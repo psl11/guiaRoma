@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+  <!-- Light theme background -->
+  <rect width="180" height="180" fill="#f5f0e8" rx="40"/>
+  
+  <!-- Golden decorative circle -->
+  <circle cx="90" cy="90" r="75" fill="none" stroke="#a07c4a" stroke-width="4"/>
+  
+  <!-- Inner accent circle -->
+  <circle cx="90" cy="90" r="65" fill="none" stroke="#8b3a3a" stroke-width="2" opacity="0.3"/>
+  
+  <!-- Stylized "R" for Roma -->
+  <text x="90" y="125" font-family="Cormorant Garamond, serif" font-size="120" font-weight="600" text-anchor="middle" fill="#8b3a3a">R</text>
+  
+  <!-- Decorative flourish -->
+  <g transform="translate(90, 40)" opacity="0.6">
+    <path d="M -15 0 Q 0 8 15 0" stroke="#a07c4a" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Dark theme styles -->
+  <defs>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        rect { fill: #1a1612; }
+        circle { stroke: #c4a373; }
+        text { fill: #c4665a; }
+        path { stroke: #c4a373; }
+      }
+    </style>
+  </defs>
+</svg>
