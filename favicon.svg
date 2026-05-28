@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Background -->
+  <rect width="64" height="64" fill="#f5f0e8"/>
+  
+  <!-- Golden circle accent -->
+  <circle cx="32" cy="32" r="28" fill="none" stroke="#a07c4a" stroke-width="2"/>
+  
+  <!-- Stylized "R" for Roma -->
+  <text x="32" y="44" font-family="Cormorant Garamond, serif" font-size="48" font-weight="600" text-anchor="middle" fill="#8b3a3a">R</text>
+  
+  <!-- Dark theme version indicator -->
+  <defs>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        rect { fill: #1a1612; }
+        circle { stroke: #c4a373; }
+        text { fill: #c4665a; }
+      }
+    </style>
+  </defs>
+</svg>
