@@ -1291,6 +1291,47 @@ strong { font-weight: 600; color: var(--ink); }
 .tl-transport.taxi { background: color-mix(in srgb, #5a7a3a 10%, transparent); border-left-color: #5a7a3a; }
 .tl-transport.walk { background: color-mix(in srgb, var(--gold) 6%, transparent); border-left-color: var(--gold-soft); }
 
+/* Recomendaciones gastronómicas dentro del timeline (enlazan a la sección Gastronomía) */
+.tl-food {
+  margin: .35rem 0 1.6rem 2.5rem;
+  padding: .7rem .95rem;
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+  border-left: 2px solid var(--accent-soft);
+  border-radius: 0 5px 5px 0;
+  font-size: .85rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.tl-food-header {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: .98rem;
+  color: var(--ink);
+  margin-bottom: .55rem;
+  display: flex; align-items: center; gap: .4rem;
+}
+.tl-food-list { display: flex; flex-direction: column; gap: .55rem; }
+.tl-food-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: .15rem .8rem;
+  align-items: baseline;
+}
+.tl-food-name {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-size: 1.08rem; font-weight: 600;
+  color: var(--accent);
+  text-decoration: none; border-bottom: 1px solid var(--line);
+}
+.tl-food-name:hover { border-bottom-color: var(--accent); }
+.tl-food-time {
+  font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+  font-size: .72rem; color: var(--ink-faint); white-space: nowrap;
+}
+.tl-food-desc { grid-column: 1 / -1; font-style: italic; font-size: .82rem; color: var(--ink-soft); }
+.tl-food-foot { margin-top: .6rem; font-style: italic; font-size: .8rem; color: var(--ink-faint); }
+.tl-food-foot a { color: var(--accent); }
+
 .tl-transport-header {
   font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
   font-style: italic;
@@ -2062,6 +2103,18 @@ function loadSvgFallbackDetail(img, cardId) {
       
       <div class="tl-item" data-pace="all"><span class="tl-time">22:00</span><a href="#campo-fiori" class="tl-title">Campo de' Fiori · Giordano Bruno</a><div class="tl-note">Estatua del filósofo quemado vivo en 1600. Cena por la zona.</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>90+ min</b> · plaza + cena en la zona</span></div>
+      <div class="tl-food">
+        <div class="tl-food-header">🍴 Cenar por Campo de' Fiori</div>
+        <div class="tl-food-list">
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-mercato-hostaria">Mercato Hostaria</a><span class="tl-food-time">🚶 1 min</span><span class="tl-food-desc">En la propia plaza, frente a Giordano Bruno · cocina romana · opción celíaca</span></div>
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-roscioli">Roscioli</a><span class="tl-food-time">🚶 3 min</span><span class="tl-food-desc">Carbonara y embutidos · bodega enorme · reserva imprescindible</span></div>
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-fortunata">Trattoria da Fortunata</a><span class="tl-food-time">🚶 2 min</span><span class="tl-food-desc">Pasta a mano en la ventana de la calle · cola habitual</span></div>
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-pollarola">La Pollarola</a><span class="tl-food-time">🚶 2 min</span><span class="tl-food-desc">Trattoria histórica en una placita escondida · sin agobios</span></div>
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-baffetto">Da Baffetto</a><span class="tl-food-time">🚶 6 min</span><span class="tl-food-desc">Si preferís pizza romana fina · sin reservas, hacia Navona</span></div>
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-frigidarium">Frigidarium</a><span class="tl-food-time">🚶 6 min</span><span class="tl-food-desc">Para el gelato de después · cono bañado en chocolate</span></div>
+        </div>
+        <div class="tl-food-foot">Todas las fichas, con platos y precios, en <a href="#gastronomia">Gastronomía</a>.</div>
+      </div>
       <div class="tl-transport taxi" data-pace="all"><div class="tl-transport-header">Campo de' Fiori → hotel · ~3 km</div><div class="tl-transport-modes"><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · paseo nocturno largo por Via dei Fori Imperiali</div><div class="tl-transport-mode-meta">⏱ <b>35-40 min</b><br>💶 <b>gratis</b></div></div><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> · cola fácil en la plaza o FreeNow<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>12-15 min</b><br>💶 <b>€12-15 · €4-5 p.p.</b></div></div></div><div class="tl-transport-footnote">Tras cenar y todo el día con maletas/viaje, el taxi compensa. Metro nocturno limitado, no recomendable.</div></div>
     </div>
 
@@ -2447,6 +2500,10 @@ function loadSvgFallbackDetail(img, cardId) {
       
       <div class="tl-item" data-pace="all"><span class="tl-time">15:30</span><span class="tl-title disabled">Comida · zona Borgo Pio</span></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>75 min</b> · comida sin prisa antes de la tarde</span><span class="tl-meta-item">🚶 hasta siguiente: <b>12 min</b> · 900 m hasta Castel Sant'Angelo</span></div>
+      <div class="tl-food">
+        <div class="tl-food-header">🍴 Comer cerca del Vaticano</div>
+        <div class="tl-food-foot">Borgo Pio y Borgo Vittorio sirven para un plato rápido (cacio e pepe, supplì), pero son zona turística. Los imprescindibles de <a href="#gastronomia">Gastronomía</a> están en el centro y Trastevere, a 20-25 min: mejor guardarlos para la cena de esta noche en Trastevere.</div>
+      </div>
       
       <div class="tl-item" data-pace="all"><span class="tl-time">16:45</span><a href="#castel-santangelo" class="tl-title">Castel Sant'Angelo · Ponte</a><div class="tl-note">Exterior. Los ángeles de Bernini en el puente.</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>45 min</b> · puente + exterior + vistas al Tíber; interior del castillo necesitaría 2h más</span></div>
@@ -2459,6 +2516,16 @@ function loadSvgFallbackDetail(img, cardId) {
       
       <div class="tl-item" data-pace="all"><span class="tl-time">18:15</span><a href="#smt" class="tl-title">Santa Maria in Trastevere</a><div class="tl-note">Mosaicos del siglo XII en el ábside. Aperitivo rápido en la plaza.</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>90 min</b> · iglesia (20 min) + aperitivo en la plaza de Trastevere hasta el taxi</span></div>
+      <div class="tl-food">
+        <div class="tl-food-header">🍴 Aperitivo / cena rápida en Trastevere</div>
+        <div class="tl-food-list">
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-tonnarello">Tonnarello</a><span class="tl-food-time">🚶 1 min</span><span class="tl-food-desc">En la misma plaza · cacio e pepe y pizza · perfecto antes del taxi</span></div>
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-zi-umberto">Osteria da Zi Umberto</a><span class="tl-food-time">🚶 4 min</span><span class="tl-food-desc">Osteria de barrio, pocos turistas · cocina honesta</span></div>
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-dar-poeta">Dar Poeta</a><span class="tl-food-time">🚶 5 min</span><span class="tl-food-desc">Pizza de masa fermentada 48h · sin reservas</span></div>
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-fior-di-luna">Fior di Luna</a><span class="tl-food-time">🚶 4 min</span><span class="tl-food-desc">Gelato artesanal para el camino al concierto</span></div>
+        </div>
+        <div class="tl-food-foot">Ojo al reloj: con el taxi al Auditorium a las 19:45, algo ligero o un buen aperitivo. Más opciones en <a href="#gastronomia">Gastronomía</a>.</div>
+      </div>
       
       <div class="tl-item" data-pace="all"><span class="tl-time">19:45</span><span class="tl-title disabled">Taxi Trastevere → Auditorium (~20 min)</span><div class="tl-note">~€18-22. Pedirlo con FreeNow 5 min antes.</div></div>
       <div class="tl-item" data-pace="all"><span class="tl-time">20:15</span><a href="#auditorium" class="tl-title">Llegada Auditorium · Cavea</a><div class="tl-note">Cafetería del Auditorium para picar algo antes del concierto.</div></div>
@@ -2917,6 +2984,14 @@ function loadSvgFallbackDetail(img, cardId) {
       
       <div class="tl-item" data-pace="slow-only"><span class="tl-time">11:50</span><a href="#ghetto" class="tl-title">Teatro Marcello · Portico d'Ottavia</a><div class="tl-note">Entrada al barrio judío.</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>30 min</b> · exterior + paseo corto por el ghetto</span><span class="tl-meta-item">🚶 hasta siguiente: <b>10 min</b> · 800 m hasta Fontana delle Tartarughe</span></div>
+      <div class="tl-food">
+        <div class="tl-food-header">🍴 Cucina ebraica en el Ghetto</div>
+        <div class="tl-food-list">
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-giggetto">Giggetto al Portico d'Ottavia</a><span class="tl-food-time">🚶 1 min</span><span class="tl-food-desc">Carciofo alla giudia frente a las ruinas · para sentarse a comer</span></div>
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-sora-lella">Sora Lella</a><span class="tl-food-time">🚶 5 min</span><span class="tl-food-desc">En la Isola Tiberina · trattoria histórica de la familia Fabrizi</span></div>
+        </div>
+        <div class="tl-food-foot">Con el tour del Coliseo a las 13:00, lo realista es picar algo rápido (un supplì, pizza al taglio) y dejar la cucina ebraica con calma para otra comida. Fichas en <a href="#gastronomia">Gastronomía</a>.</div>
+      </div>
       
       <div class="tl-item" data-pace="slow-only"><span class="tl-time">12:20</span><a href="#tartarughe" class="tl-title">Fontana delle Tartarughe</a><div class="tl-note">La fuente más deliciosa de Roma.</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>15 min</b> · la fuente se disfruta en pocos minutos — momento tranquilo antes del Coliseo</span></div>
@@ -2935,6 +3010,13 @@ function loadSvgFallbackDetail(img, cardId) {
       
       <div class="tl-item" data-pace="medium"><span class="tl-time">19:30</span><span class="tl-title disabled">Cena en Monti</span></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>90+ min</b> · cena tranquila — bien merecida</span></div>
+      <div class="tl-food">
+        <div class="tl-food-header">🍴 Cenar en Monti</div>
+        <div class="tl-food-list">
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-vecchia-roma">La Vecchia Roma</a><span class="tl-food-time">🚶 3 min</span><span class="tl-food-desc">Trattoria de barrio · gricia y abbacchio · precios sensatos</span></div>
+        </div>
+        <div class="tl-food-foot">Monti está lleno de trattorias y enotecas para el aperitivo alrededor de la fuente de la plaza. Ficha en <a href="#gastronomia">Gastronomía</a>.</div>
+      </div>
       <div class="tl-transport walk" data-pace="all"><div class="tl-transport-header">Monti → hotel (vuelta nocturna) · ~1,4 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · por Via Cavour · paseo nocturno tranquilo<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>18 min</b><br>💶 <b>gratis</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> · si el día os ha podido</div><div class="tl-transport-mode-meta">⏱ <b>8 min</b><br>💶 <b>€8-10 · €3 p.p.</b></div></div></div><div class="tl-transport-footnote">Roma de noche es muy segura en estas calles. Tras un día con 6,5 km, andar el tramo final no es para todos los gustos.</div></div>
     </div>
 
@@ -3398,6 +3480,14 @@ function loadSvgFallbackDetail(img, cardId) {
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>25 min</b> · escalinata + fuente + Via Margutta — sin prisa, hoy os queda toda la tarde por delante</span></div>
       <div class="tl-transport metro" data-pace="all"><div class="tl-transport-header">Piazza di Spagna → Esquilino · pranzo · ~2 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">Ⓜ️</span><div class="tl-transport-mode-desc"><strong>Metro A</strong> · Spagna → Termini (3 paradas, 8 min) y a comer por Monti o el Esquilino, cerca de las basílicas de la tarde<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>12 min</b><br>💶 <b>€1,50 p.p.</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · por Via Sistina y Via Nazionale · subida moderada</div><div class="tl-transport-mode-meta">⏱ <b>30 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">La tarde baja hacia el sureste por las grandes basílicas. Comed ligero y a la sombra: el calor de las 14h es el peor del día.</div></div>
       <div class="tl-item" data-pace="all"><span class="tl-time">12:30</span><span class="tl-title disabled">Pranzo · Monti / Esquilino</span><div class="tl-note">Cerca de las basílicas. Ver sección Gastronomía.</div></div>
+      <div class="tl-food">
+        <div class="tl-food-header">🍴 Comer por Monti / Esquilino</div>
+        <div class="tl-food-list">
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-matriciana">La Matriciana dal 1870</a><span class="tl-food-time">🚶 7 min</span><span class="tl-food-desc">Junto al Teatro dell'Opera · la patria de la amatriciana (Tucci)</span></div>
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-vecchia-roma">La Vecchia Roma</a><span class="tl-food-time">🚶 10 min</span><span class="tl-food-desc">En Monti, de paso hacia las basílicas · trattoria de barrio</span></div>
+        </div>
+        <div class="tl-food-foot">Más opciones en <a href="#gastronomia">Gastronomía</a>.</div>
+      </div>
       <div class="tl-transport metro" data-pace="medium"><div class="tl-transport-header">Termini → San Giovanni in Laterano · ~2,5 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">Ⓜ️</span><div class="tl-transport-mode-desc"><strong>Metro A</strong> · Termini → San Giovanni · 3 paradas · la basílica está a la salida<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>10 min</b><br>💶 <b>€1,50 p.p.</b></div></div></div><div class="tl-transport-footnote">San Giovanni abre todo el día sin pausa de mediodía: por eso va primera. San Clemente y San Pietro in Vincoli reabren a las 15:00.</div></div>
       <div class="tl-item" data-pace="medium"><span class="tl-time">14:00</span><a href="#laterano" class="tl-title">San Giovanni in Laterano · Scala Santa</a><div class="tl-note">La catedral de Roma. La Escalera Santa, enfrente.</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>60-75 min</b> · basílica + claustro + (opcional) Scala Santa enfrente</span><span class="tl-meta-item">🚶 hasta siguiente: <b>12 min</b> · ~900 m hacia el Coliseo</span></div>
@@ -3409,6 +3499,13 @@ function loadSvgFallbackDetail(img, cardId) {
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>30 min</b> · el Moisés + las cadenas de San Pedro · llevad monedas para la luz</span><span class="tl-meta-item">🚶 hasta Monti: <b>6 min</b> · estáis a un paso del rione</span></div>
       <div class="tl-transport walk" data-pace="all"><div class="tl-transport-header">San Pietro in Vincoli → Monti · ~6 min</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · bajáis a Via dei Serpenti y a la Piazza della Madonna dei Monti, corazón del rione<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>6 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">Cerráis el día donde el domingo terminó: Monti. Aperitivo en la fuentecita de la plaza y cena en una trattoria del barrio.</div></div>
       <div class="tl-item" data-pace="all"><span class="tl-time">17:30</span><a href="#monti" class="tl-title">Rione Monti · aperitivo + cena</a><div class="tl-note">Vermut en la piazza, cena de trattoria. Noche tranquila.</div></div>
+      <div class="tl-food">
+        <div class="tl-food-header">🍴 Aperitivo + cena en Monti</div>
+        <div class="tl-food-list">
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-vecchia-roma">La Vecchia Roma</a><span class="tl-food-time">🚶 2 min</span><span class="tl-food-desc">Trattoria romana sin florituras · cena tranquila</span></div>
+        </div>
+        <div class="tl-food-foot">Vermut en la fuente de Piazza della Madonna dei Monti y cena en cualquier trattoria del rione. Ficha en <a href="#gastronomia">Gastronomía</a>.</div>
+      </div>
     </div>
 
     <div class="cards-list">
@@ -3928,6 +4025,15 @@ function loadSvgFallbackDetail(img, cardId) {
       <div class="tl-transport metro" data-pace="all"><div class="tl-transport-header">Barberini → Esquilino · pranzo + basílica · ~2 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">Ⓜ️</span><div class="tl-transport-mode-desc"><strong>Metro A</strong> · Barberini → Termini (2 paradas) · coméis cerca del hotel y de Santa Maria Maggiore<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>10 min</b><br>💶 <b>€1,50 p.p.</b></div></div></div><div class="tl-transport-footnote">A partir de aquí todo queda a un paso del hotel y de Termini: el cierre del viaje sin estrés de transporte.</div></div>
       <div class="tl-item" data-pace="all"><span class="tl-time">13:30</span><span class="tl-title disabled">Pranzo · Monti / Esquilino</span><div class="tl-note">Última comida romana sin prisa. Ver sección Gastronomía.</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>75 min</b> · comida tranquila · estáis a 10 min del hotel</span></div>
+      <div class="tl-food">
+        <div class="tl-food-header">🍴 Última comida por el Esquilino</div>
+        <div class="tl-food-list">
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-matriciana">La Matriciana dal 1870</a><span class="tl-food-time">🚶 7 min</span><span class="tl-food-desc">A un paso del hotel · amatriciana de manual (Tucci)</span></div>
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-vecchia-roma">La Vecchia Roma</a><span class="tl-food-time">🚶 10 min</span><span class="tl-food-desc">En Monti · cocina romana de barrio</span></div>
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-regoli">Pasticceria Regoli</a><span class="tl-food-time">🚶 8 min</span><span class="tl-food-desc">El último maritozzo con nata antes del vuelo</span></div>
+        </div>
+        <div class="tl-food-foot">Todo a 10 min del hotel. Fichas en <a href="#gastronomia">Gastronomía</a>.</div>
+      </div>
       <div class="tl-item" data-pace="all"><span class="tl-time">15:00</span><a href="#smm" class="tl-title">Santa Maria Maggiore</a><div class="tl-note">A 5 min del hotel. Mosaicos del s. V, Bernini y el papa Francisco.</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>45 min</b> · mosaicos + artesonado dorado + tumbas · abierta sin pausa</span><span class="tl-meta-item">🚶 hasta siguiente: <b>8 min</b> · hacia Termini</span></div>
       <div class="tl-transport walk" data-pace="medium"><div class="tl-transport-header">Santa Maria Maggiore → Palazzo Massimo · ~8 min</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · hacia Termini · el museo está pegado a la estación<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>8 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">Opcional pero muy recomendable: el mejor refugio con aire acondicionado para las horas de más calor, y a 2 min del hotel.</div></div>
@@ -4312,7 +4418,7 @@ function loadSvgFallbackDetail(img, cardId) {
       </div>
 
       <!-- Roscioli -->
-      <div class="gastro-card">
+      <div class="gastro-card" id="g-roscioli">
         <div class="gastro-card-header">
           <span class="gastro-card-badge badge-deli">salumeria + cucina</span>
           <div>
@@ -4329,7 +4435,7 @@ function loadSvgFallbackDetail(img, cardId) {
       </div>
 
       <!-- Trattoria da Fortunata -->
-      <div class="gastro-card">
+      <div class="gastro-card" id="g-fortunata">
         <div class="gastro-card-header">
           <span class="gastro-card-badge badge-trattoria">trattoria</span>
           <div>
@@ -4346,7 +4452,7 @@ function loadSvgFallbackDetail(img, cardId) {
       </div>
 
       <!-- Sora Lella -->
-      <div class="gastro-card">
+      <div class="gastro-card" id="g-sora-lella">
         <div class="gastro-card-header">
           <span class="gastro-card-badge badge-trattoria">trattoria histórica</span>
           <div>
@@ -4363,7 +4469,7 @@ function loadSvgFallbackDetail(img, cardId) {
       </div>
 
       <!-- Mercato Hostaria -->
-      <div class="gastro-card">
+      <div class="gastro-card" id="g-mercato-hostaria">
         <div class="gastro-card-header">
           <span class="gastro-card-badge badge-trattoria">hostaria · wine bar</span>
           <div>
@@ -4380,7 +4486,7 @@ function loadSvgFallbackDetail(img, cardId) {
       </div>
 
       <!-- La Vecchia Roma -->
-      <div class="gastro-card">
+      <div class="gastro-card" id="g-vecchia-roma">
         <div class="gastro-card-header">
           <span class="gastro-card-badge badge-trattoria">trattoria</span>
           <div>
@@ -4393,6 +4499,74 @@ function loadSvgFallbackDetail(img, cardId) {
         <div class="gastro-card-footer">
           <span>Precio medio €25-35/persona · <span class="gastro-itinerary-tag">cena domingo Monti</span></span>
           <a class="gastro-maps-link" href="https://www.google.com/maps/search/?api=1&query=La%20Vecchia%20Roma%20Via%20Leonina%2010%20Roma" target="_blank" rel="noopener">📍 Google Maps</a>
+        </div>
+      </div>
+
+      <!-- Armando al Pantheon -->
+      <div class="gastro-card" id="g-armando">
+        <div class="gastro-card-header">
+          <span class="gastro-card-badge badge-trattoria">trattoria histórica</span>
+          <div>
+            <div class="gastro-card-name">Armando al Pantheon</div>
+            <div class="gastro-card-address">Salita de' Crescenzi 31 · Pantheon</div>
+          </div>
+        </div>
+        <p class="gastro-card-desc">Desde 1961, literalmente a la sombra del Pantheon. La familia Gargioli, tres generaciones, sirve cocina romana ortodoxa en un comedor diminuto de paredes llenas de dedicatorias. <strong>Stanley Tucci</strong> lo visita en su serie sobre Italia. No cede ni a la moda ni al turismo de masas: carta romana pura. Reserva imprescindible con semanas de antelación — es minúsculo.</p>
+        <div class="gastro-plato"><strong>Plato estrella:</strong> tonnarelli cacio e pepe, amatriciana, pasta alla gricia y abbacchio scottadito. Quinto quarto en carta para los valientes.</div>
+        <div class="gastro-card-footer">
+          <span>Lun–Sáb · €40-55/persona · reserva imprescindible (semanas antes) · <span class="gastro-itinerary-tag">cerca del Pantheon</span></span>
+          <a class="gastro-maps-link" href="https://www.google.com/maps/search/?api=1&query=Armando%20al%20Pantheon%20Salita%20de%20Crescenzi%2031%20Roma" target="_blank" rel="noopener">📍 Google Maps</a>
+        </div>
+      </div>
+
+      <!-- Ristorante La Pollarola -->
+      <div class="gastro-card" id="g-pollarola">
+        <div class="gastro-card-header">
+          <span class="gastro-card-badge badge-trattoria">trattoria histórica</span>
+          <div>
+            <div class="gastro-card-name">Ristorante La Pollarola</div>
+            <div class="gastro-card-address">Piazza della Pollarola 24-25 · Campo de' Fiori</div>
+          </div>
+        </div>
+        <p class="gastro-card-desc">Una de las trattorias más antiguas del centro, en una placita escondida a un paso de Campo de' Fiori. Cocina romana tradicional, mesas fuera y ambiente de toda la vida. Buena parada para la cena del viernes sin alejarse de la plaza.</p>
+        <div class="gastro-plato"><strong>Plato estrella:</strong> cacio e pepe, saltimbocca alla romana y fiori di zucca. Antipasti de verduras notables.</div>
+        <div class="gastro-card-footer">
+          <span>Todos los días · €30-45/persona · <span class="gastro-itinerary-tag">cena viernes Campo de' Fiori</span></span>
+          <a class="gastro-maps-link" href="https://www.google.com/maps/search/?api=1&query=La%20Pollarola%20Piazza%20della%20Pollarola%20Roma" target="_blank" rel="noopener">📍 Google Maps</a>
+        </div>
+      </div>
+
+      <!-- La Matriciana -->
+      <div class="gastro-card" id="g-matriciana">
+        <div class="gastro-card-header">
+          <span class="gastro-card-badge badge-trattoria">trattoria histórica</span>
+          <div>
+            <div class="gastro-card-name">La Matriciana dal 1870</div>
+            <div class="gastro-card-address">Via del Viminale 44 · Esquilino (junto al Teatro dell'Opera)</div>
+          </div>
+        </div>
+        <p class="gastro-card-desc">Una institución desde 1870, junto al Teatro dell'Opera y a un paso del hotel. Como dice su nombre, la patria de la amatriciana — <strong>Stanley Tucci</strong> la incluye en su recorrido romano. Manteles blancos, servicio clásico, cocina romana de libro. Ideal para el almuerzo del lunes o del martes por su cercanía al Esquilino.</p>
+        <div class="gastro-plato"><strong>Plato estrella:</strong> bucatini all'amatriciana (el plato de la casa) + carbonara + abbacchio. Reserva recomendable, sobre todo si hay función en la Ópera.</div>
+        <div class="gastro-card-footer">
+          <span>Todos los días · €35-50/persona · reserva recomendable · <span class="gastro-itinerary-tag">cerca del hotel · lunes/martes</span></span>
+          <a class="gastro-maps-link" href="https://www.google.com/maps/search/?api=1&query=La%20Matriciana%20Via%20del%20Viminale%2044%20Roma" target="_blank" rel="noopener">📍 Google Maps</a>
+        </div>
+      </div>
+
+      <!-- Ristorante Carmina -->
+      <div class="gastro-card" id="g-carmina">
+        <div class="gastro-card-header">
+          <span class="gastro-card-badge badge-trattoria">trattoria</span>
+          <div>
+            <div class="gastro-card-name">Ristorante Carmina</div>
+            <div class="gastro-card-address">Centro storico · junto a Piazza Navona</div>
+          </div>
+        </div>
+        <p class="gastro-card-desc">Pequeño restaurante de ambiente acogedor en pleno centro histórico, cerca de Piazza Navona. Cocina italiana y romana en un rincón tranquilo, lejos del bullicio de las terrazas turísticas. <em>(No he podido verificar la dirección exacta — confírmala antes de ir.)</em></p>
+        <div class="gastro-plato"><strong>Plato estrella:</strong> pasta fresca casera y clásicos romanos. Ambiente íntimo, buen trato.</div>
+        <div class="gastro-card-footer">
+          <span>Centro storico · €25-40/persona · <span class="gastro-itinerary-tag">cerca de Navona</span></span>
+          <a class="gastro-maps-link" href="https://www.google.com/maps/search/?api=1&query=Ristorante%20Carmina%20Roma%20centro" target="_blank" rel="noopener">📍 Google Maps</a>
         </div>
       </div>
 
@@ -4420,7 +4594,7 @@ function loadSvgFallbackDetail(img, cardId) {
       </div>
 
       <!-- Osteria Zi Umberto -->
-      <div class="gastro-card">
+      <div class="gastro-card" id="g-zi-umberto">
         <div class="gastro-card-header">
           <span class="gastro-card-badge badge-trattoria">trattoria</span>
           <div>
@@ -4443,7 +4617,7 @@ function loadSvgFallbackDetail(img, cardId) {
     <div class="gastro-grid">
 
       <!-- Giggetto -->
-      <div class="gastro-card">
+      <div class="gastro-card" id="g-giggetto">
         <div class="gastro-card-header">
           <span class="gastro-card-badge badge-ghetto">cucina ebraica</span>
           <div>
@@ -4465,7 +4639,7 @@ function loadSvgFallbackDetail(img, cardId) {
     <div class="gastro-grid">
 
       <!-- Dar Poeta -->
-      <div class="gastro-card">
+      <div class="gastro-card" id="g-dar-poeta">
         <div class="gastro-card-header">
           <span class="gastro-card-badge badge-pizza">pizzeria</span>
           <div>
@@ -4482,7 +4656,7 @@ function loadSvgFallbackDetail(img, cardId) {
       </div>
 
       <!-- Tonnarello -->
-      <div class="gastro-card">
+      <div class="gastro-card" id="g-tonnarello">
         <div class="gastro-card-header">
           <span class="gastro-card-badge badge-trattoria">trattoria + pizza</span>
           <div>
@@ -4498,13 +4672,47 @@ function loadSvgFallbackDetail(img, cardId) {
         </div>
       </div>
 
+      <!-- Pizzeria da Baffetto -->
+      <div class="gastro-card" id="g-baffetto">
+        <div class="gastro-card-header">
+          <span class="gastro-card-badge badge-pizza">pizzeria storica</span>
+          <div>
+            <div class="gastro-card-name">Pizzeria da Baffetto</div>
+            <div class="gastro-card-address">Via del Governo Vecchio 114 · Navona</div>
+          </div>
+        </div>
+        <p class="gastro-card-desc">Desde 1964. La pizza romana de masa fina y crujiente más célebre del centro, en una esquina de Via del Governo Vecchio a pocos pasos de Piazza Navona. Horno de leña, camareros veloces, mesas pegadas y cola en la calle. No reserva: se espera turno (suele ir rápido). Una institución.</p>
+        <div class="gastro-plato"><strong>Plato estrella:</strong> pizza Baffetto (tomate, mozzarella, huevo, salchicha, cebolla) + bruschette + supplì. Masa fina romana, no napolitana.</div>
+        <div class="gastro-card-footer">
+          <span>Todos los días (cena) · €12-18/persona · sin reservas · <span class="gastro-itinerary-tag">viernes zona Navona</span></span>
+          <a class="gastro-maps-link" href="https://www.google.com/maps/search/?api=1&query=Pizzeria%20da%20Baffetto%20Via%20del%20Governo%20Vecchio%20114%20Roma" target="_blank" rel="noopener">📍 Google Maps</a>
+        </div>
+      </div>
+
+      <!-- La Montecarlo -->
+      <div class="gastro-card" id="g-montecarlo">
+        <div class="gastro-card-header">
+          <span class="gastro-card-badge badge-pizza">pizzeria</span>
+          <div>
+            <div class="gastro-card-name">La Montecarlo</div>
+            <div class="gastro-card-address">Vicolo Savelli 13 · Navona</div>
+          </div>
+        </div>
+        <p class="gastro-card-desc">A la vuelta de Baffetto y de la misma familia fundadora, pero más amplia y con terraza. Pizza romana fina, ambiente ruidoso y juvenil, precios bajos y servicio rapidísimo. La alternativa cuando la cola de Baffetto se hace imposible.</p>
+        <div class="gastro-plato"><strong>Plato estrella:</strong> pizza margherita o capricciosa + supplì + fritti. Llegar pronto o esperar en la calle.</div>
+        <div class="gastro-card-footer">
+          <span>Todos los días · €12-18/persona · sin reservas · <span class="gastro-itinerary-tag">viernes zona Navona</span></span>
+          <a class="gastro-maps-link" href="https://www.google.com/maps/search/?api=1&query=La%20Montecarlo%20Vicolo%20Savelli%2013%20Roma" target="_blank" rel="noopener">📍 Google Maps</a>
+        </div>
+      </div>
+
     </div><!-- /grid pizza -->
 
     <p class="gastro-section-title">Gelato</p>
     <div class="gastro-grid">
 
       <!-- Frigidarium -->
-      <div class="gastro-card">
+      <div class="gastro-card" id="g-frigidarium">
         <div class="gastro-card-header">
           <span class="gastro-card-badge badge-gelato">gelateria</span>
           <div>
@@ -4538,7 +4746,7 @@ function loadSvgFallbackDetail(img, cardId) {
       </div>
 
       <!-- Fior di Luna -->
-      <div class="gastro-card">
+      <div class="gastro-card" id="g-fior-di-luna">
         <div class="gastro-card-header">
           <span class="gastro-card-badge badge-gelato">gelateria artesanal</span>
           <div>
@@ -4611,7 +4819,7 @@ function loadSvgFallbackDetail(img, cardId) {
       </div>
 
       <!-- Pasticceria Regoli -->
-      <div class="gastro-card">
+      <div class="gastro-card" id="g-regoli">
         <div class="gastro-card-header">
           <span class="gastro-card-badge badge-pasticceria">pasticceria</span>
           <div>
@@ -4645,6 +4853,62 @@ function loadSvgFallbackDetail(img, cardId) {
       </div>
 
     </div><!-- /grid cafe pasticceria -->
+
+    <p class="gastro-section-title">Bar · aperitivo · salotto romano</p>
+    <div class="gastro-grid">
+
+      <!-- Bar della Pace -->
+      <div class="gastro-card" id="g-bar-pace">
+        <div class="gastro-card-header">
+          <span class="gastro-card-badge badge-caffe">bar · aperitivo</span>
+          <div>
+            <div class="gastro-card-name">Antico Caffè della Pace</div>
+            <div class="gastro-card-address">Via della Pace 3-7 · cerca de Piazza Navona</div>
+          </div>
+        </div>
+        <p class="gastro-card-desc">El café más fotogénico de Roma: una fachada del XIX cubierta de hiedra, junto a la iglesia de Santa Maria della Pace. Abierto desde 1891, es un <em>salotto</em> histórico donde —dice la leyenda urbana— se cierran negocios y se firman acuerdos (inmobiliarios incluidos) entre mármoles y espejos. Café de día, cócteles y aperitivo de noche. Se paga el rincón, no el café.</p>
+        <div class="gastro-plato"><strong>Plato estrella:</strong> espresso o un negroni/Aperol en la terraza bajo la hiedra. Más por el ambiente que por la comida.</div>
+        <div class="gastro-card-footer">
+          <span>Todos los días · €4-15 (café/cóctel) · <span class="gastro-itinerary-tag">aperitivo zona Navona</span></span>
+          <a class="gastro-maps-link" href="https://www.google.com/maps/search/?api=1&query=Antico%20Caff%C3%A8%20della%20Pace%20Via%20della%20Pace%20Roma" target="_blank" rel="noopener">📍 Google Maps</a>
+        </div>
+      </div>
+
+      <!-- Bar Bistrot Mascagni -->
+      <div class="gastro-card" id="g-mascagni">
+        <div class="gastro-card-header">
+          <span class="gastro-card-badge badge-caffe">bar · bistrot</span>
+          <div>
+            <div class="gastro-card-name">Bar Bistrot Mascagni</div>
+            <div class="gastro-card-address">Centro · (dirección por confirmar)</div>
+          </div>
+        </div>
+        <p class="gastro-card-desc">Bar-bistrot de aire elegante para café, desayuno o aperitivo con algo de picar. Ambiente cuidado, buena repostería y cócteles. <em>(No he podido verificar la dirección exacta — confírmala antes de ir.)</em></p>
+        <div class="gastro-plato"><strong>Plato estrella:</strong> cornetto + cappuccino por la mañana; tabla y vino para el aperitivo.</div>
+        <div class="gastro-card-footer">
+          <span>€4-15 · <span class="gastro-itinerary-tag">aperitivo</span></span>
+          <a class="gastro-maps-link" href="https://www.google.com/maps/search/?api=1&query=Bistrot%20Mascagni%20Roma" target="_blank" rel="noopener">📍 Google Maps</a>
+        </div>
+      </div>
+
+      <!-- Il Bar de la Musa -->
+      <div class="gastro-card" id="g-bar-musa">
+        <div class="gastro-card-header">
+          <span class="gastro-card-badge badge-caffe">bar · café</span>
+          <div>
+            <div class="gastro-card-name">Il Bar de la Musa</div>
+            <div class="gastro-card-address">Centro · (dirección por confirmar)</div>
+          </div>
+        </div>
+        <p class="gastro-card-desc">Café-bar para una pausa tranquila, desayuno o aperitivo al margen del circuito turístico. <em>(Dirección por confirmar — dime la zona exacta y lo afino.)</em></p>
+        <div class="gastro-plato"><strong>Plato estrella:</strong> café y dulce a media mañana; spritz al atardecer.</div>
+        <div class="gastro-card-footer">
+          <span>€3-12 · <span class="gastro-itinerary-tag">café · aperitivo</span></span>
+          <a class="gastro-maps-link" href="https://www.google.com/maps/search/?api=1&query=Bar%20della%20Musa%20Roma" target="_blank" rel="noopener">📍 Google Maps</a>
+        </div>
+      </div>
+
+    </div><!-- /grid bar aperitivo -->
 
   </div>
 </section>
