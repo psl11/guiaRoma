@@ -1,21 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Background -->
-  <rect width="64" height="64" fill="#f5f0e8"/>
-  
-  <!-- Golden circle accent -->
-  <circle cx="32" cy="32" r="28" fill="none" stroke="#a07c4a" stroke-width="2"/>
-  
-  <!-- Stylized "R" for Roma -->
-  <text x="32" y="44" font-family="Cormorant Garamond, serif" font-size="48" font-weight="600" text-anchor="middle" fill="#8b3a3a">R</text>
-  
-  <!-- Dark theme version indicator -->
   <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9c4444"/>
+      <stop offset="1" stop-color="#7d3232"/>
+    </linearGradient>
     <style>
       @media (prefers-color-scheme: dark) {
-        rect { fill: #1a1612; }
-        circle { stroke: #c4a373; }
-        text { fill: #c4665a; }
+        .bg   { fill: #221d18; }
+        .ring { stroke: #d4b88a; }
+        .glyph{ fill: #e8dfd0; }
       }
     </style>
   </defs>
+
+  <!-- Fondo -->
+  <rect class="bg" width="64" height="64" rx="14" fill="url(#bg)"/>
+
+  <!-- Anillo dorado -->
+  <circle class="ring" cx="32" cy="32" r="26.5" fill="none" stroke="#c4a373" stroke-width="1.4" opacity="0.85"/>
+
+  <!-- "R" de Roma -->
+  <text class="glyph" x="32" y="46" font-family="Georgia, 'Times New Roman', Times, serif"
+        font-size="40" font-weight="700" text-anchor="middle" fill="#f5f0e8">R</text>
 </svg>

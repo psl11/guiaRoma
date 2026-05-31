@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <meta name="theme-color" content="#1a1612" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#f5f0e8" media="(prefers-color-scheme: light)">
-<title>Roma · 19—22 giugno 2026</title>
+<title>Roma · 19—23 giugno 2026</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -829,9 +829,11 @@ body {
 }
 .topbar-inner {
   max-width: 760px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
   padding: .75rem 1.25rem;
 }
+.topbar-inner .brand { grid-column: 2; text-align: center; }
+.topbar-inner .theme-btn { grid-column: 3; justify-self: end; }
 .brand {
   font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
   font-size: 1.2rem; font-weight: 600;
@@ -864,6 +866,11 @@ body {
   scrollbar-width: none;
   border-bottom: 1px solid var(--line-soft);
   background: var(--bg);
+}
+/* En pantallas anchas los pills caben enteros: se centran. En móvil
+   se mantienen scrollables desde la izquierda para no recortar el primero. */
+@media (min-width: 680px) {
+  .nav-pills { justify-content: center; }
 }
 .nav-pills::-webkit-scrollbar { display: none; }
 .nav-pill {
@@ -1179,6 +1186,7 @@ strong { font-weight: 600; color: var(--ink); }
 .day-stats-item.metro::before { content: "🚇"; }
 .day-stats-item.taxi::before { content: "🚕"; }
 .day-stats-item.train::before { content: "🚆"; }
+.day-stats-item.ticket::before { content: "🎟️"; }
 
 .timeline { position: relative; padding-left: 1.75rem; margin-top: 2rem; }
 .timeline::before {
@@ -1872,7 +1880,7 @@ footer p {
 </style>
 <script id="svg-library">
 const SVG_MOTIFS = {"dome": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_d\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_d\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_d)\"/><g opacity=\".9\"><rect x=\"280\" y=\"150\" width=\"240\" height=\"50\" fill=\"url(#st_d)\"/><ellipse cx=\"400\" cy=\"150\" rx=\"120\" ry=\"90\" fill=\"url(#st_d)\"/><rect x=\"385\" y=\"50\" width=\"30\" height=\"20\" fill=\"#8b6c43\"/><rect x=\"380\" y=\"40\" width=\"40\" height=\"12\" fill=\"#a07c4a\"/><circle cx=\"400\" cy=\"35\" r=\"6\" fill=\"#a07c4a\"/><rect x=\"200\" y=\"200\" width=\"400\" height=\"80\" fill=\"url(#st_d)\"/><g fill=\"#8b6c43\"><rect x=\"220\" y=\"200\" width=\"8\" height=\"80\"/><rect x=\"280\" y=\"200\" width=\"8\" height=\"80\"/><rect x=\"340\" y=\"200\" width=\"8\" height=\"80\"/><rect x=\"400\" y=\"200\" width=\"8\" height=\"80\"/><rect x=\"460\" y=\"200\" width=\"8\" height=\"80\"/><rect x=\"520\" y=\"200\" width=\"8\" height=\"80\"/><rect x=\"580\" y=\"200\" width=\"8\" height=\"80\"/></g></g></svg>", "pantheon": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_p\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_p\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_p)\"/><g opacity=\".9\"><path d=\"M280 180Q280 60 400 60Q520 60 520 180Z\" fill=\"url(#st_p)\"/><circle cx=\"400\" cy=\"60\" r=\"6\" fill=\"#5a4226\"/><polygon points=\"220,180 580,180 540,140 260,140\" fill=\"#8b6c43\"/><rect x=\"220\" y=\"170\" width=\"360\" height=\"12\" fill=\"#a07c4a\"/><g fill=\"url(#st_p)\"><rect x=\"240\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"280\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"320\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"360\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"400\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"440\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"480\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"520\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"560\" y=\"180\" width=\"14\" height=\"100\"/></g><rect x=\"200\" y=\"270\" width=\"400\" height=\"10\" fill=\"#8b6c43\"/></g></svg>", "arch": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_a\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_a)\"/><g opacity=\".9\"><rect x=\"100\" y=\"60\" width=\"600\" height=\"220\" fill=\"#c4a373\"/><path d=\"M320 280L320 180Q320 120 400 120Q480 120 480 180L480 280Z\" fill=\"#5a4226\"/><rect x=\"100\" y=\"90\" width=\"600\" height=\"14\" fill=\"#8b6c43\"/><rect x=\"100\" y=\"60\" width=\"600\" height=\"14\" fill=\"#8b6c43\"/><g fill=\"#5a4226\" opacity=\".6\"><rect x=\"140\" y=\"130\" width=\"40\" height=\"80\" rx=\"20\"/><rect x=\"200\" y=\"130\" width=\"40\" height=\"80\" rx=\"20\"/><rect x=\"260\" y=\"130\" width=\"40\" height=\"80\" rx=\"20\"/><rect x=\"500\" y=\"130\" width=\"40\" height=\"80\" rx=\"20\"/><rect x=\"560\" y=\"130\" width=\"40\" height=\"80\" rx=\"20\"/><rect x=\"620\" y=\"130\" width=\"40\" height=\"80\" rx=\"20\"/></g></g></svg>", "fountain": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_f\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"tc_f\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#b85c5c\"/><stop offset=\"1\" stop-color=\"#8b3a3a\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_f)\"/><g opacity=\".9\"><rect x=\"100\" y=\"40\" width=\"600\" height=\"180\" fill=\"#c4a373\"/><path d=\"M320 180L320 100Q320 70 400 70Q480 70 480 100L480 180Z\" fill=\"#8b6c43\"/><circle cx=\"400\" cy=\"135\" r=\"22\" fill=\"#5a4226\"/><rect x=\"385\" y=\"155\" width=\"30\" height=\"40\" rx=\"4\" fill=\"#5a4226\"/><rect x=\"100\" y=\"55\" width=\"600\" height=\"14\" fill=\"#8b6c43\"/><ellipse cx=\"400\" cy=\"245\" rx=\"240\" ry=\"20\" fill=\"url(#tc_f)\" opacity=\".4\"/><ellipse cx=\"400\" cy=\"240\" rx=\"220\" ry=\"14\" fill=\"#b85c5c\" opacity=\".6\"/><g stroke=\"#fff\" stroke-width=\"2\" fill=\"none\" opacity=\".5\"><path d=\"M370 200Q380 220 370 240\"/><path d=\"M400 200Q410 220 400 240\"/><path d=\"M430 200Q440 220 430 240\"/></g></g></svg>", "obelisk": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_o\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_o\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_o)\"/><g opacity=\".9\"><rect x=\"0\" y=\"220\" width=\"800\" height=\"60\" fill=\"#d4c4a0\"/><rect x=\"40\" y=\"120\" width=\"200\" height=\"100\" fill=\"#c4a373\" opacity=\".6\"/><rect x=\"560\" y=\"120\" width=\"200\" height=\"100\" fill=\"#c4a373\" opacity=\".6\"/><polygon points=\"395,40 405,40 415,220 385,220\" fill=\"url(#st_o)\"/><polygon points=\"395,40 405,40 400,20\" fill=\"#a07c4a\"/><line x1=\"400\" y1=\"20\" x2=\"400\" y2=\"10\" stroke=\"#8b6c43\" stroke-width=\"2\"/><line x1=\"395\" y1=\"14\" x2=\"405\" y2=\"14\" stroke=\"#8b6c43\" stroke-width=\"2\"/><rect x=\"375\" y=\"218\" width=\"50\" height=\"22\" fill=\"#8b6c43\"/><rect x=\"365\" y=\"232\" width=\"70\" height=\"14\" fill=\"#8b6c43\"/></g></svg>", "statue": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_s\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_s\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_s)\"/><g opacity=\".9\"><rect x=\"0\" y=\"180\" width=\"800\" height=\"100\" fill=\"#d4c4a0\"/><rect x=\"60\" y=\"120\" width=\"160\" height=\"100\" fill=\"#c4a373\" opacity=\".5\"/><rect x=\"580\" y=\"120\" width=\"160\" height=\"100\" fill=\"#c4a373\" opacity=\".5\"/><rect x=\"370\" y=\"180\" width=\"60\" height=\"80\" fill=\"url(#st_s)\"/><rect x=\"360\" y=\"200\" width=\"80\" height=\"14\" fill=\"#8b6c43\"/><ellipse cx=\"400\" cy=\"110\" rx=\"22\" ry=\"28\" fill=\"#3a2a1a\"/><path d=\"M378 130L380 180L420 180L422 130Q422 105 400 105Q378 105 378 130Z\" fill=\"#3a2a1a\"/><ellipse cx=\"400\" cy=\"105\" rx=\"24\" ry=\"14\" fill=\"#1a0f08\" opacity=\".7\"/><rect x=\"392\" y=\"155\" width=\"16\" height=\"20\" fill=\"#5a4226\"/></g></svg>", "painting": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"tc_pa\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#b85c5c\"/><stop offset=\"1\" stop-color=\"#8b3a3a\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"#e8d3a8\"/><g opacity=\".95\"><rect x=\"220\" y=\"50\" width=\"360\" height=\"200\" fill=\"#5a4226\"/><rect x=\"240\" y=\"70\" width=\"320\" height=\"160\" fill=\"#8b6c43\"/><rect x=\"250\" y=\"80\" width=\"300\" height=\"140\" fill=\"url(#tc_pa)\" opacity=\".5\"/><g fill=\"#c4a373\"><rect x=\"220\" y=\"50\" width=\"360\" height=\"6\"/><rect x=\"220\" y=\"244\" width=\"360\" height=\"6\"/><rect x=\"220\" y=\"50\" width=\"6\" height=\"200\"/><rect x=\"574\" y=\"50\" width=\"6\" height=\"200\"/></g><ellipse cx=\"400\" cy=\"130\" rx=\"28\" ry=\"38\" fill=\"#3a2a1a\" opacity=\".6\"/><rect x=\"370\" y=\"165\" width=\"60\" height=\"55\" fill=\"#5a4226\" opacity=\".6\"/><g fill=\"#a07c4a\"><circle cx=\"230\" cy=\"60\" r=\"6\"/><circle cx=\"570\" cy=\"60\" r=\"6\"/><circle cx=\"230\" cy=\"240\" r=\"6\"/><circle cx=\"570\" cy=\"240\" r=\"6\"/></g></g></svg>", "church": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_ch\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_ch)\"/><g opacity=\".9\"><rect x=\"220\" y=\"80\" width=\"360\" height=\"200\" fill=\"#c4a373\"/><polygon points=\"220,80 580,80 400,30\" fill=\"#8b6c43\"/><rect x=\"370\" y=\"180\" width=\"60\" height=\"100\" fill=\"#5a4226\"/><path d=\"M370 200Q370 180 400 180Q430 180 430 200\" fill=\"#5a4226\"/><circle cx=\"400\" cy=\"130\" r=\"22\" fill=\"#5a4226\" opacity=\".7\"/><rect x=\"270\" y=\"160\" width=\"40\" height=\"80\" rx=\"20\" fill=\"#5a4226\" opacity=\".5\"/><rect x=\"490\" y=\"160\" width=\"40\" height=\"80\" rx=\"20\" fill=\"#5a4226\" opacity=\".5\"/><rect x=\"220\" y=\"100\" width=\"360\" height=\"8\" fill=\"#8b6c43\"/><line x1=\"400\" y1=\"35\" x2=\"400\" y2=\"15\" stroke=\"#a07c4a\" stroke-width=\"3\"/><line x1=\"394\" y1=\"22\" x2=\"406\" y2=\"22\" stroke=\"#a07c4a\" stroke-width=\"3\"/></g></svg>", "fortress": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_fo\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_fo\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient><linearGradient id=\"tc_fo\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#b85c5c\"/><stop offset=\"1\" stop-color=\"#8b3a3a\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_fo)\"/><g opacity=\".9\"><rect x=\"240\" y=\"180\" width=\"320\" height=\"100\" fill=\"#8b6c43\"/><rect x=\"290\" y=\"100\" width=\"220\" height=\"100\" fill=\"url(#st_fo)\"/><ellipse cx=\"400\" cy=\"100\" rx=\"110\" ry=\"20\" fill=\"#a07c4a\"/><g fill=\"#5a4226\"><rect x=\"290\" y=\"90\" width=\"20\" height=\"20\"/><rect x=\"330\" y=\"90\" width=\"20\" height=\"20\"/><rect x=\"370\" y=\"90\" width=\"20\" height=\"20\"/><rect x=\"410\" y=\"90\" width=\"20\" height=\"20\"/><rect x=\"450\" y=\"90\" width=\"20\" height=\"20\"/><rect x=\"490\" y=\"90\" width=\"20\" height=\"20\"/></g><circle cx=\"400\" cy=\"55\" r=\"8\" fill=\"#a07c4a\"/><path d=\"M392 60L392 80L408 80L408 60Z\" fill=\"#a07c4a\"/><rect x=\"0\" y=\"240\" width=\"800\" height=\"40\" fill=\"url(#tc_fo)\" opacity=\".3\"/></g></svg>", "temple": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_t\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_t\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_t)\"/><g opacity=\".9\"><rect x=\"280\" y=\"240\" width=\"240\" height=\"14\" fill=\"#c4a373\"/><rect x=\"290\" y=\"226\" width=\"220\" height=\"14\" fill=\"#a07c4a\"/><rect x=\"300\" y=\"212\" width=\"200\" height=\"14\" fill=\"#8b6c43\"/><rect x=\"300\" y=\"130\" width=\"200\" height=\"82\" fill=\"#c4a373\"/><g fill=\"#8b6c43\"><rect x=\"310\" y=\"130\" width=\"10\" height=\"82\"/><rect x=\"340\" y=\"130\" width=\"10\" height=\"82\"/><rect x=\"370\" y=\"130\" width=\"10\" height=\"82\"/><rect x=\"400\" y=\"130\" width=\"10\" height=\"82\"/><rect x=\"430\" y=\"130\" width=\"10\" height=\"82\"/><rect x=\"460\" y=\"130\" width=\"10\" height=\"82\"/><rect x=\"490\" y=\"130\" width=\"10\" height=\"82\"/></g><rect x=\"295\" y=\"120\" width=\"210\" height=\"14\" fill=\"#8b6c43\"/><rect x=\"330\" y=\"80\" width=\"140\" height=\"40\" fill=\"url(#st_t)\"/><path d=\"M320 90Q320 30 400 30Q480 30 480 90Z\" fill=\"url(#st_t)\"/><rect x=\"392\" y=\"20\" width=\"16\" height=\"14\" fill=\"#a07c4a\"/><circle cx=\"400\" cy=\"16\" r=\"4\" fill=\"#a07c4a\"/></g></svg>", "garden": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_g\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_g)\"/><g opacity=\".9\"><rect x=\"0\" y=\"200\" width=\"800\" height=\"80\" fill=\"#d4c4a0\"/><rect x=\"0\" y=\"195\" width=\"800\" height=\"6\" fill=\"#a07c4a\"/><g fill=\"#a07c4a\"><ellipse cx=\"80\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"120\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"160\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"200\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"600\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"640\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"680\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"720\" cy=\"208\" rx=\"4\" ry=\"8\"/></g><rect x=\"158\" y=\"140\" width=\"8\" height=\"60\" fill=\"#5a4226\"/><circle cx=\"162\" cy=\"130\" r=\"38\" fill=\"#5a7a3a\"/><circle cx=\"150\" cy=\"120\" r=\"5\" fill=\"#d4801a\"/><circle cx=\"175\" cy=\"135\" r=\"5\" fill=\"#d4801a\"/><circle cx=\"160\" cy=\"145\" r=\"5\" fill=\"#d4801a\"/><rect x=\"638\" y=\"140\" width=\"8\" height=\"60\" fill=\"#5a4226\"/><circle cx=\"642\" cy=\"130\" r=\"38\" fill=\"#5a7a3a\"/><circle cx=\"630\" cy=\"120\" r=\"5\" fill=\"#d4801a\"/><circle cx=\"655\" cy=\"135\" r=\"5\" fill=\"#d4801a\"/><circle cx=\"640\" cy=\"145\" r=\"5\" fill=\"#d4801a\"/><g opacity=\".5\"><path d=\"M360 190Q360 150 400 150Q440 150 440 190Z\" fill=\"#8b6c43\"/><rect x=\"375\" y=\"190\" width=\"50\" height=\"10\" fill=\"#8b6c43\"/><circle cx=\"400\" cy=\"146\" r=\"3\" fill=\"#8b6c43\"/></g></g></svg>", "keyhole": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_k\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><mask id=\"kmask\"><rect width=\"800\" height=\"280\" fill=\"black\"/><circle cx=\"400\" cy=\"110\" r=\"50\" fill=\"white\"/><polygon points=\"370,110 430,110 415,200 385,200\" fill=\"white\"/></mask></defs><rect width=\"800\" height=\"280\" fill=\"#2a2520\"/><g mask=\"url(#kmask)\"><rect width=\"800\" height=\"280\" fill=\"url(#sk_k)\"/><rect x=\"0\" y=\"160\" width=\"350\" height=\"120\" fill=\"#5a7a3a\"/><rect x=\"450\" y=\"160\" width=\"350\" height=\"120\" fill=\"#5a7a3a\"/><rect x=\"350\" y=\"180\" width=\"100\" height=\"100\" fill=\"#d4c4a0\"/><path d=\"M360 170Q360 120 400 120Q440 120 440 170Z\" fill=\"#a07c4a\"/><rect x=\"378\" y=\"170\" width=\"44\" height=\"14\" fill=\"#a07c4a\"/><circle cx=\"400\" cy=\"116\" r=\"4\" fill=\"#8b6c43\"/></g><circle cx=\"400\" cy=\"110\" r=\"50\" fill=\"none\" stroke=\"#a07c4a\" stroke-width=\"2\" opacity=\".6\"/><polygon points=\"370,110 430,110 415,200 385,200\" fill=\"none\" stroke=\"#a07c4a\" stroke-width=\"2\" opacity=\".6\"/></svg>", "mask": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_m\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_m\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_m)\"/><g><circle cx=\"400\" cy=\"140\" r=\"110\" fill=\"url(#st_m)\"/><circle cx=\"400\" cy=\"140\" r=\"110\" fill=\"none\" stroke=\"#5a4226\" stroke-width=\"3\"/><ellipse cx=\"365\" cy=\"115\" rx=\"14\" ry=\"8\" fill=\"#3a2a1a\"/><ellipse cx=\"435\" cy=\"115\" rx=\"14\" ry=\"8\" fill=\"#3a2a1a\"/><path d=\"M345 95Q365 90 385 95\" fill=\"none\" stroke=\"#5a4226\" stroke-width=\"2\"/><path d=\"M415 95Q435 90 455 95\" fill=\"none\" stroke=\"#5a4226\" stroke-width=\"2\"/><path d=\"M400 120L390 150L410 150Z\" fill=\"#5a4226\"/><ellipse cx=\"400\" cy=\"180\" rx=\"30\" ry=\"18\" fill=\"#1a0f08\"/><path d=\"M350 200Q360 230 380 230Q400 240 420 230Q440 230 450 200\" fill=\"none\" stroke=\"#5a4226\" stroke-width=\"3\"/><path d=\"M375 165Q388 175 400 165Q412 175 425 165\" fill=\"none\" stroke=\"#5a4226\" stroke-width=\"3\"/></g></svg>", "monument": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_mo\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_mo)\"/><g opacity=\".95\"><rect x=\"100\" y=\"250\" width=\"600\" height=\"30\" fill=\"#e8d8b5\"/><rect x=\"140\" y=\"230\" width=\"520\" height=\"20\" fill=\"#f5edd9\"/><rect x=\"180\" y=\"210\" width=\"440\" height=\"20\" fill=\"#fbf7f0\"/><rect x=\"280\" y=\"120\" width=\"240\" height=\"90\" fill=\"#fbf7f0\"/><g fill=\"#e8d8b5\"><rect x=\"295\" y=\"120\" width=\"14\" height=\"90\"/><rect x=\"325\" y=\"120\" width=\"14\" height=\"90\"/><rect x=\"355\" y=\"120\" width=\"14\" height=\"90\"/><rect x=\"385\" y=\"120\" width=\"14\" height=\"90\"/><rect x=\"415\" y=\"120\" width=\"14\" height=\"90\"/><rect x=\"445\" y=\"120\" width=\"14\" height=\"90\"/><rect x=\"475\" y=\"120\" width=\"14\" height=\"90\"/></g><polygon points=\"280,120 520,120 400,80\" fill=\"#f5edd9\"/><circle cx=\"400\" cy=\"60\" r=\"6\" fill=\"#a07c4a\"/><rect x=\"392\" y=\"63\" width=\"16\" height=\"20\" fill=\"#a07c4a\"/><ellipse cx=\"400\" cy=\"90\" rx=\"20\" ry=\"8\" fill=\"#a07c4a\"/></g></svg>", "rooftops": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_r\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_r)\"/><g opacity=\".9\"><polygon points=\"100,140 200,80 300,140 300,280 100,280\" fill=\"#b85c5c\"/><polygon points=\"220,160 320,100 420,160 420,280 220,280\" fill=\"#a85050\"/><polygon points=\"340,140 440,80 540,140 540,280 340,280\" fill=\"#c46a6a\"/><polygon points=\"460,170 560,110 660,170 660,280 460,280\" fill=\"#b85c5c\"/><polygon points=\"580,140 680,80 780,140 780,280 580,280\" fill=\"#a85050\"/><rect x=\"180\" y=\"100\" width=\"14\" height=\"20\" fill=\"#8b6c43\"/><rect x=\"400\" y=\"100\" width=\"14\" height=\"20\" fill=\"#8b6c43\"/><rect x=\"640\" y=\"100\" width=\"14\" height=\"20\" fill=\"#8b6c43\"/></g></svg>", "library": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"800\" height=\"280\" fill=\"#3a2a1a\"/><rect x=\"0\" y=\"0\" width=\"800\" height=\"280\" fill=\"#5a4226\"/><g transform=\"translate(60,50)\"><rect x=\"0\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a85050\"/><rect x=\"15\" y=\"0\" width=\"12\" height=\"50\" fill=\"#8b6c43\"/><rect x=\"28\" y=\"0\" width=\"14\" height=\"50\" fill=\"#5a4226\"/><rect x=\"43\" y=\"0\" width=\"10\" height=\"50\" fill=\"#a07c4a\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#b85c5c\"/><rect x=\"69\" y=\"0\" width=\"12\" height=\"50\" fill=\"#3a2a1a\"/><rect x=\"82\" y=\"0\" width=\"14\" height=\"50\" fill=\"#c4a373\"/></g><g transform=\"translate(230,50)\"><rect x=\"0\" y=\"0\" width=\"14\" height=\"50\" fill=\"#8b6c43\"/><rect x=\"15\" y=\"0\" width=\"12\" height=\"50\" fill=\"#a85050\"/><rect x=\"28\" y=\"0\" width=\"14\" height=\"50\" fill=\"#c4a373\"/><rect x=\"43\" y=\"0\" width=\"10\" height=\"50\" fill=\"#5a4226\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#3a2a1a\"/><rect x=\"69\" y=\"0\" width=\"12\" height=\"50\" fill=\"#a07c4a\"/></g><g transform=\"translate(400,50)\"><rect x=\"0\" y=\"0\" width=\"14\" height=\"50\" fill=\"#5a4226\"/><rect x=\"15\" y=\"0\" width=\"12\" height=\"50\" fill=\"#c4a373\"/><rect x=\"28\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a85050\"/><rect x=\"43\" y=\"0\" width=\"10\" height=\"50\" fill=\"#8b6c43\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a07c4a\"/><rect x=\"69\" y=\"0\" width=\"12\" height=\"50\" fill=\"#5a4226\"/></g><g transform=\"translate(570,50)\"><rect x=\"0\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a07c4a\"/><rect x=\"15\" y=\"0\" width=\"12\" height=\"50\" fill=\"#5a4226\"/><rect x=\"28\" y=\"0\" width=\"14\" height=\"50\" fill=\"#8b6c43\"/><rect x=\"43\" y=\"0\" width=\"10\" height=\"50\" fill=\"#a85050\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#c4a373\"/><rect x=\"69\" y=\"0\" width=\"12\" height=\"50\" fill=\"#3a2a1a\"/></g><g transform=\"translate(60,160)\"><rect x=\"0\" y=\"0\" width=\"12\" height=\"50\" fill=\"#5a4226\"/><rect x=\"13\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a07c4a\"/><rect x=\"28\" y=\"0\" width=\"10\" height=\"50\" fill=\"#8b6c43\"/><rect x=\"39\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a85050\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#5a4226\"/><rect x=\"69\" y=\"0\" width=\"12\" height=\"50\" fill=\"#c4a373\"/></g><g transform=\"translate(230,160)\"><rect x=\"0\" y=\"0\" width=\"12\" height=\"50\" fill=\"#a85050\"/><rect x=\"13\" y=\"0\" width=\"14\" height=\"50\" fill=\"#c4a373\"/><rect x=\"28\" y=\"0\" width=\"10\" height=\"50\" fill=\"#5a4226\"/><rect x=\"39\" y=\"0\" width=\"14\" height=\"50\" fill=\"#3a2a1a\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#8b6c43\"/></g><g transform=\"translate(400,160)\"><rect x=\"0\" y=\"0\" width=\"12\" height=\"50\" fill=\"#c4a373\"/><rect x=\"13\" y=\"0\" width=\"14\" height=\"50\" fill=\"#3a2a1a\"/><rect x=\"28\" y=\"0\" width=\"10\" height=\"50\" fill=\"#a85050\"/><rect x=\"39\" y=\"0\" width=\"14\" height=\"50\" fill=\"#8b6c43\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a07c4a\"/></g><g transform=\"translate(570,160)\"><rect x=\"0\" y=\"0\" width=\"12\" height=\"50\" fill=\"#3a2a1a\"/><rect x=\"13\" y=\"0\" width=\"14\" height=\"50\" fill=\"#5a4226\"/><rect x=\"28\" y=\"0\" width=\"10\" height=\"50\" fill=\"#a07c4a\"/><rect x=\"39\" y=\"0\" width=\"14\" height=\"50\" fill=\"#c4a373\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a85050\"/></g><rect x=\"0\" y=\"105\" width=\"800\" height=\"6\" fill=\"#3a2a1a\"/><rect x=\"0\" y=\"215\" width=\"800\" height=\"6\" fill=\"#3a2a1a\"/></svg>", "tower": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_tw\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_tw)\"/><g opacity=\".9\"><rect x=\"200\" y=\"180\" width=\"400\" height=\"100\" fill=\"#c4a373\"/><rect x=\"400\" y=\"40\" width=\"80\" height=\"200\" fill=\"#a07c4a\"/><g fill=\"#8b6c43\"><rect x=\"400\" y=\"30\" width=\"14\" height=\"14\"/><rect x=\"420\" y=\"30\" width=\"14\" height=\"14\"/><rect x=\"446\" y=\"30\" width=\"14\" height=\"14\"/><rect x=\"466\" y=\"30\" width=\"14\" height=\"14\"/></g><g fill=\"#3a2a1a\" opacity=\".7\"><rect x=\"430\" y=\"80\" width=\"20\" height=\"30\"/><rect x=\"430\" y=\"130\" width=\"20\" height=\"30\"/><rect x=\"430\" y=\"180\" width=\"20\" height=\"30\"/></g><g fill=\"#3a2a1a\" opacity=\".5\"><rect x=\"230\" y=\"210\" width=\"20\" height=\"30\"/><rect x=\"270\" y=\"210\" width=\"20\" height=\"30\"/><rect x=\"310\" y=\"210\" width=\"20\" height=\"30\"/><rect x=\"510\" y=\"210\" width=\"20\" height=\"30\"/><rect x=\"550\" y=\"210\" width=\"20\" height=\"30\"/></g><circle cx=\"440\" cy=\"60\" r=\"6\" fill=\"#ffd66e\"/><circle cx=\"440\" cy=\"60\" r=\"14\" fill=\"#ffd66e\" opacity=\".4\"/><circle cx=\"440\" cy=\"60\" r=\"22\" fill=\"#ffd66e\" opacity=\".15\"/></g></svg>", "stairs": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_st\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_st)\"/><g opacity=\".95\"><rect x=\"340\" y=\"40\" width=\"120\" height=\"80\" fill=\"#c4a373\"/><polygon points=\"340,40 460,40 400,10\" fill=\"#8b6c43\"/><rect x=\"370\" y=\"80\" width=\"20\" height=\"40\" fill=\"#5a4226\"/><rect x=\"410\" y=\"80\" width=\"20\" height=\"40\" fill=\"#5a4226\"/><rect x=\"320\" y=\"20\" width=\"20\" height=\"40\" fill=\"#a07c4a\"/><rect x=\"460\" y=\"20\" width=\"20\" height=\"40\" fill=\"#a07c4a\"/><g fill=\"#e8d8b5\" stroke=\"#a07c4a\" stroke-width=\".5\"><polygon points=\"200,280 600,280 540,260 260,260\"/><polygon points=\"220,260 580,260 530,240 270,240\"/><polygon points=\"240,240 560,240 520,220 280,220\"/><polygon points=\"260,220 540,220 510,200 290,200\"/><polygon points=\"280,200 520,200 500,180 300,180\"/><polygon points=\"300,180 500,180 490,160 310,160\"/><polygon points=\"310,160 490,160 480,140 320,140\"/><polygon points=\"320,140 480,140 470,125 330,125\"/></g></g></svg>", "coffee": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_co\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_co)\"/><g opacity=\".95\"><rect x=\"0\" y=\"200\" width=\"800\" height=\"80\" fill=\"#8b6c43\" opacity=\".5\"/><ellipse cx=\"400\" cy=\"210\" rx=\"140\" ry=\"20\" fill=\"#fbf7f0\"/><ellipse cx=\"400\" cy=\"208\" rx=\"140\" ry=\"20\" fill=\"none\" stroke=\"#a07c4a\" stroke-width=\"2\"/><path d=\"M320 160L330 200L470 200L480 160Z\" fill=\"#fbf7f0\"/><ellipse cx=\"400\" cy=\"160\" rx=\"80\" ry=\"14\" fill=\"#3a2a1a\"/><ellipse cx=\"400\" cy=\"160\" rx=\"80\" ry=\"14\" fill=\"none\" stroke=\"#a07c4a\" stroke-width=\"2\"/><ellipse cx=\"400\" cy=\"158\" rx=\"76\" ry=\"12\" fill=\"#c4a373\" opacity=\".7\"/><path d=\"M480 170Q520 170 520 185Q520 200 480 198\" fill=\"none\" stroke=\"#fbf7f0\" stroke-width=\"4\"/><path d=\"M480 170Q520 170 520 185Q520 200 480 198\" fill=\"none\" stroke=\"#a07c4a\" stroke-width=\"2\"/><g fill=\"none\" stroke=\"#e8d8b5\" stroke-width=\"2\" opacity=\".6\"><path d=\"M360 140Q360 110 370 100Q380 90 370 70\"/><path d=\"M400 130Q400 100 410 90Q420 80 410 60\"/><path d=\"M440 140Q440 110 450 100Q460 90 450 70\"/></g><ellipse cx=\"280\" cy=\"215\" rx=\"14\" ry=\"3\" fill=\"#a07c4a\"/><rect x=\"260\" y=\"213\" width=\"22\" height=\"2\" fill=\"#a07c4a\"/></g></svg>"};
-const CARD_TO_MOTIF = {"galleria-sciarra": "arch", "fontana-trevi": "fountain", "santignazio": "dome", "pantheon": "pantheon", "piazza-navona": "obelisk", "campo-fiori": "statue", "doria-pamphilj": "painting", "santeustachio": "church", "castel-santangelo": "fortress", "tempietto": "temple", "smt": "church", "fontanone": "fountain", "giardino-aranci": "garden", "buco-serratura": "keyhole", "bocca-verita": "mask", "ghetto": "arch", "tartarughe": "fountain", "vittoriano": "monument", "monti": "rooftops", "casanatense": "library", "torre-scimmia": "tower", "popolo": "obelisk", "spagna": "stairs", "tazza-doro": "coffee", "auditorium": "monument"};
+const CARD_TO_MOTIF = {"galleria-sciarra": "arch", "fontana-trevi": "fountain", "santignazio": "dome", "pantheon": "pantheon", "piazza-navona": "obelisk", "campo-fiori": "statue", "doria-pamphilj": "painting", "santeustachio": "church", "castel-santangelo": "fortress", "tempietto": "temple", "smt": "church", "fontanone": "fountain", "giardino-aranci": "garden", "buco-serratura": "keyhole", "bocca-verita": "mask", "ghetto": "arch", "tartarughe": "fountain", "vittoriano": "monument", "monti": "rooftops", "casanatense": "library", "torre-scimmia": "tower", "popolo": "obelisk", "spagna": "stairs", "tazza-doro": "coffee", "auditorium": "monument", "laterano": "church", "san-clemente": "church", "san-pietro-vincoli": "statue", "galleria-borghese": "statue", "villa-borghese": "garden", "cappuccini": "church", "smm": "church", "palazzo-massimo": "statue", "angeli": "church"};
 
 function loadSvgFallback(img, cardId) {
   try {
@@ -1930,6 +1938,7 @@ function loadSvgFallbackDetail(img, cardId) {
     <a href="#sabado" class="nav-pill">Sabato</a>
     <a href="#domingo" class="nav-pill">Domenica</a>
     <a href="#lunes" class="nav-pill">Lunedì</a>
+    <a href="#martes" class="nav-pill">Martedì</a>
     <a href="#gastronomia" class="nav-pill">Gastronomía</a>
     <a href="#practica" class="nav-pill">Pratica</a>
   </nav>
@@ -1942,8 +1951,8 @@ function loadSvgFallbackDetail(img, cardId) {
   <div class="container">
     <div class="hero">
       <div class="hero-decoration">·  ROMA AETERNA  ·</div>
-      <h1>Tre giorni a <em>Roma</em></h1>
-      <div class="hero-meta">19 — 22 giugno 2026 · Hotel Royal Court</div>
+      <h1>Cinque giorni a <em>Roma</em></h1>
+      <div class="hero-meta">19 — 23 giugno 2026 · Hotel Royal Court</div>
       <div class="hero-quote">
         Roma è il luogo più adatto per aspettare la fine del mondo.
         <span class="hero-quote-attr">— FEDERICO FELLINI</span>
@@ -1991,7 +2000,7 @@ function loadSvgFallbackDetail(img, cardId) {
       </div>
       <div class="info-card">
         <div class="info-card-label">Salida</div>
-        <div class="info-card-value"><strong>Lunes 22 · 16:00</strong>Vuelo desde FCO</div>
+        <div class="info-card-value"><strong>Martes 23 · 21:00</strong>Vuelo desde FCO · Leonardo Express</div>
       </div>
     </div>
 
@@ -3358,15 +3367,15 @@ function loadSvgFallbackDetail(img, cardId) {
     <div class="day-header">
       <div class="day-number">IV</div>
       <div>
-        <h2>Última mañana</h2>
-        <div class="day-subtitle">Casanatense, Scrofa, Popolo, Spagna. Y vuelo.</div>
+        <h2>Tridente y la Roma cristiana</h2>
+        <div class="day-subtitle">El primer día sin guías. La mañana en el Tridente y la tarde bajando por las grandes basílicas: el Laterano, los tres niveles de San Clemente y el Moisés de Miguel Ángel.</div>
       </div>
     </div>
 
     <div class="day-stats">
-      <div class="day-stats-item walk"><strong>~5 km</strong> a pie</div>
-      <div class="day-stats-item metro"><strong>Metro A</strong> Spagna→Termini (3 paradas, 8 min)</div>
-      <div class="day-stats-item train"><strong>Leonardo Express</strong> Termini→FCO (32 min, €14)</div>
+      <div class="day-stats-item walk"><strong>~6 km</strong> a pie</div>
+      <div class="day-stats-item metro"><strong>Metro A</strong> Spagna→Termini→San Giovanni (tramos)</div>
+      <div class="day-stats-item ticket"><strong>Basílicas gratuitas</strong> · cerradas 12:30-15:00 (el Laterano no)</div>
     </div>
 
     <div class="timeline">
@@ -3386,16 +3395,20 @@ function loadSvgFallbackDetail(img, cardId) {
       <div class="tl-meta"><span class="tl-meta-item warn">⏱ <b>35 min</b> · justo con el cierre a las 12:00 — ir directo a la Cappella Cerasi (izquierda al entrar)</span><span class="tl-meta-item">🚶 hasta siguiente: <b>10 min</b> · 750 m por Via del Babuino hasta Piazza di Spagna</span></div>
       
       <div class="tl-item" data-pace="all"><span class="tl-time">11:35</span><a href="#spagna" class="tl-title">Piazza di Spagna · Barcaccia</a><div class="tl-note">Bajada por Via Margutta (la calle de Fellini).</div></div>
-      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>25 min</b> · escalinata + fuente + Via Margutta — el cierre perfecto de Roma</span></div>
-      <div class="tl-transport metro" data-pace="all"><div class="tl-transport-header">Piazza di Spagna → Termini · ~2 km</div><div class="tl-transport-modes"><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · por Via Sistina + Via Nazionale · subida moderada</div><div class="tl-transport-mode-meta">⏱ <b>25 min</b><br>💶 <b>gratis</b></div></div><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">Ⓜ️</span><div class="tl-transport-mode-desc"><strong>Metro A</strong> · Spagna → Termini · 3 paradas (Spagna · Barberini · Repubblica · Termini)<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>8 min</b><br>💶 <b>€1,50 p.p. · €4,50 total</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> · si vais con prisas para coger el Leonardo Express</div><div class="tl-transport-mode-meta">⏱ <b>10-15 min</b><br>💶 <b>€10-12 · €3-4 p.p.</b></div></div></div><div class="tl-transport-footnote">Estación Spagna está en la propia plaza, entrada bajo la escalinata. Vagón largo, planificad bajar por el extremo correcto.</div></div>
-      <div class="tl-item" data-pace="all"><span class="tl-time">12:00</span><span class="tl-title disabled">Recoger maletas en hotel</span><div class="tl-note">5 min andando desde Termini.</div></div>
-      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>15 min</b> · recoger maletas + despedida al hotel</span></div>
-      
-      <div class="tl-transport taxi" data-pace="all"><div class="tl-transport-header">Termini → Fiumicino (FCO)</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚆</span><div class="tl-transport-mode-desc"><strong>Leonardo Express</strong> · directo sin paradas · sale cada 15 min · binari 23/24<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>32 min</b><br>💶 <b>€14 p.p. · €42 total</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> · tarifa fija a FCO desde dentro del Raccordo Anulare</div><div class="tl-transport-mode-meta">⏱ <b>45-60 min · depende del tráfico</b><br>💶 <b>€55 fijo · €18 p.p.</b></div></div></div><div class="tl-transport-footnote">Comprar billete antes en máquinas amarillas (Trenitalia) o app. Taxi solo si vais muy justos de tiempo o con mucha maleta — pero a esa hora el tráfico hacia FCO puede ser caótico.</div></div>
-      <div class="tl-item" data-pace="all"><span class="tl-time">12:50</span><span class="tl-title disabled">Leonardo Express → FCO</span></div>
-      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>32 min</b> · sin paradas, directo FCO — comprar billete antes en máquinas amarillas Trenitalia</span></div>
-      
-      <div class="tl-item fixed-event" data-pace="all"><span class="tl-time">16:00</span><span class="tl-title disabled">Vuelo desde Fiumicino</span></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>25 min</b> · escalinata + fuente + Via Margutta — sin prisa, hoy os queda toda la tarde por delante</span></div>
+      <div class="tl-transport metro" data-pace="all"><div class="tl-transport-header">Piazza di Spagna → Esquilino · pranzo · ~2 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">Ⓜ️</span><div class="tl-transport-mode-desc"><strong>Metro A</strong> · Spagna → Termini (3 paradas, 8 min) y a comer por Monti o el Esquilino, cerca de las basílicas de la tarde<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>12 min</b><br>💶 <b>€1,50 p.p.</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · por Via Sistina y Via Nazionale · subida moderada</div><div class="tl-transport-mode-meta">⏱ <b>30 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">La tarde baja hacia el sureste por las grandes basílicas. Comed ligero y a la sombra: el calor de las 14h es el peor del día.</div></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">12:30</span><span class="tl-title disabled">Pranzo · Monti / Esquilino</span><div class="tl-note">Cerca de las basílicas. Ver sección Gastronomía.</div></div>
+      <div class="tl-transport metro" data-pace="medium"><div class="tl-transport-header">Termini → San Giovanni in Laterano · ~2,5 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">Ⓜ️</span><div class="tl-transport-mode-desc"><strong>Metro A</strong> · Termini → San Giovanni · 3 paradas · la basílica está a la salida<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>10 min</b><br>💶 <b>€1,50 p.p.</b></div></div></div><div class="tl-transport-footnote">San Giovanni abre todo el día sin pausa de mediodía: por eso va primera. San Clemente y San Pietro in Vincoli reabren a las 15:00.</div></div>
+      <div class="tl-item" data-pace="medium"><span class="tl-time">14:00</span><a href="#laterano" class="tl-title">San Giovanni in Laterano · Scala Santa</a><div class="tl-note">La catedral de Roma. La Escalera Santa, enfrente.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>60-75 min</b> · basílica + claustro + (opcional) Scala Santa enfrente</span><span class="tl-meta-item">🚶 hasta siguiente: <b>12 min</b> · ~900 m hacia el Coliseo</span></div>
+      <div class="tl-transport walk" data-pace="medium"><div class="tl-transport-header">Laterano → San Clemente · ~12 min</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · por Via di San Giovanni in Laterano hacia el Coliseo<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>12 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">San Clemente reabre a las 15:00. Si llegáis antes, esperad en la cafetería de enfrente.</div></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">15:30</span><a href="#san-clemente" class="tl-title">Basilica di San Clemente</a><div class="tl-note">Tres niveles, tres épocas. La máquina del tiempo de Roma.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>50-60 min</b> · basílica superior gratis + niveles inferiores con ticket</span><span class="tl-meta-item warn">Niveles inferiores: entrada de pago (~€10) · merece la pena</span></div>
+      <div class="tl-transport walk" data-pace="all"><div class="tl-transport-header">San Clemente → San Pietro in Vincoli · ~15 min</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · bordeáis el Coliseo y subís hacia Monti por la Salita dei Borgia<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>15 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">El paseo pasa junto al Coliseo (que veréis por dentro con guía el domingo). Aquí solo de refilón, empezando a iluminarse.</div></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">16:45</span><a href="#san-pietro-vincoli" class="tl-title">San Pietro in Vincoli · Moisés</a><div class="tl-note">El Moisés de Miguel Ángel. Cierra ~19:00.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>30 min</b> · el Moisés + las cadenas de San Pedro · llevad monedas para la luz</span><span class="tl-meta-item">🚶 hasta Monti: <b>6 min</b> · estáis a un paso del rione</span></div>
+      <div class="tl-transport walk" data-pace="all"><div class="tl-transport-header">San Pietro in Vincoli → Monti · ~6 min</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · bajáis a Via dei Serpenti y a la Piazza della Madonna dei Monti, corazón del rione<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>6 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">Cerráis el día donde el domingo terminó: Monti. Aperitivo en la fuentecita de la plaza y cena en una trattoria del barrio.</div></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">17:30</span><a href="#monti" class="tl-title">Rione Monti · aperitivo + cena</a><div class="tl-note">Vermut en la piazza, cena de trattoria. Noche tranquila.</div></div>
     </div>
 
     <div class="cards-list">
@@ -3704,6 +3717,566 @@ function loadSvgFallbackDetail(img, cardId) {
         <div class="notes-area">
           <label for="note-tazza-doro">Notas in situ</label>
           <textarea class="notes-textarea" id="note-tazza-doro" data-note-key="tazza-doro" placeholder="Lo que quieras recordar de aquí…"></textarea>
+        </div>
+      </article>
+
+      <!-- FICHA: SAN GIOVANNI IN LATERANO -->
+      <article class="card" id="laterano">
+        <div class="card-header">
+          <span class="card-roman">XXV</span>
+          <div class="card-title">
+            <h3>San Giovanni in Laterano · Scala Santa</h3>
+            <div class="card-italian">Arcibasilica del Santissimo Salvatore · Piazza di San Giovanni in Laterano</div>
+          </div>
+        </div>
+        <div class="card-hero"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Rome-SaintJeanDeLatran-Fa%C3%A7ade.jpg?width=900" alt="Fachada de San Giovanni in Laterano" loading="lazy" onerror="loadSvgFallback(this, 'laterano')"></div>
+        <div class="card-section">
+          <h4>Qué es</h4>
+          <p>La <strong>catedral de Roma</strong> — no San Pedro. Sorprende a casi todo el mundo: la iglesia del Papa <em>como obispo de Roma</em> es esta, no la del Vaticano. Sobre la fachada, una inscripción la define sin modestia: <em>«omnium urbis et orbis ecclesiarum mater et caput»</em> — madre y cabeza de todas las iglesias de la ciudad y del mundo. Es la basílica cristiana monumental más antigua de Occidente, fundada por Constantino. Enfrente, la <strong>Scala Santa</strong>, la escalera que según la tradición subió Jesús en casa de Pilatos.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Historia</h4>
+          <p>La fundó el emperador <strong>Constantino</strong> hacia el año 324, sobre los terrenos confiscados a la familia Laterani, pocos años después de legalizar el cristianismo con el Edicto de Milán (313). Fue la primera basílica cristiana construida a escala monumental, modelo de todas las que vendrían, y durante <strong>mil años fue la residencia oficial de los Papas</strong> — hasta el exilio de Aviñón (1309) y el posterior traslado al Vaticano. El Laterano es, históricamente, el verdadero centro del catolicismo: el Vaticano es relativamente moderno comparado con esto.</p>
+          <p>La basílica sufrió de todo: el saqueo de los vándalos (455), terremotos y dos incendios devastadores en el siglo XIV. Se reconstruyó una y otra vez. El interior que vemos hoy es obra de <strong>Francesco Borromini</strong>, que lo reformó para el Jubileo de 1650 sin atreverse a demoler las naves paleocristianas: las recubrió, creando las doce gigantescas hornacinas que albergan las <strong>estatuas colosales de los apóstoles</strong> (siglo XVIII). La fachada monumental, con las estatuas de Cristo y los santos recortadas contra el cielo, es de <strong>Alessandro Galilei</strong> (1735).</p>
+          <p>En el flanco se conserva el <strong>claustro cosmatesco</strong> del siglo XIII, obra de la familia Vassalletto: columnas torsas incrustadas de mosaico dorado, una de las joyas medievales de Roma. En la plaza se alza el <strong>obelisco Lateranense</strong>, de Tutmosis III: con sus 32 metros es el obelisco egipcio más alto del mundo y el más antiguo de Roma (siglo XV a.C.).</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Anécdotas</h4>
+          <p>Aquí se firmaron, en 1929, los <strong>Pactos de Letrán</strong> entre el régimen de Mussolini y la Santa Sede — el acuerdo que creó el Estado de la Ciudad del Vaticano como lo conocemos y resolvió la «cuestión romana» abierta desde 1870. El nombre del palacio adyacente bautizó el tratado.</p>
+          <p>Sobre el altar mayor, bajo un baldaquino gótico del siglo XIV, la tradición dice que se guardan las <strong>cabezas de San Pedro y San Pablo</strong>. Solo el Papa, como titular de esta catedral, puede oficiar misa en ese altar papal. También está aquí la <em>cathedra</em>, el trono que da nombre a la condición de «catedral».</p>
+          <p>Enfrente, la <strong>Scala Santa</strong>: 28 escalones de mármol que, según la leyenda, Santa Elena trajo de Jerusalén — la escalera del pretorio de Poncio Pilato que Cristo subió la mañana de su condena. Los peregrinos los suben <em>de rodillas</em>, rezando en cada peldaño. En lo alto está el <em>Sancta Sanctorum</em>, la antigua capilla privada de los Papas. Un joven monje agustino llamado <strong>Martín Lutero</strong> los subió de rodillas en su viaje a Roma de 1510; años después contaría que, al llegar arriba, pensó «¿quién sabe si esto es verdad?». Una semilla de la Reforma.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>En qué fijarse</h4>
+          <ul class="detail-list">
+            <li>La <strong>inscripción de la fachada</strong>: <em>mater et caput</em>. Leedla antes de entrar — explica todo el rango del lugar.</li>
+            <li>Las <strong>doce estatuas de los apóstoles</strong> en las hornacinas de Borromini: colosales, dramáticas, cada una con su atributo (la parrilla de San Lorenzo, el cuchillo de San Bartolomé desollado).</li>
+            <li>El <strong>techo dorado</strong> de casetones y el suelo cosmatesco de la nave central.</li>
+            <li>El <strong>baldaquino gótico</strong> sobre el altar papal, con las rejas que protegen las reliquias.</li>
+            <li>El <strong>claustro</strong> (entrada aparte, ~€5): columnas torsas con mosaico, fragmentos arqueológicos, silencio absoluto. Si tenéis tiempo, entrad.</li>
+            <li>El <strong>obelisco Lateranense</strong> en la plaza: el más alto del mundo. Mirad los jeroglíficos.</li>
+            <li>La <strong>Scala Santa</strong> enfrente (horario propio, suele cerrar al mediodía): se sube de rodillas; hay una escalera lateral para bajar de pie y para quien no quiera arrodillarse.</li>
+            <li><strong>Hombros y rodillas cubiertos</strong>: es catedral en activo.</li>
+          </ul>
+        </div>
+
+        <div class="facts">
+          <div class="facts-row"><span class="label">Horario basílica</span><span class="value">7:00-18:30 · sin pausa de mediodía</span></div>
+          <div class="facts-row"><span class="label">Acceso</span><span class="value">Gratuito · claustro ~€5</span></div>
+          <div class="facts-row"><span class="label">Tiempo de visita</span><span class="value">60-75 minutos</span></div>
+          <div class="facts-row"><span class="label">Metro</span><span class="value">A · San Giovanni · a la salida</span></div>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=Arcibasilica%20di%20San%20Giovanni%20in%20Laterano%20Roma" target="_blank" rel="noopener" class="maps-link">Ver en Google Maps</a>
+
+        <div class="notes-area">
+          <label for="note-laterano">Notas in situ</label>
+          <textarea class="notes-textarea" id="note-laterano" data-note-key="laterano" placeholder="Lo que quieras recordar de aquí…"></textarea>
+        </div>
+      </article>
+
+      <!-- FICHA: SAN CLEMENTE -->
+      <article class="card" id="san-clemente">
+        <div class="card-header">
+          <span class="card-roman">XXVI</span>
+          <div class="card-title">
+            <h3>Basilica di San Clemente</h3>
+            <div class="card-italian">Basilica di San Clemente al Laterano · Via Labicana 95</div>
+          </div>
+        </div>
+        <div class="card-hero"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Rome_San_Clemente_BW_1.JPG?width=900" alt="Mosaico absidal de San Clemente" loading="lazy" onerror="loadSvgFallback(this, 'san-clemente')"></div>
+        <div class="card-section">
+          <h4>Qué es</h4>
+          <p>La <strong>máquina del tiempo</strong> de Roma. Una basílica que es en realidad tres edificios apilados, uno encima de otro, separados por mil años cada uno. En la superficie, una iglesia medieval del siglo XII. Bajas unas escaleras y aparece una basílica paleocristiana del siglo IV. Bajas otro tramo y estás en un <strong>templo del dios Mitra</strong> del siglo II y unas casas romanas de la época de la República, con un manantial que todavía corre en la oscuridad. En veinte minutos descendéis 18 metros y 1.900 años. No hay mejor sitio en Roma para entender cómo la ciudad está hecha de capas.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Historia</h4>
+          <p>La gestiona desde 1667 una comunidad de <strong>dominicos irlandeses</strong> — exiliados de Irlanda por la persecución protestante, que encontraron refugio en Roma. La <strong>basílica superior</strong> (siglo XII) está coronada por uno de los mosaicos más bellos de la Edad Media: el <em>Triunfo de la Cruz</em>, un árbol de la vida del que brotan volutas verdes que envuelven a doce palomas (los apóstoles), ciervos, pavos reales y figuras cotidianas. En una capilla lateral, frescos del Quattrocento de <strong>Masolino da Panicale</strong> (con posible intervención de Masaccio).</p>
+          <p>Debajo está la <strong>basílica del siglo IV</strong>, una de las primeras iglesias de Roma, dedicada a san Clemente, el cuarto Papa. Funcionó como templo principal hasta que el saqueo normando de Roberto Guiscardo (1084) la dejó en ruinas; se rellenó de escombros y se construyó la nueva iglesia encima, olvidando que existía. Quedó sepultada y olvidada hasta que en <strong>1857</strong> el prior irlandés <strong>Joseph Mullooly</strong> empezó a excavar bajo el altar y se encontró con toda una basílica enterrada bajo sus pies.</p>
+          <p>Y aún más abajo: un <strong>mitreo</strong> del siglo II — un templo subterráneo del culto a Mitra, el dios persa cuyo misterio fue el gran rival del cristianismo en los siglos II y III (compartían el 25 de diciembre, un banquete ritual y la promesa de salvación). Junto al mitreo, los muros de casas romanas republicanas y el rumor constante de un <strong>manantial subterráneo</strong> que sigue fluyendo hacia las cloacas antiguas.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Anécdotas</h4>
+          <p>En la basílica inferior se conservan unos frescos del siglo XI con una <strong>de las primeras frases escritas en italiano vulgar</strong> — no en latín. En la escena del milagro de San Clemente, el patricio pagano Sisinio ordena a sus siervos arrastrar al santo y suelta un improperio soez: <em>«Fili de le pute, traite!»</em> («¡Hijos de puta, tirad!»). Ese exabrupto tabernario es uno de los textos fundacionales de la lengua italiana, y está pintado en una pared a 12 metros bajo tierra.</p>
+          <p>El mitreo es escalofriante por lo que significa: estáis viendo, literalmente apiladas, tres religiones sucesivas en el mismo solar. El culto pagano abajo, la iglesia primitiva en medio, la iglesia triunfante arriba. Roma no destruye: <em>sepulta y construye encima</em>. San Clemente es la prueba física de esa frase.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>En qué fijarse</h4>
+          <ul class="detail-list">
+            <li>El <strong>mosaico absidal del árbol de la vida</strong> (basílica superior): la cruz de la que nace toda la vegetación, con las doce palomas. Buscad las figuritas cotidianas entre las volutas (un pastor, una mujer dando de comer a las gallinas).</li>
+            <li>Los <strong>frescos de Masolino</strong> en la Cappella di Santa Caterina: el ciclo de Santa Catalina de Alejandría, Quattrocento puro.</li>
+            <li>Bajad al <strong>nivel del siglo IV</strong>: los frescos del milagro de San Clemente y la <strong>inscripción en italiano vulgar</strong> de Sisinio. Pedid que os la señalen o buscadla en el panel.</li>
+            <li>El <strong>mitreo</strong>: el altar con el relieve de Mitra degollando al toro (la <em>tauroctonía</em>), los bancos donde se reclinaban los iniciados.</li>
+            <li>El <strong>sonido del agua</strong>: parad y escuchad. El manantial subterráneo lleva corriendo dos mil años.</li>
+            <li>La <strong>temperatura</strong>: abajo se está fresco. Es un refugio perfecto contra el calor de la tarde.</li>
+            <li>Los niveles inferiores son de <strong>pago</strong> (~€10) y <strong>no se pueden fotografiar</strong>. La basílica superior es gratis.</li>
+          </ul>
+        </div>
+
+        <div class="facts">
+          <div class="facts-row"><span class="label">Horario</span><span class="value">L-S 10-12:30 y 15-18 · dom 12-18</span></div>
+          <div class="facts-row"><span class="label">Acceso</span><span class="value">Superior gratis · subterráneo ~€10</span></div>
+          <div class="facts-row"><span class="label">Tiempo de visita</span><span class="value">50-60 minutos</span></div>
+          <div class="facts-row"><span class="label">Importante</span><span class="value">Cierra al mediodía · reabre 15:00 · sin fotos abajo</span></div>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=Basilica%20di%20San%20Clemente%20Roma" target="_blank" rel="noopener" class="maps-link">Ver en Google Maps</a>
+
+        <div class="notes-area">
+          <label for="note-san-clemente">Notas in situ</label>
+          <textarea class="notes-textarea" id="note-san-clemente" data-note-key="san-clemente" placeholder="Lo que quieras recordar de aquí…"></textarea>
+        </div>
+      </article>
+
+      <!-- FICHA: SAN PIETRO IN VINCOLI -->
+      <article class="card" id="san-pietro-vincoli">
+        <div class="card-header">
+          <span class="card-roman">XXVII</span>
+          <div class="card-title">
+            <h3>San Pietro in Vincoli · el Moisés</h3>
+            <div class="card-italian">Basilica di San Pietro in Vincoli · Piazza di San Pietro in Vincoli 4a</div>
+          </div>
+        </div>
+        <div class="card-hero"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Michelangelo%27s_Moses.jpg?width=900" alt="El Moisés de Miguel Ángel" loading="lazy" onerror="loadSvgFallback(this, 'san-pietro-vincoli')"></div>
+        <div class="card-section">
+          <h4>Qué es</h4>
+          <p>Una basílica del siglo V que guarda, bajo el altar mayor, las <strong>cadenas</strong> (<em>vincoli</em>) con que san Pedro estuvo preso. Pero casi nadie viene por las cadenas: vienen por el <strong>Moisés de Miguel Ángel</strong> (1513-1515), el fragmento más imponente de la tumba inacabada del Papa Julio II. Una de las esculturas que mejor concentran la fuerza del Renacimiento — el instante exacto antes de que la furia estalle, tallado en mármol.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Historia</h4>
+          <p>La basílica se levantó entre 432 y 440 para custodiar las cadenas que, según la tradición, aprisionaron a san Pedro en Jerusalén. La emperatriz <strong>Eudoxia</strong> las regaló al Papa León I; cuando este las acercó a las cadenas de la prisión Mamertina de Roma (donde Pedro también estuvo preso), las dos se <strong>fundieron milagrosamente en una sola</strong>. De ahí el nombre y la veneración.</p>
+          <p>Pero la historia que importa es la del <strong>Moisés</strong>. En 1505 el Papa <strong>Julio II</strong> — el «papa guerrero», el mismo de la Capilla Sixtina — encargó a Miguel Ángel su tumba: un mausoleo megalómano de tres pisos, cuarenta estatuas, pensado para presidir la nueva basílica de San Pedro. Era el sueño escultórico de Miguel Ángel. Pero Julio II perdió el interés (prefirió gastar en reconstruir San Pedro y en los frescos de la Sixtina), dejó de pagar, y el proyecto se fue encogiendo durante <strong>cuarenta años</strong> de pleitos con los herederos. Miguel Ángel lo llamó <em>«la tragedia de la tumba»</em>. Lo que veis es el resto reducido a un monumento mural, con el Moisés salvándolo todo en el centro.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Anécdotas</h4>
+          <p>Fijaos en los <strong>cuernos</strong> de Moisés. No son un capricho: son un <strong>error de traducción</strong>. San Jerónimo, al verter la Biblia al latín (la Vulgata), tradujo el hebreo <em>qaran</em> — que significa «irradiar rayos de luz» — como <em>cornuta</em>, «con cuernos». Durante siglos el arte representó a Moisés cornudo. Miguel Ángel heredó el equívoco y lo esculpió.</p>
+          <p>La leyenda más famosa: al terminarlo, Miguel Ángel lo encontró tan vivo que le golpeó la rodilla con el martillo y le gritó <em>«¡Perché non parli?»</em> — «¿Por qué no hablas?». Dicen que aún se ve la marca del golpe en la rodilla. Y <strong>Sigmund Freud</strong> quedó tan obsesionado que escribió un ensayo entero (<em>El Moisés de Miguel Ángel</em>, 1914) intentando descifrar el instante psicológico que la estatua congela: ¿va a levantarse furibundo al ver a su pueblo adorando el becerro de oro, o se está conteniendo? Esa tensión irresuelta es justo lo que la hace inolvidable.</p>
+          <p>A los lados del Moisés, <strong>Lía y Raquel</strong> (la vida activa y la contemplativa), también de mano de Miguel Ángel, más serenas. La efigie yacente de Julio II en lo alto es, en cambio, de discípulos: el papa que arruinó el sueño quedó relegado a la fila de arriba, mientras el profeta domina la escena.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>En qué fijarse</h4>
+        <div class="detail-photo">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/%27Moses%27_by_Michelangelo_JBU140.jpg?width=700" alt="El Moisés de Miguel Ángel (1513-1515). Echad monedas en la caja de la luz: sin iluminación, los detalles del mármol se pierden." loading="lazy" onerror="loadSvgFallbackDetail(this, 'san-pietro-vincoli')">
+            <div class="detail-photo-caption">El <em>Moisés</em> de Miguel Ángel (1513-1515). Echad monedas en la caja de la luz: a oscuras, el mármol se apaga.</div>
+          </div>
+        <ul class="detail-list">
+            <li>Los <strong>cuernos</strong> (los rayos de luz mal traducidos) y la mirada lateral, hacia la izquierda, cargada de furia contenida.</li>
+            <li>La <strong>barba</strong>: mirad cómo los dedos de la mano derecha se hunden y enredan en ella. Es uno de los detalles técnicos más asombrosos de la escultura occidental.</li>
+            <li>La <strong>musculatura</strong> de los brazos y la tensión del pie izquierdo, ya recogido como si fuera a incorporarse.</li>
+            <li><strong>Lía y Raquel</strong> a los lados: la calma frente a la tormenta central.</li>
+            <li>Bajo el <strong>altar mayor</strong>, en una urna de bronce y cristal, las <strong>cadenas de san Pedro</strong>.</li>
+            <li>Echad <strong>monedas en la caja de la luz</strong>: la capilla suele estar en penumbra y sin luz el Moisés pierde la mitad.</li>
+            <li>Cierra al mediodía: hay que entrar <strong>antes de las 12:30</strong> o <strong>después de las 15:00</strong>.</li>
+          </ul>
+        </div>
+
+        <div class="facts">
+          <div class="facts-row"><span class="label">Horario</span><span class="value">8-12:30 y 15-19 (verano)</span></div>
+          <div class="facts-row"><span class="label">Acceso</span><span class="value">Gratuito · luz con monedas</span></div>
+          <div class="facts-row"><span class="label">Tiempo de visita</span><span class="value">20-30 minutos</span></div>
+          <div class="facts-row"><span class="label">Cómo llegar</span><span class="value">Metro B Cavour · subiendo por Monti</span></div>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=San%20Pietro%20in%20Vincoli%20Roma" target="_blank" rel="noopener" class="maps-link">Ver en Google Maps</a>
+
+        <div class="notes-area">
+          <label for="note-san-pietro-vincoli">Notas in situ</label>
+          <textarea class="notes-textarea" id="note-san-pietro-vincoli" data-note-key="san-pietro-vincoli" placeholder="Lo que quieras recordar de aquí…"></textarea>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- MARTES -->
+<section id="martes">
+  <div class="container">
+    <div class="section-eyebrow">martedì · 23 giugno</div>
+    <div class="day-header">
+      <div class="day-number">V</div>
+      <div>
+        <h2>Villa Borghese y despedida</h2>
+        <div class="day-subtitle">El último día. El Bernini imposible de la Galleria Borghese, el mirador del Pincio y un cierre sereno junto al hotel antes del vuelo nocturno.</div>
+      </div>
+    </div>
+
+    <div class="day-stats">
+      <div class="day-stats-item walk"><strong>~5 km</strong> a pie</div>
+      <div class="day-stats-item ticket"><strong>Galleria Borghese</strong> · turno 10:00 reservado (obligatorio)</div>
+      <div class="day-stats-item train"><strong>Leonardo Express</strong> Termini→FCO (32 min, €14)</div>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item" data-pace="all"><span class="tl-time">08:30</span><span class="tl-title disabled">Desayuno + check-out · maletas en consigna</span><div class="tl-note">El vuelo es de noche: dejad las maletas en el hotel y salid ligeros.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>45 min</b> · desayuno + check-out + dejar maletas en consigna</span></div>
+      <div class="tl-transport metro" data-pace="all"><div class="tl-transport-header">Hotel → Galleria Borghese · ~3 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">Ⓜ️</span><div class="tl-transport-mode-desc"><strong>Metro A</strong> · Termini → Spagna (4 paradas) y subís por la escalinata / Via Veneto hasta la villa<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>20 min</b><br>💶 <b>€1,50 p.p.</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> directo hasta la entrada del museo</div><div class="tl-transport-mode-meta">⏱ <b>12 min</b><br>💶 <b>€12-14 · €4-5 p.p.</b></div></div></div><div class="tl-transport-footnote">Llegad al museo 15 min antes del turno. La entrada con reserva es estricta: si perdéis la hora, no entráis.</div></div>
+      <div class="tl-item fixed-event" data-pace="all"><span class="tl-time">10:00</span><a href="#galleria-borghese" class="tl-title">Galleria Borghese</a><div class="tl-note">Turno reservado de 2h. Bernini, Caravaggio, Canova.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>2 h</b> · turno completo · planta baja escultura (Bernini), arriba pintura (Caravaggio, Tiziano)</span><span class="tl-meta-item warn">Reserva online obligatoria · se agota semanas antes · consigna de mochilas obligatoria</span></div>
+      <div class="tl-transport walk" data-pace="all"><div class="tl-transport-header">Galleria Borghese → Terrazza del Pincio · jardines · ~1,5 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · cruzáis Villa Borghese hacia el oeste: el laghetto con el templo de Esculapio, el reloj de agua, y la terraza del Pincio sobre Piazza del Popolo<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>25 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">El parque es enorme; id apuntando al laghetto y a la terraza. A mediodía hay sombra de pinos.</div></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">12:00</span><a href="#villa-borghese" class="tl-title">Villa Borghese · laghetto · Terrazza del Pincio</a><div class="tl-note">El jardín y el balcón de Roma sobre las cúpulas.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>45-60 min</b> · laghetto + terraza · la mejor vista panorámica del viaje</span><span class="tl-meta-item">🚶 hasta Cappuccini: <b>15 min</b> · bajando por Via Veneto</span></div>
+      <div class="tl-transport walk" data-pace="medium"><div class="tl-transport-header">Pincio → Cripta dei Cappuccini · ~15 min</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · salís del parque por Porta Pinciana y bajáis Via Veneto (la de <em>La dolce vita</em>)<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>15 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">La cripta es intensa (los huesos de casi 4.000 frailes). Si no os apetece, saltadla y bajad directos a comer.</div></div>
+      <div class="tl-item" data-pace="medium"><span class="tl-time">12:45</span><a href="#cappuccini" class="tl-title">Cripta dei Cappuccini</a><div class="tl-note">Memento mori barroco. La capilla de huesos de Via Veneto.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>40 min</b> · cripta + pequeño museo</span><span class="tl-meta-item warn">Prohibido hacer fotos dentro de la cripta</span></div>
+      <div class="tl-transport metro" data-pace="all"><div class="tl-transport-header">Barberini → Esquilino · pranzo + basílica · ~2 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">Ⓜ️</span><div class="tl-transport-mode-desc"><strong>Metro A</strong> · Barberini → Termini (2 paradas) · coméis cerca del hotel y de Santa Maria Maggiore<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>10 min</b><br>💶 <b>€1,50 p.p.</b></div></div></div><div class="tl-transport-footnote">A partir de aquí todo queda a un paso del hotel y de Termini: el cierre del viaje sin estrés de transporte.</div></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">13:30</span><span class="tl-title disabled">Pranzo · Monti / Esquilino</span><div class="tl-note">Última comida romana sin prisa. Ver sección Gastronomía.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>75 min</b> · comida tranquila · estáis a 10 min del hotel</span></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">15:00</span><a href="#smm" class="tl-title">Santa Maria Maggiore</a><div class="tl-note">A 5 min del hotel. Mosaicos del s. V, Bernini y el papa Francisco.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>45 min</b> · mosaicos + artesonado dorado + tumbas · abierta sin pausa</span><span class="tl-meta-item">🚶 hasta siguiente: <b>8 min</b> · hacia Termini</span></div>
+      <div class="tl-transport walk" data-pace="medium"><div class="tl-transport-header">Santa Maria Maggiore → Palazzo Massimo · ~8 min</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · hacia Termini · el museo está pegado a la estación<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>8 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">Opcional pero muy recomendable: el mejor refugio con aire acondicionado para las horas de más calor, y a 2 min del hotel.</div></div>
+      <div class="tl-item" data-pace="medium"><span class="tl-time">15:55</span><a href="#palazzo-massimo" class="tl-title">Palazzo Massimo · Museo Nazionale Romano</a><div class="tl-note">El mejor arte romano del mundo. El jardín pintado de Livia.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>60-75 min</b> · esculturas + frescos de Livia · climatizado</span><span class="tl-meta-item warn">Cierra los lunes · martes abierto hasta 19:00</span></div>
+      <div class="tl-transport walk" data-pace="all"><div class="tl-transport-header">Palazzo Massimo → Santa Maria degli Angeli · ~6 min</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · hasta Piazza della Repubblica<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>6 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">Último monumento del viaje: una iglesia de Miguel Ángel dentro de unas termas romanas. Cierre perfecto.</div></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">17:10</span><a href="#angeli" class="tl-title">Santa Maria degli Angeli e dei Martiri</a><div class="tl-note">Miguel Ángel dentro de las Termas de Diocleciano. La Meridiana.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>20-30 min</b> · el frigidarium colosal + la línea meridiana en el suelo · gratis</span><span class="tl-meta-item">🚶 hasta hotel: <b>7 min</b></span></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">17:45</span><span class="tl-title disabled">Recoger maletas en hotel</span><div class="tl-note">7 min andando desde Repubblica. Despedida del Royal Court.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>20 min</b> · recoger maletas + último café + despedida</span></div>
+      <div class="tl-transport train" data-pace="all"><div class="tl-transport-header">Termini → Fiumicino (FCO)</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚆</span><div class="tl-transport-mode-desc"><strong>Leonardo Express</strong> · directo sin paradas · sale cada 15 min · binari 23/24 · salid hacia las 18:15 para estar en FCO sobre las 19:00<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>32 min</b><br>💶 <b>€14 p.p. · €42 total</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> · tarifa fija a FCO desde dentro del Raccordo Anulare</div><div class="tl-transport-mode-meta">⏱ <b>45-60 min · según tráfico</b><br>💶 <b>€55 fijo · €18 p.p.</b></div></div></div><div class="tl-transport-footnote">Comprad el billete antes en las máquinas amarillas (Trenitalia) o en la app. Con vuelo a las 21:00, salir de Termini hacia las 18:15 da margen de sobra (≈2 h en el aeropuerto).</div></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">18:15</span><span class="tl-title disabled">Leonardo Express → FCO</span></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>32 min</b> · sin paradas, directo a FCO</span></div>
+      <div class="tl-item fixed-event" data-pace="all"><span class="tl-time">21:00</span><span class="tl-title disabled">Vuelo desde Fiumicino</span></div>
+    </div>
+
+    <div class="cards-list">
+
+      <!-- FICHA: GALLERIA BORGHESE -->
+      <article class="card" id="galleria-borghese">
+        <div class="card-header">
+          <span class="card-roman">XXVIII</span>
+          <div class="card-title">
+            <h3>Galleria Borghese</h3>
+            <div class="card-italian">Museo e Galleria Borghese · Piazzale Scipione Borghese 5</div>
+          </div>
+        </div>
+        <div class="card-hero"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Apollo_and_Daphne_(Bernini)_-_left.jpg?width=900" alt="Apolo y Dafne de Bernini en la Galleria Borghese" loading="lazy" onerror="loadSvgFallback(this, 'galleria-borghese')"></div>
+        <div class="card-section">
+          <h4>Qué es</h4>
+          <p>La colección de arte más intensa de Roma por metro cuadrado. En un <em>casino</em> nobiliario rodeado de jardines, lo que el cardenal <strong>Scipione Borghese</strong> reunió en el siglo XVII: <strong>seis esculturas de Bernini</strong> talladas en su juventud — entre ellas el <em>Apolo y Dafne</em> y el <em>Rapto de Proserpina</em> —, <strong>seis Caravaggios</strong>, la <em>Paolina</em> de Canova, un Rafael, dos Tizianos. Probablemente lo mejor que vais a ver en el viaje fuera del Vaticano, y se visita por <strong>turnos de dos horas con reserva obligatoria</strong>.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Historia</h4>
+          <p><strong>Scipione Borghese</strong> (1577-1633) era el cardenal-sobrino del Papa Pablo V: el hombre que manejaba el poder y el dinero de la curia. Fue un coleccionista voraz y <em>sin escrúpulos</em>. Para hacerse con obras, confiscaba: al pintor Cavalier d'Arpino le requisó la colección entera (de ahí llegaron sus primeros Caravaggio); a Domenichino lo metió en la cárcel para quedarse con su <em>Caza de Diana</em>. Pero también fue el mecenas que descubrió a un Bernini veinteañero y le encargó las esculturas que <strong>inventaron el Barroco</strong>.</p>
+          <p>El <em>casino</em> (1613-1616), obra de Flaminio Ponzio y Giovanni Vasanzio, se construyó expresamente para exhibir la colección entre jardines. Se mantuvo en la familia Borghese hasta 1902, cuando el Estado italiano la compró íntegra para evitar su dispersión. Hoy es museo público — pero con aforo estricto: solo 360 personas cada dos horas, de ahí la reserva.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Anécdotas</h4>
+          <p>El <em>Apolo y Dafne</em> (1622-1625): Bernini tenía <strong>24 años</strong>. El mármol se convierte en hojas — los dedos de Dafne brotan en ramas de laurel, su piel se vuelve corteza, justo en el instante en que el dios la alcanza. En el <em>Rapto de Proserpina</em>, la mano de Plutón se hunde en el muslo de mármol de la diosa dejando marca: <strong>el detalle más citado de toda la escultura occidental</strong>, mármol que parece carne que cede.</p>
+          <p>La <strong>Paolina Borghese</strong> de Canova (1805-1808): la hermana de Napoleón, casada con un Borghese, posó semidesnuda reclinada como Venus. Cuando le preguntaron escandalizados cómo había podido posar así, respondió con una frase legendaria: <em>«Había una estufa en la sala»</em>. De los Caravaggios, no os perdáis el <em>David con la cabeza de Goliat</em>: la cabeza decapitada que David sostiene es un <strong>autorretrato del propio Caravaggio</strong>, pintado mientras huía de Roma condenado a muerte por homicidio — un acto de contrición en forma de cabeza cortada.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>En qué fijarse</h4>
+        <div class="detail-photo">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bernini-Apollo_and_Daphne.jpg?width=700" alt="Apolo y Dafne de Bernini: el mármol convertido en hojas de laurel en el instante de la metamorfosis." loading="lazy" onerror="loadSvgFallbackDetail(this, 'galleria-borghese')">
+            <div class="detail-photo-caption"><em>Apolo y Dafne</em> de Bernini (1622-25). Dad la vuelta entera a la escultura: cada ángulo cuenta otro momento de la metamorfosis.</div>
+          </div>
+        <ul class="detail-list">
+            <li>Los <strong>Bernini</strong> de la planta baja: <em>Apolo y Dafne</em>, <em>Rapto de Proserpina</em>, <em>David</em> (con el rostro mordiéndose el labio, autorretrato) y <em>Eneas y Anquises</em>. Rodeadlos: están pensados para verse en movimiento.</li>
+            <li>El detalle de la <strong>mano de Plutón en el muslo</strong> de Proserpina. Acercaos.</li>
+            <li>La <strong>Paolina</strong> de Canova: la manzana en la mano (Venus vencedora), el colchón de mármol que parece hundirse.</li>
+            <li>Los <strong>seis Caravaggios</strong> (planta superior): <em>David con la cabeza de Goliat</em>, <em>Niño con cesto de frutas</em>, <em>Baco enfermo</em>, <em>San Jerónimo</em>, <em>Madonna dei Palafrenieri</em>.</li>
+            <li><em>Amor sacro y amor profano</em> de <strong>Tiziano</strong> (sala XX): uno de los cuadros más enigmáticos del Renacimiento.</li>
+            <li>Los <strong>techos al fresco</strong> y la propia arquitectura del casino.</li>
+            <li><strong>Dos horas pasan volando</strong>: si vais justos, priorizad Bernini (abajo) y Caravaggio (arriba). Mochilas a la consigna, es obligatorio.</li>
+          </ul>
+        </div>
+
+        <div class="facts">
+          <div class="facts-row"><span class="label">Horario</span><span class="value">Mar-Dom 9-19 · turnos de 2h · cierra lunes</span></div>
+          <div class="facts-row"><span class="label">Entrada</span><span class="value">~€13 + reserva · obligatoria online</span></div>
+          <div class="facts-row"><span class="label">Tiempo de visita</span><span class="value">2 horas (turno completo)</span></div>
+          <div class="facts-row"><span class="label">Importante</span><span class="value">Reservad semanas antes · consigna obligatoria</span></div>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=Galleria%20Borghese%20Roma" target="_blank" rel="noopener" class="maps-link">Ver en Google Maps</a>
+
+        <div class="culture-box">
+          <span class="label">Referencias culturales</span>
+          <div class="ref-item"><span class="ref-title">La Grande Bellezza</span> (Paolo Sorrentino, 2013) — Villa Borghese y sus jardines aparecen como telón de la Roma aristocrática y melancólica de Jep.</div>
+        </div>
+
+        <div class="notes-area">
+          <label for="note-galleria-borghese">Notas in situ</label>
+          <textarea class="notes-textarea" id="note-galleria-borghese" data-note-key="galleria-borghese" placeholder="Lo que quieras recordar de aquí…"></textarea>
+        </div>
+      </article>
+
+      <!-- FICHA: VILLA BORGHESE · PINCIO -->
+      <article class="card" id="villa-borghese">
+        <div class="card-header">
+          <span class="card-roman">XXIX</span>
+          <div class="card-title">
+            <h3>Villa Borghese · Terrazza del Pincio</h3>
+            <div class="card-italian">Villa Borghese · Pincio · il laghetto</div>
+          </div>
+        </div>
+        <div class="card-hero"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Tempio_di_Esculapio_-_Villa_Borghese_-_Roma.jpg?width=900" alt="El laghetto y el templo de Esculapio en Villa Borghese" loading="lazy" onerror="loadSvgFallback(this, 'villa-borghese')"></div>
+        <div class="card-section">
+          <h4>Qué es</h4>
+          <p>El gran parque de Roma — 80 hectáreas de pinos, fuentes y avenidas sobre el Tridente. Era el jardín privado de la villa de Scipione Borghese; hoy es el pulmón verde de la ciudad. Tiene un <strong>laghetto</strong> (laguito) con un templo neoclásico dedicado a Esculapio en una isleta, paseos con bustos de italianos ilustres, un reloj de agua, y en su extremo oeste la <strong>Terrazza del Pincio</strong>: el mirador más famoso de Roma, asomado sobre la Piazza del Popolo y el mar de cúpulas hasta San Pedro.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Historia</h4>
+          <p>Los jardines nacieron en el siglo XVII como parte de la villa suburbana del cardenal <strong>Scipione Borghese</strong>, concebidos a la italiana con perspectivas, estatuas antiguas y fuentes. En el siglo XVIII se rediseñaron al gusto del jardín paisajístico inglés, más «natural». Cuando el Estado compró la propiedad en 1901-1903, los jardines se abrieron al público y pasaron a ser de la ciudad.</p>
+          <p>La <strong>Terrazza del Pincio</strong>, en cambio, es obra del arquitecto <strong>Giuseppe Valadier</strong> (1809-1814), el mismo que rediseñó la Piazza del Popolo justo debajo. Valadier ligó la plaza y la colina con rampas monumentales durante la administración napoleónica de Roma, creando uno de los grandes gestos urbanísticos neoclásicos de la ciudad: subes del óvalo de la plaza al balcón de la colina por una pendiente ajardinada.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Anécdotas</h4>
+          <p>En el paseo del Pincio hay un curioso <strong>reloj de agua</strong> (<em>idrocronometro</em>), de 1873, que funciona con la fuerza del agua y todavía marca la hora dentro de una torreta sobre un estanquito. Cerca, una larga avenida está flanqueada por <strong>228 bustos</strong> de «italianos ilustres» — de Dante a Garibaldi —, una galería al aire libre del panteón patriótico decimonónico. Muchos aparecen con la nariz rota: es tradición casi folclórica que los bustos pierdan apéndices.</p>
+          <p>El laghetto, con su <strong>templo de Esculapio</strong> reflejado en el agua y sus barquitas de alquiler, es uno de los rincones más fotografiados del parque. Generaciones de escritores del Grand Tour —Goethe, Stendhal, Henry James— pasearon por estos jardines buscando la melancolía romana. Y la terraza al atardecer, con la luz dorada sobre las cúpulas, es la imagen que Sorrentino persigue una y otra vez en <em>La Grande Bellezza</em>.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>En qué fijarse</h4>
+          <ul class="detail-list">
+            <li>El <strong>laghetto</strong> y el <strong>templo de Esculapio</strong> en la isleta: las barcas se alquilan por 20 minutos, refrescante con calor.</li>
+            <li>La <strong>Terrazza del Pincio</strong>: asomaos a la balaustrada. Abajo, la Piazza del Popolo ovalada; al fondo, San Pedro. La mejor panorámica del viaje.</li>
+            <li>El <strong>reloj de agua</strong> (idrocronometro) escondido entre la vegetación: buscadlo, es de 1873 y sigue funcionando.</li>
+            <li>El <strong>paseo de los bustos</strong> de italianos ilustres: contadles las narices rotas.</li>
+            <li>La <strong>sombra de los pinos romanos</strong>: a mediodía, este es el sitio donde Roma se hace soportable en junio.</li>
+            <li>Las <strong>rampas de Valadier</strong> que bajan a Piazza del Popolo: el modo más bonito de descender hacia el centro.</li>
+          </ul>
+        </div>
+
+        <div class="facts">
+          <div class="facts-row"><span class="label">Acceso</span><span class="value">Parque libre · siempre abierto · gratis</span></div>
+          <div class="facts-row"><span class="label">Mejor momento</span><span class="value">Atardecer (vistas) · mediodía por la sombra</span></div>
+          <div class="facts-row"><span class="label">Tiempo</span><span class="value">45 min - 2 horas</span></div>
+          <div class="facts-row"><span class="label">Combo</span><span class="value">A la salida de la Galleria Borghese</span></div>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=Terrazza%20del%20Pincio%20Roma" target="_blank" rel="noopener" class="maps-link">Ver en Google Maps</a>
+
+        <div class="notes-area">
+          <label for="note-villa-borghese">Notas in situ</label>
+          <textarea class="notes-textarea" id="note-villa-borghese" data-note-key="villa-borghese" placeholder="Lo que quieras recordar de aquí…"></textarea>
+        </div>
+      </article>
+
+      <!-- FICHA: CRIPTA DEI CAPPUCCINI -->
+      <article class="card" id="cappuccini">
+        <div class="card-header">
+          <span class="card-roman">XXX</span>
+          <div class="card-title">
+            <h3>Cripta dei Cappuccini</h3>
+            <div class="card-italian">Santa Maria della Concezione dei Cappuccini · Via Vittorio Veneto 27</div>
+          </div>
+        </div>
+        <div class="card-hero"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Santa_Maria_della_Concezione_dei_Cappuccini.jpg?width=900" alt="Santa Maria della Concezione dei Cappuccini" loading="lazy" onerror="loadSvgFallback(this, 'cappuccini')"></div>
+        <div class="card-section">
+          <h4>Qué es</h4>
+          <p>Bajo una iglesia discreta al inicio de Via Veneto, <strong>cinco capillas subterráneas decoradas íntegramente con los huesos de unos 3.700 frailes capuchinos</strong> muertos entre 1528 y 1870. Candelabros, rosetones, arcos y guirnaldas hechos con vértebras, cráneos, pelvis y fémures. No es una catacumba macabra ni una galería de horrores: es un <strong>memento mori</strong> franciscano, una meditación serena sobre la muerte, resumida en la placa final: <em>«Lo que vosotros sois, nosotros fuimos; lo que nosotros somos, vosotros seréis»</em>.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Historia</h4>
+          <p>Los <strong>capuchinos</strong> — la rama más austera y reformada de los franciscanos, los del hábito marrón con capucha puntiaguda — se instalaron aquí en 1631, cuando el cardenal <strong>Antonio Barberini</strong> (hermano del Papa Urbano VIII y él mismo fraile capuchino) les cedió el convento. Al trasladarse desde su antigua sede, trajeron en carros la <strong>tierra sagrada de Jerusalén</strong> con la que cubrir a sus muertos, y los restos exhumados de los frailes difuntos.</p>
+          <p>Durante más de dos siglos, cada vez que moría un fraile se enterraba en la tierra de Jerusalén y, pasado el tiempo, se exhumaba el más antiguo para hacer sitio. Con los huesos exhumados, los propios frailes fueron <strong>componiendo la decoración</strong> capilla a capilla, generación tras generación. No fue obra de un artista, sino una labor colectiva y anónima de siglos: una catequesis sobre la fugacidad de la vida hecha con el material más elocuente posible.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Anécdotas</h4>
+          <p>El <strong>Marqués de Sade</strong> la visitó en 1775 y dejó constancia escrita, fascinado. Pero quien la inmortalizó fue <strong>Mark Twain</strong> en <em>Los inocentes en el extranjero</em> (1869): le dedicó páginas memorables, entre el espanto y la admiración, describiendo a un fraile que le enseñaba la cripta «tan tranquilo como quien muestra su jardín». También la citan Hawthorne y, más recientemente, aparece en novelas y películas de ambiente romano.</p>
+          <p>En el techo de la última capilla hay un <strong>esqueleto infantil con una guadaña y una balanza</strong> hechas de huesos — una alegoría de la Muerte que siega y pesa las almas. La tradición dice que era una sobrina de los Barberini. Es la imagen más recordada del lugar. La cripta se recorre en silencio, sin música, con luz tenue: el efecto no es de terror sino de extraña paz. <strong>No se permiten fotografías</strong>.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>En qué fijarse</h4>
+          <ul class="detail-list">
+            <li>Las <strong>cinco capillas</strong>: la de las calaveras, la de las pelvis, la de las tibias y fémures, la de los tres esqueletos y la cripta de la Resurrección. Cada una con un motivo distinto.</li>
+            <li>El <strong>esqueleto con la guadaña y la balanza</strong> en el techo de la última: la alegoría de la Muerte.</li>
+            <li>La <strong>placa con la frase trilingüe</strong>: «Lo que vosotros sois, nosotros fuimos…». Leedla despacio.</li>
+            <li>Los <strong>frailes vestidos</strong>: algunos esqueletos conservan el hábito marrón, recostados en nichos.</li>
+            <li>La <strong>tierra de Jerusalén</strong> del suelo de las capillas.</li>
+            <li>El <strong>pequeño museo</strong> de arriba (incluido), sobre la orden capuchina, con un cuadro atribuido a Caravaggio (<em>San Francisco en meditación</em>).</li>
+            <li><strong>Silencio y respeto</strong>: es un lugar sagrado, no una atracción. Sin fotos.</li>
+          </ul>
+        </div>
+
+        <div class="facts">
+          <div class="facts-row"><span class="label">Horario</span><span class="value">Todos los días 10:00-19:00 (último acceso 18:30)</span></div>
+          <div class="facts-row"><span class="label">Entrada</span><span class="value">~€10 · incluye museo</span></div>
+          <div class="facts-row"><span class="label">Tiempo de visita</span><span class="value">40 minutos</span></div>
+          <div class="facts-row"><span class="label">Metro</span><span class="value">A · Barberini · Via Veneto 27</span></div>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=Cripta%20dei%20Cappuccini%20Via%20Veneto%20Roma" target="_blank" rel="noopener" class="maps-link">Ver en Google Maps</a>
+
+        <div class="culture-box">
+          <span class="label">Referencias culturales</span>
+          <div class="ref-item"><span class="ref-title">Los inocentes en el extranjero</span> (Mark Twain, 1869) — las páginas más famosas jamás escritas sobre la cripta, entre el humor y el escalofrío.</div>
+        </div>
+
+        <div class="notes-area">
+          <label for="note-cappuccini">Notas in situ</label>
+          <textarea class="notes-textarea" id="note-cappuccini" data-note-key="cappuccini" placeholder="Lo que quieras recordar de aquí…"></textarea>
+        </div>
+      </article>
+
+      <!-- FICHA: SANTA MARIA MAGGIORE -->
+      <article class="card" id="smm">
+        <div class="card-header">
+          <span class="card-roman">XXXI</span>
+          <div class="card-title">
+            <h3>Santa Maria Maggiore</h3>
+            <div class="card-italian">Basilica Papale di Santa Maria Maggiore · Piazza di Santa Maria Maggiore</div>
+          </div>
+        </div>
+        <div class="card-hero"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Santa_Maria_Maggiore_at_dusk.jpg?width=900" alt="Santa Maria Maggiore" loading="lazy" onerror="loadSvgFallback(this, 'smm')"></div>
+        <div class="card-section">
+          <h4>Qué es</h4>
+          <p>Una de las <strong>cuatro basílicas papales mayores</strong> de Roma y la más grande dedicada a la Virgen — y casualmente, a cinco minutos andando del hotel, en lo alto del Esquilino. Conserva los <strong>mosaicos paleocristianos del siglo V</strong> más importantes de la ciudad, un artesonado dorado con el primer oro llegado de América, un suelo cosmatesco medieval, la tumba de Bernini y, desde 2025, la del <strong>papa Francisco</strong>. Mil seiscientos años de cristianismo en un solo edificio.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Historia</h4>
+          <p>La leyenda la llama <em>Santa Maria della Neve</em> (de la Nieve): en agosto del año 358, la Virgen se apareció al Papa Liberio y a un patricio pidiendo una iglesia donde, a la mañana siguiente, hallaran nieve. Y en pleno verano romano, <strong>nevó sobre la colina del Esquilino</strong>, dibujando la planta del templo. Cada 5 de agosto, la basílica conmemora el milagro dejando caer pétalos blancos desde el techo.</p>
+          <p>La basílica actual la levantó el Papa <strong>Sixto III</strong> hacia 432-440, justo después de que el Concilio de Éfeso (431) proclamara a María <em>Theotokos</em>, Madre de Dios — por eso es un monumento al nuevo culto mariano. El <strong>campanario románico</strong> (siglo XIV), con sus 75 metros, es el más alto de Roma. El <strong>artesonado dorado</strong> del techo, diseñado por Giuliano da Sangallo, se cubrió —según la tradición— con el <strong>primer oro que Colón trajo de América</strong>, regalado por los Reyes Católicos al Papa Alejandro VI Borgia. Bernini y Fuga intervinieron en los siglos XVII-XVIII (la fachada exterior es de Ferdinando Fuga).</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Anécdotas</h4>
+          <p><strong>Gian Lorenzo Bernini</strong>, el genio del Barroco que dio forma a media Roma, está enterrado aquí en una tumba sorprendentemente <strong>modesta</strong>: una simple losa en el suelo, a la derecha del altar mayor, casi imposible de encontrar si no la buscas. El hombre que diseñó la columnata de San Pedro reposa bajo una lápida que cualquiera pisa sin saberlo.</p>
+          <p>En abril de <strong>2025</strong>, el <strong>papa Francisco</strong> fue enterrado en esta basílica —no en el Vaticano—, según su voluntad expresa: quería reposar junto al icono de la <em>Salus Populi Romani</em>, la imagen mariana bizantina que veneraba y ante la que rezaba antes y después de cada viaje. Su tumba, sencilla, con la sola inscripción «Franciscus», se ha convertido en lugar de peregrinación. Es el primer papa en más de un siglo enterrado fuera del Vaticano.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>En qué fijarse</h4>
+          <ul class="detail-list">
+            <li>Los <strong>mosaicos del siglo V</strong> en lo alto de la nave: 36 escenas del Antiguo Testamento, los mosaicos cristianos más antiguos de Roma. Y el <strong>mosaico absidal</strong> de la Coronación de la Virgen (siglo XIII, de Jacopo Torriti).</li>
+            <li>El <strong>artesonado dorado</strong> del techo: el primer oro de América.</li>
+            <li>El <strong>suelo cosmatesco</strong> medieval, de mármoles geométricos.</li>
+            <li>La <strong>Cappella Sistina</strong> y la <strong>Cappella Paolina (Borghese)</strong>: dos capillas-mausoleo barrocas riquísimas, una a cada lado.</li>
+            <li>El icono <strong>Salus Populi Romani</strong> en la Cappella Paolina: la imagen mariana más venerada de Roma.</li>
+            <li>La <strong>tumba de Bernini</strong>: losa en el suelo a la derecha del altar. Buscadla.</li>
+            <li>La <strong>tumba del papa Francisco</strong>: sencilla, con la inscripción «Franciscus».</li>
+            <li><strong>Hombros y rodillas cubiertos</strong>. Control de seguridad a la entrada.</li>
+          </ul>
+        </div>
+
+        <div class="facts">
+          <div class="facts-row"><span class="label">Horario</span><span class="value">7:00-18:45 · sin pausa de mediodía</span></div>
+          <div class="facts-row"><span class="label">Acceso</span><span class="value">Basílica gratis · museo/loggia con ticket</span></div>
+          <div class="facts-row"><span class="label">Tiempo de visita</span><span class="value">40-45 minutos</span></div>
+          <div class="facts-row"><span class="label">Cómo llegar</span><span class="value">5 min andando desde el hotel</span></div>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=Basilica%20di%20Santa%20Maria%20Maggiore%20Roma" target="_blank" rel="noopener" class="maps-link">Ver en Google Maps</a>
+
+        <div class="notes-area">
+          <label for="note-smm">Notas in situ</label>
+          <textarea class="notes-textarea" id="note-smm" data-note-key="smm" placeholder="Lo que quieras recordar de aquí…"></textarea>
+        </div>
+      </article>
+
+      <!-- FICHA: PALAZZO MASSIMO -->
+      <article class="card" id="palazzo-massimo">
+        <div class="card-header">
+          <span class="card-roman">XXXII</span>
+          <div class="card-title">
+            <h3>Palazzo Massimo</h3>
+            <div class="card-italian">Museo Nazionale Romano · Palazzo Massimo alle Terme · Largo di Villa Peretti 1</div>
+          </div>
+        </div>
+        <div class="card-hero"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Affreschi_di_villa_di_livia,_giardino_dipinto,_03.jpg?width=900" alt="El jardín pintado de la Villa de Livia, en Palazzo Massimo" loading="lazy" onerror="loadSvgFallback(this, 'palazzo-massimo')"></div>
+        <div class="card-section">
+          <h4>Qué es</h4>
+          <p>Probablemente la <strong>mejor colección de arte romano antiguo del mundo</strong>, y casi nadie la visita — a dos minutos de Termini y del hotel. Esculturas helenísticas en bronce y mármol (el <em>Púgil en reposo</em>, el <em>Discóbolo</em>), monedas, joyas, momias y, sobre todo, los <strong>frescos</strong>: el <em>jardín pintado de la Villa de Livia</em>, una habitación entera convertida en un vergel ilusorio. Climatizado: el refugio perfecto para las horas de calor antes del vuelo.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Historia</h4>
+          <p>El edificio es un palacio neorrenacentista de finales del siglo XIX. Desde 1998 alberga una de las cuatro sedes del <strong>Museo Nazionale Romano</strong>, que reúne las grandes piezas arqueológicas halladas en Roma y sus alrededores. A diferencia de los museos abarrotados, aquí se camina con calma entre obras maestras absolutas, muchas veces casi a solas. El plato fuerte está en la <strong>segunda planta</strong>: los frescos arrancados de villas imperiales y reinstalados en salas a oscuras que reconstruyen las habitaciones originales.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Anécdotas</h4>
+          <p>El <strong>jardín pintado de la Villa de Livia</strong> (esposa del emperador Augusto), de Prima Porta: las cuatro paredes de un comedor subterráneo pintadas con un jardín en flor — granados, laureles, pájaros, frutos — para crear la ilusión de comer al aire libre estando bajo tierra, fresco en verano. Tiene <strong>dos mil años</strong> y conserva un verde imposible. Es de las cosas más bellas que se pueden ver en Roma, y casi nadie lo sabe.</p>
+          <p>El <strong>Púgil en reposo</strong> es un bronce helenístico original (no una copia): un boxeador sentado tras el combate, con el rostro hinchado, la nariz rota, las orejas de coliflor y cicatrices de cobre rojizo simulando heridas frescas. Un realismo brutal, sin idealización, de hace 2.300 años. Cerca está el <strong>Discóbolo Lancellotti</strong>, la mejor copia romana del bronce perdido de Mirón, y el inquietante <em>Hermafrodita durmiente</em>.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>En qué fijarse</h4>
+          <ul class="detail-list">
+            <li>El <strong>jardín de Livia</strong> (2ª planta): entrad en la sala a oscuras y dejad que los ojos se acostumbren. Buscad los pájaros entre las ramas.</li>
+            <li>El <strong>Púgil en reposo</strong>: rodeadlo, miradle la cara. Es uno de los grandes bronces que sobreviven de la Antigüedad.</li>
+            <li>El <strong>Discóbolo Lancellotti</strong>: el lanzador de disco congelado en tensión.</li>
+            <li>Los <strong>frescos de la Villa Farnesina</strong> (2ª planta): estucos y pinturas de delicadeza extrema.</li>
+            <li>La <strong>momia de la niña de Grottarossa</strong> y la colección de joyas y monedas (sótano).</li>
+            <li>El <strong>aire acondicionado</strong>: aprovechadlo. Es el mejor sitio para pasar las horas centrales del calor.</li>
+          </ul>
+        </div>
+
+        <div class="facts">
+          <div class="facts-row"><span class="label">Horario</span><span class="value">Mar-Dom 9:30-19:00 · cierra lunes</span></div>
+          <div class="facts-row"><span class="label">Entrada</span><span class="value">~€8 · billete combinado MNR (7 días)</span></div>
+          <div class="facts-row"><span class="label">Tiempo de visita</span><span class="value">60-90 minutos</span></div>
+          <div class="facts-row"><span class="label">Cómo llegar</span><span class="value">2 min de Termini y del hotel</span></div>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=Palazzo%20Massimo%20alle%20Terme%20Roma" target="_blank" rel="noopener" class="maps-link">Ver en Google Maps</a>
+
+        <div class="notes-area">
+          <label for="note-palazzo-massimo">Notas in situ</label>
+          <textarea class="notes-textarea" id="note-palazzo-massimo" data-note-key="palazzo-massimo" placeholder="Lo que quieras recordar de aquí…"></textarea>
+        </div>
+      </article>
+
+      <!-- FICHA: SANTA MARIA DEGLI ANGELI -->
+      <article class="card" id="angeli">
+        <div class="card-header">
+          <span class="card-roman">XXXIII</span>
+          <div class="card-title">
+            <h3>Santa Maria degli Angeli</h3>
+            <div class="card-italian">Basilica di Santa Maria degli Angeli e dei Martiri · Piazza della Repubblica</div>
+          </div>
+        </div>
+        <div class="card-hero"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Santa_Maria_degli_Angeli_e_dei_Martiri,_Roma_-_interno.jpg?width=900" alt="Interior de Santa Maria degli Angeli" loading="lazy" onerror="loadSvgFallback(this, 'angeli')"></div>
+        <div class="card-section">
+          <h4>Qué es</h4>
+          <p>Una basílica diseñada por <strong>Miguel Ángel</strong> construida <em>dentro</em> de las ruinas de las <strong>Termas de Diocleciano</strong>, las mayores de la Roma antigua. El gigantesco <em>frigidarium</em> (la sala de los baños fríos) reconvertido en iglesia: bóvedas colosales, columnas de granito egipcio de 15 metros, y en el suelo una <strong>línea meridiana</strong> de bronce, un reloj solar que cruza la nave. El cierre perfecto del viaje, y a un paso de Termini.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Historia</h4>
+          <p>Las <strong>Termas de Diocleciano</strong> (298-306 d.C.) fueron las más grandes jamás construidas en Roma: cabían 3.000 personas. La tradición cristiana sostiene que se levantaron con el trabajo forzado de prisioneros cristianos — de ahí el «<em>dei Martiri</em>» del nombre. En 1561, el Papa Pío IV encargó al ya anciano <strong>Miguel Ángel</strong> (tenía 86 años) que consagrara aquel espacio pagano convirtiendo el frigidarium en iglesia, sin destruir la arquitectura romana, sino habitándola. Fue una de sus últimas obras. En el siglo XVIII, Luigi Vanvitelli la reformó dándole su aspecto actual.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Anécdotas</h4>
+          <p>En el suelo recorre la nave la <strong>Linea Clementina o Meridiana</strong> (1702), encargada por el Papa Clemente XI al astrónomo Francesco Bianchini: una franja de bronce con los signos del zodiaco incrustada en el pavimento. Por un pequeño <strong>agujero (gnomon)</strong> en lo alto del muro entra un rayo de sol que, al mediodía solar, cruza la línea marcando el día del año. Servía para fijar el calendario y —crucial para la Iglesia— comprobar la fecha de la <strong>Pascua</strong>. Es un instrumento científico monumental dentro de una iglesia.</p>
+          <p>Las <strong>ocho columnas de granito rosa de Asuán</strong> que sostienen la nave son <em>originales romanas</em> de las termas: monolitos de 15 metros que llevan aquí 1.700 años. Por su escala y su solemnidad, esta es la iglesia donde el Estado italiano celebra los <strong>funerales de Estado</strong>. Al salir, la Piazza della Repubblica os recibe con la exuberante <strong>Fontana delle Naiadi</strong> y sus ninfas. Buen último plano de Roma antes del aeropuerto.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>En qué fijarse</h4>
+          <ul class="detail-list">
+            <li>La <strong>escala del frigidarium</strong>: levantad la vista. Esa bóveda es romana original, de hace 1.700 años.</li>
+            <li>Las <strong>columnas de granito rosa</strong> de Asuán: las ocho originales son las más oscuras; las demás se añadieron imitándolas.</li>
+            <li>La <strong>Meridiana</strong>: seguid la línea de bronce por el suelo, con sus constelaciones. Buscad el agujero del gnomon en lo alto.</li>
+            <li>La sensación de <strong>termas convertidas en templo</strong>: Miguel Ángel apenas tocó la estructura; entendió que las ruinas ya eran sublimes.</li>
+            <li>Al salir, la <strong>Fontana delle Naiadi</strong> en Piazza della Repubblica.</li>
+            <li>Gratis y rápida: el <strong>último monumento</strong> del viaje, a 7 minutos del hotel.</li>
+          </ul>
+        </div>
+
+        <div class="facts">
+          <div class="facts-row"><span class="label">Horario</span><span class="value">L-S 9-19 · dom 9-19:30 (aprox.)</span></div>
+          <div class="facts-row"><span class="label">Acceso</span><span class="value">Gratuito</span></div>
+          <div class="facts-row"><span class="label">Tiempo de visita</span><span class="value">20-30 minutos</span></div>
+          <div class="facts-row"><span class="label">Metro</span><span class="value">A · Repubblica · junto a Termini</span></div>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=Santa%20Maria%20degli%20Angeli%20e%20dei%20Martiri%20Roma" target="_blank" rel="noopener" class="maps-link">Ver en Google Maps</a>
+
+        <div class="notes-area">
+          <label for="note-angeli">Notas in situ</label>
+          <textarea class="notes-textarea" id="note-angeli" data-note-key="angeli" placeholder="Lo que quieras recordar de aquí…"></textarea>
         </div>
       </article>
 
@@ -4202,7 +4775,7 @@ function loadSvgFallbackDetail(img, cardId) {
 
 <footer>
   <div class="container">
-    <p>Itinerario preparado para <em>Pay</em> y dos colegas<br>Roma · 19—22 giugno 2026<br>"Roma no se cuenta, se camina."</p>
+    <p>Itinerario preparado para <em>Pay</em> y dos colegas<br>Roma · 19—23 giugno 2026<br>"Roma no se cuenta, se camina."</p>
   </div>
 </footer>
 
@@ -4264,7 +4837,17 @@ const places = [
   { id: 'torre-scimmia', n: 'XXI', name: 'Torre della Scimmia', day: 'Lunes', lat: 41.9017011, lng: 12.4742752, type: 'card' },
   { id: 'popolo', n: 'XXII', name: 'Piazza del Popolo · Santa Maria del Popolo', day: 'Lunes', lat: 41.9107038, lng: 12.4763579, type: 'card' },
   { id: 'spagna', n: 'XXIII', name: 'Piazza di Spagna', day: 'Lunes', lat: 41.9059900, lng: 12.4827750, type: 'card' },
-  { id: 'tazza-doro', n: 'XXIV', name: 'Tazza d\'Oro', day: 'Lunes', lat: 41.8994973, lng: 12.4773862, type: 'card' }
+  { id: 'tazza-doro', n: 'XXIV', name: 'Tazza d\'Oro', day: 'Lunes', lat: 41.8994973, lng: 12.4773862, type: 'card' },
+  { id: 'laterano', n: 'XXV', name: 'San Giovanni in Laterano', day: 'Lunes', lat: 41.8858820, lng: 12.5057860, type: 'card' },
+  { id: 'san-clemente', n: 'XXVI', name: 'Basilica di San Clemente', day: 'Lunes', lat: 41.8894110, lng: 12.4975660, type: 'card' },
+  { id: 'san-pietro-vincoli', n: 'XXVII', name: 'San Pietro in Vincoli · Moisés', day: 'Lunes', lat: 41.8937640, lng: 12.4933280, type: 'card' },
+  // MARTES
+  { id: 'galleria-borghese', n: 'XXVIII', name: 'Galleria Borghese', day: 'Martes', lat: 41.9142220, lng: 12.4920280, type: 'card' },
+  { id: 'villa-borghese', n: 'XXIX', name: 'Villa Borghese · Terrazza del Pincio', day: 'Martes', lat: 41.9110000, lng: 12.4783000, type: 'card' },
+  { id: 'cappuccini', n: 'XXX', name: 'Cripta dei Cappuccini', day: 'Martes', lat: 41.9047900, lng: 12.4888600, type: 'card' },
+  { id: 'smm', n: 'XXXI', name: 'Santa Maria Maggiore', day: 'Martes', lat: 41.8976400, lng: 12.4986300, type: 'card' },
+  { id: 'palazzo-massimo', n: 'XXXII', name: 'Palazzo Massimo · Museo Nazionale Romano', day: 'Martes', lat: 41.9017900, lng: 12.4985200, type: 'card' },
+  { id: 'angeli', n: 'XXXIII', name: 'Santa Maria degli Angeli', day: 'Martes', lat: 41.9030300, lng: 12.4961000, type: 'card' }
 ];
 
 // === LEAFLET MAP ===

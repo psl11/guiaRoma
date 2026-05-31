@@ -1,30 +1,37 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
-  <!-- Light theme background -->
-  <rect width="180" height="180" fill="#f5f0e8" rx="40"/>
-  
-  <!-- Golden decorative circle -->
-  <circle cx="90" cy="90" r="75" fill="none" stroke="#a07c4a" stroke-width="4"/>
-  
-  <!-- Inner accent circle -->
-  <circle cx="90" cy="90" r="65" fill="none" stroke="#8b3a3a" stroke-width="2" opacity="0.3"/>
-  
-  <!-- Stylized "R" for Roma -->
-  <text x="90" y="125" font-family="Cormorant Garamond, serif" font-size="120" font-weight="600" text-anchor="middle" fill="#8b3a3a">R</text>
-  
-  <!-- Decorative flourish -->
-  <g transform="translate(90, 40)" opacity="0.6">
-    <path d="M -15 0 Q 0 8 15 0" stroke="#a07c4a" stroke-width="2" fill="none" stroke-linecap="round"/>
-  </g>
-  
-  <!-- Dark theme styles -->
   <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="75%">
+      <stop offset="0" stop-color="#a44a4a"/>
+      <stop offset="0.6" stop-color="#8b3a3a"/>
+      <stop offset="1" stop-color="#6f2e2e"/>
+    </radialGradient>
     <style>
       @media (prefers-color-scheme: dark) {
-        rect { fill: #1a1612; }
-        circle { stroke: #c4a373; }
-        text { fill: #c4665a; }
-        path { stroke: #c4a373; }
+        .bg    { fill: #221d18; }
+        .ring  { stroke: #d4b88a; }
+        .ring2 { stroke: #d4b88a; }
+        .gold  { fill: #d4b88a; }
+        .glyph { fill: #e8dfd0; }
       }
     </style>
   </defs>
+
+  <!-- Fondo -->
+  <rect class="bg" width="180" height="180" rx="40" fill="url(#bg)"/>
+
+  <!-- Doble anillo dorado -->
+  <circle class="ring"  cx="90" cy="90" r="76" fill="none" stroke="#c4a373" stroke-width="3"/>
+  <circle class="ring2" cx="90" cy="90" r="69" fill="none" stroke="#c4a373" stroke-width="1.2" opacity="0.65"/>
+
+  <!-- Estrella superior -->
+  <text class="gold" x="90" y="48" font-family="Georgia, 'Times New Roman', serif"
+        font-size="20" text-anchor="middle" fill="#c4a373">&#10022;</text>
+
+  <!-- "R" de Roma -->
+  <text class="glyph" x="90" y="124" font-family="Georgia, 'Times New Roman', Times, serif"
+        font-size="104" font-weight="700" text-anchor="middle" fill="#f5f0e8">R</text>
+
+  <!-- Wordmark inferior -->
+  <text class="gold" x="90" y="150" font-family="Georgia, 'Times New Roman', serif"
+        font-size="13" letter-spacing="5" text-anchor="middle" fill="#c4a373">ROMA</text>
 </svg>
