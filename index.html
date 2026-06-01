@@ -1866,6 +1866,53 @@ footer p {
   padding: .1rem .4rem;
   border-radius: 3px;
 }
+/* Cuadro de reservas */
+.reservas-box {
+  margin: 1.5rem 0 2rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.reservas-box-header {
+  background: color-mix(in srgb, var(--accent) 10%, var(--bg-soft));
+  padding: .65rem 1.1rem;
+  font-family: 'Cormorant Garamond','Garamond',serif;
+  font-size: .88rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.reservas-table { width: 100%; border-collapse: collapse; }
+.reservas-table td {
+  padding: .55rem 1.1rem;
+  vertical-align: top;
+  font-size: .85rem;
+  line-height: 1.55;
+  border-bottom: 1px solid var(--line-soft);
+  font-family: 'Lora','Georgia',serif;
+}
+.reservas-table tr:last-child td { border-bottom: none; }
+.reservas-table td:first-child {
+  width: 45%;
+  font-family: 'Cormorant Garamond','Garamond',serif;
+  font-size: .98rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.reservas-table td a { color: var(--accent); border-bottom: 1px solid var(--line); }
+.reservas-badge {
+  display: inline-block;
+  font-size: .68rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: .1rem .5rem;
+  border-radius: 99px;
+  vertical-align: middle;
+  margin-left: .35rem;
+}
+.badge-urgent { background: color-mix(in srgb,var(--accent) 15%,transparent); color: var(--accent); }
+.badge-rec    { background: color-mix(in srgb,var(--gold) 15%,transparent); color: var(--gold); }
+
 .gastro-section-title {
   font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
   font-style: italic;
@@ -1921,7 +1968,7 @@ footer p {
 </style>
 <script id="svg-library">
 const SVG_MOTIFS = {"dome": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_d\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_d\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_d)\"/><g opacity=\".9\"><rect x=\"280\" y=\"150\" width=\"240\" height=\"50\" fill=\"url(#st_d)\"/><ellipse cx=\"400\" cy=\"150\" rx=\"120\" ry=\"90\" fill=\"url(#st_d)\"/><rect x=\"385\" y=\"50\" width=\"30\" height=\"20\" fill=\"#8b6c43\"/><rect x=\"380\" y=\"40\" width=\"40\" height=\"12\" fill=\"#a07c4a\"/><circle cx=\"400\" cy=\"35\" r=\"6\" fill=\"#a07c4a\"/><rect x=\"200\" y=\"200\" width=\"400\" height=\"80\" fill=\"url(#st_d)\"/><g fill=\"#8b6c43\"><rect x=\"220\" y=\"200\" width=\"8\" height=\"80\"/><rect x=\"280\" y=\"200\" width=\"8\" height=\"80\"/><rect x=\"340\" y=\"200\" width=\"8\" height=\"80\"/><rect x=\"400\" y=\"200\" width=\"8\" height=\"80\"/><rect x=\"460\" y=\"200\" width=\"8\" height=\"80\"/><rect x=\"520\" y=\"200\" width=\"8\" height=\"80\"/><rect x=\"580\" y=\"200\" width=\"8\" height=\"80\"/></g></g></svg>", "pantheon": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_p\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_p\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_p)\"/><g opacity=\".9\"><path d=\"M280 180Q280 60 400 60Q520 60 520 180Z\" fill=\"url(#st_p)\"/><circle cx=\"400\" cy=\"60\" r=\"6\" fill=\"#5a4226\"/><polygon points=\"220,180 580,180 540,140 260,140\" fill=\"#8b6c43\"/><rect x=\"220\" y=\"170\" width=\"360\" height=\"12\" fill=\"#a07c4a\"/><g fill=\"url(#st_p)\"><rect x=\"240\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"280\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"320\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"360\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"400\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"440\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"480\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"520\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"560\" y=\"180\" width=\"14\" height=\"100\"/></g><rect x=\"200\" y=\"270\" width=\"400\" height=\"10\" fill=\"#8b6c43\"/></g></svg>", "arch": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_a\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_a)\"/><g opacity=\".9\"><rect x=\"100\" y=\"60\" width=\"600\" height=\"220\" fill=\"#c4a373\"/><path d=\"M320 280L320 180Q320 120 400 120Q480 120 480 180L480 280Z\" fill=\"#5a4226\"/><rect x=\"100\" y=\"90\" width=\"600\" height=\"14\" fill=\"#8b6c43\"/><rect x=\"100\" y=\"60\" width=\"600\" height=\"14\" fill=\"#8b6c43\"/><g fill=\"#5a4226\" opacity=\".6\"><rect x=\"140\" y=\"130\" width=\"40\" height=\"80\" rx=\"20\"/><rect x=\"200\" y=\"130\" width=\"40\" height=\"80\" rx=\"20\"/><rect x=\"260\" y=\"130\" width=\"40\" height=\"80\" rx=\"20\"/><rect x=\"500\" y=\"130\" width=\"40\" height=\"80\" rx=\"20\"/><rect x=\"560\" y=\"130\" width=\"40\" height=\"80\" rx=\"20\"/><rect x=\"620\" y=\"130\" width=\"40\" height=\"80\" rx=\"20\"/></g></g></svg>", "fountain": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_f\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"tc_f\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#b85c5c\"/><stop offset=\"1\" stop-color=\"#8b3a3a\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_f)\"/><g opacity=\".9\"><rect x=\"100\" y=\"40\" width=\"600\" height=\"180\" fill=\"#c4a373\"/><path d=\"M320 180L320 100Q320 70 400 70Q480 70 480 100L480 180Z\" fill=\"#8b6c43\"/><circle cx=\"400\" cy=\"135\" r=\"22\" fill=\"#5a4226\"/><rect x=\"385\" y=\"155\" width=\"30\" height=\"40\" rx=\"4\" fill=\"#5a4226\"/><rect x=\"100\" y=\"55\" width=\"600\" height=\"14\" fill=\"#8b6c43\"/><ellipse cx=\"400\" cy=\"245\" rx=\"240\" ry=\"20\" fill=\"url(#tc_f)\" opacity=\".4\"/><ellipse cx=\"400\" cy=\"240\" rx=\"220\" ry=\"14\" fill=\"#b85c5c\" opacity=\".6\"/><g stroke=\"#fff\" stroke-width=\"2\" fill=\"none\" opacity=\".5\"><path d=\"M370 200Q380 220 370 240\"/><path d=\"M400 200Q410 220 400 240\"/><path d=\"M430 200Q440 220 430 240\"/></g></g></svg>", "obelisk": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_o\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_o\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_o)\"/><g opacity=\".9\"><rect x=\"0\" y=\"220\" width=\"800\" height=\"60\" fill=\"#d4c4a0\"/><rect x=\"40\" y=\"120\" width=\"200\" height=\"100\" fill=\"#c4a373\" opacity=\".6\"/><rect x=\"560\" y=\"120\" width=\"200\" height=\"100\" fill=\"#c4a373\" opacity=\".6\"/><polygon points=\"395,40 405,40 415,220 385,220\" fill=\"url(#st_o)\"/><polygon points=\"395,40 405,40 400,20\" fill=\"#a07c4a\"/><line x1=\"400\" y1=\"20\" x2=\"400\" y2=\"10\" stroke=\"#8b6c43\" stroke-width=\"2\"/><line x1=\"395\" y1=\"14\" x2=\"405\" y2=\"14\" stroke=\"#8b6c43\" stroke-width=\"2\"/><rect x=\"375\" y=\"218\" width=\"50\" height=\"22\" fill=\"#8b6c43\"/><rect x=\"365\" y=\"232\" width=\"70\" height=\"14\" fill=\"#8b6c43\"/></g></svg>", "statue": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_s\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_s\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_s)\"/><g opacity=\".9\"><rect x=\"0\" y=\"180\" width=\"800\" height=\"100\" fill=\"#d4c4a0\"/><rect x=\"60\" y=\"120\" width=\"160\" height=\"100\" fill=\"#c4a373\" opacity=\".5\"/><rect x=\"580\" y=\"120\" width=\"160\" height=\"100\" fill=\"#c4a373\" opacity=\".5\"/><rect x=\"370\" y=\"180\" width=\"60\" height=\"80\" fill=\"url(#st_s)\"/><rect x=\"360\" y=\"200\" width=\"80\" height=\"14\" fill=\"#8b6c43\"/><ellipse cx=\"400\" cy=\"110\" rx=\"22\" ry=\"28\" fill=\"#3a2a1a\"/><path d=\"M378 130L380 180L420 180L422 130Q422 105 400 105Q378 105 378 130Z\" fill=\"#3a2a1a\"/><ellipse cx=\"400\" cy=\"105\" rx=\"24\" ry=\"14\" fill=\"#1a0f08\" opacity=\".7\"/><rect x=\"392\" y=\"155\" width=\"16\" height=\"20\" fill=\"#5a4226\"/></g></svg>", "painting": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"tc_pa\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#b85c5c\"/><stop offset=\"1\" stop-color=\"#8b3a3a\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"#e8d3a8\"/><g opacity=\".95\"><rect x=\"220\" y=\"50\" width=\"360\" height=\"200\" fill=\"#5a4226\"/><rect x=\"240\" y=\"70\" width=\"320\" height=\"160\" fill=\"#8b6c43\"/><rect x=\"250\" y=\"80\" width=\"300\" height=\"140\" fill=\"url(#tc_pa)\" opacity=\".5\"/><g fill=\"#c4a373\"><rect x=\"220\" y=\"50\" width=\"360\" height=\"6\"/><rect x=\"220\" y=\"244\" width=\"360\" height=\"6\"/><rect x=\"220\" y=\"50\" width=\"6\" height=\"200\"/><rect x=\"574\" y=\"50\" width=\"6\" height=\"200\"/></g><ellipse cx=\"400\" cy=\"130\" rx=\"28\" ry=\"38\" fill=\"#3a2a1a\" opacity=\".6\"/><rect x=\"370\" y=\"165\" width=\"60\" height=\"55\" fill=\"#5a4226\" opacity=\".6\"/><g fill=\"#a07c4a\"><circle cx=\"230\" cy=\"60\" r=\"6\"/><circle cx=\"570\" cy=\"60\" r=\"6\"/><circle cx=\"230\" cy=\"240\" r=\"6\"/><circle cx=\"570\" cy=\"240\" r=\"6\"/></g></g></svg>", "church": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_ch\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_ch)\"/><g opacity=\".9\"><rect x=\"220\" y=\"80\" width=\"360\" height=\"200\" fill=\"#c4a373\"/><polygon points=\"220,80 580,80 400,30\" fill=\"#8b6c43\"/><rect x=\"370\" y=\"180\" width=\"60\" height=\"100\" fill=\"#5a4226\"/><path d=\"M370 200Q370 180 400 180Q430 180 430 200\" fill=\"#5a4226\"/><circle cx=\"400\" cy=\"130\" r=\"22\" fill=\"#5a4226\" opacity=\".7\"/><rect x=\"270\" y=\"160\" width=\"40\" height=\"80\" rx=\"20\" fill=\"#5a4226\" opacity=\".5\"/><rect x=\"490\" y=\"160\" width=\"40\" height=\"80\" rx=\"20\" fill=\"#5a4226\" opacity=\".5\"/><rect x=\"220\" y=\"100\" width=\"360\" height=\"8\" fill=\"#8b6c43\"/><line x1=\"400\" y1=\"35\" x2=\"400\" y2=\"15\" stroke=\"#a07c4a\" stroke-width=\"3\"/><line x1=\"394\" y1=\"22\" x2=\"406\" y2=\"22\" stroke=\"#a07c4a\" stroke-width=\"3\"/></g></svg>", "fortress": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_fo\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_fo\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient><linearGradient id=\"tc_fo\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#b85c5c\"/><stop offset=\"1\" stop-color=\"#8b3a3a\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_fo)\"/><g opacity=\".9\"><rect x=\"240\" y=\"180\" width=\"320\" height=\"100\" fill=\"#8b6c43\"/><rect x=\"290\" y=\"100\" width=\"220\" height=\"100\" fill=\"url(#st_fo)\"/><ellipse cx=\"400\" cy=\"100\" rx=\"110\" ry=\"20\" fill=\"#a07c4a\"/><g fill=\"#5a4226\"><rect x=\"290\" y=\"90\" width=\"20\" height=\"20\"/><rect x=\"330\" y=\"90\" width=\"20\" height=\"20\"/><rect x=\"370\" y=\"90\" width=\"20\" height=\"20\"/><rect x=\"410\" y=\"90\" width=\"20\" height=\"20\"/><rect x=\"450\" y=\"90\" width=\"20\" height=\"20\"/><rect x=\"490\" y=\"90\" width=\"20\" height=\"20\"/></g><circle cx=\"400\" cy=\"55\" r=\"8\" fill=\"#a07c4a\"/><path d=\"M392 60L392 80L408 80L408 60Z\" fill=\"#a07c4a\"/><rect x=\"0\" y=\"240\" width=\"800\" height=\"40\" fill=\"url(#tc_fo)\" opacity=\".3\"/></g></svg>", "temple": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_t\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_t\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_t)\"/><g opacity=\".9\"><rect x=\"280\" y=\"240\" width=\"240\" height=\"14\" fill=\"#c4a373\"/><rect x=\"290\" y=\"226\" width=\"220\" height=\"14\" fill=\"#a07c4a\"/><rect x=\"300\" y=\"212\" width=\"200\" height=\"14\" fill=\"#8b6c43\"/><rect x=\"300\" y=\"130\" width=\"200\" height=\"82\" fill=\"#c4a373\"/><g fill=\"#8b6c43\"><rect x=\"310\" y=\"130\" width=\"10\" height=\"82\"/><rect x=\"340\" y=\"130\" width=\"10\" height=\"82\"/><rect x=\"370\" y=\"130\" width=\"10\" height=\"82\"/><rect x=\"400\" y=\"130\" width=\"10\" height=\"82\"/><rect x=\"430\" y=\"130\" width=\"10\" height=\"82\"/><rect x=\"460\" y=\"130\" width=\"10\" height=\"82\"/><rect x=\"490\" y=\"130\" width=\"10\" height=\"82\"/></g><rect x=\"295\" y=\"120\" width=\"210\" height=\"14\" fill=\"#8b6c43\"/><rect x=\"330\" y=\"80\" width=\"140\" height=\"40\" fill=\"url(#st_t)\"/><path d=\"M320 90Q320 30 400 30Q480 30 480 90Z\" fill=\"url(#st_t)\"/><rect x=\"392\" y=\"20\" width=\"16\" height=\"14\" fill=\"#a07c4a\"/><circle cx=\"400\" cy=\"16\" r=\"4\" fill=\"#a07c4a\"/></g></svg>", "garden": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_g\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_g)\"/><g opacity=\".9\"><rect x=\"0\" y=\"200\" width=\"800\" height=\"80\" fill=\"#d4c4a0\"/><rect x=\"0\" y=\"195\" width=\"800\" height=\"6\" fill=\"#a07c4a\"/><g fill=\"#a07c4a\"><ellipse cx=\"80\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"120\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"160\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"200\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"600\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"640\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"680\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"720\" cy=\"208\" rx=\"4\" ry=\"8\"/></g><rect x=\"158\" y=\"140\" width=\"8\" height=\"60\" fill=\"#5a4226\"/><circle cx=\"162\" cy=\"130\" r=\"38\" fill=\"#5a7a3a\"/><circle cx=\"150\" cy=\"120\" r=\"5\" fill=\"#d4801a\"/><circle cx=\"175\" cy=\"135\" r=\"5\" fill=\"#d4801a\"/><circle cx=\"160\" cy=\"145\" r=\"5\" fill=\"#d4801a\"/><rect x=\"638\" y=\"140\" width=\"8\" height=\"60\" fill=\"#5a4226\"/><circle cx=\"642\" cy=\"130\" r=\"38\" fill=\"#5a7a3a\"/><circle cx=\"630\" cy=\"120\" r=\"5\" fill=\"#d4801a\"/><circle cx=\"655\" cy=\"135\" r=\"5\" fill=\"#d4801a\"/><circle cx=\"640\" cy=\"145\" r=\"5\" fill=\"#d4801a\"/><g opacity=\".5\"><path d=\"M360 190Q360 150 400 150Q440 150 440 190Z\" fill=\"#8b6c43\"/><rect x=\"375\" y=\"190\" width=\"50\" height=\"10\" fill=\"#8b6c43\"/><circle cx=\"400\" cy=\"146\" r=\"3\" fill=\"#8b6c43\"/></g></g></svg>", "keyhole": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_k\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><mask id=\"kmask\"><rect width=\"800\" height=\"280\" fill=\"black\"/><circle cx=\"400\" cy=\"110\" r=\"50\" fill=\"white\"/><polygon points=\"370,110 430,110 415,200 385,200\" fill=\"white\"/></mask></defs><rect width=\"800\" height=\"280\" fill=\"#2a2520\"/><g mask=\"url(#kmask)\"><rect width=\"800\" height=\"280\" fill=\"url(#sk_k)\"/><rect x=\"0\" y=\"160\" width=\"350\" height=\"120\" fill=\"#5a7a3a\"/><rect x=\"450\" y=\"160\" width=\"350\" height=\"120\" fill=\"#5a7a3a\"/><rect x=\"350\" y=\"180\" width=\"100\" height=\"100\" fill=\"#d4c4a0\"/><path d=\"M360 170Q360 120 400 120Q440 120 440 170Z\" fill=\"#a07c4a\"/><rect x=\"378\" y=\"170\" width=\"44\" height=\"14\" fill=\"#a07c4a\"/><circle cx=\"400\" cy=\"116\" r=\"4\" fill=\"#8b6c43\"/></g><circle cx=\"400\" cy=\"110\" r=\"50\" fill=\"none\" stroke=\"#a07c4a\" stroke-width=\"2\" opacity=\".6\"/><polygon points=\"370,110 430,110 415,200 385,200\" fill=\"none\" stroke=\"#a07c4a\" stroke-width=\"2\" opacity=\".6\"/></svg>", "mask": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_m\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_m\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_m)\"/><g><circle cx=\"400\" cy=\"140\" r=\"110\" fill=\"url(#st_m)\"/><circle cx=\"400\" cy=\"140\" r=\"110\" fill=\"none\" stroke=\"#5a4226\" stroke-width=\"3\"/><ellipse cx=\"365\" cy=\"115\" rx=\"14\" ry=\"8\" fill=\"#3a2a1a\"/><ellipse cx=\"435\" cy=\"115\" rx=\"14\" ry=\"8\" fill=\"#3a2a1a\"/><path d=\"M345 95Q365 90 385 95\" fill=\"none\" stroke=\"#5a4226\" stroke-width=\"2\"/><path d=\"M415 95Q435 90 455 95\" fill=\"none\" stroke=\"#5a4226\" stroke-width=\"2\"/><path d=\"M400 120L390 150L410 150Z\" fill=\"#5a4226\"/><ellipse cx=\"400\" cy=\"180\" rx=\"30\" ry=\"18\" fill=\"#1a0f08\"/><path d=\"M350 200Q360 230 380 230Q400 240 420 230Q440 230 450 200\" fill=\"none\" stroke=\"#5a4226\" stroke-width=\"3\"/><path d=\"M375 165Q388 175 400 165Q412 175 425 165\" fill=\"none\" stroke=\"#5a4226\" stroke-width=\"3\"/></g></svg>", "monument": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_mo\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_mo)\"/><g opacity=\".95\"><rect x=\"100\" y=\"250\" width=\"600\" height=\"30\" fill=\"#e8d8b5\"/><rect x=\"140\" y=\"230\" width=\"520\" height=\"20\" fill=\"#f5edd9\"/><rect x=\"180\" y=\"210\" width=\"440\" height=\"20\" fill=\"#fbf7f0\"/><rect x=\"280\" y=\"120\" width=\"240\" height=\"90\" fill=\"#fbf7f0\"/><g fill=\"#e8d8b5\"><rect x=\"295\" y=\"120\" width=\"14\" height=\"90\"/><rect x=\"325\" y=\"120\" width=\"14\" height=\"90\"/><rect x=\"355\" y=\"120\" width=\"14\" height=\"90\"/><rect x=\"385\" y=\"120\" width=\"14\" height=\"90\"/><rect x=\"415\" y=\"120\" width=\"14\" height=\"90\"/><rect x=\"445\" y=\"120\" width=\"14\" height=\"90\"/><rect x=\"475\" y=\"120\" width=\"14\" height=\"90\"/></g><polygon points=\"280,120 520,120 400,80\" fill=\"#f5edd9\"/><circle cx=\"400\" cy=\"60\" r=\"6\" fill=\"#a07c4a\"/><rect x=\"392\" y=\"63\" width=\"16\" height=\"20\" fill=\"#a07c4a\"/><ellipse cx=\"400\" cy=\"90\" rx=\"20\" ry=\"8\" fill=\"#a07c4a\"/></g></svg>", "rooftops": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_r\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_r)\"/><g opacity=\".9\"><polygon points=\"100,140 200,80 300,140 300,280 100,280\" fill=\"#b85c5c\"/><polygon points=\"220,160 320,100 420,160 420,280 220,280\" fill=\"#a85050\"/><polygon points=\"340,140 440,80 540,140 540,280 340,280\" fill=\"#c46a6a\"/><polygon points=\"460,170 560,110 660,170 660,280 460,280\" fill=\"#b85c5c\"/><polygon points=\"580,140 680,80 780,140 780,280 580,280\" fill=\"#a85050\"/><rect x=\"180\" y=\"100\" width=\"14\" height=\"20\" fill=\"#8b6c43\"/><rect x=\"400\" y=\"100\" width=\"14\" height=\"20\" fill=\"#8b6c43\"/><rect x=\"640\" y=\"100\" width=\"14\" height=\"20\" fill=\"#8b6c43\"/></g></svg>", "library": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"800\" height=\"280\" fill=\"#3a2a1a\"/><rect x=\"0\" y=\"0\" width=\"800\" height=\"280\" fill=\"#5a4226\"/><g transform=\"translate(60,50)\"><rect x=\"0\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a85050\"/><rect x=\"15\" y=\"0\" width=\"12\" height=\"50\" fill=\"#8b6c43\"/><rect x=\"28\" y=\"0\" width=\"14\" height=\"50\" fill=\"#5a4226\"/><rect x=\"43\" y=\"0\" width=\"10\" height=\"50\" fill=\"#a07c4a\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#b85c5c\"/><rect x=\"69\" y=\"0\" width=\"12\" height=\"50\" fill=\"#3a2a1a\"/><rect x=\"82\" y=\"0\" width=\"14\" height=\"50\" fill=\"#c4a373\"/></g><g transform=\"translate(230,50)\"><rect x=\"0\" y=\"0\" width=\"14\" height=\"50\" fill=\"#8b6c43\"/><rect x=\"15\" y=\"0\" width=\"12\" height=\"50\" fill=\"#a85050\"/><rect x=\"28\" y=\"0\" width=\"14\" height=\"50\" fill=\"#c4a373\"/><rect x=\"43\" y=\"0\" width=\"10\" height=\"50\" fill=\"#5a4226\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#3a2a1a\"/><rect x=\"69\" y=\"0\" width=\"12\" height=\"50\" fill=\"#a07c4a\"/></g><g transform=\"translate(400,50)\"><rect x=\"0\" y=\"0\" width=\"14\" height=\"50\" fill=\"#5a4226\"/><rect x=\"15\" y=\"0\" width=\"12\" height=\"50\" fill=\"#c4a373\"/><rect x=\"28\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a85050\"/><rect x=\"43\" y=\"0\" width=\"10\" height=\"50\" fill=\"#8b6c43\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a07c4a\"/><rect x=\"69\" y=\"0\" width=\"12\" height=\"50\" fill=\"#5a4226\"/></g><g transform=\"translate(570,50)\"><rect x=\"0\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a07c4a\"/><rect x=\"15\" y=\"0\" width=\"12\" height=\"50\" fill=\"#5a4226\"/><rect x=\"28\" y=\"0\" width=\"14\" height=\"50\" fill=\"#8b6c43\"/><rect x=\"43\" y=\"0\" width=\"10\" height=\"50\" fill=\"#a85050\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#c4a373\"/><rect x=\"69\" y=\"0\" width=\"12\" height=\"50\" fill=\"#3a2a1a\"/></g><g transform=\"translate(60,160)\"><rect x=\"0\" y=\"0\" width=\"12\" height=\"50\" fill=\"#5a4226\"/><rect x=\"13\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a07c4a\"/><rect x=\"28\" y=\"0\" width=\"10\" height=\"50\" fill=\"#8b6c43\"/><rect x=\"39\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a85050\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#5a4226\"/><rect x=\"69\" y=\"0\" width=\"12\" height=\"50\" fill=\"#c4a373\"/></g><g transform=\"translate(230,160)\"><rect x=\"0\" y=\"0\" width=\"12\" height=\"50\" fill=\"#a85050\"/><rect x=\"13\" y=\"0\" width=\"14\" height=\"50\" fill=\"#c4a373\"/><rect x=\"28\" y=\"0\" width=\"10\" height=\"50\" fill=\"#5a4226\"/><rect x=\"39\" y=\"0\" width=\"14\" height=\"50\" fill=\"#3a2a1a\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#8b6c43\"/></g><g transform=\"translate(400,160)\"><rect x=\"0\" y=\"0\" width=\"12\" height=\"50\" fill=\"#c4a373\"/><rect x=\"13\" y=\"0\" width=\"14\" height=\"50\" fill=\"#3a2a1a\"/><rect x=\"28\" y=\"0\" width=\"10\" height=\"50\" fill=\"#a85050\"/><rect x=\"39\" y=\"0\" width=\"14\" height=\"50\" fill=\"#8b6c43\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a07c4a\"/></g><g transform=\"translate(570,160)\"><rect x=\"0\" y=\"0\" width=\"12\" height=\"50\" fill=\"#3a2a1a\"/><rect x=\"13\" y=\"0\" width=\"14\" height=\"50\" fill=\"#5a4226\"/><rect x=\"28\" y=\"0\" width=\"10\" height=\"50\" fill=\"#a07c4a\"/><rect x=\"39\" y=\"0\" width=\"14\" height=\"50\" fill=\"#c4a373\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a85050\"/></g><rect x=\"0\" y=\"105\" width=\"800\" height=\"6\" fill=\"#3a2a1a\"/><rect x=\"0\" y=\"215\" width=\"800\" height=\"6\" fill=\"#3a2a1a\"/></svg>", "tower": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_tw\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_tw)\"/><g opacity=\".9\"><rect x=\"200\" y=\"180\" width=\"400\" height=\"100\" fill=\"#c4a373\"/><rect x=\"400\" y=\"40\" width=\"80\" height=\"200\" fill=\"#a07c4a\"/><g fill=\"#8b6c43\"><rect x=\"400\" y=\"30\" width=\"14\" height=\"14\"/><rect x=\"420\" y=\"30\" width=\"14\" height=\"14\"/><rect x=\"446\" y=\"30\" width=\"14\" height=\"14\"/><rect x=\"466\" y=\"30\" width=\"14\" height=\"14\"/></g><g fill=\"#3a2a1a\" opacity=\".7\"><rect x=\"430\" y=\"80\" width=\"20\" height=\"30\"/><rect x=\"430\" y=\"130\" width=\"20\" height=\"30\"/><rect x=\"430\" y=\"180\" width=\"20\" height=\"30\"/></g><g fill=\"#3a2a1a\" opacity=\".5\"><rect x=\"230\" y=\"210\" width=\"20\" height=\"30\"/><rect x=\"270\" y=\"210\" width=\"20\" height=\"30\"/><rect x=\"310\" y=\"210\" width=\"20\" height=\"30\"/><rect x=\"510\" y=\"210\" width=\"20\" height=\"30\"/><rect x=\"550\" y=\"210\" width=\"20\" height=\"30\"/></g><circle cx=\"440\" cy=\"60\" r=\"6\" fill=\"#ffd66e\"/><circle cx=\"440\" cy=\"60\" r=\"14\" fill=\"#ffd66e\" opacity=\".4\"/><circle cx=\"440\" cy=\"60\" r=\"22\" fill=\"#ffd66e\" opacity=\".15\"/></g></svg>", "stairs": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_st\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_st)\"/><g opacity=\".95\"><rect x=\"340\" y=\"40\" width=\"120\" height=\"80\" fill=\"#c4a373\"/><polygon points=\"340,40 460,40 400,10\" fill=\"#8b6c43\"/><rect x=\"370\" y=\"80\" width=\"20\" height=\"40\" fill=\"#5a4226\"/><rect x=\"410\" y=\"80\" width=\"20\" height=\"40\" fill=\"#5a4226\"/><rect x=\"320\" y=\"20\" width=\"20\" height=\"40\" fill=\"#a07c4a\"/><rect x=\"460\" y=\"20\" width=\"20\" height=\"40\" fill=\"#a07c4a\"/><g fill=\"#e8d8b5\" stroke=\"#a07c4a\" stroke-width=\".5\"><polygon points=\"200,280 600,280 540,260 260,260\"/><polygon points=\"220,260 580,260 530,240 270,240\"/><polygon points=\"240,240 560,240 520,220 280,220\"/><polygon points=\"260,220 540,220 510,200 290,200\"/><polygon points=\"280,200 520,200 500,180 300,180\"/><polygon points=\"300,180 500,180 490,160 310,160\"/><polygon points=\"310,160 490,160 480,140 320,140\"/><polygon points=\"320,140 480,140 470,125 330,125\"/></g></g></svg>", "coffee": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_co\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_co)\"/><g opacity=\".95\"><rect x=\"0\" y=\"200\" width=\"800\" height=\"80\" fill=\"#8b6c43\" opacity=\".5\"/><ellipse cx=\"400\" cy=\"210\" rx=\"140\" ry=\"20\" fill=\"#fbf7f0\"/><ellipse cx=\"400\" cy=\"208\" rx=\"140\" ry=\"20\" fill=\"none\" stroke=\"#a07c4a\" stroke-width=\"2\"/><path d=\"M320 160L330 200L470 200L480 160Z\" fill=\"#fbf7f0\"/><ellipse cx=\"400\" cy=\"160\" rx=\"80\" ry=\"14\" fill=\"#3a2a1a\"/><ellipse cx=\"400\" cy=\"160\" rx=\"80\" ry=\"14\" fill=\"none\" stroke=\"#a07c4a\" stroke-width=\"2\"/><ellipse cx=\"400\" cy=\"158\" rx=\"76\" ry=\"12\" fill=\"#c4a373\" opacity=\".7\"/><path d=\"M480 170Q520 170 520 185Q520 200 480 198\" fill=\"none\" stroke=\"#fbf7f0\" stroke-width=\"4\"/><path d=\"M480 170Q520 170 520 185Q520 200 480 198\" fill=\"none\" stroke=\"#a07c4a\" stroke-width=\"2\"/><g fill=\"none\" stroke=\"#e8d8b5\" stroke-width=\"2\" opacity=\".6\"><path d=\"M360 140Q360 110 370 100Q380 90 370 70\"/><path d=\"M400 130Q400 100 410 90Q420 80 410 60\"/><path d=\"M440 140Q440 110 450 100Q460 90 450 70\"/></g><ellipse cx=\"280\" cy=\"215\" rx=\"14\" ry=\"3\" fill=\"#a07c4a\"/><rect x=\"260\" y=\"213\" width=\"22\" height=\"2\" fill=\"#a07c4a\"/></g></svg>"};
-const CARD_TO_MOTIF = {"galleria-sciarra": "arch", "fontana-trevi": "fountain", "santignazio": "dome", "pantheon": "pantheon", "piazza-navona": "obelisk", "campo-fiori": "statue", "doria-pamphilj": "painting", "santeustachio": "church", "castel-santangelo": "fortress", "tempietto": "temple", "smt": "church", "fontanone": "fountain", "giardino-aranci": "garden", "buco-serratura": "keyhole", "bocca-verita": "mask", "ghetto": "arch", "tartarughe": "fountain", "vittoriano": "monument", "monti": "rooftops", "casanatense": "library", "torre-scimmia": "tower", "popolo": "obelisk", "spagna": "stairs", "tazza-doro": "coffee", "auditorium": "monument", "laterano": "church", "san-clemente": "church", "san-pietro-vincoli": "statue", "galleria-borghese": "statue", "villa-borghese": "garden", "cappuccini": "church", "smm": "church", "palazzo-massimo": "statue", "angeli": "church"};
+const CARD_TO_MOTIF = {"galleria-sciarra": "arch", "fontana-trevi": "fountain", "santignazio": "dome", "pantheon": "pantheon", "piazza-navona": "obelisk", "campo-fiori": "statue", "doria-pamphilj": "painting", "santeustachio": "church", "castel-santangelo": "fortress", "tempietto": "temple", "smt": "church", "fontanone": "fountain", "giardino-aranci": "garden", "buco-serratura": "keyhole", "bocca-verita": "mask", "ghetto": "arch", "tartarughe": "fountain", "vittoriano": "monument", "monti": "rooftops", "casanatense": "library", "torre-scimmia": "tower", "popolo": "obelisk", "spagna": "stairs", "tazza-doro": "coffee", "auditorium": "monument", "laterano": "church", "san-clemente": "church", "san-pietro-vincoli": "statue", "galleria-borghese": "statue", "villa-borghese": "garden", "cappuccini": "church", "smm": "church", "palazzo-massimo": "statue", "angeli": "church", "santa-teresa": "statue"};
 
 function loadSvgFallback(img, cardId) {
   try {
@@ -2227,6 +2274,8 @@ function loadSvgFallbackDetail(img, cardId) {
           <span class="label">Referencias culturales</span>
           <div class="ref-item"><span class="ref-title">La dolce vita</span> (Federico Fellini, 1960) — la escena más famosa del cine italiano: Anita Ekberg bañándose en la fuente con Marcello Mastroianni. Rodada en marzo con agua a 4°C.</div>
           <div class="ref-item"><span class="ref-title">Tres monedas en la fuente</span> (Jean Negulesco, 1954) — la película que popularizó internacionalmente la tradición de la moneda.</div>
+          <div class="ref-item"><span class="ref-title">I Segreti di Roma</span> (Corrado Augias, 2005) — Augias recorre la historia del Acqua Vergine, el acueducto de Agripa del año 19 a.C. que aún hoy abastece esta fuente: el nombre «Vergine» viene de la leyenda de la jovencita que, según Frontino, mostró a los ingenieros romanos el manantial en la Campagna. El agua lleva viniendo del mismo sitio desde hace 2.000 años.</div>
+          <div class="ref-item"><span class="ref-title">Historias de Roma</span> (Enric González, 2004) — González pasa por Trevi de madrugada, cuando ya no hay turistas y la fuente ruge sola. «Roma se vuelve suya cuando se queda sin testigos.»</div>
         </div>
 
         <div class="notes-area">
@@ -2343,6 +2392,11 @@ function loadSvgFallbackDetail(img, cardId) {
         <a href="https://www.google.com/maps/search/?api=1&query=Pantheon%20Roma" target="_blank" rel="noopener" class="maps-link">Ver en Google Maps</a>
         
 
+        <div class="culture-box">
+          <span class="label">Referencias literarias</span>
+          <div class="ref-item"><span class="ref-title">I Segreti di Roma</span> (Corrado Augias, 2005) — Augias dedica un capítulo a la tumba de Rafael en el Pantheon y a la petición que hizo en su testamento: ser enterrado allí con su amante, la <em>Fornarina</em>. Solo la primera parte se cumplió. También recorre la historia del edificio desde Agripa hasta Hadrian, deteniéndose en el misterio estructural de la cúpula: el mayor domo de hormigón sin armar del mundo, todavía sin rival.</div>
+        </div>
+
         <div class="notes-area">
           <label for="note-pantheon">Notas in situ</label>
           <textarea class="notes-textarea" id="note-pantheon" data-note-key="pantheon" placeholder="Lo que quieras recordar de aquí…"></textarea>
@@ -2404,6 +2458,10 @@ function loadSvgFallbackDetail(img, cardId) {
           <label for="note-piazza-navona">Notas in situ</label>
           <textarea class="notes-textarea" id="note-piazza-navona" data-note-key="piazza-navona" placeholder="Lo que quieras recordar de aquí…"></textarea>
         </div>
+        <div class="culture-box">
+          <span class="label">Referencias literarias</span>
+          <div class="ref-item"><span class="ref-title">I Segreti di Roma</span> (Corrado Augias, 2005) — Augias recorre la historia del <em>Stadio di Domiziano</em> que da forma a la plaza, y el descubrimiento en el siglo XIX de que el perímetro ovalado de las casas trazaba exactamente la pista de carreras original. Tiene también un pasaje divertido sobre la rivalidad entre Bernini y Borromini: comparten plaza, trabajan para el mismo papa, y Bernini hizo que la figura del Río de la Plata alzara el brazo mirando hacia la fachada de su rival «como horrorizado». Borromini murió antes de poder responder.</div>
+        </div>
       </article>
 
       <!-- FICHA: CAMPO DE' FIORI -->
@@ -2456,6 +2514,11 @@ function loadSvgFallbackDetail(img, cardId) {
         <div class="notes-area">
           <label for="note-campo-fiori">Notas in situ</label>
           <textarea class="notes-textarea" id="note-campo-fiori" data-note-key="campo-fiori" placeholder="Lo que quieras recordar de aquí…"></textarea>
+        </div>
+        <div class="culture-box">
+          <span class="label">Referencias literarias</span>
+          <div class="ref-item"><span class="ref-title">I Segreti di Roma</span> (Corrado Augias, 2005) — El capítulo dedicado a Giordano Bruno es uno de los más detallados del libro. Augias reconstruye los siete años de proceso inquisitorial, los cargos exactos por los que Bruno fue condenado (no solo el heliocentrismo, sino su panteísmo radical: negaba la Trinidad, la Encarnación, la Virgen) y describe la mañana del 17 de febrero de 1600, cuando fue quemado vivo en esta misma plaza con la lengua sujeta para que no pudiera hablar. «Roma quemó a su mejor pensador y levantó una estatua en su honor. Así funciona esta ciudad con sus héroes.»</div>
+          <div class="ref-item"><span class="ref-title">Historias de Roma</span> (Enric González, 2004) — González pasa por Campo de' Fiori en varias crónicas como ejemplo del doble fondo de Roma: una plaza de mercado donde cada mañana huele a verdura y cada noche a cerveza, y en el centro un hombre quemado vivo hace cuatro siglos que nadie mira.</div>
         </div>
       </article>
 
@@ -2701,9 +2764,11 @@ function loadSvgFallbackDetail(img, cardId) {
         
 
         <div class="culture-box">
-          <span class="label">Referencias culturales</span>
+          <span class="label">Referencias culturales y literarias</span>
           <div class="ref-item"><span class="ref-title">Tosca</span> (Giacomo Puccini, 1900) — la ópera termina con la protagonista lanzándose desde el tejado del castillo tras cantar el aria «<em>E lucevan le stelle</em>». Uno de los finales operísticos más famosos del repertorio.</div>
           <div class="ref-item"><span class="ref-title">Ángeles y demonios</span> (Dan Brown, 2000) — el castillo aparece como uno de los enclaves clave de la trama. La novela fue éxito mundial antes que <em>El código Da Vinci</em>.</div>
+          <div class="ref-item"><span class="ref-title">I Segreti di Roma</span> (Corrado Augias, 2005) — Augias traza la historia completa del edificio: el mausoleo de Adriano construido para ser la tumba más suntuosa del mundo, su conversión en fortaleza papal, los corredores secretos que conectan el castillo con el Vaticano (el <em>passetto</em>), y la leyenda del papa Gregorio Magno que en 590, durante una procesión de penitencia por la peste, vio al arcángel Miguel posarse sobre lo alto del mausoleo envainando la espada — señal del fin de la epidemia. De ahí el nombre.</div>
+          <div class="ref-item"><span class="ref-title">Historias de Roma</span> (Enric González, 2004) — González lo cita como ejemplo de la vocación romana de reutilizar: «en Roma nada se destruye y nada se construye de cero; todo se adapta, se tapa, se convierte en otra cosa».</div>
         </div>
 
         <div class="notes-area">
@@ -3199,8 +3264,9 @@ function loadSvgFallbackDetail(img, cardId) {
         
 
         <div class="culture-box">
-          <span class="label">Referencias culturales</span>
+          <span class="label">Referencias culturales y literarias</span>
           <div class="ref-item"><span class="ref-title">Vacaciones en Roma</span> (William Wyler, 1953) — la escena más famosa: Gregory Peck mete la mano en la Bocca y simula que se la arranca para asustar a Audrey Hepburn. La reacción de Hepburn es genuina — Peck no la avisó.</div>
+          <div class="ref-item"><span class="ref-title">I Segreti di Roma</span> (Corrado Augias, 2005) — Augias desmonta el mito: la Bocca no es ninguna trampa para perjuros sino una simple tapa de alcantarilla romana del siglo IV a.C., probablemente del desagüe del Foro Boario. Su identidad exacta sigue en discusión. Augias lo usa como ejemplo de la tendencia romana a fabricar leyendas sobre objetos ordinarios: «Roma convierte en sagrado lo que toca».</div>
         </div>
 
         <div class="notes-area">
@@ -3263,6 +3329,10 @@ function loadSvgFallbackDetail(img, cardId) {
         <div class="notes-area">
           <label for="note-ghetto">Notas in situ</label>
           <textarea class="notes-textarea" id="note-ghetto" data-note-key="ghetto" placeholder="Lo que quieras recordar de aquí…"></textarea>
+        </div>
+        <div class="culture-box">
+          <span class="label">Referencias literarias</span>
+          <div class="ref-item"><span class="ref-title">I Segreti di Roma</span> (Corrado Augias, 2005) — Uno de los capítulos más cargados del libro. Augias recorre la historia del ghetto desde su creación por Pablo IV en 1555 hasta la <em>razzia</em> nazi del 16 de octubre de 1943, cuando más de 1.000 judíos romanos fueron deportados a Auschwitz. Solo 16 volvieron. Describe cómo el Papa Pío XII no intervino públicamente, un silencio que sigue siendo el nudo moral más discutido de su papado. Las <em>stolpersteine</em> en el suelo del barrio — los adoquines de bronce con los nombres de los deportados — son el mapa de esa mañana.</div>
         </div>
       </article>
 
@@ -3872,6 +3942,10 @@ function loadSvgFallbackDetail(img, cardId) {
           <label for="note-laterano">Notas in situ</label>
           <textarea class="notes-textarea" id="note-laterano" data-note-key="laterano" placeholder="Lo que quieras recordar de aquí…"></textarea>
         </div>
+        <div class="culture-box">
+          <span class="label">Referencias literarias</span>
+          <div class="ref-item"><span class="ref-title">I Segreti di Roma</span> (Corrado Augias, 2005) — Augias subraya la paradoja que más descoloca a los visitantes: «la catedral más importante del mundo no es la de Roma, sino que es la de Roma, y casi nadie lo sabe». Dedica un capítulo a la historia del Laterano como sede del poder pontificio durante mil años, a los Pactos de 1929 firmados en este palacio, y a por qué la inauguración de la nueva basílica de San Pedro en el Vaticano fue, de algún modo, la firma del declive político de los Papas: cuando se trasladaron allí, dejaron de ser los obispos de Roma y se convirtieron en monarcas universales.</div>
+        </div>
       </article>
 
       <!-- FICHA: SAN CLEMENTE -->
@@ -4034,15 +4108,21 @@ function loadSvgFallbackDetail(img, cardId) {
         </div>
         <div class="tl-food-foot">Todo a 10 min del hotel. Fichas en <a href="#gastronomia">Gastronomía</a>.</div>
       </div>
-      <div class="tl-item" data-pace="all"><span class="tl-time">15:00</span><a href="#smm" class="tl-title">Santa Maria Maggiore</a><div class="tl-note">A 5 min del hotel. Mosaicos del s. V, Bernini y el papa Francisco.</div></div>
-      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>45 min</b> · mosaicos + artesonado dorado + tumbas · abierta sin pausa</span><span class="tl-meta-item">🚶 hasta siguiente: <b>8 min</b> · hacia Termini</span></div>
-      <div class="tl-transport walk" data-pace="medium"><div class="tl-transport-header">Santa Maria Maggiore → Palazzo Massimo · ~8 min</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · hacia Termini · el museo está pegado a la estación<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>8 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">Opcional pero muy recomendable: el mejor refugio con aire acondicionado para las horas de más calor, y a 2 min del hotel.</div></div>
-      <div class="tl-item" data-pace="medium"><span class="tl-time">15:55</span><a href="#palazzo-massimo" class="tl-title">Palazzo Massimo · Museo Nazionale Romano</a><div class="tl-note">El mejor arte romano del mundo. El jardín pintado de Livia.</div></div>
-      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>60-75 min</b> · esculturas + frescos de Livia · climatizado</span><span class="tl-meta-item warn">Cierra los lunes · martes abierto hasta 19:00</span></div>
-      <div class="tl-transport walk" data-pace="all"><div class="tl-transport-header">Palazzo Massimo → Santa Maria degli Angeli · ~6 min</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · hasta Piazza della Repubblica<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>6 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">Último monumento del viaje: una iglesia de Miguel Ángel dentro de unas termas romanas. Cierre perfecto.</div></div>
-      <div class="tl-item" data-pace="all"><span class="tl-time">17:10</span><a href="#angeli" class="tl-title">Santa Maria degli Angeli e dei Martiri</a><div class="tl-note">Miguel Ángel dentro de las Termas de Diocleciano. La Meridiana.</div></div>
-      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>20-30 min</b> · el frigidarium colosal + la línea meridiana en el suelo · gratis</span><span class="tl-meta-item">🚶 hasta hotel: <b>7 min</b></span></div>
-      <div class="tl-item" data-pace="all"><span class="tl-time">17:45</span><span class="tl-title disabled">Recoger maletas en hotel</span><div class="tl-note">7 min andando desde Repubblica. Despedida del Royal Court.</div></div>
+      <div class="tl-transport walk" data-pace="all"><div class="tl-transport-header">Termini → Piazza San Bernardo · ~12 min andando</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · por Via Nazionale hacia Via XX Settembre · subida suave · en la plaza, la <strong>Fontana del Mosè</strong> os espera antes de que abra la iglesia<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>12 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">La iglesia cierra al mediodía y reabre exactamente a las 15:30. Llegad antes a ver la Fontana del Mosè, que está justo al lado.</div></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">15:20</span><span class="tl-title disabled">Fontana dell'Acqua Felice · el Mosè</span><div class="tl-note">Terminal del acueducto de Sixto V. El enorme Moisés de bronce en la hornacina central. Piazza San Bernardo.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>10 min</b> · exterior · merece dos minutos antes de la iglesia de al lado</span></div>
+      <div class="tl-item fixed-event" data-pace="all"><span class="tl-time">15:30</span><a href="#santa-teresa" class="tl-title">Éxtasis de Santa Teresa · Santa Maria della Vittoria</a><div class="tl-note">Bernini, 1647–52. La capilla Cornaro. Cierra 18:00.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>25-30 min</b> · la capilla Cornaro + el frontal de la iglesia · acceso libre · llevad monedas para la luz</span><span class="tl-meta-item warn">Reabre exactamente a las 15:30 · hombros y rodillas cubiertos</span></div>
+      <div class="tl-transport walk" data-pace="all"><div class="tl-transport-header">SMV → Santa Maria Maggiore · ~12 min</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · por Via Agostino Depretis · bajada directa hacia el Esquilino<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>12 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">La bajada os deja directamente en la zona del hotel. Ya queda todo cerca.</div></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">16:10</span><a href="#smm" class="tl-title">Santa Maria Maggiore</a><div class="tl-note">5 min del hotel. Mosaicos del s. V, Bernini y Francisco.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>45 min</b> · mosaicos + artesonado dorado + tumbas · abierta sin pausa</span><span class="tl-meta-item">🚶 hasta siguiente: <b>8 min</b></span></div>
+      <div class="tl-transport walk" data-pace="medium"><div class="tl-transport-header">Santa Maria Maggiore → Palazzo Massimo · ~8 min</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · hacia Termini · el museo está pegado a la estación<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>8 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">Climatizado y tranquilo: el mejor refugio para el calor de las 17h. A 2 min del hotel para recoger maletas después.</div></div>
+      <div class="tl-item" data-pace="medium"><span class="tl-time">17:05</span><a href="#palazzo-massimo" class="tl-title">Palazzo Massimo · Museo Nazionale Romano</a><div class="tl-note">El mejor arte romano del mundo. El jardín pintado de Livia.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>55 min</b> · frescos de Livia + Púgil + Discóbolo · climatizado</span><span class="tl-meta-item warn">Cierra los lunes · martes abierto hasta 19:00 — salid a las 18:00</span></div>
+      <div class="tl-transport walk" data-pace="slow-only"><div class="tl-transport-header">Palazzo Massimo → Santa Maria degli Angeli · ~6 min</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · Piazza della Repubblica · solo si habéis ido rápido en el Palazzo y tenéis margen<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>6 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">Sólo si salís del Palazzo antes de las 18:00 con holgura. Si no, el hotel es el destino — tenéis el Leonardo Express a las 18:15.</div></div>
+      <div class="tl-item" data-pace="slow-only"><span class="tl-time">18:05</span><a href="#angeli" class="tl-title">Santa Maria degli Angeli e dei Martiri</a><div class="tl-note">Miguel Ángel dentro de las Termas de Diocleciano. La Meridiana. Solo si el ritmo da.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item warn">⏱ <b>20 min máximo</b> · si entráis a las 18:05, recoged maletas a las 18:25 → muy justo para el Leo</span></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">17:45</span><span class="tl-title disabled">Recoger maletas en hotel</span><div class="tl-note">Desde SMMaggiore o SMV, 8-10 min andando. Despedida del Royal Court.</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>20 min</b> · recoger maletas + último café + despedida</span></div>
       <div class="tl-transport train" data-pace="all"><div class="tl-transport-header">Termini → Fiumicino (FCO)</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚆</span><div class="tl-transport-mode-desc"><strong>Leonardo Express</strong> · directo sin paradas · sale cada 15 min · binari 23/24 · salid hacia las 18:15 para estar en FCO sobre las 19:00<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>32 min</b><br>💶 <b>€14 p.p. · €42 total</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> · tarifa fija a FCO desde dentro del Raccordo Anulare</div><div class="tl-transport-mode-meta">⏱ <b>45-60 min · según tráfico</b><br>💶 <b>€55 fijo · €18 p.p.</b></div></div></div><div class="tl-transport-footnote">Comprad el billete antes en las máquinas amarillas (Trenitalia) o en la app. Con vuelo a las 21:00, salir de Termini hacia las 18:15 da margen de sobra (≈2 h en el aeropuerto).</div></div>
       <div class="tl-item" data-pace="all"><span class="tl-time">18:15</span><span class="tl-title disabled">Leonardo Express → FCO</span></div>
@@ -4103,6 +4183,23 @@ function loadSvgFallbackDetail(img, cardId) {
           <div class="facts-row"><span class="label">Importante</span><span class="value">Reservad semanas antes · consigna obligatoria</span></div>
         </div>
         <a href="https://www.google.com/maps/search/?api=1&query=Galleria%20Borghese%20Roma" target="_blank" rel="noopener" class="maps-link">Ver en Google Maps</a>
+
+        <div class="card-section no-dropcap">
+          <h4>¿Sin entradas? Cómo conseguirlas y Plan B</h4>
+          <p>Las entradas se agotan semanas antes, especialmente en verano. Si a 2-3 semanas vista no hay hueco:</p>
+          <ul class="detail-list">
+            <li><strong>Cancelaciones de VivaTicket</strong> (el sistema oficial): entran nuevas plazas cada mañana al <strong>abrir el sistema</strong> (~9:00 h). Vale la pena mirar durante 3-4 días seguidos a esa hora exacta.</li>
+            <li><strong>Tiqets / GetYourGuide / Musement</strong>: los revendedores oficiales a veces tienen hueco cuando VivaTicket indica sold-out. Cobran ~€5-8 de recargo, pero es legítimo.</li>
+            <li><strong>En persona en la taquilla</strong>: algunos turnos (suele ser el de las 9:00 o el último de la tarde) se reservan como <em>walk-in</em> del día. Llegar 30 min antes de la apertura del museo y preguntar.</li>
+            <li><strong>Llamar</strong> directamente: +39 06 8413979. A veces gestionan cancela­ciones por teléfono.</li>
+          </ul>
+          <p><strong>Plan B si no conseguís entrada:</strong></p>
+          <ul class="detail-list">
+            <li><strong>Galleria Nazionale d'Arte Moderna (GNAM)</strong>: dentro de los propios jardines de Villa Borghese, a 5 min andando del casino. La mayor colección de arte moderno italiano — Modigliani, De Chirico, Balla, Canova, Klimt. Sin reserva, sin aforo. Entra todo el mundo. Cierra lunes.</li>
+            <li><strong>Museo Etrusco di Villa Giulia</strong>: al borde del parque, a 15 min. La mejor colección etrusca del mundo — la escultura del <em>Sarcófago de los Esposos</em> sola justifica la visita. Sin reserva.</li>
+            <li><strong>El parque + Pincio con tiempo de sobra</strong>: si cae el plan del museo, tened la mañana entera para el laghetto, el reloj de agua, los pinos y el mirador — sin prisa, con granita di caffè de Tazza d'Oro en el bolsillo.</li>
+          </ul>
+        </div>
 
         <div class="culture-box">
           <span class="label">Referencias culturales</span>
@@ -4282,10 +4379,77 @@ function loadSvgFallbackDetail(img, cardId) {
         </div>
       </article>
 
+      <!-- FICHA: ÉXTASIS DE SANTA TERESA -->
+      <article class="card" id="santa-teresa">
+        <div class="card-header">
+          <span class="card-roman">XXXII</span>
+          <div class="card-title">
+            <h3>Éxtasis de Santa Teresa · Santa Maria della Vittoria</h3>
+            <div class="card-italian">Cappella Cornaro · Via XX Settembre 17 · Piazza San Bernardo</div>
+          </div>
+        </div>
+        <div class="card-hero"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Extase_de_Sainte_Th%C3%A9r%C3%A8se.jpg?width=900" alt="Éxtasis de Santa Teresa, Bernini, 1647-52, Cappella Cornaro" loading="lazy" onerror="loadSvgFallback(this, 'santa-teresa')"></div>
+        <div class="card-section">
+          <h4>Qué es</h4>
+          <p>En una iglesia discreta de Via XX Settembre, una capilla lateral esconde lo que muchos consideran <strong>la escultura más erótica y más espiritual del arte occidental</strong> — y las dos cosas a la vez. El <em>Éxtasis de Santa Teresa</em> de Gian Lorenzo Bernini (1647-1652): Teresa de Ávila en mármol blanco, suspendida sobre una nube dorada, con los ojos en blanco y la boca entreabierta, mientras un ángel sonriente le hunde un dardo de oro en el pecho. La luz viene de arriba, de una ventana oculta. En los palcos laterales de mármol, los miembros de la familia Cornaro observan la escena como en un teatro. Es un <strong>espacio total</strong> — arquitectura, escultura, pintura, luz — concebido como una sola obra.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Historia</h4>
+          <p>El cardenal veneciano <strong>Federico Cornaro</strong> encargó a Bernini la renovación completa de su capilla funeraria en Santa Maria della Vittoria entre 1645 y 1652. Bernini tenía 47 años y estaba en la cima de su poder. Tomó como protagonista a <strong>Teresa de Ávila</strong> (1515-1582), la mística castellana que en 1622 había sido canonizada con inusual velocidad. Teresa describió en su autobiografía las visiones en que un ángel la atravesaba con un dardo de fuego, dejándola «del todo enamorada de Dios». El pasaje es uno de los textos espirituales más físicamente explícitos que existen.</p>
+          <p>Bernini convirtió ese pasaje en mármol. La figura de Teresa flota sobre una nube real esculpida en piedra; los pliegues de su hábito siguen una lógica imposible, de tela mojada o de sueño. El ángel, de una belleza insolente, tiene la expresión ambigua de quien disfruta de lo que hace. La <strong>luz dorada</strong> que baña la escena viene de una ventana oculta en el techo de la capilla — Bernini calculó el ángulo para que en las horas de la tarde los rayos cayeran exactamente sobre el grupo escultórico. Las rayas doradas de estuco que bajan desde la ventana representan la luz divina hecha material.</p>
+          <p>Los <strong>palcos laterales</strong> — con los miembros de la familia Cornaro esculpidos en bajorrelieve, cuchicheando entre ellos como espectadores de un palco de ópera — convierten la capilla en un <em>teatro sagrado</em>: el espectador que entra forma parte de la audiencia de un drama espiritual representado para siempre.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Anécdotas</h4>
+          <p>El presidente francés Charles de Brosses visitó la capilla en 1740 y escribió en sus cartas: <em>«Si ese es el amor divino, yo lo conozco»</em>. La frase resume siglos de debate sobre si la obra representa éxtasis místico o placer sensual — y la respuesta honesta es que Bernini hizo la pregunta a propósito, sin responderla.</p>
+          <p><strong>Freud</strong> tenía una fotografía de la escultura en su consulta vienesa. La usaba como punto de discusión sobre la indistinción entre experiencia mística y experiencia erótica. <strong>Georges Bataille</strong> le dedicó un ensayo largo. <strong>Lacan</strong> la citó en sus seminarios como ejemplo de un goce que va más allá del principio del placer. Es, en términos de impacto cultural acumulado, una de las obras más comentadas de Occidente fuera de los grandes museos.</p>
+          <p>El vecindario inmediato es interesante: en la misma <strong>Piazza San Bernardo</strong> está la <em>Fontana dell'Acqua Felice</em>, encargada por Sixto V en 1587 con el <em>Mosè</em> —el Moisés en bronce— en la hornacina central. El papa quiso que le esculpieran como Moisés haciendo brotar el agua del desierto. El resultado fue tan feo que según la leyenda el escultor <strong>Prospero Antichi</strong> murió de vergüenza al ver su obra. Hoy los romanos la llaman cariñosamente «il Mosè» y está bien.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>En qué fijarse</h4>
+        <div class="detail-photo">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Ecstasy_of_Saint_Teresa_detail.jpg?width=700" alt="Detalle del ángel del Éxtasis de Santa Teresa — la expresión ambigua de Bernini." loading="lazy" onerror="loadSvgFallbackDetail(this, 'santa-teresa')">
+            <div class="detail-photo-caption">El ángel de Bernini. La sonrisa tiene una ambigüedad calculada que Bernini nunca quiso resolver.</div>
+          </div>
+        <ul class="detail-list">
+            <li>La <strong>expresión de Teresa</strong>: los ojos en blanco, la boca entreabierta, los pies abandonados. No es quietud — es convulsión detenida en mármol.</li>
+            <li>La <strong>sonrisa del ángel</strong> — y el dardo. Mirarlo de frente, luego de cada lado. La ambigüedad es el mensaje.</li>
+            <li>Los <strong>pliegues del hábito</strong>: tela imposible, sin lógica de gravedad. Son los pliegues de una experiencia interior, no de tela real.</li>
+            <li>La <strong>nube de mármol</strong> sobre la que flotan: piedra dura, efecto de algodón.</li>
+            <li>Las <strong>rayas de estuco dorado</strong> que bajan del techo: la luz divina materializada. Mirad de dónde vienen — la ventana oculta a la derecha.</li>
+            <li>Los <strong>palcos laterales</strong> con los Cornaro: fijaos en sus gestos y posiciones. Son espectadores del drama eterno.</li>
+            <li>Echad <strong>monedas en la caja</strong> junto a la capilla para encender la luz — sin iluminación la profundidad del mármol desaparece.</li>
+            <li>Horario de tarde: la iglesia cierra 12:00-15:30. Llegad a las <strong>15:30 exactas</strong>.</li>
+          </ul>
+        </div>
+
+        <div class="facts">
+          <div class="facts-row"><span class="label">Horario</span><span class="value">L-S 7:00-12:00 y 15:30-18:00 · Dom 15:30-18:00</span></div>
+          <div class="facts-row"><span class="label">Acceso</span><span class="value">Gratuito · monedas para la iluminación</span></div>
+          <div class="facts-row"><span class="label">Tiempo de visita</span><span class="value">25-30 minutos</span></div>
+          <div class="facts-row"><span class="label">Cómo llegar</span><span class="value">Metro A · Barberini · 12 min andando por Via XX Settembre</span></div>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=Santa%20Maria%20della%20Vittoria%20Via%20XX%20Settembre%20Roma" target="_blank" rel="noopener" class="maps-link">Ver en Google Maps</a>
+
+        <div class="culture-box">
+          <span class="label">Referencias culturales</span>
+          <div class="ref-item"><span class="ref-title">Ángeles y Demonios</span> (Dan Brown / Ron Howard) — la iglesia aparece en la novela y la película como una de las cuatro paradas del «Camino de la Iluminación». Excesivo como siempre, pero la capilla es exactamente tan teatral como Brown la describe.</div>
+          <div class="ref-item"><span class="ref-title">I Segreti di Roma</span> (Corrado Augias, 2005) — Augias dedica un pasaje a la ambigüedad deliberada de Bernini: «creó algo que parece sagrado y parece profano, y esa es exactamente su grandeza».</div>
+        </div>
+
+        <div class="notes-area">
+          <label for="note-santa-teresa">Notas in situ</label>
+          <textarea class="notes-textarea" id="note-santa-teresa" data-note-key="santa-teresa" placeholder="Lo que quieras recordar de aquí…"></textarea>
+        </div>
+      </article>
+
       <!-- FICHA: PALAZZO MASSIMO -->
       <article class="card" id="palazzo-massimo">
         <div class="card-header">
-          <span class="card-roman">XXXII</span>
+          <span class="card-roman">XXXIII</span>
           <div class="card-title">
             <h3>Palazzo Massimo</h3>
             <div class="card-italian">Museo Nazionale Romano · Palazzo Massimo alle Terme · Largo di Villa Peretti 1</div>
@@ -4337,7 +4501,7 @@ function loadSvgFallbackDetail(img, cardId) {
       <!-- FICHA: SANTA MARIA DEGLI ANGELI -->
       <article class="card" id="angeli">
         <div class="card-header">
-          <span class="card-roman">XXXIII</span>
+          <span class="card-roman">XXXIV</span>
           <div class="card-title">
             <h3>Santa Maria degli Angeli</h3>
             <div class="card-italian">Basilica di Santa Maria degli Angeli e dei Martiri · Piazza della Repubblica</div>
@@ -4395,13 +4559,59 @@ function loadSvgFallbackDetail(img, cardId) {
   <div class="container">
     <div class="section-eyebrow">Roma · gastronomía</div>
     <h2 class="section-title">Dónde comer</h2>
+    <div class="reservas-box">
+      <div class="reservas-box-header">Reservas · cuándo y con cuánta antelación</div>
+      <table class="reservas-table">
+        <tr>
+          <td><a href="#g-armando">Armando al Pantheon</a><span class="reservas-badge badge-urgent">semanas antes</span></td>
+          <td>Local muy pequeño, lleno casi siempre. Reservar con <strong>2-3 semanas</strong> mínimo. Sin reserva, imposible.</td>
+        </tr>
+        <tr>
+          <td><a href="#g-roscioli">Roscioli</a><span class="reservas-badge badge-urgent">semanas antes</span></td>
+          <td>Uno de los más solicitados de Roma. Reservar con <strong>1-2 semanas</strong> de antelación. Tienen turno de barra sin reserva, pero el comedor se llena.</td>
+        </tr>
+        <tr>
+          <td><a href="#g-felice">Felice a Testaccio</a><span class="reservas-badge badge-urgent">semanas antes</span></td>
+          <td>La cacio e pepe más famosa de Roma. <strong>1-2 semanas</strong> mínimo. Imposible sin reserva en fin de semana.</td>
+        </tr>
+        <tr>
+          <td><a href="#g-checchino">Checchino dal 1887</a><span class="reservas-badge badge-urgent">días/semana antes</span></td>
+          <td>Templo del quinto quarto. Reservar con <strong>varios días</strong> de antelación, especialmente fines de semana.</td>
+        </tr>
+        <tr>
+          <td><a href="#galleria-borghese">Galleria Borghese</a><span class="reservas-badge badge-urgent">semanas antes</span></td>
+          <td>No es restaurante, pero es la reserva más crítica del viaje. Los turnos se agotan <strong>semanas antes</strong> — reservar en cuanto se decidan las fechas. Si está lleno, ver consejos en la ficha.</td>
+        </tr>
+        <tr>
+          <td><a href="#g-matriciana">La Matriciana</a><span class="reservas-badge badge-rec">recomendable</span></td>
+          <td>Reservar con <strong>2-3 días</strong> de antelación, especialmente si hay función en el Teatro dell'Opera.</td>
+        </tr>
+        <tr>
+          <td><a href="#g-sora-lella">Sora Lella</a><span class="reservas-badge badge-rec">recomendable</span></td>
+          <td>Especialmente para <strong>fin de semana</strong>. Reservar con 2-4 días. Cerrado domingos.</td>
+        </tr>
+        <tr>
+          <td><a href="#g-giggetto">Giggetto al Portico d'Ottavia</a><span class="reservas-badge badge-rec">recomendable</span></td>
+          <td>Para comer en el Ghetto con calma. Reservar con <strong>1-2 días</strong>, sobre todo domingo al mediodía.</td>
+        </tr>
+        <tr>
+          <td><a href="#g-mercato-hostaria">Mercato Hostaria</a><span class="reservas-badge badge-rec">recomendable (noche)</span></td>
+          <td>Para la cena del viernes en Campo de' Fiori. Reservar si se va de noche — al mediodía suele haber hueco.</td>
+        </tr>
+        <tr>
+          <td><strong>Sin reserva (hacer cola)</strong></td>
+          <td><a href="#g-baffetto">Da Baffetto</a>, <a href="#g-montecarlo">La Montecarlo</a>, <a href="#g-dar-poeta">Dar Poeta</a>, <a href="#g-fortunata">Da Fortunata</a>, <a href="#g-tonnarello">Tonnarello</a> — llegar pronto o esperar en la calle.</td>
+        </tr>
+      </table>
+    </div>
+
     <p class="gastro-intro">Roma tiene cuatro platos de pasta (cacio e pepe, carbonara, amatriciana, gricia), un quinto cuarto que la mayoría no conoce, una tradición de cocina giudaico-romana única en el mundo, y la pizza más debatida de Italia. La ciudad aún tiene decenas de trattorias donde comen los romanos de verdad. Los sitios de abajo cuadran con las zonas que vais a recorrer y con lo que merece la pena priorizar.</p>
 
     <p class="gastro-section-title">Pasta clásica · trattorias históricas</p>
     <div class="gastro-grid">
 
       <!-- Felice a Testaccio -->
-      <div class="gastro-card">
+      <div class="gastro-card" id="g-felice">
         <div class="gastro-card-header">
           <span class="gastro-card-badge badge-trattoria">trattoria</span>
           <div>
@@ -4553,31 +4763,14 @@ function loadSvgFallbackDetail(img, cardId) {
         </div>
       </div>
 
-      <!-- Ristorante Carmina -->
-      <div class="gastro-card" id="g-carmina">
-        <div class="gastro-card-header">
-          <span class="gastro-card-badge badge-trattoria">trattoria</span>
-          <div>
-            <div class="gastro-card-name">Ristorante Carmina</div>
-            <div class="gastro-card-address">Centro storico · junto a Piazza Navona</div>
-          </div>
-        </div>
-        <p class="gastro-card-desc">Pequeño restaurante de ambiente acogedor en pleno centro histórico, cerca de Piazza Navona. Cocina italiana y romana en un rincón tranquilo, lejos del bullicio de las terrazas turísticas. <em>(No he podido verificar la dirección exacta — confírmala antes de ir.)</em></p>
-        <div class="gastro-plato"><strong>Plato estrella:</strong> pasta fresca casera y clásicos romanos. Ambiente íntimo, buen trato.</div>
-        <div class="gastro-card-footer">
-          <span>Centro storico · €25-40/persona · <span class="gastro-itinerary-tag">cerca de Navona</span></span>
-          <a class="gastro-maps-link" href="https://www.google.com/maps/search/?api=1&query=Ristorante%20Carmina%20Roma%20centro" target="_blank" rel="noopener">📍 Google Maps</a>
-        </div>
-      </div>
-
-    </div><!-- /grid trattorias -->
+          </div><!-- /grid trattorias -->
 
     <p class="gastro-section-title">Quinto quarto · cocina de Testaccio</p>
     <div class="gastro-intro">El «quinto quarto» es lo que queda del animal después de repartir los cuatro cuartos nobiles entre la aristocracia y el clero: vísceras, menudillos, callos, rabo, corazón. Testaccio fue el barrio del Mattatoio — el matadero de Roma — y los trabajadores cobraban en parte con estas piezas. De ahí nació la cocina más antigua y auténtica de la ciudad. No es para todos los paladares, pero es imposiblemente romano.</div>
     <div class="gastro-grid">
 
       <!-- Checchino -->
-      <div class="gastro-card">
+      <div class="gastro-card" id="g-checchino">
         <div class="gastro-card-header">
           <span class="gastro-card-badge badge-quinto">quinto quarto</span>
           <div>
@@ -4874,29 +5067,14 @@ function loadSvgFallbackDetail(img, cardId) {
         </div>
       </div>
 
-      <!-- Bar Bistrot Mascagni -->
-      <div class="gastro-card" id="g-mascagni">
-        <div class="gastro-card-header">
-          <span class="gastro-card-badge badge-caffe">bar · bistrot</span>
-          <div>
-            <div class="gastro-card-name">Bar Bistrot Mascagni</div>
-            <div class="gastro-card-address">Centro · (dirección por confirmar)</div>
-          </div>
-        </div>
-        <p class="gastro-card-desc">Bar-bistrot de aire elegante para café, desayuno o aperitivo con algo de picar. Ambiente cuidado, buena repostería y cócteles. <em>(No he podido verificar la dirección exacta — confírmala antes de ir.)</em></p>
-        <div class="gastro-plato"><strong>Plato estrella:</strong> cornetto + cappuccino por la mañana; tabla y vino para el aperitivo.</div>
-        <div class="gastro-card-footer">
-          <span>€4-15 · <span class="gastro-itinerary-tag">aperitivo</span></span>
-          <a class="gastro-maps-link" href="https://www.google.com/maps/search/?api=1&query=Bistrot%20Mascagni%20Roma" target="_blank" rel="noopener">📍 Google Maps</a>
-        </div>
       </div>
 
-      <!-- Il Bar de la Musa -->
+      <!-- Il Bar della Musa -->
       <div class="gastro-card" id="g-bar-musa">
         <div class="gastro-card-header">
           <span class="gastro-card-badge badge-caffe">bar · café</span>
           <div>
-            <div class="gastro-card-name">Il Bar de la Musa</div>
+            <div class="gastro-card-name">Il Bar della Musa</div>
             <div class="gastro-card-address">Centro · (dirección por confirmar)</div>
           </div>
         </div>
@@ -4906,9 +5084,7 @@ function loadSvgFallbackDetail(img, cardId) {
           <span>€3-12 · <span class="gastro-itinerary-tag">café · aperitivo</span></span>
           <a class="gastro-maps-link" href="https://www.google.com/maps/search/?api=1&query=Bar%20della%20Musa%20Roma" target="_blank" rel="noopener">📍 Google Maps</a>
         </div>
-      </div>
-
-    </div><!-- /grid bar aperitivo -->
+          </div><!-- /grid bar aperitivo -->
 
   </div>
 </section>
@@ -4994,7 +5170,8 @@ function loadSvgFallbackDetail(img, cardId) {
 
     <p style="margin-top:1rem;font-family:'Cormorant Garamond','Garamond','Hoefler Text','Times New Roman',serif;font-style:italic;color:var(--gold);font-size:.95rem;letter-spacing:.05em;">Libros</p>
     <ul class="detail-list">
-      <li><strong><em>Historias de Roma</em></strong>, Enric González (2004) — el libro del que sale este viaje. Capítulos cortos, ácidos, sobre la Roma cotidiana de un corresponsal en los noventa. Si tenéis que leer uno, es este.</li>
+      <li><strong><em>Historias de Roma</em></strong>, Enric González (2004) — el libro del que sale este viaje. Capítulos cortos, ácidos, sobre la Roma cotidiana de un corresponsal en los noventa. Si tenéis que leer uno, es este. <em>(Los pasajes subrayados que compartas serán añadidos directamente a las fichas donde correspondan.)</em></li>
+      <li><strong><em>I Segreti di Roma</em></strong>, Corrado Augias (2005) — el otro libro de cabecera para este viaje. Augias, periodista y escritor romano, explora los secretos enterrados de la ciudad: el Bruno de Campo de' Fiori, el mausoleo de Adriano, el ghetto y la razzia del 43, la Bocca della Verità como alcantarilla, los acueductos. Capítulos autónomos, lectura fácil. Sus pasajes ya están enlazados en las fichas de esta guía.</li>
       <li><strong><em>Roma</em></strong>, Robert Hughes (2011) — biografía cultural de la ciudad en 600 páginas. Denso pero magistral. Si vais a leerlo entero, empezad ya. Si no, leed solo el capítulo sobre el Renacimiento y el Barroco.</li>
       <li><strong><em>Memorias de Adriano</em></strong>, Marguerite Yourcenar (1951) — el emperador del Pantheon en primera persona. Te cambia cómo ves la ciudad. Es el clásico moderno sobre la Roma imperial.</li>
       <li><strong><em>SPQR</em></strong>, Mary Beard (2015) — historia de la antigua Roma escrita por la mayor experta viva. Académica pero legible. Buen complemento al Coliseo guiado del domingo.</li>
@@ -5110,8 +5287,9 @@ const places = [
   { id: 'villa-borghese', n: 'XXIX', name: 'Villa Borghese · Terrazza del Pincio', day: 'Martes', lat: 41.9110000, lng: 12.4783000, type: 'card' },
   { id: 'cappuccini', n: 'XXX', name: 'Cripta dei Cappuccini', day: 'Martes', lat: 41.9047900, lng: 12.4888600, type: 'card' },
   { id: 'smm', n: 'XXXI', name: 'Santa Maria Maggiore', day: 'Martes', lat: 41.8976400, lng: 12.4986300, type: 'card' },
-  { id: 'palazzo-massimo', n: 'XXXII', name: 'Palazzo Massimo · Museo Nazionale Romano', day: 'Martes', lat: 41.9017900, lng: 12.4985200, type: 'card' },
-  { id: 'angeli', n: 'XXXIII', name: 'Santa Maria degli Angeli', day: 'Martes', lat: 41.9030300, lng: 12.4961000, type: 'card' }
+  { id: 'santa-teresa', n: 'XXXII', name: 'Éxtasis de Santa Teresa · SMV', day: 'Martes', lat: 41.9028000, lng: 12.4888000, type: 'card' },
+  { id: 'palazzo-massimo', n: 'XXXIII', name: 'Palazzo Massimo · Museo Nazionale Romano', day: 'Martes', lat: 41.9017900, lng: 12.4985200, type: 'card' },
+  { id: 'angeli', n: 'XXXIV', name: 'Santa Maria degli Angeli', day: 'Martes', lat: 41.9030300, lng: 12.4961000, type: 'card' }
 ];
 
 // === LEAFLET MAP ===
