@@ -799,7 +799,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+html { scroll-behavior: smooth; scroll-padding-top: 124px; }
 
 body {
   font-family: 'Lora', Georgia, 'Times New Roman', serif;
@@ -1331,6 +1331,47 @@ strong { font-weight: 600; color: var(--ink); }
 .tl-food-desc { grid-column: 1 / -1; font-style: italic; font-size: .82rem; color: var(--ink-soft); }
 .tl-food-foot { margin-top: .6rem; font-style: italic; font-size: .8rem; color: var(--ink-faint); }
 .tl-food-foot a { color: var(--accent); }
+/* Reserva confirmada dentro del bloque de comida */
+.tl-food-item.reserved {
+  background: color-mix(in srgb, var(--gold) 14%, transparent);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 5px 5px 0;
+  padding: .4rem .6rem; margin: -.1rem 0;
+}
+.tl-resv-badge {
+  font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+  font-size: .62rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #fff; background: var(--accent);
+  padding: .12em .5em; border-radius: 3px;
+  margin-left: .5em; white-space: nowrap; vertical-align: middle;
+}
+/* Evento de reserva en la línea de tiempo (estilo dorado) */
+.tl-item.reserved-event::before { background: var(--gold) !important; box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 30%, transparent); }
+.tl-item.reserved-event .tl-title { color: var(--accent); }
+.tl-resv-meta {
+  margin: -.6rem 0 1.1rem 2.5rem; padding: .5rem .8rem;
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
+  border-left: 3px solid var(--gold); border-radius: 0 5px 5px 0;
+  font-size: .78rem; color: var(--ink-soft); line-height: 1.5;
+}
+.tl-resv-meta strong { color: var(--ink); }
+.tl-resv-meta .tl-resv-tel { font-family: 'JetBrains Mono', monospace; font-size: .74rem; }
+/* Bloque Plan B (alternativa sin reserva) */
+.tl-planb {
+  margin: .35rem 0 1.4rem 2.5rem; padding: .8rem 1rem;
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  border-left: 3px solid var(--ink-soft); border-radius: 0 6px 6px 0;
+  font-size: .84rem; color: var(--ink-soft); line-height: 1.55;
+}
+.tl-planb-header {
+  font-family: 'Cormorant Garamond','Garamond','Hoefler Text','Times New Roman',serif;
+  font-style: italic; font-size: 1.02rem; color: var(--ink); margin-bottom: .45rem;
+}
+.tl-planb ul { margin: .5rem 0; padding-left: 1.1rem; }
+.tl-planb li { margin: .35rem 0; }
+.tl-planb a { color: var(--accent); }
+.tl-planb strong { color: var(--ink); }
 
 .tl-transport-header {
   font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
@@ -1420,7 +1461,7 @@ strong { font-weight: 600; color: var(--ink); }
   border: 1px solid var(--line-soft);
   border-radius: 6px;
   padding: 1.75rem 1.5rem;
-  scroll-margin-top: 90px;
+  scroll-margin-top: 0;
   position: relative;
   transition: box-shadow .4s ease, border-color .4s ease;
 }
@@ -1912,6 +1953,22 @@ footer p {
 }
 .badge-urgent { background: color-mix(in srgb,var(--accent) 15%,transparent); color: var(--accent); }
 .badge-rec    { background: color-mix(in srgb,var(--gold) 15%,transparent); color: var(--gold); }
+.badge-done   { background: #2e7d4f; color: #fff; }
+.reservas-table tr.is-done td:first-child { border-left: 3px solid #2e7d4f; }
+.reservas-confirmadas {
+  margin: 0 0 1rem; padding: .85rem 1rem;
+  background: color-mix(in srgb, #2e7d4f 9%, transparent);
+  border: 1px solid color-mix(in srgb, #2e7d4f 35%, transparent);
+  border-radius: 8px; font-size: .85rem; line-height: 1.55;
+}
+.reservas-confirmadas h4 {
+  font-family: 'JetBrains Mono','SF Mono',monospace; font-size: .72rem;
+  letter-spacing: .08em; text-transform: uppercase; color: #2e7d4f;
+  margin: 0 0 .5rem;
+}
+.reservas-confirmadas ul { margin: 0; padding-left: 1.1rem; }
+.reservas-confirmadas li { margin: .2rem 0; }
+.reservas-confirmadas .rc-when { font-family: 'JetBrains Mono',monospace; font-size: .76rem; color: var(--ink); font-weight: 700; }
 
 .gastro-section-title {
   font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
@@ -2148,12 +2205,12 @@ function loadSvgFallbackDetail(img, cardId) {
       <div class="tl-item" data-pace="all"><span class="tl-time">21:30</span><a href="#piazza-navona" class="tl-title">Piazza Navona</a><div class="tl-note">Tres fuentes barrocas. Bernini vs Borromini.</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>30 min</b> · suficiente para las tres fuentes</span><span class="tl-meta-item">🚶 hasta siguiente: <b>5 min</b> · 402 m hasta Campo de' Fiori</span></div>
       
-      <div class="tl-item" data-pace="all"><span class="tl-time">22:00</span><a href="#campo-fiori" class="tl-title">Campo de' Fiori · Giordano Bruno</a><div class="tl-note">Estatua del filósofo quemado vivo en 1600. Cena por la zona.</div></div>
-      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>90+ min</b> · plaza + cena en la zona</span></div>
+      <div class="tl-item reserved-event" data-pace="all"><span class="tl-time">22:00</span><a href="#campo-fiori" class="tl-title">Campo de' Fiori · cena en Mercato Hostaria</a><span class="tl-tag">reservado</span><div class="tl-note">La estatua de Giordano Bruno, quemado vivo aquí en 1600. Cena reservada en la propia plaza.</div></div>
+      <div class="tl-resv-meta">✅ <strong>Reserva confirmada · Mercato Hostaria</strong> — vie 19 jun, 22:00 · 3 comensales · Campo de' Fiori 53 · vía Restoo. En la propia plaza, frente a Giordano Bruno.</div>
       <div class="tl-food">
-        <div class="tl-food-header">🍴 Cenar por Campo de' Fiori</div>
+        <div class="tl-food-header">🍴 Tu mesa (y alternativas alrededor)</div>
         <div class="tl-food-list">
-          <div class="tl-food-item"><a class="tl-food-name" href="#g-mercato-hostaria">Mercato Hostaria</a><span class="tl-food-time">🚶 1 min</span><span class="tl-food-desc">En la propia plaza, frente a Giordano Bruno · cocina romana · opción celíaca · <strong>~€30-45</strong></span></div>
+          <div class="tl-food-item reserved"><a class="tl-food-name" href="#g-mercato-hostaria">Mercato Hostaria</a><span class="tl-resv-badge">✓ reservado 22:00</span><span class="tl-food-desc">En la propia plaza, frente a Giordano Bruno · cocina romana · opción celíaca · <strong>~€30-45</strong></span></div>
           <div class="tl-food-item"><a class="tl-food-name" href="#g-roscioli">Roscioli</a><span class="tl-food-time">🚶 3 min</span><span class="tl-food-desc">Carbonara y embutidos · bodega enorme · reserva imprescindible · <strong>~€40-55</strong></span></div>
           <div class="tl-food-item"><a class="tl-food-name" href="#g-fortunata">Trattoria da Fortunata</a><span class="tl-food-time">🚶 2 min</span><span class="tl-food-desc">Pasta a mano en la ventana de la calle · cola habitual · <strong>~€25-35</strong></span></div>
           <div class="tl-food-item"><a class="tl-food-name" href="#g-pollarola">La Pollarola</a><span class="tl-food-time">🚶 2 min</span><span class="tl-food-desc">Trattoria histórica en una placita escondida · sin agobios · <strong>~€30-45</strong></span></div>
@@ -2581,18 +2638,18 @@ function loadSvgFallbackDetail(img, cardId) {
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>25 min</b> · espresso en barra + cabeza de ciervo en la iglesia de al lado</span></div>
       <div class="tl-transport taxi" data-pace="all"><div class="tl-transport-header">Centro → Vaticano (Musei) · ~2 km</div><div class="tl-transport-modes"><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · cruzando Ponte Sant'Angelo · vistas espectaculares al castillo</div><div class="tl-transport-mode-meta">⏱ <b>25-30 min</b><br>💶 <b>gratis</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">Ⓜ️</span><div class="tl-transport-mode-desc"><strong>Metro A</strong> · Barberini → Ottaviano · 4 paradas · + 8 min andando hasta entrada</div><div class="tl-transport-mode-meta">⏱ <b>25 min total</b><br>💶 <b>€1,50 p.p. · €4,50 total</b></div></div><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> directo a la entrada del Vaticano<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>12-15 min</b><br>💶 <b>€12-15 · €4-5 p.p.</b></div></div></div><div class="tl-transport-footnote">Hay que llegar al tour a las 12:10. El taxi os ahorra ese margen sin riesgo. Si vais con tiempo, andar es de los mejores tramos de Roma — pero tened en cuenta que llegáis algo cansados de la mañana.</div></div>
       <div class="tl-item fixed-event" data-pace="all"><span class="tl-time">12:10</span><span class="tl-title disabled">Tour guiado Vaticano</span><span class="tl-tag">guiado</span><div class="tl-note">Hasta 15:10. Museos + Sixtina + San Pedro.</div></div>
-      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>3h fijas</b> · 3h es el tiempo justo para esto — no esperes profundidad, espera impacto</span><span class="tl-meta-item">🚶 hasta siguiente: <b>15 min</b> · 1,1 km hasta Borgo Pio</span></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>3h fijas</b> · 3h es el tiempo justo para esto — no esperes profundidad, espera impacto</span><span class="tl-meta-item">🚶 hasta siguiente: <b>30 min</b> · ~2,5 km hasta Trastevere (Otello), pasando por Castel Sant'Angelo</span></div>
       
-      <div class="tl-item" data-pace="all"><span class="tl-time">15:30</span><span class="tl-title disabled">Comida · zona Borgo Pio</span></div>
-      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>75 min</b> · comida sin prisa antes de la tarde</span><span class="tl-meta-item">🚶 hasta siguiente: <b>12 min</b> · 900 m hasta Castel Sant'Angelo</span></div>
-      <div class="tl-food">
-        <div class="tl-food-header">🍴 Comer cerca del Vaticano</div>
-        <div class="tl-food-foot">Borgo Pio y Borgo Vittorio sirven para un plato rápido (cacio e pepe, supplì), pero son zona turística. Los imprescindibles de <a href="#gastronomia">Gastronomía</a> están en el centro y Trastevere, a 20-25 min: mejor guardarlos para la cena de esta noche en Trastevere.</div>
-      </div>
-      
-      <div class="tl-item" data-pace="all"><span class="tl-time">16:45</span><a href="#castel-santangelo" class="tl-title">Castel Sant'Angelo · Ponte</a><div class="tl-note">Exterior. Los ángeles de Bernini en el puente.</div></div>
-      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>45 min</b> · puente + exterior + vistas al Tíber; interior del castillo necesitaría 2h más</span></div>
-      <div class="tl-transport walk" data-pace="medium"><div class="tl-transport-header">Castel Sant'Angelo → Tempietto del Bramante · ~1,6 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · cruzando Ponte Sisto · subida moderada al Gianicolo final<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>20 min</b><br>💶 <b>gratis</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> · si vais cansados o con prisas para llegar antes de las 18:00 (cierre Tempietto)</div><div class="tl-transport-mode-meta">⏱ <b>8-10 min</b><br>💶 <b>€10-12 · €3-4 p.p.</b></div></div></div><div class="tl-transport-footnote">La subida final al Gianicolo es la única cuesta seria del día. Si lleváis ya muchos kms, considerar taxi.</div></div>
+      <div class="tl-transport walk" data-pace="all"><div class="tl-transport-header">Vaticano → Trastevere (Otello) · ~2,5 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · bajáis a la orilla del Tíber, pasáis junto a Castel Sant'Angelo y cruzáis a Trastevere por Ponte Sisto<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>30 min</b><br>💶 <b>gratis</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> directo hasta Via della Pelliccia · si el tour se alarga</div><div class="tl-transport-mode-meta">⏱ <b>12 min</b><br>💶 <b>€12-14 · €4-5 p.p.</b></div></div></div><div class="tl-transport-footnote">El tour acaba a las 15:10 y la mesa es a las 16:00: tiempo justo para el paseo y un vistazo a Castel Sant'Angelo de camino.</div></div>
+
+      <div class="tl-item" data-pace="medium"><span class="tl-time">15:25</span><a href="#castel-santangelo" class="tl-title">Castel Sant'Angelo · Ponte (exterior)</a><div class="tl-note">De paso hacia Trastevere. Los diez ángeles de Bernini en el puente. Solo exterior.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>20 min</b> · puente + foto al Tíber, sin entrar — vais a comer</span><span class="tl-meta-item">🚶 hasta Otello: <b>18 min</b> · cruzando Ponte Sisto</span></div>
+
+      <div class="tl-item reserved-event" data-pace="all"><span class="tl-time">16:00</span><span class="tl-title disabled">Comida en Otello · Trastevere</span><span class="tl-tag">reservado</span><div class="tl-note">Trattoria romana clásica de Trastevere. Vuestra mesa del sábado, comida tardía sin prisa.</div></div>
+      <div class="tl-resv-meta">✅ <strong>Reserva confirmada · Otello (Trastevere)</strong> — sáb 20 jun, 16:00 · 3 comensales · Via della Pelliccia 47/53 · vía TheFork. A 3 min de Santa Maria in Trastevere; después subís al Gianicolo.</div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>75 min</b> · comida sin agobios antes de la tarde</span><span class="tl-meta-item">🚶 hasta siguiente: <b>13 min</b> · subida al Gianicolo hasta el Tempietto</span></div>
+
+      <div class="tl-transport walk" data-pace="medium"><div class="tl-transport-header">Otello → Tempietto del Bramante · ~1 km (subida)</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · subís el Gianicolo por Via Garibaldi<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>13 min</b><br>💶 <b>gratis</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> · si vais justos para el cierre del Tempietto (18:00)</div><div class="tl-transport-mode-meta">⏱ <b>6 min</b><br>💶 <b>€8-10 · €3 p.p.</b></div></div></div><div class="tl-transport-footnote">La subida al Gianicolo es la única cuesta seria del día — después de comer, con calma.</div></div>
       <div class="tl-item" data-pace="medium"><span class="tl-time">17:30</span><a href="#tempietto" class="tl-title">Tempietto del Bramante</a><span class="tl-tag">Sorrentino</span><div class="tl-note">Cierra 18:00. Llegar antes.</div></div>
       <div class="tl-meta"><span class="tl-meta-item warn">⏱ <b>20 min</b> · muy justo con el cierre a las 18:00 — llegar a las 17:30 máximo</span><span class="tl-meta-item">🚶 hasta siguiente: <b>3 min</b> · 250 m hasta Fontanone (solo en plan optimista)</span></div>
       
@@ -2602,14 +2659,12 @@ function loadSvgFallbackDetail(img, cardId) {
       <div class="tl-item" data-pace="all"><span class="tl-time">18:15</span><a href="#smt" class="tl-title">Santa Maria in Trastevere</a><div class="tl-note">Mosaicos del siglo XII en el ábside. Aperitivo rápido en la plaza.</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>90 min</b> · iglesia (20 min) + aperitivo en la plaza de Trastevere hasta el taxi</span></div>
       <div class="tl-food">
-        <div class="tl-food-header">🍴 Aperitivo / cena rápida en Trastevere</div>
+        <div class="tl-food-header">🍴 Aperitivo ligero en Trastevere (ya habéis comido en Otello)</div>
         <div class="tl-food-list">
-          <div class="tl-food-item"><a class="tl-food-name" href="#g-tonnarello">Tonnarello</a><span class="tl-food-time">🚶 1 min</span><span class="tl-food-desc">En la misma plaza · cacio e pepe y pizza · perfecto antes del taxi · <strong>~€25-35</strong></span></div>
-          <div class="tl-food-item"><a class="tl-food-name" href="#g-zi-umberto">Osteria da Zi Umberto</a><span class="tl-food-time">🚶 4 min</span><span class="tl-food-desc">Osteria de barrio, pocos turistas · cocina honesta · <strong>~€25-35</strong></span></div>
-          <div class="tl-food-item"><a class="tl-food-name" href="#g-dar-poeta">Dar Poeta</a><span class="tl-food-time">🚶 5 min</span><span class="tl-food-desc">Pizza de masa fermentada 48h · sin reservas · <strong>~€15-22</strong></span></div>
           <div class="tl-food-item"><a class="tl-food-name" href="#g-fior-di-luna">Fior di Luna</a><span class="tl-food-time">🚶 4 min</span><span class="tl-food-desc">Gelato artesanal para el camino al concierto · <strong>~€3-4</strong></span></div>
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-tonnarello">Tonnarello</a><span class="tl-food-time">🚶 1 min</span><span class="tl-food-desc">Si os entra hambre antes del taxi · cacio e pepe y pizza · <strong>~€25-35</strong></span></div>
         </div>
-        <div class="tl-food-foot">Ojo al reloj: con el taxi al Auditorium a las 19:45, algo ligero o un buen aperitivo. Más opciones en <a href="#gastronomia">Gastronomía</a>.</div>
+        <div class="tl-food-foot">Tras la comida tardía en Otello, esta parada es solo un vermut o un gelato antes del taxi de las 19:45. Más opciones en <a href="#gastronomia">Gastronomía</a>.</div>
       </div>
       
       <div class="tl-item" data-pace="all"><span class="tl-time">19:45</span><span class="tl-title disabled">Taxi Trastevere → Auditorium (~20 min)</span><div class="tl-note">~€18-22. Pedirlo con FreeNow 5 min antes.</div></div>
@@ -3636,32 +3691,37 @@ function loadSvgFallbackDetail(img, cardId) {
       <div class="tl-item" data-pace="all"><span class="tl-time">11:35</span><a href="#spagna" class="tl-title">Piazza di Spagna · Barcaccia</a><div class="tl-note">Bajada por Via Margutta (la calle de Fellini).</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>25 min</b> · escalinata + fuente + Via Margutta — sin prisa, hoy os queda toda la tarde por delante</span></div>
       <div class="tl-transport metro" data-pace="all"><div class="tl-transport-header">Piazza di Spagna → Esquilino · pranzo · ~2 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">Ⓜ️</span><div class="tl-transport-mode-desc"><strong>Metro A</strong> · Spagna → Termini (3 paradas, 8 min) y a comer por Monti o el Esquilino, cerca de las basílicas de la tarde<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>12 min</b><br>💶 <b>€1,50 p.p.</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · por Via Sistina y Via Nazionale · subida moderada</div><div class="tl-transport-mode-meta">⏱ <b>30 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">La tarde baja hacia el sureste por las grandes basílicas. Comed ligero y a la sombra: el calor de las 14h es el peor del día.</div></div>
-      <div class="tl-item" data-pace="all"><span class="tl-time">12:30</span><span class="tl-title disabled">Pranzo · Monti / Esquilino</span><div class="tl-note">Cerca de las basílicas. Ver sección Gastronomía.</div></div>
+      <div class="tl-item reserved-event" data-pace="all"><span class="tl-time">14:15</span><span class="tl-title disabled">Pranzo en La Matriciana dal 1870 · Esquilino</span><span class="tl-tag">reservado</span><div class="tl-note">La patria de la amatriciana (sale en Stanley Tucci). Junto al Teatro dell'Opera.</div></div>
+      <div class="tl-resv-meta">✅ <strong>Reserva confirmada · La Matriciana dal 1870</strong> — lun 22 jun, 14:15 · 3 comensales · Via del Viminale 44 · ☎ <span class="tl-resv-tel">+39 06 488 1775</span>. A 5 min de Termini; desde aquí bajáis en metro a San Giovanni para las basílicas.</div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>75-90 min</b> · comida tranquila · la mañana acaba sobre las 12:00, tenéis margen de sobra antes de la mesa (café o paseo por el centro)</span><span class="tl-meta-item">🚶 hasta el metro: <b>5 min</b> · Termini</span></div>
       <div class="tl-food">
-        <div class="tl-food-header">🍴 Comer por Monti / Esquilino</div>
+        <div class="tl-food-header">🍴 Tu mesa del lunes (mediodía)</div>
         <div class="tl-food-list">
-          <div class="tl-food-item"><a class="tl-food-name" href="#g-matriciana">La Matriciana dal 1870</a><span class="tl-food-time">🚶 7 min</span><span class="tl-food-desc">Junto al Teatro dell'Opera · la patria de la amatriciana (Tucci) · <strong>~€35-50</strong></span></div>
-          <div class="tl-food-item"><a class="tl-food-name" href="#g-vecchia-roma">La Vecchia Roma</a><span class="tl-food-time">🚶 10 min</span><span class="tl-food-desc">En Monti, de paso hacia las basílicas · trattoria de barrio · <strong>~€25-35</strong></span></div>
+          <div class="tl-food-item reserved"><a class="tl-food-name" href="#g-matriciana">La Matriciana dal 1870</a><span class="tl-resv-badge">✓ reservado 14:15</span><span class="tl-food-desc">Junto al Teatro dell'Opera · la patria de la amatriciana (Tucci) · <strong>~€35-50</strong></span></div>
         </div>
-        <div class="tl-food-foot">Más opciones en <a href="#gastronomia">Gastronomía</a>.</div>
+        <div class="tl-food-foot">Ficha completa en <a href="#gastronomia">Gastronomía</a>.</div>
       </div>
       <div class="tl-transport metro" data-pace="medium"><div class="tl-transport-header">Termini → San Giovanni in Laterano · ~2,5 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">Ⓜ️</span><div class="tl-transport-mode-desc"><strong>Metro A</strong> · Termini → San Giovanni · 3 paradas · la basílica está a la salida<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>10 min</b><br>💶 <b>€1,50 p.p.</b></div></div></div><div class="tl-transport-footnote">San Giovanni abre todo el día sin pausa de mediodía: por eso va primera. San Clemente y San Pietro in Vincoli reabren a las 15:00.</div></div>
-      <div class="tl-item" data-pace="medium"><span class="tl-time">14:00</span><a href="#laterano" class="tl-title">San Giovanni in Laterano · Scala Santa</a><div class="tl-note">La catedral de Roma. La Escalera Santa, enfrente.</div></div>
-      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>60-75 min</b> · basílica + claustro + (opcional) Scala Santa enfrente</span><span class="tl-meta-item">🚶 hasta siguiente: <b>12 min</b> · ~900 m hacia el Coliseo</span></div>
+      <div class="tl-item" data-pace="medium"><span class="tl-time">15:45</span><a href="#laterano" class="tl-title">San Giovanni in Laterano · Scala Santa</a><div class="tl-note">La catedral de Roma. La Escalera Santa, enfrente.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>60 min</b> · basílica + claustro + (opcional) Scala Santa enfrente</span><span class="tl-meta-item">🚶 hasta siguiente: <b>12 min</b> · ~900 m hacia el Coliseo</span></div>
       <div class="tl-transport walk" data-pace="medium"><div class="tl-transport-header">Laterano → San Clemente · ~12 min</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · por Via di San Giovanni in Laterano hacia el Coliseo<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>12 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">San Clemente reabre a las 15:00. Si llegáis antes, esperad en la cafetería de enfrente.</div></div>
-      <div class="tl-item" data-pace="all"><span class="tl-time">15:30</span><a href="#san-clemente" class="tl-title">Basilica di San Clemente</a><div class="tl-note">Tres niveles, tres épocas. La máquina del tiempo de Roma.</div></div>
-      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>50-60 min</b> · basílica superior gratis + niveles inferiores con ticket</span><span class="tl-meta-item warn">Niveles inferiores: entrada de pago (~€10) · merece la pena</span></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">17:00</span><a href="#san-clemente" class="tl-title">Basilica di San Clemente</a><div class="tl-note">Tres niveles, tres épocas. La máquina del tiempo de Roma.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>45-55 min</b> · basílica superior gratis + niveles inferiores con ticket</span><span class="tl-meta-item warn">Cierra 18:00 · última entrada a los niveles inferiores ~17:20 — entrad directos a comprar el ticket. Si vais justos, ved solo la basílica superior</span></div>
       <div class="tl-transport walk" data-pace="all"><div class="tl-transport-header">San Clemente → San Pietro in Vincoli · ~15 min</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · bordeáis el Coliseo y subís hacia Monti por la Salita dei Borgia<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>15 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">El paseo pasa junto al Coliseo (que veréis por dentro con guía el domingo). Aquí solo de refilón, empezando a iluminarse.</div></div>
-      <div class="tl-item" data-pace="all"><span class="tl-time">16:45</span><a href="#san-pietro-vincoli" class="tl-title">San Pietro in Vincoli · Moisés</a><div class="tl-note">El Moisés de Miguel Ángel. Cierra ~19:00.</div></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">18:15</span><a href="#san-pietro-vincoli" class="tl-title">San Pietro in Vincoli · Moisés</a><div class="tl-note">El Moisés de Miguel Ángel. Cierra ~19:00.</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>30 min</b> · el Moisés + las cadenas de San Pedro · llevad monedas para la luz</span><span class="tl-meta-item">🚶 hasta Monti: <b>6 min</b> · estáis a un paso del rione</span></div>
-      <div class="tl-transport walk" data-pace="all"><div class="tl-transport-header">San Pietro in Vincoli → Monti · ~6 min</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · bajáis a Via dei Serpenti y a la Piazza della Madonna dei Monti, corazón del rione<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>6 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">Cerráis el día donde el domingo terminó: Monti. Aperitivo en la fuentecita de la plaza y cena en una trattoria del barrio.</div></div>
-      <div class="tl-item" data-pace="all"><span class="tl-time">17:30</span><a href="#monti" class="tl-title">Rione Monti · aperitivo + cena</a><div class="tl-note">Vermut en la piazza, cena de trattoria. Noche tranquila.</div></div>
+      <div class="tl-transport walk" data-pace="all"><div class="tl-transport-header">San Pietro in Vincoli → Monti · ~6 min</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · bajáis a Via dei Serpenti y a la Piazza della Madonna dei Monti, corazón del rione<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>6 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">Aperitivo en la fuentecita de la plaza antes de bajar a Testaccio a cenar.</div></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">19:00</span><a href="#monti" class="tl-title">Rione Monti · aperitivo</a><div class="tl-note">Vermut en la piazza de la Madonna dei Monti. Descanso antes de la cena.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>~2h</b> · aperitivo y paseo tranquilo por el rione hasta la hora de bajar a Testaccio</span></div>
+      <div class="tl-transport taxi" data-pace="all"><div class="tl-transport-header">Monti → Testaccio (Felice) · ~3,5 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> directo hasta Via Mastro Giorgio<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>12 min</b><br>💶 <b>€12-14 · €4-5 p.p.</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">Ⓜ️</span><div class="tl-transport-mode-desc"><strong>Metro B</strong> · Cavour → Piramide (6 paradas) + 8 min andando</div><div class="tl-transport-mode-meta">⏱ <b>20 min</b><br>💶 <b>€1,50 p.p.</b></div></div></div><div class="tl-transport-footnote">Salid de Monti sobre las 21:30 para llegar holgados a la mesa de las 22:00.</div></div>
+      <div class="tl-item reserved-event" data-pace="all"><span class="tl-time">22:00</span><span class="tl-title disabled">Cena en Felice a Testaccio</span><span class="tl-tag">reservado</span><div class="tl-note">La cacio e pepe más famosa de Roma, mezclada en la mesa. Cierre redondo del viaje.</div></div>
+      <div class="tl-resv-meta">✅ <strong>Reserva confirmada · Felice a Testaccio</strong> — lun 22 jun, 22:00 · 3 comensales · Via Mastro Giorgio 29 (Testaccio). Pedid la cacio e pepe y el tonnarello que montan en la mesa; de segundo, abbacchio o el quinto quarto.</div>
       <div class="tl-food">
-        <div class="tl-food-header">🍴 Aperitivo + cena en Monti</div>
+        <div class="tl-food-header">🍴 Tu cena del lunes (noche)</div>
         <div class="tl-food-list">
-          <div class="tl-food-item"><a class="tl-food-name" href="#g-vecchia-roma">La Vecchia Roma</a><span class="tl-food-time">🚶 2 min</span><span class="tl-food-desc">Trattoria romana sin florituras · cena tranquila · <strong>~€25-35</strong></span></div>
+          <div class="tl-food-item reserved"><a class="tl-food-name" href="#g-felice">Felice a Testaccio</a><span class="tl-resv-badge">✓ reservado 22:00</span><span class="tl-food-desc">Cacio e pepe legendaria mezclada en la mesa · quinto quarto · <strong>~€35-50</strong></span></div>
         </div>
-        <div class="tl-food-foot">Vermut en la fuente de Piazza della Madonna dei Monti y cena en cualquier trattoria del rione. Ficha en <a href="#gastronomia">Gastronomía</a>.</div>
+        <div class="tl-food-foot">Ficha completa en <a href="#gastronomia">Gastronomía</a>.</div>
       </div>
     </div>
 
@@ -4197,16 +4257,27 @@ function loadSvgFallbackDetail(img, cardId) {
 
     <div class="day-stats">
       <div class="day-stats-item walk"><strong>~5 km</strong> a pie</div>
-      <div class="day-stats-item ticket"><strong>Galleria Borghese</strong> · turno 10:00 reservado (obligatorio)</div>
+      <div class="day-stats-item ticket"><strong>Galleria Borghese</strong> · sin reserva → Plan B en el parque (GNAM / Villa Giulia)</div>
       <div class="day-stats-item train"><strong>Leonardo Express</strong> Termini→FCO (32 min, €14)</div>
     </div>
 
     <div class="timeline">
       <div class="tl-item" data-pace="all"><span class="tl-time">08:30</span><span class="tl-title disabled">Desayuno + check-out · maletas en consigna</span><div class="tl-note">El vuelo es de noche: dejad las maletas en el hotel y salid ligeros.</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>45 min</b> · desayuno + check-out + dejar maletas en consigna</span></div>
-      <div class="tl-transport metro" data-pace="all"><div class="tl-transport-header">Hotel → Galleria Borghese · ~3 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">Ⓜ️</span><div class="tl-transport-mode-desc"><strong>Metro A</strong> · Termini → Spagna (4 paradas) y subís por la escalinata / Via Veneto hasta la villa<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>20 min</b><br>💶 <b>€1,50 p.p.</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> directo hasta la entrada del museo</div><div class="tl-transport-mode-meta">⏱ <b>12 min</b><br>💶 <b>€12-14 · €4-5 p.p.</b></div></div></div><div class="tl-transport-footnote">Llegad al museo 15 min antes del turno. La entrada con reserva es estricta: si perdéis la hora, no entráis.</div></div>
-      <div class="tl-item fixed-event" data-pace="all"><span class="tl-time">10:00</span><a href="#galleria-borghese" class="tl-title">Galleria Borghese</a><div class="tl-note">Turno reservado de 2h. Bernini, Caravaggio, Canova.</div></div>
-      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>2 h</b> · turno completo · planta baja escultura (Bernini), arriba pintura (Caravaggio, Tiziano)</span><span class="tl-meta-item warn">Reserva online obligatoria · se agota semanas antes · consigna de mochilas obligatoria</span></div>
+      <div class="tl-transport metro" data-pace="all"><div class="tl-transport-header">Hotel → Villa Borghese · ~3 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">Ⓜ️</span><div class="tl-transport-mode-desc"><strong>Metro A</strong> · Termini → Spagna (4 paradas) y subís por la escalinata / Via Veneto hasta la villa<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>20 min</b><br>💶 <b>€1,50 p.p.</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> directo hasta la entrada del parque</div><div class="tl-transport-mode-meta">⏱ <b>12 min</b><br>💶 <b>€12-14 · €4-5 p.p.</b></div></div></div><div class="tl-transport-footnote">Sin reserva en la Galleria Borghese: la mañana se monta dentro del parque (ver Plan B abajo). Salid con calma, el día es tranquilo.</div></div>
+      <div class="tl-item" data-pace="medium"><span class="tl-time">09:45</span><span class="tl-title disabled">Intento walk-in · Galleria Borghese</span><span class="tl-tag">opcional</span><div class="tl-note">Pasad por la taquilla del casino: a la apertura (9:00-10:00) a veces liberan plazas sueltas del día. Probadlo sin contar con ello.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item warn">⏱ <b>10 min</b> · preguntar en taquilla · si hay hueco, entráis 2h y os saltáis el museo alternativo</span></div>
+      <div class="tl-planb">
+        <div class="tl-planb-header">📍 Plan B confirmado · la mañana en Villa Borghese sin la Galleria</div>
+        No hubo turnos para vuestras fechas — pero el gran Bernini lo tenéis igual por la tarde: el <a href="#santa-teresa">Éxtasis de Santa Teresa</a>, su escultura más famosa. La mañana se monta en el parque eligiendo <strong>uno</strong> de estos dos museos, ambos <strong>sin reserva ni aforo</strong> (detalle completo en la <a href="#galleria-borghese">ficha de la Galleria Borghese</a>):
+        <ul>
+          <li><strong>GNAM · Galleria Nazionale d'Arte Moderna</strong> — a 5 min del casino Borghese. Modigliani, De Chirico, Balla, Canova, Klimt. Grande y climatizada. Entrada directa (~€10). Martes abierto.</li>
+          <li><strong>Museo Etrusco di Villa Giulia</strong> — al borde del parque, 15 min. La mejor colección etrusca del mundo: el <em>Sarcófago de los Esposos</em>. Sin colas. Martes abierto.</li>
+        </ul>
+        ¿Sin ganas de museo? La alternativa es quedaros con el parque entero —laghetto, reloj de agua, Pincio— sin prisa, con una granita di caffè en la mano.
+      </div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">10:00</span><span class="tl-title disabled">Museo a elegir (GNAM o Villa Giulia) · o mañana de parque</span><div class="tl-note">Plan B — opciones justo arriba. Ambos sin reserva.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>~2 h</b> · museo a elegir o mañana tranquila de jardines</span><span class="tl-meta-item">🚶 hasta el Pincio: <b>25 min</b> · cruzando Villa Borghese</span></div>
       <div class="tl-transport walk" data-pace="all"><div class="tl-transport-header">Galleria Borghese → Terrazza del Pincio · jardines · ~1,5 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · cruzáis Villa Borghese hacia el oeste: el laghetto con el templo de Esculapio, el reloj de agua, y la terraza del Pincio sobre Piazza del Popolo<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>25 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">El parque es enorme; id apuntando al laghetto y a la terraza. A mediodía hay sombra de pinos.</div></div>
       <div class="tl-item" data-pace="all"><span class="tl-time">12:00</span><a href="#villa-borghese" class="tl-title">Villa Borghese · laghetto · Terrazza del Pincio</a><div class="tl-note">El jardín y el balcón de Roma sobre las cúpulas.</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>45-60 min</b> · laghetto + terraza · la mejor vista panorámica del viaje</span><span class="tl-meta-item">🚶 hasta Cappuccini: <b>15 min</b> · bajando por Via Veneto</span></div>
@@ -4302,7 +4373,7 @@ function loadSvgFallbackDetail(img, cardId) {
 
         <div class="card-section no-dropcap">
           <h4>¿Sin entradas? Cómo conseguirlas y Plan B</h4>
-          <p>Las entradas se agotan semanas antes, especialmente en verano. Si a 2-3 semanas vista no hay hueco:</p>
+          <p><strong>Para este viaje:</strong> no hubo turnos libres para las fechas (se agotaron con semanas de antelación). El plan del martes asume que <em>no</em> se entra — ver el Plan B del día V en el timeline. Aun así, último intento por si se libera algo:</p>
           <ul class="detail-list">
             <li><strong>Cancelaciones de VivaTicket</strong> (el sistema oficial): entran nuevas plazas cada mañana al <strong>abrir el sistema</strong> (~9:00 h). Vale la pena mirar durante 3-4 días seguidos a esa hora exacta.</li>
             <li><strong>Tiqets / GetYourGuide / Musement</strong>: los revendedores oficiales a veces tienen hueco cuando VivaTicket indica sold-out. Cobran ~€5-8 de recargo, pero es legítimo.</li>
@@ -4702,6 +4773,15 @@ function loadSvgFallbackDetail(img, cardId) {
     <h2 class="section-title">Dónde comer</h2>
     <div class="reservas-box">
       <div class="reservas-box-header">Reservas · cuándo y con cuánta antelación</div>
+      <div class="reservas-confirmadas">
+        <h4>✅ Ya reservado · 3 comensales</h4>
+        <ul>
+          <li><span class="rc-when">Vie 19 · 22:00</span> — <a href="#g-mercato-hostaria">Mercato Hostaria</a>, Campo de' Fiori 53 <em>(Restoo)</em></li>
+          <li><span class="rc-when">Sáb 20 · 16:00</span> — Otello (Trastevere), Via della Pelliccia 47/53 <em>(TheFork)</em></li>
+          <li><span class="rc-when">Lun 22 · 14:15</span> — <a href="#g-matriciana">La Matriciana dal 1870</a>, Via del Viminale 44 · ☎ +39 06 488 1775</li>
+          <li><span class="rc-when">Lun 22 · 22:00</span> — <a href="#g-felice">Felice a Testaccio</a>, Via Mastro Giorgio 29</li>
+        </ul>
+      </div>
       <table class="reservas-table">
         <tr>
           <td><a href="#g-armando">Armando al Pantheon</a><span class="reservas-badge badge-urgent">semanas antes</span></td>
@@ -4711,21 +4791,21 @@ function loadSvgFallbackDetail(img, cardId) {
           <td><a href="#g-roscioli">Roscioli</a><span class="reservas-badge badge-urgent">semanas antes</span></td>
           <td>Uno de los más solicitados de Roma. Reservar con <strong>1-2 semanas</strong> de antelación. Tienen turno de barra sin reserva, pero el comedor se llena.</td>
         </tr>
-        <tr>
-          <td><a href="#g-felice">Felice a Testaccio</a><span class="reservas-badge badge-urgent">semanas antes</span></td>
-          <td>La cacio e pepe más famosa de Roma. <strong>1-2 semanas</strong> mínimo. Imposible sin reserva en fin de semana.</td>
+        <tr class="is-done">
+          <td><a href="#g-felice">Felice a Testaccio</a><span class="reservas-badge badge-done">✓ reservado · lun 22, 22:00</span></td>
+          <td>La cacio e pepe más famosa de Roma. <strong>Reserva confirmada</strong> para la cena del lunes (3 pax).</td>
         </tr>
         <tr>
           <td><a href="#g-checchino">Checchino dal 1887</a><span class="reservas-badge badge-urgent">días/semana antes</span></td>
           <td>Templo del quinto quarto. Reservar con <strong>varios días</strong> de antelación, especialmente fines de semana.</td>
         </tr>
         <tr>
-          <td><a href="#galleria-borghese">Galleria Borghese</a><span class="reservas-badge badge-urgent">semanas antes</span></td>
-          <td>No es restaurante, pero es la reserva más crítica del viaje. Los turnos se agotan <strong>semanas antes</strong> — reservar en cuanto se decidan las fechas. Si está lleno, ver consejos en la ficha.</td>
+          <td><a href="#galleria-borghese">Galleria Borghese</a><span class="reservas-badge badge-urgent">sin hueco</span></td>
+          <td>No hubo turnos libres para las fechas del viaje. <strong>Plan B montado</strong> para el martes (ver la ficha y el timeline del día V): walk-in a primera hora + alternativas con el Bernini de la Borghese cubierto por otras vías.</td>
         </tr>
-        <tr>
-          <td><a href="#g-matriciana">La Matriciana</a><span class="reservas-badge badge-rec">recomendable</span></td>
-          <td>Reservar con <strong>2-3 días</strong> de antelación, especialmente si hay función en el Teatro dell'Opera.</td>
+        <tr class="is-done">
+          <td><a href="#g-matriciana">La Matriciana dal 1870</a><span class="reservas-badge badge-done">✓ reservado · lun 22, 14:15</span></td>
+          <td>La patria de la amatriciana (Stanley Tucci). <strong>Reserva confirmada</strong> para el almuerzo del lunes (3 pax). ☎ +39 06 488 1775.</td>
         </tr>
         <tr>
           <td><a href="#g-sora-lella">Sora Lella</a><span class="reservas-badge badge-rec">recomendable</span></td>
@@ -4735,9 +4815,13 @@ function loadSvgFallbackDetail(img, cardId) {
           <td><a href="#g-giggetto">Giggetto al Portico d'Ottavia</a><span class="reservas-badge badge-rec">recomendable</span></td>
           <td>Para comer en el Ghetto con calma. Reservar con <strong>1-2 días</strong>, sobre todo domingo al mediodía.</td>
         </tr>
-        <tr>
-          <td><a href="#g-mercato-hostaria">Mercato Hostaria</a><span class="reservas-badge badge-rec">recomendable (noche)</span></td>
-          <td>Para la cena del viernes en Campo de' Fiori. Reservar si se va de noche — al mediodía suele haber hueco.</td>
+        <tr class="is-done">
+          <td><a href="#g-mercato-hostaria">Mercato Hostaria</a><span class="reservas-badge badge-done">✓ reservado · vie 19, 22:00</span></td>
+          <td><strong>Reserva confirmada</strong> para la cena del viernes en Campo de' Fiori (3 pax).</td>
+        </tr>
+        <tr class="is-done">
+          <td>Otello (Trastevere)<span class="reservas-badge badge-done">✓ reservado · sáb 20, 16:00</span></td>
+          <td><strong>Reserva confirmada</strong> · comida tardía del sábado tras el Vaticano. Via della Pelliccia 47/53.</td>
         </tr>
         <tr>
           <td><strong>Sin reserva (hacer cola)</strong></td>
