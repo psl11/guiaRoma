@@ -1288,6 +1288,30 @@ strong { font-weight: 600; color: var(--ink); }
 .day-stats-item.train::before { content: "🚆"; }
 .day-stats-item.ticket::before { content: "🎟️"; }
 
+/* Botón "Ver ruta del día": abre Google Maps con todas las paradas del día (modo direcciones) */
+.day-route-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  margin-left: auto;
+  padding: .35rem .9rem;
+  background: var(--accent);
+  color: var(--bg-elev);
+  border: 1px solid var(--accent);
+  border-radius: 99px;
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: .9rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: filter .2s ease, transform .2s ease;
+}
+.day-route-btn::before { content: "🗺️"; font-style: normal; font-size: .95rem; }
+.day-route-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+@media (max-width: 600px) {
+  .day-route-btn { margin-left: 0; width: 100%; justify-content: center; }
+}
+
 .timeline { position: relative; padding-left: 1.75rem; margin-top: 2rem; }
 .timeline::before {
   content: "";
@@ -6552,6 +6576,73 @@ function restoreResumen() {
   } catch(e) {}
 }
 
+// === RUTA DEL DÍA (Google Maps · modo direcciones) ===
+// Por cada día construye un enlace a Google Maps con todas sus paradas en orden
+// (de la primera a la última del timeline), para ver de un vistazo el recorrido.
+const MAX_ROUTE_STOPS = 10; // Google Maps admite como máximo 10 paradas por ruta.
+
+function buildDayRoutes() {
+  // Coordenadas precisas por id de ficha (de `places`); si faltan, usamos el texto de búsqueda del enlace.
+  const coordById = {};
+  try {
+    places.forEach(p => { if (p.lat != null && p.lng != null) coordById[p.id] = p.lat + ',' + p.lng; });
+  } catch (e) {}
+
+  function pointFor(link) {
+    const card = link.closest('article.card[id]');
+    if (card && coordById[card.id]) return coordById[card.id];
+    try {
+      const q = new URL(link.href).searchParams.get('query');
+      if (q) return q;
+    } catch (e) {}
+    return null;
+  }
+
+  // Si hay más de MAX_ROUTE_STOPS, conservamos primera y última y muestreamos el resto uniformemente.
+  function capStops(points) {
+    if (points.length <= MAX_ROUTE_STOPS) return points;
+    const middle = points.slice(1, -1);
+    const slots = MAX_ROUTE_STOPS - 2;
+    const result = [points[0]];
+    for (let i = 0; i < slots; i++) {
+      const idx = slots === 1 ? 0 : Math.round(i * (middle.length - 1) / (slots - 1));
+      result.push(middle[idx]);
+    }
+    result.push(points[points.length - 1]);
+    return result;
+  }
+
+  function buildDirUrl(points) {
+    const enc = encodeURIComponent;
+    let url = 'https://www.google.com/maps/dir/?api=1&travelmode=walking'
+      + '&origin=' + enc(points[0])
+      + '&destination=' + enc(points[points.length - 1]);
+    const waypoints = points.slice(1, -1);
+    if (waypoints.length) url += '&waypoints=' + waypoints.map(enc).join('|');
+    return url;
+  }
+
+  document.querySelectorAll('section .day-stats').forEach(stats => {
+    stats.querySelectorAll('.day-route-btn').forEach(el => el.remove()); // idempotente (reinit)
+    const section = stats.closest('section');
+    if (!section) return;
+    const links = Array.from(section.querySelectorAll('.timeline a.maps-link'));
+    const points = links.map(pointFor).filter(Boolean);
+    if (points.length < 2) return; // sin ruta posible con menos de 2 paradas
+    const total = points.length;
+    const btn = document.createElement('a');
+    btn.className = 'day-route-btn';
+    btn.href = buildDirUrl(capStops(points));
+    btn.target = '_blank';
+    btn.rel = 'noopener';
+    btn.title = 'Abre Google Maps con el recorrido del día a pie';
+    btn.textContent = total > MAX_ROUTE_STOPS
+      ? 'Ver ruta del día (' + MAX_ROUTE_STOPS + ' de ' + total + ' paradas)'
+      : 'Ver ruta del día (' + total + ' paradas)';
+    stats.appendChild(btn);
+  });
+}
+
 // === INIT ===
 function init() {
   restorePace();
@@ -6561,6 +6652,7 @@ function init() {
   setupNotes();
   updateActivePill();
   bindCardLinks();
+  buildDayRoutes();
 }
 init();
 
