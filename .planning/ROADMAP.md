@@ -12,7 +12,7 @@ guiaRoma es hoy un único `index.html` (6.665 líneas) con la guía de un viaje 
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Andamiaje + Golden de paridad** - Proyecto Nuxt 4 en la rama de release, estático bajo `/guiaRoma/`, CSS verbatim, Nitro dormido, y golden de Playwright capturado desde `main` antes de divergir
+- [x] **Phase 1: Andamiaje + Golden de paridad** - Proyecto Nuxt 4 en la rama de release, estático bajo `/guiaRoma/`, CSS verbatim, Nitro dormido, y golden de Playwright capturado desde `main` antes de divergir (completed 2026-06-18)
 - [ ] **Phase 2: Esquema de datos + migración del contenido** - 6 colecciones zod en Nuxt Content v3 y todo Roma migrado 1:1 a datos tipados, con `day.cards` ordenado y validación que rompe el build
 - [ ] **Phase 3: Capa de página, layout y tema** - `useTrip(slug)` + `TripView` renderizando un viaje desde datos, routing multi-viaje, layout/Topbar/NavPills idénticos y tema claro/oscuro sin parpadeo
 - [ ] **Phase 4: Render de contenido + modos de ritmo** - Fichas, timeline y secciones de referencia renderizadas desde datos e idénticas a hoy, con selector de ritmo, "caminar menos" y modo resumen
@@ -36,7 +36,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 3 plans
   - [x] 01-01-PLAN.md — Golden de paridad: capturar el golden del `index.html` (14 vistas × claro/oscuro × móvil/desktop) con Playwright, deterministas y versionados, ANTES de divergir [Wave 1]
   - [x] 01-02-PLAN.md — Scaffold Nuxt 4 en raíz (srcDir=app/, pnpm, TS estricto, @nuxt/eslint+stylistic, módulos, fuentes self-host) + CSS editorial extraído verbatim a tokens/base/leaflet [Wave 2]
-  - [ ] 01-03-PLAN.md — Subpath `/guiaRoma/` (baseURL + github_pages + .nojekyll) + backend Nitro dormido + verificación local del build (0×404 de /_nuxt/*, 0×CDN) [Wave 3]
+  - [x] 01-03-PLAN.md — Subpath `/guiaRoma/` (baseURL + github_pages + .nojekyll) + backend Nitro dormido + verificación local del build (0×404 de /_nuxt/*, 0×CDN) [Wave 3]
 
 ### Phase 2: Esquema de datos + migración del contenido
 **Goal**: Definir el esquema de viaje tipado (la raíz de la que derivan búsqueda, ruta del día, mapa, ritmo y fallback) y migrar **todo** el contenido de Roma a datos, sin perder ni una palabra ni un enlace, con la validación zod actuando como puerta de calidad en el build.
@@ -126,7 +126,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Andamiaje + Golden de paridad | 2/3 | In Progress|  |
+| 1. Andamiaje + Golden de paridad | 3/3 | Complete   | 2026-06-18 |
 | 2. Esquema de datos + migración del contenido | 0/TBD | Not started | - |
 | 3. Capa de página, layout y tema | 0/TBD | Not started | - |
 | 4. Render de contenido + modos de ritmo | 0/TBD | Not started | - |

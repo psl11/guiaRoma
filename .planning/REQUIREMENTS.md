@@ -30,7 +30,7 @@ Requisitos para la release 1.0. Cada uno se mapea a una fase del roadmap.
 
 - [ ] **ARCH-01**: La página renderiza un viaje a partir de sus datos vía `useTrip(slug)`; añadir un viaje nuevo = añadir archivos de contenido, sin tocar código
 - [ ] **ARCH-02**: Routing preparado para multi-viaje (`/` = Roma por defecto; estructura `/trips/[slug]` lista) reutilizando un mismo `TripView`
-- [ ] **ARCH-03**: Directorio Nitro `server/` presente pero dormido (sin endpoints activos); el sitio se sigue generando estático
+- [x] **ARCH-03**: Directorio Nitro `server/` presente pero dormido (sin endpoints activos); el sitio se sigue generando estático
 
 ### Componentes y render (UI)
 
@@ -54,9 +54,9 @@ Requisitos para la release 1.0. Cada uno se mapea a una fase del roadmap.
 
 ### Estático, offline y despliegue (BUILD)
 
-- [ ] **BUILD-01**: `nuxt generate` produce un sitio estático desplegable en GitHub Pages bajo subpath `/guiaRoma/` (baseURL + `.nojekyll`), con los assets resolviendo correctamente
+- [x] **BUILD-01**: `nuxt generate` produce un sitio estático desplegable en GitHub Pages bajo subpath `/guiaRoma/` (baseURL + `.nojekyll`), con los assets resolviendo correctamente
 - [x] **BUILD-02**: Comportamiento offline conservado: Leaflet self-hosteado (no CDN) y fuentes self-hosteadas (`@nuxt/fonts`) para no depender de Google Fonts; las imágenes remotas degradan a fallback SVG como hoy
-- [ ] **BUILD-03**: La app funciona servida desde el subpath de producción de forma equivalente a la versión actual
+- [x] **BUILD-03**: La app funciona servida desde el subpath de producción de forma equivalente a la versión actual
 
 ### Verificación de paridad (PARITY)
 
@@ -106,10 +106,10 @@ Qué fases cubren qué requisitos. Mapeo del roadmap (ver `.planning/ROADMAP.md`
 | PLAT-03 | Phase 1 | Complete |
 | PLAT-04 | Phase 1 | Complete |
 | PLAT-05 | Phase 1 | Complete |
-| ARCH-03 | Phase 1 | Pending |
-| BUILD-01 | Phase 1 | Pending |
+| ARCH-03 | Phase 1 | Complete |
+| BUILD-01 | Phase 1 | Complete |
 | BUILD-02 | Phase 1 | Complete |
-| BUILD-03 | Phase 1 | Pending |
+| BUILD-03 | Phase 1 | Complete |
 | PARITY-01 | Phase 1 | Complete |
 | DATA-01 | Phase 2 | Pending |
 | DATA-02 | Phase 2 | Pending |
