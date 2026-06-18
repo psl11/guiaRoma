@@ -6418,7 +6418,10 @@ function setupNotes() {
 const navPills = document.querySelectorAll('.nav-pill');
 const sections = document.querySelectorAll('section');
 function updateActivePill() {
-  const scrollY = window.scrollY + 100;
+  // El margen debe superar el scroll-padding-top de la cabecera fija (124px):
+  // si no, al saltar a una sección el scroll queda ~24px por encima de su top
+  // y se marcaba la pastilla de la sección anterior.
+  const scrollY = window.scrollY + 130;
   let current = '';
   sections.forEach(s => {
     if (scrollY >= s.offsetTop) current = s.id;
