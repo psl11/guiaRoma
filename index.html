@@ -746,6 +746,74 @@ svg.leaflet-image-layer.leaflet-interactive path {
   display: none !important;
 }
 
+/* === Modo "Caminar menos" (movilidad reducida) === */
+.light-wrap {
+  margin-top: .85rem; padding-top: .85rem;
+  border-top: 1px solid var(--line-soft);
+  display: flex; align-items: center; gap: .7rem; flex-wrap: wrap;
+}
+.light-toggle {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--bg-elev); border: 1px solid var(--line);
+  color: var(--ink-soft); cursor: pointer;
+  padding: .45rem .8rem; border-radius: 99px;
+  font-family: 'JetBrains Mono','SF Mono','Consolas',monospace;
+  font-size: .72rem; letter-spacing: .04em;
+  transition: all .2s ease;
+}
+.light-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.light-toggle .light-switch {
+  width: 30px; height: 17px; border-radius: 99px;
+  background: var(--line); position: relative; transition: background .2s ease; flex: none;
+}
+.light-toggle .light-switch::after {
+  content: ""; position: absolute; top: 2px; left: 2px;
+  width: 13px; height: 13px; border-radius: 50%;
+  background: #fff; transition: transform .2s ease;
+}
+body.light-mode .light-toggle { border-color: #2e7d4f; color: #2e7d4f; background: color-mix(in srgb,#2e7d4f 8%,transparent); }
+body.light-mode .light-toggle .light-switch { background: #2e7d4f; }
+body.light-mode .light-toggle .light-switch::after { transform: translateX(13px); }
+.light-help {
+  font-family: 'Cormorant Garamond','Garamond','Hoefler Text','Times New Roman',serif;
+  font-style: italic; font-size: .82rem; color: var(--ink-faint); line-height: 1.4; flex: 1 1 240px;
+}
+
+/* Banner global cuando el modo está activo */
+.light-banner { display: none; }
+body.light-mode .light-banner {
+  display: block; margin: 0 0 1.25rem;
+  padding: .7rem 1rem; border-radius: 8px;
+  background: color-mix(in srgb,#2e7d4f 10%,transparent);
+  border: 1px solid color-mix(in srgb,#2e7d4f 35%,transparent);
+  font-size: .85rem; color: var(--ink-soft); line-height: 1.5;
+}
+.light-banner strong { color: #2e7d4f; }
+
+/* Caja "Versión ligera" por día — oculta salvo en modo ligero */
+.dia-ligera { display: none; }
+body.light-mode .dia-ligera {
+  display: block;
+  margin: 0 0 1.4rem; padding: .9rem 1.1rem;
+  background: color-mix(in srgb,#2e7d4f 7%,transparent);
+  border: 1px solid color-mix(in srgb,#2e7d4f 30%,transparent);
+  border-left: 4px solid #2e7d4f; border-radius: 0 10px 10px 0;
+}
+.dia-ligera-head {
+  font-family: 'Cormorant Garamond','Garamond','Hoefler Text','Times New Roman',serif;
+  font-style: italic; font-size: 1.15rem; color: var(--ink); margin-bottom: .5rem;
+}
+.dia-ligera ul { margin: 0; padding-left: 0; list-style: none; }
+.dia-ligera li { margin: .45rem 0; font-size: .87rem; line-height: 1.5; color: var(--ink-soft); padding-left: 1.6rem; position: relative; }
+.dia-ligera li::before { position: absolute; left: 0; top: 0; }
+.dia-ligera li.lg-see::before   { content: "✅"; }
+.dia-ligera li.lg-move::before  { content: "🚕"; }
+.dia-ligera li.lg-skip::before  { content: "⏭️"; }
+.dia-ligera li.lg-care::before  { content: "⚠️"; }
+.dia-ligera li.lg-rest::before  { content: "🪑"; }
+.dia-ligera li strong { color: var(--ink); }
+.dia-ligera a { color: var(--accent); }
+
 /* Sticky pace indicator that follows you per day */
 .pace-day-indicator {
   display: inline-block;
@@ -2127,6 +2195,13 @@ function loadSvgFallbackDetail(img, cardId) {
         </button>
       </div>
       <p class="pace-help">Elige el ritmo según cómo os sintáis. <em>Optimista</em> es el plan completo. <em>Neutra</em> elimina las paradas menos esenciales. <em>Pesimista</em> deja solo lo imprescindible para disfrutar sin prisas. Las fichas siempre están disponibles en cada día por si queréis improvisar.</p>
+      <div class="light-wrap">
+        <button class="light-toggle" id="light-toggle" onclick="toggleLightMode()" aria-pressed="false">
+          <span class="light-switch"></span>
+          <span>🦶 Caminar menos</span>
+        </button>
+        <span class="light-help">Modo movilidad reducida: pone el ritmo en <em>Pesimista</em> y añade en cada día una <strong>«Versión ligera»</strong> con lo imprescindible, traslados en taxi/metro y avisos de escaleras y cuestas.</span>
+      </div>
     </div>
 
     <h4>Datos del viaje</h4>
@@ -2172,6 +2247,7 @@ function loadSvgFallbackDetail(img, cardId) {
 <!-- VIERNES -->
 <section id="viernes">
   <div class="container">
+    <div class="light-banner">🦶 <strong>Modo «Caminar menos» activado.</strong> El ritmo está en <em>Pesimista</em> (solo lo imprescindible) y cada día muestra una <strong>«Versión ligera»</strong> con qué ver, cómo moverte en taxi/metro y dónde hay escaleras o cuestas que esquivar. Desactívalo arriba (🦶) para volver al plan completo.</div>
     <div class="section-eyebrow">venerdì · 19 giugno</div>
     <div class="day-header">
       <div class="day-number">I</div>
@@ -2187,9 +2263,19 @@ function loadSvgFallbackDetail(img, cardId) {
       <div class="day-stats-item taxi"><strong>2 trayectos</strong> taxi · hotel ↔ centro (~€10 cada uno)</div>
     </div>
 
+    <div class="dia-ligera">
+      <div class="dia-ligera-head">🦶 Versión ligera · viernes</div>
+      <ul>
+        <li class="lg-see"><strong>Imprescindibles:</strong> Fontana di Trevi, Pantheon (exterior), Piazza Navona y cena en <a href="#g-mercato-hostaria">Mercato Hostaria</a> (Campo de' Fiori, 22:00). Todo llano y muy junto: ~1 km en total.</li>
+        <li class="lg-move"><strong>Cómo moverse:</strong> taxi del hotel directo a Trevi y taxi de vuelta desde Campo de' Fiori. Entre paradas, calles cortas y planas (4-5 min cada tramo).</li>
+        <li class="lg-skip"><strong>Saltar hoy:</strong> Galleria Sciarra (desvío con poco margen) y, si cansa, Sant'Ignazio.</li>
+        <li class="lg-rest"><strong>Descanso:</strong> sentaos pronto a cenar en Campo de' Fiori; un caffè en Navona por el camino.</li>
+      </ul>
+    </div>
+
     <div class="timeline">
       <div class="tl-item" data-pace="all"><span class="tl-time">~17:00</span><span class="tl-title disabled">Llegada · aeropuerto → hotel</span><div class="tl-note">Del aeropuerto a Termini; el hotel está a 4 min andando de la estación. Ajustad según la hora real de aterrizaje.</div></div>
-      <div class="tl-transport train" data-pace="all"><div class="tl-transport-header">Fiumicino (FCO) → Roma Termini · ~32 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚆</span><div class="tl-transport-mode-desc"><strong>Leonardo Express</strong> · directo sin paradas FCO → Termini · sale cada 15 min · el hotel queda a 4 min de la estación<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>32 min</b><br>💶 <b>€14 p.p.</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> · tarifa fija oficial FCO → centro · cómodo con maletas, sobre todo entre tres</div><div class="tl-transport-mode-meta">⏱ <b>45-55 min</b><br>💶 <b>€55 fijo · €18 p.p.</b></div></div></div><div class="tl-transport-footnote">Billete del Leonardo Express: en la app <strong>Trenitalia</strong> u <strong>Omio</strong>, o en las máquinas/taquillas del aeropuerto. <strong>No hace falta comprarlo con antelación</strong> — es precio fijo, sin asiento asignado y sale cada 15 min; comprarlo en la app solo os ahorra la cola de la máquina. <em>Si aterrizáis en Ciampino (CIA):</em> no hay tren — bus Terravision/SIT (~€6, 40 min a Termini) o taxi de tarifa fija €40.</div></div>
+      <div class="tl-transport taxi" data-pace="all"><div class="tl-transport-header">Fiumicino (FCO) → Roma Termini · ~32 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> · tarifa fija oficial FCO → centro · puerta del hotel, sin arrastrar maletas por Termini · siendo 3, sale a cuenta<span class="tl-transport-mode-tag">recomendado a la llegada</span></div><div class="tl-transport-mode-meta">⏱ <b>45-55 min</b><br>💶 <b>€55 fijo · €18 p.p.</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚆</span><div class="tl-transport-mode-desc"><strong>Leonardo Express</strong> · directo sin paradas · sale cada 15 min · el hotel a 4 min de Termini · más barato e inmune al tráfico</div><div class="tl-transport-mode-meta">⏱ <b>32 min</b><br>💶 <b>€14 p.p. · €42 total</b></div></div></div><div class="tl-transport-footnote">Para <strong>3 con maletas y al final del día de viaje</strong>, el taxi (€55 fijo, ~€18 p.p.) compensa los ~€13 de diferencia: os deja en la puerta. El tren gana si hay atasco o si vais ligeros. Taxi: solo blancos oficiales de la parada, confirmad <em>"tariffa fissa per il centro"</em> antes de subir (€55 hasta 4 pax, maletas incluidas; tarifa vigente desde 2024, confirmad el cartel). Tren: billete en la app <strong>Trenitalia</strong>/<strong>Omio</strong> o en la máquina — <strong>sin reserva previa</strong>, precio fijo y sin asiento. <em>Si aterrizáis en Ciampino (CIA):</em> no hay tren — bus Terravision/SIT (~€6, 40 min) o taxi fijo €40.</div></div>
       <div class="tl-item" data-pace="all"><span class="tl-time">18:00</span><span class="tl-title disabled">Hotel Royal Court · check-in</span><div class="tl-note">Ducha rápida, salida 19:00.</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>60 min</b> · check-in + ducha + preparar salida</span></div>
       <div class="tl-transport taxi" data-pace="slow-only"><div class="tl-transport-header">Hotel → Galleria Sciarra · ~2 km</div><div class="tl-transport-modes"><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · por Via Cavour bajando hacia Trevi</div><div class="tl-transport-mode-meta">⏱ <b>25 min</b><br>💶 <b>gratis</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">Ⓜ️</span><div class="tl-transport-mode-desc"><strong>Metro A</strong> · Termini → Barberini · 1 parada · + 7 min andando</div><div class="tl-transport-mode-meta">⏱ <b>15 min</b><br>💶 <b>€1,50 p.p. · €4,50 total</b></div></div><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> directo desde el hotel<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>8-12 min</b><br>💶 <b>€10-12 · €3-4 p.p.</b></div></div></div><div class="tl-transport-footnote">Después del check-in suele apetecer ir directo sin esperas. Pedir taxi desde recepción a las 19:15.</div></div>
@@ -2624,14 +2710,25 @@ function loadSvgFallbackDetail(img, cardId) {
       <div class="day-number">II</div>
       <div>
         <h2>Vaticano y Trastevere</h2>
-        <div class="day-subtitle">Mañana eficiente · Vaticano guiado · Trastevere · concierto Einaudi.</div>
+        <div class="day-subtitle">Mañana eficiente · Vaticano guiado · tarde y cena sin prisa en Trastevere.</div>
       </div>
     </div>
 
     <div class="day-stats">
       <div class="day-stats-item walk"><strong>~7 km</strong> a pie</div>
-      <div class="day-stats-item taxi"><strong>3 taxis</strong> · centro↔Vaticano · Trastevere→Auditorium · Auditorium→hotel</div>
+      <div class="day-stats-item taxi"><strong>2 taxis</strong> · centro↔Vaticano · Trastevere→hotel</div>
       <div class="day-stats-item metro"><strong>Opción metro</strong> centro→Vaticano (línea A · Ottaviano)</div>
+    </div>
+
+    <div class="dia-ligera">
+      <div class="dia-ligera-head">🦶 Versión ligera · sábado</div>
+      <ul>
+        <li class="lg-see"><strong>Imprescindibles:</strong> Tour del Vaticano (reservado), comida en Otello (Trastevere, 16:00), <a href="#smt">Santa Maria in Trastevere</a> y cena en Trastevere.</li>
+        <li class="lg-move"><strong>Cómo moverse:</strong> taxi hotel→Vaticano y taxi Vaticano→Otello (Trastevere) directo — os ahorráis el tramo a pie junto al río. Trastevere es llano.</li>
+        <li class="lg-skip"><strong>Saltar hoy:</strong> la subida al Gianicolo (<a href="#tempietto">Tempietto</a> y <a href="#fontanone">Acqua Paola</a>), la única cuesta seria del día; y Doria Pamphilj / Sant'Eustachio de la mañana si preferís guardar fuerzas.</li>
+        <li class="lg-care"><strong>Ojo:</strong> el tour del Vaticano son ~3h de pie sobre suelo duro y con poco donde sentarse. Avisad al guía del esguince y marcad vuestro ritmo.</li>
+        <li class="lg-rest"><strong>Descanso:</strong> la comida larga en Otello y la cena en Trastevere, ambas sentadas y en zona plana.</li>
+      </ul>
     </div>
 
     <div class="timeline">
@@ -2667,21 +2764,21 @@ function loadSvgFallbackDetail(img, cardId) {
       <div class="tl-item" data-pace="slow-only"><span class="tl-time">17:50</span><a href="#fontanone" class="tl-title">Fontana dell'Acqua Paola</a><span class="tl-tag">Sorrentino</span><div class="tl-note">A 5 min del Tempietto. Vista panorámica al atardecer. La escena de apertura de La Grande Bellezza.</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>25 min</b> · la fuente + el panorama al atardecer valen cada minuto</span><span class="tl-meta-item">🚶 hasta siguiente: <b>9 min</b> · 700 m bajando el Gianicolo hasta Santa Maria in Trastevere</span></div>
       
-      <div class="tl-item" data-pace="all"><span class="tl-time">18:15</span><a href="#smt" class="tl-title">Santa Maria in Trastevere</a><div class="tl-note">Mosaicos del siglo XII en el ábside. Aperitivo rápido en la plaza.</div></div>
-      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>90 min</b> · iglesia (20 min) + aperitivo en la plaza de Trastevere hasta el taxi</span></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">18:15</span><a href="#smt" class="tl-title">Santa Maria in Trastevere</a><div class="tl-note">Mosaicos del siglo XII en el ábside. Y el corazón de la mejor noche de Trastevere.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>20 min</b> · iglesia · luego, la plaza y las callejuelas de Trastevere para vosotros</span></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">19:00</span><span class="tl-title disabled">Tarde-noche libre en Trastevere · aperitivo + cena</span><div class="tl-note">El concierto pasó al domingo: esta noche queda libre, y Trastevere es el mejor sitio de Roma para cenar sin prisa.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>a vuestro ritmo</b> · vermut en la plaza, paseo por los vicoli y cena de trattoria</span></div>
       <div class="tl-food">
-        <div class="tl-food-header">🍴 Aperitivo ligero en Trastevere (ya habéis comido en Otello)</div>
+        <div class="tl-food-header">🍴 Cena en Trastevere</div>
         <div class="tl-food-list">
-          <div class="tl-food-item"><a class="tl-food-name" href="#g-fior-di-luna">Fior di Luna</a><span class="tl-food-time">🚶 4 min</span><span class="tl-food-desc">Gelato artesanal para el camino al concierto · <strong>~€3-4</strong></span></div>
-          <div class="tl-food-item"><a class="tl-food-name" href="#g-tonnarello">Tonnarello</a><span class="tl-food-time">🚶 1 min</span><span class="tl-food-desc">Si os entra hambre antes del taxi · cacio e pepe y pizza · <strong>~€25-35</strong></span></div>
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-tonnarello">Tonnarello</a><span class="tl-food-time">🚶 1 min</span><span class="tl-food-desc">En la misma plaza · cacio e pepe y carbonara · animado · <strong>~€25-35</strong></span></div>
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-zi-umberto">Osteria da Zi Umberto</a><span class="tl-food-time">🚶 4 min</span><span class="tl-food-desc">Osteria de barrio, pocos turistas · cocina honesta · <strong>~€25-35</strong></span></div>
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-dar-poeta">Dar Poeta</a><span class="tl-food-time">🚶 5 min</span><span class="tl-food-desc">Pizza de masa fermentada 48h · sin reservas · <strong>~€15-22</strong></span></div>
+          <div class="tl-food-item"><a class="tl-food-name" href="#g-fior-di-luna">Fior di Luna</a><span class="tl-food-time">🚶 4 min</span><span class="tl-food-desc">Gelato artesanal para rematar la noche · <strong>~€3-4</strong></span></div>
         </div>
-        <div class="tl-food-foot">Tras la comida tardía en Otello, esta parada es solo un vermut o un gelato antes del taxi de las 19:45. Más opciones en <a href="#gastronomia">Gastronomía</a>.</div>
+        <div class="tl-food-foot">Tras la comida tardía en Otello quizá apetezca algo más ligero o tardío — Trastevere aguanta despierto hasta tarde. Fichas en <a href="#gastronomia">Gastronomía</a>.</div>
       </div>
-      
-      <div class="tl-item" data-pace="all"><span class="tl-time">19:45</span><span class="tl-title disabled">Taxi Trastevere → Auditorium (~20 min)</span><div class="tl-note">~€18-22. Pedirlo con FreeNow 5 min antes.</div></div>
-      <div class="tl-item" data-pace="all"><span class="tl-time">20:15</span><a href="#auditorium" class="tl-title">Llegada Auditorium · Cavea</a><div class="tl-note">Cafetería del Auditorium para picar algo antes del concierto.</div></div>
-      <div class="tl-item fixed-event" data-pace="all"><span class="tl-time">21:00</span><span class="tl-title disabled">Concierto Ludovico Einaudi</span><span class="tl-tag">reservado</span><div class="tl-note">Cavea (anfiteatro al aire libre). ~1h 45min.</div></div>
-      <div class="tl-item" data-pace="all"><span class="tl-time">23:00</span><span class="tl-title disabled">Taxi Auditorium → hotel (~15 min)</span><div class="tl-note">~€20. Habrá cola de taxis al salir, pedir con app.</div></div>
+      <div class="tl-transport taxi" data-pace="all"><div class="tl-transport-header">Trastevere → hotel · ~4 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> · cola en Piazza Sonnino o con FreeNow<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>15 min</b><br>💶 <b>€13-16 · €4-5 p.p.</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · cruzando el centro de noche · largo pero bonito</div><div class="tl-transport-mode-meta">⏱ <b>40 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">Noche sin horarios: la única del viaje sin nada fijo después de cenar.</div></div>
     </div>
 
     <div class="cards-list">
@@ -3122,7 +3219,7 @@ function loadSvgFallbackDetail(img, cardId) {
         </div>
 
         <div class="facts">
-          <div class="facts-row"><span class="label">Concierto</span><span class="value">Sábado 20 · 21:00</span></div>
+          <div class="facts-row"><span class="label">Concierto</span><span class="value">Domingo 21 · 21:00</span></div>
           <div class="facts-row"><span class="label">Llegada recomendada</span><span class="value">20:15-20:30</span></div>
           <div class="facts-row"><span class="label">Desde Trastevere</span><span class="value">Taxi 15-20 min · €18-22</span></div>
           <div class="facts-row"><span class="label">Duración</span><span class="value">~1h 45min</span></div>
@@ -3147,7 +3244,7 @@ function loadSvgFallbackDetail(img, cardId) {
       <div class="day-number">III</div>
       <div>
         <h2>Aventino · Ghetto · Roma Antigua</h2>
-        <div class="day-subtitle">El día más físico. Aventino y Ghetto por la mañana, Coliseo con Arena por la tarde y España en el Mundial al caer la noche.</div>
+        <div class="day-subtitle">El día más físico. Aventino y Ghetto por la mañana, Coliseo con Arena por la tarde, España en el Mundial y el concierto de Einaudi como broche.</div>
       </div>
     </div>
 
@@ -3155,6 +3252,19 @@ function loadSvgFallbackDetail(img, cardId) {
       <div class="day-stats-item walk"><strong>~6,5 km</strong> a pie</div>
       <div class="day-stats-item metro"><strong>Metro B</strong> Termini→Circo Massimo (mañana)</div>
       <div class="day-stats-item ticket"><strong>Coliseo guiado · 15:00</strong> · Arena + Foro + Palatino (2h 30min)</div>
+      <div class="day-stats-item taxi"><strong>Taxi al Auditorium</strong> · concierto Einaudi 21:00 (~€20)</div>
+    </div>
+
+    <div class="dia-ligera">
+      <div class="dia-ligera-head">🦶 Versión ligera · domingo <span style="font-style:normal;font-size:.7rem;">(el día más exigente)</span></div>
+      <ul>
+        <li class="lg-care"><strong>El día clave para el tobillo:</strong> el tour incluye Foro y Palatino, de terreno irregular y con cuestas. <strong>Guardad las piernas para esto</strong> y descansad por la mañana.</li>
+        <li class="lg-see"><strong>Imprescindibles:</strong> comida en Ristoro Della Salute (13:30, junto al Coliseo), tour Coliseo + Arena (15:00, reservado), España en el pub (18:00, sentados) y concierto Einaudi (21:00, sentados).</li>
+        <li class="lg-skip"><strong>Saltar la mañana de andar:</strong> el Aventino (<a href="#giardino-aranci">Giardino degli Aranci</a> y <a href="#buco-serratura">Buco della Serratura</a> suben colina) y reducir el Ghetto. Mejor llegar fresco al tour.</li>
+        <li class="lg-move"><strong>Cómo moverse:</strong> taxi directo a la comida (Ristoro, a pie de Coliseo) y taxi del pub al Auditorium. Nada de patear el centro antes del tour.</li>
+        <li class="lg-care"><strong>En el tour, avisad al guía del esguince:</strong> podéis hacer Coliseo + Arena y aflojar en el Foro/Palatino (la parte con subida) o ir a vuestro aire. Calzado de apoyo.</li>
+        <li class="lg-rest"><strong>Descanso:</strong> comida en Ristoro antes del tour; el partido y el concierto son sentados.</li>
+      </ul>
     </div>
 
     <div class="timeline">
@@ -3204,7 +3314,7 @@ function loadSvgFallbackDetail(img, cardId) {
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>2h 30min</b> · hasta ~17:30 · Coliseo con Arena + Foro Romano + Palatino</span><span class="tl-meta-item">🚶 hasta el bar del partido: <b>3-12 min</b></span></div>
 
       <div class="tl-item fixed-event" data-pace="all"><span class="tl-time">18:00</span><span class="tl-title disabled">⚽ España – Arabia Saudí · Mundial</span><span class="tl-tag">partido</span><div class="tl-note">A ver el partido a un pub con ambiente. Todos a un paso del Coliseo.</div></div>
-      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>~2 h</b> · partido + ambiente · cena después en Monti (a 5-10 min)</span></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>~2 h</b> · partido + <strong>cena en el propio pub</strong> · al pitido final, taxi al Auditorium para el concierto</span></div>
       <div class="tl-food">
         <div class="tl-food-header">⚽ Ver a España cerca del Coliseo · sports bars</div>
         <div class="tl-food-list">
@@ -3212,19 +3322,15 @@ function loadSvgFallbackDetail(img, cardId) {
           <div class="tl-food-item"><a class="tl-food-name" href="https://www.google.com/maps/search/?api=1&query=The%20Scholars%20Lounge%20Roma" target="_blank" rel="noopener">The Scholars Lounge</a><span class="tl-food-time">🚶 12 min</span><span class="tl-food-desc">Cerca de Piazza Venezia · el pub deportivo más grande de Roma · pantallas enormes y ambientazo en partidos · birra ~€7</span></div>
           <div class="tl-food-item"><a class="tl-food-name" href="https://www.google.com/maps/search/?api=1&query=The%20Fiddler%27s%20Elbow%20Roma" target="_blank" rel="noopener">The Fiddler's Elbow</a><span class="tl-food-time">🚶 12 min</span><span class="tl-food-desc">El pub irlandés más antiguo de Roma, junto a Monti / Santa Maria Maggiore · clásico para fútbol · birra ~€6</span></div>
         </div>
-        <div class="tl-food-foot">En partido de España estos pubs se llenan: llegad <strong>20-30 min antes</strong> para coger sitio. The Shamrock es el más cercano al Coliseo; The Scholars Lounge, el de más ambiente. Tras el pitido final, subís a cenar a Monti.</div>
+        <div class="tl-food-foot">En partido de España estos pubs se llenan: llegad <strong>20-30 min antes</strong> para coger sitio. The Shamrock es el más cercano al Coliseo; The Scholars Lounge, el de más ambiente. <strong>Cenáis ahí mismo durante el partido</strong> (todos sirven comida) y al pitido final salís hacia el concierto.</div>
       </div>
 
-      <div class="tl-item" data-pace="all"><span class="tl-time">20:15</span><span class="tl-title disabled">Cena en Monti</span><div class="tl-note">Tras el partido, subís a Monti (5-10 min). Cena tranquila para cerrar el día.</div></div>
-      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>90+ min</b> · cena tranquila — bien merecida</span></div>
-      <div class="tl-food">
-        <div class="tl-food-header">🍴 Cenar en Monti</div>
-        <div class="tl-food-list">
-          <div class="tl-food-item"><a class="tl-food-name" href="#g-vecchia-roma">La Vecchia Roma</a><span class="tl-food-time">🚶 3 min</span><span class="tl-food-desc">Trattoria de barrio · gricia y abbacchio · precios sensatos · <strong>~€25-35</strong></span></div>
-        </div>
-        <div class="tl-food-foot">Monti está lleno de trattorias y enotecas para el aperitivo alrededor de la fuente de la plaza. Ficha en <a href="#gastronomia">Gastronomía</a>.</div>
-      </div>
-      <div class="tl-transport walk" data-pace="all"><div class="tl-transport-header">Monti → hotel (vuelta nocturna) · ~1,4 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · por Via Cavour · paseo nocturno tranquilo<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>18 min</b><br>💶 <b>gratis</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> · si el día os ha podido</div><div class="tl-transport-mode-meta">⏱ <b>8 min</b><br>💶 <b>€8-10 · €3 p.p.</b></div></div></div><div class="tl-transport-footnote">Roma de noche es muy segura en estas calles. Tras un día con 6,5 km, andar el tramo final no es para todos los gustos.</div></div>
+      <div class="tl-transport taxi" data-pace="all"><div class="tl-transport-header">Pub (Coliseo) → Auditorium Parco della Musica · ~7 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> · pedidlo con FreeNow al pitido final · es lo único que llega bien al Auditorium<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>20-25 min</b><br>💶 <b>€18-22 · €6-7 p.p.</b></div></div></div><div class="tl-transport-footnote">Salid del pub sobre las 19:55-20:10 para llegar holgados. El Auditorium está al norte, fuera del centro: el taxi es la opción realista de noche.</div></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">20:30</span><a href="#auditorium" class="tl-title">Llegada Auditorium · Cavea</a><div class="tl-note">Cafetería del Auditorium para un café o algo dulce antes del concierto.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>30 min</b> · margen para recoger entradas y sentarse en la Cavea</span></div>
+      <div class="tl-item fixed-event" data-pace="all"><span class="tl-time">21:00</span><span class="tl-title disabled">Concierto Ludovico Einaudi</span><span class="tl-tag">reservado</span><div class="tl-note">Cavea (anfiteatro al aire libre). ~1h 45min. El broche del viaje.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>~1h 45min</b> · Einaudi al aire libre, de noche · el mejor cierre posible</span></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">~23:00</span><span class="tl-title disabled">Taxi Auditorium → hotel (~15 min)</span><div class="tl-note">~€20. Habrá cola de taxis al salir, o pedid con FreeNow. Si quedáis con hambre, una pizza al taglio camino del hotel.</div></div>
     </div>
 
     <div class="cards-list">
@@ -3700,6 +3806,17 @@ function loadSvgFallbackDetail(img, cardId) {
       <div class="day-stats-item walk"><strong>~6 km</strong> a pie</div>
       <div class="day-stats-item metro"><strong>Metro A</strong> Spagna→Termini→San Giovanni (tramos)</div>
       <div class="day-stats-item ticket"><strong>Basílicas gratuitas</strong> · cerradas 12:30-15:00 (el Laterano no)</div>
+    </div>
+
+    <div class="dia-ligera">
+      <div class="dia-ligera-head">🦶 Versión ligera · lunes</div>
+      <ul>
+        <li class="lg-see"><strong>Imprescindibles:</strong> <a href="#casanatense">Biblioteca Casanatense</a>, comida en <a href="#g-matriciana">La Matriciana</a> (14:15), <a href="#laterano">San Giovanni in Laterano</a>, el <a href="#san-pietro-vincoli">Moisés</a> de San Pietro in Vincoli y cena en <a href="#g-felice">Felice</a> (22:00).</li>
+        <li class="lg-move"><strong>Cómo moverse:</strong> metro y taxi entre zonas (Spagna→Termini en metro, Termini→San Giovanni en metro, a Testaccio en taxi). Evitad los tramos largos a pie del Tridente.</li>
+        <li class="lg-skip"><strong>Saltar hoy:</strong> subir la escalinata de Piazza di Spagna (vedla desde abajo), los niveles subterráneos de <a href="#san-clemente">San Clemente</a> (son escaleras a la excavación; quedaos en la basílica de arriba) y la Torre della Scimmia.</li>
+        <li class="lg-care"><strong>Ojo:</strong> escaleras = la escalinata de Spagna y el subsuelo de San Clemente. Sáltatelos.</li>
+        <li class="lg-rest"><strong>Descanso:</strong> comida sentada en La Matriciana y cena en Felice.</li>
+      </ul>
     </div>
 
     <div class="timeline">
@@ -4290,6 +4407,17 @@ function loadSvgFallbackDetail(img, cardId) {
       <div class="day-stats-item walk"><strong>~5 km</strong> a pie</div>
       <div class="day-stats-item ticket"><strong>Galleria Borghese</strong> · sin reserva → Plan B en el parque (GNAM / Villa Giulia)</div>
       <div class="day-stats-item train"><strong>Leonardo Express</strong> Termini→FCO (32 min, €14)</div>
+    </div>
+
+    <div class="dia-ligera">
+      <div class="dia-ligera-head">🦶 Versión ligera · martes (despedida)</div>
+      <ul>
+        <li class="lg-see"><strong>Imprescindibles:</strong> la <a href="#villa-borghese">Terrazza del Pincio</a> (mirador), comida en <a href="#g-vecchia-roma">La Vecchia Roma</a> (13:00), el <a href="#santa-teresa">Éxtasis de Santa Teresa</a> de Bernini y <a href="#smm">Santa Maria Maggiore</a>.</li>
+        <li class="lg-move"><strong>Cómo moverse:</strong> taxi directo a la terraza del Pincio (subís sin patear el parque) y taxi/metro de vuelta a Monti. La tarde (Santa Teresa, SMM, degli Angeli) está pegada al hotel y es llana.</li>
+        <li class="lg-skip"><strong>Saltar hoy:</strong> el paseo largo por Villa Borghese y la <a href="#cappuccini">Cripta dei Cappuccini</a> si cansa. ¿Apetece museo? GNAM es interior y cómodo.</li>
+        <li class="lg-care"><strong>Ojo:</strong> dejad margen para recoger maletas sin prisas antes del tren de las 18:15.</li>
+        <li class="lg-rest"><strong>Descanso:</strong> comida en La Vecchia Roma; todo lo de la tarde a pocos minutos del hotel.</li>
+      </ul>
     </div>
 
     <div class="timeline">
@@ -5106,7 +5234,7 @@ function loadSvgFallbackDetail(img, cardId) {
         <p class="gastro-card-desc">Desde 1995. «Ni romana ni napolitana» según sus propios dueños — masa de 48h de fermentación con un carácter propio. Callejuela de Trastevere, ambiente ruidoso y honesto. No acepta reservas: llegar antes de las 20h o esperar en la calle.</p>
         <div class="gastro-plato"><strong>Plato estrella:</strong> no hay una favorita canónica — la masa en sí es el argumento. Goop la llama «una de nuestras favoritas de la ciudad».</div>
         <div class="gastro-card-footer">
-          <span>Todos los días 12h–24h · precio medio €15-22/persona · <span class="gastro-itinerary-tag">sábado antes del Auditorium</span></span>
+          <span>Todos los días 12h–24h · precio medio €15-22/persona · <span class="gastro-itinerary-tag">cena del sábado en Trastevere</span></span>
           <a class="gastro-maps-link" href="https://www.google.com/maps/search/?api=1&query=Dar%20Poeta%20Vicolo%20del%20Bologna%2045%20Roma" target="_blank" rel="noopener">📍 Google Maps</a>
         </div>
       </div>
@@ -5463,7 +5591,7 @@ function loadSvgFallbackDetail(img, cardId) {
 
     <p style="margin-top:1.25rem;font-family:'Cormorant Garamond','Garamond','Hoefler Text','Times New Roman',serif;font-style:italic;color:var(--gold);font-size:.95rem;letter-spacing:.05em;">Y para escuchar de fondo mientras preparáis maletas</p>
     <ul class="detail-list">
-      <li><strong>La playlist de Ludovico Einaudi</strong> — <em>Le Onde</em>, <em>I giorni</em>, <em>Una mattina</em>, <em>Nuvole bianche</em>. Vais a escucharle en vivo el sábado.</li>
+      <li><strong>La playlist de Ludovico Einaudi</strong> — <em>Le Onde</em>, <em>I giorni</em>, <em>Una mattina</em>, <em>Nuvole bianche</em>. Vais a escucharle en vivo el domingo.</li>
       <li><strong>Banda sonora de <em>La Grande Bellezza</em></strong> — mezcla litúrgica/electrónica curada por Sorrentino (Lele Marchitelli + David Lang + Henryk Górecki). Spotify la tiene completa.</li>
     </ul>
   </div>
@@ -5526,7 +5654,7 @@ const places = [
   { id: 'tempietto', n: 'X', name: 'Tempietto del Bramante', day: 'Sábado', lat: 41.8887243, lng: 12.4664133, type: 'card' },
   { id: 'smt', n: 'XI', name: 'Santa Maria in Trastevere', day: 'Sábado', lat: 41.8894930, lng: 12.4698361, type: 'card' },
   { id: 'fontanone', n: 'XII', name: 'Fontana dell\'Acqua Paola', day: 'Sábado', lat: 41.8888422, lng: 12.4642556, type: 'card' },
-  { id: 'auditorium', n: '♪', name: 'Auditorium Parco della Musica (Einaudi)', day: 'Sábado noche', lat: 41.9291587, lng: 12.4747027, type: 'concert' },
+  { id: 'auditorium', n: '♪', name: 'Auditorium Parco della Musica (Einaudi)', day: 'Domingo noche', lat: 41.9291587, lng: 12.4747027, type: 'concert' },
   // DOMINGO
   { id: 'giardino-aranci', n: 'XIII', name: 'Giardino degli Aranci', day: 'Domingo', lat: 41.8851338, lng: 12.4803900, type: 'card' },
   { id: 'buco-serratura', n: 'XIV', name: 'Buco della Serratura', day: 'Domingo', lat: 41.8829829, lng: 12.4784752, type: 'card' },
@@ -5781,9 +5909,28 @@ function restorePace() {
   } catch(e) {}
 }
 
+// === Modo "Caminar menos" (movilidad reducida) ===
+function setLightMode(on) {
+  document.body.classList.toggle('light-mode', on);
+  const btn = document.getElementById('light-toggle');
+  if (btn) btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  try { localStorage.setItem('roma-light', on ? '1' : '0'); } catch(e) {}
+  // Al activar, fijamos el ritmo más tranquilo (menos paradas = menos andar)
+  if (on) setPace('slow');
+}
+function toggleLightMode() {
+  setLightMode(!document.body.classList.contains('light-mode'));
+}
+function restoreLightMode() {
+  try {
+    if (localStorage.getItem('roma-light') === '1') setLightMode(true);
+  } catch(e) {}
+}
+
 // === INIT ===
 function init() {
   restorePace();
+  restoreLightMode();
   buildSearchIndex();
   setupNotes();
   updateActivePill();
