@@ -779,6 +779,38 @@ body.light-mode .light-toggle .light-switch::after { transform: translateX(13px)
   font-style: italic; font-size: .82rem; color: var(--ink-faint); line-height: 1.4; flex: 1 1 240px;
 }
 
+/* === Modo resumen (vista índice): solo hora + lugar === */
+.resumen-toggle {
+  display: inline-flex; align-items: center; gap: .5rem;
+  background: var(--bg-elev); border: 1px solid var(--line);
+  color: var(--ink-soft); cursor: pointer;
+  padding: .45rem .8rem; border-radius: 99px;
+  font-family: 'JetBrains Mono','SF Mono','Consolas',monospace;
+  font-size: .72rem; letter-spacing: .04em;
+  transition: all .2s ease;
+}
+.resumen-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.resumen-toggle .res-switch {
+  width: 30px; height: 17px; border-radius: 99px;
+  background: var(--line); position: relative; transition: background .2s ease; flex: none;
+}
+.resumen-toggle .res-switch::after {
+  content: ""; position: absolute; top: 2px; left: 2px;
+  width: 13px; height: 13px; border-radius: 50%;
+  background: #fff; transition: transform .2s ease;
+}
+body.modo-resumen .resumen-toggle { border-color: var(--accent); color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, transparent); }
+body.modo-resumen .resumen-toggle .res-switch { background: var(--accent); }
+body.modo-resumen .resumen-toggle .res-switch::after { transform: translateX(13px); }
+
+/* Lo que oculta el modo resumen — deja el índice de hora + lugar */
+body.modo-resumen .day-stats,
+body.modo-resumen .day-subtitle,
+body.modo-resumen .dia-ligera,
+body.modo-resumen .tl-meta,
+body.modo-resumen .tl-transport,
+body.modo-resumen .cards-list { display: none !important; }
+
 /* Banner global cuando el modo está activo */
 .light-banner { display: none; }
 body.light-mode .light-banner {
@@ -2265,6 +2297,13 @@ function loadSvgFallbackDetail(img, cardId) {
           <span>🦶 Caminar menos</span>
         </button>
         <span class="light-help">Modo movilidad reducida: pone el ritmo en <em>Pesimista</em> y añade en cada día una <strong>«Versión ligera»</strong> con lo imprescindible, traslados en taxi/metro y avisos de escaleras y cuestas.</span>
+      </div>
+      <div class="light-wrap">
+        <button class="resumen-toggle" id="resumen-toggle" onclick="toggleResumen()" aria-pressed="false">
+          <span class="res-switch"></span>
+          <span>📋 Modo resumen</span>
+        </button>
+        <span class="light-help">Vista índice: solo hora y lugar, en orden. Oculta traslados, explicaciones, fichas y estadísticas; mantiene las comidas y cenas reservadas. El plan de un vistazo.</span>
       </div>
     </div>
 
@@ -6489,10 +6528,27 @@ function restoreLightMode() {
   } catch(e) {}
 }
 
+// === Modo resumen (vista índice) ===
+function setResumen(on) {
+  document.body.classList.toggle('modo-resumen', on);
+  const btn = document.getElementById('resumen-toggle');
+  if (btn) btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  try { localStorage.setItem('roma-resumen', on ? '1' : '0'); } catch(e) {}
+}
+function toggleResumen() {
+  setResumen(!document.body.classList.contains('modo-resumen'));
+}
+function restoreResumen() {
+  try {
+    if (localStorage.getItem('roma-resumen') === '1') setResumen(true);
+  } catch(e) {}
+}
+
 // === INIT ===
 function init() {
   restorePace();
   restoreLightMode();
+  restoreResumen();
   buildSearchIndex();
   setupNotes();
   updateActivePill();
