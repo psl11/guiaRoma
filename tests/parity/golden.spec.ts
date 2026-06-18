@@ -75,7 +75,22 @@ for (const theme of ['light', 'dark'] as const) {
     // estado determinista y ademas el "offline" que el proyecto valora (BUILD-02),
     // eliminando la dependencia de red de terceros (Wikimedia/turismoroma) que
     // haria el golden no reproducible. Registrado ANTES de goto.
-    await page.route('**/*.{jpg,jpeg,png,webp,avif,gif}', (route) => route.abort())
+    //
+    // Bloqueo por resourceType === 'image' (no por glob de extension): el glob de
+    // extensiones anterior era sensible a mayusculas Y exigia que la URL TERMINARA
+    // en la extension, asi que se le escapaban (CR-01/WR-01):
+    //   - 4 URLs en MAYUSCULAS '.JPG' (fontana-trevi, valle delle rose, giardino-aranci,
+    //     P-Octavia) -> fotos reales filtradas en dia-viernes / dia-domingo;
+    //   - 9+ URLs con query string ('...jpg?width=900': vaticano/card-guided,
+    //     castel-santangelo, ojo de la cerradura del Aventino, elefantino, Cristo
+    //     della Minerva...) -> fotos reales filtradas en varias vistas dia/referencia/ficha.
+    // resourceType captura TODA imagen sea cual sea su extension/caja/query string.
+    // CRITICO: hay que route.continue() las peticiones NO-imagen (el index.html local,
+    // su CSS/JS, fuentes) — abortarlas colgaria la pagina. Esto fuerza el fallback SVG
+    // de TODAS las heros: el verdadero estado offline-determinista de A5.
+    await page.route('**/*', (route) =>
+      route.request().resourceType() === 'image' ? route.abort() : route.continue(),
+    )
 
     // Tema oscuro determinista: el script inline del index.html (linea 6263) lee
     // localStorage['roma-theme'] y pinta dark en el primer paint. Sin clic, sin timing.

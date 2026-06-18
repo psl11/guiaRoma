@@ -72,16 +72,37 @@ test.beforeAll(async () => {
   // 3) Arrancar un static server propio sobre el directorio PADRE (sirve /guiaRoma/ como subpath).
   //    SIN --single: queremos 404 reales para assets ausentes (no rewrite a index.html),
   //    para que el assert de 0×404 de /_nuxt/* sea significativo.
+  //    `detached: true` hace que el proceso sea LIDER de su propio grupo de procesos: asi en
+  //    afterAll podemos matar el GRUPO ENTERO (pnpm + su hijo `serve`, el server HTTP real) y no
+  //    dejar huerfanos. `spawn('pnpm', ['dlx', 'serve'])` crea el arbol pnpm -> node serve; un
+  //    `server.kill('SIGTERM')` mataria solo a `pnpm`, re-parentando `serve` a PID 1 y dejandolo
+  //    ocupando el puerto -> re-ejecuciones locales pegarian contra un zombie (WR-02).
   server = spawn('pnpm', ['dlx', 'serve', '-l', String(PORT), previewRoot], {
     stdio: 'ignore',
     shell: false,
+    detached: true,
   })
+  // No queremos que el proceso hijo mantenga vivo el event loop del runner de tests.
+  server.unref()
   await waitForServer(SUBPATH_URL)
 })
 
 test.afterAll(async () => {
-  if (server && !server.killed) {
-    server.kill('SIGTERM')
+  // Matar el GRUPO de procesos completo (pnpm dlx + el server `serve` real), no solo el
+  // proceso `pnpm` directo. `process.kill(-pid, ...)` con pid negativo envia la senal a todo
+  // el grupo cuyo lider es `server` (creado con detached:true). Asi no queda ningun proceso
+  // escuchando en el puerto tras la corrida (WR-02 resuelto).
+  if (server?.pid && !server.killed) {
+    try {
+      process.kill(-server.pid, 'SIGTERM')
+    }
+    catch {
+      // El grupo ya pudo terminar; reintento de seguridad sobre el proceso directo.
+      try {
+        server.kill('SIGTERM')
+      }
+      catch { /* ya muerto */ }
+    }
   }
   if (previewRoot && existsSync(previewRoot)) {
     rmSync(previewRoot, { recursive: true, force: true })
