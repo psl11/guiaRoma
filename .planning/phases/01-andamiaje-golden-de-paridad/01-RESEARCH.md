@@ -873,22 +873,27 @@ expect(bad, `404s de assets bajo subpath: ${bad.join(', ')}`).toHaveLength(0)
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+> Las 3 preguntas se resolvieron durante la planificación (ver PATTERNS.md + Plan 01-01); resolución inline en cada punto.
 
 1. **Localización exacta de la ficha tipo `guided` (Vaticano/Coliseo) para el golden**
    - Qué sabemos: D-04 la nombra (Vaticano/Coliseo); `concert` confirmado (`#auditorium`, roman `♪`); `card` confirmado (`#galleria-sciarra`).
    - Qué falta: el `id` exacto de la ficha guiada (el grep de `class="...guided"` no devolvió match limpio — la clase de tipo puede aplicarse por otro selector o estar compuesta).
    - Recomendación: al planificar la tarea del golden, leer las secciones sábado/domingo del `index.html` (Vaticano) y fijar el `id`. No bloquea la fase; es un dato a resolver en la captura.
+   - **RESOLVED:** No existe clase `guided`/`concert` — las 38 fichas son `<article class="card">` (verificado en PATTERNS.md). Representante de la ficha guiada = `#vaticano` (L2920). Codificado en Plan 01-01 Tarea 2.
 
 2. **Tratamiento determinista de las imágenes hero de terceros en el golden** (ver A5)
    - Qué sabemos: son URLs Wikimedia/turismoroma con `onerror`→SVG; cargan por red → no deterministas.
    - Qué falta: decisión de producto/ingeniería entre "capturar con foto" (frágil), "bloquear→SVG" (reproducible + estado offline) o "mask" (ignorar).
    - Recomendación: que el planner lo eleve como decisión explícita en el plan/VALIDATION.md. Por defecto, esperar carga real con tolerancia; `mask` si hay flakiness.
+   - **RESOLVED (A5):** opción **bloquear→fallback SVG** (`page.route('**/*.{jpg,jpeg,png,webp,avif,gif}', r => r.abort())`) — determinista y alineado con el objetivo offline (BUILD-02). Codificado en Plan 01-01 Tarea 2.
 
 3. **Plataforma/CI de captura y comparación del golden** (ver A8)
    - Qué sabemos: Playwright sufija los snapshots con `-{platform}`; la captura es local (linux, esta sesión).
    - Qué falta: confirmar que Fase 8 comparará en la misma plataforma, o fijar `snapshotPathTemplate` sin plataforma.
    - Recomendación: documentar la plataforma de captura en VALIDATION.md; si el equipo usa SOs mixtos, fijar template sin sufijo de plataforma.
+   - **RESOLVED (A8):** `snapshotPathTemplate` SIN el segmento `-{platform}` para poder comparar entre SOs en Fase 8; captura documentada en linux. Codificado en Plan 01-01 Tarea 1.
 
 ---
 
