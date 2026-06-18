@@ -6,17 +6,12 @@ export default defineNuxtConfig({
   modules: ['@nuxt/content', '@nuxtjs/color-mode', '@nuxt/fonts', '@nuxt/eslint'],
 
   // Subpath de producción (BUILD-01/03): el sitio vive en usuario.github.io/guiaRoma/.
-  // baseURL del Plan 02; los favicons (Plan 03) se declaran en app.head.link apuntando a
-  // rutas raíz-relativas (/favicon.svg) que Nuxt reescribe a /guiaRoma/favicon.svg al servir
-  // public/ bajo el baseURL → resuelven correctamente bajo el subpath sin 404 (A4, D-02).
+  // baseURL del Plan 02. Los favicons (Plan 03) se declaran en app/app.vue con useHead +
+  // useRuntimeConfig().app.baseURL: Nuxt NO antepone baseURL a los href de app.head.link,
+  // así que un `/favicon.svg` estático daría 404 bajo el subpath. public/ sirve las copias
+  // (A4, D-02) en /guiaRoma/favicon.svg.
   app: {
     baseURL: '/guiaRoma/',
-    head: {
-      link: [
-        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
-        { rel: 'apple-touch-icon', href: '/apple-touch-icon.svg' },
-      ],
-    },
   },
 
   // CSS editorial VERBATIM, cargado UNA sola vez. ORDEN crítico: base consume las variables de tokens.

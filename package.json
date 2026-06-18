@@ -12,7 +12,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test:golden": "playwright test",
-    "test:golden:update": "playwright test --update-snapshots"
+    "test:golden:update": "playwright test --update-snapshots",
+    "test:subpath": "playwright test tests/parity/subpath.spec.ts"
   },
   "devDependencies": {
     "@playwright/test": "1.61.0",
