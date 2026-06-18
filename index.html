@@ -6626,7 +6626,9 @@ function buildDayRoutes() {
     stats.querySelectorAll('.day-route-btn').forEach(el => el.remove()); // idempotente (reinit)
     const section = stats.closest('section');
     if (!section) return;
-    const links = Array.from(section.querySelectorAll('.timeline a.maps-link'));
+    // Los enlaces a.maps-link viven en las fichas (article.card) del día, no dentro de .timeline.
+    // Solo las fichas de monumentos usan .maps-link; los restaurantes usan .tl-food-name, así que quedan fuera.
+    const links = Array.from(section.querySelectorAll('a.maps-link'));
     const points = links.map(pointFor).filter(Boolean);
     if (points.length < 2) return; // sin ruta posible con menos de 2 paradas
     const total = points.length;
