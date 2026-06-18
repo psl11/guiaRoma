@@ -2090,10 +2090,58 @@ footer p {
     padding-bottom: .1rem;
   }
 }
+
+/* === Sección Arte · fichas de artistas === */
+.art-intro { font-family: 'Cormorant Garamond','Garamond','Hoefler Text','Times New Roman',serif; font-style: italic; font-size: 1.05rem; color: var(--ink-soft); line-height: 1.6; margin-bottom: 1.5rem; }
+.artist-card {
+  background: var(--bg-elev); border: 1px solid var(--line-soft);
+  border-radius: 6px; padding: 1.6rem 1.5rem; margin-bottom: 1.5rem;
+  scroll-margin-top: 0; position: relative;
+}
+.artist-head { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.1rem; }
+.artist-avatar {
+  flex: none; width: 58px; height: 58px; border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, #a44a4a, #8b3a3a 70%, #6f2e2e);
+  color: #f5f0e8; font-family: 'Cormorant Garamond','Garamond',serif; font-weight: 600;
+  font-size: 2rem; display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--gold); box-shadow: 0 2px 10px rgba(0,0,0,.18);
+}
+.artist-head h3 { font-family: 'Cormorant Garamond','Garamond','Hoefler Text','Times New Roman',serif; font-size: 1.7rem; font-weight: 600; color: var(--accent); margin: 0 0 .15rem; line-height: 1.1; }
+.artist-dates { font-family: 'JetBrains Mono','SF Mono','Consolas',monospace; font-size: .68rem; letter-spacing: .04em; color: var(--ink-faint); text-transform: uppercase; }
+.artist-epithet { font-family: 'Cormorant Garamond','Garamond',serif; font-style: italic; font-size: 1.05rem; color: var(--gold); margin-top: .35rem; line-height: 1.3; }
+.artist-section { margin: 1rem 0; }
+.artist-section h4 { font-family: 'JetBrains Mono','SF Mono','Consolas',monospace; font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin: 0 0 .45rem; }
+.artist-section p { font-size: .92rem; line-height: 1.65; color: var(--ink-soft); margin: 0 0 .6rem; }
+.artist-section ul { margin: 0; padding-left: 1.1rem; }
+.artist-section li { font-size: .9rem; line-height: 1.55; color: var(--ink-soft); margin: .3rem 0; }
+.artist-section strong { color: var(--ink); }
+.artist-section em { color: var(--ink); }
+.artist-trip {
+  margin-top: 1.1rem; padding: .85rem 1rem; border-radius: 0 8px 8px 0;
+  background: color-mix(in srgb, var(--gold) 9%, transparent);
+  border-left: 3px solid var(--gold); font-size: .9rem; line-height: 1.7; color: var(--ink-soft);
+}
+.artist-trip-head { font-family: 'Cormorant Garamond','Garamond',serif; font-style: italic; font-size: 1.05rem; color: var(--ink); margin-bottom: .3rem; }
+.artist-trip a { color: var(--accent); border-bottom: 1px solid var(--line); white-space: nowrap; }
+.artist-trip a:hover { border-bottom-color: var(--accent); }
+
+/* Chip de artistas dentro de una ficha de monumento (back-link) */
+.card-artists {
+  margin: -.4rem 0 1.1rem; font-size: .8rem; color: var(--ink-faint);
+  font-family: 'JetBrains Mono','SF Mono','Consolas',monospace; letter-spacing: .02em;
+}
+.card-artists .art-link {
+  display: inline-block; color: var(--accent); text-decoration: none;
+  background: color-mix(in srgb, var(--accent) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  border-radius: 99px; padding: .1rem .6rem; margin: .15rem .25rem .15rem 0;
+}
+.card-artists .art-link:hover { background: color-mix(in srgb, var(--accent) 18%, transparent); }
+.card-artists .art-link::before { content: "✦ "; color: var(--gold); }
 </style>
 <script id="svg-library">
 const SVG_MOTIFS = {"dome": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_d\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_d\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_d)\"/><g opacity=\".9\"><rect x=\"280\" y=\"150\" width=\"240\" height=\"50\" fill=\"url(#st_d)\"/><ellipse cx=\"400\" cy=\"150\" rx=\"120\" ry=\"90\" fill=\"url(#st_d)\"/><rect x=\"385\" y=\"50\" width=\"30\" height=\"20\" fill=\"#8b6c43\"/><rect x=\"380\" y=\"40\" width=\"40\" height=\"12\" fill=\"#a07c4a\"/><circle cx=\"400\" cy=\"35\" r=\"6\" fill=\"#a07c4a\"/><rect x=\"200\" y=\"200\" width=\"400\" height=\"80\" fill=\"url(#st_d)\"/><g fill=\"#8b6c43\"><rect x=\"220\" y=\"200\" width=\"8\" height=\"80\"/><rect x=\"280\" y=\"200\" width=\"8\" height=\"80\"/><rect x=\"340\" y=\"200\" width=\"8\" height=\"80\"/><rect x=\"400\" y=\"200\" width=\"8\" height=\"80\"/><rect x=\"460\" y=\"200\" width=\"8\" height=\"80\"/><rect x=\"520\" y=\"200\" width=\"8\" height=\"80\"/><rect x=\"580\" y=\"200\" width=\"8\" height=\"80\"/></g></g></svg>", "pantheon": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_p\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_p\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_p)\"/><g opacity=\".9\"><path d=\"M280 180Q280 60 400 60Q520 60 520 180Z\" fill=\"url(#st_p)\"/><circle cx=\"400\" cy=\"60\" r=\"6\" fill=\"#5a4226\"/><polygon points=\"220,180 580,180 540,140 260,140\" fill=\"#8b6c43\"/><rect x=\"220\" y=\"170\" width=\"360\" height=\"12\" fill=\"#a07c4a\"/><g fill=\"url(#st_p)\"><rect x=\"240\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"280\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"320\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"360\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"400\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"440\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"480\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"520\" y=\"180\" width=\"14\" height=\"100\"/><rect x=\"560\" y=\"180\" width=\"14\" height=\"100\"/></g><rect x=\"200\" y=\"270\" width=\"400\" height=\"10\" fill=\"#8b6c43\"/></g></svg>", "arch": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_a\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_a)\"/><g opacity=\".9\"><rect x=\"100\" y=\"60\" width=\"600\" height=\"220\" fill=\"#c4a373\"/><path d=\"M320 280L320 180Q320 120 400 120Q480 120 480 180L480 280Z\" fill=\"#5a4226\"/><rect x=\"100\" y=\"90\" width=\"600\" height=\"14\" fill=\"#8b6c43\"/><rect x=\"100\" y=\"60\" width=\"600\" height=\"14\" fill=\"#8b6c43\"/><g fill=\"#5a4226\" opacity=\".6\"><rect x=\"140\" y=\"130\" width=\"40\" height=\"80\" rx=\"20\"/><rect x=\"200\" y=\"130\" width=\"40\" height=\"80\" rx=\"20\"/><rect x=\"260\" y=\"130\" width=\"40\" height=\"80\" rx=\"20\"/><rect x=\"500\" y=\"130\" width=\"40\" height=\"80\" rx=\"20\"/><rect x=\"560\" y=\"130\" width=\"40\" height=\"80\" rx=\"20\"/><rect x=\"620\" y=\"130\" width=\"40\" height=\"80\" rx=\"20\"/></g></g></svg>", "fountain": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_f\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"tc_f\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#b85c5c\"/><stop offset=\"1\" stop-color=\"#8b3a3a\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_f)\"/><g opacity=\".9\"><rect x=\"100\" y=\"40\" width=\"600\" height=\"180\" fill=\"#c4a373\"/><path d=\"M320 180L320 100Q320 70 400 70Q480 70 480 100L480 180Z\" fill=\"#8b6c43\"/><circle cx=\"400\" cy=\"135\" r=\"22\" fill=\"#5a4226\"/><rect x=\"385\" y=\"155\" width=\"30\" height=\"40\" rx=\"4\" fill=\"#5a4226\"/><rect x=\"100\" y=\"55\" width=\"600\" height=\"14\" fill=\"#8b6c43\"/><ellipse cx=\"400\" cy=\"245\" rx=\"240\" ry=\"20\" fill=\"url(#tc_f)\" opacity=\".4\"/><ellipse cx=\"400\" cy=\"240\" rx=\"220\" ry=\"14\" fill=\"#b85c5c\" opacity=\".6\"/><g stroke=\"#fff\" stroke-width=\"2\" fill=\"none\" opacity=\".5\"><path d=\"M370 200Q380 220 370 240\"/><path d=\"M400 200Q410 220 400 240\"/><path d=\"M430 200Q440 220 430 240\"/></g></g></svg>", "obelisk": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_o\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_o\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_o)\"/><g opacity=\".9\"><rect x=\"0\" y=\"220\" width=\"800\" height=\"60\" fill=\"#d4c4a0\"/><rect x=\"40\" y=\"120\" width=\"200\" height=\"100\" fill=\"#c4a373\" opacity=\".6\"/><rect x=\"560\" y=\"120\" width=\"200\" height=\"100\" fill=\"#c4a373\" opacity=\".6\"/><polygon points=\"395,40 405,40 415,220 385,220\" fill=\"url(#st_o)\"/><polygon points=\"395,40 405,40 400,20\" fill=\"#a07c4a\"/><line x1=\"400\" y1=\"20\" x2=\"400\" y2=\"10\" stroke=\"#8b6c43\" stroke-width=\"2\"/><line x1=\"395\" y1=\"14\" x2=\"405\" y2=\"14\" stroke=\"#8b6c43\" stroke-width=\"2\"/><rect x=\"375\" y=\"218\" width=\"50\" height=\"22\" fill=\"#8b6c43\"/><rect x=\"365\" y=\"232\" width=\"70\" height=\"14\" fill=\"#8b6c43\"/></g></svg>", "statue": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_s\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_s\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_s)\"/><g opacity=\".9\"><rect x=\"0\" y=\"180\" width=\"800\" height=\"100\" fill=\"#d4c4a0\"/><rect x=\"60\" y=\"120\" width=\"160\" height=\"100\" fill=\"#c4a373\" opacity=\".5\"/><rect x=\"580\" y=\"120\" width=\"160\" height=\"100\" fill=\"#c4a373\" opacity=\".5\"/><rect x=\"370\" y=\"180\" width=\"60\" height=\"80\" fill=\"url(#st_s)\"/><rect x=\"360\" y=\"200\" width=\"80\" height=\"14\" fill=\"#8b6c43\"/><ellipse cx=\"400\" cy=\"110\" rx=\"22\" ry=\"28\" fill=\"#3a2a1a\"/><path d=\"M378 130L380 180L420 180L422 130Q422 105 400 105Q378 105 378 130Z\" fill=\"#3a2a1a\"/><ellipse cx=\"400\" cy=\"105\" rx=\"24\" ry=\"14\" fill=\"#1a0f08\" opacity=\".7\"/><rect x=\"392\" y=\"155\" width=\"16\" height=\"20\" fill=\"#5a4226\"/></g></svg>", "painting": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"tc_pa\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#b85c5c\"/><stop offset=\"1\" stop-color=\"#8b3a3a\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"#e8d3a8\"/><g opacity=\".95\"><rect x=\"220\" y=\"50\" width=\"360\" height=\"200\" fill=\"#5a4226\"/><rect x=\"240\" y=\"70\" width=\"320\" height=\"160\" fill=\"#8b6c43\"/><rect x=\"250\" y=\"80\" width=\"300\" height=\"140\" fill=\"url(#tc_pa)\" opacity=\".5\"/><g fill=\"#c4a373\"><rect x=\"220\" y=\"50\" width=\"360\" height=\"6\"/><rect x=\"220\" y=\"244\" width=\"360\" height=\"6\"/><rect x=\"220\" y=\"50\" width=\"6\" height=\"200\"/><rect x=\"574\" y=\"50\" width=\"6\" height=\"200\"/></g><ellipse cx=\"400\" cy=\"130\" rx=\"28\" ry=\"38\" fill=\"#3a2a1a\" opacity=\".6\"/><rect x=\"370\" y=\"165\" width=\"60\" height=\"55\" fill=\"#5a4226\" opacity=\".6\"/><g fill=\"#a07c4a\"><circle cx=\"230\" cy=\"60\" r=\"6\"/><circle cx=\"570\" cy=\"60\" r=\"6\"/><circle cx=\"230\" cy=\"240\" r=\"6\"/><circle cx=\"570\" cy=\"240\" r=\"6\"/></g></g></svg>", "church": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_ch\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_ch)\"/><g opacity=\".9\"><rect x=\"220\" y=\"80\" width=\"360\" height=\"200\" fill=\"#c4a373\"/><polygon points=\"220,80 580,80 400,30\" fill=\"#8b6c43\"/><rect x=\"370\" y=\"180\" width=\"60\" height=\"100\" fill=\"#5a4226\"/><path d=\"M370 200Q370 180 400 180Q430 180 430 200\" fill=\"#5a4226\"/><circle cx=\"400\" cy=\"130\" r=\"22\" fill=\"#5a4226\" opacity=\".7\"/><rect x=\"270\" y=\"160\" width=\"40\" height=\"80\" rx=\"20\" fill=\"#5a4226\" opacity=\".5\"/><rect x=\"490\" y=\"160\" width=\"40\" height=\"80\" rx=\"20\" fill=\"#5a4226\" opacity=\".5\"/><rect x=\"220\" y=\"100\" width=\"360\" height=\"8\" fill=\"#8b6c43\"/><line x1=\"400\" y1=\"35\" x2=\"400\" y2=\"15\" stroke=\"#a07c4a\" stroke-width=\"3\"/><line x1=\"394\" y1=\"22\" x2=\"406\" y2=\"22\" stroke=\"#a07c4a\" stroke-width=\"3\"/></g></svg>", "fortress": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_fo\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_fo\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient><linearGradient id=\"tc_fo\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#b85c5c\"/><stop offset=\"1\" stop-color=\"#8b3a3a\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_fo)\"/><g opacity=\".9\"><rect x=\"240\" y=\"180\" width=\"320\" height=\"100\" fill=\"#8b6c43\"/><rect x=\"290\" y=\"100\" width=\"220\" height=\"100\" fill=\"url(#st_fo)\"/><ellipse cx=\"400\" cy=\"100\" rx=\"110\" ry=\"20\" fill=\"#a07c4a\"/><g fill=\"#5a4226\"><rect x=\"290\" y=\"90\" width=\"20\" height=\"20\"/><rect x=\"330\" y=\"90\" width=\"20\" height=\"20\"/><rect x=\"370\" y=\"90\" width=\"20\" height=\"20\"/><rect x=\"410\" y=\"90\" width=\"20\" height=\"20\"/><rect x=\"450\" y=\"90\" width=\"20\" height=\"20\"/><rect x=\"490\" y=\"90\" width=\"20\" height=\"20\"/></g><circle cx=\"400\" cy=\"55\" r=\"8\" fill=\"#a07c4a\"/><path d=\"M392 60L392 80L408 80L408 60Z\" fill=\"#a07c4a\"/><rect x=\"0\" y=\"240\" width=\"800\" height=\"40\" fill=\"url(#tc_fo)\" opacity=\".3\"/></g></svg>", "temple": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_t\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_t\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_t)\"/><g opacity=\".9\"><rect x=\"280\" y=\"240\" width=\"240\" height=\"14\" fill=\"#c4a373\"/><rect x=\"290\" y=\"226\" width=\"220\" height=\"14\" fill=\"#a07c4a\"/><rect x=\"300\" y=\"212\" width=\"200\" height=\"14\" fill=\"#8b6c43\"/><rect x=\"300\" y=\"130\" width=\"200\" height=\"82\" fill=\"#c4a373\"/><g fill=\"#8b6c43\"><rect x=\"310\" y=\"130\" width=\"10\" height=\"82\"/><rect x=\"340\" y=\"130\" width=\"10\" height=\"82\"/><rect x=\"370\" y=\"130\" width=\"10\" height=\"82\"/><rect x=\"400\" y=\"130\" width=\"10\" height=\"82\"/><rect x=\"430\" y=\"130\" width=\"10\" height=\"82\"/><rect x=\"460\" y=\"130\" width=\"10\" height=\"82\"/><rect x=\"490\" y=\"130\" width=\"10\" height=\"82\"/></g><rect x=\"295\" y=\"120\" width=\"210\" height=\"14\" fill=\"#8b6c43\"/><rect x=\"330\" y=\"80\" width=\"140\" height=\"40\" fill=\"url(#st_t)\"/><path d=\"M320 90Q320 30 400 30Q480 30 480 90Z\" fill=\"url(#st_t)\"/><rect x=\"392\" y=\"20\" width=\"16\" height=\"14\" fill=\"#a07c4a\"/><circle cx=\"400\" cy=\"16\" r=\"4\" fill=\"#a07c4a\"/></g></svg>", "garden": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_g\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_g)\"/><g opacity=\".9\"><rect x=\"0\" y=\"200\" width=\"800\" height=\"80\" fill=\"#d4c4a0\"/><rect x=\"0\" y=\"195\" width=\"800\" height=\"6\" fill=\"#a07c4a\"/><g fill=\"#a07c4a\"><ellipse cx=\"80\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"120\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"160\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"200\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"600\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"640\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"680\" cy=\"208\" rx=\"4\" ry=\"8\"/><ellipse cx=\"720\" cy=\"208\" rx=\"4\" ry=\"8\"/></g><rect x=\"158\" y=\"140\" width=\"8\" height=\"60\" fill=\"#5a4226\"/><circle cx=\"162\" cy=\"130\" r=\"38\" fill=\"#5a7a3a\"/><circle cx=\"150\" cy=\"120\" r=\"5\" fill=\"#d4801a\"/><circle cx=\"175\" cy=\"135\" r=\"5\" fill=\"#d4801a\"/><circle cx=\"160\" cy=\"145\" r=\"5\" fill=\"#d4801a\"/><rect x=\"638\" y=\"140\" width=\"8\" height=\"60\" fill=\"#5a4226\"/><circle cx=\"642\" cy=\"130\" r=\"38\" fill=\"#5a7a3a\"/><circle cx=\"630\" cy=\"120\" r=\"5\" fill=\"#d4801a\"/><circle cx=\"655\" cy=\"135\" r=\"5\" fill=\"#d4801a\"/><circle cx=\"640\" cy=\"145\" r=\"5\" fill=\"#d4801a\"/><g opacity=\".5\"><path d=\"M360 190Q360 150 400 150Q440 150 440 190Z\" fill=\"#8b6c43\"/><rect x=\"375\" y=\"190\" width=\"50\" height=\"10\" fill=\"#8b6c43\"/><circle cx=\"400\" cy=\"146\" r=\"3\" fill=\"#8b6c43\"/></g></g></svg>", "keyhole": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_k\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><mask id=\"kmask\"><rect width=\"800\" height=\"280\" fill=\"black\"/><circle cx=\"400\" cy=\"110\" r=\"50\" fill=\"white\"/><polygon points=\"370,110 430,110 415,200 385,200\" fill=\"white\"/></mask></defs><rect width=\"800\" height=\"280\" fill=\"#2a2520\"/><g mask=\"url(#kmask)\"><rect width=\"800\" height=\"280\" fill=\"url(#sk_k)\"/><rect x=\"0\" y=\"160\" width=\"350\" height=\"120\" fill=\"#5a7a3a\"/><rect x=\"450\" y=\"160\" width=\"350\" height=\"120\" fill=\"#5a7a3a\"/><rect x=\"350\" y=\"180\" width=\"100\" height=\"100\" fill=\"#d4c4a0\"/><path d=\"M360 170Q360 120 400 120Q440 120 440 170Z\" fill=\"#a07c4a\"/><rect x=\"378\" y=\"170\" width=\"44\" height=\"14\" fill=\"#a07c4a\"/><circle cx=\"400\" cy=\"116\" r=\"4\" fill=\"#8b6c43\"/></g><circle cx=\"400\" cy=\"110\" r=\"50\" fill=\"none\" stroke=\"#a07c4a\" stroke-width=\"2\" opacity=\".6\"/><polygon points=\"370,110 430,110 415,200 385,200\" fill=\"none\" stroke=\"#a07c4a\" stroke-width=\"2\" opacity=\".6\"/></svg>", "mask": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_m\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient><linearGradient id=\"st_m\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#c4a373\"/><stop offset=\"1\" stop-color=\"#8b6c43\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_m)\"/><g><circle cx=\"400\" cy=\"140\" r=\"110\" fill=\"url(#st_m)\"/><circle cx=\"400\" cy=\"140\" r=\"110\" fill=\"none\" stroke=\"#5a4226\" stroke-width=\"3\"/><ellipse cx=\"365\" cy=\"115\" rx=\"14\" ry=\"8\" fill=\"#3a2a1a\"/><ellipse cx=\"435\" cy=\"115\" rx=\"14\" ry=\"8\" fill=\"#3a2a1a\"/><path d=\"M345 95Q365 90 385 95\" fill=\"none\" stroke=\"#5a4226\" stroke-width=\"2\"/><path d=\"M415 95Q435 90 455 95\" fill=\"none\" stroke=\"#5a4226\" stroke-width=\"2\"/><path d=\"M400 120L390 150L410 150Z\" fill=\"#5a4226\"/><ellipse cx=\"400\" cy=\"180\" rx=\"30\" ry=\"18\" fill=\"#1a0f08\"/><path d=\"M350 200Q360 230 380 230Q400 240 420 230Q440 230 450 200\" fill=\"none\" stroke=\"#5a4226\" stroke-width=\"3\"/><path d=\"M375 165Q388 175 400 165Q412 175 425 165\" fill=\"none\" stroke=\"#5a4226\" stroke-width=\"3\"/></g></svg>", "monument": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_mo\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_mo)\"/><g opacity=\".95\"><rect x=\"100\" y=\"250\" width=\"600\" height=\"30\" fill=\"#e8d8b5\"/><rect x=\"140\" y=\"230\" width=\"520\" height=\"20\" fill=\"#f5edd9\"/><rect x=\"180\" y=\"210\" width=\"440\" height=\"20\" fill=\"#fbf7f0\"/><rect x=\"280\" y=\"120\" width=\"240\" height=\"90\" fill=\"#fbf7f0\"/><g fill=\"#e8d8b5\"><rect x=\"295\" y=\"120\" width=\"14\" height=\"90\"/><rect x=\"325\" y=\"120\" width=\"14\" height=\"90\"/><rect x=\"355\" y=\"120\" width=\"14\" height=\"90\"/><rect x=\"385\" y=\"120\" width=\"14\" height=\"90\"/><rect x=\"415\" y=\"120\" width=\"14\" height=\"90\"/><rect x=\"445\" y=\"120\" width=\"14\" height=\"90\"/><rect x=\"475\" y=\"120\" width=\"14\" height=\"90\"/></g><polygon points=\"280,120 520,120 400,80\" fill=\"#f5edd9\"/><circle cx=\"400\" cy=\"60\" r=\"6\" fill=\"#a07c4a\"/><rect x=\"392\" y=\"63\" width=\"16\" height=\"20\" fill=\"#a07c4a\"/><ellipse cx=\"400\" cy=\"90\" rx=\"20\" ry=\"8\" fill=\"#a07c4a\"/></g></svg>", "rooftops": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_r\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_r)\"/><g opacity=\".9\"><polygon points=\"100,140 200,80 300,140 300,280 100,280\" fill=\"#b85c5c\"/><polygon points=\"220,160 320,100 420,160 420,280 220,280\" fill=\"#a85050\"/><polygon points=\"340,140 440,80 540,140 540,280 340,280\" fill=\"#c46a6a\"/><polygon points=\"460,170 560,110 660,170 660,280 460,280\" fill=\"#b85c5c\"/><polygon points=\"580,140 680,80 780,140 780,280 580,280\" fill=\"#a85050\"/><rect x=\"180\" y=\"100\" width=\"14\" height=\"20\" fill=\"#8b6c43\"/><rect x=\"400\" y=\"100\" width=\"14\" height=\"20\" fill=\"#8b6c43\"/><rect x=\"640\" y=\"100\" width=\"14\" height=\"20\" fill=\"#8b6c43\"/></g></svg>", "library": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><rect width=\"800\" height=\"280\" fill=\"#3a2a1a\"/><rect x=\"0\" y=\"0\" width=\"800\" height=\"280\" fill=\"#5a4226\"/><g transform=\"translate(60,50)\"><rect x=\"0\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a85050\"/><rect x=\"15\" y=\"0\" width=\"12\" height=\"50\" fill=\"#8b6c43\"/><rect x=\"28\" y=\"0\" width=\"14\" height=\"50\" fill=\"#5a4226\"/><rect x=\"43\" y=\"0\" width=\"10\" height=\"50\" fill=\"#a07c4a\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#b85c5c\"/><rect x=\"69\" y=\"0\" width=\"12\" height=\"50\" fill=\"#3a2a1a\"/><rect x=\"82\" y=\"0\" width=\"14\" height=\"50\" fill=\"#c4a373\"/></g><g transform=\"translate(230,50)\"><rect x=\"0\" y=\"0\" width=\"14\" height=\"50\" fill=\"#8b6c43\"/><rect x=\"15\" y=\"0\" width=\"12\" height=\"50\" fill=\"#a85050\"/><rect x=\"28\" y=\"0\" width=\"14\" height=\"50\" fill=\"#c4a373\"/><rect x=\"43\" y=\"0\" width=\"10\" height=\"50\" fill=\"#5a4226\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#3a2a1a\"/><rect x=\"69\" y=\"0\" width=\"12\" height=\"50\" fill=\"#a07c4a\"/></g><g transform=\"translate(400,50)\"><rect x=\"0\" y=\"0\" width=\"14\" height=\"50\" fill=\"#5a4226\"/><rect x=\"15\" y=\"0\" width=\"12\" height=\"50\" fill=\"#c4a373\"/><rect x=\"28\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a85050\"/><rect x=\"43\" y=\"0\" width=\"10\" height=\"50\" fill=\"#8b6c43\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a07c4a\"/><rect x=\"69\" y=\"0\" width=\"12\" height=\"50\" fill=\"#5a4226\"/></g><g transform=\"translate(570,50)\"><rect x=\"0\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a07c4a\"/><rect x=\"15\" y=\"0\" width=\"12\" height=\"50\" fill=\"#5a4226\"/><rect x=\"28\" y=\"0\" width=\"14\" height=\"50\" fill=\"#8b6c43\"/><rect x=\"43\" y=\"0\" width=\"10\" height=\"50\" fill=\"#a85050\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#c4a373\"/><rect x=\"69\" y=\"0\" width=\"12\" height=\"50\" fill=\"#3a2a1a\"/></g><g transform=\"translate(60,160)\"><rect x=\"0\" y=\"0\" width=\"12\" height=\"50\" fill=\"#5a4226\"/><rect x=\"13\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a07c4a\"/><rect x=\"28\" y=\"0\" width=\"10\" height=\"50\" fill=\"#8b6c43\"/><rect x=\"39\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a85050\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#5a4226\"/><rect x=\"69\" y=\"0\" width=\"12\" height=\"50\" fill=\"#c4a373\"/></g><g transform=\"translate(230,160)\"><rect x=\"0\" y=\"0\" width=\"12\" height=\"50\" fill=\"#a85050\"/><rect x=\"13\" y=\"0\" width=\"14\" height=\"50\" fill=\"#c4a373\"/><rect x=\"28\" y=\"0\" width=\"10\" height=\"50\" fill=\"#5a4226\"/><rect x=\"39\" y=\"0\" width=\"14\" height=\"50\" fill=\"#3a2a1a\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#8b6c43\"/></g><g transform=\"translate(400,160)\"><rect x=\"0\" y=\"0\" width=\"12\" height=\"50\" fill=\"#c4a373\"/><rect x=\"13\" y=\"0\" width=\"14\" height=\"50\" fill=\"#3a2a1a\"/><rect x=\"28\" y=\"0\" width=\"10\" height=\"50\" fill=\"#a85050\"/><rect x=\"39\" y=\"0\" width=\"14\" height=\"50\" fill=\"#8b6c43\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a07c4a\"/></g><g transform=\"translate(570,160)\"><rect x=\"0\" y=\"0\" width=\"12\" height=\"50\" fill=\"#3a2a1a\"/><rect x=\"13\" y=\"0\" width=\"14\" height=\"50\" fill=\"#5a4226\"/><rect x=\"28\" y=\"0\" width=\"10\" height=\"50\" fill=\"#a07c4a\"/><rect x=\"39\" y=\"0\" width=\"14\" height=\"50\" fill=\"#c4a373\"/><rect x=\"54\" y=\"0\" width=\"14\" height=\"50\" fill=\"#a85050\"/></g><rect x=\"0\" y=\"105\" width=\"800\" height=\"6\" fill=\"#3a2a1a\"/><rect x=\"0\" y=\"215\" width=\"800\" height=\"6\" fill=\"#3a2a1a\"/></svg>", "tower": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_tw\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_tw)\"/><g opacity=\".9\"><rect x=\"200\" y=\"180\" width=\"400\" height=\"100\" fill=\"#c4a373\"/><rect x=\"400\" y=\"40\" width=\"80\" height=\"200\" fill=\"#a07c4a\"/><g fill=\"#8b6c43\"><rect x=\"400\" y=\"30\" width=\"14\" height=\"14\"/><rect x=\"420\" y=\"30\" width=\"14\" height=\"14\"/><rect x=\"446\" y=\"30\" width=\"14\" height=\"14\"/><rect x=\"466\" y=\"30\" width=\"14\" height=\"14\"/></g><g fill=\"#3a2a1a\" opacity=\".7\"><rect x=\"430\" y=\"80\" width=\"20\" height=\"30\"/><rect x=\"430\" y=\"130\" width=\"20\" height=\"30\"/><rect x=\"430\" y=\"180\" width=\"20\" height=\"30\"/></g><g fill=\"#3a2a1a\" opacity=\".5\"><rect x=\"230\" y=\"210\" width=\"20\" height=\"30\"/><rect x=\"270\" y=\"210\" width=\"20\" height=\"30\"/><rect x=\"310\" y=\"210\" width=\"20\" height=\"30\"/><rect x=\"510\" y=\"210\" width=\"20\" height=\"30\"/><rect x=\"550\" y=\"210\" width=\"20\" height=\"30\"/></g><circle cx=\"440\" cy=\"60\" r=\"6\" fill=\"#ffd66e\"/><circle cx=\"440\" cy=\"60\" r=\"14\" fill=\"#ffd66e\" opacity=\".4\"/><circle cx=\"440\" cy=\"60\" r=\"22\" fill=\"#ffd66e\" opacity=\".15\"/></g></svg>", "stairs": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_st\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_st)\"/><g opacity=\".95\"><rect x=\"340\" y=\"40\" width=\"120\" height=\"80\" fill=\"#c4a373\"/><polygon points=\"340,40 460,40 400,10\" fill=\"#8b6c43\"/><rect x=\"370\" y=\"80\" width=\"20\" height=\"40\" fill=\"#5a4226\"/><rect x=\"410\" y=\"80\" width=\"20\" height=\"40\" fill=\"#5a4226\"/><rect x=\"320\" y=\"20\" width=\"20\" height=\"40\" fill=\"#a07c4a\"/><rect x=\"460\" y=\"20\" width=\"20\" height=\"40\" fill=\"#a07c4a\"/><g fill=\"#e8d8b5\" stroke=\"#a07c4a\" stroke-width=\".5\"><polygon points=\"200,280 600,280 540,260 260,260\"/><polygon points=\"220,260 580,260 530,240 270,240\"/><polygon points=\"240,240 560,240 520,220 280,220\"/><polygon points=\"260,220 540,220 510,200 290,200\"/><polygon points=\"280,200 520,200 500,180 300,180\"/><polygon points=\"300,180 500,180 490,160 310,160\"/><polygon points=\"310,160 490,160 480,140 320,140\"/><polygon points=\"320,140 480,140 470,125 330,125\"/></g></g></svg>", "coffee": "<svg viewBox=\"0 0 800 280\" preserveAspectRatio=\"xMidYMid slice\"><defs><linearGradient id=\"sk_co\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f5edd9\"/><stop offset=\"1\" stop-color=\"#e8d8b5\"/></linearGradient></defs><rect width=\"800\" height=\"280\" fill=\"url(#sk_co)\"/><g opacity=\".95\"><rect x=\"0\" y=\"200\" width=\"800\" height=\"80\" fill=\"#8b6c43\" opacity=\".5\"/><ellipse cx=\"400\" cy=\"210\" rx=\"140\" ry=\"20\" fill=\"#fbf7f0\"/><ellipse cx=\"400\" cy=\"208\" rx=\"140\" ry=\"20\" fill=\"none\" stroke=\"#a07c4a\" stroke-width=\"2\"/><path d=\"M320 160L330 200L470 200L480 160Z\" fill=\"#fbf7f0\"/><ellipse cx=\"400\" cy=\"160\" rx=\"80\" ry=\"14\" fill=\"#3a2a1a\"/><ellipse cx=\"400\" cy=\"160\" rx=\"80\" ry=\"14\" fill=\"none\" stroke=\"#a07c4a\" stroke-width=\"2\"/><ellipse cx=\"400\" cy=\"158\" rx=\"76\" ry=\"12\" fill=\"#c4a373\" opacity=\".7\"/><path d=\"M480 170Q520 170 520 185Q520 200 480 198\" fill=\"none\" stroke=\"#fbf7f0\" stroke-width=\"4\"/><path d=\"M480 170Q520 170 520 185Q520 200 480 198\" fill=\"none\" stroke=\"#a07c4a\" stroke-width=\"2\"/><g fill=\"none\" stroke=\"#e8d8b5\" stroke-width=\"2\" opacity=\".6\"><path d=\"M360 140Q360 110 370 100Q380 90 370 70\"/><path d=\"M400 130Q400 100 410 90Q420 80 410 60\"/><path d=\"M440 140Q440 110 450 100Q460 90 450 70\"/></g><ellipse cx=\"280\" cy=\"215\" rx=\"14\" ry=\"3\" fill=\"#a07c4a\"/><rect x=\"260\" y=\"213\" width=\"22\" height=\"2\" fill=\"#a07c4a\"/></g></svg>"};
-const CARD_TO_MOTIF = {"galleria-sciarra": "arch", "fontana-trevi": "fountain", "santignazio": "dome", "pantheon": "pantheon", "piazza-navona": "obelisk", "campo-fiori": "statue", "doria-pamphilj": "painting", "santeustachio": "church", "castel-santangelo": "fortress", "tempietto": "temple", "smt": "church", "fontanone": "fountain", "giardino-aranci": "garden", "buco-serratura": "keyhole", "bocca-verita": "mask", "ghetto": "arch", "tartarughe": "fountain", "vittoriano": "monument", "monti": "rooftops", "casanatense": "library", "torre-scimmia": "tower", "popolo": "obelisk", "spagna": "stairs", "tazza-doro": "coffee", "auditorium": "monument", "laterano": "church", "san-clemente": "church", "san-pietro-vincoli": "statue", "galleria-borghese": "statue", "palazzo-barberini": "painting", "cappuccini": "church", "smm": "church", "palazzo-massimo": "statue", "angeli": "church", "santa-teresa": "statue"};
+const CARD_TO_MOTIF = {"galleria-sciarra": "arch", "fontana-trevi": "fountain", "santignazio": "dome", "pantheon": "pantheon", "piazza-navona": "obelisk", "campo-fiori": "statue", "doria-pamphilj": "painting", "santeustachio": "church", "castel-santangelo": "fortress", "tempietto": "temple", "smt": "church", "fontanone": "fountain", "giardino-aranci": "garden", "buco-serratura": "keyhole", "bocca-verita": "mask", "ghetto": "arch", "tartarughe": "fountain", "vittoriano": "monument", "monti": "rooftops", "casanatense": "library", "minerva": "church", "san-luigi": "painting", "torre-scimmia": "tower", "popolo": "obelisk", "spagna": "stairs", "tazza-doro": "coffee", "auditorium": "monument", "laterano": "church", "san-clemente": "church", "san-pietro-vincoli": "statue", "galleria-borghese": "statue", "palazzo-barberini": "painting", "cappuccini": "church", "smm": "church", "palazzo-massimo": "statue", "angeli": "church", "santa-teresa": "statue"};
 
 function loadSvgFallback(img, cardId) {
   try {
@@ -2155,6 +2203,7 @@ function loadSvgFallbackDetail(img, cardId) {
     <a href="#reservas" class="nav-pill">Reservas</a>
     <a href="#gastronomia" class="nav-pill">Gastronomía</a>
     <a href="#practica" class="nav-pill">Pratica</a>
+    <a href="#arte" class="nav-pill">Arte</a>
   </nav>
 </header>
 
@@ -2457,6 +2506,7 @@ function loadSvgFallbackDetail(img, cardId) {
             <div class="card-italian">Chiesa di Sant'Ignazio · Rione Pigna</div>
           </div>
         </div>
+        <div class="card-artists">Artistas: <a class="art-link" href="#art-pozzo">Andrea Pozzo</a></div>
         <div class="card-hero"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Church_of_Sant%27Ignazio_di_Loyola.jpg/1280px-Church_of_Sant%27Ignazio_di_Loyola.jpg" alt="Techo de Sant'Ignazio por Andrea Pozzo" loading="lazy" onerror="loadSvgFallback(this, 'santignazio')"></div>
         <div class="card-section">
           <h4>Qué es</h4>
@@ -2519,6 +2569,7 @@ function loadSvgFallbackDetail(img, cardId) {
             <div class="card-italian">Pantheon · Piazza della Rotonda</div>
           </div>
         </div>
+        <div class="card-artists">Artistas: <a class="art-link" href="#art-rafael">Rafael</a> <span style="color:var(--ink-faint);font-style:italic;">(aquí está enterrado)</span></div>
         <div class="card-hero"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Rome_Pantheon_front.jpg/960px-Rome_Pantheon_front.jpg" alt="Fachada del Pantheon" loading="lazy" onerror="loadSvgFallback(this, 'pantheon')"></div>
         <div class="card-section">
           <h4>Qué es</h4>
@@ -2582,6 +2633,7 @@ function loadSvgFallbackDetail(img, cardId) {
             <div class="card-italian">Piazza Navona · Rione Parione</div>
           </div>
         </div>
+        <div class="card-artists">Artistas: <a class="art-link" href="#art-bernini">Bernini</a> <a class="art-link" href="#art-borromini">Borromini</a></div>
         <div class="card-hero"><img src="https://artandtraditiontours.com/wp-content/uploads/2025/01/AdobeStock_46341549-scaled.jpeg" alt="Piazza Navona" loading="lazy" onerror="loadSvgFallback(this, 'piazza-navona')"></div>
         <div class="card-section">
           <h4>Qué es</h4>
@@ -2793,6 +2845,7 @@ function loadSvgFallbackDetail(img, cardId) {
             <div class="card-italian">Galleria Doria Pamphilj · Via del Corso</div>
           </div>
         </div>
+        <div class="card-artists">Artistas: <a class="art-link" href="#art-caravaggio">Caravaggio</a> <a class="art-link" href="#art-bernini">Bernini</a></div>
         <div class="card-hero"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Diego_Vel%C3%A1zquez_046.jpg/960px-Diego_Vel%C3%A1zquez_046.jpg" alt="Retrato del Papa Inocencio X por Velázquez" loading="lazy" onerror="loadSvgFallback(this, 'doria-pamphilj')"></div>
         <div class="card-section">
           <h4>Qué es</h4>
@@ -2920,6 +2973,7 @@ function loadSvgFallbackDetail(img, cardId) {
             <div class="card-italian">Castel Sant'Angelo · Lungotevere Castello</div>
           </div>
         </div>
+        <div class="card-artists">Artistas: <a class="art-link" href="#art-bernini">Bernini</a></div>
         <div class="card-hero"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Castel_Sant%27Angelo_and_Ponte_Sant%27Angelo.jpg/960px-Castel_Sant%27Angelo_and_Ponte_Sant%27Angelo.jpg?width=900" alt="Castel Sant'Angelo" loading="lazy" onerror="loadSvgFallback(this, 'castel-santangelo')"></div>
         <div class="card-section">
           <h4>Qué es</h4>
@@ -3825,18 +3879,24 @@ function loadSvgFallbackDetail(img, cardId) {
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>60 min</b> · desayuno + check-out + dejar maletas en consigna</span></div>
       <div class="tl-transport walk" data-pace="all"><div class="tl-transport-header">Hotel → Biblioteca Casanatense · ~2,2 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · bajada agradable por Via Nazionale · comercios abiertos<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>28 min</b><br>💶 <b>gratis</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">Ⓜ️</span><div class="tl-transport-mode-desc"><strong>Metro A</strong> · Termini → Barberini · 1 parada · + 8 min andando hasta Casanatense</div><div class="tl-transport-mode-meta">⏱ <b>15 min total</b><br>💶 <b>€1,50 p.p. · €4,50 total</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚕</span><div class="tl-transport-mode-desc"><strong>Taxi</strong> directo</div><div class="tl-transport-mode-meta">⏱ <b>10 min</b><br>💶 <b>€10-12 · €3-4 p.p.</b></div></div></div><div class="tl-transport-footnote">Última mañana en Roma — la bajada por Via Nazionale es agradable y os deja con buen sabor. Si lleváis prisa, metro.</div></div>
       <div class="tl-item" data-pace="all"><span class="tl-time">09:30</span><a href="#casanatense" class="tl-title">Biblioteca Casanatense</a><div class="tl-note">Única ventana semanal. Solo lunes-viernes.</div></div>
-      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>60 min</b> · suficiente para la Sala Monumental — es pequeña pero densa</span><span class="tl-meta-item">🚶 hasta siguiente: <b>2 min</b> · 180 m hasta Tazza d'Oro</span></div>
-      
-      <div class="tl-item" data-pace="medium"><span class="tl-time">10:30</span><a href="#tazza-doro" class="tl-title">Tazza d'Oro · espresso</a><div class="tl-note">A 2 min andando. El mejor espresso de Roma según muchos. Granita di caffè en barra.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>45 min</b> · suficiente para la Sala Monumental — es pequeña pero densa</span><span class="tl-meta-item">🚶 hasta siguiente: <b>2 min</b> · hasta la Minerva, detrás del Panteón</span></div>
+
+      <div class="tl-item" data-pace="medium"><span class="tl-time">10:15</span><a href="#minerva" class="tl-title">Santa Maria sopra Minerva</a><div class="tl-note">Detrás del Panteón. El elefantino de Bernini fuera; el Cristo de Miguel Ángel dentro.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>20 min</b> · la única iglesia gótica de Roma · el Cristo de Miguel Ángel y la bóveda azul estrellada</span><span class="tl-meta-item">🚶 hasta siguiente: <b>4 min</b> · hasta San Luigi dei Francesi</span></div>
+
+      <div class="tl-item" data-pace="medium"><span class="tl-time">10:35</span><a href="#san-luigi" class="tl-title">San Luigi dei Francesi</a><span class="tl-tag">Caravaggio</span><div class="tl-note">El ciclo de San Mateo: tres Caravaggios en la Cappella Contarelli. Entrada gratis.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item warn">⏱ <b>20 min</b> · llevad monedas para iluminar la capilla · cierra a mediodía (12:45)</span><span class="tl-meta-item">🚶 hasta Tazza d'Oro: <b>4 min</b></span></div>
+
+      <div class="tl-item" data-pace="medium"><span class="tl-time">11:00</span><a href="#tazza-doro" class="tl-title">Tazza d'Oro · espresso</a><div class="tl-note">A 2 min del Panteón. El mejor espresso de Roma según muchos. Granita di caffè en barra.</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>15 min</b> · espresso en barra — la granita di caffè necesita 5 min más pero merece</span></div>
-      <div class="tl-transport walk" data-pace="all"><div class="tl-transport-header">Recorrido mañana del lunes (entre paradas)</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · Casanatense → Tazza d'Oro (2 min) → Torre Scimmia (7 min) → Popolo (13 min, sube Via Ripetta) → Spagna (10 min, Via del Babuino)<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>~3 km · 50 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">Todo el centro histórico hilado a pie. Las distancias son cortas y los trayectos son por las calles más bonitas de Roma.</div></div>
-      <div class="tl-item" data-pace="medium"><span class="tl-time">10:55</span><a href="#torre-scimmia" class="tl-title">Torre della Scimmia</a><div class="tl-note">Por Via della Scrofa. Leyenda medieval del mono.</div></div>
+      <div class="tl-transport walk" data-pace="all"><div class="tl-transport-header">Recorrido mañana del lunes (entre paradas)</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · Casanatense → Minerva (2 min) → San Luigi dei Francesi (4 min) → Tazza d'Oro (4 min) → Torre Scimmia (7 min) → Popolo (13 min, sube Via Ripetta) → Spagna (10 min, Via del Babuino)<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>~3 km · 50 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">Todo el centro histórico hilado a pie, por las calles más bonitas de Roma. La zona de detrás del Panteón concentra Minerva y San Luigi: dos joyas en cuatro minutos.</div></div>
+      <div class="tl-item" data-pace="medium"><span class="tl-time">11:15</span><a href="#torre-scimmia" class="tl-title">Torre della Scimmia</a><div class="tl-note">Por Via della Scrofa. Leyenda medieval del mono.</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>5 min</b> · exterior — es un vistazo rápido desde la calle, no un museo</span><span class="tl-meta-item">🚶 hasta siguiente: <b>13 min</b> · ~1 km por Via Ripetta hasta Piazza del Popolo</span></div>
       
-      <div class="tl-item" data-pace="all"><span class="tl-time">11:00</span><a href="#popolo" class="tl-title">Piazza del Popolo · Santa Maria del Popolo</a><div class="tl-note">Dos Caravaggios. Iglesia cierra 12:00.</div></div>
-      <div class="tl-meta"><span class="tl-meta-item warn">⏱ <b>35 min</b> · justo con el cierre a las 12:00 — ir directo a la Cappella Cerasi (izquierda al entrar)</span><span class="tl-meta-item">🚶 hasta siguiente: <b>10 min</b> · 750 m por Via del Babuino hasta Piazza di Spagna</span></div>
-      
-      <div class="tl-item" data-pace="all"><span class="tl-time">11:35</span><a href="#spagna" class="tl-title">Piazza di Spagna · Barcaccia</a><div class="tl-note">Bajada por Via Margutta (la calle de Fellini).</div></div>
+      <div class="tl-item" data-pace="all"><span class="tl-time">11:35</span><a href="#popolo" class="tl-title">Piazza del Popolo · Santa Maria del Popolo</a><div class="tl-note">Dos Caravaggios más. Iglesia cierra 12:00 — id directos a la Cappella Cerasi.</div></div>
+      <div class="tl-meta"><span class="tl-meta-item warn">⏱ <b>25 min</b> · cierra a las 12:00 — ir directo a la Cappella Cerasi (izquierda al entrar)</span><span class="tl-meta-item">🚶 hasta siguiente: <b>10 min</b> · 750 m por Via del Babuino hasta Piazza di Spagna</span></div>
+
+      <div class="tl-item" data-pace="all"><span class="tl-time">12:15</span><a href="#spagna" class="tl-title">Piazza di Spagna · Barcaccia</a><div class="tl-note">Bajada por Via Margutta (la calle de Fellini).</div></div>
       <div class="tl-meta"><span class="tl-meta-item ok">⏱ <b>25 min</b> · escalinata + fuente + Via Margutta — sin prisa, hoy os queda toda la tarde por delante</span></div>
       <div class="tl-transport metro" data-pace="all"><div class="tl-transport-header">Piazza di Spagna → Esquilino · pranzo · ~2 km</div><div class="tl-transport-modes"><div class="tl-transport-mode recommended"><span class="tl-transport-mode-icon">Ⓜ️</span><div class="tl-transport-mode-desc"><strong>Metro A</strong> · Spagna → Termini (3 paradas, 8 min) y a comer por Monti o el Esquilino, cerca de las basílicas de la tarde<span class="tl-transport-mode-tag">recomendado</span></div><div class="tl-transport-mode-meta">⏱ <b>12 min</b><br>💶 <b>€1,50 p.p.</b></div></div><div class="tl-transport-mode"><span class="tl-transport-mode-icon">🚶</span><div class="tl-transport-mode-desc">Andando · por Via Sistina y Via Nazionale · subida moderada</div><div class="tl-transport-mode-meta">⏱ <b>30 min</b><br>💶 <b>gratis</b></div></div></div><div class="tl-transport-footnote">La tarde baja hacia el sureste por las grandes basílicas. Comed ligero y a la sombra: el calor de las 14h es el peor del día.</div></div>
       <div class="tl-item reserved-event" data-pace="all"><span class="tl-time">14:15</span><span class="tl-title disabled">Pranzo en La Matriciana dal 1870 · Esquilino</span><span class="tl-tag">reservado</span><div class="tl-note">La patria de la amatriciana (sale en Stanley Tucci). Junto al Teatro dell'Opera.</div></div>
@@ -3874,6 +3934,122 @@ function loadSvgFallbackDetail(img, cardId) {
     </div>
 
     <div class="cards-list">
+
+      <!-- FICHA: SANTA MARIA SOPRA MINERVA -->
+      <article class="card" id="minerva">
+        <div class="card-header">
+          <span class="card-roman">XXXV</span>
+          <div class="card-title">
+            <h3>Santa Maria sopra Minerva</h3>
+            <div class="card-italian">Piazza della Minerva · detrás del Panteón</div>
+          </div>
+        </div>
+        <div class="card-artists">Artistas: <a class="art-link" href="#art-michelangelo">Michelangelo</a> <a class="art-link" href="#art-bernini">Bernini</a></div>
+        <div class="card-hero"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Elefantino%20Bernini%20Roma.jpg?width=900" alt="El elefantino de Bernini con el obelisco frente a Santa Maria sopra Minerva" loading="lazy" onerror="loadSvgFallback(this, 'minerva')"></div>
+        <div class="card-section">
+          <h4>Qué es</h4>
+          <p>La <strong>única iglesia gótica de Roma</strong>, levantada por los dominicos sobre los restos de un templo dedicado a Minerva. Pasa desapercibida —tiene una fachada lisa y modesta—, pero dentro guarda una <strong>bóveda azul cuajada de estrellas doradas</strong>, el <em>Cristo Resucitado</em> de <strong>Miguel Ángel</strong>, los frescos de Filippino Lippi en la Capilla Carafa y las tumbas de dos papas Médicis, de Fra Angelico y de Santa Catalina de Siena. Y delante, en la plaza, uno de los caprichos más queridos de Roma: el <strong>elefantino de Bernini</strong> cargando un obelisco egipcio.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Historia</h4>
+          <p>Los dominicos empezaron la iglesia hacia <strong>1280</strong> sobre el solar de un antiguo templo —de ahí el «sopra Minerva», «sobre Minerva»—. La construyeron al estilo <strong>gótico</strong>, importado de Florencia por frailes de Santa Maria Novella, algo rarísimo en una ciudad que pasó del románico directo al Renacimiento. El interior actual, con su intenso azul estrellado, es fruto de una restauración neogótica del siglo XIX, pero recupera el espíritu medieval del templo.</p>
+          <p>Por su prestigio dominico, la Minerva se llenó de tumbas y capillas de las grandes familias: la <strong>Capilla Carafa</strong>, con los frescos de <strong>Filippino Lippi</strong> (1488-1493), es una joya del primer Renacimiento. Aquí están enterrados los papas <strong>León X</strong> y <strong>Clemente VII</strong> (los dos Médicis), el pintor <strong>Fra Angelico</strong> y, bajo el altar mayor, <strong>Santa Catalina de Siena</strong>, copatrona de Italia y Europa.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Anécdotas</h4>
+          <p>El <strong>elefantino</strong> (1667) lo diseñó <strong>Bernini</strong> y lo talló su discípulo Ercole Ferrata para sostener un pequeño obelisco egipcio hallado en el huerto del convento. La inscripción del papa Alejandro VII proclama que «hace falta una mente robusta para sostener una sabiduría sólida», y por eso el peso descansa sobre el elefante, símbolo de fuerza e inteligencia. Los romanos, más prosaicos, lo bautizaron <em>«il pulcino della Minerva»</em> (el pollito) y cuentan que Bernini orientó adrede el <strong>trasero del elefante</strong> hacia el convento dominico, con cuyos frailes se llevaba mal.</p>
+          <p>En el convento contiguo, en <strong>1633</strong>, <strong>Galileo Galilei</strong> fue juzgado por la Inquisición y obligado a abjurar de que la Tierra gira alrededor del Sol. La leyenda —no documentada— pone en su boca al levantarse el famoso <em>«E pur si muove»</em> («y sin embargo, se mueve»).</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>En qué fijarse</h4>
+          <div class="detail-photo">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Cristo%20della%20Minerva%20-%20Michelangelo.jpg?width=800" alt="El Cristo Resucitado de Miguel Ángel en Santa Maria sopra Minerva" loading="lazy" onerror="loadSvgFallbackDetail(this, 'minerva')">
+            <div class="detail-photo-caption">El <em>Cristo Resucitado</em> de Miguel Ángel (1519-1521): un Cristo desnudo y clásico que sostiene la cruz. El paño de bronce dorado sobre las caderas se añadió después, por pudor. Está a la izquierda del altar mayor — fijaos en el pulido casi pictórico del mármol.</div>
+          </div>
+          <ul class="detail-list">
+            <li>El <strong>elefantino de Bernini</strong> en la plaza, antes de entrar: el obelisco más pequeño de Roma sobre la sonrisa del elefante.</li>
+            <li>El <strong>Cristo de Miguel Ángel</strong> a la izquierda del altar: tocadlo con la mirada, no con las manos (el pie está gastado de siglos de devoción).</li>
+            <li>La <strong>bóveda azul estrellada</strong>: levantad la vista nada más entrar.</li>
+            <li>La <strong>Capilla Carafa</strong> (brazo derecho del crucero): los frescos de Filippino Lippi, con la <em>Anunciación</em> y la <em>Asunción</em>.</li>
+            <li>El cuerpo de <strong>Santa Catalina de Siena</strong> bajo el altar mayor (su cabeza se venera en Siena).</li>
+            <li>En la pared exterior y en pilastras, las <strong>placas de las grandes inundaciones</strong> del Tíber: marcan hasta dónde llegó el agua.</li>
+          </ul>
+        </div>
+
+        <div class="facts">
+          <div class="facts-row"><span class="label">Horario</span><span class="value">~10-13 y 15-19 · entrada libre</span></div>
+          <div class="facts-row"><span class="label">Cómo llegar</span><span class="value">Detrás del Panteón · 2 min de la Casanatense</span></div>
+          <div class="facts-row"><span class="label">Tiempo</span><span class="value">20-25 min</span></div>
+          <div class="facts-row"><span class="label">Código</span><span class="value">Hombros y rodillas cubiertos</span></div>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=Santa%20Maria%20sopra%20Minerva%20Roma" target="_blank" rel="noopener" class="maps-link">Ver en Google Maps</a>
+
+        <div class="notes-area">
+          <label for="note-minerva">Notas in situ</label>
+          <textarea class="notes-textarea" id="note-minerva" data-note-key="minerva" placeholder="Lo que quieras recordar de aquí…"></textarea>
+        </div>
+      </article>
+
+      <!-- FICHA: SAN LUIGI DEI FRANCESI -->
+      <article class="card" id="san-luigi">
+        <div class="card-header">
+          <span class="card-roman">XXXVI</span>
+          <div class="card-title">
+            <h3>San Luigi dei Francesi</h3>
+            <div class="card-italian">Chiesa di San Luigi dei Francesi · entre el Panteón y Navona</div>
+          </div>
+          <span class="card-badge">Caravaggio</span>
+        </div>
+        <div class="card-artists">Artistas: <a class="art-link" href="#art-caravaggio">Caravaggio</a></div>
+        <div class="card-hero"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/The%20Calling%20of%20Saint%20Matthew-Caravaggio%20(1599-1600).jpg?width=900" alt="La Vocación de San Mateo, de Caravaggio, en San Luigi dei Francesi" loading="lazy" onerror="loadSvgFallback(this, 'san-luigi')"></div>
+        <div class="card-section">
+          <h4>Qué es</h4>
+          <p>La <strong>iglesia nacional de los franceses</strong> en Roma. Por fuera, una fachada renacentista correcta; por dentro, en la última capilla de la izquierda —la <strong>Capilla Contarelli</strong>—, tres de los cuadros más importantes de la historia de la pintura: el <strong>ciclo de San Mateo de Caravaggio</strong> (la <em>Vocación</em>, la <em>Inspiración</em> y el <em>Martirio</em>). Y todo, gratis. Es probablemente el lugar con más arte por metro cuadrado y menos turistas relativos del centro.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Historia</h4>
+          <p>La iglesia se construyó entre <strong>1518 y 1589</strong> para la comunidad francesa de Roma, y está dedicada a <strong>San Luis</strong> (Luis IX de Francia). En 1599-1600, el joven <strong>Caravaggio</strong> recibió el encargo de decorar la capilla del cardenal Contarelli (Cointrel) con escenas de la vida de San Mateo. Era su <strong>primera gran comisión pública</strong>, y lo cambió todo: la ciudad entera acudió a ver aquellos cuadros revolucionarios, oscuros y reales, y Caravaggio pasó de pintor prometedor a celebridad de la noche a la mañana.</p>
+          <p>La primera versión de la <em>Inspiración de San Mateo</em> fue <strong>rechazada</strong> por demasiado terrenal: mostraba a un Mateo viejo y zafio, con los pies sucios, y a un ángel guiándole la mano como a un analfabeto. Caravaggio tuvo que repintarla en la versión, más decorosa, que cuelga hoy sobre el altar.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>Anécdotas</h4>
+          <p>La <em>Vocación de San Mateo</em> es la joya. Cristo entra por la derecha, en penumbra, y <strong>señala</strong> a Mateo con un gesto que es una cita directa: la mano de Cristo repite la de Adán en la <em>Creación</em> de la Capilla Sixtina de Miguel Ángel. Un <strong>rayo de luz</strong> entra con él y cae sobre el grupo de recaudadores sentados a la mesa. ¿Quién es Mateo? El debate dura siglos: ¿el hombre barbado que se señala a sí mismo («¿yo?»), o el joven inclinado que sigue contando monedas, sordo a la llamada? Esa ambigüedad es parte del genio.</p>
+          <p>Caravaggio pinta a los publicanos como <strong>jóvenes de su Roma</strong> —con plumas, espadas y ropa de moda de 1600, no de tiempos de Jesús—: el milagro irrumpe en el presente, en una taberna cualquiera. Es la gran idea caravaggesca: lo sagrado ocurre aquí y ahora, entre gente común.</p>
+        </div>
+
+        <div class="card-section no-dropcap">
+          <h4>En qué fijarse</h4>
+          <div class="detail-photo">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Caravaggio%20-%20Martirio%20di%20San%20Matteo.jpg?width=800" alt="El Martirio de San Mateo, de Caravaggio" loading="lazy" onerror="loadSvgFallbackDetail(this, 'san-luigi')">
+            <div class="detail-photo-caption">Las tres telas rodean la Capilla Contarelli: a la izquierda la <em>Vocación</em>, sobre el altar la <em>Inspiración</em>, a la derecha el <em>Martirio de San Mateo</em> (en la foto), el más violento y teatral. En el fondo, entre las sombras, asoma un autorretrato de Caravaggio mirando la escena.</div>
+          </div>
+          <ul class="detail-list">
+            <li>La <strong>Vocación</strong> (pared izquierda): seguid el rayo de luz y la mano de Cristo. Buscad quién es Mateo.</li>
+            <li>La <strong>Inspiración</strong> (sobre el altar): el ángel dictándole el Evangelio, Mateo a punto de caerse del taburete.</li>
+            <li>El <strong>Martirio</strong> (pared derecha): el caos, el verdugo, y al fondo la cara del propio Caravaggio.</li>
+            <li>Llevad <strong>monedas de 1€</strong>: la capilla se ilumina con un temporizador. Sin luz, los cuadros quedan en sombra.</li>
+            <li>El <strong>contraste</strong>: el resto de la iglesia es ornamentado y dorado; los Caravaggios, crudos y oscuros. Esa tensión es el salto al Barroco.</li>
+          </ul>
+        </div>
+
+        <div class="facts">
+          <div class="facts-row"><span class="label">Horario</span><span class="value">~9:30-12:45 y 14:30-18:30 · entrada libre</span></div>
+          <div class="facts-row"><span class="label">Cómo llegar</span><span class="value">A 4 min de la Minerva · entre el Panteón y Navona</span></div>
+          <div class="facts-row"><span class="label">Tiempo</span><span class="value">20 min · llevad monedas para la luz</span></div>
+          <div class="facts-row"><span class="label">Artista</span><span class="value">Caravaggio · ver <a href="#art-caravaggio">ficha en Arte</a></span></div>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&query=San%20Luigi%20dei%20Francesi%20Roma" target="_blank" rel="noopener" class="maps-link">Ver en Google Maps</a>
+
+        <div class="notes-area">
+          <label for="note-san-luigi">Notas in situ</label>
+          <textarea class="notes-textarea" id="note-san-luigi" data-note-key="san-luigi" placeholder="Lo que quieras recordar de aquí…"></textarea>
+        </div>
+      </article>
 
       <!-- FICHA: CASANATENSE -->
       <article class="card" id="casanatense">
@@ -4008,6 +4184,7 @@ function loadSvgFallbackDetail(img, cardId) {
             <div class="card-italian">Rione Campo Marzio · Porta del Popolo</div>
           </div>
         </div>
+        <div class="card-artists">Artistas: <a class="art-link" href="#art-caravaggio">Caravaggio</a> <a class="art-link" href="#art-rafael">Rafael</a></div>
         <div class="card-hero"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Piazza_del_Popolo_Rome.jpg/960px-Piazza_del_Popolo_Rome.jpg" alt="Piazza del Popolo" loading="lazy" onerror="loadSvgFallback(this, 'popolo')"></div>
         <div class="card-section">
           <h4>Qué es</h4>
@@ -4338,6 +4515,7 @@ function loadSvgFallbackDetail(img, cardId) {
             <div class="card-italian">Basilica di San Pietro in Vincoli · Piazza di San Pietro in Vincoli 4a</div>
           </div>
         </div>
+        <div class="card-artists">Artistas: <a class="art-link" href="#art-michelangelo">Michelangelo</a></div>
         <div class="card-hero"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Michelangelo%27s_Moses_%28Rome%29.jpg/900px-Michelangelo%27s_Moses_%28Rome%29.jpg" alt="El Moisés de Miguel Ángel" loading="lazy" onerror="loadSvgFallback(this, 'san-pietro-vincoli')"></div>
         <div class="card-section">
           <h4>Qué es</h4>
@@ -4554,6 +4732,7 @@ function loadSvgFallbackDetail(img, cardId) {
             <div class="card-italian">Galleria Nazionale d'Arte Antica · Via delle Quattro Fontane 13</div>
           </div>
         </div>
+        <div class="card-artists">Artistas: <a class="art-link" href="#art-caravaggio">Caravaggio</a> <a class="art-link" href="#art-rafael">Rafael</a> <a class="art-link" href="#art-cortona">Cortona</a> <a class="art-link" href="#art-borromini">Borromini</a></div>
         <div class="card-hero"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Cortona%20Trionfo%20della%20Divina%20Provvidenza.jpg?width=900" alt="El techo de Pietro da Cortona, Triunfo de la Divina Providencia, en el Gran Salone de Palazzo Barberini" loading="lazy" onerror="loadSvgFallback(this, 'palazzo-barberini')"></div>
         <div class="card-section">
           <h4>Qué es</h4>
@@ -4735,6 +4914,7 @@ function loadSvgFallbackDetail(img, cardId) {
             <div class="card-italian">Cappella Cornaro · Via XX Settembre 17 · Piazza San Bernardo</div>
           </div>
         </div>
+        <div class="card-artists">Artistas: <a class="art-link" href="#art-bernini">Bernini</a></div>
         <div class="card-hero"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Ecstasy_of_St._Teresa_HDR.jpg/900px-Ecstasy_of_St._Teresa_HDR.jpg" alt="Éxtasis de Santa Teresa, Bernini, 1647-52, Cappella Cornaro" loading="lazy" onerror="loadSvgFallback(this, 'santa-teresa')"></div>
         <div class="card-section">
           <h4>Qué es</h4>
@@ -5591,6 +5771,155 @@ function loadSvgFallbackDetail(img, cardId) {
   </div>
 </section>
 
+<section id="arte">
+  <div class="container">
+    <div class="section-eyebrow">Roma · entender lo que ves</div>
+    <h2 class="section-title">Arte</h2>
+    <p class="art-intro">Roma no se entiende sin las manos que la hicieron. Aquí están los artistas y arquitectos cuyas obras vais a ver durante el viaje: quiénes fueron, cómo reconocer su estilo y por qué siguen importando. Cada ficha enlaza con los lugares del itinerario donde os los vais a encontrar. Leed la del artista antes de cada visita: ver una obra sabiendo qué buscar lo cambia todo.</p>
+
+    <!-- BERNINI -->
+    <article class="artist-card" id="art-bernini">
+      <div class="artist-head">
+        <div class="artist-avatar">B</div>
+        <div>
+          <h3>Gian Lorenzo Bernini</h3>
+          <div class="artist-dates">Nápoles 1598 – Roma 1680 · escultor · arquitecto</div>
+          <div class="artist-epithet">«El hombre que esculpió el Barroco y dio su rostro a la Roma que hoy fotografiamos.»</div>
+        </div>
+      </div>
+      <div class="artist-section"><h4>Quién fue</h4><p>Hijo de un escultor florentino, niño prodigio que a los 25 años ya era el artista favorito de los papas. Bajo el mecenazgo de <strong>Urbano VIII</strong> (Barberini) y <strong>Alejandro VII</strong> (Chigi) se convirtió durante sesenta años en el artista total de Roma: escultor, arquitecto, pintor, escenógrafo y hasta dramaturgo. Dio forma a la imagen del catolicismo triunfante de la Contrarreforma.</p></div>
+      <div class="artist-section"><h4>Su estilo</h4><p>El Barroco hecho carne. Bernini logra que el mármol parezca <strong>piel, tela, agua y movimiento</strong>. Captura el <em>instante decisivo</em> —el momento de máxima tensión: Dafne convirtiéndose en laurel, Teresa traspasada por el ángel—. Y funde escultura, arquitectura y luz natural en un solo golpe teatral (el <em>bel composto</em>). Su tema es la emoción extrema: éxtasis, asombro, dolor.</p></div>
+      <div class="artist-section"><h4>Obras maestras</h4><ul><li><em>Apolo y Dafne</em> y <em>El rapto de Proserpina</em> — Galleria Borghese</li><li>El <strong>baldaquino</strong> y la <strong>columnata</strong> de la Plaza de San Pedro</li><li>La <em>Fontana dei Quattro Fiumi</em> en Piazza Navona</li><li>El <em>Éxtasis de Santa Teresa</em></li></ul></div>
+      <div class="artist-section"><h4>Por qué importa</h4><p>Inventó el lenguaje visual del Barroco que se exportó a toda la Europa católica. Concibió la obra de arte como una <strong>experiencia envolvente y emocional</strong>, anticipando la idea moderna de espectáculo total. Su rivalidad con Borromini definió dos formas opuestas de entender la arquitectura.</p></div>
+      <div class="artist-trip">
+        <div class="artist-trip-head">✦ Lo verás en este viaje</div>
+        <a href="#santa-teresa">Éxtasis de Santa Teresa</a> · <a href="#piazza-navona">Fontana dei Quattro Fiumi (Navona)</a> · <a href="#castel-santangelo">los ángeles del Ponte Sant'Angelo</a> · <a href="#minerva">el elefantino de la Minerva</a> · <a href="#doria-pamphilj">busto de Inocencio X (Doria Pamphilj)</a> · <a href="#palazzo-barberini">Palazzo Barberini</a> · y, con guía, el baldaquino y la columnata del <strong>Vaticano</strong>.
+      </div>
+    </article>
+
+    <!-- CARAVAGGIO -->
+    <article class="artist-card" id="art-caravaggio">
+      <div class="artist-head">
+        <div class="artist-avatar">C</div>
+        <div>
+          <h3>Caravaggio</h3>
+          <div class="artist-dates">Milán 1571 – Porto Ercole 1610 · pintor</div>
+          <div class="artist-epithet">«Trajo la calle, la suciedad y la luz brutal a la pintura sagrada. Y cambió el arte para siempre.»</div>
+        </div>
+      </div>
+      <div class="artist-section"><h4>Quién fue</h4><p>Michelangelo Merisi, llamado por su pueblo natal. Genial y violento, vivió huyendo: <strong>mató a un hombre</strong> en una reyerta en 1606 y pasó sus últimos años fugitivo entre Nápoles, Malta y Sicilia. Murió a los 38 en una playa, en circunstancias aún oscuras. En apenas quince años de carrera revolucionó la pintura europea.</p></div>
+      <div class="artist-section"><h4>Su estilo</h4><p>El <strong>tenebrismo</strong>: fondos negros de los que un foco de luz arranca las figuras (el <em>claroscuro</em>). Y un realismo descarnado —usaba prostitutas y mendigos como modelos para vírgenes y santos, con <strong>pies sucios y arrugas reales</strong>, algo escandaloso entonces—. Composiciones de máxima tensión que meten al espectador dentro de la escena.</p></div>
+      <div class="artist-section"><h4>Obras maestras</h4><ul><li>El ciclo de <strong>San Mateo</strong> (Vocación, Inspiración, Martirio) — San Luigi dei Francesi</li><li>La <em>Conversión de San Pablo</em> y la <em>Crucifixión de San Pedro</em> — Santa Maria del Popolo</li><li><em>Judith y Holofernes</em> y <em>Narciso</em> — Palazzo Barberini</li><li>La <em>Vocación de San Mateo</em> es, para muchos, su obra cumbre</li></ul></div>
+      <div class="artist-section"><h4>Por qué importa</h4><p>Rompió con el idealismo del Renacimiento y trajo la <strong>realidad cruda y la luz dramática</strong> a la pintura. Su influencia (los <em>caravaggisti</em>) se extendió por toda Europa: Ribera, Zurbarán, Georges de La Tour y hasta Rembrandt beben de él. Es el puente hacia la pintura moderna.</p></div>
+      <div class="artist-trip">
+        <div class="artist-trip-head">✦ Lo verás en este viaje</div>
+        <a href="#san-luigi">Ciclo de San Mateo (San Luigi dei Francesi)</a> · <a href="#popolo">los dos de Santa Maria del Popolo</a> · <a href="#palazzo-barberini">Judith (Palazzo Barberini)</a> · <a href="#doria-pamphilj">Galleria Doria Pamphilj</a>.
+      </div>
+    </article>
+
+    <!-- MICHELANGELO -->
+    <article class="artist-card" id="art-michelangelo">
+      <div class="artist-head">
+        <div class="artist-avatar">M</div>
+        <div>
+          <h3>Michelangelo Buonarroti</h3>
+          <div class="artist-dates">Caprese 1475 – Roma 1564 · escultor · pintor · arquitecto</div>
+          <div class="artist-epithet">«El arquetipo del genio. Se creía solo escultor y, de paso, pintó la Sixtina.»</div>
+        </div>
+      </div>
+      <div class="artist-section"><h4>Quién fue</h4><p>Florentino, el genio del Alto Renacimiento. Trabajó para nueve papas a lo largo de casi 70 años de carrera. Se consideraba ante todo <strong>escultor</strong> —del mármol decía que «liberaba» la figura ya presente en el bloque—, pero pintó la <strong>Capilla Sixtina</strong> y, ya anciano, dirigió la cúpula de San Pedro. Sus contemporáneos acuñaron el término <em>terribilità</em> para su fuerza sobrehumana.</p></div>
+      <div class="artist-section"><h4>Su estilo</h4><p>La <strong>figura humana</strong> como vehículo de lo divino y lo heroico: cuerpos monumentales, musculosos, en tensión contenida. El <em>non finito</em> —partes sin pulir— hace que la figura parezca emerger de la piedra. En su obra tardía, una espiritualidad atormentada y dramática.</p></div>
+      <div class="artist-section"><h4>Obras maestras</h4><ul><li>La bóveda y el <em>Juicio Final</em> de la <strong>Capilla Sixtina</strong></li><li>La <em>Pietà</em> y la <strong>cúpula</strong> de San Pedro</li><li>El <em>David</em> (Florencia)</li><li>El <em>Moisés</em> y el <em>Cristo de la Minerva</em></li></ul></div>
+      <div class="artist-section"><h4>Por qué importa</h4><p>Definió la idea del artista como <strong>genio creador</strong>, no como artesano. Su Sixtina y su escultura fijaron el canon de la figura humana en el arte occidental durante siglos, y su arquitectura tardía abrió el camino al Manierismo y al Barroco.</p></div>
+      <div class="artist-trip">
+        <div class="artist-trip-head">✦ Lo verás en este viaje</div>
+        <a href="#san-pietro-vincoli">el Moisés (San Pietro in Vincoli)</a> · <a href="#minerva">el Cristo de la Minerva</a> · y, con guía, la <strong>Capilla Sixtina</strong>, la <em>Pietà</em> y la cúpula de San Pedro en el <strong>Vaticano</strong>.
+      </div>
+    </article>
+
+    <!-- RAFAEL -->
+    <article class="artist-card" id="art-rafael">
+      <div class="artist-head">
+        <div class="artist-avatar">R</div>
+        <div>
+          <h3>Raffaello Sanzio</h3>
+          <div class="artist-dates">Urbino 1483 – Roma 1520 · pintor · arquitecto</div>
+          <div class="artist-epithet">«Si Miguel Ángel es fuerza, Rafael es armonía. Murió a los 37 en la cima de la fama.»</div>
+        </div>
+      </div>
+      <div class="artist-section"><h4>Quién fue</h4><p>El tercer gran maestro del Alto Renacimiento, junto a Leonardo y Miguel Ángel. Encantador, sociable y prolífico, dirigió un taller enorme y llegó a ser <strong>arquitecto jefe de San Pedro</strong>. Murió a los 37, un Viernes Santo, en plena gloria; Roma quedó conmocionada. Está enterrado en el <strong>Panteón</strong>, que visitaréis.</p></div>
+      <div class="artist-section"><h4>Su estilo</h4><p>La <strong>armonía perfecta</strong>: equilibrio, claridad, gracia y dulzura (la <em>grazia</em>). Composiciones serenas y matemáticamente ordenadas, color luminoso, una idealización elegante de la figura. Donde Miguel Ángel tensiona, Rafael apacigua.</p></div>
+      <div class="artist-section"><h4>Obras maestras</h4><ul><li>Las <strong>Estancias Vaticanas</strong> —entre ellas <em>La Escuela de Atenas</em></li><li>La <em>Transfiguración</em> y sus célebres <em>Madonnas</em></li><li><em>La Fornarina</em> — Palazzo Barberini</li><li>La <strong>Capilla Chigi</strong> en Santa Maria del Popolo (diseño integral)</li></ul></div>
+      <div class="artist-section"><h4>Por qué importa</h4><p>Su ideal de belleza armónica se convirtió en el <strong>modelo académico durante cuatro siglos</strong>: «rafaelesco» es sinónimo de perfección clásica. Fue además pionero en la idea de proteger y catalogar las antigüedades de Roma.</p></div>
+      <div class="artist-trip">
+        <div class="artist-trip-head">✦ Lo verás en este viaje</div>
+        <a href="#palazzo-barberini">La Fornarina (Palazzo Barberini)</a> · <a href="#popolo">la Capilla Chigi (Santa Maria del Popolo)</a> · su tumba en el <a href="#pantheon">Panteón</a> · y, con guía, las <strong>Estancias</strong> del <strong>Vaticano</strong>.
+      </div>
+    </article>
+
+    <!-- BORROMINI -->
+    <article class="artist-card" id="art-borromini">
+      <div class="artist-head">
+        <div class="artist-avatar">B</div>
+        <div>
+          <h3>Francesco Borromini</h3>
+          <div class="artist-dates">Bissone 1599 – Roma 1667 · arquitecto</div>
+          <div class="artist-epithet">«El rival oscuro de Bernini: geometría pura, muros que ondulan, genio atormentado.»</div>
+        </div>
+      </div>
+      <div class="artist-section"><h4>Quién fue</h4><p>Empezó como cantero y ayudante —de Maderno y del propio Bernini— y se hizo a sí mismo a fuerza de talento. Solitario, melancólico y de carácter difícil, tuvo en vida menos éxito mundano que su rival y acabó <strong>suicidándose</strong>. Hoy se le considera, técnicamente, el más innovador de los dos.</p></div>
+      <div class="artist-section"><h4>Su estilo</h4><p>La <strong>geometría en movimiento</strong>: muros que ondulan (cóncavo-convexo), plantas basadas en triángulos y óvalos, una luz sabiamente dirigida. Donde Bernini es teatro, decoración y oro, Borromini es <strong>estructura pura, dinamismo y forma</strong>. Casi nunca usa color ni dorados: juega con la geometría y la luz.</p></div>
+      <div class="artist-section"><h4>Obras maestras</h4><ul><li><em>San Carlo alle Quattro Fontane</em> — su manifiesto</li><li><em>Sant'Ivo alla Sapienza</em>, con su cúpula en espiral</li><li>La fachada de <em>Sant'Agnese in Agone</em> (Piazza Navona)</li><li>La <strong>galería en falsa perspectiva</strong> del Palazzo Spada</li><li>La <strong>escalera ovalada</strong> del Palazzo Barberini</li></ul></div>
+      <div class="artist-section"><h4>Por qué importa</h4><p>Liberó la arquitectura de la rigidez clásica e inventó un <strong>lenguaje dinámico</strong> que marcó todo el Barroco centroeuropeo. Su rivalidad con Bernini es la gran historia del arte romano del siglo XVII: dos genios, dos caracteres opuestos, trabajando puerta con puerta.</p></div>
+      <div class="artist-trip">
+        <div class="artist-trip-head">✦ Lo verás en este viaje</div>
+        <a href="#piazza-navona">la fachada de Sant'Agnese (Piazza Navona)</a> · <a href="#palazzo-barberini">la escalera ovalada del Palazzo Barberini</a>. <span style="color:var(--ink-faint);">(Y si pasáis por Campo de' Fiori de día, su pasillo en perspectiva del Palazzo Spada.)</span>
+      </div>
+    </article>
+
+    <!-- PIETRO DA CORTONA -->
+    <article class="artist-card" id="art-cortona">
+      <div class="artist-head">
+        <div class="artist-avatar">P</div>
+        <div>
+          <h3>Pietro da Cortona</h3>
+          <div class="artist-dates">Cortona 1596 – Roma 1669 · pintor · arquitecto</div>
+          <div class="artist-epithet">«El tercer pilar del Barroco romano y el rey indiscutible del techo pintado.»</div>
+        </div>
+      </div>
+      <div class="artist-section"><h4>Quién fue</h4><p>Pietro Berrettini, llamado por su pueblo. Junto a Bernini y Borromini completa la trinidad del Barroco romano. Protegido también por los <strong>Barberini</strong>, fue el maestro absoluto de la <strong>pintura de bóvedas</strong>.</p></div>
+      <div class="artist-section"><h4>Su estilo</h4><p>La <strong>exuberancia ilusionista</strong>: techos que disuelven la arquitectura en un cielo abierto poblado de figuras en remolino. Color cálido, movimiento, abundancia. La gloria barroca llevada a lo más alto, literalmente.</p></div>
+      <div class="artist-section"><h4>Obras maestras</h4><ul><li>El <em>Triunfo de la Divina Providencia</em> — Palazzo Barberini</li><li>Las salas pintadas del Palazzo Pitti (Florencia)</li><li>La iglesia de <em>Santi Luca e Martina</em> y la fachada de <em>Santa Maria della Pace</em></li></ul></div>
+      <div class="artist-section"><h4>Por qué importa</h4><p>Definió el <strong>techo barroco ilusionista</strong> que se imitaría en palacios e iglesias de toda Europa. El <em>Triunfo</em> Barberini es el manifiesto del género: un encargo de propaganda familiar convertido en obra maestra.</p></div>
+      <div class="artist-trip">
+        <div class="artist-trip-head">✦ Lo verás en este viaje</div>
+        <a href="#palazzo-barberini">el techo del Gran Salone (Palazzo Barberini)</a>.
+      </div>
+    </article>
+
+    <!-- ANDREA POZZO -->
+    <article class="artist-card" id="art-pozzo">
+      <div class="artist-head">
+        <div class="artist-avatar">A</div>
+        <div>
+          <h3>Andrea Pozzo</h3>
+          <div class="artist-dates">Trento 1642 – Viena 1709 · pintor jesuita · teórico</div>
+          <div class="artist-epithet">«Llevó el trampantojo al límite: pintó un cielo y una cúpula que no existen.»</div>
+        </div>
+      </div>
+      <div class="artist-section"><h4>Quién fue</h4><p>Hermano jesuita, pintor y el gran <strong>teórico de la perspectiva</strong> del Barroco. Su tratado <em>Perspectiva pictorum et architectorum</em> difundió la técnica por toda Europa y llegó hasta China de la mano de los misioneros.</p></div>
+      <div class="artist-section"><h4>Su estilo</h4><p>El <strong>trampantojo total</strong> (<em>quadratura</em>): pinta arquitecturas falsas que continúan las reales hasta que el ojo no sabe dónde acaba la piedra y empieza la pintura. Todo está calculado para funcionar desde <strong>un punto exacto del suelo</strong>, marcado con un disco.</p></div>
+      <div class="artist-section"><h4>Obras maestras</h4><ul><li>La bóveda de <strong>Sant'Ignazio</strong>: la <em>Apoteosis de San Ignacio</em></li><li>Su célebre <strong>cúpula falsa</strong> de Sant'Ignazio — pintada plana sobre lienzo porque no hubo dinero para construirla de verdad</li></ul></div>
+      <div class="artist-section"><h4>Por qué importa</h4><p>Convirtió la ilusión perspectiva en una <strong>técnica enseñable</strong> y la exportó por el mundo con su tratado. Sant'Ignazio es la demostración más espectacular de hasta dónde puede engañar la pintura al ojo humano.</p></div>
+      <div class="artist-trip">
+        <div class="artist-trip-head">✦ Lo verás en este viaje</div>
+        <a href="#santignazio">la bóveda y la cúpula falsa de Sant'Ignazio</a> (buscad los dos discos en el suelo).
+      </div>
+    </article>
+
+  </div>
+</section>
+
 </main>
 
 <button class="back-btn" id="back-btn" onclick="goBack()" aria-label="Volver">
@@ -5660,6 +5989,8 @@ const places = [
   { id: 'monti', n: 'XIX', name: 'Rione Monti', day: 'Domingo', lat: 41.8949000, lng: 12.4928000, type: 'card' },
   // LUNES
   { id: 'casanatense', n: 'XX', name: 'Biblioteca Casanatense', day: 'Lunes', lat: 41.8986879, lng: 12.4794511, type: 'card' },
+  { id: 'minerva', n: 'XXXV', name: 'Santa Maria sopra Minerva', day: 'Lunes', lat: 41.8983000, lng: 12.4779000, type: 'card' },
+  { id: 'san-luigi', n: 'XXXVI', name: 'San Luigi dei Francesi', day: 'Lunes', lat: 41.8990000, lng: 12.4745000, type: 'card' },
   { id: 'torre-scimmia', n: 'XXI', name: 'Torre della Scimmia', day: 'Lunes', lat: 41.9017011, lng: 12.4742752, type: 'card' },
   { id: 'popolo', n: 'XXII', name: 'Piazza del Popolo · Santa Maria del Popolo', day: 'Lunes', lat: 41.9107038, lng: 12.4763579, type: 'card' },
   { id: 'spagna', n: 'XXIII', name: 'Piazza di Spagna', day: 'Lunes', lat: 41.9059900, lng: 12.4827750, type: 'card' },
