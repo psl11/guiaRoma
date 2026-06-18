@@ -32,14 +32,14 @@ La 1.0 debe ser **exactamente igual que la guía de hoy** (paridad visual y func
 
 <!-- Objetivos de la migración. Construyendo hacia esto en la 1.0. -->
 
-- [ ] Proyecto Nuxt 4 funcionando (estructura, build, dev server)
-- [ ] Todo el contenido de Roma extraído a datos estructurados y **tipados** (esquema de viaje validado)
-- [ ] UI partida en **componentes reutilizables** (ficha, timeline, mapa, controles, secciones, layout)
+- [x] Proyecto Nuxt 4 funcionando (estructura, build estático, dev server) — ✓ **Fase 1**
+- [ ] Todo el contenido de Roma extraído a datos estructurados y **tipados** (esquema de viaje validado) — Fase 2
+- [ ] UI partida en **componentes reutilizables** (ficha, timeline, mapa, controles, secciones, layout) — Fases 3-4
 - [ ] Arquitectura **multi-viaje**: la app renderiza un viaje a partir de sus datos; añadir otro = añadir archivos
-- [ ] **Paridad 100%** visual y funcional con el `index.html` actual (verificada)
-- [ ] **Salida estática** desplegable como ahora (`nuxt generate`) y **comportamiento offline conservado**
-- [ ] **Estandarización**: TypeScript, ESLint/Prettier, *design tokens*, validación de esquema de datos
-- [ ] Backend (Nitro) **preparado pero dormido**: estructura lista para v2, sin funcionalidad de servidor activa en 1.0
+- [ ] **Paridad 100%** visual y funcional con el `index.html` actual (verificada) — *golden* de referencia capturado en **Fase 1** (56 PNGs); verificación de paridad en Fase 8
+- [~] **Salida estática** desplegable como ahora (`nuxt generate`) y **comportamiento offline conservado** — parcial: build estático bajo `/guiaRoma/` + fuentes/Leaflet self-host (0×CDN) en **Fase 1**
+- [~] **Estandarización**: TypeScript, ESLint/Prettier, *design tokens*, validación de esquema de datos — parcial: TS estricto + ESLint (stylistic) + *design tokens* (CSS verbatim) en **Fase 1**; validación zod en Fase 2
+- [x] Backend (Nitro) **preparado pero dormido**: estructura lista para v2, sin funcionalidad de servidor activa en 1.0 — ✓ **Fase 1** (`server/api/README.md`, cero endpoints)
 
 ### Out of Scope
 
@@ -59,6 +59,7 @@ La 1.0 debe ser **exactamente igual que la guía de hoy** (paridad visual y func
 - **Experiencia**: el responsable domina Nuxt y prevé evolucionar la app a *full-stack* (auth, subida de media de los viajes), lo que motivó elegir Nuxt 4 sobre Astro.
 - **Uso real**: consultar la guía sobre el terreno en Roma, posiblemente con conexión móvil pobre → el offline importa de verdad.
 - **Dependencias externas actuales**: Google Fonts; imágenes alojadas en terceros (Wikimedia y otros) con *fallback* SVG; *tiles* de OpenStreetMap para el mapa.
+- **Estado de la migración**: Fase 1 completada en `release/nuxt-4` — andamiaje Nuxt 4 (build estático bajo `/guiaRoma/`, CSS editorial verbatim, fuentes/Leaflet self-host, backend Nitro dormido) y *golden* de paridad capturado (56 PNGs deterministas, imágenes bloqueadas→SVG). `main` intacto. Siguiente: Fase 2 (esquema de datos + migración del contenido).
 
 ## Constraints
 
@@ -73,12 +74,12 @@ La 1.0 debe ser **exactamente igual que la guía de hoy** (paridad visual y func
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Nuxt 4 como framework | El equipo lo domina y Nitro habilita el backend futuro (auth, uploads) mejor que Astro | — Pendiente |
-| 1.0 = solo Roma, *data-driven* | Fidelidad a "igual que ahora" + arquitectura lista para N viajes | — Pendiente |
-| Estático + offline en 1.0; PWA a v2 | Mantener el uso actual sin sobre-ingeniería | — Pendiente |
-| Formato de contenido a decidir en research | Depende de Nuxt Content v3; JSON vs Markdown vs híbrido | — Pendiente |
-| Trabajo en rama de release, `main` intacto | No romper la versión viva durante la migración | — Pendiente |
-| Backend preparado pero dormido en 1.0 | Evitar *scope creep*; dejar la puerta abierta para v2 | — Pendiente |
+| Nuxt 4 como framework | El equipo lo domina y Nitro habilita el backend futuro (auth, uploads) mejor que Astro | ✓ Fase 1: scaffold compila a estático bajo `/guiaRoma/` |
+| 1.0 = solo Roma, *data-driven* | Fidelidad a "igual que ahora" + arquitectura lista para N viajes | — Pendiente (datos en Fase 2) |
+| Estático + offline en 1.0; PWA a v2 | Mantener el uso actual sin sobre-ingeniería | ✓ Fase 1: `nuxt generate`; fuentes/Leaflet self-host (0×CDN) |
+| Formato de contenido a decidir en research | Depende de Nuxt Content v3; JSON vs Markdown vs híbrido | Decidido (research/CLAUDE.md): híbrido YAML `type:data` + MDC |
+| Trabajo en rama de release, `main` intacto | No romper la versión viva durante la migración | ✓ Fase 1: todo en `release/nuxt-4`; `main` intacto |
+| Backend preparado pero dormido en 1.0 | Evitar *scope creep*; dejar la puerta abierta para v2 | ✓ Fase 1: `server/api/README.md`, cero endpoints |
 
 ## Evolution
 
@@ -98,4 +99,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-18 after initialization*
+*Last updated: 2026-06-19 — Fase 1 completada (andamiaje + golden de paridad)*
