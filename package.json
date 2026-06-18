@@ -1,0 +1,13 @@
+{
+  "name": "guiaroma",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.32.1",
+  "scripts": {
+    "test:golden": "playwright test",
+    "test:golden:update": "playwright test --update-snapshots"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.0"
+  }
+}
