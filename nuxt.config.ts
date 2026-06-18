@@ -16,6 +16,29 @@ export default defineNuxtConfig({
     '~/assets/css/leaflet.css',
   ],
 
+  // Tema: registrar el módulo en Fase 1 (el ThemeToggle/uso es Fase 3).
+  // Reproduce el contrato del index.html: <html data-theme="dark"> + localStorage['roma-theme'].
+  colorMode: {
+    preference: 'system',
+    fallback: 'light',
+    dataValue: 'theme',
+    storageKey: 'roma-theme',
+    classSuffix: '',
+  },
+
+  // TypeScript estricto (PLAT-02); typeCheck en comando separado (`pnpm typecheck`).
+  typescript: {
+    strict: true,
+    typeCheck: false,
+  },
+
+  // Formateo vía @nuxt/eslint (stylistic) — una sola herramienta, sin mezclar con Prettier.
+  eslint: {
+    config: {
+      stylistic: true,
+    },
+  },
+
   // Self-host de las 3 familias (BUILD-02 offline). Pesos/itálicas EXACTOS de index.html línea 13.
   fonts: {
     families: [
@@ -41,28 +64,5 @@ export default defineNuxtConfig({
         subsets: ['latin', 'latin-ext'],
       },
     ],
-  },
-
-  // Tema: registrar el módulo en Fase 1 (el ThemeToggle/uso es Fase 3).
-  // Reproduce el contrato del index.html: <html data-theme="dark"> + localStorage['roma-theme'].
-  colorMode: {
-    preference: 'system',
-    fallback: 'light',
-    dataValue: 'theme',
-    storageKey: 'roma-theme',
-    classSuffix: '',
-  },
-
-  // TypeScript estricto (PLAT-02); typeCheck en comando separado (`pnpm typecheck`).
-  typescript: {
-    strict: true,
-    typeCheck: false,
-  },
-
-  // Formateo vía @nuxt/eslint (stylistic) — una sola herramienta, sin mezclar con Prettier.
-  eslint: {
-    config: {
-      stylistic: true,
-    },
   },
 })

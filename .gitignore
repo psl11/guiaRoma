@@ -8,6 +8,9 @@ node_modules
 .cache
 dist
 
+# Nuxt Content — caché local de SQLite (artefacto de build, NO versionar)
+.data
+
 # Playwright runtime artifacts (NOT the golden snapshots — those live in
 # tests/parity/golden.spec.ts-snapshots/ and MUST be versioned, Pitfall 2)
 test-results

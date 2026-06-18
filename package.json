@@ -17,6 +17,7 @@
   "devDependencies": {
     "@playwright/test": "1.61.0",
     "@types/leaflet": "1.9.21",
+    "better-sqlite3": "^12.11.1",
     "prettier": "3.8.4"
   },
   "dependencies": {
@@ -29,5 +30,10 @@
     "minisearch": "7.2.0",
     "nuxt": "4.4.8",
     "zod": "4.4.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3"
+    ]
   }
 }
