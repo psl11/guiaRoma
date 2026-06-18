@@ -32,12 +32,14 @@ export default defineConfig({
   // que Playwright añadiría, p. ej. `-linux`/`-darwin`/`-win32`) para poder comparar
   // los golden entre SOs en la Fase 8 sin atarlos a un SO concreto. La captura se
   // realizó en linux (documentado en el SUMMARY).
-  snapshotPathTemplate: '{testFileDir}/{testFileName}-snapshots/{arg}-{projectName}{ext}',
+  snapshotPathTemplate: '{testDir}/{testFileName}-snapshots/{arg}-{projectName}{ext}',
 
   projects: [
-    // Viewport móvil ~390px (D-04)
-    { name: 'mobile', use: { ...devices['iPhone 12'] } },
+    // Viewport móvil ~390px (D-04). iPhone 12 aporta el viewport/DPR/UA móvil;
+    // forzamos chromium (su defaultBrowserType es webkit) — chromium basta para un
+    // visual-diff determinista y es el único navegador instalado.
+    { name: 'mobile', use: { ...devices['iPhone 12'], browserName: 'chromium' } },
     // Viewport desktop 1280×800 (D-04)
-    { name: 'desktop', use: { viewport: { width: 1280, height: 800 } } },
+    { name: 'desktop', use: { viewport: { width: 1280, height: 800 }, browserName: 'chromium' } },
   ],
 })

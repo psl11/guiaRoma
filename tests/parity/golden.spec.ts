@@ -1,0 +1,96 @@
+import { test, expect, type Page } from '@playwright/test'
+
+// === Golden de paridad del index.html ACTUAL (PARITY-01) ===
+//
+// Captura las 14 vistas de D-04 (home + 5 dias + 3 fichas-tipo + 5 referencias)
+// en tema claro y oscuro, sobre los viewports mobile/desktop de playwright.config.ts.
+// Es la linea base inmutable contra la que la Fase 8 medira la paridad 100%.
+//
+// El index.html se sirve in situ (D-05, webServer en playwright.config.ts) y es
+// byte-identico a origin/main (verificado), asi que el golden representa la version
+// viva (con "ruta del dia" y cenas) ANTES de que exista codigo Nuxt que diverja.
+
+// Vistas EXACTAS (nombre de snapshot -> selector). Verificado en index.html:
+//   - Las 38 fichas son <article class="card">; NO existe clase guided/concert.
+//     Representantes por id literal: #galleria-sciarra (card simple, L2450),
+//     #vaticano (guiada, L2920), #auditorium (concierto ♪, L3381).
+const VIEWS = [
+  ['inicio', '#inicio'],
+  ['dia-viernes', '#viernes'],
+  ['dia-sabado', '#sabado'],
+  ['dia-domingo', '#domingo'],
+  ['dia-lunes', '#lunes'],
+  ['dia-martes', '#martes'],
+  ['ref-reservas', '#reservas'],
+  ['ref-gastronomia', '#gastronomia'],
+  ['ref-practica', '#practica'],
+  ['ref-arte', '#arte'],
+  ['ref-arquitectura', '#arquitectura'],
+  ['card-monumento', '#galleria-sciarra'],
+  ['card-guided', '#vaticano'],
+  ['card-concert', '#auditorium'],
+] as const
+
+// settle(): deja la pagina en un estado determinista antes de capturar.
+//  1. Desactiva `loading="lazy"` en todas las <img> y espera a que TODAS resuelvan
+//     (cargen o, con A5, fallen). Con las peticiones de imagen bloqueadas, esto fuerza
+//     que TODOS los onerror -> loadSvgFallback (swap a SVG) ocurran ARRIBA y de una vez,
+//     en lugar de progresivamente al hacer scroll. Sin esto, el swap a SVG de las imagenes
+//     lazy reflowa la altura de las secciones largas (#martes) entre capturas -> flakiness.
+//  2. Espera networkidle y document.fonts.ready (elimina el FOUT de las fuentes de Google).
+//  3. Doble requestAnimationFrame para asentar el reflow final tras los swaps a SVG.
+// Las animaciones (@keyframes fadeIn de .card, transiciones de tema) las congela
+// animations:'disabled' en playwright.config.ts.
+async function settle(page: Page) {
+  // Forzar carga ansiosa: dispara el fetch (y por tanto el onerror->SVG con A5) de toda <img>.
+  await page.evaluate(() => {
+    document.querySelectorAll('img').forEach((img) => {
+      img.loading = 'eager'
+    })
+  })
+  await page.waitForLoadState('networkidle')
+  // Esperar a que cada <img> este "complete" (resuelta: cargada o errorada -> swap SVG hecho).
+  await page.evaluate(
+    () =>
+      Promise.all(
+        Array.from(document.images).map((img) =>
+          img.complete
+            ? Promise.resolve()
+            : new Promise<void>((resolve) => {
+                img.addEventListener('load', () => resolve(), { once: true })
+                img.addEventListener('error', () => resolve(), { once: true })
+              }),
+        ),
+      ),
+  )
+  await page.evaluate(() => (document as unknown as { fonts?: { ready?: Promise<unknown> } }).fonts?.ready)
+  // Asentar el reflow final que provocan los swaps a SVG.
+  await page.evaluate(() => new Promise<void>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r()))))
+}
+
+for (const theme of ['light', 'dark'] as const) {
+  test(`golden ${theme}`, async ({ page }) => {
+    // Decision A5 (heros remotas) — bloquear TODAS las peticiones de imagen para
+    // forzar SIEMPRE el estado de fallback SVG (onerror -> SVG por motif). Es el
+    // estado determinista y ademas el "offline" que el proyecto valora (BUILD-02),
+    // eliminando la dependencia de red de terceros (Wikimedia/turismoroma) que
+    // haria el golden no reproducible. Registrado ANTES de goto.
+    await page.route('**/*.{jpg,jpeg,png,webp,avif,gif}', (route) => route.abort())
+
+    // Tema oscuro determinista: el script inline del index.html (linea 6263) lee
+    // localStorage['roma-theme'] y pinta dark en el primer paint. Sin clic, sin timing.
+    if (theme === 'dark') {
+      await page.addInitScript(() => localStorage.setItem('roma-theme', 'dark'))
+    }
+
+    await page.goto('/index.html')
+    await settle(page)
+
+    // Captura por elemento (mas estable que fullPage; A6) — 1:1 con D-04.
+    for (const [name, sel] of VIEWS) {
+      const locator = page.locator(sel)
+      await locator.scrollIntoViewIfNeeded()
+      await expect(locator).toHaveScreenshot(`${name}-${theme}.png`)
+    }
+  })
+}
