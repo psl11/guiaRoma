@@ -97,17 +97,51 @@ Excluido explícitamente para no caer en scope creep.
 
 ## Traceability
 
-Qué fases cubren qué requisitos. Se rellena durante la creación del roadmap.
+Qué fases cubren qué requisitos. Mapeo del roadmap (ver `.planning/ROADMAP.md`).
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (pendiente de roadmap) | — | Pending |
+| PLAT-01 | Phase 1 | Pending |
+| PLAT-02 | Phase 1 | Pending |
+| PLAT-03 | Phase 1 | Pending |
+| PLAT-04 | Phase 1 | Pending |
+| PLAT-05 | Phase 1 | Pending |
+| ARCH-03 | Phase 1 | Pending |
+| BUILD-01 | Phase 1 | Pending |
+| BUILD-02 | Phase 1 | Pending |
+| BUILD-03 | Phase 1 | Pending |
+| PARITY-01 | Phase 1 | Pending |
+| DATA-01 | Phase 2 | Pending |
+| DATA-02 | Phase 2 | Pending |
+| DATA-03 | Phase 2 | Pending |
+| DATA-04 | Phase 2 | Pending |
+| DATA-05 | Phase 2 | Pending |
+| DATA-06 | Phase 2 | Pending |
+| ARCH-01 | Phase 3 | Pending |
+| ARCH-02 | Phase 3 | Pending |
+| UI-01 | Phase 3 | Pending |
+| FEAT-01 | Phase 3 | Pending |
+| UI-02 | Phase 4 | Pending |
+| UI-03 | Phase 4 | Pending |
+| UI-04 | Phase 4 | Pending |
+| FEAT-06 | Phase 4 | Pending |
+| FEAT-07 | Phase 4 | Pending |
+| FEAT-08 | Phase 4 | Pending |
+| FEAT-05 | Phase 5 | Pending |
+| FEAT-03 | Phase 6 | Pending |
+| FEAT-09 | Phase 6 | Pending |
+| FEAT-02 | Phase 7 | Pending |
+| UI-05 | Phase 7 | Pending |
+| FEAT-04 | Phase 7 | Pending |
+| PARITY-02 | Phase 8 | Pending |
 
 **Coverage:**
-- v1 requirements: 28 total
-- Mapped to phases: 0
-- Unmapped: 28 ⚠️
+- v1 requirements: 33 total (PLAT 5 · DATA 6 · ARCH 3 · UI 5 · FEAT 9 · BUILD 3 · PARITY 2)
+- Mapped to phases: 33
+- Unmapped: 0 ✓
+
+> Nota: la definición inicial anotaba "28 total" como cuenta provisional; el recuento exacto de REQ-IDs es **33**. Todos quedan mapeados a exactamente una fase, sin huérfanos ni duplicados.
 
 ---
 *Requirements defined: 2026-06-18*
-*Last updated: 2026-06-18 after initial definition*
+*Last updated: 2026-06-18 after roadmap traceability mapping*
