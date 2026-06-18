@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 1 context gathered
-last_updated: "2026-06-18T21:07:51.447Z"
-last_activity: 2026-06-18 -- Phase 01 planning complete
+stopped_at: "Completed 01-01-PLAN.md (golden de paridad: 56 PNGs deterministas)"
+last_updated: "2026-06-18T21:43:45.481Z"
+last_activity: 2026-06-18
 progress:
   total_phases: 8
   completed_phases: 0
   total_plans: 3
-  completed_plans: 0
-  percent: 0
+  completed_plans: 1
+  percent: 33
 ---
 
 # Project State
@@ -21,34 +21,34 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** La 1.0 debe ser exactamente igual que la guía de hoy (paridad visual y funcional al 100%), pero construida de forma dinámica, data-driven y mantenible.
-**Current focus:** Phase 1 — Andamiaje + Golden de paridad
+**Current focus:** Phase 01 — andamiaje-golden-de-paridad
 
 ## Current Position
 
-Phase: 1 of 8 (Andamiaje + Golden de paridad)
-Plan: 0 of TBD in current phase
+Phase: 01 (andamiaje-golden-de-paridad) — EXECUTING
+Plan: 2 of 3
 Status: Ready to execute
-Last activity: 2026-06-18 -- Phase 01 planning complete
+Last activity: 2026-06-18
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [███░░░░░░░] 33%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 0
-- Average duration: — min
-- Total execution time: 0.0 hours
+- Total plans completed: 1
+- Average duration: 9 min
+- Total execution time: 0.15 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 01 | 1 | 9 min | 9 min |
 
 **Recent Trend:**
 
-- Last 5 plans: —
+- Last 5 plans: 01-01 (9 min)
 - Trend: —
 
 *Updated after each plan completion*
@@ -65,6 +65,9 @@ Recent decisions affecting current work:
 - [Roadmap]: `day.cards: string[]` ordenado (Phase 2) es la pieza más crítica del modelo: de él se deriva la "ruta del día" (hoy depende del orden del DOM)
 - [Roadmap]: `useCardNavigation` (Phase 5) se construye antes que mapa/búsqueda/enlaces, sus tres consumidores
 - [Roadmap]: Mapa Leaflet + fallback de imagen (Phase 7) van al final por ser lo más sensible a SSR/hidratación
+- [Phase ?]: [Fase 1]: A5 fijada — golden bloquea todas las peticiones de imagen (page.route.abort) para forzar el fallback SVG determinista (offline, BUILD-02)
+- [Phase ?]: [Fase 1]: A8 fijada — snapshotPathTemplate sin sufijo de plataforma; golden capturado en linux
+- [Phase ?]: [Fase 1]: fichas-tipo del golden por id literal (#galleria-sciarra/#vaticano/#auditorium) — no existe clase CSS guided/concert en el index.html
 
 ### Pending Todos
 
@@ -91,6 +94,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-18T20:17:12.223Z
-Stopped at: Phase 1 context gathered
-Resume file: .planning/phases/01-andamiaje-golden-de-paridad/01-CONTEXT.md
+Last session: 2026-06-18T21:43:45.473Z
+Stopped at: Completed 01-01-PLAN.md (golden de paridad: 56 PNGs deterministas)
+Resume file: None

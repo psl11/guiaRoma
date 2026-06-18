@@ -34,7 +34,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. Existe `server/` con `server/api/README.md` y ningún endpoint activo; el sitio se sigue generando estático (SSR-en-build ON, sin `ssr:false`)
   5. Hay screenshots golden del `index.html` original (home, una sección de día, una ficha de cada tipo) en claro/oscuro y móvil/desktop, guardados como referencia antes de divergir
 **Plans**: 3 plans
-  - [ ] 01-01-PLAN.md — Golden de paridad: capturar el golden del `index.html` (14 vistas × claro/oscuro × móvil/desktop) con Playwright, deterministas y versionados, ANTES de divergir [Wave 1]
+  - [x] 01-01-PLAN.md — Golden de paridad: capturar el golden del `index.html` (14 vistas × claro/oscuro × móvil/desktop) con Playwright, deterministas y versionados, ANTES de divergir [Wave 1]
   - [ ] 01-02-PLAN.md — Scaffold Nuxt 4 en raíz (srcDir=app/, pnpm, TS estricto, @nuxt/eslint+stylistic, módulos, fuentes self-host) + CSS editorial extraído verbatim a tokens/base/leaflet [Wave 2]
   - [ ] 01-03-PLAN.md — Subpath `/guiaRoma/` (baseURL + github_pages + .nojekyll) + backend Nitro dormido + verificación local del build (0×404 de /_nuxt/*, 0×CDN) [Wave 3]
 
@@ -126,7 +126,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Andamiaje + Golden de paridad | 0/3 | Planned | - |
+| 1. Andamiaje + Golden de paridad | 1/3 | In Progress|  |
 | 2. Esquema de datos + migración del contenido | 0/TBD | Not started | - |
 | 3. Capa de página, layout y tema | 0/TBD | Not started | - |
 | 4. Render de contenido + modos de ritmo | 0/TBD | Not started | - |
