@@ -11,11 +11,11 @@ Requisitos para la release 1.0. Cada uno se mapea a una fase del roadmap.
 
 ### Plataforma y estandarización (PLAT)
 
-- [ ] **PLAT-01**: El proyecto Nuxt 4 arranca en desarrollo (`nuxt dev`) y compila a estático (`nuxt generate`) sin errores
-- [ ] **PLAT-02**: TypeScript en modo estricto en todo el proyecto
-- [ ] **PLAT-03**: ESLint + Prettier (`@nuxt/eslint`) configurados y el comando de lint pasa limpio
-- [ ] **PLAT-04**: El CSS editorial actual se conserva como CSS global (las custom properties siguen siendo el sistema de design tokens), sin reescribirlo a otro framework
-- [ ] **PLAT-05**: Estructura de carpetas Nuxt 4 establecida (`app/`, `content/`, `public/`, `server/`, `shared/`, `nuxt.config.ts`)
+- [x] **PLAT-01**: El proyecto Nuxt 4 arranca en desarrollo (`nuxt dev`) y compila a estático (`nuxt generate`) sin errores
+- [x] **PLAT-02**: TypeScript en modo estricto en todo el proyecto
+- [x] **PLAT-03**: ESLint + Prettier (`@nuxt/eslint`) configurados y el comando de lint pasa limpio
+- [x] **PLAT-04**: El CSS editorial actual se conserva como CSS global (las custom properties siguen siendo el sistema de design tokens), sin reescribirlo a otro framework
+- [x] **PLAT-05**: Estructura de carpetas Nuxt 4 establecida (`app/`, `content/`, `public/`, `server/`, `shared/`, `nuxt.config.ts`)
 
 ### Modelo de datos y contenido (DATA)
 
@@ -55,7 +55,7 @@ Requisitos para la release 1.0. Cada uno se mapea a una fase del roadmap.
 ### Estático, offline y despliegue (BUILD)
 
 - [ ] **BUILD-01**: `nuxt generate` produce un sitio estático desplegable en GitHub Pages bajo subpath `/guiaRoma/` (baseURL + `.nojekyll`), con los assets resolviendo correctamente
-- [ ] **BUILD-02**: Comportamiento offline conservado: Leaflet self-hosteado (no CDN) y fuentes self-hosteadas (`@nuxt/fonts`) para no depender de Google Fonts; las imágenes remotas degradan a fallback SVG como hoy
+- [x] **BUILD-02**: Comportamiento offline conservado: Leaflet self-hosteado (no CDN) y fuentes self-hosteadas (`@nuxt/fonts`) para no depender de Google Fonts; las imágenes remotas degradan a fallback SVG como hoy
 - [ ] **BUILD-03**: La app funciona servida desde el subpath de producción de forma equivalente a la versión actual
 
 ### Verificación de paridad (PARITY)
@@ -101,14 +101,14 @@ Qué fases cubren qué requisitos. Mapeo del roadmap (ver `.planning/ROADMAP.md`
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PLAT-01 | Phase 1 | Pending |
-| PLAT-02 | Phase 1 | Pending |
-| PLAT-03 | Phase 1 | Pending |
-| PLAT-04 | Phase 1 | Pending |
-| PLAT-05 | Phase 1 | Pending |
+| PLAT-01 | Phase 1 | Complete |
+| PLAT-02 | Phase 1 | Complete |
+| PLAT-03 | Phase 1 | Complete |
+| PLAT-04 | Phase 1 | Complete |
+| PLAT-05 | Phase 1 | Complete |
 | ARCH-03 | Phase 1 | Pending |
 | BUILD-01 | Phase 1 | Pending |
-| BUILD-02 | Phase 1 | Pending |
+| BUILD-02 | Phase 1 | Complete |
 | BUILD-03 | Phase 1 | Pending |
 | PARITY-01 | Phase 1 | Complete |
 | DATA-01 | Phase 2 | Pending |

@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Completed 01-01-PLAN.md (golden de paridad: 56 PNGs deterministas)"
-last_updated: "2026-06-18T21:43:45.481Z"
+stopped_at: Completed 01-02-PLAN.md (scaffold Nuxt 4 + CSS verbatim; lint/typecheck/generate verdes)
+last_updated: "2026-06-18T22:00:13.037Z"
 last_activity: 2026-06-18
 progress:
   total_phases: 8
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
-  percent: 33
+  completed_plans: 2
+  percent: 67
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 ## Current Position
 
 Phase: 01 (andamiaje-golden-de-paridad) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
-Last activity: 2026-06-18
+Last activity: 2026-06-19
 
-Progress: [███░░░░░░░] 33%
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
@@ -52,6 +52,7 @@ Progress: [███░░░░░░░] 33%
 - Trend: —
 
 *Updated after each plan completion*
+| Phase 01 P01-02 | 9min | 2 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -68,6 +69,9 @@ Recent decisions affecting current work:
 - [Phase ?]: [Fase 1]: A5 fijada — golden bloquea todas las peticiones de imagen (page.route.abort) para forzar el fallback SVG determinista (offline, BUILD-02)
 - [Phase ?]: [Fase 1]: A8 fijada — snapshotPathTemplate sin sufijo de plataforma; golden capturado en linux
 - [Phase ?]: [Fase 1]: fichas-tipo del golden por id literal (#galleria-sciarra/#vaticano/#auditorium) — no existe clase CSS guided/concert en el index.html
+- [Phase ?]: [Fase 1]: Scaffold Nuxt 4 vía B (a mano) en raíz no vacía — preserva index.html/favicons intactos (D-02/Pitfall 1)
+- [Phase ?]: [Fase 1]: CSS editorial VERBATIM (tokens/base/leaflet) sin @layer/scoped — paridad por construcción; eliminadas 2 llaves } sobrantes latentes del index.html (no-op visual, PostCSS las rechazaba)
+- [Phase ?]: [Fase 1]: better-sqlite3 (dev, build-time) como conector SQLite de @nuxt/content — el sitio desplegado sigue 100% estatico
 
 ### Pending Todos
 
@@ -94,6 +98,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-18T21:43:45.473Z
-Stopped at: Completed 01-01-PLAN.md (golden de paridad: 56 PNGs deterministas)
+Last session: 2026-06-18T22:00:13.028Z
+Stopped at: Completed 01-02-PLAN.md (scaffold Nuxt 4 + CSS verbatim; lint/typecheck/generate verdes)
 Resume file: None
