@@ -1,12 +1,22 @@
-// nuxt.config.ts — Fase 1 (scaffold + CSS verbatim + módulos del stack)
-// El subpath de producción, el preset github_pages y el backend dormido se afinan en el Plan 03.
+// nuxt.config.ts — Fase 1 (scaffold + CSS verbatim + módulos del stack + subpath de producción)
+// Plan 02: modules / app.baseURL / css / colorMode / typescript / eslint / fonts.
+// Plan 03 (AÑADIDO): nitro.preset github_pages + prerender (failOnError), favicons bajo el subpath.
 // compatibilityVersion 4 es el DEFAULT en Nuxt 4 — NO hace falta future.compatibilityVersion.
 export default defineNuxtConfig({
   modules: ['@nuxt/content', '@nuxtjs/color-mode', '@nuxt/fonts', '@nuxt/eslint'],
 
-  // Subpath de producción (BUILD-01/03). Declararlo ya es correcto; se afina en el Plan 03.
+  // Subpath de producción (BUILD-01/03): el sitio vive en usuario.github.io/guiaRoma/.
+  // baseURL del Plan 02; los favicons (Plan 03) se declaran en app.head.link apuntando a
+  // rutas raíz-relativas (/favicon.svg) que Nuxt reescribe a /guiaRoma/favicon.svg al servir
+  // public/ bajo el baseURL → resuelven correctamente bajo el subpath sin 404 (A4, D-02).
   app: {
     baseURL: '/guiaRoma/',
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.svg' },
+      ],
+    },
   },
 
   // CSS editorial VERBATIM, cargado UNA sola vez. ORDEN crítico: base consume las variables de tokens.
@@ -24,6 +34,19 @@ export default defineNuxtConfig({
     dataValue: 'theme',
     storageKey: 'roma-theme',
     classSuffix: '',
+  },
+
+  // Salida 100% estática para GitHub Pages (BUILD-01/03). SSR-en-build ON (NUNCA SPA shell):
+  // el preset github_pages prerenderiza a .output/public con la estructura de Pages
+  // (incl. .nojekyll); failOnError convierte un enlace interno roto en fallo de build
+  // (parity guard). El routing es history (default) — las anclas #id son fragmentos, no rutas.
+  nitro: {
+    preset: 'github_pages',
+    prerender: {
+      crawlLinks: true,
+      routes: ['/'],
+      failOnError: true,
+    },
   },
 
   // TypeScript estricto (PLAT-02); typeCheck en comando separado (`pnpm typecheck`).
