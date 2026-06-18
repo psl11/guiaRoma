@@ -138,6 +138,17 @@ Cada tarea se commiteo atomicamente:
 **Total deviations:** 3 auto-arregladas (2 blocking Rule 3, 1 bug Rule 1).
 **Impact on plan:** Todas necesarias para que el golden se genere y sea determinista (el objetivo central del plan, V8). Cero scope creep — el alcance, las decisiones (A5/A8), las 14 vistas y la cota de PNGs son exactamente los del plan; las desviaciones solo corrigen detalles de la mecanica de Playwright (tokens de ruta, navegador, settle) que el sketch no podia prever.
 
+## Code-review fixes (2026-06-19, post-revisión 01-REVIEW.md)
+
+Una revisión de código (`01-REVIEW.md`) detectó que el bloqueo de imágenes de A5 era **incompleto**, comprometiendo el determinismo del golden. Corregido en una pasada de gap-closure (rama `release/nuxt-4`, commits normales con hooks):
+
+- **CR-01 (BLOCKER) + WR-01 (WARNING) — corregidos** (commit `5bca7a5`): el glob `'**/*.{jpg,jpeg,png,webp,avif,gif}'` era sensible a mayúsculas y exigía que la URL terminara en la extensión, así que dejaba pasar 4 URLs `.JPG` en mayúsculas y 9+ URLs con query string (`?width=N`/`?w=N`). Reemplazado por el bloqueo robusto por tipo de recurso: `await page.route('**/*', (route) => route.request().resourceType() === 'image' ? route.abort() : route.continue())`. Captura TODA imagen sea cual sea su extensión/caja/query string; las peticiones no-imagen se `continue()` (el `index.html` local, CSS/JS y fuentes deben cargar). `settle()` intacto, las 14 vistas intactas.
+- **Golden regenerado** (commit `1d15c1a`): cambiaron **8 PNGs** (`dia-lunes` + `dia-martes` × claro/oscuro × móvil/desktop), cuyas heros con query string sí filtraban fotos reales (San Luigi dei Francesi/Caravaggio, Elefantino-Minerva, Castel Sant'Angelo…) en la captura original con red parcial; ahora muestran el SVG de fallback determinista. **Cuenta de PNGs intacta: 56.** 2ª ejecución sin `--update` → verde (6 passed, exit 0).
+- **WR-02 (WARNING) — corregido** (commit `5bca7a5`): el server estático de `subpath.spec.ts` se arranca con `spawn(..., { detached: true })` y se derriba con `process.kill(-server.pid, 'SIGTERM')` (grupo de procesos completo: `pnpm dlx` + `serve`), evitando el huérfano que ocupaba el puerto entre re-ejecuciones locales. Verificado: 0 procesos escuchando tras la corrida.
+- **IN-01 (LOW) — reconocido como intencional:** `app.baseURL: '/guiaRoma/'` hardcodeado es deliberado (el sitio vive siempre en ese subpath; funciona también en `generate` local sin depender de la env var de CI). Sin cambio.
+
+> Nota sobre la sección "Decisión A5" de arriba: el literal del `page.route` por extensiones que aparece documentado fue el de la **implementación original** de este plan; la implementación vigente bloquea por `resourceType` (más robusta, misma decisión A5 — fallback SVG determinista/offline). La intención de A5 no cambia; sólo el mecanismo de matching, ahora exhaustivo.
+
 ## Issues Encountered
 
 - Un primer comentario en `playwright.config.ts` contenia el literal `` `-{platform}` ``, lo que hacia que el check `! grep -q "{platform}"` de la verificacion de la Tarea 1 diera falso positivo (la **plantilla** ya era correcta, A8 cumplida; el match estaba en la prosa del comentario). Resuelto reescribiendo el comentario sin el token literal, manteniendo la explicacion de A8. (No es desviacion del plan: es un ajuste de redaccion para que la verificacion automatica refleje la realidad.)
