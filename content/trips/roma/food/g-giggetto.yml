@@ -1,6 +1,13 @@
 slug: g-giggetto
 trip: roma
 group: Cocina giudaico-romana · Ghetto
+# gastro-intro de NIVEL GRUPO (Ghetto), verbatim de index.html línea 5541. Vive en la ficha
+# representativa del grupo (la primera del grupo en el DOM).
+groupIntro: >-
+  La cocina del Ghetto tiene 2.000 años de historia. Frutos, verduras y legumbres
+  llevados al extremo de sabor: el carciofo alla giudia (alcachofa frita abierta
+  «como una rosa») es una de las cosas más romanas que podéis comer. Junio es final
+  de temporada — si los hay, no los dejéis pasar.
 badge: cucina ebraica
 badgeKind: ghetto
 name: Giggetto al Portico d'Ottavia

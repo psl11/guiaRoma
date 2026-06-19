@@ -37,3 +37,33 @@ howTo:
 map:
   center: { lat: 41.8989, lng: 12.477 }
   zoom: 14
+# Eyebrow + intro de las secciones-página, verbatim de index.html (fuera de toda card):
+#   gastronomia → 5337 / 5340 · arte → 5943 / 5945 · arquitectura → 6106 / 6108.
+sections:
+  gastronomia:
+    eyebrow: Roma · gastronomía
+    intro: >-
+      Roma tiene cuatro platos de pasta (cacio e pepe, carbonara, amatriciana,
+      gricia), un quinto cuarto que la mayoría no conoce, una tradición de cocina
+      giudaico-romana única en el mundo, y la pizza más debatida de Italia. La
+      ciudad aún tiene decenas de trattorias donde comen los romanos de verdad.
+      Los sitios de abajo cuadran con las zonas que vais a recorrer y con lo que
+      merece la pena priorizar.
+  arte:
+    eyebrow: Roma · entender lo que ves
+    intro: >-
+      Roma no se entiende sin las manos que la hicieron. Aquí están los artistas
+      y arquitectos cuyas obras vais a ver durante el viaje: quiénes fueron, cómo
+      reconocer su estilo y por qué siguen importando. Cada ficha enlaza con los
+      lugares del itinerario donde os los vais a encontrar. Leed la del artista
+      antes de cada visita: ver una obra sabiendo qué buscar lo cambia todo.
+  arquitectura:
+    eyebrow: Roma · leer los edificios
+    intro: >-
+      Roma es una clase de arquitectura de 2.500 años a cielo abierto. En estos
+      días vais a pasar de la cúpula del Panteón a una basílica paleocristiana,
+      del Tempietto renacentista a una fachada barroca que ondula. Esta sección
+      os da las **cinco edades** de la arquitectura romana —qué define a cada una,
+      en qué fijarse y dónde la veréis— y, al final, un **glosario** para descifrar
+      lo que tenéis delante. El objetivo: que podáis plantaros ante cualquier
+      edificio y "leerlo".

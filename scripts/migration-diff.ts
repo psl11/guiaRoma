@@ -334,6 +334,12 @@ const STRUCTURAL_KEYS = new Set<string>([
   // (la `article.card` no contiene "Viernes"). Como `coords`/`type`, es estructural: excluirlo
   // del multiset de texto, si no toda ficha daría su día como "texto sobrante".
   'day',
+  // `groupIntro` es prosa de NIVEL GRUPO (Quinto quarto, Ghetto): vive en la ficha
+  // representativa del grupo pero su texto NO está dentro del subárbol `.gastro-card` del
+  // index.html (es el `<div class="gastro-intro">` que precede a la rejilla del grupo). El diff
+  // PER-CARD no puede verlo en el HTML, así que incluirlo aquí daría "texto sobrante" en esa
+  // ficha. Su fidelidad 1:1 la cubre el bloque de prosa de nivel grupo (extractGroupIntro).
+  'groupIntro',
 ])
 
 /**

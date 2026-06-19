@@ -1,6 +1,17 @@
 slug: g-checchino
 trip: roma
 group: Quinto quarto · cocina de Testaccio
+# gastro-intro de NIVEL GRUPO (Quinto quarto), verbatim de index.html línea 5501. Vive en la
+# ficha representativa del grupo (la primera del grupo en el DOM).
+groupIntro: >-
+  El «quinto quarto» es lo que queda del animal después de repartir los cuatro
+  cuartos nobiles entre la aristocracia y el clero: vísceras, menudillos, callos,
+  rabo, corazón. Testaccio fue el barrio del Mattatoio — el matadero de Roma — y
+  los trabajadores cobraban en parte con estas piezas. De ahí nació la cocina más
+  antigua y auténtica de la ciudad. González lo explica directamente: «el pueblo
+  romano se acostumbró a vivir del 'quinto cuarto' (vísceras, rabos, etcétera, el
+  material cárnico más barato), de pasta, de verduras y, de vez en cuando, algo de
+  pescado». No es para todos los paladares, pero es imposiblemente romano.
 badge: quinto quarto
 badgeKind: quinto
 name: Checchino dal 1887
