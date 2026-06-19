@@ -1,0 +1,112 @@
+slug: laterano
+trip: roma
+roman: XXV
+name: San Giovanni in Laterano · Scala Santa
+italian: Arcibasilica del Santissimo Salvatore · Piazza di San Giovanni in Laterano
+day: Lunes
+coords:
+  lat: 41.8858820
+  lng: 12.5057860
+type: card
+motif: church
+arch:
+  - ref: arq-medieval
+    label: 'Arquitectura: [Paleocristiano](#arq-medieval)'
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/San_Giovanni_in_Laterano_2021.jpg/960px-San_Giovanni_in_Laterano_2021.jpg
+  alt: Fachada de San Giovanni in Laterano
+sections:
+  - heading: Qué es
+    body: >-
+      La **catedral de Roma** — no San Pedro. Sorprende a casi todo el mundo: la
+      iglesia del Papa _como obispo de Roma_ es esta, no la del Vaticano. Sobre
+      la fachada, una inscripción la define sin modestia: _«omnium urbis et orbis
+      ecclesiarum mater et caput»_ — madre y cabeza de todas las iglesias de la
+      ciudad y del mundo. Es la basílica cristiana monumental más antigua de
+      Occidente, fundada por Constantino. Enfrente, la **Scala Santa**, la
+      escalera que según la tradición subió Jesús en casa de Pilatos.
+  - heading: Historia
+    body: >-
+      La fundó el emperador **Constantino** hacia el año 324, sobre los terrenos
+      confiscados a la familia Laterani, pocos años después de legalizar el
+      cristianismo con el Edicto de Milán (313). Fue la primera basílica
+      cristiana construida a escala monumental, modelo de todas las que vendrían,
+      y durante **mil años fue la residencia oficial de los Papas** — hasta el
+      exilio de Aviñón (1309) y el posterior traslado al Vaticano. El Laterano
+      es, históricamente, el verdadero centro del catolicismo: el Vaticano es
+      relativamente moderno comparado con esto.
+
+
+      La basílica sufrió de todo: el saqueo de los vándalos (455), terremotos y
+      dos incendios devastadores en el siglo XIV. Se reconstruyó una y otra vez.
+      El interior que vemos hoy es obra de **Francesco Borromini**, que lo reformó
+      para el Jubileo de 1650 sin atreverse a demoler las naves paleocristianas:
+      las recubrió, creando las doce gigantescas hornacinas que albergan las
+      **estatuas colosales de los apóstoles** (siglo XVIII). La fachada
+      monumental, con las estatuas de Cristo y los santos recortadas contra el
+      cielo, es de **Alessandro Galilei** (1735).
+
+
+      En el flanco se conserva el **claustro cosmatesco** del siglo XIII, obra de
+      la familia Vassalletto: columnas torsas incrustadas de mosaico dorado, una
+      de las joyas medievales de Roma. En la plaza se alza el **obelisco
+      Lateranense**, de Tutmosis III: con sus 32 metros es el obelisco egipcio
+      más alto del mundo y el más antiguo de Roma (siglo XV a.C.).
+  - heading: Anécdotas
+    body: >-
+      Aquí se firmaron, en 1929, los **Pactos de Letrán** entre el régimen de
+      Mussolini y la Santa Sede — el acuerdo que creó el Estado de la Ciudad del
+      Vaticano como lo conocemos y resolvió la «cuestión romana» abierta desde
+      1870. El nombre del palacio adyacente bautizó el tratado.
+
+
+      Sobre el altar mayor, bajo un baldaquino gótico del siglo XIV, la tradición
+      dice que se guardan las **cabezas de San Pedro y San Pablo**. Solo el Papa,
+      como titular de esta catedral, puede oficiar misa en ese altar papal.
+      También está aquí la _cathedra_, el trono que da nombre a la condición de
+      «catedral».
+
+
+      Enfrente, la **Scala Santa**: 28 escalones de mármol que, según la leyenda,
+      Santa Elena trajo de Jerusalén — la escalera del pretorio de Poncio Pilato
+      que Cristo subió la mañana de su condena. Los peregrinos los suben _de
+      rodillas_, rezando en cada peldaño. En lo alto está el _Sancta Sanctorum_,
+      la antigua capilla privada de los Papas. Un joven monje agustino llamado
+      **Martín Lutero** los subió de rodillas en su viaje a Roma de 1510; años
+      después contaría que, al llegar arriba, pensó «¿quién sabe si esto es
+      verdad?». Una semilla de la Reforma.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/San_Giovanni_in_Laterano_%28Rome%29_-_Interior_10.jpg/960px-San_Giovanni_in_Laterano_%28Rome%29_-_Interior_10.jpg" alt="Interior de San Giovanni in Laterano con las estatuas de los apóstoles" caption="Una de las doce estatuas colosales de los apóstoles en las hornacinas de Borromini (s. XVIII), de 5-6 metros. Cada apóstol con su atributo: la parrilla de San Lorenzo, el cuchillo de San Bartolomé desollado. Casi ningún turista las mira."}
+
+      - La **inscripción de la fachada**: _mater et caput_. Leedla antes de entrar — explica todo el rango del lugar.
+      - Las **doce estatuas de los apóstoles** en las hornacinas de Borromini: colosales, dramáticas, cada una con su atributo (la parrilla de San Lorenzo, el cuchillo de San Bartolomé desollado).
+      - El **techo dorado** de casetones y el suelo cosmatesco de la nave central.
+      - El **baldaquino gótico** sobre el altar papal, con las rejas que protegen las reliquias.
+      - El **claustro** (entrada aparte, ~€5): columnas torsas con mosaico, fragmentos arqueológicos, silencio absoluto. Si tenéis tiempo, entrad.
+      - El **obelisco Lateranense** en la plaza: el más alto del mundo. Mirad los jeroglíficos.
+      - La **Scala Santa** enfrente (horario propio, suele cerrar al mediodía): se sube de rodillas; hay una escalera lateral para bajar de pie y para quien no quiera arrodillarse.
+      - **Hombros y rodillas cubiertos**: es catedral en activo.
+facts:
+  - label: Horario basílica
+    value: 7:00-18:30 · sin pausa de mediodía
+  - label: Acceso
+    value: Gratuito · claustro ~€5
+  - label: Tiempo de visita
+    value: 60-75 minutos
+  - label: Metro
+    value: A · San Giovanni · a la salida
+mapsQuery: Arcibasilica di San Giovanni in Laterano Roma
+culture:
+  - title: Referencias literarias
+    text: ''
+  - title: I Segreti di Roma
+    text: >-
+      (Corrado Augias, 2005) — Augias subraya la paradoja que más descoloca a
+      los visitantes: «la catedral más importante del mundo no es la de Roma,
+      sino que es la de Roma, y casi nadie lo sabe». Dedica un capítulo a la
+      historia del Laterano como sede del poder pontificio durante mil años, a
+      los Pactos de 1929 firmados en este palacio, y a por qué la inauguración de
+      la nueva basílica de San Pedro en el Vaticano fue, de algún modo, la firma
+      del declive político de los Papas: cuando se trasladaron allí, dejaron de
+      ser los obispos de Roma y se convirtieron en monarcas universales.

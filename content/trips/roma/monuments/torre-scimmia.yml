@@ -1,0 +1,103 @@
+slug: torre-scimmia
+trip: roma
+roman: XXI
+name: Torre della Scimmia
+italian: Via dei Portoghesi · Rione Campo Marzio
+day: Lunes
+coords:
+  lat: 41.9017011
+  lng: 12.4742752
+type: card
+motif: tower
+hero:
+  src: https://www.agenziaviaggisumisura.it/wp-content/uploads/2016/12/la-torre-della-scimmia-e-la-leggenda-del-miracolo-600x531.jpg
+  alt: Torre della Scimmia
+sections:
+  - heading: Qué es
+    body: >-
+      Una torre medieval de ladrillo del siglo XII que asoma sobre los tejados
+      de una calle estrecha del centro storico — Via dei Portoghesi. En lo alto
+      arde permanentemente una **luz votiva** encendida desde hace siete siglos
+      sin interrupción, en cumplimiento de un voto popular por un milagro
+      ocurrido en este mismo edificio. La historia que cuenta es uno de los
+      relatos urbanos más bellos de la Roma medieval.
+  - heading: Historia
+    body: >-
+      La torre forma parte del _Palazzo Scapucci_, edificio medieval
+      transformado en residencia aristocrática durante el Renacimiento. La torre
+      en sí es del siglo XII — Roma medieval tuvo más de 250 torres familiares,
+      baluartes defensivos de los grandes clanes nobles que se peleaban entre
+      ellos en guerras urbanas que duraban décadas. La mayoría fueron demolidas.
+      Sobreviven menos de quince — algunas integradas en edificios
+      renacentistas, otras truncadas o convertidas en campanarios.
+
+
+      La leyenda — y esto es lo que da nombre a la torre — sitúa el milagro hacia
+      finales del siglo XVI. Una familia romana acomodada llamada Scapucci tenía
+      un **mono mascota**, traído de Indias por algún viajero. Una mañana,
+      mientras la madre se ocupaba de la casa, el mono cogió al bebé recién
+      nacido — pocas semanas de vida, según las versiones — y, sin que nadie lo
+      advirtiera, lo subió escaleras arriba hasta lo alto de la torre. Cuando la
+      madre descubrió la escena, el mono estaba en la cornisa exterior con el
+      niño en brazos, peligrosamente cerca del borde, a 30 metros sobre la calle.
+
+
+      La madre, paralizada, hizo un voto a la Virgen María: si el niño se
+      salvaba, encendería una lámpara votiva en lo alto de la torre eternamente.
+      En ese momento, el padre llegó con un cura. El sacerdote indicó a la
+      familia que se acercaran al borde mostrando una imagen de la Virgen y
+      rezando en voz alta. El mono, atraído por las plegarias o quizás
+      simplemente cansado, devolvió el bebé intacto a manos de la madre. Desde
+      aquel día — y los romanos lo confirman — **una luz votiva no se ha apagado
+      nunca** en lo alto de la torre.
+  - heading: Anécdotas
+    body: >-
+      La luz votiva original era de aceite. Se cambió a electricidad en el siglo
+      XX. Hay todavía un descendiente de los Scapucci que se ocupa formalmente de
+      mantenerla encendida — el voto pasó como obligación familiar hereditaria.
+      Si se apaga, alguien lo nota y la reenciende. Hubo un episodio durante la
+      ocupación nazi de 1944 cuando un bombardeo cercano hizo saltar el cableado
+      eléctrico y la luz estuvo apagada tres horas — la única interrupción
+      documentada en siete siglos.
+
+
+      La leyenda inspiró a **Nathaniel Hawthorne**, el autor norteamericano de
+      _La letra escarlata_, que vivió en Roma entre 1858 y 1859. La incluyó casi
+      literalmente en su novela _El fauno de mármol_ — uno de los textos
+      extranjeros más bellos jamás escritos sobre Roma. Hawthorne pasaba frente a
+      la torre cada día durante el otoño de 1858 y se obsesionó con la historia.
+      En su novela transforma la torre en escenario de un episodio onírico.
+
+
+      Enric González la describe en sus _Historias de Roma_ con el cariño de
+      quien vivió a dos pasos: «Si están en Roma, acérquense a la Via della
+      Scrofa y caminen en dirección a Piazza del Popolo hasta llegar a Via dei
+      Portoghesi. Son cuatro pasos. En esa esquina, miren a su izquierda: eso que
+      verán al fondo de la calle es la Torre della Scimmia, en una de las vistas
+      más bellas de una ciudad pródiga en vistas bellas. No creo que les interese
+      saberlo, pero el barbero que ocupa los bajos era mi barbero, y la barbería,
+      antigua, es muy graciosa: cada dos por tres entra un turista para
+      fotografiar el interior.» La luz se ve mejor **de noche**, cuando la torre
+      es un cuadrado oscuro contra el cielo coronado por un punto luminoso que
+      tiembla.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Rome_Torre_della_Scimmia.jpg/800px-Rome_Torre_della_Scimmia.jpg" alt="Torre della Scimmia en Via dei Portoghesi, Roma" caption="La torre medieval vista desde Via dei Portoghesi — exactamente como González la describe. En lo alto, el farolillo votivo que según la leyenda no se ha apagado desde el siglo XVII. Se ve mejor de noche, cuando es un punto de luz que tiembla sobre tejados oscuros."}
+
+      - La **luz votiva** en lo alto: pequeña, casi imperceptible de día. Es la única razón estructural de la torre.
+      - Los **ladrillos medievales** de la torre: irregulares, con mortero grueso, muy distintos de la mampostería renacentista del resto del Palazzo Scapucci.
+      - La **placa conmemorativa** bajo la torre: cuenta brevemente la leyenda. Está en italiano antiguo.
+      - La **Via dei Portoghesi** en sí: estrecha, sin tráfico, con palacetes barrocos modestos. Es una de las calles más tranquilas del centro storico.
+      - El **Palazzo Scapucci** al que pertenece la torre: edificio renacentista actualmente residencial privado, no visitable.
+      - La **iglesia de Sant'Antonio dei Portoghesi** enfrente: iglesia barroca de la comunidad portuguesa en Roma desde el siglo XV. Interior poco visitado, con un techo pintado al fresco.
+      - Si volvéis de noche por la zona — y os queda alguna noche más — pasad por aquí y mirad la luz. El efecto es muy distinto al de día.
+facts:
+  - label: Acceso
+    value: Libre 24/7 · solo exterior
+  - label: Tiempo
+    value: 5-10 minutos
+  - label: Mejor momento
+    value: Atardecer y noche · luz votiva visible
+  - label: Combo
+    value: 5' andando desde Casanatense
+mapsQuery: Torre della Scimmia Via dei Portoghesi Roma
