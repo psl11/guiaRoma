@@ -469,17 +469,19 @@ useHead({ link: [
 
 **If this table looks short:** it is, deliberately — the stack and contract are locked and the load-bearing APIs were verified from source. The assumptions left are the field-shape detail (A1) the planner must confirm against `shared/schemas.ts`, and two discretion choices (A3, A4-confidence).
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **`<MDC>` `<p>`-wrapping vs golden rhythm in `#inicio`.**
    - What we know: `<MDC>` wraps inline content in `<p>` (ProseP); `mdc-unwrap="p"`/`unwrap` removes it.
    - What's unclear: exactly which of `trip.title`, `infoCards.value`, `howTo` need unwrapping to match the golden's vertical spacing (a pixel cuadre, resolvable only by running the build).
    - Recommendation: implement with `unwrap` on the inline cases (`title`, `infoCards.value`), keep `<p>` on `howTo`, and verify against the golden screenshot at the end of F3. Not a blocker; it's CSS/markup tuning, no new logic.
+   - **RESOLVED:** Plan 04 renders `trip.title` + `infoCards.value` via `<MDC>` with `unwrap` and keeps `<p>` on `howTo`; the golden vertical-rhythm cuadre is asserted in Plan 05's parity spec. Pure CSS/markup tuning — no new logic.
 
 2. **Component-test tooling is not installed.** (See Validation Architecture ▸ Wave 0.)
    - What we know: `vitest@4.1.9` is installed; `vitest.config.ts` includes only `tests/data/**`; `@nuxt/test-utils`, `@vue/test-utils`, `happy-dom` are **absent**.
    - What's unclear: whether the planner adds component tests (for `ThemeToggle`/`NavPills`) or relies on Playwright for those behaviors.
    - Recommendation: the **pure helper** (`dayLabel`) and **`useTrip` index shape** are unit-testable with plain Vitest (no Nuxt runtime) — add a `tests/unit/**` include. Component mounting (`mountSuspended`) and the SC#3 anti-FOUC HTML check are best done in Playwright (already installed). See Validation Architecture.
+   - **RESOLVED:** Plan 01 adds the `tests/unit/**` Vitest include + the `dayLabel` test; Plan 02 extracts a pure `buildTripIndexes` helper for plain-Vitest SC#1 coverage; Plan 05 uses Playwright (installed) for component/FOUC/parity behavior. `@nuxt/test-utils` intentionally NOT added — no new dependency.
 
 ## Environment Availability
 
