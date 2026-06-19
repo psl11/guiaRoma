@@ -1,0 +1,35 @@
+kind: arquitectura
+slug: arq-renacimiento
+trip: roma
+avatar: III
+name: Renacimiento
+dates: s. XV – XVI · el regreso de los antiguos
+epithet: "«Volver a medir las ruinas: proporción, geometría y la cúpula y el orden clásico recuperados con rigor.»"
+sections:
+  - heading: Qué la define
+    body: >-
+      Tras siglos, los arquitectos vuelven a **estudiar las ruinas romanas** y el
+      tratado de Vitruvio. Buscan la **proporción matemática**, la simetría, la
+      **planta central** (el círculo como forma perfecta) y recuperan el lenguaje
+      clásico **con función, no como mero adorno**. Bramante encabeza la "manera
+      moderna"; Miguel Ángel la lleva a lo escultórico.
+  - heading: En qué fijarse
+    body: |
+      - La **planta central** y la **cúpula sobre tambor**: el modelo del Panteón,
+      ahora cristianizado.
+      - La **proporción y la claridad**: nada sobra, todo responde a una geometría
+      legible.
+      - El **orden clásico bien entendido**: columnas que sostienen, no que
+      decoran.
+      - El **Tempietto de Bramante**: pequeño, pero es _el_ manifiesto del
+      Renacimiento pleno — un templo circular perfecto.
+      - La **cúpula de San Pedro** (Miguel Ángel): la hija monumental de la del
+      Panteón.
+seenIn:
+  - ref: tempietto
+    label: '[el Tempietto del Bramante](#tempietto)'
+    note: ✦ Dónde la verás en este viaje
+  - ref: vaticano
+    label: 'la cúpula de San Pedro ( [Vaticano](#vaticano) )'
+  - ref: popolo
+    label: 'la Capilla Chigi en [Santa Maria del Popolo](#popolo)'

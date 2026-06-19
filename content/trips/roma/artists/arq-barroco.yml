@@ -1,0 +1,40 @@
+kind: arquitectura
+slug: arq-barroco
+trip: roma
+avatar: IV
+name: Barroco
+dates: s. XVII · el edificio como espectáculo
+epithet: "«La línea recta se rompe: todo se curva, se mueve, juega con la luz y te envuelve. Roma es la capital del Barroco.»"
+sections:
+  - heading: Qué la define
+    body: >-
+      La **Contrarreforma** quiere emocionar y convencer, y la arquitectura se
+      vuelve **teatro**: fachadas **cóncavas y convexas** que ondulan, plantas
+      **ovaladas** y dinámicas, juegos de luz, trampantojos, e **integración
+      total** de escultura, pintura y arquitectura. Sus dos polos:
+      [Bernini](#art-bernini) (lo grandioso y escenográfico) y
+      [Borromini](#art-borromini) (la geometría que se retuerce).
+  - heading: En qué fijarse
+    body: |
+      - La **fachada en movimiento**: muros que avanzan y retroceden (Borromini).
+      - La **planta ovalada** y las curvas, frente al círculo o el rectángulo
+      renacentistas.
+      - La **integración escenográfica**: la columnata de Bernini que "abraza" la
+      plaza, el baldaquino, las fuentes como decorado.
+      - El **trampantojo**: techos que se abren al cielo (Cortona en Barberini,
+      Pozzo en Sant'Ignazio).
+      - El **contraste dramático** de luz y sombra, el oro, el mármol policromado.
+seenIn:
+  - ref: piazza-navona
+    label: '[Piazza Navona](#piazza-navona)'
+    note: ✦ Dónde la verás en este viaje
+  - ref: vaticano
+    label: 'la columnata y el baldaquino de San Pedro ( [Vaticano](#vaticano) )'
+  - ref: santignazio
+    label: '[Sant''Ignazio](#santignazio)'
+  - ref: palazzo-barberini
+    label: '[Palazzo Barberini](#palazzo-barberini)'
+  - ref: santa-teresa
+    label: '[Santa Maria della Vittoria](#santa-teresa)'
+  - ref: fontana-trevi
+    label: '[la Fontana di Trevi](#fontana-trevi)'
