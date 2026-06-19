@@ -1,0 +1,39 @@
+slug: roma
+title: Cinque giorni a _Roma_
+decoration: '·  ROMA AETERNA  ·'
+meta: 19 — 23 giugno 2026 · Hotel Royal Court
+quote: Roma è il luogo più adatto per aspettare la fine del mondo.
+quoteAttr: — FEDERICO FELLINI
+infoCards:
+  - label: Alojamiento
+    value: |
+      **Hotel Royal Court**
+      Via Marghera 51, Esquilino
+      +39 06 4434 0364
+  - label: Estación más cercana
+    value: |
+      **Roma Termini**
+      4 min andando
+      Metro A / B · Leonardo Express → FCO
+  - label: Llegada
+    value: |
+      **Viernes 19 · 18:00**
+      Check-in y salida nocturna
+  - label: Salida
+    value: |
+      **Martes 23 · 21:50**
+      Vuelo desde FCO · Leonardo Express
+howTo:
+  - >-
+    Cada parada tiene su ficha con historia, anécdotas y detalles concretos en los
+    que fijarse _in situ_. El buscador encuentra cualquier sitio en segundos. El mapa
+    marca los puntos por orden de visita; pulsa un marcador para saltar a la ficha
+    correspondiente. Las notas que escribas en cada ficha se guardan en este dispositivo.
+    Esta guía funciona _offline_ una vez cargada — descárgala al teléfono antes de salir.
+  - >-
+    El Vaticano y el Coliseo se visitan con guía humano. Del **Vaticano** sí hay una
+    ficha de _preparación_ (qué buscar en los Museos, la Sixtina y San Pedro) entre las
+    del sábado. Los demás lugares están en orden cronológico, agrupados por día.
+map:
+  center: { lat: 41.8989, lng: 12.477 }
+  zoom: 14
