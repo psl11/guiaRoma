@@ -1,0 +1,340 @@
+slug: martes
+trip: roma
+order: 5
+roman: V
+eyebrow: martedì · 23 giugno
+title: Villa Borghese y despedida
+subtitle: >-
+  El último día. Sin la Galleria Borghese, el arte lo pone Palazzo Barberini
+  (Caravaggio y Rafael); luego, el Bernini del Éxtasis de Santa Teresa y un
+  cierre sereno junto al hotel antes del vuelo nocturno.
+stats:
+  - variant: walk
+    text: '**~2 km** a pie · día llano e interior'
+  - variant: ticket
+    text: >-
+      **Palazzo Barberini** · ~€12 · sustituye a la Galleria Borghese (sin
+      reserva)
+  - variant: train
+    text: '**Leonardo Express** Termini→FCO (32 min, €14)'
+light:
+  title: 🦶 Versión ligera · martes (despedida)
+  items:
+    - kind: see
+      text: >-
+        **Imprescindibles:** [Palazzo Barberini](#palazzo-barberini) (Caravaggio
+        y Rafael, interior), comida en [La Vecchia Roma](#g-vecchia-roma) (13:00),
+        el [Éxtasis de Santa Teresa](#santa-teresa) de Bernini y [Santa Maria
+        Maggiore](#smm).
+    - kind: move
+      text: >-
+        **Cómo moverse:** metro/taxi al museo (Barberini, 2 paradas) y taxi de
+        vuelta a Monti. La tarde (Santa Teresa, SMM, degli Angeli) está pegada al
+        hotel y es llana. Casi todo el día en interior.
+    - kind: skip
+      text: >-
+        **Saltar hoy:** la [Cripta dei Cappuccini](#cappuccini) si cansa (está al
+        lado del museo, así que es opcional sin desviarse).
+    - kind: care
+      text: >-
+        **Ojo:** dejad margen para recoger maletas sin prisas antes del tren de
+        las 18:15.
+    - kind: rest
+      text: >-
+        **Descanso:** comida en La Vecchia Roma; todo lo de la tarde a pocos
+        minutos del hotel.
+timeline:
+  - kind: stop
+    pace: all
+    time: '08:30'
+    title: Desayuno + check-out · maletas en consigna
+    disabled: true
+    note: 'El vuelo es de noche: dejad las maletas en el hotel y salid ligeros.'
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **45 min** · desayuno + check-out + dejar maletas en consigna'
+  - kind: transport
+    pace: all
+    header: Hotel → Palazzo Barberini · ~1,5 km
+    modes:
+      - icon: Ⓜ️
+        recommended: true
+        desc: >-
+          **Metro A** · Termini → Barberini (2 paradas) · el palacio está a 2 min
+          de la salida
+        tag: recomendado
+        meta: '⏱ **10 min** 💶 **€1,50 p.p.**'
+      - icon: 🚕
+        desc: '**Taxi** directo a Piazza Barberini'
+        meta: '⏱ **8 min** 💶 **€9-11 · €3-4 p.p.**'
+    footnote: >-
+      Sin Galleria Borghese (no había reserva): la mañana se monta en Piazza
+      Barberini, con el museo y la cripta pegados. Casi nada de andar — ideal para
+      el último día.
+  - kind: stop
+    pace: all
+    time: '10:00'
+    title: Palazzo Barberini · Galleria Nazionale d'Arte Antica
+    ref: palazzo-barberini
+    note: >-
+      El sustituto perfecto de la Borghese: Caravaggio, Rafael y el techo de
+      Pietro da Cortona. Interior y con bancos.
+  - kind: meta
+    items:
+      - level: ok
+        text: >-
+          ⏱ **90 min** · la _Judith_ de Caravaggio, la _Fornarina_ de Rafael, el
+          _Triunfo_ de Cortona y la escalera helicoidal de Borromini · abre 10:00,
+          cierra lunes
+      - level: plain
+        text: '🚶 hasta Cappuccini: **5 min**'
+  - kind: transport
+    pace: medium
+    variant: walk
+    header: Palazzo Barberini → Cripta dei Cappuccini · ~5 min
+    modes:
+      - icon: 🚶
+        recommended: true
+        desc: Andando · bajáis a Piazza Barberini y un tramo corto de Via Veneto
+        tag: recomendado
+        meta: '⏱ **5 min** 💶 **gratis**'
+    footnote: >-
+      Los dos están en la misma plaza. La cripta es opcional; si no apetece, un
+      café en Via Veneto y a comer.
+  - kind: stop
+    pace: medium
+    time: '11:45'
+    title: Cripta dei Cappuccini
+    ref: cappuccini
+    tag: opcional
+    note: Memento mori barroco. La capilla de huesos de Via Veneto.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **40 min** · cripta + pequeño museo'
+      - level: warn
+        text: Prohibido hacer fotos dentro de la cripta
+  - kind: transport
+    pace: all
+    variant: taxi
+    header: Barberini → Monti (La Vecchia Roma) · ~1,8 km
+    modes:
+      - icon: 🚕
+        recommended: true
+        desc: '**Taxi** directo a Monti · cómodo para llegar a la mesa sin andar'
+        tag: recomendado
+        meta: '⏱ **8 min** 💶 **€9-11 · €3-4 p.p.**'
+      - icon: 🚶
+        desc: Andando · bajada por Via delle Quattro Fontane y Via Nazionale
+        meta: '⏱ **18 min** 💶 **gratis**'
+    footnote: >-
+      La mesa es a las 13:00. Desde Barberini, el taxi os deja en Monti en nada.
+  - kind: stop
+    pace: all
+    time: '13:00'
+    title: Comida en La Vecchia Roma · Monti
+    disabled: true
+    reservedEvent: true
+    tag: reservado
+    note: >-
+      Última comida romana, trattoria de barrio en Monti. Cierre tranquilo antes
+      de la tarde.
+  - kind: reservation
+    text: >-
+      ✅ **Reserva confirmada · La Vecchia Roma** — mar 23 jun, 13:00 · **2
+      personas** · a nombre de **Alejandro** · en Monti, a ~8 min del hotel.
+      _(Ojo: esta es para 2 — el resto de reservas del viaje son para 3.)_
+  - kind: meta
+    items:
+      - level: ok
+        text: >-
+          ⏱ **hasta ~15:00** · última comida romana sin prisa · un café y a Santa
+          Teresa (reabre 15:30)
+      - level: plain
+        text: >-
+          🪑 descanso largo · podéis pasar por el hotel a sentaros antes de la
+          tarde
+  - kind: food
+    pace: all
+    header: 🍴 Tu mesa del martes (mediodía)
+    entries:
+      - ref: g-vecchia-roma
+        name: La Vecchia Roma
+        reserved: true
+        badge: ✓ reservado 13:00 · 2 pax
+        desc: >-
+          En Monti · cocina romana de barrio · a nombre de Alejandro · **~€25-35**
+      - ref: g-regoli
+        name: Pasticceria Regoli
+        time: '🚶 8 min'
+        desc: >-
+          De postre o para el camino · el último maritozzo con nata antes del
+          vuelo · **~€2-5**
+    footnote: 'Fichas en [Gastronomía](#gastronomia).'
+  - kind: transport
+    pace: all
+    variant: taxi
+    header: Monti → Piazza San Bernardo (Santa Teresa) · ~1,4 km
+    modes:
+      - icon: 🚕
+        recommended: true
+        desc: '**Taxi** · directo a Piazza San Bernardo, para llegar sentados'
+        tag: recomendado
+        meta: '⏱ **6 min** 💶 **€8-10 · €3 p.p.**'
+      - icon: 🚶
+        desc: Andando · subida suave por Via Nazionale
+        meta: '⏱ **15 min** 💶 **gratis**'
+    footnote: >-
+      Santa Maria della Vittoria reabre a las 15:30: comed sin prisa, un café, y
+      subís para las 15:20-15:30. Llegáis antes a ver la Fontana del Mosè (Acqua
+      Felice), justo al lado.
+  - kind: stop
+    pace: all
+    time: '15:20'
+    title: Fontana dell'Acqua Felice · el Mosè
+    disabled: true
+    note: >-
+      Terminal del acueducto de Sixto V. El enorme Moisés de bronce en la
+      hornacina central. Piazza San Bernardo.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **10 min** · exterior · merece dos minutos antes de la iglesia de al lado'
+  - kind: stop
+    pace: all
+    time: '15:30'
+    title: Éxtasis de Santa Teresa · Santa Maria della Vittoria
+    ref: santa-teresa
+    note: 'Bernini, 1647–52. La capilla Cornaro. Cierra 18:00.'
+  - kind: meta
+    items:
+      - level: ok
+        text: >-
+          ⏱ **25-30 min** · la capilla Cornaro + el frontal de la iglesia · acceso
+          libre · llevad monedas para la luz
+      - level: warn
+        text: 'Reabre exactamente a las 15:30 · hombros y rodillas cubiertos'
+  - kind: transport
+    pace: all
+    variant: walk
+    header: SMV → Santa Maria Maggiore · ~12 min
+    modes:
+      - icon: 🚶
+        recommended: true
+        desc: >-
+          Andando · por Via Agostino Depretis · bajada directa hacia el Esquilino
+        tag: recomendado
+        meta: '⏱ **12 min** 💶 **gratis**'
+    footnote: >-
+      La bajada os deja directamente en la zona del hotel. Ya queda todo cerca.
+  - kind: stop
+    pace: all
+    time: '16:10'
+    title: Santa Maria Maggiore
+    ref: smm
+    note: '5 min del hotel. Mosaicos del s. V, Bernini y Francisco.'
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **45 min** · mosaicos + artesonado dorado + tumbas · abierta sin pausa'
+      - level: plain
+        text: '🚶 hasta siguiente: **8 min**'
+  - kind: transport
+    pace: all
+    variant: walk
+    header: Santa Maria Maggiore → Piazza della Repubblica · ~8 min
+    modes:
+      - icon: 🚶
+        recommended: true
+        desc: >-
+          Andando · hacia Termini · iglesia y museo están pegados a la estación y
+          al hotel
+        tag: recomendado
+        meta: '⏱ **8 min** 💶 **gratis**'
+    footnote: >-
+      Última parada antes del hotel. Elegid **una** de las dos de abajo según el
+      calor y las ganas: la iglesia (rápida y gratis) o el museo (climatizado). No
+      da tiempo a las dos antes del tren.
+  - kind: stop
+    pace: all
+    time: '17:05'
+    title: Santa Maria degli Angeli e dei Martiri
+    ref: angeli
+    note: >-
+      Miguel Ángel dentro de las Termas de Diocleciano. La Meridiana. Rápida y
+      gratis.
+  - kind: meta
+    items:
+      - level: ok
+        text: >-
+          ⏱ **20-25 min** · el frigidarium colosal + la meridiana en el suelo ·
+          gratis · en Piazza della Repubblica
+  - kind: stop
+    pace: medium
+    time: '17:05'
+    title: Palazzo Massimo · Museo Nazionale Romano
+    ref: palazzo-massimo
+    tag: alternativa
+    note: >-
+      El mejor arte romano del mundo. El jardín de Livia. Cambiadlo por degli
+      Angeli si el calor aprieta.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **40-50 min** · frescos de Livia + Púgil + Discóbolo · climatizado'
+      - level: warn
+        text: 'A elegir: el museo _o_ la iglesia · martes abierto hasta 19:00'
+  - kind: stop
+    pace: all
+    time: '17:50'
+    title: Recoger maletas en hotel
+    disabled: true
+    note: >-
+      Desde Piazza della Repubblica, 7-8 min andando. Despedida del Royal Court.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **20 min** · recoger maletas + último café + despedida'
+  - kind: transport
+    pace: all
+    variant: train
+    header: Termini → Fiumicino (FCO)
+    modes:
+      - icon: 🚆
+        recommended: true
+        desc: >-
+          **Leonardo Express** · directo sin paradas · sale cada 15 min · binari
+          23/24 · salid hacia las 18:15 para estar en FCO sobre las 19:00
+        tag: recomendado
+        meta: '⏱ **32 min** 💶 **€14 p.p. · €42 total**'
+      - icon: 🚕
+        desc: '**Taxi** · tarifa fija a FCO desde dentro del Raccordo Anulare'
+        meta: '⏱ **45-60 min · según tráfico** 💶 **€55 fijo · €18 p.p.**'
+    footnote: >-
+      Comprad el billete en la app Trenitalia/Omio o en las máquinas amarillas.
+      Con vuelo a las **21:50**, salir de Termini hacia las 18:15 deja FCO sobre
+      las 19:00 y ≈2h45 antes del vuelo — margen de sobra para un extracomunitario.
+      Si vais cómodos, podéis estirar hasta salir a las 18:30.
+  - kind: stop
+    pace: all
+    time: '18:15'
+    title: Leonardo Express → FCO
+    disabled: true
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **32 min** · sin paradas, directo a FCO'
+  - kind: stop
+    pace: all
+    time: '21:50'
+    title: Vuelo desde Fiumicino
+    disabled: true
+cards:
+  - galleria-borghese
+  - palazzo-barberini
+  - cappuccini
+  - smm
+  - santa-teresa
+  - palazzo-massimo
+  - angeli
