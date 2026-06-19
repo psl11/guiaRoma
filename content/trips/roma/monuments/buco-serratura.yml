@@ -1,0 +1,100 @@
+slug: buco-serratura
+trip: roma
+roman: XIV
+name: Buco della Serratura
+italian: Piazza dei Cavalieri di Malta · Aventino
+day: Domingo
+coords:
+  lat: 41.8829829
+  lng: 12.4784752
+type: card
+motif: keyhole
+badge: Sorrentino
+hero:
+  src: https://michelangelobuonarrotietornato.com/wp-content/uploads/2019/12/00002.jpg
+  alt: Vista por el ojo de cerradura
+sections:
+  - heading: Qué es
+    body: >-
+      Un ojo de cerradura en la puerta de una propiedad privada de la **Orden
+      Soberana de Malta**. Si te asomas a mirar por él, ves _la cúpula de San
+      Pedro perfectamente enmarcada al fondo de un seto recortado_. Tres estados
+      políticos en una línea visual: Italia (donde estás), la Orden de Malta
+      (entidad soberana propietaria del jardín) y el Vaticano (al fondo). Una
+      broma geográfica y un golpe de teatro óptico.
+  - heading: Historia
+    body: >-
+      La **Orden Soberana Militar y Hospitalaria de San Juan de Jerusalén** —
+      más conocida como Orden de Malta — es una entidad sui generis del derecho
+      internacional. Fundada en el siglo XI durante las Cruzadas como hermandad
+      de caballeros médicos, sobrevive desde entonces como _sujeto de derecho
+      internacional_, con relaciones diplomáticas con más de 100 países y
+      observador en la ONU, pero **sin territorio propio salvo dos propiedades
+      en Roma**: el Palazzo Magistrale en Via dei Condotti y este complejo en el
+      Aventino, conocido como Villa del Priorato. Técnicamente, cuando entras al
+      jardín de la villa, sales de Italia y entras en una jurisdicción soberana
+      sin territorio.
+
+
+      La villa fue reconstruida en 1765 por **Giovanni Battista Piranesi**, el
+      famoso grabador de las _Carceri_ y de las vistas romanas. Es la única obra
+      arquitectónica completa que Piranesi llegó a construir — todo lo demás
+      fueron diseños sobre papel. La **plaza exterior** (Piazza dei Cavalieri di
+      Malta) también la diseñó él, con obeliscos y trofeos de armas esculpidos en
+      relieve en los muros. Es una pequeña scena teatral con marcado simbolismo
+      iniciático y militar — algunos historiadores han visto en ella referencias
+      herméticas y masónicas.
+
+
+      El ojo de cerradura no fue obra explícita de Piranesi: el alineamiento
+      perfecto con la cúpula vaticana es probablemente casual, pero la naturaleza
+      barroca del momento permite pensar que el arquitecto lo notó y lo dejó así
+      intencionalmente. La perspectiva funciona porque el jardín tiene un paseo
+      arbolado recortado geométricamente que apunta directamente hacia el Tíber,
+      y al fondo, exactamente alineada, la cúpula de San Pedro.
+  - heading: Anécdotas
+    body: >-
+      El efecto óptico se hizo viral en redes sociales hacia 2015-2017, y la cola
+      para asomarse pasó de ser anecdótica a ser permanente. En verano,
+      especialmente fines de semana, la cola puede ser de 30-60 minutos. La Orden
+      de Malta no cobra ni regula: simplemente la gente espera turnos.
+
+
+      Hay una **técnica fotográfica** óptima: con un móvil normal, activa el modo
+      retrato o telefoto, pega el lente al agujero, ajusta el enfoque al fondo y
+      dispara. La cúpula sale enmarcada perfectamente entre dos hileras de
+      cipreses recortados. Si haces foto frontal sin ajustar el enfoque, sale
+      borrosa porque el lente intenta enfocar la cerradura, no el fondo.
+
+
+      Sorrentino lo cita en _La Grande Bellezza_ como uno de los lugares
+      "secretos" que solo los iniciados conocen. En la película el efecto se ve
+      fugazmente, pero el plano lo memorizan los espectadores. Es el lugar más
+      Sorrentino-Enric González del viaje: un truco geométrico-político-óptico-religioso
+      en una sola mirada.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://commons.wikimedia.org/wiki/Special:FilePath/Vatican_City_through_the_Aventine_Keyhole.jpg?width=700" alt="La vista a través del ojo de cerradura: la cúpula de San Pedro encuadrada por un seto recortado a propósito. Tres países" caption="La vista a través del ojo de cerradura: la cúpula de San Pedro encuadrada por un seto recortado a propósito. Tres países en una mirada."}
+
+      - La **plaza exterior diseñada por Piranesi**: obeliscos, trofeos militares en relieve en los muros, mascarones grotescos. Antes de hacer cola para el ojo, examina la plaza.
+      - Los **símbolos masónicos/herméticos** esculpidos: triángulos, ojos, instrumentos arquitectónicos. Piranesi era cercano a círculos esotéricos.
+      - El **truco óptico del ojo**: el jardín está recortado geométricamente para que la cúpula del Vaticano aparezca centrada entre dos hileras de árboles, como un fondo de teatro.
+      - Las **tres jurisdicciones**: tú estás físicamente en Italia, miras a través de territorio de la Orden de Malta, y enfocas un edificio del Estado de la Ciudad del Vaticano. Tres países en una mirada.
+      - Si la cola es muy larga (más de una hora), **abandona**. El paseo desde el Giardino degli Aranci hasta aquí, y la propia plaza Piranesi, ya valen la subida. El ojo es un truco — bonito, pero un truco.
+      - De vuelta hacia el norte, encontrarás la **Iglesia de Santa Sabina** y la **basílica de Sant'Alessio**, dos joyas medievales que casi nadie visita.
+facts:
+  - label: Acceso
+    value: Libre 24/7 · solo desde fuera
+  - label: Cola
+    value: 30-60 min en domingo de junio
+  - label: Foto
+    value: Modo retrato + enfoque al fondo
+  - label: Tiempo
+    value: 15-45 min con cola
+mapsQuery: Buco della Serratura Aventino Roma
+sorrentino:
+  label: La Grande Bellezza
+  text: >-
+    Sorrentino lo cita como ejemplo de "secreto romano" — un sitio que solo los
+    iniciados encuentran. El plano fugaz aparece hacia el último tercio de la
+    película.
