@@ -663,7 +663,12 @@ describe('monument schema', () => {
 
 **Si esta tabla parece corta:** las decisiones de stack/forma están bloqueadas y verificadas; las asunciones restantes son de detalle de implementación, todas de riesgo bajo-medio y cubiertas por los tests.
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+> **Estado: las 3 resueltas** por decisiones ya fijadas en los planes de la Fase 2 (nota de resolución por ítem):
+> - **Q1 (`slug` vs `id`/`stem`) → RESOLVED:** se usa un campo **`slug`** (== ancla del `index.html`) en todas las colecciones; el esquema lo define en `shared/schemas.ts` (Plan 02-01) y Plan 02-03 lo verifica (`grep -q "slug: roma"`). Se confirma con `pnpm typecheck`/build en 02-01.
+> - **Q2 (`archLink` como campo vs inline) → RESOLVED:** se deja **inline en el `body`** (es prosa) y el `invariants.spec` escanea los `(#…)` de todos los campos `Md` para validar TODAS las anclas internas (Plan 02-07 + 02-01).
+> - **Q3 (`reference`: `z.union` vs `blocks`) → RESOLVED:** **dos esquemas** (`ReservasSchema` + `PracticaSchema`) unidos por `z.union`/`z.discriminatedUnion('slug', …)` (Plan 02-01 T2), no un `blocks` genérico.
 
 1. **¿`slug` o `id`-propio o confiar en `stem`?**
    - Qué sabemos: `id` reservado (colisiona), `stem` = ruta-sin-ext (no es el ancla limpia).
