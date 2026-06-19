@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Andamiaje + Golden de paridad** - Proyecto Nuxt 4 en la rama de release, estático bajo `/guiaRoma/`, CSS verbatim, Nitro dormido, y golden de Playwright capturado desde `main` antes de divergir (completed 2026-06-18)
 - [x] **Phase 2: Esquema de datos + migración del contenido** - 6 colecciones zod en Nuxt Content v3 y todo Roma migrado 1:1 a datos tipados, con `day.cards` ordenado y validación que rompe el build (completed 2026-06-19)
-- [ ] **Phase 3: Capa de página, layout y tema** - `useTrip(slug)` + `TripView` renderizando un viaje desde datos, routing multi-viaje, layout/Topbar/NavPills idénticos y tema claro/oscuro sin parpadeo
+- [x] **Phase 3: Capa de página, layout y tema** - `useTrip(slug)` + `TripView` renderizando un viaje desde datos, routing multi-viaje, layout/Topbar/NavPills idénticos y tema claro/oscuro sin parpadeo (completed 2026-06-19)
 - [ ] **Phase 4: Render de contenido + modos de ritmo** - Fichas, timeline y secciones de referencia renderizadas desde datos e idénticas a hoy, con selector de ritmo, "caminar menos" y modo resumen
 - [ ] **Phase 5: Navegación transversal** - `useCardNavigation` (scroll-a-ficha, pila volver, scrollspy `+130`) consumida de forma única por enlaces, mapa y búsqueda
 - [ ] **Phase 6: Derivados de datos — búsqueda y ruta del día** - Búsqueda en cliente sobre los datos y "ruta del día" derivada de `day.cards`, ambas con la misma cobertura y resultado que hoy
@@ -67,7 +67,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   - [x] 03-02-PLAN.md — useTrip(slug) aggregates the 6 collections + id Maps, resolves at SSG; pure indexer unit-tested (SC#1/ARCH-01) [Wave 2]
   - [x] 03-03-PLAN.md — Layout shell verbatim: Topbar + ThemeToggle (2-state, CSS-only icon) + NavPills (hybrid D-03/D-04) + BackButton shell (UI-01/FEAT-01) [Wave 2]
   - [x] 03-04-PLAN.md — TripView (chrome + 12-anchor scaffold, D-05) + TheHero (full #inicio via MDC, D-06) (ARCH-01/02/UI-01) [Wave 3]
-  - [ ] 03-05-PLAN.md — Wire app.vue/pages/routing + parity head (D-09); Playwright shell+routing+FOUC+icon parity + human golden sign-off [Wave 4]
+  - [x] 03-05-PLAN.md — Wire app.vue/pages/routing + parity head (D-09); Playwright shell+routing+FOUC+icon parity + human golden sign-off [Wave 4]
 **UI hint**: yes
 
 ### Phase 4: Render de contenido + modos de ritmo
@@ -137,7 +137,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 |-------|----------------|--------|-----------|
 | 1. Andamiaje + Golden de paridad | 3/3 | Complete   | 2026-06-18 |
 | 2. Esquema de datos + migración del contenido | 7/7 | Complete   | 2026-06-19 |
-| 3. Capa de página, layout y tema | 4/5 | In Progress|  |
+| 3. Capa de página, layout y tema | 5/5 | Complete   | 2026-06-19 |
 | 4. Render de contenido + modos de ritmo | 0/TBD | Not started | - |
 | 5. Navegación transversal | 0/TBD | Not started | - |
 | 6. Derivados de datos — búsqueda y ruta del día | 0/TBD | Not started | - |

@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 03-04-PLAN.md
-last_updated: "2026-06-19T13:18:48.006Z"
+status: verifying
+stopped_at: Completed 03-05-PLAN.md (F3 done — golden-parity sign-off APPROVED)
+last_updated: "2026-06-19T17:21:14.225Z"
 last_activity: 2026-06-19
 progress:
   total_phases: 8
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 15
-  completed_plans: 14
-  percent: 25
+  completed_plans: 15
+  percent: 38
 ---
 
 # Project State
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 
 Phase: 03 (Capa de página, layout y tema) — EXECUTING
 Plan: 5 of 5
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-06-19
 
-Progress: [█████████░] 93%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -66,6 +66,7 @@ Progress: [█████████░] 93%
 | Phase 03 P02 | 7min | 2 tasks | 3 files |
 | Phase 03 P03 | 6min | 2 tasks | 5 files |
 | Phase 03 P04 | 11min | 2 tasks | 2 files |
+| Phase Phase 03 PP05 | 13min | 4 tasks tasks | 5 files files |
 
 ## Accumulated Context
 
@@ -116,6 +117,10 @@ Recent decisions affecting current work:
 - [Phase ?]: [Fase 3]: las 11 secciones no-#inicio de TripView son <section id> reales y VACÍAS (solo id, sin contenido ni height) — una altura fija desplazaría cada ancla y rompería el scrollspy de F5 (scroll-padding-top:124px); vacías, section{padding}/section+section{border-top} aplican igual que en el golden
 - [Phase ?]: [Fase 3]: prosa de #inicio (TheHero) vía <MDC> con unwrap='p' en los casos inline (trip.title en h1, infoCards value) y <p> conservado en howTo (RESEARCH §Open Q1 RESUELTA); el cuadre de ritmo vertical a pixel se valida contra el golden en el parity Playwright del Plan 05
 - [Phase ?]: [Fase 3]: v-if='trip' en <TheHero> estrecha Ref<Trip|null> a la prop Trip no-nula sin ocultar #inicio (trip siempre presente para / slug roma y /trips/[slug] válido con guard 404); anclas de día en español #viernes..#martes = ids reales del index.html y de nav-pills, no las grafías italianas sueltas de una nota del plan
+- [Phase ?]: [Fase 3]: app.vue = NuxtPage root SIN NuxtLayout (TripView posee el chrome, A3) + head de paridad VERBATIM por useHead (D-09: lang es, title 'Roma · 19—23 giugno 2026', dos theme-color metas dark #1a1612/light #f5f0e8); bloque favicon useHead de Fase 1 preservado intacto (NO app.head.link, que no antepone baseURL → 404 bajo /guiaRoma/)
+- [Phase ?]: [Fase 3]: /trips/[slug] reusa TripView con createError(404, fatal) en slug desconocido y NUNCA se prerenderiza (no se enlaza, no se toca nitro.prerender.routes); index.vue y [slug].vue son one-liners <TripView :slug> (convención A3); el build no emite dir trips/ (D-01, asertado en shell.spec)
+- [Phase ?]: [Fase 3]: specs de paridad autocontenidos (build+serve propio, mirror de subpath.spec.ts) porque el webServer por defecto sirve el index.html VIEJO; prefieren aserciones DOM/texto a screenshots (no rebaselinar golden); toleran EXACTAMENTE el un mensaje esperado de hidratación color-mode SSG (D2) y fallan ante cualquier otro error de consola. SC#3 anti-FOUC en dos partes (script inline presente + dark-sin-flash), SC#4 icono solo-CSS nunca system
+- [Phase ?]: [Fase 3]: F3 CERRADA — sign-off humano de paridad golden APROBADO (home idéntico al golden de Fase 1 en claro+oscuro, móvil+desktop, sin FOUC); ARCH-01/ARCH-02/UI-01/FEAT-01 completos; D1 (unión SQL artist/reference en useTrip) diferido a F4 antes de rellenar #arte/#arquitectura/#reservas/#practica
 
 ### Pending Todos
 
@@ -142,6 +147,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-19T13:18:47.998Z
-Stopped at: Completed 03-04-PLAN.md
+Last session: 2026-06-19T17:21:14.215Z
+Stopped at: Completed 03-05-PLAN.md (F3 done — golden-parity sign-off APPROVED)
 Resume file: None
