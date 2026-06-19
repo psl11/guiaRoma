@@ -122,10 +122,14 @@ function domToMarkdown(node: AnyNode, links: Set<string>): string {
 
 // Subárboles que son CHROME de UI, no contenido editorial migrado: NO cuentan como texto.
 //   - .notes-area: el bloque de "Notas in situ" + el <textarea> (Fase 7, no es prosa).
+//   - .artist-avatar: la inicial decorativa de la ficha (B / IV / ?). Es estructural (el YAML
+//     la guarda en el campo `avatar`, ya excluido del texto vía STRUCTURAL_KEYS): para que la
+//     comparación sea SIMÉTRICA hay que excluirla también del lado HTML; si no, su letra
+//     aparecería como "texto faltante" en las 13 artist-cards.
 //   - .maps-link / .gastro-maps-link: la ETIQUETA del botón ("Ver en Google Maps" /
 //     "📍 Google Maps") la genera el componente en Fase 4; su href SÍ se captura como enlace,
 //     pero su texto no es prosa migrada (el dato sólo guarda `mapsQuery`).
-const CHROME_SELECTOR = '.notes-area'
+const CHROME_SELECTOR = '.notes-area, .artist-avatar'
 const MAPS_LINK_SELECTOR = '.maps-link, .gastro-maps-link'
 
 export function extractFromHtml(id: string): Extracted {

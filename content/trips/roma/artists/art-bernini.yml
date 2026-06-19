@@ -1,0 +1,73 @@
+kind: artist
+slug: art-bernini
+trip: roma
+avatar: B
+name: Gian Lorenzo Bernini
+dates: Nápoles 1598 – Roma 1680 · escultor · arquitecto
+epithet: «El hombre que esculpió el Barroco y dio su rostro a la Roma que hoy fotografiamos.»
+sections:
+  - heading: Quién fue
+    body: >-
+      Hijo de un escultor florentino, niño prodigio que a los 25 años ya era el
+      artista favorito de los papas. Bajo el mecenazgo de **Urbano VIII**
+      (Barberini) y **Alejandro VII** (Chigi) se convirtió durante sesenta años
+      en el artista total de Roma: escultor, arquitecto, pintor, escenógrafo y
+      hasta dramaturgo. Dio forma a la imagen del catolicismo triunfante de la
+      Contrarreforma.
+  - heading: Su estilo
+    body: >-
+      El Barroco hecho carne. Bernini logra que el mármol parezca **piel, tela,
+      agua y movimiento**. Captura el _instante decisivo_ —el momento de máxima
+      tensión: Dafne convirtiéndose en laurel, Teresa traspasada por el ángel—. Y
+      funde escultura, arquitectura y luz natural en un solo golpe teatral (el
+      _bel composto_). Su tema es la emoción extrema: éxtasis, asombro, dolor.
+  - heading: Obras maestras
+    body: |
+      - _Apolo y Dafne_ y _El rapto de Proserpina_ — Galleria Borghese
+      - El **baldaquino** y la **columnata** de la Plaza de San Pedro
+      - La _Fontana dei Quattro Fiumi_ en Piazza Navona
+      - El _Éxtasis de Santa Teresa_
+  - heading: Por qué importa
+    body: >-
+      Inventó el lenguaje visual del Barroco que se exportó a toda la Europa
+      católica. Concibió la obra de arte como una **experiencia envolvente y
+      emocional**, anticipando la idea moderna de espectáculo total. Su rivalidad
+      con Borromini definió dos formas opuestas de entender la arquitectura.
+  - heading: Cómo reconocer su mano
+    body: |
+      - El **mármol blando**: la carne se hunde bajo los dedos (mirad la mano de
+      Plutón en el muslo de Proserpina), las telas vuelan, el pelo se enreda.
+      Parece imposible que sea piedra.
+      - El **instante de máxima acción**, nunca el reposo: Dafne justo cuando le
+      brotan las hojas.
+      - La **teatralidad**: figuras que se asoman, rompen el marco y te miran; y
+      la **luz natural dirigida** como un foco (la ventana oculta que ilumina a
+      Santa Teresa).
+      - Bocas entreabiertas, ojos en blanco, manos suspendidas: el éxtasis y el
+      asombro hechos gesto.
+  - heading: Curiosidades
+    body: |
+      - Niño prodigio: a los ocho años ya tallaba cabezas que dejaban al papa
+      boquiabierto.
+      - Diseñaba **obras de teatro** con incendios e inundaciones falsas en
+      escena; de ahí su sentido del espectáculo.
+      - En un ataque de celos hizo **marcar a navaja** la cara de su amante
+      Costanza; su busto es el retrato más "vivo" de toda su obra.
+      - Su gran fracaso —los campanarios de San Pedro, que se agrietaron y hubo
+      que demoler— casi lo hunde; se rehízo con la columnata que hoy abraza la
+      plaza.
+seenIn:
+  - ref: santa-teresa
+    label: '[Éxtasis de Santa Teresa](#santa-teresa)'
+    note: ✦ Lo verás en este viaje
+  - ref: piazza-navona
+    label: '[Fontana dei Quattro Fiumi (Navona)](#piazza-navona)'
+  - ref: castel-santangelo
+    label: '[los ángeles del Ponte Sant''Angelo](#castel-santangelo)'
+  - ref: minerva
+    label: '[el elefantino de la Minerva](#minerva)'
+  - ref: doria-pamphilj
+    label: '[busto de Inocencio X (Doria Pamphilj)](#doria-pamphilj)'
+  - ref: palazzo-barberini
+    label: '[Palazzo Barberini](#palazzo-barberini)'
+    note: y, con guía, el baldaquino y la columnata del **Vaticano**.
