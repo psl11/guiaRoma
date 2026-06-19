@@ -1,0 +1,17 @@
+slug: g-tonnarello
+trip: roma
+group: Pizza
+badge: trattoria + pizza
+badgeKind: trattoria
+name: Tonnarello
+address: Via della Paglia 1 · Trastevere
+desc: >-
+  Trattoria de Trastevere con mesas en la calle. Tiene las cuatro pastas romanas
+  clásicas y también pizza — buena opción cuando el grupo no se pone de acuerdo.
+  Siempre concurrido, ambiente vivo de barrio. Precios razonables para la zona.
+plato: >-
+  **Plato estrella:** tonnarelli cacio e pepe (lógico dado el nombre) + pizza.
+  Buen lugar para aperitivo antes del sábado noche.
+footer: Todos los días · precio medio €25-35/persona ·
+itineraryTag: sábado Trastevere
+mapsQuery: Tonnarello Via della Paglia 1 Roma
