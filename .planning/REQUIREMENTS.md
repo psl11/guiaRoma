@@ -42,7 +42,7 @@ Requisitos para la release 1.0. Cada uno se mapea a una fase del roadmap.
 
 ### Features interactivas — paridad (FEAT)
 
-- [ ] **FEAT-01**: Tema claro/oscuro con `@nuxtjs/color-mode` (`data-theme`, `storageKey: 'roma-theme'`), respeta `prefers-color-scheme` y no parpadea en estático
+- [x] **FEAT-01**: Tema claro/oscuro con `@nuxtjs/color-mode` (`data-theme`, `storageKey: 'roma-theme'`), respeta `prefers-color-scheme` y no parpadea en estático
 - [ ] **FEAT-02**: Mapa Leaflet (componente client-only) con marcadores numerados por tipo, popups "Abrir ficha →", `fitBounds` y banner offline — idéntico a hoy
 - [ ] **FEAT-03**: Búsqueda en cliente sobre los DATOS (MiniSearch), cubriendo el mismo texto que hoy, con dropdown que navega a la ficha
 - [ ] **FEAT-04**: Notas por ficha persistidas en localStorage, con las mismas claves y comportamiento
@@ -120,7 +120,7 @@ Qué fases cubren qué requisitos. Mapeo del roadmap (ver `.planning/ROADMAP.md`
 | ARCH-01 | Phase 3 | Complete |
 | ARCH-02 | Phase 3 | Pending |
 | UI-01 | Phase 3 | Complete |
-| FEAT-01 | Phase 3 | Pending |
+| FEAT-01 | Phase 3 | Complete |
 | UI-02 | Phase 4 | Pending |
 | UI-03 | Phase 4 | Pending |
 | UI-04 | Phase 4 | Pending |

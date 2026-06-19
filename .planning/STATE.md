@@ -4,7 +4,7 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Completed 03-02-PLAN.md
-last_updated: "2026-06-19T12:56:58.778Z"
+last_updated: "2026-06-19T13:05:08.873Z"
 last_activity: 2026-06-19
 progress:
   total_phases: 8
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 ## Current Position
 
 Phase: 03 (Capa de página, layout y tema) — EXECUTING
-Plan: 3 of 5
+Plan: 4 of 5
 Status: Ready to execute
 Last activity: 2026-06-19
 
@@ -64,6 +64,7 @@ Progress: [████████░░] 80%
 | Phase 02 P07 | 14min | 3 tasks | 18 files |
 | Phase 03 P01 | 3min | 2 tasks | 4 files |
 | Phase 03 P02 | 7min | 2 tasks | 3 files |
+| Phase 03 P03 | 6min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -107,6 +108,9 @@ Recent decisions affecting current work:
 - [Phase 3]: [Fase 3]: useTrip(slug) es la raíz de datos (SC#1/ARCH-01): 6 useAsyncData(queryCollection) en Promise.all, filtro .where('trip','=',slug) (trip por slug), days/reference ordenados ASC, resuelto en prerender (offline); slug es la única clave consultada, nunca .where('id')
 - [Phase 3]: [Fase 3]: artist/reference son z.discriminatedUnion → Content v3 genera item-types vacíos; el retorno de useTrip se tipa contra los tipos zod de shared/schemas vía as-unknown-as, y el builder .order('order') de reference se castea a any (un eslint-disable local) porque .order exige keyof y la unión omite la columna order real; runtime SQL intacto
 - [Phase 3]: [Fase 3]: buildTripIndexes extraído a app/utils/ como función pura (Maps slug-keyed con guard ?? []) → SC#1 cubierto en Vitest plano sin añadir @nuxt/test-utils
+- [Phase ?]: [Fase 3]: los 4 componentes de chrome (Topbar/ThemeToggle/NavPills/BackButton) reproducen el markup+clases del index.html VERBATIM y escriben CERO CSS — sin <style scoped> (data-v-* rompería selectores descendientes cross-componente como .topbar-inner .theme-btn y [data-theme] .theme-btn .moon); paridad por construcción (UI-01)
+- [Phase ?]: [Fase 3]: ThemeToggle consume useColorMode() (D-08) — invierte el valor RESUELTO (colorMode.value) y escribe una preferencia CONCRETA light/dark, nunca 'system'; el icono conmuta SOLO via CSS [data-theme] (D-10/SC#4), ambos spans siempre renderizados, sin directivas condicionales (evita FOUC + mismatch de hidratacion)
+- [Phase ?]: [Fase 3]: NavPills es hibrido (D-03) — 7 pastillas estructurales literales + 5 de dia DERIVADAS de props.days (v-for, href='#'+slug, etiqueta via dayLabel(eyebrow), D-04) en el orden BLOQUEADO entre Mapa y Reservas; sin estado resaltado/scrollspy (frontera F5). BackButton es shell visible-solo (D-07): onclick descartado, sin manejador ni clase de visibilidad. eslint.config.mjs permite el nombre de 1 palabra 'Topbar' (bloqueado por el contrato de auto-import)
 
 ### Pending Todos
 
@@ -133,6 +137,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-19T12:56:58.767Z
+Last session: 2026-06-19T13:04:35.127Z
 Stopped at: Completed 03-02-PLAN.md
 Resume file: None
