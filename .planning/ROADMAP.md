@@ -47,7 +47,14 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Cada día codifica su `timeline` como array ordenado con el `kind` y el `pace` de cada fila, y declara `cards: string[]` con el **orden exacto** de sus fichas-monumento (el campo del que se reproduce la "ruta del día", que hoy depende del orden del DOM)
   3. Todo el contenido de Roma (≈37 monumentos + gastronomía + artistas + secciones Reservas/Práctica/Arte/Arquitectura) está migrado 1:1, con la prosa en Markdown-inline lista para `<MDC>` y cada monumento con su `motif` (zod `enum`)
   4. La validación de esquema **falla el build** ante cualquier dato inválido; un test de invariantes confirma ids únicos y que toda referencia cruzada (`timeline.ref`, `cards[]`, `seenIn`, `archLink`) resuelve a una ficha existente
-**Plans**: TBD
+**Plans**: 7 plans
+  - [ ] 02-01-PLAN.md — Contrato de datos: 6 colecciones zod en shared/schemas.ts + content.config.ts + Vitest/yaml/cheerio + tests schema.spec (puerta DATA-05) e invariants.spec (SC4) [Wave 1]
+  - [ ] 02-02-PLAN.md — Harness de fidelidad 1:1 (D-07/D-08): cheerio extrae texto+enlaces por id del index.html + migration-diff.spec (puerta DATA-04) [Wave 2]
+  - [ ] 02-03-PLAN.md — trip.yml + 5 days: timeline discriminado por kind con pace (DATA-02) + cards en orden de DOM (DATA-03) [Wave 2]
+  - [ ] 02-04-PLAN.md — 21 monumentos viernes/sabado/domingo migrados 1:1 (motif/type/places, cross-refs card-artists/card-arch, prosa MDC-ready) [Wave 2]
+  - [ ] 02-05-PLAN.md — 17 monumentos lunes/martes migrados 1:1 (completan los 38) [Wave 2]
+  - [ ] 02-06-PLAN.md — 26 fichas de gastronomia migradas 1:1 (group/badge; 5 sin id reciben slug g-) [Wave 2]
+  - [ ] 02-07-PLAN.md — 13 artist-cards (artist/arquitectura/glossary) + reservas + practica migrados 1:1 [Wave 2]
 
 ### Phase 3: Capa de página, layout y tema
 **Goal**: Construir la capa que agrega un viaje desde sus datos y lo entrega al árbol de componentes, con el shell de layout (Topbar, NavPills, BackButton) visualmente idéntico a hoy y el tema claro/oscuro resuelto sin parpadeo en estático — fijando el anti-FOUC desde que el layout existe.
@@ -127,7 +134,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Andamiaje + Golden de paridad | 3/3 | Complete   | 2026-06-18 |
-| 2. Esquema de datos + migración del contenido | 0/TBD | Not started | - |
+| 2. Esquema de datos + migración del contenido | 0/7 | Not started | - |
 | 3. Capa de página, layout y tema | 0/TBD | Not started | - |
 | 4. Render de contenido + modos de ritmo | 0/TBD | Not started | - |
 | 5. Navegación transversal | 0/TBD | Not started | - |
