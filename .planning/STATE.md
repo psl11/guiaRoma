@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 3 UI-SPEC approved
-last_updated: "2026-06-19T12:37:47.953Z"
-last_activity: 2026-06-19 -- Phase 03 planning complete
+stopped_at: Completed 03-01-PLAN.md
+last_updated: "2026-06-19T12:47:31.636Z"
+last_activity: 2026-06-19
 progress:
   total_phases: 8
   completed_phases: 2
   total_plans: 15
-  completed_plans: 10
+  completed_plans: 11
   percent: 25
 ---
 
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** La 1.0 debe ser exactamente igual que la guía de hoy (paridad visual y funcional al 100%), pero construida de forma dinámica, data-driven y mantenible.
-**Current focus:** Phase 3 — capa de página, layout y tema
+**Current focus:** Phase 03 — Capa de página, layout y tema
 
 ## Current Position
 
-Phase: 3
-Plan: Not started
+Phase: 03 (Capa de página, layout y tema) — EXECUTING
+Plan: 2 of 5
 Status: Ready to execute
-Last activity: 2026-06-19 -- Phase 03 planning complete
+Last activity: 2026-06-19
 
-Progress: [██████████] 100%
+Progress: [███████░░░] 73%
 
 ## Performance Metrics
 
@@ -62,6 +62,7 @@ Progress: [██████████] 100%
 | Phase 02 P05 | 18min | 2 tasks | 17 files |
 | Phase 02 P06 | 9min | 2 tasks | 26 files |
 | Phase 02 P07 | 14min | 3 tasks | 18 files |
+| Phase 03 P01 | 3min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -99,6 +100,9 @@ Recent decisions affecting current work:
 - [Phase ?]: [Fase 2]: reservas.table.badge/badgeKind → optional (fila 'Sin reserva' sin badge); anclas de SECCIÓN de página (#gastronomia/#arte/#arquitectura/#inicio/#mapa) aceptadas en el invariante de anclas inline (landings SPA, no entidades)
 - [Phase ?]: [Fase 2]: archLink (arq-barroco → #art-bernini/#art-borromini) INLINE en el body de la prosa, no campo aparte; arq-medieval con 2 secciones fiel al DOM (sin 'Por qué importa')
 - [Phase 2]: gap closure — los 8 textos de NIVEL sección/grupo que la migración per-card dejó caer (eyebrows+intros de gastronomía/arte/arquitectura 5337/5340·5943/5945·6106/6108 + gastro-intro de quinto quarto 5501 / ghetto 5541) se capturan verbatim en TripSchema.sections (trip.yml) y food.groupIntro (g-checchino/g-giggetto); migration-diff gana extractSectionMeta/extractGroupIntro + test de nivel sección con fixtures negativos, y groupIntro va a STRUCTURAL_KEYS para no romper el diff per-card. pnpm test:data 295 verde, typecheck+lint limpios. Supersede la decisión de 02-06 de no poblar groupIntro
+- [Phase 3]: [Fase 3]: dayLabel guarda split('·')[0] con ?? '' para noUncheckedIndexedAccess (TS2532) conservando la forma prescrita split('·')+toLocaleUpperCase('it'); String.split siempre devuelve >=1 elemento, sin cambio de comportamiento
+- [Phase 3]: [Fase 3]: tests/unit y tests/data como runners DISJUNTOS via un solo include + scripts dedicados (test:unit / test:data), no Vitest projects; data sigue 295 verde aislado, unit 7 verde
+- [Phase 3]: [Fase 3]: la etiqueta de día se DERIVA (D-04), nunca se almacena — sin campo navLabel en shared/schemas.ts y sin tocar los 5 YAML de día; helper puro en app/utils/ auto-importado como dayLabel
 
 ### Pending Todos
 
@@ -125,6 +129,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-19T11:05:05.672Z
-Stopped at: Phase 3 UI-SPEC approved
-Resume file: .planning/phases/03-capa-de-p-gina-layout-y-tema/03-UI-SPEC.md
+Last session: 2026-06-19T12:47:31.629Z
+Stopped at: Completed 03-01-PLAN.md
+Resume file: None
