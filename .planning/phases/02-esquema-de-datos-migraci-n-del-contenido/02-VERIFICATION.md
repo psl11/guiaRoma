@@ -1,8 +1,13 @@
 ---
 phase: 02-esquema-de-datos-migraci-n-del-contenido
 verified: 2026-06-19T10:07:14Z
-status: gaps_closed
+status: passed
 score: 8/8 must-haves verified
+note: >-
+  Verification initially found 1 gap (gaps_found, 7/8); it was closed in-phase
+  (commits b7a4a93, fbe8f9c) and re-verified deterministically — all 8 section-level
+  texts present verbatim, pnpm test:data 295 passed, typecheck + lint clean, gate
+  teeth intact, index.html untouched. Status promoted gaps_found → passed.
 overrides_applied: 0
 gap_closure:
   resolved: 2026-06-19
@@ -19,8 +24,9 @@ gap_closure:
     02-06-SUMMARY.md ▸ "Gap Closure".
 gaps:
   - truth: "Migrar TODO el contenido de Roma 1:1 a datos, sin perder ni una palabra ni un enlace (DATA-04 / SC3)"
-    status: failed
+    status: resolved
     reason: >-
+      [RESOLVED via gap closure — commits b7a4a93/fbe8f9c. Original finding kept for audit:]
       5 editorial paragraphs visible in index.html are not captured in any YAML file:
       (1) gastronomia main gastro-intro — "Roma tiene cuatro platos de pasta (cacio e pepe,
       carbonara, amatriciana, gricia)…" (index.html line 5340);
