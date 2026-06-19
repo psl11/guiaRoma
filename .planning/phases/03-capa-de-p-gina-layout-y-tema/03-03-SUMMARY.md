@@ -139,6 +139,10 @@ None — no external service configuration required. No packages installed (the 
 - `NavPills`/`Topbar` expect a `days: Day[]` prop ordered ASC — Plan 04 must source it from `useTrip().days` (03-02) and keep the data source consistent (layout vs TripView is Claude's Discretion per PATTERNS §TripView).
 - No blockers. `.active`/scrollspy (NavPills) and the back-stack + `.show` toggle (BackButton) remain F5 work, by design.
 
+## Self-Check: PASSED
+
+All created files verified on disk (Topbar.vue, ThemeToggle.vue, NavPills.vue, BackButton.vue, 03-03-SUMMARY.md). All commits verified present in git history (`3997acd`, `00bd407`, `9f520c1`).
+
 ---
 *Phase: 03-capa-de-p-gina-layout-y-tema*
 *Completed: 2026-06-19*
