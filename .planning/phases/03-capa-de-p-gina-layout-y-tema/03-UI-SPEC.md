@@ -1,7 +1,7 @@
 ---
 phase: 3
 slug: capa-de-p-gina-layout-y-tema
-status: draft
+status: verified
 shadcn_initialized: false
 preset: none
 created: 2026-06-19
