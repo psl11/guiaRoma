@@ -62,7 +62,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Layout, Topbar y NavPills están componentizados y se ven idénticos a hoy (misma cabecera fija, mismas pastillas de navegación)
   3. El tema claro/oscuro funciona con `@nuxtjs/color-mode` (`data-theme`, `storageKey:'roma-theme'`, `fallback:'light'`), respeta `prefers-color-scheme` y **no parpadea** al recargar con `roma-theme=dark` (el script inline anti-flash está presente en el `<head>` del HTML generado)
   4. El icono luna/sol se resuelve solo por CSS (`[data-theme]`), sin ningún `v-if` por tema en los templates
-**Plans**: TBD
+**Plans**: 5 plans
+  - [ ] 03-01-PLAN.md — Test tooling (tests/unit runner) + pure dayLabel helper (D-04) [Wave 1]
+  - [ ] 03-02-PLAN.md — useTrip(slug) aggregates the 6 collections + id Maps, resolves at SSG; pure indexer unit-tested (SC#1/ARCH-01) [Wave 2]
+  - [ ] 03-03-PLAN.md — Layout shell verbatim: Topbar + ThemeToggle (2-state, CSS-only icon) + NavPills (hybrid D-03/D-04) + BackButton shell (UI-01/FEAT-01) [Wave 2]
+  - [ ] 03-04-PLAN.md — TripView (chrome + 12-anchor scaffold, D-05) + TheHero (full #inicio via MDC, D-06) (ARCH-01/02/UI-01) [Wave 3]
+  - [ ] 03-05-PLAN.md — Wire app.vue/pages/routing + parity head (D-09); Playwright shell+routing+FOUC+icon parity + human golden sign-off [Wave 4]
 **UI hint**: yes
 
 ### Phase 4: Render de contenido + modos de ritmo
@@ -132,7 +137,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 |-------|----------------|--------|-----------|
 | 1. Andamiaje + Golden de paridad | 3/3 | Complete   | 2026-06-18 |
 | 2. Esquema de datos + migración del contenido | 7/7 | Complete   | 2026-06-19 |
-| 3. Capa de página, layout y tema | 0/TBD | Not started | - |
+| 3. Capa de página, layout y tema | 0/5 | Not started | - |
 | 4. Render de contenido + modos de ritmo | 0/TBD | Not started | - |
 | 5. Navegación transversal | 0/TBD | Not started | - |
 | 6. Derivados de datos — búsqueda y ruta del día | 0/TBD | Not started | - |
