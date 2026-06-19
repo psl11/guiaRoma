@@ -1,0 +1,120 @@
+slug: reservas
+trip: roma
+order: 1
+title: Reservas
+eyebrow: Roma · organización
+intro: >-
+  Todo lo reservado para el viaje en un solo sitio — mesas y visitas guiadas. Más
+  abajo, qué restaurantes conviene reservar y con cuánta antelación.
+confirmed:
+  - group: mesas
+    when: Vie 19 · 22:30
+    text: '[Osteria da Fortunata](#g-fortunata) (junto a Campo de'' Fiori) · 3 comensales'
+  - group: mesas
+    when: Sáb 20 · 22:00
+    text: '[Mercato Hostaria](#g-mercato-hostaria), Campo de'' Fiori 53 _(Restoo)_'
+  - group: mesas
+    when: Sáb 20 · 16:00
+    text: Otello (Trastevere), Via della Pelliccia 47/53 _(TheFork)_
+  - group: mesas
+    when: Dom 21 · 13:30
+    text: Ristoro Della Salute (junto al Coliseo) · a nombre de **Alejandro**
+  - group: mesas
+    when: Lun 22 · 14:15
+    text: '[La Matriciana dal 1870](#g-matriciana), Via del Viminale 44 · ☎ +39 06 488 1775'
+  - group: mesas
+    when: Lun 22 · 22:00
+    text: '[Felice a Testaccio](#g-felice), Via Mastro Giorgio 29'
+  - group: mesas
+    when: Mar 23 · 13:00
+    text: '[La Vecchia Roma](#g-vecchia-roma) (Monti) · **2 personas** · a nombre de Alejandro'
+  - group: visitas
+    when: Sáb 20 · 12:10
+    text: Tour Vaticano _(GetYourGuide)_ · encuentro 11:55 en Touristation, Viale Vaticano 95
+  - group: visitas
+    when: Dom 21 · 15:00
+    text: 'Tour Coliseo + Arena + Foro + Palatino _(Civitatis)_ · encuentro en metro Colosseo (L.B), salida Via dei Fori Imperiali'
+  - group: visitas
+    when: Lun 22 · 13:00-14:00
+    text: '**Panteón · entrada con hora** ✅ _reservado_ · 3 entradas nominales (Alejandro, Pablo, Víctor) · Musei Italiani'
+table:
+  - ref: g-armando
+    name: Armando al Pantheon
+    badge: semanas antes
+    badgeKind: urgent
+    desc: >-
+      Local muy pequeño, lleno casi siempre. Reservar con **2-3 semanas** mínimo.
+      Sin reserva, imposible.
+  - ref: g-roscioli
+    name: Roscioli
+    badge: semanas antes
+    badgeKind: urgent
+    desc: >-
+      Uno de los más solicitados de Roma. Reservar con **1-2 semanas** de
+      antelación. Tienen turno de barra sin reserva, pero el comedor se llena.
+  - ref: g-felice
+    name: Felice a Testaccio
+    badge: ✓ reservado · lun 22, 22:00
+    badgeKind: done
+    isDone: true
+    desc: >-
+      La cacio e pepe más famosa de Roma. **Reserva confirmada** para la cena del
+      lunes (3 pax).
+  - ref: g-checchino
+    name: Checchino dal 1887
+    badge: días/semana antes
+    badgeKind: urgent
+    desc: >-
+      Templo del quinto quarto. Reservar con **varios días** de antelación,
+      especialmente fines de semana.
+  - ref: galleria-borghese
+    name: Galleria Borghese
+    badge: sin hueco
+    badgeKind: urgent
+    desc: >-
+      No hubo turnos libres para las fechas. El martes se sustituye por [Palazzo
+      Barberini](#palazzo-barberini) (Caravaggio, Rafael, techo de Cortona) —
+      interior y sin reserva. El Bernini en escultura queda cubierto esa tarde con
+      el Éxtasis de Santa Teresa.
+  - ref: g-matriciana
+    name: La Matriciana dal 1870
+    badge: ✓ reservado · lun 22, 14:15
+    badgeKind: done
+    isDone: true
+    desc: >-
+      La patria de la amatriciana (Stanley Tucci). **Reserva confirmada** para el
+      almuerzo del lunes (3 pax). ☎ +39 06 488 1775.
+  - ref: g-sora-lella
+    name: Sora Lella
+    badge: recomendable
+    badgeKind: rec
+    desc: >-
+      Especialmente para **fin de semana**. Reservar con 2-4 días. Cerrado
+      domingos.
+  - ref: g-giggetto
+    name: Giggetto al Portico d'Ottavia
+    badge: recomendable
+    badgeKind: rec
+    desc: >-
+      Para comer en el Ghetto con calma. Reservar con **1-2 días**, sobre todo
+      domingo al mediodía.
+  - ref: g-mercato-hostaria
+    name: Mercato Hostaria
+    badge: ✓ reservado · sáb 20, 22:00
+    badgeKind: done
+    isDone: true
+    desc: >-
+      **Reserva confirmada** para la cena del sábado en Campo de' Fiori (3 pax) —
+      movida desde el viernes.
+  - name: Otello (Trastevere)
+    badge: ✓ reservado · sáb 20, 16:00
+    badgeKind: done
+    isDone: true
+    desc: >-
+      **Reserva confirmada** · comida tardía del sábado tras el Vaticano. Via della
+      Pelliccia 47/53.
+  - name: Sin reserva (hacer cola)
+    desc: >-
+      [Da Baffetto](#g-baffetto), [La Montecarlo](#g-montecarlo), [Dar
+      Poeta](#g-dar-poeta), [Da Fortunata](#g-fortunata),
+      [Tonnarello](#g-tonnarello) — llegar pronto o esperar en la calle.

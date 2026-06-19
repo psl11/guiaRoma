@@ -169,12 +169,25 @@ describe('cross-refs resuelven a slugs existentes', () => {
 })
 
 // ── Invariante 4: anclas (#id) inline en la prosa resuelven (cubre archLink) ──
+// Anclas de SECCIÓN de página (no entidades): el index.html enlaza, dentro de la prosa,
+// a las landings `<section id="…">` de la página única (la nav-pill y los `tl-food-foot`
+// «Fichas en [Gastronomía](#gastronomia)»). NO son slugs de contenido — no hay una entidad
+// `gastronomia`/`arte` (gastronomía = toda la colección food). Los días (`viernes`…) y
+// `reservas`/`practica` SÍ son slugs y resuelven por sí mismos; aquí sólo se listan las
+// secciones puramente navegacionales sin entidad de respaldo. Fase 4/5 renderiza estas
+// anclas como landings de sección. Excluirlas mantiene los dientes del gate (una ancla de
+// ENTIDAD mal escrita sigue fallando) sin romper la fidelidad 1:1 (DATA-04) de los enlaces.
+const PAGE_SECTIONS = new Set(['inicio', 'mapa', 'arte', 'arquitectura', 'gastronomia'])
+
 describe('anclas (#id) dentro de la prosa Md resuelven', () => {
-  it('cada [texto](#id) de cualquier campo resuelve a un slug existente', () => {
+  it('cada [texto](#id) de cualquier campo resuelve a un slug existente (o a una sección de página)', () => {
     for (const d of all) {
       for (const str of collectStrings(d.data)) {
         for (const anchor of extractAnchors(str)) {
-          expect(allSlugs.has(anchor), `${d.file}: ancla inline #${anchor} no resuelve`).toBe(true)
+          expect(
+            allSlugs.has(anchor) || PAGE_SECTIONS.has(anchor),
+            `${d.file}: ancla inline #${anchor} no resuelve`,
+          ).toBe(true)
         }
       }
     }

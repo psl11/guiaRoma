@@ -224,8 +224,8 @@ export const ReservasSchema = z.object({
   table: z.array(z.object({ // reservas-table 'cuándo reservar'
     ref: z.string().optional(), // a #g-* | #galleria-borghese (algunas filas sin ref)
     name: z.string(), // texto del enlace o título
-    badge: z.string(), // reservas-badge texto 'semanas antes'|'✓ reservado · …'|…
-    badgeKind: z.enum(['urgent', 'done', 'rec']), // badge-urgent | badge-done | badge-rec
+    badge: z.string().optional(), // reservas-badge texto 'semanas antes'|'✓ reservado · …' (la fila "Sin reserva (hacer cola)" no lleva badge)
+    badgeKind: z.enum(['urgent', 'done', 'rec']).optional(), // badge-urgent | badge-done | badge-rec (ausente en la fila sin badge)
     isDone: z.boolean().default(false), // tr.is-done
     desc: Md, // 2ª celda
   })),
