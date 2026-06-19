@@ -15,4 +15,16 @@ export default withNuxt(
   {
     ignores: ['app/assets/css/**', 'tests/parity/**'],
   },
+  // `Topbar` es un nombre de componente de UNA palabra por mandato del contrato de
+  // marcado (Fase 3): el auto-import debe producir `<Topbar>` para reproducir el shell
+  // VERBATIM del index.html (header.topbar). Renombrarlo (p. ej. `TheTopbar`) rompería
+  // la paridad por construcción, así que se permite explícitamente ante
+  // vue/multi-word-component-names. El resto de componentes ya son multi-palabra
+  // (NavPills, ThemeToggle, BackButton), por lo que la regla sigue activa para ellos.
+  {
+    files: ['app/components/Topbar.vue'],
+    rules: {
+      'vue/multi-word-component-names': 'off',
+    },
+  },
 )
