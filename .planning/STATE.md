@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Completed 02-07-PLAN.md (last plan of Phase 02 — ready for verification)
-last_updated: "2026-06-19T09:58:08.372Z"
+stopped_at: "Phase 02 gap closure complete (DATA-04/SC#3 — 8 section-level texts captured + gate extended); test:data 295 verde"
+last_updated: "2026-06-19T10:18:33.377Z"
 last_activity: 2026-06-19
 progress:
   total_phases: 8
@@ -97,6 +97,7 @@ Recent decisions affecting current work:
 - [Phase ?]: [Fase 2]: avatar de artist-card es estructural en ambos lados del diff (se excluye .artist-avatar de la extracción HTML, igual que STRUCTURAL_KEYS en YAML); seenIn lleva la prosa de cabecera/conector en label/note de los Link
 - [Phase ?]: [Fase 2]: reservas.table.badge/badgeKind → optional (fila 'Sin reserva' sin badge); anclas de SECCIÓN de página (#gastronomia/#arte/#arquitectura/#inicio/#mapa) aceptadas en el invariante de anclas inline (landings SPA, no entidades)
 - [Phase ?]: [Fase 2]: archLink (arq-barroco → #art-bernini/#art-borromini) INLINE en el body de la prosa, no campo aparte; arq-medieval con 2 secciones fiel al DOM (sin 'Por qué importa')
+- [Phase 2]: gap closure — los 8 textos de NIVEL sección/grupo que la migración per-card dejó caer (eyebrows+intros de gastronomía/arte/arquitectura 5337/5340·5943/5945·6106/6108 + gastro-intro de quinto quarto 5501 / ghetto 5541) se capturan verbatim en TripSchema.sections (trip.yml) y food.groupIntro (g-checchino/g-giggetto); migration-diff gana extractSectionMeta/extractGroupIntro + test de nivel sección con fixtures negativos, y groupIntro va a STRUCTURAL_KEYS para no romper el diff per-card. pnpm test:data 295 verde, typecheck+lint limpios. Supersede la decisión de 02-06 de no poblar groupIntro
 
 ### Pending Todos
 
@@ -123,6 +124,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-19T09:58:08.362Z
-Stopped at: Completed 02-07-PLAN.md (last plan of Phase 02 — ready for verification)
+Last session: 2026-06-19T10:18:33.369Z
+Stopped at: Phase 02 gap closure complete (DATA-04/SC#3 — 8 section-level texts captured + gate extended); test:data 295 verde
 Resume file: None

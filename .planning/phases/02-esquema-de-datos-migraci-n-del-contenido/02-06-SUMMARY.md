@@ -109,6 +109,7 @@ Cada tarea se commiteó atómicamente:
 
 ## Decisions Made
 - **`groupIntro` no se pobla en ninguna ficha.** Los `gastro-intro` (el de cabecera de sección en 5340 + los de quinto quarto 5501 y ghetto 5541) son prosa de nivel grupo/sección, NO contenida en el subárbol DOM de ninguna `gastro-card`. El `migration-diff` es por card (`extractFromHtml` selecciona el `.gastro-card[id]`) y `groupIntro` no está en `STRUCTURAL_KEYS`, así que atarlo a una ficha haría que esas palabras aparecieran como sobrantes (`extraWords`) y rompería el diff de esa ficha. Fiel al mandato "fix YAML to match source", el campo queda `optional`/ausente; un intro de grupo se modelaría a nivel de sección gastronómica en una fase futura (este esquema no tiene entidad de sección gastro).
+  - **⚠️ SUPERSEDED por la verificación de Fase 2 (gap closure, 2026-06-19).** Esta decisión dejó caer 8 textos editoriales de NIVEL SECCIÓN/GRUPO (02-VERIFICATION → `gaps_found`): los `gastro-intro` de quinto quarto (5501) y ghetto (5541), el eyebrow+intro de gastronomía (5337/5340), arte (5943/5945) y arquitectura (6106/6108) no quedaban en NINGÚN YAML, violando DATA-04/SC#3 ("sin perder ni una palabra"). El razonamiento técnico (atar `groupIntro` a una card rompe su diff per-card) era correcto, pero la conclusión (no migrar la prosa) no: el dato simplemente desaparecía. **Resolución:** `groupIntro` SÍ se pobla en la ficha representativa de cada grupo con intro (g-checchino, g-giggetto) y `groupIntro` se añade a `STRUCTURAL_KEYS` para que el diff per-card lo ignore; los eyebrows+intros de sección se modelan en `TripSchema.sections`. Un NUEVO test de nivel sección (extractSectionMeta/extractGroupIntro) diffea esos textos 1:1 contra index.html, cerrando el punto ciego. Ver "## Gap Closure" abajo.
 - **`itineraryTag` como campo propio** aunque en el HTML va anidado dentro del span del footer: separarlo es seguro porque el diff compara multiset de palabras de toda la prosa y ni `footer` ni `itineraryTag` son estructurales → 0 palabras perdidas/añadidas. (En g-zi-umberto el `gastro-itinerary-tag` va dentro del `gastro-plato`, no del footer; el campo lo recoge igual y el multiset cuadra.)
 - **g-bar-musa preserva el texto "dirección por confirmar" verbatim** del `index.html`: es contenido real de la fuente (la card original ya tiene la dirección sin confirmar), exigido por DATA-04, no un placeholder introducido aquí.
 
@@ -135,6 +136,41 @@ None introducidos por la migración. Las 26 fichas portan contenido real y compl
 - SUMMARY.md presente.
 - Commits `90e3eb5` (Task 1) y `48e5e51` (Task 2) verificados en `git log`.
 - `schema.spec.ts` (conteo food=26 + 26 validaciones por fichero) y `migration-diff.spec.ts` (21 gastro con id activos, 0 missing/extra) en verde para food. Las 5 sin id verificadas a mano (mapsQuery 1:1 + campos).
+
+---
+
+## Gap Closure (2026-06-19) — los 8 textos de nivel sección/grupo
+
+**Disparador:** `02-VERIFICATION.md` → `gaps_found` (7/8 must-haves). El truth DATA-04/SC#3 ("migrar TODO el contenido 1:1, sin perder ni una palabra ni un enlace") falló: 8 textos editoriales visibles en `index.html` no estaban en NINGÚN YAML, invisibles a la puerta `migration-diff` porque vive POR CARD y esta prosa está FUERA de toda card.
+
+**Causa raíz (doble):** (1) decisión de modelado de este plan (no poblar `groupIntro`); (2) `TripSchema` sin campos para eyebrow/intro de sección. Y un agujero estructural: la puerta de fidelidad no podía ver prosa de nivel sección, así que los 281 tests pasaban con esos textos ausentes.
+
+**Los 8 items capturados (verbatim 1:1 de `index.html`):**
+
+| # | Item | Fuente (línea) | Dónde vive ahora |
+|---|------|----------------|------------------|
+| 1 | eyebrow "Roma · gastronomía" | 5337 | `trip.yml` → `sections.gastronomia.eyebrow` |
+| 2 | intro "Roma tiene cuatro platos de pasta…" | 5340 | `trip.yml` → `sections.gastronomia.intro` |
+| 3 | intro grupo Quinto quarto "El «quinto quarto»…" | 5501 | `food/g-checchino.yml` → `groupIntro` |
+| 4 | intro grupo Ghetto "La cocina del Ghetto…" | 5541 | `food/g-giggetto.yml` → `groupIntro` |
+| 5 | eyebrow "Roma · entender lo que ves" | 5943 | `trip.yml` → `sections.arte.eyebrow` |
+| 6 | intro "Roma no se entiende sin las manos…" | 5945 | `trip.yml` → `sections.arte.intro` |
+| 7 | eyebrow "Roma · leer los edificios" | 6106 | `trip.yml` → `sections.arquitectura.eyebrow` |
+| 8 | intro "Roma es una clase de arquitectura…" (con `**cinco edades**`/`**glosario**`) | 6108 | `trip.yml` → `sections.arquitectura.intro` |
+
+**Cierre del agujero de regresión (raíz):**
+- `shared/schemas.ts`: `TripSchema` gana `sections?` (gastronomia/arte/arquitectura), cada una `{ eyebrow, intro: Md }`. Aditivo y opcional (otros viajes siguen validando); Roma puebla las tres.
+- `scripts/migration-diff.ts`: nuevos `extractSectionMeta(sectionId)` (eyebrow + `<p>` intro de sección, restringido a `<p>` para no confundirlo con los `<div>` de grupo) y `extractGroupIntro(groupTitle)` (el `<div class="gastro-intro">` que sigue al `gastro-section-title` cuyo texto casa con el campo `group`; `null` si el grupo no tiene intro). `groupIntro` añadido a `STRUCTURAL_KEYS` (es prosa de grupo, fuera del subárbol de la card → el diff per-card debe ignorarla, si no daría `extraWords`).
+- `tests/data/migration-diff.spec.ts`: dos `describe` nuevos diffean `trip.sections.*` (eyebrow+intro) y los dos `food.groupIntro` contra `index.html` con las MISMAS reglas D-08 (multiset de palabras + conjunto de href), + fixtures negativos SIEMPRE-corren (truncación → palabras faltantes; adición → palabras sobrantes; grupo sin intro → null; sección inexistente → throw). **FALLA si cualquiera de estos textos de sección falta o se altera.**
+
+**Verificación:** `pnpm test:data` → **295 passed** (281 previos + 14 de nivel sección: 9 equivalencia/presencia + 5 fixtures negativos). `pnpm typecheck` exit 0. `pnpm lint` exit 0 sobre los 3 ficheros de código.
+
+**Commits del gap closure (phase-02):**
+1. `b7a4a93` (feat) — esquema `sections` + extensión de la puerta (extractSectionMeta/extractGroupIntro + tests de nivel sección con fixtures negativos).
+2. `fbe8f9c` (feat) — datos: `trip.yml` sections ×6 + `groupIntro` en g-checchino/g-giggetto (verbatim), y `groupIntro` → `STRUCTURAL_KEYS` (fix del diff per-card).
+
+**Estado del truth DATA-04/SC#3:** RESUELTO — los 8 textos están en datos, verbatim, y protegidos por gate.
+
 ---
 *Phase: 02-esquema-de-datos-migraci-n-del-contenido*
 *Completed: 2026-06-19*
