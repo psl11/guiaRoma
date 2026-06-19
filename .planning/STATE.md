@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 03-03-PLAN.md
-last_updated: "2026-06-19T13:05:08.873Z"
+stopped_at: Completed 03-04-PLAN.md
+last_updated: "2026-06-19T13:18:48.006Z"
 last_activity: 2026-06-19
 progress:
   total_phases: 8
   completed_phases: 2
   total_plans: 15
-  completed_plans: 12
+  completed_plans: 14
   percent: 25
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 ## Current Position
 
 Phase: 03 (Capa de página, layout y tema) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 Status: Ready to execute
 Last activity: 2026-06-19
 
-Progress: [████████░░] 80%
+Progress: [█████████░] 93%
 
 ## Performance Metrics
 
@@ -65,6 +65,7 @@ Progress: [████████░░] 80%
 | Phase 03 P01 | 3min | 2 tasks | 4 files |
 | Phase 03 P02 | 7min | 2 tasks | 3 files |
 | Phase 03 P03 | 6min | 2 tasks | 5 files |
+| Phase 03 P04 | 11min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -111,6 +112,10 @@ Recent decisions affecting current work:
 - [Phase ?]: [Fase 3]: los 4 componentes de chrome (Topbar/ThemeToggle/NavPills/BackButton) reproducen el markup+clases del index.html VERBATIM y escriben CERO CSS — sin <style scoped> (data-v-* rompería selectores descendientes cross-componente como .topbar-inner .theme-btn y [data-theme] .theme-btn .moon); paridad por construcción (UI-01)
 - [Phase ?]: [Fase 3]: ThemeToggle consume useColorMode() (D-08) — invierte el valor RESUELTO (colorMode.value) y escribe una preferencia CONCRETA light/dark, nunca 'system'; el icono conmuta SOLO via CSS [data-theme] (D-10/SC#4), ambos spans siempre renderizados, sin directivas condicionales (evita FOUC + mismatch de hidratacion)
 - [Phase ?]: [Fase 3]: NavPills es hibrido (D-03) — 7 pastillas estructurales literales + 5 de dia DERIVADAS de props.days (v-for, href='#'+slug, etiqueta via dayLabel(eyebrow), D-04) en el orden BLOQUEADO entre Mapa y Reservas; sin estado resaltado/scrollspy (frontera F5). BackButton es shell visible-solo (D-07): onclick descartado, sin manejador ni clase de visibilidad. eslint.config.mjs permite el nombre de 1 palabra 'Topbar' (bloqueado por el contrato de auto-import)
+- [Phase ?]: [Fase 3]: TripView es el poseedor de la página (A3) — llama a await useTrip(props.slug) y monta chrome + las 12 anclas slug en orden; las páginas del Plan 05 serán one-liners <TripView :slug>
+- [Phase ?]: [Fase 3]: las 11 secciones no-#inicio de TripView son <section id> reales y VACÍAS (solo id, sin contenido ni height) — una altura fija desplazaría cada ancla y rompería el scrollspy de F5 (scroll-padding-top:124px); vacías, section{padding}/section+section{border-top} aplican igual que en el golden
+- [Phase ?]: [Fase 3]: prosa de #inicio (TheHero) vía <MDC> con unwrap='p' en los casos inline (trip.title en h1, infoCards value) y <p> conservado en howTo (RESEARCH §Open Q1 RESUELTA); el cuadre de ritmo vertical a pixel se valida contra el golden en el parity Playwright del Plan 05
+- [Phase ?]: [Fase 3]: v-if='trip' en <TheHero> estrecha Ref<Trip|null> a la prop Trip no-nula sin ocultar #inicio (trip siempre presente para / slug roma y /trips/[slug] válido con guard 404); anclas de día en español #viernes..#martes = ids reales del index.html y de nav-pills, no las grafías italianas sueltas de una nota del plan
 
 ### Pending Todos
 
@@ -137,6 +142,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-19T13:04:35.127Z
-Stopped at: Completed 03-03-PLAN.md
+Last session: 2026-06-19T13:18:47.998Z
+Stopped at: Completed 03-04-PLAN.md
 Resume file: None
