@@ -1,10 +1,13 @@
 import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { parse as parseYaml } from 'yaml'
 import {
   normalize,
   textMultiset,
   extractFromHtml,
+  extractSectionMeta,
+  extractGroupIntro,
   diffEntry,
   isEquivalent,
   yamlLinks,
@@ -167,4 +170,130 @@ describe('diff index.html ⇄ YAML por id (DATA-04 / D-08)', () => {
       expect(isEquivalent(d)).toBe(true)
     })
   }
+})
+
+// ── Prosa de NIVEL SECCIÓN/GRUPO (DATA-04 / SC#3) — cierra el hueco del diff per-card ──
+//
+// El diff per-card de arriba es estructuralmente CIEGO a la prosa que vive fuera de las cards:
+// el `section-eyebrow` + el párrafo intro de cada sección-página (gastronomía/arte/arquitectura)
+// y los `gastro-intro` de NIVEL GRUPO (Quinto quarto, Ghetto). En la verificación de Fase 2 se
+// dejaron caer 8 de estos textos sin que ningún test fallara (02-VERIFICATION gap). Este bloque
+// los diffea 1:1 contra los campos YAML (trip.sections.* y food.groupIntro) con las MISMAS reglas
+// D-08 (multiset de palabras normalizado + conjunto de enlaces): si falta o se altera cualquiera
+// de estos textos de sección, la suite FALLA. Esto no sustituye al diff per-card: lo complementa
+// en el plano que aquél no puede ver.
+const ROMA_ROOT = join(process.cwd(), 'content', 'trips', 'roma')
+
+/** Compara dos textos por las reglas D-08: multiset de palabras visibles + conjunto de href. */
+function diffProse(htmlText: string, yamlText: string) {
+  const htmlWords = textMultiset(normalize(htmlText))
+  const yamlWords = textMultiset(normalize(yamlText))
+  const htmlLinks = yamlLinks({ _: htmlText }) // anclas/URLs embebidas en el texto (si las hubiera)
+  const yLinks = yamlLinks({ _: yamlText })
+  const deficit = (a: Map<string, number>, b: Map<string, number>): string[] => {
+    const out: string[] = []
+    for (const [k, n] of a) for (let i = 0; i < n - (b.get(k) ?? 0); i++) out.push(k)
+    return out
+  }
+  return {
+    missingWords: deficit(htmlWords, yamlWords),
+    extraWords: deficit(yamlWords, htmlWords),
+    missingLinks: [...htmlLinks].filter(l => !yLinks.has(l)),
+    extraLinks: [...yLinks].filter(l => !htmlLinks.has(l)),
+  }
+}
+
+function expectEquivalentProse(label: string, htmlText: string, yamlText: string) {
+  const d = diffProse(htmlText, yamlText)
+  expect(d.missingWords, `texto faltante en ${label}: ${JSON.stringify(d.missingWords)}`).toEqual([])
+  expect(d.extraWords, `texto sobrante en ${label}: ${JSON.stringify(d.extraWords)}`).toEqual([])
+  expect(d.missingLinks, `enlaces faltantes en ${label}: ${JSON.stringify(d.missingLinks)}`).toEqual([])
+  expect(d.extraLinks, `enlaces sobrantes en ${label}: ${JSON.stringify(d.extraLinks)}`).toEqual([])
+}
+
+describe('prosa de nivel sección: trip.sections eyebrow/intro ⇄ index.html (DATA-04 / SC#3)', () => {
+  const trip = parseYaml(readFileSync(join(ROMA_ROOT, 'trip.yml'), 'utf8')) as {
+    sections?: Record<string, { eyebrow?: string, intro?: string } | undefined>
+  }
+
+  const SECTIONS = ['gastronomia', 'arte', 'arquitectura'] as const
+
+  it('trip.yml declara las 3 secciones-página con eyebrow + intro', () => {
+    for (const id of SECTIONS) {
+      const s = trip.sections?.[id]
+      expect(s, `falta trip.sections.${id}`).toBeDefined()
+      expect(typeof s?.eyebrow, `falta eyebrow en sección ${id}`).toBe('string')
+      expect(typeof s?.intro, `falta intro en sección ${id}`).toBe('string')
+    }
+  })
+
+  for (const id of SECTIONS) {
+    it(`${id} — eyebrow equivalente al .section-eyebrow del index.html`, () => {
+      const html = extractSectionMeta(id)
+      const yaml = trip.sections?.[id]?.eyebrow ?? ''
+      expectEquivalentProse(`sección ${id} (eyebrow)`, html.eyebrow, yaml)
+    })
+
+    it(`${id} — intro equivalente al párrafo de sección del index.html`, () => {
+      const html = extractSectionMeta(id)
+      const yaml = trip.sections?.[id]?.intro ?? ''
+      expectEquivalentProse(`sección ${id} (intro)`, html.intro, yaml)
+    })
+  }
+})
+
+describe('prosa de nivel grupo: food.groupIntro ⇄ gastro-intro del index.html (DATA-04 / SC#3)', () => {
+  // El gastro-intro de cada grupo se ancla a la ficha REPRESENTATIVA del grupo (la primera del
+  // grupo en el DOM). Sólo dos grupos tienen intro en el index.html: Quinto quarto y Ghetto.
+  const GROUP_INTRO_CARDS = ['g-checchino', 'g-giggetto'] as const
+
+  for (const slug of GROUP_INTRO_CARDS) {
+    it(`${slug} — groupIntro presente y equivalente al gastro-intro de su grupo`, () => {
+      const card = parseYaml(readFileSync(join(ROMA_ROOT, 'food', `${slug}.yml`), 'utf8')) as {
+        group: string
+        groupIntro?: string
+      }
+      expect(typeof card.groupIntro, `falta groupIntro en ${slug}`).toBe('string')
+      const htmlIntro = extractGroupIntro(card.group)
+      expect(htmlIntro, `el grupo "${card.group}" no tiene gastro-intro en index.html`).not.toBeNull()
+      expectEquivalentProse(`groupIntro de ${slug}`, htmlIntro as string, card.groupIntro as string)
+    })
+  }
+})
+
+// ── Fixtures negativos de nivel sección (SIEMPRE corren) — la puerta TIENE DIENTES ──
+// Análogo a los fixtures per-card de arriba: prueban que el diff de sección DETECTA una pérdida
+// o alteración, sin depender de que el YAML esté bien (si el YAML regresara, los tests de arriba
+// fallarían; estos garantizan que el COMPARADOR sí distingue equivalente de no-equivalente).
+describe('puerta de fidelidad de sección: detecta pérdidas/alteraciones (fixtures, siempre corren)', () => {
+  it('un intro de sección FIEL es equivalente (sin faltantes ni sobrantes)', () => {
+    const { intro } = extractSectionMeta('arquitectura')
+    const d = diffProse(intro, normalize(intro))
+    expect(d.missingWords).toEqual([])
+    expect(d.extraWords).toEqual([])
+    expect(d.missingLinks).toEqual([])
+    expect(d.extraLinks).toEqual([])
+  })
+
+  it('si al intro YAML le FALTA una frase → reporta palabras faltantes', () => {
+    const { intro } = extractSectionMeta('gastronomia')
+    const truncado = normalize(intro).split(' ').slice(0, -5).join(' ')
+    const d = diffProse(intro, truncado)
+    expect(d.missingWords.length).toBe(5)
+  })
+
+  it('si el intro YAML AÑADE texto que no está en el HTML → reporta palabras sobrantes', () => {
+    const { intro } = extractSectionMeta('arte')
+    const d = diffProse(intro, `${normalize(intro)} palabrainventadaquenoexiste`)
+    expect(d.extraWords).toContain('palabrainventadaquenoexiste')
+  })
+
+  it('extractGroupIntro devuelve null para un grupo sin gastro-intro (p.ej. Pizza)', () => {
+    expect(extractGroupIntro('Pizza')).toBeNull()
+  })
+
+  it('extractSectionMeta lanza para una sección inexistente', () => {
+    // @ts-expect-error — id fuera del literal: comprobamos el guard en runtime.
+    expect(() => extractSectionMeta('no-existe')).toThrow()
+  })
 })

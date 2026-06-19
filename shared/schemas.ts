@@ -247,6 +247,14 @@ export const PracticaSchema = z.object({
 // genérico. discriminatedUnion('slug') aprovecha que slug es z.literal en ambos.
 export const ReferenceSchema = z.discriminatedUnion('slug', [ReservasSchema, PracticaSchema])
 
+// Metadatos editoriales de las secciones-página (gastronomia / arte / arquitectura): el
+// `section-eyebrow` + el párrafo introductorio (`gastro-intro` / `art-intro`) que el index.html
+// renderiza FUERA de cualquier card (entre el <h2> y la rejilla de fichas). No pertenecen a
+// ninguna entidad (monument/food/artist) → viven a nivel `trip`. `eyebrow` es texto plano
+// (no enlaces); `intro` es Markdown-inline (la de arquitectura lleva **negritas**). Verbatim
+// de index.html (gastronomia 5337/5340, arte 5943/5945, arquitectura 6106/6108).
+const SectionMeta = z.object({ eyebrow: z.string(), intro: Md })
+
 // ── Trip — RESEARCH 482-491 ──────────────────────────────────────────────────
 export const TripSchema = z.object({
   slug: z.string(), // 'roma'
@@ -258,6 +266,14 @@ export const TripSchema = z.object({
   infoCards: z.array(z.object({ label: z.string(), value: Md })), // info-grid (label + value)
   howTo: z.array(Md), // 'Cómo usar esta guía' (párrafos)
   map: z.object({ center: Coords, zoom: z.number() }), // setView([41.8989,12.477],14)
+  // Eyebrow + intro de las secciones-página, keyed por id de sección (= ancla #gastronomia/
+  // #arte/#arquitectura del index.html). Opcional a nivel esquema (un viaje futuro podría no
+  // tener estas secciones) pero Roma DEBE poblar las tres (paridad: prosa visible en el HTML).
+  sections: z.object({
+    gastronomia: SectionMeta.optional(),
+    arte: SectionMeta.optional(),
+    arquitectura: SectionMeta.optional(),
+  }).optional(),
 })
 
 // ── Tipos TS derivados (gratis, una sola fuente de verdad) ────────────────────

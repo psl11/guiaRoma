@@ -157,6 +157,69 @@ export function extractFromHtml(id: string): Extracted {
   return { text, links }
 }
 
+// ── Prosa de NIVEL SECCIÓN/GRUPO (fuera de las cards) ───────────────────────────
+// El `extractFromHtml`/`diffEntry` de arriba es PER-CARD: selecciona article.card /
+// .gastro-card / article.artist-card y sólo ve el texto de ese subárbol. Pero el index.html
+// tiene prosa editorial que vive FUERA de toda card: el `section-eyebrow` y el párrafo
+// introductorio de cada sección-página (gastronomía/arte/arquitectura), y el `gastro-intro`
+// de NIVEL GRUPO (Quinto quarto, Ghetto). Esa prosa es invisible al diff per-card → fue el
+// hueco que dejó caer 8 textos en la migración (02-VERIFICATION gap). Estos helpers la
+// extraen para que el spec la diffee 1:1 contra los campos YAML (trip.sections / food.groupIntro).
+
+/** Eyebrow (`.section-eyebrow`) + intro (`.gastro-intro`/`.art-intro`) de una sección-página. */
+export interface SectionMetaExtract {
+  /** Texto del `.section-eyebrow` (plano, sin markup ni enlaces). */
+  eyebrow: string
+  /** Texto del párrafo intro, con strong/em/a convertidos a Markdown-inline. */
+  intro: string
+}
+
+/**
+ * Extrae eyebrow + intro de una sección-página por su id de ancla (`gastronomia`/`arte`/
+ * `arquitectura`). El eyebrow es el primer `.section-eyebrow` dentro de la `<section>`; el
+ * intro es el primer `.gastro-intro`/`.art-intro` (el de NIVEL SECCIÓN, que en el HTML es un
+ * `<p>`, no los `<div class="gastro-intro">` de nivel grupo). Lanza si la sección no existe.
+ */
+export function extractSectionMeta(sectionId: 'gastronomia' | 'arte' | 'arquitectura'): SectionMetaExtract {
+  const section = $(`section#${sectionId}`).first()
+  if (section.length === 0) {
+    throw new Error(`extractSectionMeta: no hay <section id="${sectionId}"> en index.html`)
+  }
+  const eyebrowEl = section.find('.section-eyebrow').first()
+  // El intro de sección es un <p> (los .gastro-intro de grupo son <div>): restringir a <p>
+  // evita capturar por error un intro de grupo como si fuera el de la sección.
+  const introEl = section.find('p.gastro-intro, p.art-intro').first()
+  if (eyebrowEl.length === 0 || introEl.length === 0) {
+    throw new Error(`extractSectionMeta: falta eyebrow o intro en la sección "${sectionId}"`)
+  }
+  const links = new Set<string>()
+  return {
+    eyebrow: eyebrowEl.text(),
+    intro: domToMarkdown(introEl.get(0) as AnyNode, links),
+  }
+}
+
+/**
+ * Extrae el `gastro-intro` de NIVEL GRUPO asociado a un `gastro-section-title` cuyo texto
+ * coincide (normalizado) con `groupTitle` (= el campo `group` de la ficha food). El intro de
+ * grupo es el `<div class="gastro-intro">` que sigue inmediatamente al título; si ese título
+ * no va seguido de un intro (la mayoría de grupos no tienen), devuelve null. Texto con
+ * strong/em/a → Markdown-inline. Lanza si no encuentra el título.
+ */
+export function extractGroupIntro(groupTitle: string): string | null {
+  const target = normalize(groupTitle)
+  const titleEl = $('p.gastro-section-title')
+    .filter((_, el) => normalize($(el).text()) === target)
+    .first()
+  if (titleEl.length === 0) {
+    throw new Error(`extractGroupIntro: no hay gastro-section-title "${groupTitle}" en index.html`)
+  }
+  const next = titleEl.next()
+  if (!next.hasClass('gastro-intro')) return null // grupo sin intro
+  const links = new Set<string>()
+  return domToMarkdown(next.get(0) as AnyNode, links)
+}
+
 // ── normalize(s) ──────────────────────────────────────────────────────────────
 // Reglas mínimas y testeables de D-08: convertir strong/em HTML a Markdown (por si llega
 // HTML crudo), decodificar entidades comunes y COLAPSAR espacios. Devuelve un string
