@@ -29,7 +29,8 @@ findings:
   warning: 4
   info: 2
   total: 7
-status: issues_found
+status: resolved
+resolved: 2026-06-19
 ---
 
 # Phase 3: Code Review Report
@@ -37,7 +38,21 @@ status: issues_found
 **Reviewed:** 2026-06-19T18:05:00Z
 **Depth:** standard
 **Files Reviewed:** 20
-**Status:** issues_found
+**Status:** resolved — BLOCKER fixed in Phase 3 (see Resolution); robustness/type items deferred to Phase 4
+
+## Resolution (2026-06-19)
+
+| Finding | Disposition |
+|---------|-------------|
+| **CR-01** hero-meta `[object Object]` (parity BLOCKER) | ✅ **FIXED** — renamed reserved field `meta`→`heroMeta` in `shared/schemas.ts`, `content/trips/roma/trip.yml`, `app/components/TheHero.vue`. Regenerated: `.hero-meta` now renders `19 — 23 giugno 2026 · Hotel Royal Court`. |
+| **WR-01** parity test asserted visibility, not text | ✅ **FIXED** — `shell.spec.ts` now asserts hero-decoration/h1-em/hero-meta/quote-attr TEXT plus `not.toContainText('[object Object]')`; passes green. |
+| **WR-04** stale `subpath.spec.ts` / D2 comment | ✅ **FIXED** — corrected the D2 note in `deferred-items.md`. |
+| **IN-01** reserved-name audit | ✅ **DONE** — audited all top-level schema fields; only `meta` collided (now fixed). `TransportMode.meta` is nested/safe. |
+| **WR-02** `useTrip` swallows `.error` | ⏭ **DEFERRED → Phase 4** (`deferred-items.md` D3) — same silent-degradation mechanism as D1; harmless in F3 (empty placeholders). |
+| **WR-03** over-broad `as unknown as` casts | ⏭ **DEFERRED → Phase 4** (D3) — narrow to the two union collections when D1's union fix lands. |
+| **IN-02** `[slug]` `as string` | ⏭ **DEFERRED → Phase 4** (D3) — optional hardening, no defect. |
+
+Verified after fix: `pnpm generate` exit 0; full parity suite **15 passed / 1 skipped**; `test:data` 295; `test:unit` 12; typecheck + lint clean.
 
 ## Summary
 

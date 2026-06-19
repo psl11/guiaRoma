@@ -54,7 +54,39 @@ plan/phase to resolve.
   preset paints dark immediately — passes). It is a console-only artifact on the `<html>` element.
 - **Handling in 03-05 specs:** the new `tests/parity/{shell,theme}.spec.ts` tolerate exactly this
   one expected color-mode message and fail on any OTHER console error, so a genuine regression is
-  still caught. (The Fase 1 `subpath.spec.ts` asserts zero console errors but renders the scaffold,
-  with no color-mode consumer mounted, so it is unaffected.)
+  still caught. (The Fase 1 `subpath.spec.ts` was updated identically — it now renders the full
+  Fase 3 page, which mounts `ThemeToggle`, so it tolerates exactly this one color-mode message and
+  still fails on any other console error. It no longer renders the bare scaffold. — corrected per
+  code-review WR-04.)
 - **Optional future cleanup (not required for 1.0):** none needed unless the mismatch message is
   considered noise; it cannot be removed without reintroducing FOUC.
+
+---
+
+## D3 — `useTrip` data-layer robustness + type-safety (code-review WR-02 / WR-03 / IN-02), fix WITH D1 in Phase 4
+
+- **Found during:** Phase 03 code review (`03-REVIEW.md`).
+- **Owning file:** `app/composables/useTrip.ts` (Plan 03-02) + `app/pages/trips/[slug].vue`.
+- **WR-02 — silent error swallowing:** `useTrip` reads only `.data` from its six `useAsyncData`
+  queries; every `.error` channel is discarded. That is the exact mechanism that hides **D1**
+  (the union tables throw `no such column: "trip"` → `.data` stays null → `?? []` → empty Maps →
+  build exits 0). Harmless in F3 (those sections are empty placeholders) but, once F4 renders
+  `#arte/#arquitectura/#reservas/#practica`, the same swallow would turn a real data outage into a
+  silently blank section. **Fix in F4 (alongside D1):** surface query errors — at minimum
+  `if (import.meta.dev && r.error.value) console.error(...)`, ideally fail the prerender loudly
+  when a non-placeholder collection errors.
+- **WR-03 — over-broad `as unknown as` casts:** the casts are applied to ALL six collections, but
+  only the two `z.discriminatedUnion` ones (`artist`/`reference`) actually need them (Content emits
+  empty `{}` item types for unions). The blanket cast blinded TypeScript to the runtime/schema
+  divergence that produced **CR-01** (the `meta` reserved-field corruption). **Fix in F4:** narrow
+  the casts to `artist`/`reference` only; let `trip`/`day`/`monument`/`food` keep their real
+  Content-generated types so the compiler retains leverage.
+- **IN-02 (optional, no defect):** `[slug].vue` does `useRoute().params.slug as string`. Benign for
+  a single segment (Nuxt yields a string; bad slugs fall into the existing 404 guard). If hardening
+  later: `String(useRoute().params.slug ?? '')`.
+- **Impact on the 1.0 / F3 parity bar:** NONE. These are robustness/type-quality items; F3 renders
+  and passes parity. Bundle with D1 when the union collections get real rendering in F4.
+
+> CR-01 (the `meta`→`heroMeta` reserved-field parity break) and WR-01 (parity test now asserts
+> hero-meta TEXT) were **FIXED in Phase 3** — see `03-REVIEW.md` ▸ Resolution. IN-01 (reserved-name
+> audit) was performed: only `meta` collided and is now resolved.
