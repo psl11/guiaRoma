@@ -1,0 +1,265 @@
+slug: viernes
+trip: roma
+order: 1
+roman: I
+eyebrow: venerdì · 19 giugno
+title: Centro Storico nocturno
+subtitle: El bautismo. Roma iluminada en sus mejores escenarios.
+stats:
+  - variant: walk
+    text: '**~3,5 km** a pie'
+  - variant: train
+    text: '**Leonardo Express** FCO→Termini (32 min, €14) · hotel a 4 min'
+  - variant: taxi
+    text: '**2 trayectos** taxi · hotel ↔ centro (~€10 cada uno)'
+light:
+  title: 🦶 Versión ligera · viernes
+  items:
+    - kind: see
+      text: >-
+        **Imprescindibles:** Fontana di Trevi, Pantheon (exterior), Piazza
+        Navona y cena en [Osteria da Fortunata](#g-fortunata) (junto a Campo de'
+        Fiori, 22:30). Todo llano y muy junto: ~1 km en total.
+    - kind: move
+      text: >-
+        **Cómo moverse:** taxi del hotel directo a Trevi y taxi de vuelta desde
+        Campo de' Fiori. Entre paradas, calles cortas y planas (4-5 min cada
+        tramo).
+    - kind: skip
+      text: >-
+        **Saltar hoy:** Galleria Sciarra (desvío con poco margen) y, si cansa,
+        Sant'Ignazio.
+    - kind: rest
+      text: >-
+        **Descanso:** sentaos pronto a cenar en Campo de' Fiori; un caffè en
+        Navona por el camino.
+timeline:
+  - kind: stop
+    pace: all
+    time: '~17:00'
+    title: Llegada · aeropuerto → hotel
+    disabled: true
+    note: >-
+      Del aeropuerto a Termini; el hotel está a 4 min andando de la estación.
+      Ajustad según la hora real de aterrizaje.
+  - kind: transport
+    pace: all
+    variant: taxi
+    header: Fiumicino (FCO) → Roma Termini · ~32 km
+    modes:
+      - icon: 🚕
+        recommended: true
+        desc: >-
+          **Taxi** · tarifa fija oficial FCO → centro · puerta del hotel, sin
+          arrastrar maletas por Termini · siendo 3, sale a cuenta
+        tag: recomendado a la llegada
+        meta: '⏱ **45-55 min** 💶 **€55 fijo · €18 p.p.**'
+      - icon: 🚆
+        desc: >-
+          **Leonardo Express** · directo sin paradas · sale cada 15 min · el
+          hotel a 4 min de Termini · más barato e inmune al tráfico
+        meta: '⏱ **32 min** 💶 **€14 p.p. · €42 total**'
+    footnote: >-
+      Para **3 con maletas y al final del día de viaje**, el taxi (€55 fijo, ~€18
+      p.p.) compensa los ~€13 de diferencia: os deja en la puerta. El tren gana
+      si hay atasco o si vais ligeros. Taxi: solo blancos oficiales de la parada,
+      confirmad _"tariffa fissa per il centro"_ antes de subir (€55 hasta 4 pax,
+      maletas incluidas; tarifa vigente desde 2024, confirmad el cartel). Tren:
+      billete en la app **Trenitalia**/**Omio** o en la máquina — **sin reserva
+      previa**, precio fijo y sin asiento. _Si aterrizáis en Ciampino (CIA):_ no
+      hay tren — bus Terravision/SIT (~€6, 40 min) o taxi fijo €40.
+  - kind: stop
+    pace: all
+    time: '18:00'
+    title: Hotel Royal Court · check-in
+    disabled: true
+    note: Ducha rápida, salida 19:00.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **60 min** · check-in + ducha + preparar salida'
+  - kind: transport
+    pace: slow-only
+    variant: taxi
+    header: Hotel → Galleria Sciarra · ~2 km
+    modes:
+      - icon: 🚶
+        desc: Andando · por Via Cavour bajando hacia Trevi
+        meta: '⏱ **25 min** 💶 **gratis**'
+      - icon: Ⓜ️
+        desc: '**Metro A** · Termini → Barberini · 1 parada · + 7 min andando'
+        meta: '⏱ **15 min** 💶 **€1,50 p.p. · €4,50 total**'
+      - icon: 🚕
+        recommended: true
+        desc: '**Taxi** directo desde el hotel'
+        tag: recomendado
+        meta: '⏱ **8-12 min** 💶 **€10-12 · €3-4 p.p.**'
+    footnote: >-
+      Después del check-in suele apetecer ir directo sin esperas. Pedir taxi
+      desde recepción a las 19:15.
+  - kind: stop
+    pace: slow-only
+    time: '19:30'
+    title: Galleria Sciarra
+    ref: galleria-sciarra
+    tag: Sorrentino
+    note: 'Única ventana: cierra 20:00 viernes, cerrada en finde.'
+  - kind: meta
+    items:
+      - level: warn
+        text: '⏱ **25 min** · justo — es paseo + foto, no museo'
+  - kind: transport
+    pace: all
+    variant: walk
+    header: Recorrido nocturno del viernes
+    modes:
+      - icon: 🚶
+        recommended: true
+        desc: >-
+          Andando entre todas las paradas · centro histórico peatonalizado ·
+          calles iluminadas
+        tag: recomendado
+        meta: '⏱ **~1,5 km totales** 💶 **gratis**'
+    footnote: >-
+      El centro de Roma de noche se patea bien. Distancias entre Sciarra · Trevi
+      · Sant'Ignazio · Pantheon · Navona · Campo Fiori: 152m + 357m + 243m +
+      320m + 402m.
+  - kind: stop
+    pace: all
+    time: '19:55'
+    title: Fontana di Trevi
+    ref: fontana-trevi
+    note: De noche e iluminada. Moneda con la derecha sobre el hombro izquierdo.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **35 min** · suficiente para la visita nocturna y moneda'
+      - level: plain
+        text: '🚶 hasta siguiente: **5 min** · 357 m hasta Sant''Ignazio'
+  - kind: stop
+    pace: medium
+    time: '20:30'
+    title: Sant'Ignazio di Loyola
+    ref: santignazio
+    note: Techo Andrea Pozzo. El disco dorado del suelo.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **35 min** · suficiente para el trampantojo y la plaza'
+      - level: plain
+        text: '🚶 hasta siguiente: **3 min** · 243 m hasta el Pantheon'
+  - kind: stop
+    pace: all
+    time: '21:05'
+    title: Pantheon (exterior)
+    ref: pantheon
+    note: Fachada iluminada. El interior, el lunes.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **25 min** · exterior + plaza + foto nocturna'
+      - level: plain
+        text: '🚶 hasta siguiente: **4 min** · 320 m hasta Piazza Navona'
+  - kind: food
+    pace: all
+    header: ☕ Comprar café para llevar a casa
+    entries:
+      - href: 'https://www.google.com/maps/search/?api=1&query=Sant%27Eustachio%20Il%20Caffè%20Roma'
+        name: Sant'Eustachio Il Caffè
+        time: '🚶 2 min'
+        desc: >-
+          A un paso del Pantheon · pedid la **lattina** (en grano o molido) para
+          llevar · abre hasta tarde, así que **compradlo esta noche** con calma ·
+          aguanta sellado el resto del viaje
+    footnote: >-
+      Es el mejor momento del viaje para pillarlo: el sábado pasáis con prisa por
+      la hora del Vaticano. Ficha del café en [Gastronomía /
+      cafés](#tazza-doro).
+  - kind: stop
+    pace: all
+    time: '21:30'
+    title: Piazza Navona
+    ref: piazza-navona
+    note: Tres fuentes barrocas. Bernini vs Borromini.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **30 min** · suficiente para las tres fuentes'
+      - level: plain
+        text: '🚶 hasta siguiente: **5 min** · 402 m hasta Campo de'' Fiori'
+  - kind: stop
+    pace: all
+    time: '22:00'
+    title: Campo de' Fiori
+    ref: campo-fiori
+    note: >-
+      Fin del paseo nocturno. La estatua de Giordano Bruno, quemado vivo aquí en
+      1600.
+  - kind: stop
+    pace: all
+    time: '22:30'
+    title: Cena en Osteria da Fortunata
+    ref: g-fortunata
+    reservedEvent: true
+    tag: reservado
+    note: >-
+      Pasta hecha a mano en la ventana de la calle, a 2 min de Campo de' Fiori.
+  - kind: reservation
+    text: >-
+      ✅ **Cena reservada · Osteria da Fortunata** — vie 19 jun, 22:30 · 3
+      comensales · a 2 min de Campo de' Fiori.
+  - kind: food
+    pace: all
+    header: 🍴 Tu mesa (y alternativas alrededor)
+    entries:
+      - ref: g-fortunata
+        name: Osteria da Fortunata
+        reserved: true
+        badge: ✓ reservado 22:30
+        desc: >-
+          Pasta hecha a mano en la ventana de la calle · a 2 min de la plaza ·
+          **~€25-35**
+      - ref: g-roscioli
+        name: Roscioli
+        time: '🚶 3 min'
+        desc: >-
+          Carbonara y embutidos · bodega enorme · reserva imprescindible ·
+          **~€40-55**
+      - ref: g-pollarola
+        name: La Pollarola
+        time: '🚶 2 min'
+        desc: >-
+          Trattoria histórica en una placita escondida · sin agobios ·
+          **~€30-45**
+      - ref: g-baffetto
+        name: Da Baffetto
+        time: '🚶 6 min'
+        desc: 'Si preferís pizza romana fina · sin reservas, hacia Navona · **~€12-18**'
+      - ref: g-frigidarium
+        name: Frigidarium
+        time: '🚶 6 min'
+        desc: 'Para el gelato de después · cono bañado en chocolate · **~€3-4**'
+    footnote: 'Todas las fichas, con platos y precios, en [Gastronomía](#gastronomia).'
+  - kind: transport
+    pace: all
+    variant: taxi
+    header: Campo de' Fiori → hotel · ~3 km
+    modes:
+      - icon: 🚶
+        desc: Andando · paseo nocturno largo por Via dei Fori Imperiali
+        meta: '⏱ **35-40 min** 💶 **gratis**'
+      - icon: 🚕
+        recommended: true
+        desc: '**Taxi** · cola fácil en la plaza o FreeNow'
+        tag: recomendado
+        meta: '⏱ **12-15 min** 💶 **€12-15 · €4-5 p.p.**'
+    footnote: >-
+      Tras cenar y todo el día con maletas/viaje, el taxi compensa. Metro
+      nocturno limitado, no recomendable.
+cards:
+  - galleria-sciarra
+  - fontana-trevi
+  - santignazio
+  - pantheon
+  - piazza-navona
+  - campo-fiori
