@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Phase 2 context gathered
-last_updated: "2026-06-19T07:48:53.099Z"
-last_activity: 2026-06-19 -- Phase 02 planning complete
+last_updated: "2026-06-19T08:09:52.214Z"
+last_activity: 2026-06-19
 progress:
   total_phases: 8
   completed_phases: 1
   total_plans: 10
-  completed_plans: 3
+  completed_plans: 4
   percent: 13
 ---
 
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** La 1.0 debe ser exactamente igual que la guía de hoy (paridad visual y funcional al 100%), pero construida de forma dinámica, data-driven y mantenible.
-**Current focus:** Phase 2 — esquema de datos + migración del contenido
+**Current focus:** Phase 02 — esquema-de-datos-migraci-n-del-contenido
 
 ## Current Position
 
-Phase: 2
-Plan: Not started
+Phase: 02 (esquema-de-datos-migraci-n-del-contenido) — EXECUTING
+Plan: 2 of 7
 Status: Ready to execute
-Last activity: 2026-06-19 -- Phase 02 planning complete
+Last activity: 2026-06-19
 
-Progress: [██████████] 100%
+Progress: [████░░░░░░] 40%
 
 ## Performance Metrics
 
@@ -54,6 +54,7 @@ Progress: [██████████] 100%
 *Updated after each plan completion*
 | Phase 01 P01-02 | 9min | 2 tasks | 11 files |
 | Phase 01 P03 | 7min | 2 tasks | 8 files |
+| Phase 02 P01 | 12 | 4 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -76,6 +77,9 @@ Recent decisions affecting current work:
 - [Phase ?]: [Fase 1]: verificación de subpath vía B (autocontenida en subpath.spec.ts: beforeAll genera+copia+spawn serve, afterAll mata+limpia) — sin tocar playwright.config.ts
 - [Phase ?]: [Fase 1]: favicons en app/app.vue con useHead+app.baseURL (NO app.head.link): Nuxt no antepone baseURL a app.head.link → /favicon.svg daría 404 bajo /guiaRoma/
 - [Phase ?]: [Fase 1]: subpath /guiaRoma/ verificado SOLO en local (0x404 de /_nuxt/* + 0xCDN); D-06 — no se montó CI/deploy, main intacto
+- [Phase ?]: [Fase 2]: shared/schemas.ts es la fuente unica del esquema zod, importado por content.config.ts Y por schema.spec.ts (mismo contrato en config y test)
+- [Phase ?]: [Fase 2]: DATA-05 se cumple via test Vitest Node-puro (safeParse por fichero), NO con el esquema de Content (no valida data-collections en build, #3351)
+- [Phase ?]: [Fase 2]: cross-refs en invariants.spec (no en zod refine); slug (no id reservado) como ancla estable; prosa como sections[{heading,body}] (D-01)
 
 ### Pending Todos
 
@@ -102,6 +106,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-19T06:23:47.826Z
+Last session: 2026-06-19T08:09:31.121Z
 Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-esquema-de-datos-migraci-n-del-contenido/02-CONTEXT.md
+Resume file: None

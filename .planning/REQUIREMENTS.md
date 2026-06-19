@@ -19,12 +19,12 @@ Requisitos para la release 1.0. Cada uno se mapea a una fase del roadmap.
 
 ### Modelo de datos y contenido (DATA)
 
-- [ ] **DATA-01**: Esquema de viaje tipado con zod en colecciones de Nuxt Content v3 (trip, day, monument, food, artist, reference)
-- [ ] **DATA-02**: El timeline de cada día codifica el ORDEN explícito de sus filas (stop / transport / meta / food …) y el `pace` de cada una (all / medium / slow-only)
+- [x] **DATA-01**: Esquema de viaje tipado con zod en colecciones de Nuxt Content v3 (trip, day, monument, food, artist, reference)
+- [x] **DATA-02**: El timeline de cada día codifica el ORDEN explícito de sus filas (stop / transport / meta / food …) y el `pace` de cada una (all / medium / slow-only)
 - [ ] **DATA-03**: Cada día declara `cards: string[]` con el orden exacto de sus fichas, para reproducir la "ruta del día" (que hoy depende del orden del DOM, no del array `places`)
 - [ ] **DATA-04**: Todo el contenido de Roma (≈37 fichas de monumento + gastronomía + arte/artistas + secciones de referencia) migrado 1:1 a datos, sin pérdida de texto ni de enlaces
-- [ ] **DATA-05**: La validación de esquema falla el build cuando un dato no cumple (ningún dato inválido llega a producción)
-- [ ] **DATA-06**: La prosa rica de las fichas se escribe en Markdown-inline y se renderiza con `<MDC>` preservando negritas, enlaces y párrafos
+- [x] **DATA-05**: La validación de esquema falla el build cuando un dato no cumple (ningún dato inválido llega a producción)
+- [x] **DATA-06**: La prosa rica de las fichas se escribe en Markdown-inline y se renderiza con `<MDC>` preservando negritas, enlaces y párrafos
 
 ### Arquitectura multi-viaje (ARCH)
 
@@ -111,12 +111,12 @@ Qué fases cubren qué requisitos. Mapeo del roadmap (ver `.planning/ROADMAP.md`
 | BUILD-02 | Phase 1 | Complete |
 | BUILD-03 | Phase 1 | Complete |
 | PARITY-01 | Phase 1 | Complete |
-| DATA-01 | Phase 2 | Pending |
-| DATA-02 | Phase 2 | Pending |
+| DATA-01 | Phase 2 | Complete |
+| DATA-02 | Phase 2 | Complete |
 | DATA-03 | Phase 2 | Pending |
 | DATA-04 | Phase 2 | Pending |
-| DATA-05 | Phase 2 | Pending |
-| DATA-06 | Phase 2 | Pending |
+| DATA-05 | Phase 2 | Complete |
+| DATA-06 | Phase 2 | Complete |
 | ARCH-01 | Phase 3 | Pending |
 | ARCH-02 | Phase 3 | Pending |
 | UI-01 | Phase 3 | Pending |
