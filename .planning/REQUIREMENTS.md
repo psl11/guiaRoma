@@ -28,7 +28,7 @@ Requisitos para la release 1.0. Cada uno se mapea a una fase del roadmap.
 
 ### Arquitectura multi-viaje (ARCH)
 
-- [ ] **ARCH-01**: La página renderiza un viaje a partir de sus datos vía `useTrip(slug)`; añadir un viaje nuevo = añadir archivos de contenido, sin tocar código
+- [x] **ARCH-01**: La página renderiza un viaje a partir de sus datos vía `useTrip(slug)`; añadir un viaje nuevo = añadir archivos de contenido, sin tocar código
 - [ ] **ARCH-02**: Routing preparado para multi-viaje (`/` = Roma por defecto; estructura `/trips/[slug]` lista) reutilizando un mismo `TripView`
 - [x] **ARCH-03**: Directorio Nitro `server/` presente pero dormido (sin endpoints activos); el sitio se sigue generando estático
 
@@ -117,7 +117,7 @@ Qué fases cubren qué requisitos. Mapeo del roadmap (ver `.planning/ROADMAP.md`
 | DATA-04 | Phase 2 | Complete |
 | DATA-05 | Phase 2 | Complete |
 | DATA-06 | Phase 2 | Complete |
-| ARCH-01 | Phase 3 | Pending |
+| ARCH-01 | Phase 3 | Complete |
 | ARCH-02 | Phase 3 | Pending |
 | UI-01 | Phase 3 | Complete |
 | FEAT-01 | Phase 3 | Pending |
