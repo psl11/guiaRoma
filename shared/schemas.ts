@@ -260,7 +260,7 @@ export const TripSchema = z.object({
   slug: z.string(), // 'roma'
   title: z.string(), // 'Cinque giorni a Roma' (con <em> en h1)
   decoration: z.string(), // hero-decoration '·  ROMA AETERNA  ·'
-  meta: z.string(), // hero-meta '19 — 23 giugno 2026 · Hotel Royal Court'
+  heroMeta: z.string(), // hero-meta '19 — 23 giugno 2026 · Hotel Royal Court' — NO usar 'meta': es nombre RESERVADO de Content v3 (se sobrescribe → '[object Object]', CR-01), igual que 'id'
   quote: z.string(),
   quoteAttr: z.string(), // hero-quote + attr '— FEDERICO FELLINI'
   infoCards: z.array(z.object({ label: z.string(), value: Md })), // info-grid (label + value)

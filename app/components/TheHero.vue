@@ -40,7 +40,7 @@ defineProps<{ trip: Trip }>()
           />
         </h1>
         <div class="hero-meta">
-          {{ trip.meta }}
+          {{ trip.heroMeta }}
         </div>
         <div class="hero-quote">
           {{ trip.quote }}<span class="hero-quote-attr">{{ trip.quoteAttr }}</span>

@@ -141,10 +141,15 @@ test.describe('shell de la build estática (/guiaRoma/)', () => {
     // --- #inicio masthead (h1 con <em>, hero-decoration, hero-meta, hero-quote) ---
     const inicio = page.locator('#inicio')
     await expect(inicio).toBeVisible()
-    await expect(inicio.locator('.hero .hero-decoration')).toBeVisible()
-    await expect(inicio.locator('.hero h1 em')).toBeVisible()
-    await expect(inicio.locator('.hero .hero-meta')).toBeVisible()
-    await expect(inicio.locator('.hero .hero-quote')).toBeVisible()
+    await expect(inicio.locator('.hero .hero-decoration')).toContainText('ROMA AETERNA')
+    await expect(inicio.locator('.hero h1 em')).toContainText('Roma')
+    // Aserción de TEXTO real (no solo visibilidad): atrapa la corrupción «[object Object]» si
+    // un campo del trip choca con un nombre RESERVADO de Content v3 (CR-01: 'meta' → 'heroMeta').
+    const heroMeta = inicio.locator('.hero .hero-meta')
+    await expect(heroMeta).toContainText('giugno 2026')
+    await expect(heroMeta).toContainText('Hotel Royal Court')
+    await expect(heroMeta).not.toContainText('[object Object]')
+    await expect(inicio.locator('.hero .hero-quote .hero-quote-attr')).toContainText('FELLINI')
 
     // --- info-grid con 4 info-card ---
     await expect(inicio.locator('.info-grid .info-card')).toHaveCount(4)
