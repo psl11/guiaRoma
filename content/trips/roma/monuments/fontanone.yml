@@ -1,0 +1,104 @@
+slug: fontanone
+trip: roma
+roman: XII
+name: Fontana dell'Acqua Paola
+italian: Il Fontanone · Gianicolo
+day: Sábado
+coords:
+  lat: 41.8888422
+  lng: 12.4642556
+type: card
+motif: fountain
+badge: Sorrentino
+arch:
+  - ref: arq-barroco
+    label: 'Arquitectura: [Barroco](#arq-barroco)'
+hero:
+  src: https://engine.tripwizy.com/image/es/fontana-dell-acqua-paola.jpeg
+  alt: Fontana dell'Acqua Paola
+sections:
+  - heading: Qué es
+    body: >-
+      Una fuente monumental del siglo XVII en lo alto del Gianicolo, sobre
+      Trastevere. Cinco arcos, seis columnas de granito egipcio reutilizadas del
+      viejo San Pedro, una balaustrada y una panorámica completa sobre Roma que
+      va desde el Vaticano hasta el Aventino. Y, sobre todo, **la escena inicial
+      de _La Grande Bellezza_**: el turista japonés se desploma muerto justo
+      aquí, contemplando esta vista.
+  - heading: Historia
+    body: >-
+      La fuente la construyó el Papa **Pablo V Borghese** en 1612 como
+      terminación monumental de un acueducto que él mismo había restaurado: el
+      _Acquedotto Traiano-Paolo_, que traía agua desde el lago de Bracciano (a
+      30 km al norte). Antes existía un acueducto romano del emperador Trajano,
+      abandonado durante la Edad Media. Pablo V lo reconstruyó casi enteramente
+      y, como buen mecenas barroco, terminó la obra con un decorado
+      escenográfico desproporcionado para su utilidad práctica: una fuente del
+      tamaño de un teatro, en lo alto del Gianicolo, donde el agua cae con
+      estruendo. Inicialmente la fuente vertía en cinco pilas separadas (una
+      bajo cada arco). En 1690, Carlo Fontana añadió la **pila única
+      gigantesca** que ves ahora, ampliándola y dándole la teatralidad final.
+
+
+      Las seis columnas de granito gris egipcio son **reutilizadas de la
+      basílica original de San Pedro** del siglo IV — la que Constantino había
+      construido y que se demolió para hacer la basílica actual. Bramante y
+      Maderno tiraron la vieja San Pedro a principios del XVII, y Pablo V decidió
+      no perder las columnas: vinieron aquí. Es decir: estás mirando piezas de
+      la _primera_ San Pedro del año 320. Hay literalmente piedras egipcias que
+      vio Constantino sosteniendo este fontanone.
+  - heading: Anécdotas
+    body: >-
+      La inscripción en letras gigantes sobre la fuente atribuye a Pablo V la
+      restauración del acueducto "_de Trajano_", pero la atribución es errónea —
+      el acueducto original era del emperador Trajano (98-117 d.C.), no del
+      Acqua Vergine. Los historiadores barrocos confundieron la atribución y
+      nadie corrigió la inscripción.
+
+
+      Y aquí **la escena**. _La Grande Bellezza_ (2013) de Paolo Sorrentino se
+      abre con un coro de mujeres cantando una canción sacra contemporánea ("_I
+      lie_" de David Lang) en lo alto del Fontanone. La cámara muestra a un grupo
+      de turistas asiáticos, fotos, sol implacable, un guía rezando una lista de
+      monumentos. Un turista japonés se separa del grupo, se queda mirando el
+      panorama sobre Roma con cara de estupor, y al cabo de unos segundos **se
+      desploma muerto, fulminado por un infarto provocado por la belleza**. La
+      cámara se queda con su cuerpo mientras la canción continúa. Es uno de los
+      planos iniciales más teatrales del cine italiano del siglo XXI —
+      Sorrentino quería decir, sin decirlo, que Roma sigue siendo capaz de
+      matarte de pura belleza. Aforismo de origen literario llamado _síndrome de
+      Stendhal_.
+
+
+      Quien quiera reproducir la escena: ponte exactamente bajo el quinto arco
+      (el más a la derecha mirando la fuente), de espaldas a ella, mirando Roma.
+      Eso es lo que mira el turista del cuento. La sensación es real — la ciudad
+      entera se abre debajo. El Vaticano a la izquierda, Trastevere bajo tus
+      pies, Pincio enfrente a lo lejos, el Aventino a la derecha.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Fontanone_dell%27Acqua_Paola.jpg/800px-Fontanone_dell%27Acqua_Paola.jpg" alt="Fontana dell'Acqua Paola, Gianicolo, Roma" caption="El Fontanone de Paolo V (1612) — la escena de apertura de _La Grande Bellezza_. Seis arcos de travertino blanco, tres grandes y dos pequeños, sobre el que los japoneses bailan al amanecer en la película. La vista sobre Roma desde aquí es la mejor del Gianicolo."}
+
+      - Las **seis columnas de granito gris**: tres a cada lado de los arcos. Son las del viejo San Pedro del siglo IV. Tócalas si quieres — piedra egipcia traída por los romanos hace 1900 años.
+      - La **inscripción** sobre la fuente: «_Paulus Quintus Pontifex Maximus Aquam in Agro Bracianensi Saluberrimis E Fontibus Collectam_…» — atribuye orgullosamente la obra al Papa Borghese.
+      - Los **dragones y águilas**: emblemas heráldicos de la familia Borghese, esparcidos por la fachada.
+      - La **vista**: identifica los monumentos. De izquierda a derecha aproximadamente: cúpula de San Pedro, Castel Sant'Angelo, las cúpulas del Centro Storico, Vittoriano (cubo blanco), Aventino al fondo. De noche, todo iluminado.
+      - El **contraste sonoro**: el agua cae con estruendo mientras la ciudad zumba abajo. Es el ruido lo que hace memorable el lugar — no es una fuente "para mirar" sino "para oír y mirar".
+      - El **atardecer**: en junio cae sobre las 20:50. Llegar diez minutos antes y quedarse hasta el azul nocturno. La luz cambia de oro a rosa a azul cobalto en veinte minutos.
+facts:
+  - label: Acceso
+    value: Libre 24/7
+  - label: Mejor momento
+    value: Atardecer (20:50 jun) y hora azul
+  - label: Cómo llegar
+    value: Subida andando 15' desde Trastevere
+  - label: Bajada
+    value: Por Via Garibaldi o Salita di Sant'Onofrio
+mapsQuery: Fontana dell'Acqua Paola Roma
+sorrentino:
+  label: La Grande Bellezza · escena inicial
+  text: >-
+    Minuto 4:30 de la película. Coro de mujeres cantando "I lie" mientras un
+    turista japonés muere fulminado por la belleza de Roma vista desde aquí.
+    Para reproducirla: ponte bajo el quinto arco, de espaldas a la fuente,
+    mirando la ciudad.

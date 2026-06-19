@@ -74,7 +74,18 @@ function selectCard(id: string): Cheerio<AnyNode> {
 /**
  * Convierte el subárbol DOM de un contenedor a texto Markdown-inline:
  *   <strong>/<b> → **texto**, <em>/<i> → _texto_, <a href> → [texto](href)
+ *   <img alt>     → el texto ALT (es contenido visible/accesible migrado — la ficha YAML
+ *                   lo guarda en `hero.alt` y en el `alt=` de :detail-photo, y la denylist
+ *                   declara que `alt`/`caption` SÍ cuentan; por simetría el lado HTML debe
+ *                   emitirlo, si no toda ficha con hero daría `alt` como "texto sobrante").
  * Recoge además todos los href en `links`. El resto de etiquetas aportan sólo su texto.
+ *
+ * Los hijos se unen con UN ESPACIO (no ''): en el HTML dos elementos en línea adyacentes sin
+ * blanco entre ellos (p.ej. `<span class="label">Horario crítico</span><span class="value">L-V…`)
+ * se pegarían en un único token ("críticol-v"), mientras que el lado YAML — que junta strings de
+ * campos distintos con espacio — los separa. Unir con espacio aquí casa ambos lados; `normalize`
+ * colapsa cualquier espacio doble que esto introduzca dentro de un <p>, así que es inocuo para la
+ * prosa y sólo arregla el pegado de `.facts-row` (label+value), card-header, etc.
  * (No es un conversor Markdown perfecto — D-08 sólo exige equivalencia de texto+enlaces.)
  */
 function domToMarkdown(node: AnyNode, links: Set<string>): string {
@@ -83,7 +94,7 @@ function domToMarkdown(node: AnyNode, links: Set<string>): string {
   if (node.type !== 'tag') return '' // comentarios, etc. → sin texto visible
 
   const el = node as unknown as { name: string, attribs: Record<string, string>, children: AnyNode[] }
-  const inner = el.children.map(c => domToMarkdown(c, links)).join('')
+  const inner = el.children.map(c => domToMarkdown(c, links)).join(' ')
   const tag = el.name.toLowerCase()
 
   switch (tag) {
@@ -93,6 +104,9 @@ function domToMarkdown(node: AnyNode, links: Set<string>): string {
     case 'em':
     case 'i':
       return `_${inner}_`
+    case 'img':
+      // El texto alternativo es contenido visible/accesible; el src es estructural (no texto).
+      return el.attribs?.alt ?? ''
     case 'a': {
       const href = el.attribs?.href
       if (href) {
@@ -227,9 +241,18 @@ export function yamlLinks(yamlObj: Record<string, unknown>): Set<string> {
   // Maps: reconstruir desde mapsQuery (campo tipado, no inline).
   const q = yamlObj.mapsQuery
   if (typeof q === 'string' && q.length > 0) {
-    links.add(MAPS_PREFIX + encodeURIComponent(q))
+    links.add(MAPS_PREFIX + encodeMapsQuery(q))
   }
   return links
+}
+
+// Las .maps-link del index.html codifican el apóstrofo como `%27` (común en italiano:
+// Sant'Angelo, dell'Acqua, de' Fiori). `encodeURIComponent` deja el apóstrofo SIN escapar
+// (es un carácter "unreserved" en su tabla), así que la reconstrucción ingenua no casa con
+// el href fuente y el diff reporta el enlace de Maps como faltante/sobrante en toda ficha con
+// apóstrofo. Igualar la codificación del HTML (verificado: `%27` en las 38 .maps-link).
+export function encodeMapsQuery(q: string): string {
+  return encodeURIComponent(q).replace(/'/g, '%27')
 }
 
 // Claves ESTRUCTURALES del YAML cuyo string NO es prosa visible: ids, enums, urls/queries,
@@ -240,6 +263,10 @@ const STRUCTURAL_KEYS = new Set<string>([
   'slug', 'trip', 'id', 'ref', 'href', 'src', 'mapsQuery',
   'motif', 'type', 'kind', 'variant', 'level', 'category', 'badgeKind', 'group',
   'order', 'zoom', 'lat', 'lng', 'icon', 'avatar',
+  // `day` viene del array `places` (metadato del popup del mapa), NO del texto de la ficha
+  // (la `article.card` no contiene "Viernes"). Como `coords`/`type`, es estructural: excluirlo
+  // del multiset de texto, si no toda ficha daría su día como "texto sobrante".
+  'day',
 ])
 
 /**
@@ -260,9 +287,30 @@ export function collectProseStrings(value: unknown, key: string | null, acc: str
   return acc
 }
 
+// ── MDC inline components en la prosa YAML (D-02) ───────────────────────────────
+// La `detail-photo` se migra como componente MDC inline dentro del `body` de su sección:
+//   :detail-photo{src="…" alt="…" caption="…"}
+// Para el diff de TEXTO sólo cuenta el contenido VISIBLE/ACCESIBLE del componente: el `alt`
+// (que el lado HTML ya emite desde <img alt>) y el `caption` (el `.detail-photo-caption` del
+// HTML). El nombre del componente (`detail-photo`), las llaves, los nombres de atributo y el
+// `src` (URL, estructural) NO son texto migrado y se descartan — si no, "detail-photo", la URL
+// y "src/alt/caption" entrarían como "texto sobrante" y el diff nunca casaría.
+const MDC_COMPONENT_RE = /:[a-z][a-z0-9-]*\{([^}]*)\}/gi
+const MDC_ATTR_RE = /\b(alt|caption)\s*=\s*"([^"]*)"/gi
+
+export function stripMdcComponents(s: string): string {
+  return s.replace(MDC_COMPONENT_RE, (_full, attrs: string) => {
+    const parts: string[] = []
+    let m: RegExpExecArray | null
+    MDC_ATTR_RE.lastIndex = 0
+    while ((m = MDC_ATTR_RE.exec(attrs)) !== null) parts.push(m[2])
+    return ` ${parts.join(' ')} ` // espacios de guarda: el componente no pega con el texto vecino
+  })
+}
+
 /** Texto normalizado del lado YAML: concatena SÓLO la prosa/campos visibles (sin chrome). */
 export function yamlText(yamlObj: Record<string, unknown>): string {
-  return normalize(collectProseStrings(yamlObj, null).join(' '))
+  return normalize(stripMdcComponents(collectProseStrings(yamlObj, null).join(' ')))
 }
 
 // ── diffEntry(id, yamlObj) ─────────────────────────────────────────────────────

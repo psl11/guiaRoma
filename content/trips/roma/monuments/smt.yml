@@ -1,0 +1,101 @@
+slug: smt
+trip: roma
+roman: XI
+name: Santa Maria in Trastevere
+italian: Basilica di Santa Maria in Trastevere
+day: Sábado
+coords:
+  lat: 41.8894930
+  lng: 12.4698361
+type: card
+motif: church
+arch:
+  - ref: arq-medieval
+    label: 'Arquitectura: [Paleocristiano](#arq-medieval)'
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/6/63/01_Santa_Maria_in_Trastevere_Facade.jpg
+  alt: Santa Maria in Trastevere
+sections:
+  - heading: Qué es
+    body: >-
+      La basílica más antigua de Roma dedicada a la Virgen María. La primera
+      versión se construyó en el siglo III d.C. — cuando ser cristiano seguía
+      siendo ilegal. La iglesia actual es del siglo XII, con mosaicos del ábside
+      que son una de las obras maestras del arte medieval italiano. Pero lo
+      memorable es la plaza: **Piazza Santa Maria in Trastevere** es el corazón
+      emocional del barrio.
+  - heading: Historia
+    body: >-
+      Cuenta una leyenda que el año del nacimiento de Cristo, en este punto
+      exacto, brotó una fuente de aceite que manó durante un día entero — señal
+      de la llegada del Mesías. Sobre ese supuesto lugar se construyó en el año
+      220 d.C., bajo el papado de Calixto I, la primera iglesia cristiana
+      pública de Roma — antes incluso del Edicto de Constantino. Fue posible
+      porque Trastevere era entonces un barrio de extranjeros, judíos, marineros
+      y artesanos, fuera del rigor administrativo del centro imperial. La iglesia
+      subsistió a través de los siglos con sucesivas reconstrucciones.
+
+
+      La basílica que vemos hoy se construyó entre 1138 y 1148 bajo el papado de
+      Inocencio II. Los mosaicos del ábside, obra de **Pietro Cavallini**, son
+      del siglo XII (los superiores) y siglo XIII (los inferiores, con escenas
+      de la vida de María). Cavallini fue uno de los grandes pintores y
+      mosaiquistas pre-Giotto, y su trabajo aquí es uno de los más importantes
+      ejemplos de arte medieval romano. Bajo el altar mayor están los restos del
+      Papa Calixto I, fundador de la iglesia. La **Madonna della Clemenza**, un
+      icono encáustico del siglo VI o VII, está en la Capilla Altemps a la
+      izquierda del altar — es uno de los iconos cristianos más antiguos
+      conservados, anterior incluso a la separación entre Roma y Constantinopla.
+  - heading: Anécdotas
+    body: >-
+      Las **22 columnas** de la nave central son _spolia_ de las Termas de
+      Caracalla. Roma medieval era una cantera para Roma renacentista: lo que no
+      se demolía para hacer cal, se reciclaba para iglesias. Algunas columnas
+      tienen capiteles diferentes porque vinieron de edificios paganos distintos
+      — los obreros del siglo XII mezclaron caprichosamente lo que tenían
+      disponible.
+
+
+      Por la noche, la **plaza frente a la iglesia** es uno de los espacios
+      sociales más vivos de Roma. Romanos jóvenes, turistas, músicos callejeros,
+      niños jugando al fútbol contra el pretil de la fuente. La fuente es del
+      siglo IX, una de las más antiguas todavía en funcionamiento. Los romanos
+      llaman "_vita di piazza_" a este tipo de noche al aire libre, sin destino,
+      donde el espacio público hace de salón colectivo. Trastevere es el último
+      barrio donde esa tradición sobrevive en el centro — el resto se ha
+      gentrificado o turistificado más severamente. Aún se ven viejas señoras
+      que sacan sillas a la calle para tomar la fresca. Si llegáis a las 18:30
+      con la luz dorada, sentaros un rato en la escalinata de la fuente. Es uno
+      de esos momentos donde Roma es Roma sin esfuerzo.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Apse_of_Santa_Maria_in_Trastevere%2C_Left_Side.jpg/960px-Apse_of_Santa_Maria_in_Trastevere%2C_Left_Side.jpg" alt="El mosaico del ábside (siglo XII): Cristo y María coronada como reina, sentados juntos en el trono — iconografía rarísim" caption="El mosaico del ábside (siglo XII): Cristo y María coronada como reina, sentados juntos en el trono — iconografía rarísima."}
+
+      - Los **mosaicos del ábside**: cubren el semicírculo detrás del altar. Mira la franja inferior, las escenas de la vida de María (Anunciación, Natividad, Asunción) — son de Cavallini.
+      - En la franja superior central, **Cristo y María sentados juntos en el trono** — iconografía rarísima donde la Virgen aparece coronada como reina, no como subordinada. Inocencio II quiso enfatizar el papel cósmico de María.
+      - El **artesonado dorado del techo**: del siglo XVII, obra de Domenichino. La pintura central es una Asunción.
+      - El **suelo cosmatesco**: la familia Cosmati creó en el siglo XII un estilo de mosaico geométrico con teselas de mármol antiguo. Toda la nave central tiene ese suelo — camínalo despacio.
+      - La **Madonna della Clemenza** en la Capilla Altemps: icono del siglo VI-VII, una de las imágenes más antiguas conservadas de la Virgen. Está casi siempre poco iluminada — acerca el móvil con linterna para verla bien.
+      - El **campanario románico** visible desde fuera: con su capucha de mosaico azul y dorado. Es de finales del XII.
+      - La **plaza** al salir: especialmente al atardecer. Sentate en la escalinata de la fuente y mira pasar la vida romana.
+facts:
+  - label: Horario
+    value: 7:30-20:30 todos los días
+  - label: Acceso
+    value: Gratuito
+  - label: Tiempo de visita
+    value: 30 minutos + tiempo en plaza
+  - label: Antigüedad
+    value: Siglo III · primera fundación
+mapsQuery: Santa Maria in Trastevere Roma
+culture:
+  - title: Referencias literarias
+    text: ''
+  - title: Historias de Roma
+    text: >-
+      (Enric González, 2004) — «Tal vez hayan visto en Londres o en Berlín los
+      restos fosilizados de un archaeopterix, el pequeño saurio jurásico alado y
+      con plumas, considerado uno de los eslabones entre los dinosaurios y su
+      resultado evolutivo, las aves. Algo así es, por ejemplo, la iglesia de
+      Santa María en el Trastevere: un eslabón entre el Imperio romano y su
+      resultado evolutivo, el imperio de la Iglesia católica.»

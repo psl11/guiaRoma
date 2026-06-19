@@ -1,0 +1,96 @@
+slug: tempietto
+trip: roma
+roman: X
+name: Tempietto del Bramante
+italian: Tempietto · San Pietro in Montorio
+day: Sábado
+coords:
+  lat: 41.8887243
+  lng: 12.4664133
+type: card
+motif: temple
+badge: Sorrentino
+arch:
+  - ref: arq-renacimiento
+    label: 'Arquitectura: [Renacimiento](#arq-renacimiento)'
+hero:
+  src: https://www.accademiaspagna.org/wp-content/uploads/2017/05/tempietto.jpg
+  alt: Tempietto del Bramante
+sections:
+  - heading: Qué es
+    body: >-
+      Un templo circular de cinco metros de diámetro escondido en el patio de un
+      monasterio del Gianicolo. Pequeño como una capilla, pero
+      arquitectónicamente **el documento fundacional del alto Renacimiento**. Lo
+      construyó Donato Bramante en 1502 y a partir de él se diseñaron luego San
+      Pedro del Vaticano, el Capitolio de Washington y miles de cúpulas
+      neoclásicas. La obra más influyente del Renacimiento por metro cuadrado.
+  - heading: Historia
+    body: >-
+      Los Reyes Católicos — Isabel y Fernando — encargaron en 1502 al arquitecto
+      Donato Bramante construir un memorial en el lugar donde, según la
+      tradición medieval, San Pedro había sido crucificado por orden de Nerón.
+      Era una época en la que España, recién unificada y enriquecida con las
+      primeras remesas de América, quería marcar presencia en Roma. El terreno
+      estaba en lo alto del **Gianicolo**, junto a la iglesia franciscana de San
+      Pietro in Montorio. Bramante diseñó un templo perfectamente circular,
+      sobre tres escalones, rodeado por una columnata dórica de 16 columnas de
+      granito gris (reutilizadas de un templo romano), coronado por un tambor
+      cilíndrico y una cúpula hemisférica. El interior es minúsculo — una sola
+      sala circular con un altar en el centro. Pero la proporción y la armonía
+      geométrica eran tan perfectas que el edificio se convirtió inmediatamente
+      en modelo.
+
+
+      El propio Bramante, alentado por Julio II, usaría el Tempietto como base
+      conceptual para el proyecto inicial de la nueva basílica de San Pedro.
+      Andrea Palladio lo incluyó como única obra renacentista en su tratado
+      _Quattro libri dell'architettura_. Christopher Wren se inspiró en él para
+      Saint Paul de Londres. Thomas Jefferson para el Capitolio. Es, sin
+      exagerar, el edificio más copiado y citado de la historia de la
+      arquitectura occidental — y mide cinco metros.
+  - heading: Anécdotas
+    body: >-
+      Bramante quería rodear el Tempietto con un **patio circular columnado** que
+      reforzase la centralidad geométrica. Nunca se construyó por falta de
+      fondos — el patio actual es rectangular, lo cual rompe sutilmente la
+      composición original. Existen los dibujos de Bramante con el proyecto
+      completo. La cripta del Tempietto contiene el supuesto agujero donde se
+      clavó la cruz invertida de San Pedro — la tradición histórica del lugar es
+      errónea (Pedro fue crucificado en el Vaticano, en la colina opuesta del
+      Tíber), pero la creencia medieval persistió. En el siglo XX, las
+      excavaciones arqueológicas bajo el Vaticano confirmaron que la tumba
+      auténtica de Pedro está bajo la basílica de San Pedro, no aquí. Pero el
+      Tempietto sigue siendo, en términos arquitectónicos, el equivalente íntimo
+      y perfecto de aquella inmensidad.
+
+
+      Aparece brevemente en _La Grande Bellezza_ en una secuencia onírica, casi
+      como mención simbólica. Sorrentino visita en su película muchos espacios
+      "manifiesto" del arte romano — el Tempietto es uno de ellos.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Tempietto_di_San_Pietro_in_Montorio.jpg/800px-Tempietto_di_San_Pietro_in_Montorio.jpg" alt="Tempietto del Bramante en San Pietro in Montorio, Roma" caption="El Tempietto (1502): el primer edificio del Renacimiento que recupera plenamente la planta circular clásica. 16 columnas dóricas de granito, entablamento, cella. Mide solo 15 metros de diámetro — pero parece un templo romano auténtico."}
+
+      - Las **proporciones**: cuenta las columnas (16) y los tramos del entablamento. Bramante usó proporciones del Vitruvio, basadas en la teoría clásica del cuerpo humano como módulo.
+      - La **cúpula hemisférica** y el **tambor cilíndrico**: si miras la sección imaginaria de arriba abajo, ves un cubo, un cilindro y una semiesfera apilados — los tres sólidos platónicos primarios.
+      - Las **columnas dóricas**: son _spolia_ romanas (reutilizadas de un edificio antiguo). Bramante las quería específicamente porque representan la pureza del orden más antiguo griego.
+      - El **friso dórico**: 12 metopas con los instrumentos de la pasión cristiana (clavos, corona de espinas, lanza, etc.) — síntesis perfecta entre arquitectura pagana clásica e iconografía cristiana.
+      - Si te dejan, baja a la **cripta circular**: el agujero donde la tradición sitúa la cruz de Pedro. Espacio minúsculo pero cargado.
+      - La **vista del patio** desde la columnata: aunque el patio actual no es el original circular, el silencio del lugar es perfecto. A 80 metros del bullicio del Trastevere.
+facts:
+  - label: Horario
+    value: Ma-D 10:00-18:00 · L cerrado
+  - label: Acceso
+    value: Gratuito · entrada por Academia España
+  - label: Tiempo de visita
+    value: 20-30 minutos
+  - label: Ojo
+    value: Cierra 18:00 sábado · llegar 17:45 máx
+mapsQuery: Tempietto del Bramante San Pietro in Montorio Roma
+sorrentino:
+  label: La Grande Bellezza
+  text: >-
+    Aparece como cita simbólica en una secuencia onírica. Sorrentino lo elige
+    por su carga manifiestamente renacentista — un "memorial del Renacimiento"
+    que dialoga con la decadencia barroca del resto de la película.

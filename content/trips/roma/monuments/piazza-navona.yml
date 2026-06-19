@@ -1,0 +1,106 @@
+slug: piazza-navona
+trip: roma
+roman: V
+name: Piazza Navona
+italian: Piazza Navona · Rione Parione
+day: Viernes
+coords:
+  lat: 41.8991633
+  lng: 12.4730742
+type: card
+motif: obelisk
+artists:
+  - ref: art-bernini
+    label: 'Artistas: [Bernini](#art-bernini)'
+  - ref: art-borromini
+    label: '[Borromini](#art-borromini)'
+arch:
+  - ref: arq-barroco
+    label: 'Arquitectura: [Barroco](#arq-barroco)'
+hero:
+  src: https://artandtraditiontours.com/wp-content/uploads/2025/01/AdobeStock_46341549-scaled.jpeg
+  alt: Piazza Navona
+sections:
+  - heading: Qué es
+    body: >-
+      La plaza barroca por excelencia de Roma. Una elipse alargada de 240 metros
+      con tres fuentes alineadas, la mayor de ellas obra cumbre de Bernini, y
+      una iglesia con fachada de Borromini frente a ella. Lo que muchos no
+      saben: la plaza tiene esa forma porque está construida exactamente encima
+      del _Stadium de Domiziano_, un anfiteatro romano del siglo I d.C.
+  - heading: Historia
+    body: >-
+      En el año 86 d.C., el emperador Domiziano construyó aquí un estadio para
+      competiciones atléticas griegas — el _agon_, de donde viene "Navona"
+      (n'agone → in agone → navona). Cabían 30.000 espectadores en gradas
+      elípticas. Tras la caída del imperio, las gradas se convirtieron en
+      cimientos de casas, los corredores en sótanos, y la pista en plaza. Si
+      bajas hoy al sótano de la iglesia de Sant'Agnese in Agone (que está en la
+      plaza), puedes ver los muros romanos originales del estadio.
+
+
+      La transformación barroca llegó en el siglo XVII bajo el papado de
+      **Inocencio X Pamphilj**, cuya familia tenía aquí su palazzo (el Palazzo
+      Pamphilj, hoy embajada de Brasil). Inocencio quiso hacer de Navona el
+      escaparate del barroco romano. Encargó a su rival favorito, **Gian Lorenzo
+      Bernini**, la fuente central — la _Fontana dei Quattro Fiumi_, inaugurada
+      en 1651, con cuatro gigantes que representan los cuatro grandes ríos
+      conocidos entonces: Nilo (África), Ganges (Asia), Danubio (Europa) y Río
+      de la Plata (América). La fuente sostiene un obelisco egipcio de 16 metros
+      traído del Circo de Maxencio. Las dos fuentes laterales — del Moro y de
+      Neptuno — son de Giacomo della Porta, anteriores, retocadas después por
+      Bernini.
+  - heading: Anécdotas
+    body: >-
+      La rivalidad legendaria entre Bernini y **Francesco Borromini** (que
+      diseñó la iglesia de Sant'Agnese in Agone, frente a la fuente) generó un
+      mito persistente: dicen que la estatua del Nilo se tapa la cara con un
+      velo para no mirar la "horrenda" fachada de Borromini, y que el Río de la
+      Plata levanta la mano "horrorizado" como si la iglesia fuese a caerse
+      encima. _Es mentira_: la fuente fue terminada antes de que Borromini
+      comenzase la iglesia. Pero la historia es tan buena que se repite. Domingo
+      se llamaba al fondo de la plaza el «Lago di Piazza Navona»: hasta 1866,
+      cada agosto, se tapaban los desagües y se inundaba la plaza con 30 cm de
+      agua para que la nobleza paseara en carruajes refrescándose. Los pobres
+      iban a bañarse a pie. La tradición se perdió cuando las cuestiones de
+      higiene pública del Reino de Italia la prohibieron. En diciembre, la plaza
+      acoge desde el siglo XIX el famoso mercado navideño de la _Befana_ (la
+      bruja buena que trae regalos el 6 de enero).
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Obelisco_Fontana_dei_Fiumi_Piazza_Navona_Roma.jpg/960px-Obelisco_Fontana_dei_Fiumi_Piazza_Navona_Roma.jpg" alt="El Río de la Plata de Bernini con la mano alzada. La leyenda dice que se «horroriza» de la fachada de Borromini enfrente" caption="El Río de la Plata de Bernini con la mano alzada. La leyenda dice que se «horroriza» de la fachada de Borromini enfrente — falso, pero memorable."}
+
+      - La **forma alargada de la plaza**: camínala entera. Estás caminando sobre la pista del estadio donde corrían atletas hace 1900 años.
+      - El **Río de la Plata** en la fuente central: es el gigante con un pie levantado y un brazo alzado. Lleva monedas a sus pies — alusión a la riqueza de América.
+      - El **león** de la fuente de Bernini: bebe del agua que cae. Si te fijas, la roca sobre la que se apoya tiene un agujero por donde se ve la luz del otro lado — un truco para hacer la composición "respirable".
+      - La **fachada de Sant'Agnese in Agone** (Borromini): los dos campanarios curvos enmarcan la cúpula. Borromini la diseñó precisamente para que se viese mejor desde el lado opuesto de la plaza.
+      - El **Palazzo Pamphilj** (al lado de la iglesia): es la embajada de Brasil. Por dentro tiene una galería decorada por Pietro da Cortona. Solo visitable con cita previa de la embajada.
+      - El **obelisco egipcio**: no es realmente egipcio antiguo. Es una copia romana del siglo I encargada por Domiziano e inscrita con jeroglíficos falsos. Los romanos amaban Egipto.
+facts:
+  - label: Horario
+    value: 24/7
+  - label: Acceso
+    value: Gratuito
+  - label: Tiempo de visita
+    value: 25-30 minutos
+  - label: Mejor momento
+    value: Atardecer y noche · de día llena de turistas
+mapsQuery: Piazza Navona Roma
+culture:
+  - title: Referencias literarias
+    text: ''
+  - title: I Segreti di Roma
+    text: >-
+      (Corrado Augias, 2005) — Augias recorre la historia del _Stadio di
+      Domiziano_ que da forma a la plaza, y el descubrimiento en el siglo XIX de
+      que el perímetro ovalado de las casas trazaba exactamente la pista de
+      carreras original. Tiene también un pasaje divertido sobre la rivalidad
+      entre Bernini y Borromini: comparten plaza, trabajan para el mismo papa, y
+      Bernini hizo que la figura del Río de la Plata alzara el brazo mirando
+      hacia la fachada de su rival «como horrorizado». Borromini murió antes de
+      poder responder.
+  - title: Historias de Roma
+    text: >-
+      (Enric González, 2004) — González la nombra simplemente como el «estadio
+      de Domiciano», porque eso es lo que es. Esa es exactamente la actitud
+      correcta ante Roma: ver debajo de lo que ves.
