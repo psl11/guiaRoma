@@ -14,7 +14,8 @@
     "test:golden": "playwright test",
     "test:golden:update": "playwright test --update-snapshots",
     "test:subpath": "playwright test tests/parity/subpath.spec.ts",
-    "test:data": "vitest run tests/data"
+    "test:data": "vitest run tests/data",
+    "test:unit": "vitest run tests/unit"
   },
   "devDependencies": {
     "@playwright/test": "1.61.0",

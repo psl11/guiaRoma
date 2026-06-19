@@ -10,10 +10,13 @@ import { defineConfig } from 'vitest/config'
 // (invariants.spec). No usa runtime Nuxt ni SQLite (sería contraproducente: Content
 // "limpia" los datos inválidos y ocultaría los fallos que DATA-05 debe atrapar).
 //
-// Runners DISJUNTOS: este Vitest cubre SOLO `tests/data/**`. El golden de paridad
-// (`tests/parity/**`) sigue en Playwright (playwright.config.ts), sin solaparse.
+// Runners DISJUNTOS: este Vitest cubre la puerta de DATOS (`tests/data/**`) y la suite
+// UNITARIA de helpers puros (`tests/unit/**`, p. ej. `dayLabel`). Ambos comparten motor
+// pero son LÓGICAMENTE separados: `test:data` corre solo `tests/data` y `test:unit` solo
+// `tests/unit`, así la puerta Fase 2 nunca se mezcla con los tests unitarios. El golden de
+// paridad (`tests/parity/**`) sigue en Playwright (playwright.config.ts), sin solaparse.
 export default defineConfig({
   test: {
-    include: ['tests/data/**/*.spec.ts'],
+    include: ['tests/data/**/*.spec.ts', 'tests/unit/**/*.spec.ts'],
   },
 })
