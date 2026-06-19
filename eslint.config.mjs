@@ -9,6 +9,9 @@ export default withNuxt(
   // tests/parity/** es el harness Playwright del golden (Plan 01-01): suite E2E
   // independiente con su propio runtime/contexto TS, fuera del código fuente Nuxt.
   // Se mantiene intacta (no se lintea con la config de Nuxt).
+  //
+  // tests/data/** (puertas Vitest de la Fase 2, Plan 02-01) NO se ignora: es código
+  // fuente TS de validación (no un harness verbatim), y debe lintarse como el resto.
   {
     ignores: ['app/assets/css/**', 'tests/parity/**'],
   },

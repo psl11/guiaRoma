@@ -13,13 +13,17 @@
     "lint:fix": "eslint . --fix",
     "test:golden": "playwright test",
     "test:golden:update": "playwright test --update-snapshots",
-    "test:subpath": "playwright test tests/parity/subpath.spec.ts"
+    "test:subpath": "playwright test tests/parity/subpath.spec.ts",
+    "test:data": "vitest run tests/data"
   },
   "devDependencies": {
     "@playwright/test": "1.61.0",
     "@types/leaflet": "1.9.21",
     "better-sqlite3": "^12.11.1",
-    "prettier": "3.8.4"
+    "cheerio": "^1.2.0",
+    "prettier": "3.8.4",
+    "vitest": "4.1.9",
+    "yaml": "^2.9.0"
   },
   "dependencies": {
     "@nuxt/content": "3.14.0",
