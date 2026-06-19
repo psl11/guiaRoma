@@ -129,8 +129,8 @@ export const DaySchema = z.object({
   eyebrow: z.string(), // 'venerdì · 19 giugno' (section-eyebrow del día)
   title: z.string(), // 'Centro Storico nocturno'
   subtitle: z.string(), // .day-subtitle
-  stats: z.array(z.object({ // .day-stats-item walk|train|taxi
-    variant: z.enum(['walk', 'train', 'taxi', 'metro']),
+  stats: z.array(z.object({ // .day-stats-item walk|train|taxi|metro|ticket (CSS 1285-1289)
+    variant: z.enum(['walk', 'train', 'taxi', 'metro', 'ticket']),
     text: Md,
   })),
   light: z.object({ // .dia-ligera (Versión ligera)
