@@ -18,7 +18,8 @@ import { expect, test } from '@playwright/test'
  *  - 0 respuestas con status >= 400 para recursos `/_nuxt/*` bajo `/guiaRoma/` (BUILD-01/03).
  *  - 0 peticiones a CDNs (fonts.googleapis.com / fonts.gstatic.com / unpkg.com): fuentes y
  *    assets self-hosteados (BUILD-02, objetivo offline).
- *  - 0 errores críticos de consola al cargar (BUILD-03: la app del scaffold carga bajo el subpath).
+ *  - 0 errores críticos de consola al cargar, salvo el mensaje benigno de hidratación de
+ *    @nuxtjs/color-mode (BUILD-03: la app real —ya con TripView/ThemeToggle montados, Fase 3— carga bajo el subpath).
  *  - `.output/public/.nojekyll` existe (V7/BUILD-01: Pages no ignorará `/_nuxt/`).
  */
 
@@ -29,6 +30,14 @@ const PORT = 5000 + Number(process.env.TEST_WORKER_INDEX ?? 0)
 const BASE = `http://localhost:${PORT}`
 const SUBPATH_URL = `${BASE}/guiaRoma/`
 const OUTPUT_DIR = join(process.cwd(), '.output', 'public')
+
+// @nuxtjs/color-mode en SSG inyecta el script anti-FOUC que fija `data-theme` en <html> ANTES
+// de la hidratación; el HTML prerenderizado (preference:'system') no lo trae → «Hydration
+// completed but contains mismatches.» benigno (solo el atributo de <html>, sin flash visible).
+// Quitarlo reintroduciría FOUC y rompería SC#3, así que se tolera EXACTAMENTE este mensaje;
+// cualquier OTRO error de consola sigue fallando (D2 en deferred-items.md; mismo criterio que
+// tests/parity/shell.spec.ts + theme.spec.ts, que montan el consumidor de color-mode).
+const EXPECTED_HYDRATION_MSG = /Hydration completed but contains mismatches/i
 
 let server: ChildProcess | undefined
 let previewRoot: string | undefined
@@ -126,9 +135,12 @@ test('el build se sirve bajo /guiaRoma/ sin 404 de /_nuxt/* ni peticiones a CDNs
   page.on('request', (r) => {
     if (/fonts\.googleapis\.com|fonts\.gstatic\.com|unpkg\.com/.test(r.url())) cdnRequests.push(r.url())
   })
-  // (3) errores de consola (BUILD-03: la app carga sin romper bajo el subpath).
+  // (3) errores de consola (BUILD-03: la app carga sin romper bajo el subpath), tolerando
+  //     SOLO el mensaje de hidratación de color-mode (ver EXPECTED_HYDRATION_MSG arriba).
   page.on('console', (msg) => {
-    if (msg.type() === 'error') consoleErrors.push(msg.text())
+    if (msg.type() === 'error' && !EXPECTED_HYDRATION_MSG.test(msg.text())) {
+      consoleErrors.push(msg.text())
+    }
   })
 
   const response = await page.goto(SUBPATH_URL)
