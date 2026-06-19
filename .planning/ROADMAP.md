@@ -13,7 +13,7 @@ guiaRoma es hoy un único `index.html` (6.665 líneas) con la guía de un viaje 
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Andamiaje + Golden de paridad** - Proyecto Nuxt 4 en la rama de release, estático bajo `/guiaRoma/`, CSS verbatim, Nitro dormido, y golden de Playwright capturado desde `main` antes de divergir (completed 2026-06-18)
-- [ ] **Phase 2: Esquema de datos + migración del contenido** - 6 colecciones zod en Nuxt Content v3 y todo Roma migrado 1:1 a datos tipados, con `day.cards` ordenado y validación que rompe el build
+- [x] **Phase 2: Esquema de datos + migración del contenido** - 6 colecciones zod en Nuxt Content v3 y todo Roma migrado 1:1 a datos tipados, con `day.cards` ordenado y validación que rompe el build (completed 2026-06-19)
 - [ ] **Phase 3: Capa de página, layout y tema** - `useTrip(slug)` + `TripView` renderizando un viaje desde datos, routing multi-viaje, layout/Topbar/NavPills idénticos y tema claro/oscuro sin parpadeo
 - [ ] **Phase 4: Render de contenido + modos de ritmo** - Fichas, timeline y secciones de referencia renderizadas desde datos e idénticas a hoy, con selector de ritmo, "caminar menos" y modo resumen
 - [ ] **Phase 5: Navegación transversal** - `useCardNavigation` (scroll-a-ficha, pila volver, scrollspy `+130`) consumida de forma única por enlaces, mapa y búsqueda
@@ -51,7 +51,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   - [x] 02-01-PLAN.md — Contrato de datos: 6 colecciones zod en shared/schemas.ts + content.config.ts + Vitest/yaml/cheerio + tests schema.spec (puerta DATA-05) e invariants.spec (SC4) [Wave 1]
   - [x] 02-02-PLAN.md — Harness de fidelidad 1:1 (D-07/D-08): cheerio extrae texto+enlaces por id del index.html + migration-diff.spec (puerta DATA-04) [Wave 2]
   - [x] 02-03-PLAN.md — trip.yml + 5 days: timeline discriminado por kind con pace (DATA-02) + cards en orden de DOM (DATA-03) [Wave 2]
-  - [x] 02-04-PLAN.md — 21 monumentos viernes/sabado/domingo migrados 1:1 (motif/type/places, cross-refs card-artists/card-arch, prosa MDC-ready) [Wave 3]  - [x] 02-05-PLAN.md — 17 monumentos lunes/martes migrados 1:1 (completan los 38) [Wave 3]  - [x] 02-06-PLAN.md — 26 fichas de gastronomia migradas 1:1 (group/badge; 5 sin id reciben slug g-) [Wave 3]  - [ ] 02-07-PLAN.md — 13 artist-cards (artist/arquitectura/glossary) + reservas + practica migrados 1:1 [Wave 3]
+  - [x] 02-04-PLAN.md — 21 monumentos viernes/sabado/domingo migrados 1:1 (motif/type/places, cross-refs card-artists/card-arch, prosa MDC-ready) [Wave 3]  - [x] 02-05-PLAN.md — 17 monumentos lunes/martes migrados 1:1 (completan los 38) [Wave 3]  - [x] 02-06-PLAN.md — 26 fichas de gastronomia migradas 1:1 (group/badge; 5 sin id reciben slug g-) [Wave 3]  - [x] 02-07-PLAN.md — 13 artist-cards (artist/arquitectura/glossary) + reservas + practica migrados 1:1 [Wave 3]
 ### Phase 3: Capa de página, layout y tema
 **Goal**: Construir la capa que agrega un viaje desde sus datos y lo entrega al árbol de componentes, con el shell de layout (Topbar, NavPills, BackButton) visualmente idéntico a hoy y el tema claro/oscuro resuelto sin parpadeo en estático — fijando el anti-FOUC desde que el layout existe.
 **Depends on**: Phase 2
@@ -130,7 +130,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Andamiaje + Golden de paridad | 3/3 | Complete   | 2026-06-18 |
-| 2. Esquema de datos + migración del contenido | 6/7 | In Progress|  |
+| 2. Esquema de datos + migración del contenido | 7/7 | Complete   | 2026-06-19 |
 | 3. Capa de página, layout y tema | 0/TBD | Not started | - |
 | 4. Render de contenido + modos de ritmo | 0/TBD | Not started | - |
 | 5. Navegación transversal | 0/TBD | Not started | - |

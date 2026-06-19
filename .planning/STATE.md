@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Phase 2 context gathered
-last_updated: "2026-06-19T09:41:29.300Z"
+status: verifying
+stopped_at: Completed 02-07-PLAN.md (last plan of Phase 02 — ready for verification)
+last_updated: "2026-06-19T09:58:08.372Z"
 last_activity: 2026-06-19
 progress:
   total_phases: 8
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 10
-  completed_plans: 9
-  percent: 13
+  completed_plans: 10
+  percent: 25
 ---
 
 # Project State
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 
 Phase: 02 (esquema-de-datos-migraci-n-del-contenido) — EXECUTING
 Plan: 7 of 7
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-06-19
 
-Progress: [█████████░] 90%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -60,6 +60,7 @@ Progress: [█████████░] 90%
 | Phase 02 P04 | 27min | 2 tasks | 21 files |
 | Phase 02 P05 | 18min | 2 tasks | 17 files |
 | Phase 02 P06 | 9min | 2 tasks | 26 files |
+| Phase 02 P07 | 14min | 3 tasks | 18 files |
 
 ## Accumulated Context
 
@@ -92,6 +93,10 @@ Recent decisions affecting current work:
 - [Phase ?]: [Fase 2]: Los 38 monumentos quedan migrados (21 Plan 04 + 17 Plan 05); schema.spec conteo 38 y migration-diff de los 38 en verde (DATA-04/DATA-01)
 - [Phase ?]: [Fase 2]: Las 26 fichas de gastronomía quedan migradas (17+9, incl. 5 sin id con slug g- generado y verificado a mano); schema.spec conteo food=26 y migration-diff de los 21 con id en verde (DATA-04/DATA-01)
 - [Phase ?]: [Fase 2]: groupIntro de food NO se pobla por ficha — los gastro-intro son prosa de nivel grupo/sección fuera del subárbol DOM de cada card; atarlo a una ficha rompería su migration-diff por-card (extraWords). Campo queda optional
+- [Phase ?]: [Fase 2]: Plan 07 cierra el corpus — 13 artist-cards (kind artist/arquitectura/glossary), reservas (tabla tipada badge/estado) y practica (prosa+media); pnpm test:data 100% verde con TODOS los cross-refs resueltos
+- [Phase ?]: [Fase 2]: avatar de artist-card es estructural en ambos lados del diff (se excluye .artist-avatar de la extracción HTML, igual que STRUCTURAL_KEYS en YAML); seenIn lleva la prosa de cabecera/conector en label/note de los Link
+- [Phase ?]: [Fase 2]: reservas.table.badge/badgeKind → optional (fila 'Sin reserva' sin badge); anclas de SECCIÓN de página (#gastronomia/#arte/#arquitectura/#inicio/#mapa) aceptadas en el invariante de anclas inline (landings SPA, no entidades)
+- [Phase ?]: [Fase 2]: archLink (arq-barroco → #art-bernini/#art-borromini) INLINE en el body de la prosa, no campo aparte; arq-medieval con 2 secciones fiel al DOM (sin 'Por qué importa')
 
 ### Pending Todos
 
@@ -118,6 +123,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-19T09:40:57.084Z
-Stopped at: Phase 2 context gathered
+Last session: 2026-06-19T09:58:08.362Z
+Stopped at: Completed 02-07-PLAN.md (last plan of Phase 02 — ready for verification)
 Resume file: None
