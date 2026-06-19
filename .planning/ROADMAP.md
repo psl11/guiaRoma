@@ -51,11 +51,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   - [ ] 02-01-PLAN.md — Contrato de datos: 6 colecciones zod en shared/schemas.ts + content.config.ts + Vitest/yaml/cheerio + tests schema.spec (puerta DATA-05) e invariants.spec (SC4) [Wave 1]
   - [ ] 02-02-PLAN.md — Harness de fidelidad 1:1 (D-07/D-08): cheerio extrae texto+enlaces por id del index.html + migration-diff.spec (puerta DATA-04) [Wave 2]
   - [ ] 02-03-PLAN.md — trip.yml + 5 days: timeline discriminado por kind con pace (DATA-02) + cards en orden de DOM (DATA-03) [Wave 2]
-  - [ ] 02-04-PLAN.md — 21 monumentos viernes/sabado/domingo migrados 1:1 (motif/type/places, cross-refs card-artists/card-arch, prosa MDC-ready) [Wave 2]
-  - [ ] 02-05-PLAN.md — 17 monumentos lunes/martes migrados 1:1 (completan los 38) [Wave 2]
-  - [ ] 02-06-PLAN.md — 26 fichas de gastronomia migradas 1:1 (group/badge; 5 sin id reciben slug g-) [Wave 2]
-  - [ ] 02-07-PLAN.md — 13 artist-cards (artist/arquitectura/glossary) + reservas + practica migrados 1:1 [Wave 2]
-
+  - [ ] 02-04-PLAN.md — 21 monumentos viernes/sabado/domingo migrados 1:1 (motif/type/places, cross-refs card-artists/card-arch, prosa MDC-ready) [Wave 3]  - [ ] 02-05-PLAN.md — 17 monumentos lunes/martes migrados 1:1 (completan los 38) [Wave 3]  - [ ] 02-06-PLAN.md — 26 fichas de gastronomia migradas 1:1 (group/badge; 5 sin id reciben slug g-) [Wave 3]  - [ ] 02-07-PLAN.md — 13 artist-cards (artist/arquitectura/glossary) + reservas + practica migrados 1:1 [Wave 3]
 ### Phase 3: Capa de página, layout y tema
 **Goal**: Construir la capa que agrega un viaje desde sus datos y lo entrega al árbol de componentes, con el shell de layout (Topbar, NavPills, BackButton) visualmente idéntico a hoy y el tema claro/oscuro resuelto sin parpadeo en estático — fijando el anti-FOUC desde que el layout existe.
 **Depends on**: Phase 2
