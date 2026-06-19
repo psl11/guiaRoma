@@ -51,9 +51,14 @@ export default defineNuxtConfig({
   },
 
   // Formateo vía @nuxt/eslint (stylistic) — una sola herramienta, sin mezclar con Prettier.
+  // typescript: true → incluye el parser/reglas de typescript-eslint para los .ts FUERA del
+  // grafo Vue (shared/, tests/data/, *.config.ts). Por defecto @nuxt/eslint lo deja en false
+  // y esos ficheros caerían a espree (que no entiende `: tipo`/`export type`). Fase 2 es la
+  // primera con código fuente TS tipado lintado, de ahí que haga falta activarlo ahora.
   eslint: {
     config: {
       stylistic: true,
+      typescript: true,
     },
   },
 
