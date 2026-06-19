@@ -136,7 +136,7 @@ export const DaySchema = z.object({
   light: z.object({ // .dia-ligera (Versión ligera)
     title: z.string(),
     items: z.array(z.object({
-      kind: z.enum(['see', 'move', 'skip', 'rest']), // lg-see/lg-move/lg-skip/lg-rest
+      kind: z.enum(['see', 'move', 'skip', 'care', 'rest']), // lg-see/lg-move/lg-skip/lg-care/lg-rest (✅🚕⏭️⚠️🪑)
       text: Md,
     })),
   }).optional(),
