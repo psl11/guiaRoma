@@ -36,7 +36,22 @@ findings:
   warning: 5
   info: 3
   total: 10
-status: issues_found
+status: resolved
+resolution:
+  resolved_at: 2026-06-20T00:00:00Z
+  resolved: [CR-01, CR-02, WR-03, WR-04]
+  false_positive: [WR-02]
+  deferred: [WR-01, WR-05, IN-01, IN-02, IN-03]
+  note: >-
+    CR-01/CR-02/WR-03/WR-04 fixed and committed (atomic, parity preserved;
+    typecheck + lint + unit + the modes/render/cards/reference parity specs
+    all green). WR-01 is subsumed by the CR-01 fix (useHead({ bodyAttrs }) now
+    registers once via useTripModesController). WR-02 is a false positive: the
+    built HTML already emits aria-pressed="false"/"true" correctly from the
+    boolean binding (Vue serializes the enumerated ARIA attribute as a string),
+    verified by the modes spec. WR-05 (ReservasSection hardcoded strings) is an
+    intentional verbatim parity reproduction; multi-trip data-driving is
+    deferred to a future milestone. IN-01/02/03 are informational, left as-is.
 ---
 
 # Phase 04: Code Review Report
@@ -56,7 +71,10 @@ Five warnings cover: the `aria-pressed` boolean-vs-string WAI-ARIA spec deviatio
 
 ## Critical Issues
 
-### CR-01: `useTripModes` called per timeline-item instance — watch accumulation causes N×localStorage writes per state change
+### CR-01: `useTripModes` called per timeline-item instance — watch accumulation causes N×localStorage writes per state change  — [RESOLVED]
+
+> **Resolved:** Split the composable into a side-effect-free accessor `useTripModes()` (returns `{ pace, light, resumen, isVisible }` from `useState`, callable from any component) and a `useTripModesController()` holding all side-effects (watch light→slow, `useHead({ bodyAttrs })`, `onMounted` restore+persist), invoked exactly once in `TheHero.vue`. Timeline components keep calling the pure accessor for `isVisible`. No module-level mutable singleton. All modes-spec invariants preserved.
+
 
 **File:** `app/composables/useTripModes.ts:48,66-81`
 **Issue:** `useTripModes()` is invoked in the `setup()` of every `TimelineStop` and `TimelineTransport` instance (verified: `TimelineStop.vue:38`, `TimelineTransport.vue:43`). The composable is not idempotent: each call unconditionally registers `watch(light, on => { if (on) pace.value = 'slow' })` (line 48) and an `onMounted` callback (line 66) that registers three more `watch` calls for localStorage persistence. With 9 stops + 4 transports per day across 5 days (~65 instances), every state change to `pace`/`light`/`resumen` fires ~65 handler invocations, and each `pace` change triggers ~65 `localStorage.setItem` calls. The `useState` singletons guarantee correct final state (all handlers write the same value), but it is not a benign redundancy: the `watch(light, ...)` at line 48 — the one that forces `pace = 'slow'` — is registered 65 times. A single `light = true` click fires 65 synchronous `pace.value = 'slow'` assignments in the same tick. Because Vue batches reactive writes, the visual result is correct, but this is an unintended consequence of the composable design: `useTripModes` was designed as a singleton (comment line 12: "estado reactivo ÚNICO"), but its side effects run once per consumer component instance.
@@ -114,7 +132,10 @@ Alternatively (cleaner): call `useTripModes()` only in `TheHero.vue` (which alre
 
 ---
 
-### CR-02: `TimelineFood` renders `<a href="undefined">` when `entry.ref` and `entry.href` are both absent
+### CR-02: `TimelineFood` renders `<a href="undefined">` when `entry.ref` and `entry.href` are both absent  — [RESOLVED]
+
+> **Resolved:** Changed the `v-else` anchor to `v-else-if="entry.href"` and added a `<span class="tl-food-name">{{ entry.name }}</span>` fallback (verbatim `tl-food-name` markup minus the href, matching index.html) for the neither-ref-nor-href case.
+
 
 **File:** `app/components/TimelineFood.vue:52-63`
 **Issue:** `FoodEntry` in `shared/schemas.ts` defines both `ref` and `href` as `z.string().optional()`. The template uses `v-if="entry.ref"` to pick between a `#ref` anchor and an external `entry.href` link, but does not guard against the case where both are absent. When `entry.ref` is falsy and `entry.href` is `undefined`, the `v-else` branch renders `<a href="undefined">` — a broken anchor that navigates to the literal string "undefined" in the browser.
@@ -164,7 +185,10 @@ Alternatively, add a `.refine()` to `FoodEntry` in `shared/schemas.ts` enforcing
 
 ## Warnings
 
-### WR-01: `useHead({ bodyAttrs })` registered once per component instance calling `useTripModes`
+### WR-01: `useHead({ bodyAttrs })` registered once per component instance calling `useTripModes`  — [RESOLVED via CR-01]
+
+> **Resolved:** Subsumed by the CR-01 fix. `useHead({ bodyAttrs })` now lives in `useTripModesController()`, invoked exactly once in `TheHero.vue`, so there is a single `bodyAttrs.class` entry.
+
 
 **File:** `app/composables/useTripModes.ts:56-64`
 **Issue:** `useHead({ bodyAttrs: { class: computed(...) } })` is called inside `useTripModes()`. Because three different component types call this composable (`TheHero`, `TimelineStop`, `TimelineTransport`), Nuxt's `useHead` receives multiple independent `bodyAttrs.class` entries — one per component instance. Nuxt merges head entries using `@unhead/vue`'s stack: the last registered entry wins for non-array attributes, or they are concatenated depending on the `tagDuplicateStrategy`. In practice, having ~65 competing `class` entries on `bodyAttrs` is undefined behavior from the Nuxt head composable perspective and may produce duplicate class names in the rendered `<body>` tag (`class="light-mode light-mode light-mode ..."`).
@@ -175,7 +199,10 @@ The visual result may be correct in current versions (Vue/Unhead deduplicate ide
 
 ---
 
-### WR-02: `aria-pressed` bound to a Vue `boolean` — WAI-ARIA spec requires string `"true"` / `"false"`
+### WR-02: `aria-pressed` bound to a Vue `boolean` — WAI-ARIA spec requires string `"true"` / `"false"`  — [FALSE POSITIVE — not changed]
+
+> **Adjudication:** False positive. The built HTML already emits `aria-pressed="false"` / `aria-pressed="true"` correctly — Vue serializes the enumerated ARIA attribute to its string form from the boolean binding. The modes spec asserts the rendered `aria-pressed` string values and passes. `:aria-pressed="light"` / `:aria-pressed="resumen"` left as-is.
+
 
 **File:** `app/components/TheHero.vue:119,131`
 **Issue:** `:aria-pressed="light"` and `:aria-pressed="resumen"` bind Vue boolean refs directly. The WAI-ARIA 1.1 spec defines `aria-pressed` as a string enumeration (`"true"`, `"false"`, `"mixed"`, `"undefined"`). Vue renders a JavaScript `false` as the string `"false"` for boolean HTML attributes in general, but for ARIA attributes the behavior depends on the renderer version. In Vue 3 with Nuxt 4's SSR rendering, a boolean `false` is serialized as the string `"false"` on the attribute (correct), but `true` becomes the string `"true"` only if Vue treats it as a non-boolean attribute. ARIA attributes are not in Vue's boolean-attribute allowlist, so this works at runtime — but it is fragile if the renderer changes, and assistive technology should see the string form explicitly.
@@ -195,7 +222,10 @@ Same for `#resumen-toggle`: `:aria-pressed="String(resumen)"`.
 
 ---
 
-### WR-03: `TripView.vue` uses non-null assertions on data that `useTrip` can return null — runtime crash on missing day/reference
+### WR-03: `TripView.vue` uses non-null assertions on data that `useTrip` can return null — runtime crash on missing day/reference  — [RESOLVED]
+
+> **Resolved:** Each `DaySection` / `ReservasSection` / `PracticaSection` mount now has a `v-if` presence guard (`dayBySlug(...)` for days, `refById.get(...)` for references); a missing entry renders an empty section instead of passing `undefined` to a required prop. Section anchor ids preserved. Render unchanged for the real roma data.
+
 
 **File:** `app/components/TripView.vue:58-96`
 **Issue:** All five `DaySection` mounts and both reference mounts use non-null assertion (`!`) on `days.find(...)` and `refById.get(...)`:
@@ -226,7 +256,10 @@ The `await useTrip(props.slug)` at line 44 means TripView itself is async and wa
 
 ---
 
-### WR-04: Test `render-timeline.spec.ts` does not assert `.tl-food[data-pace]` absence — incomplete coverage of Pitfall 4
+### WR-04: Test `render-timeline.spec.ts` does not assert `.tl-food[data-pace]` absence — incomplete coverage of Pitfall 4  — [RESOLVED]
+
+> **Resolved:** Added `await expect(tl.locator('.tl-food[data-pace]')).toHaveCount(0)` alongside the existing `.tl-meta` / `.tl-resv-meta` assertions.
+
 
 **File:** `tests/parity/render-timeline.spec.ts:155-157`
 **Issue:** The test at line 155 asserts that `.tl-meta[data-pace]` and `.tl-resv-meta[data-pace]` are absent (count 0), correctly verifying Pitfall 4. However, it does NOT assert the same for `.tl-food[data-pace]`. The `food` kind has a `pace` field in the schema (visible in `shared/schemas.ts` line 113: `pace: Pace.default('all')`), but `TimelineFood` intentionally does not render `data-pace` (as documented in the component). This omission in the test means a future regression that accidentally adds `data-pace` to `.tl-food` would not be caught.
@@ -242,7 +275,10 @@ await expect(tl.locator('.tl-resv-meta[data-pace]')).toHaveCount(0)
 
 ---
 
-### WR-05: `ReservasSection` hardcodes trip-specific text ("3 comensales", static h4s) — breaks multi-trip architecture
+### WR-05: `ReservasSection` hardcodes trip-specific text ("3 comensales", static h4s) — breaks multi-trip architecture  — [DEFERRED]
+
+> **Adjudication:** Deferred. These strings intentionally reproduce index.html verbatim for the 1.0 parity bar; data-driving them for multi-trip reuse is a future milestone (no functional bug in the current Roma trip). Left as-is.
+
 
 **File:** `app/components/ReservasSection.vue:73,80,90-91`
 **Issue:** Three strings are hardcoded directly in the template instead of coming from the data:
