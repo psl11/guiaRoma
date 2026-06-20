@@ -1,8 +1,8 @@
 ---
 phase: 5
 slug: navegaci-n-transversal
-status: draft
-nyquist_compliant: false
+status: planned
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-06-21
 ---
@@ -41,12 +41,14 @@ created: 2026-06-21
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| TBD (planner) | — | — | FEAT-05 / SC#1 | — | N/A | unit | `pnpm test:unit` → `cardNavigation.spec.ts` (navStack push/pop LIFO, `canGoBack` flip) | ❌ W0 | ⬜ pending |
-| TBD (planner) | — | — | FEAT-05 / SC#1 | — | N/A | behavior | `pnpm test:golden` → `navigation.spec.ts` (click prose → `.card.highlight` 2500ms + scroll moves; "back" → scroll restored, `.back-btn.show` gone) | ❌ W0 | ⬜ pending |
-| TBD (planner) | — | — | FEAT-05 / SC#2 | — | N/A | unit | `pnpm test:unit` → `computeActiveSection(...)` fixtures (last-wins; +130 vs 124 boundary) | ❌ W0 | ⬜ pending |
-| TBD (planner) | — | — | FEAT-05 / SC#2 | — | N/A | behavior | `pnpm test:golden` → `navigation.spec.ts` (scroll to offset → correct `.nav-pill.active`; no IntersectionObserver) | ❌ W0 | ⬜ pending |
-| TBD (planner) | — | — | FEAT-05 / SC#2 | T-05-01 | Only fichas intercepted: `monById.has(id)` predicate gate | unit | `pnpm test:unit` → ficha-vs-section predicate test with mock `Map` | ❌ W0 | ⬜ pending |
-| TBD (planner) | — | — | FEAT-05 / SC#3 | T-05-01 | MDC prose `a[href^="#"]` intercepted → `navigateToCard` (not native jump/reload); section links jump natively | behavior | `pnpm test:golden` → `navigation.spec.ts` (prose `#g-...` → highlighted + stack; section `#reservas` → native jump, no highlight) | ❌ W0 | ⬜ pending |
+| 05-01 T1/T2 | 05-01 | 1 | FEAT-05 / SC#1 | — | N/A | unit | `pnpm test:unit` → `cardNavigation.spec.ts` (pushScroll/popScroll LIFO, `canGoBack` flip) | ❌ W0 | ⬜ pending |
+| 05-01 T1/T2 | 05-01 | 1 | FEAT-05 / SC#2 | — | N/A | unit | `pnpm test:unit` → `computeActiveSection(...)` fixtures (last-wins; +130 vs 124 boundary) | ❌ W0 | ⬜ pending |
+| 05-01 T1/T2 | 05-01 | 1 | FEAT-05 / SC#2 | T-05-01 | Only fichas intercepted: `isFichaTarget`/`monById.has(id)` predicate gate | unit | `pnpm test:unit` → ficha-vs-section predicate test with mock `Map` | ❌ W0 | ⬜ pending |
+| 05-02 T1 | 05-02 | 2 | FEAT-05 / SC#1 | T-05-01 | `navigateToCard` preventDefaults + bounded by predicate; composable compiles | typecheck+unit | `pnpm typecheck && pnpm test:unit` (composable typed; pure delegation green) | ❌ W0 | ⬜ pending |
+| 05-02 T2 | 05-02 | 2 | FEAT-05 / SC#1+SC#2 | — | N/A | build | `pnpm generate` (wired NavPills/.active + BackButton/.show + controller; static build green, default = empty state) | ❌ W0 | ⬜ pending |
+| 05-03 T1 | 05-03 | 3 | FEAT-05 / SC#1 | — | N/A | behavior | `pnpm test:golden` → `navigation.spec.ts` (click prose → `.card.highlight` 2500ms + scroll moves; "back" → scroll restored, `.back-btn.show` gone) | ❌ W0 | ⬜ pending |
+| 05-03 T1 | 05-03 | 3 | FEAT-05 / SC#2 | — | N/A | behavior | `pnpm test:golden` → `navigation.spec.ts` (scroll to offset → correct `.nav-pill.active` at `scrollY+130`; no IntersectionObserver) | ❌ W0 | ⬜ pending |
+| 05-03 T1 | 05-03 | 3 | FEAT-05 / SC#3 | T-05-01 | MDC prose `a[href^="#"]` intercepted → `navigateToCard` (not native jump/reload); section links jump natively | behavior | `pnpm test:golden` → `navigation.spec.ts` (prose `#g-...` → highlighted + stack, hash unchanged; section `#reservas` → native jump, no highlight) | ❌ W0 | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -73,11 +75,11 @@ created: 2026-06-21
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < ~10s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references (cardNavigation.spec.ts in 05-01; navigation.spec.ts in 05-03)
+- [x] No watch-mode flags (all `vitest run` / `playwright test`)
+- [x] Feedback latency < ~10s (unit); golden includes one `pnpm generate`
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** planner-assigned 2026-06-21 (task IDs mapped; nyquist_compliant)
