@@ -23,7 +23,11 @@
 // shell. La paridad es por construcción.
 //
 // CABLEADO DE LOS MODOS (D-05, FEAT-06/07/08): este componente CONSUME `useTripModes()` para
-// cablear los controles del #inicio que la paridad de F3 dejó YA MONTADOS sin manejadores. NO
+// cablear los controles del #inicio que la paridad de F3 dejó YA MONTADOS sin manejadores, y es
+// el ÚNICO sitio que invoca `useTripModesController()` — registra los efectos secundarios de los
+// modos (watch light→slow, body-attrs vía useHead, restore+persist en onMounted) EXACTAMENTE una
+// vez (CR-01): TheHero posee los controles y se monta una sola vez, mientras los ~65
+// TimelineStop/TimelineTransport solo usan el accesor puro `useTripModes()` para `isVisible`. NO
 // se reestructura el DOM del #inicio (ni orden, ni clases base, ni el search-input de F6): solo
 // se añaden bindings reactivos sobre los controles existentes.
 //   · Los 3 `.pace-btn` reciben `:class="{ active: pace === '<valor>' }"` + `@click` que asigna
@@ -40,6 +44,8 @@ import type { Trip } from '~~/shared/schemas'
 
 defineProps<{ trip: Trip }>()
 
+// Efectos secundarios de los modos: se registran AQUÍ una sola vez (CR-01).
+useTripModesController()
 const { pace, light, resumen } = useTripModes()
 </script>
 
