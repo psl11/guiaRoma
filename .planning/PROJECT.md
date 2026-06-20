@@ -34,9 +34,9 @@ La 1.0 debe ser **exactamente igual que la guía de hoy** (paridad visual y func
 
 - [x] Proyecto Nuxt 4 funcionando (estructura, build estático, dev server) — ✓ **Fase 1**
 - [x] Todo el contenido de Roma extraído a datos estructurados y **tipados** (esquema de viaje validado) — ✓ **Fase 2** (6 colecciones zod en Nuxt Content, 85 ficheros YAML, migración 1:1 verificada por harness de diff)
-- [ ] UI partida en **componentes reutilizables** (ficha, timeline, mapa, controles, secciones, layout) — Fases 3-4
-- [ ] Arquitectura **multi-viaje**: la app renderiza un viaje a partir de sus datos; añadir otro = añadir archivos
-- [ ] **Paridad 100%** visual y funcional con el `index.html` actual (verificada) — *golden* de referencia capturado en **Fase 1** (56 PNGs); verificación de paridad en Fase 8
+- [~] UI partida en **componentes reutilizables** — parcial: **shell de layout** (Topbar, NavPills, ThemeToggle, BackButton) + **página** (`TripView`, `TheHero` con el `#inicio` completo) componentizados ✓ **Fase 3**; fichas/timeline/mapa/secciones de referencia/controles de ritmo en Fases 4-7
+- [x] Arquitectura **multi-viaje**: la app renderiza un viaje a partir de sus datos; añadir otro = añadir archivos — ✓ **Fase 3** (`useTrip(slug)` agrega las 6 colecciones con índices por id; un único `TripView` se renderiza en `/` (Roma por defecto) y en `/trips/[slug]`, estructura lista sin prerender en 1.0)
+- [~] **Paridad 100%** visual y funcional con el `index.html` actual (verificada) — *golden* de referencia capturado en **Fase 1** (56 PNGs); paridad del **shell + `#inicio`** asegurada con tests Playwright + sign-off humano en **Fase 3**; verificación de paridad total en Fase 8
 - [~] **Salida estática** desplegable como ahora (`nuxt generate`) y **comportamiento offline conservado** — parcial: build estático bajo `/guiaRoma/` + fuentes/Leaflet self-host (0×CDN) en **Fase 1**
 - [~] **Estandarización**: TypeScript, ESLint/Prettier, *design tokens*, validación de esquema de datos — parcial: TS estricto + ESLint (stylistic) + *design tokens* (CSS verbatim) en **Fase 1**; validación zod (6 colecciones, puerta que rompe el build) ✓ **Fase 2**
 - [x] Backend (Nitro) **preparado pero dormido**: estructura lista para v2, sin funcionalidad de servidor activa en 1.0 — ✓ **Fase 1** (`server/api/README.md`, cero endpoints)
@@ -59,7 +59,7 @@ La 1.0 debe ser **exactamente igual que la guía de hoy** (paridad visual y func
 - **Experiencia**: el responsable domina Nuxt y prevé evolucionar la app a *full-stack* (auth, subida de media de los viajes), lo que motivó elegir Nuxt 4 sobre Astro.
 - **Uso real**: consultar la guía sobre el terreno en Roma, posiblemente con conexión móvil pobre → el offline importa de verdad.
 - **Dependencias externas actuales**: Google Fonts; imágenes alojadas en terceros (Wikimedia y otros) con *fallback* SVG; *tiles* de OpenStreetMap para el mapa.
-- **Estado de la migración**: Fases 1-2 completadas en `release/nuxt-4`. Fase 1 — andamiaje Nuxt 4 (build estático bajo `/guiaRoma/`, CSS editorial verbatim, fuentes/Leaflet self-host, backend Nitro dormido) y *golden* de paridad (56 PNGs deterministas). Fase 2 — esquema de viaje tipado en **Nuxt Content v3** (6 colecciones zod en `shared/schemas.ts`) y **todo el contenido de Roma migrado 1:1** (85 ficheros YAML: 38 monumentos + 26 gastro + 13 arte/arquitectura + 5 días + 2 referencia + 1 trip), con puertas de validación Vitest que rompen el build (DATA-05 vía test, ya que Content v3 no valida `type:data` en build — #3351) y un harness cheerio que verifica equivalencia 1:1 de texto+enlaces. `main` intacto. Siguiente: Fase 3 (capa de página, layout y tema).
+- **Estado de la migración**: Fases 1-2 completadas en `release/nuxt-4`. Fase 1 — andamiaje Nuxt 4 (build estático bajo `/guiaRoma/`, CSS editorial verbatim, fuentes/Leaflet self-host, backend Nitro dormido) y *golden* de paridad (56 PNGs deterministas). Fase 2 — esquema de viaje tipado en **Nuxt Content v3** (6 colecciones zod en `shared/schemas.ts`) y **todo el contenido de Roma migrado 1:1** (85 ficheros YAML: 38 monumentos + 26 gastro + 13 arte/arquitectura + 5 días + 2 referencia + 1 trip), con puertas de validación Vitest que rompen el build (DATA-05 vía test, ya que Content v3 no valida `type:data` en build — #3351) y un harness cheerio que verifica equivalencia 1:1 de texto+enlaces. Fase 3 — **capa de página, layout y tema**: `useTrip(slug)` agrega un viaje (6 colecciones + índices por id, resuelto en SSG) y un único `TripView` lo renderiza en `/` (Roma) y `/trips/[slug]` (multi-viaje listo, sin prerender en 1.0); shell de layout (Topbar/NavPills/ThemeToggle/BackButton) y `#inicio` completo componentizados **verbatim** (cero CSS nuevo); tema claro/oscuro con `@nuxtjs/color-mode` **sin FOUC** (script anti-flash en el `<head>` generado, icono por CSS). Paridad de shell + `#inicio` verificada (Playwright + sign-off humano); un *code review* detectó y corrigió un choque de campo reservado de Content (`meta`→`heroMeta`) que rompía el subtítulo del hero. `main` intacto. Siguiente: Fase 4 (render de contenido + modos de ritmo).
 
 ## Constraints
 
@@ -80,6 +80,8 @@ La 1.0 debe ser **exactamente igual que la guía de hoy** (paridad visual y func
 | Formato de contenido a decidir en research | Depende de Nuxt Content v3; JSON vs Markdown vs híbrido | Decidido (research/CLAUDE.md): híbrido YAML `type:data` + MDC |
 | Trabajo en rama de release, `main` intacto | No romper la versión viva durante la migración | ✓ Fase 1: todo en `release/nuxt-4`; `main` intacto |
 | Backend preparado pero dormido en 1.0 | Evitar *scope creep*; dejar la puerta abierta para v2 | ✓ Fase 1: `server/api/README.md`, cero endpoints |
+| Chrome (Topbar/NavPills/footer/BackButton) vive **dentro de `TripView`**, no en un layout aparte | Cada ruta obtiene los pills de día de SU viaje; `app.vue` → solo `NuxtPage` | ✓ Fase 3: `useTrip`+`TripView` poseen el árbol de página; multi-viaje *data-driven* |
+| `meta` es **nombre reservado** de Nuxt Content v3 (como `id`) | Colisiona y se sobrescribe a `[object Object]` en la tabla SQLite → rompía el subtítulo del hero | ✓ Fase 3: renombrado `heroMeta`; lo atrapó el *code review*, el test de paridad ahora asevera el TEXTO del hero (no solo visibilidad) |
 
 ## Evolution
 
@@ -99,4 +101,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-19 — Fase 2 completada (esquema de datos tipado + migración 1:1 del contenido de Roma)*
+*Last updated: 2026-06-20 — Fase 3 completada (capa de página `useTrip`/`TripView`, shell de layout componentizado, tema sin FOUC; paridad de shell + `#inicio` verificada)*
