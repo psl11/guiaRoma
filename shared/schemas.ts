@@ -208,6 +208,31 @@ export const ArtistSchema = z.discriminatedUnion('kind', [
   }),
 ])
 
+// ── ArtistRowSchema — SUPERSET plano SOLO para materializar columnas SQL (D1/D-04-D) ──
+// Content v3 NO sabe expandir un `z.discriminatedUnion` a columnas SQL: las colecciones
+// unión devuelven el conteo de filas correcto pero TODOS los campos del esquema salen null
+// (solo existen las columnas base id/extension/meta/stem/__hash__) → `.where('trip',…)` no
+// alcanza nada y #arte/#arquitectura quedan VACÍAS. Este `z.object` PLANO es la unión de
+// las 3 ramas Artist (campos comunes + cada campo específico `.optional()`) para que Content
+// genere columnas reales. NO es la validación ni el tipo público: la VERDAD estricta sigue
+// siendo `ArtistSchema` (discriminatedUnion), que valida los datos en tests/data y tipa
+// `Artist`. Se usa EXCLUSIVAMENTE como `schema:` de la colección `artist` en content.config.ts.
+export const ArtistRowSchema = z.object({
+  // Comunes a las 3 ramas (artist | arquitectura | glossary)
+  kind: z.enum(['artist', 'arquitectura', 'glossary']),
+  slug: z.string(), // el literal 'arq-glosario' se estrecha en ArtistSchema, no aquí
+  trip: z.string(),
+  avatar: z.string(),
+  name: z.string(),
+  dates: z.string(),
+  epithet: z.string(),
+  // Específicos de rama → opcionales en el superset (los reusa Section/Link verbatim)
+  sections: z.array(Section).optional(), // artist | arquitectura
+  seenIn: z.array(Link).optional(), // artist | arquitectura
+  archLink: z.array(Link).optional(), // solo arquitectura
+  terms: z.array(z.object({ term: z.string(), def: Md })).optional(), // solo glossary
+})
+
 // ── Reference — solo reservas + practica (D-03/D-04) — RESEARCH 450-479 ───────
 export const ReservasSchema = z.object({
   slug: z.literal('reservas'),
@@ -246,6 +271,43 @@ export const PracticaSchema = z.object({
 // Unión por slug discriminado (D-03): 2 ficheros con shapes muy distintos. NO un `blocks`
 // genérico. discriminatedUnion('slug') aprovecha que slug es z.literal en ambos.
 export const ReferenceSchema = z.discriminatedUnion('slug', [ReservasSchema, PracticaSchema])
+
+// ── ReferenceRowSchema — SUPERSET plano SOLO para materializar columnas SQL (D1/D-04-D) ──
+// Mismo motivo que ArtistRowSchema: Content v3 no materializa `z.discriminatedUnion` a
+// columnas (reservas/practica salían con todos los campos null → #reservas/#practica
+// vacías). Este `z.object` PLANO une ReservasSchema + PracticaSchema (comunes + específicos
+// `.optional()`) para que Content genere columnas reales. La validación estricta y el tipo
+// público `Reference` siguen saliendo de `ReferenceSchema` (la unión); este superset se usa
+// EXCLUSIVAMENTE como `schema:` de la colección `reference` en content.config.ts.
+export const ReferenceRowSchema = z.object({
+  // Comunes a reservas + practica
+  slug: z.string(), // los literales 'reservas'/'practica' se estrechan en ReferenceSchema
+  trip: z.string(),
+  order: z.number(),
+  title: z.string(),
+  eyebrow: z.string(),
+  intro: Md,
+  // Específicos de reservas → opcionales (shapes verbatim de ReservasSchema)
+  confirmed: z.array(z.object({
+    group: z.enum(['mesas', 'visitas']),
+    when: z.string(),
+    text: Md,
+  })).optional(),
+  table: z.array(z.object({
+    ref: z.string().optional(),
+    name: z.string(),
+    badge: z.string().optional(),
+    badgeKind: z.enum(['urgent', 'done', 'rec']).optional(),
+    isDone: z.boolean().default(false),
+    desc: Md,
+  })).optional(),
+  // Específicos de practica → opcionales (shapes verbatim de PracticaSchema)
+  sections: z.array(Section).optional(),
+  media: z.array(z.object({
+    category: z.enum(['libros', 'peliculas', 'series', 'playlist']),
+    items: z.array(Md),
+  })).optional(),
+})
 
 // Metadatos editoriales de las secciones-página (gastronomia / arte / arquitectura): el
 // `section-eyebrow` + el párrafo introductorio (`gastro-intro` / `art-intro`) que el index.html
