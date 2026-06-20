@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 05-01-PLAN.md (cardNav pure logic)
-last_updated: "2026-06-20T23:47:57.618Z"
+stopped_at: Completed 05-02-PLAN.md (useCardNavigation + shell wiring)
+last_updated: "2026-06-20T23:57:49.230Z"
 last_activity: 2026-06-20
 progress:
   total_phases: 8
   completed_phases: 4
   total_plans: 23
-  completed_plans: 21
+  completed_plans: 22
   percent: 50
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 ## Current Position
 
 Phase: 05 (Navegación transversal) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 Status: Ready to execute
 Last activity: 2026-06-20
 
-Progress: [█████████░] 91%
+Progress: [██████████] 96%
 
 ## Performance Metrics
 
@@ -75,6 +75,7 @@ Progress: [█████████░] 91%
 | Phase 04 P04 | 38min | 2 tasks | 8 files |
 | Phase 04 P05 | 22min | 3 tasks | 8 files |
 | Phase 05 P01 | 3min | 2 tasks | 2 files |
+| Phase 05 P02 | 5min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -148,6 +149,10 @@ Recent decisions affecting current work:
 - [Phase ?]: [Fase 5 P01]: computeActiveSection es port verbatim de index.html:6492-6496 (y=scrollY+130, for-loop last-wins sin break, default ''); el +130 (no 124) se asevera load-bearing con un caso frontera 124-falla/130-pasa (scrollY 874 -> offsetTop 1000)
 - [Phase ?]: [Fase 5 P01]: cardNav.ts pure/DOM-free/Nuxt-free/zero-import (window/document/useState solo en JSDoc); pushScroll/popScroll inmutables devuelven {top,rest} para test plano, el controlador del Plan 02 muta su useState y delega la forma LIFO aqui
 - [Phase ?]: [Fase 5 P01]: isFichaTarget = monById.has(id) reemplaza el querySelectorAll('.card') del original (D-02) y ES el gate acotado T-05-01 que consume el Plan 02; id ausente -> salto nativo de seccion
+- [Phase ?]: [Fase 5 P02]: useCardNavigation = singleton useState (accesor PURO navStack/activeSection/canGoBack/navigateToCard/goBack + controller de efectos invocado 1 vez en TripView), clon exacto de useTripModes/useTripModesController (Pitfall 4: listeners una sola vez)
+- [Phase ?]: [Fase 5 P02]: navigateToCard/goBack port VERBATIM index.html:6390-6409 (preventDefault, push window.scrollY, scrollIntoView smooth block:start, .highlight 2500ms, pop+window.scrollTo); guards intactos; sin offset manual (scroll-padding-top:124px); highlightCard NO portado
+- [Phase ?]: [Fase 5 P02]: click DELEGADO = document.addEventListener nativo en onMounted (NO @click Vue, NO bindCardLinks, NO ProseA.global.vue; Pitfall 1) gated por isFichaTarget (D-02); seccion->salto nativo, ficha->preventDefault (D-03)+navigateToCard; burbuja por ahora (05-03 confirma vs captura)
+- [Phase ?]: [Fase 5 P02]: controller+llamada TripView async/await porque useTrip es async (Rule 1); NavPills/BackButton CABLEADOS no reestructurados (:class active por pastilla; :class show+@click goBack); CERO CSS nuevo, sin <style scoped>, base.css intacto; test:unit+typecheck+lint+generate verde
 
 ### Pending Todos
 
@@ -174,6 +179,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-20T23:47:57.609Z
-Stopped at: Completed 05-01-PLAN.md (cardNav pure logic)
+Last session: 2026-06-20T23:57:49.216Z
+Stopped at: Completed 05-02-PLAN.md (useCardNavigation + shell wiring)
 Resume file: None

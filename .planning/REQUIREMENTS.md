@@ -46,7 +46,7 @@ Requisitos para la release 1.0. Cada uno se mapea a una fase del roadmap.
 - [ ] **FEAT-02**: Mapa Leaflet (componente client-only) con marcadores numerados por tipo, popups "Abrir ficha →", `fitBounds` y banner offline — idéntico a hoy
 - [ ] **FEAT-03**: Búsqueda en cliente sobre los DATOS (MiniSearch), cubriendo el mismo texto que hoy, con dropdown que navega a la ficha
 - [ ] **FEAT-04**: Notas por ficha persistidas en localStorage, con las mismas claves y comportamiento
-- [ ] **FEAT-05**: Navegación a ficha con resaltado + botón "volver" (pila) que restaura el scroll, y scrollspy de pastillas con el mismo offset
+- [x] **FEAT-05**: Navegación a ficha con resaltado + botón "volver" (pila) que restaura el scroll, y scrollspy de pastillas con el mismo offset
 - [x] **FEAT-06**: Selector de ritmo (optimista / neutral / lento) que muestra u oculta items del timeline, persistido
 - [x] **FEAT-07**: Modo "caminar menos" (movilidad reducida) que además fuerza ritmo lento
 - [x] **FEAT-08**: Modo resumen (vista índice de hora y lugar)
@@ -127,7 +127,7 @@ Qué fases cubren qué requisitos. Mapeo del roadmap (ver `.planning/ROADMAP.md`
 | FEAT-06 | Phase 4 | Complete |
 | FEAT-07 | Phase 4 | Complete |
 | FEAT-08 | Phase 4 | Complete |
-| FEAT-05 | Phase 5 | Pending |
+| FEAT-05 | Phase 5 | Complete |
 | FEAT-03 | Phase 6 | Pending |
 | FEAT-09 | Phase 6 | Pending |
 | FEAT-02 | Phase 7 | Pending |
