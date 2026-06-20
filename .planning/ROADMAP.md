@@ -79,7 +79,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. El timeline se renderiza desde el array ordenado del día despachando por `kind` (`stop`/`transport`/`meta`/`food`/`reservation`) y se ve idéntico a hoy
   3. Las secciones de referencia (Reservas, Gastronomía, Práctica, Arte, Arquitectura) se renderizan desde datos y se ven idénticas a hoy
   4. El selector de ritmo (optimista/neutral/lento) muestra u oculta items del timeline con la matriz **exacta** (`slow-only` solo visible en optimista; `medium` oculto solo en lento) y persiste; el modo "caminar menos" fuerza ritmo lento; el modo resumen togglea la vista índice — los tres con el mismo comportamiento (incluido el micro-flash de un frame que ya existe hoy)
-**Plans**: TBD
+**Plans**: 5 plans
+  - [ ] 04-01-PLAN.md — Cimientos: matriz isVisible pura + test, composable useTripModes (pace/light/resumen + persistencia + body classes), y los componentes MDC globales (DetailPhoto + ProseUl/ProseLi) + allowlist eslint de Timeline [Wave 1]
+  - [ ] 04-02-PLAN.md — MonumentCard: la .card verbatim data-driven (prosa MDC con dropcap, detail-photo/detail-list, hero plano, maps-link, notes shell) (UI-02) [Wave 2]
+  - [ ] 04-03-PLAN.md — Familia Timeline: dispatcher por kind + 5 componentes (stop/transport/meta/food/reservation); solo stop/transport filtran por ritmo (UI-03/FEAT-06, Pitfall 4) [Wave 2]
+  - [ ] 04-04-PLAN.md — Secciones de referencia: GastroCard+GastroSection (agrupado en orden canónico, Pitfall 6), ArtistCard unificado, ReservasSection, PracticaSection (UI-04) [Wave 2]
+  - [ ] 04-05-PLAN.md — Cableado + verificación: TheHero→useTripModes + DaySection + enchufar TripView; 4 specs Playwright (render-cards/timeline/reference + modes) + sign-off humano (FEAT-06/07/08, SC#1-4) [Wave 3]
 **UI hint**: yes
 
 ### Phase 5: Navegación transversal
