@@ -59,7 +59,9 @@ describe('computeActiveSection — scrollspy last-wins (FEAT-05 SC#2, index.html
   })
 
   it('vacío-antes-de-la-primera: nada satisfecho → "" (sin pastilla activa)', () => {
-    expect(computeActiveSection(0, [{ id: 'x', offsetTop: 50 }])).toBe('')
+    // offsetTop debe SUPERAR el +130 load-bearing para no satisfacerse: con scrollY 0 el umbral
+    // es 130, así que una sección en offsetTop 200 NO se activa (130 < 200) → default "".
+    expect(computeActiveSection(0, [{ id: 'x', offsetTop: 200 }])).toBe('')
   })
 })
 
