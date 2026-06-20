@@ -37,4 +37,19 @@ export default withNuxt(
       'vue/multi-word-component-names': 'off',
     },
   },
+  // `MonumentCard.vue` (Plan 04-02): los bloques `.card-artists`/`.card-arch` reproducen el original
+  // `Artistas: <a class="art-link">…</a> <a>…</a>`, donde el ESPACIO entre enlaces es significativo
+  // (`.art-link` es inline-block; el hueco se suma al margin). Ese marcado se escribe en una sola
+  // línea con separadores `{{ ' ' }}` EXPLÍCITOS porque reformatearlo con saltos de línea haría que
+  // el compilador de Vue (whitespace: 'condense') colapsara los huecos y se perdiera la paridad de
+  // espaciado (verificado byte-a-byte contra index.html). Por eso se relajan SOLO las dos reglas de
+  // saltos de línea de contenido en ESTE fichero; el resto de reglas (incl. el CERO CSS) siguen.
+  {
+    files: ['app/components/MonumentCard.vue'],
+    rules: {
+      'vue/singleline-html-element-content-newline': 'off',
+      'vue/multiline-html-element-content-newline': 'off',
+      'vue/max-attributes-per-line': 'off',
+    },
+  },
 )
