@@ -52,18 +52,24 @@ export default withNuxt(
       'vue/max-attributes-per-line': 'off',
     },
   },
-  // Componentes del timeline (Plan 04-03) que incrustan `<MDC>` en contenedores inline
+  // Componentes hoja del timeline (Plan 04-03) que incrustan `<MDC>` en contenedores inline
   // WHITESPACE-SENSIBLES del original: `.tl-note`, `.tl-transport-mode-desc` (con el
-  // `.tl-transport-mode-tag` anidado justo tras el desc), `.tl-transport-mode-meta` y
-  // `.tl-transport-footnote`. En index.html el contenido va PEGADO a su contenedor
-  // (`<div class="tl-note">texto</div>`, sin nodos de texto en blanco). Insertar saltos de
-  // línea entre el contenedor y el `<MDC>`/`<span>` introduciría nodos de texto que el
-  // compilador de Vue (whitespace: 'condense') trataría de forma distinta a la paridad
-  // verbatim; y el `<MDC>` lleva 2+ atributos (`:value`/`:tag`/`unwrap`). Por eso se relajan
-  // SOLO las tres reglas de formato de contenido/atributos en ESTOS ficheros (mismo precedente
-  // que MonumentCard); el resto (incl. el CERO CSS y multi-word salvo Timeline) sigue activo.
+  // `.tl-transport-mode-tag` anidado justo tras el desc), `.tl-transport-mode-meta`,
+  // `.tl-transport-footnote`, `.tl-food-desc`, `.tl-food-foot`. En index.html el contenido va
+  // PEGADO a su contenedor (`<div class="tl-note">texto</div>`, sin nodos de texto en blanco).
+  // Insertar saltos de línea entre el contenedor y el `<MDC>`/`<span>` introduciría nodos de texto
+  // que el compilador de Vue (whitespace: 'condense') trataría de forma distinta a la paridad
+  // verbatim; y el `<MDC>` lleva 2+ atributos (`:value`/`:tag`/`unwrap`). Por eso se relajan SOLO
+  // las tres reglas de formato de contenido/atributos en ESTOS ficheros (mismo precedente que
+  // MonumentCard); el resto (incl. el CERO CSS y multi-word salvo Timeline) sigue activo.
   {
-    files: ['app/components/TimelineStop.vue', 'app/components/TimelineTransport.vue'],
+    files: [
+      'app/components/TimelineStop.vue',
+      'app/components/TimelineTransport.vue',
+      'app/components/TimelineMeta.vue',
+      'app/components/TimelineFood.vue',
+      'app/components/TimelineReservation.vue',
+    ],
     rules: {
       'vue/singleline-html-element-content-newline': 'off',
       'vue/multiline-html-element-content-newline': 'off',
