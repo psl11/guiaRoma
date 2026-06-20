@@ -435,7 +435,9 @@ El `activeSection`/`canGoBack`/`goBack` vienen de `const { activeSection, canGoB
 
 **Todo lo demás está VERIFIED (código instalado) o CITED (index.html/repo).** La lógica de navegación, scrollspy, las clases CSS, los slugs y el patrón de composable están todos confirmados leyendo los ficheros reales.
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+> Both resolved inline below and implemented in the plans — Q1 (`document` scope) in 05-02 T1; Q2 (no `nextTick`) in the verbatim port (05-01/05-02). Retained for design rationale.
 
 1. **¿Dónde montar exactamente el listener delegado: `document` o el root de `TripView`?**
    - What we know: `TripView` es el dueño de la página y se monta una vez; CONTEXT.md lo nombra candidato. `document` garantiza capturar TODOS los clics de enlace.
