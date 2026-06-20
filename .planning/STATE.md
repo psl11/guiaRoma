@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 4 context gathered
-last_updated: "2026-06-20T10:06:53.438Z"
-last_activity: 2026-06-20 -- Phase 04 planning complete
+stopped_at: Completed 04-01-PLAN.md
+last_updated: "2026-06-20T10:19:21.977Z"
+last_activity: 2026-06-20
 progress:
   total_phases: 8
   completed_phases: 3
   total_plans: 20
-  completed_plans: 15
+  completed_plans: 16
   percent: 38
 ---
 
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** La 1.0 debe ser exactamente igual que la guía de hoy (paridad visual y funcional al 100%), pero construida de forma dinámica, data-driven y mantenible.
-**Current focus:** Phase 4 — render de contenido + modos de ritmo
+**Current focus:** Phase 04 — render-de-contenido-modos-de-ritmo
 
 ## Current Position
 
-Phase: 4
-Plan: Not started
+Phase: 04 (render-de-contenido-modos-de-ritmo) — EXECUTING
+Plan: 2 of 5
 Status: Ready to execute
-Last activity: 2026-06-20 -- Phase 04 planning complete
+Last activity: 2026-06-20
 
-Progress: [██████████] 100%
+Progress: [████████░░] 80%
 
 ## Performance Metrics
 
@@ -68,6 +68,7 @@ Progress: [██████████] 100%
 | Phase 03 P03 | 6min | 2 tasks | 5 files |
 | Phase 03 P04 | 11min | 2 tasks | 2 files |
 | Phase Phase 03 PP05 | 13min | 4 tasks tasks | 5 files files |
+| Phase 04 P01 | 12min | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -122,6 +123,10 @@ Recent decisions affecting current work:
 - [Phase ?]: [Fase 3]: /trips/[slug] reusa TripView con createError(404, fatal) en slug desconocido y NUNCA se prerenderiza (no se enlaza, no se toca nitro.prerender.routes); index.vue y [slug].vue son one-liners <TripView :slug> (convención A3); el build no emite dir trips/ (D-01, asertado en shell.spec)
 - [Phase ?]: [Fase 3]: specs de paridad autocontenidos (build+serve propio, mirror de subpath.spec.ts) porque el webServer por defecto sirve el index.html VIEJO; prefieren aserciones DOM/texto a screenshots (no rebaselinar golden); toleran EXACTAMENTE el un mensaje esperado de hidratación color-mode SSG (D2) y fallan ante cualquier otro error de consola. SC#3 anti-FOUC en dos partes (script inline presente + dark-sin-flash), SC#4 icono solo-CSS nunca system
 - [Phase ?]: [Fase 3]: F3 CERRADA — sign-off humano de paridad golden APROBADO (home idéntico al golden de Fase 1 en claro+oscuro, móvil+desktop, sin FOUC); ARCH-01/ARCH-02/UI-01/FEAT-01 completos; D1 (unión SQL artist/reference en useTrip) diferido a F4 antes de rellenar #arte/#arquitectura/#reservas/#practica
+- [Phase ?]: [Fase 4 P01]: Pitfall 1 resuelto (opción b) — NO se crean ProseUl/ProseLi globales; las listas de prosa MDC no son uniformes (monumentos+practica=detail-list, artistas=plain sin clase), un override global plano rompería la paridad de los 13 artistas. Datos de F2 intactos; lo resuelve el plan consumidor (04-02/04-04)
+- [Phase ?]: [Fase 4 P01]: useTripModes = estado reactivo único (useState singleton pace/light/resumen, D-03); acopla light->slow sin else (Pitfall 5, no revierte); clases de body via useHead({bodyAttrs}) sin DOM imperativo; restore+persistencia SOLO en onMounted con claves literales roma-* (micro-flash SC#4); isVisible delega en la función pura
+- [Phase ?]: [Fase 4 P01]: app/utils/pace.ts = matriz isVisible pura de 3 ramas exactas (index.html:6525-6531, Pitfall 4 preservado), 9 casos en Vitest plano (TDD RED->GREEN); tipos Pace/ItemPace exportados
+- [Phase ?]: [Fase 4 P01]: DetailPhoto.global.vue = PRIMER .global.vue del repo (sufijo = mecanismo de registro global para <MDC> resolveComponent); img plano sin manejador de error (frontera D-01, fallback SVG es F7); caption via <MDC unwrap=p>; eslint allowlist gemela para Timeline
 
 ### Pending Todos
 
@@ -148,6 +153,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-20T08:59:28.341Z
-Stopped at: Phase 4 context gathered
-Resume file: .planning/phases/04-render-de-contenido-modos-de-ritmo/04-CONTEXT.md
+Last session: 2026-06-20T10:19:21.967Z
+Stopped at: Completed 04-01-PLAN.md
+Resume file: None

@@ -35,7 +35,7 @@ Requisitos para la release 1.0. Cada uno se mapea a una fase del roadmap.
 ### Componentes y render (UI)
 
 - [x] **UI-01**: Layout / Topbar / NavPills componentizados y visualmente idénticos a hoy
-- [ ] **UI-02**: Componente de ficha de atracción (hero, nombre italiano, prosa, enlace a Maps, notas) idéntico a hoy
+- [x] **UI-02**: Componente de ficha de atracción (hero, nombre italiano, prosa, enlace a Maps, notas) idéntico a hoy
 - [ ] **UI-03**: Timeline componentizado (item / transport / food) idéntico a hoy, respetando el filtrado por ritmo
 - [ ] **UI-04**: Secciones de referencia (Reservas, Gastronomía, Práctica, Arte, Arquitectura) renderizadas desde datos e idénticas a hoy
 - [ ] **UI-05**: Componente imagen-con-fallback que reproduce el comportamiento actual (`onerror` → SVG por ficha / motif)
@@ -47,9 +47,9 @@ Requisitos para la release 1.0. Cada uno se mapea a una fase del roadmap.
 - [ ] **FEAT-03**: Búsqueda en cliente sobre los DATOS (MiniSearch), cubriendo el mismo texto que hoy, con dropdown que navega a la ficha
 - [ ] **FEAT-04**: Notas por ficha persistidas en localStorage, con las mismas claves y comportamiento
 - [ ] **FEAT-05**: Navegación a ficha con resaltado + botón "volver" (pila) que restaura el scroll, y scrollspy de pastillas con el mismo offset
-- [ ] **FEAT-06**: Selector de ritmo (optimista / neutral / lento) que muestra u oculta items del timeline, persistido
-- [ ] **FEAT-07**: Modo "caminar menos" (movilidad reducida) que además fuerza ritmo lento
-- [ ] **FEAT-08**: Modo resumen (vista índice de hora y lugar)
+- [x] **FEAT-06**: Selector de ritmo (optimista / neutral / lento) que muestra u oculta items del timeline, persistido
+- [x] **FEAT-07**: Modo "caminar menos" (movilidad reducida) que además fuerza ritmo lento
+- [x] **FEAT-08**: Modo resumen (vista índice de hora y lugar)
 - [ ] **FEAT-09**: "Ruta del día" derivada de datos: enlace a Google Maps con las paradas del día en orden, con el mismo cap (10 paradas) y muestreo
 
 ### Estático, offline y despliegue (BUILD)
@@ -121,12 +121,12 @@ Qué fases cubren qué requisitos. Mapeo del roadmap (ver `.planning/ROADMAP.md`
 | ARCH-02 | Phase 3 | Complete |
 | UI-01 | Phase 3 | Complete |
 | FEAT-01 | Phase 3 | Complete |
-| UI-02 | Phase 4 | Pending |
+| UI-02 | Phase 4 | Complete |
 | UI-03 | Phase 4 | Pending |
 | UI-04 | Phase 4 | Pending |
-| FEAT-06 | Phase 4 | Pending |
-| FEAT-07 | Phase 4 | Pending |
-| FEAT-08 | Phase 4 | Pending |
+| FEAT-06 | Phase 4 | Complete |
+| FEAT-07 | Phase 4 | Complete |
+| FEAT-08 | Phase 4 | Complete |
 | FEAT-05 | Phase 5 | Pending |
 | FEAT-03 | Phase 6 | Pending |
 | FEAT-09 | Phase 6 | Pending |
