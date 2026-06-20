@@ -89,6 +89,22 @@ posteriores. NO se arreglan en el plan que los descubre.
 
 ## D-04-D: `queryCollection('artist'/'reference')` devuelve filas con TODOS los campos null (uniones discriminadas no se materializan en SQL) — BLOQUEANTE para #arte/#arquitectura/#reservas/#practica
 
+> **RESUELTO (D1) — commit `89ea4ac`, opción 1 (superset object).** Se añadieron dos
+> `z.object` PLANOS superset en `shared/schemas.ts` — `ArtistRowSchema` (unión de las 3 ramas
+> Artist: comunes + `sections`/`seenIn`/`archLink`/`terms` opcionales) y `ReferenceRowSchema`
+> (unión reservas+practica: comunes + `confirmed`/`table`/`sections`/`media` opcionales) — y se
+> usan como `schema:` de las colecciones `artist`/`reference` en `content.config.ts` (SOLO esas
+> dos; trip/day/monument/food intactas). Las uniones estrictas `ArtistSchema`/`ReferenceSchema`
+> NO se tocaron: siguen siendo los tipos públicos `Artist`/`Reference` y la puerta de validación
+> de `tests/data`. La YAML NO se tocó. `useTrip.ts` ya casteaba las filas a los tipos estrictos
+> (`as unknown as Artist[]/Reference[]`) → el cast queda ahora respaldado por datos reales.
+> **Verificación:** `pnpm test:data` siguió GREEN (295, validan las uniones estrictas que no
+> cambiaron); `typecheck` 0; `lint` 0; render real (`pnpm generate` con probe temporal,
+> ya eliminado) confirmó **13 filas artist** y **2 filas reference** con campos NO null
+> (`slug`/`kind`/`name`, `slug`/`order`/`title`) vía `queryCollection(...).where('trip','=','roma').all()`,
+> y `pnpm generate` ya NO emite `[request error] … /__nuxt_content/artist/query` ni `/reference/query`.
+> Desbloquea #arte/#arquitectura/#reservas/#practica para el cableado de `TripView` (Plan 05).
+
 - **Descubierto en:** Plan 04-04 (secciones de referencia), al verificar el render real con
   `pnpm generate` + un probe que enchufaba `GastroSection`/`ReservasSection`/`PracticaSection`/
   `ArtistCard` a `useTrip('roma')`. GastroSection (colección `food`, `z.object`) renderizó perfecto;
