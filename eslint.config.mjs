@@ -27,4 +27,14 @@ export default withNuxt(
       'vue/multi-word-component-names': 'off',
     },
   },
+  // `Timeline` (Plan 04-03) es otro nombre de UNA palabra exigido por el contrato de
+  // auto-import: el dispatcher del timeline debe producir `<Timeline>` (gemelo de Topbar).
+  // El resto de componentes de la Fase 4 son multi-palabra (MonumentCard, DetailPhoto,
+  // TimelineStop, …), por lo que la regla sigue activa para ellos.
+  {
+    files: ['app/components/Timeline.vue'],
+    rules: {
+      'vue/multi-word-component-names': 'off',
+    },
+  },
 )
