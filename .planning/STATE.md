@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 04-02-PLAN.md
-last_updated: "2026-06-20T11:22:10.361Z"
+status: verifying
+stopped_at: "Completed 04-05-PLAN.md (Tasks 1-3); Task 4 checkpoint:human-verify PENDIENTE"
+last_updated: "2026-06-20T15:06:34.234Z"
 last_activity: 2026-06-20
 progress:
   total_phases: 8
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 20
-  completed_plans: 19
-  percent: 38
+  completed_plans: 20
+  percent: 50
 ---
 
 # Project State
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 
 Phase: 04 (render-de-contenido-modos-de-ritmo) — EXECUTING
 Plan: 5 of 5
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-06-20
 
-Progress: [██████████] 95%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -72,6 +72,7 @@ Progress: [██████████] 95%
 | Phase 04 P02 | 35min | 1 tasks | 2 files |
 | Phase 04 P03 | 6min | 2 tasks | 7 files |
 | Phase 04 P04 | 38min | 2 tasks | 8 files |
+| Phase 04 P05 | 22min | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -138,6 +139,10 @@ Recent decisions affecting current work:
 - [Phase ?]: [Fase 4 P04]: Pitfall 1 honrado en ambos lados — PracticaSection aplica el override LOCAL ul->detail-list (gemelo de MonumentCard); ArtistCard NO lo aplica (las .artist-section usan <ul> plano). Sin conflicto con Plan 01 porque no existe ProseUl global. Verificado: arte=0 detail-list, practica=detail-list
 - [Phase ?]: [Fase 4 P04]: ArtistCard es UN componente que unifica artist/arquitectura/glossary por kind (v-if glossary -> arch-glossary con arch-term; v-else artist-head + artist-section + artist-trip head=note del 1er seenIn, body=labels MDC unidos por ' · ' + note de cierre); ReservasSection tabla con heurística strong/plano para filas sin ref; PracticaSection h2 sin section-title + intro/media inline-styled
 - [Phase ?]: [Fase 4 P04]: BLOQUEANTE D-04-D/D1 CONFIRMADO — queryCollection('artist'/'reference').all() devuelve filas con TODOS los campos null (uniones discriminadas NO se materializan en columnas SQL); .where('trip') matchea 0 filas. Los 5 componentes son correctos (verificado con datos estáticos byte-a-byte), pero #arte/#arquitectura/#reservas/#practica NO renderizarán con datos reales hasta resolver D1. Detalle+opciones en deferred-items.md. Bloquea render-reference.spec del Plan 05
+- [Phase ?]: [Fase 4 P05]: TheHero CONSUME useTripModes para cablear sus controles ya montados (D-05): 3 pace-btn :class active+@click, light/resumen :aria-pressed+@click; el 1er pace-btn pierde el active LITERAL (Vue lo mergearía y quedaría siempre activo); sin reestructurar el #inicio ni tocar el search-input (F6), CERO CSS
+- [Phase ?]: [Fase 4 P05]: DaySection resuelve day.cards[]→monById→MonumentCard en ORDEN del dato (Pitfall 6, ruta del día de F6); TripView rellena las 11 secciones por props desde un SOLO useTrip (monById/food/artists/refById), #arte/#arquitectura con eyebrow/section-title estatico/art-intro fuera de las cards + ArtistCard por kind (glosario al final), #mapa vacío (F7)
+- [Phase ?]: [Fase 4 P05]: [Rule 3] Timeline dispatcher — <component :is=STRING> NO resuelve auto-imports en SSG (emitia <TimelineStop> vacios, timeline sin filas); resuelto con resolveComponent() por nombre en el setup (referencia estatica → Nuxt inyecta el import). Bug latente del Plan 04-03 que solo afloraba al montar Timeline en pagina real (04-03 lo difirio al Plan 05)
+- [Phase ?]: [Fase 4 P05]: los 4 specs de render/modos son AUTOCONTENIDOS (mirror de shell/theme.spec: build+serve propio bajo /guiaRoma/, toleran SOLO el error de hidratacion color-mode, no usan el webServer del golden, no rebaselinan D-08); aserción de detail-photo ESTRUCTURAL (.detail-photo>img con src/alt) no de pixel (carga real de Wikimedia = checkpoint humano D-06); persistencia via addInitScript(localStorage), micro-flash via MutationObserver
 
 ### Pending Todos
 
@@ -164,6 +169,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-20T11:21:55.939Z
-Stopped at: Completed 04-02-PLAN.md
+Last session: 2026-06-20T15:06:08.543Z
+Stopped at: Completed 04-05-PLAN.md (Tasks 1-3); Task 4 checkpoint:human-verify PENDIENTE
 Resume file: None

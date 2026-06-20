@@ -15,7 +15,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Andamiaje + Golden de paridad** - Proyecto Nuxt 4 en la rama de release, estático bajo `/guiaRoma/`, CSS verbatim, Nitro dormido, y golden de Playwright capturado desde `main` antes de divergir (completed 2026-06-18)
 - [x] **Phase 2: Esquema de datos + migración del contenido** - 6 colecciones zod en Nuxt Content v3 y todo Roma migrado 1:1 a datos tipados, con `day.cards` ordenado y validación que rompe el build (completed 2026-06-19)
 - [x] **Phase 3: Capa de página, layout y tema** - `useTrip(slug)` + `TripView` renderizando un viaje desde datos, routing multi-viaje, layout/Topbar/NavPills idénticos y tema claro/oscuro sin parpadeo (completed 2026-06-19)
-- [ ] **Phase 4: Render de contenido + modos de ritmo** - Fichas, timeline y secciones de referencia renderizadas desde datos e idénticas a hoy, con selector de ritmo, "caminar menos" y modo resumen
+- [x] **Phase 4: Render de contenido + modos de ritmo** - Fichas, timeline y secciones de referencia renderizadas desde datos e idénticas a hoy, con selector de ritmo, "caminar menos" y modo resumen (completed 2026-06-20)
 - [ ] **Phase 5: Navegación transversal** - `useCardNavigation` (scroll-a-ficha, pila volver, scrollspy `+130`) consumida de forma única por enlaces, mapa y búsqueda
 - [ ] **Phase 6: Derivados de datos — búsqueda y ruta del día** - Búsqueda en cliente sobre los datos y "ruta del día" derivada de `day.cards`, ambas con la misma cobertura y resultado que hoy
 - [ ] **Phase 7: Isla client-only — mapa, fallback de imagen y notas** - Mapa Leaflet client-only con marcadores/popups/banner offline, imagen-con-fallback hero/detail y notas por ficha en localStorage
@@ -84,7 +84,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   - [x] 04-02-PLAN.md — MonumentCard: la .card verbatim data-driven (prosa MDC con dropcap, detail-photo/detail-list, hero plano, maps-link, notes shell) (UI-02) [Wave 2]
   - [x] 04-03-PLAN.md — Familia Timeline: dispatcher por kind + 5 componentes (stop/transport/meta/food/reservation); solo stop/transport filtran por ritmo (UI-03/FEAT-06, Pitfall 4) [Wave 2]
   - [x] 04-04-PLAN.md — Secciones de referencia: GastroCard+GastroSection (agrupado en orden canónico, Pitfall 6), ArtistCard unificado, ReservasSection, PracticaSection (UI-04) [Wave 2]
-  - [ ] 04-05-PLAN.md — Cableado + verificación: TheHero→useTripModes + DaySection + enchufar TripView; 4 specs Playwright (render-cards/timeline/reference + modes) + sign-off humano (FEAT-06/07/08, SC#1-4) [Wave 3]
+  - [x] 04-05-PLAN.md — Cableado + verificación: TheHero→useTripModes + DaySection + enchufar TripView; 4 specs Playwright (render-cards/timeline/reference + modes) + sign-off humano (FEAT-06/07/08, SC#1-4) [Wave 3]
 **UI hint**: yes
 
 ### Phase 5: Navegación transversal
@@ -143,7 +143,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 1. Andamiaje + Golden de paridad | 3/3 | Complete   | 2026-06-18 |
 | 2. Esquema de datos + migración del contenido | 7/7 | Complete   | 2026-06-19 |
 | 3. Capa de página, layout y tema | 5/5 | Complete   | 2026-06-19 |
-| 4. Render de contenido + modos de ritmo | 4/5 | In Progress|  |
+| 4. Render de contenido + modos de ritmo | 5/5 | Complete   | 2026-06-20 |
 | 5. Navegación transversal | 0/TBD | Not started | - |
 | 6. Derivados de datos — búsqueda y ruta del día | 0/TBD | Not started | - |
 | 7. Isla client-only — mapa, fallback de imagen y notas | 0/TBD | Not started | - |
