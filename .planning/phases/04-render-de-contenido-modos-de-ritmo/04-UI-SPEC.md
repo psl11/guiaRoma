@@ -1,10 +1,11 @@
 ---
 phase: 4
 slug: render-de-contenido-modos-de-ritmo
-status: draft
+status: approved
 shadcn_initialized: false
 preset: none
 created: 2026-06-20
+reviewed_at: 2026-06-20
 ---
 
 # Fase 4 — Contrato de diseño UI (Render de contenido + modos de ritmo)
