@@ -16,7 +16,10 @@
 //   · `a.tl-food-name` cuyo href es `#`+entry.ref (ancla a ficha gastro, enlace plano; la
 //     intercepción SPA es F5) O entry.href (URL externa de Maps para cafés sueltos). Los enlaces
 //     EXTERNOS llevan `target="_blank" rel="noopener"` VERBATIM (index.html:2423, anti-tabnabbing);
-//     los internos `#…` NO (index.html:2437-2441).
+//     los internos `#…` NO (index.html:2437-2441). `ref` y `href` son AMBOS opcionales en el
+//     esquema: si faltan los dos, se renderiza un `span.tl-food-name` (mismo markup, sin href)
+//     en lugar de `<a href="undefined">` (CR-02). En los datos F2 de Roma toda entrada lleva
+//     `ref` O `href`, así que el span es solo defensa ante un dato schema-válido sin enlace.
 //   · `span.tl-resv-badge` (badge "✓ reservado 22:30") O `span.tl-food-time` ("🚶 3 min"), ambos
 //     opcionales (v-if), en ese orden.
 //   · `span.tl-food-desc` con el desc (Markdown-inline → `<MDC unwrap="p" :tag="false">`).
@@ -55,12 +58,16 @@ defineProps<{ row: FoodRow }>()
           class="tl-food-name"
         >{{ entry.name }}</a>
         <a
-          v-else
+          v-else-if="entry.href"
           :href="entry.href"
           target="_blank"
           rel="noopener"
           class="tl-food-name"
         >{{ entry.name }}</a>
+        <span
+          v-else
+          class="tl-food-name"
+        >{{ entry.name }}</span>
         <span
           v-if="entry.badge"
           class="tl-resv-badge"
