@@ -43,9 +43,20 @@
 // rompería selectores globales del shell). NINGÚN enlace de ruta a /trips/* — crawlLinks lo
 // prerenderizaría y rompería la disciplina de prerender D-01; toda la navegación es por
 // anclas #fragmento. Topbar/BackButton/TheHero/DaySection y las secciones se auto-importan.
+//
+// F5 (Plan 05-02): TripView es el dueño de la página (montado una vez) → es el ÚNICO host del
+// controller de navegación (FEAT-05, D-05), espejo de cómo TheHero hospeda el controller de
+// modos. El controller registra el listener de click delegado (intercepta
+// los enlaces a ficha — prosa MDC + timeline — vía un `document.addEventListener` nativo,
+// Pitfall 1) y el de scroll (scrollspy de pastillas) UNA SOLA VEZ. NO se añade un `<div>`
+// envoltorio ni un handler de plantilla al `<main>`: el listener es nativo sobre `document` (D-01).
 const props = defineProps<{ slug: string }>()
 
 const { trip, days, monById, food, artists, refById } = await useTrip(props.slug)
+
+// Efectos de navegación: se registran AQUÍ una sola vez (Pitfall 4). El controller hace su
+// propio `await useTrip('roma')` para `monById`; va tras el useTrip de arriba por coherencia.
+await useCardNavigationController()
 
 // Busca un día por su slug. Devuelve `undefined` si falta (WR-03): el `v-if` de cada sección
 // usa esto para no montar `DaySection` con un `day` ausente. Con los datos F2 de Roma siempre
