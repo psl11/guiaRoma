@@ -96,7 +96,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. El scrollspy resalta la pastilla de navegación de la sección activa usando la fórmula **exacta** `scrollY + 130 >= offsetTop` (no `IntersectionObserver`), con el mismo punto de conmutación que hoy
   3. Los enlaces internos `a[href^="#"]` que `<MDC>` genera en la prosa (p. ej. `[texto](#g-fortunata)`) se interceptan y disparan `navigateToCard` en vez de recargar o saltar sin animación
 **Plans**: 3 plans
-  - [ ] 05-01-PLAN.md — Lógica pura: `app/utils/cardNav.ts` (selector scrollspy `+130` last-wins, navStack push/pop, predicado ficha-vs-sección) + unit test Vitest (SC#1/SC#2) [Wave 1]
+  - [x] 05-01-PLAN.md — Lógica pura: `app/utils/cardNav.ts` (selector scrollspy `+130` last-wins, navStack push/pop, predicado ficha-vs-sección) + unit test Vitest (SC#1/SC#2) [Wave 1]
   - [ ] 05-02-PLAN.md — `useCardNavigation` singleton (accesor + controller con listener click delegado nativo D-01 + scroll `{passive}`) y cableado de NavPills `.active` / BackButton `.show`+`@click` / TripView (D-02..D-05) [Wave 2]
   - [ ] 05-03-PLAN.md — Spec Playwright autocontenido (SC#1/SC#2/SC#3), resolución empírica de Pitfall 1 (burbuja vs captura) + sign-off humano de paridad [Wave 3]
 **UI hint**: yes
@@ -147,7 +147,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 2. Esquema de datos + migración del contenido | 7/7 | Complete   | 2026-06-19 |
 | 3. Capa de página, layout y tema | 5/5 | Complete   | 2026-06-19 |
 | 4. Render de contenido + modos de ritmo | 5/5 | Complete   | 2026-06-20 |
-| 5. Navegación transversal | 0/3 | Not started | - |
+| 5. Navegación transversal | 1/3 | In Progress|  |
 | 6. Derivados de datos — búsqueda y ruta del día | 0/TBD | Not started | - |
 | 7. Isla client-only — mapa, fallback de imagen y notas | 0/TBD | Not started | - |
 | 8. Verificación de paridad | 0/TBD | Not started | - |

@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 5 context gathered
-last_updated: "2026-06-20T23:38:57.512Z"
-last_activity: 2026-06-20 -- Phase 5 planning complete
+stopped_at: Completed 05-01-PLAN.md (cardNav pure logic)
+last_updated: "2026-06-20T23:47:57.618Z"
+last_activity: 2026-06-20
 progress:
   total_phases: 8
   completed_phases: 4
   total_plans: 23
-  completed_plans: 20
+  completed_plans: 21
   percent: 50
 ---
 
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** La 1.0 debe ser exactamente igual que la guía de hoy (paridad visual y funcional al 100%), pero construida de forma dinámica, data-driven y mantenible.
-**Current focus:** Phase 5 — navegación transversal
+**Current focus:** Phase 05 — Navegación transversal
 
 ## Current Position
 
-Phase: 5
-Plan: Not started
+Phase: 05 (Navegación transversal) — EXECUTING
+Plan: 2 of 3
 Status: Ready to execute
-Last activity: 2026-06-20 -- Phase 5 planning complete
+Last activity: 2026-06-20
 
-Progress: [██████████] 100%
+Progress: [█████████░] 91%
 
 ## Performance Metrics
 
@@ -74,6 +74,7 @@ Progress: [██████████] 100%
 | Phase 04 P03 | 6min | 2 tasks | 7 files |
 | Phase 04 P04 | 38min | 2 tasks | 8 files |
 | Phase 04 P05 | 22min | 3 tasks | 8 files |
+| Phase 05 P01 | 3min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -144,6 +145,9 @@ Recent decisions affecting current work:
 - [Phase ?]: [Fase 4 P05]: DaySection resuelve day.cards[]→monById→MonumentCard en ORDEN del dato (Pitfall 6, ruta del día de F6); TripView rellena las 11 secciones por props desde un SOLO useTrip (monById/food/artists/refById), #arte/#arquitectura con eyebrow/section-title estatico/art-intro fuera de las cards + ArtistCard por kind (glosario al final), #mapa vacío (F7)
 - [Phase ?]: [Fase 4 P05]: [Rule 3] Timeline dispatcher — <component :is=STRING> NO resuelve auto-imports en SSG (emitia <TimelineStop> vacios, timeline sin filas); resuelto con resolveComponent() por nombre en el setup (referencia estatica → Nuxt inyecta el import). Bug latente del Plan 04-03 que solo afloraba al montar Timeline en pagina real (04-03 lo difirio al Plan 05)
 - [Phase ?]: [Fase 4 P05]: los 4 specs de render/modos son AUTOCONTENIDOS (mirror de shell/theme.spec: build+serve propio bajo /guiaRoma/, toleran SOLO el error de hidratacion color-mode, no usan el webServer del golden, no rebaselinan D-08); aserción de detail-photo ESTRUCTURAL (.detail-photo>img con src/alt) no de pixel (carga real de Wikimedia = checkpoint humano D-06); persistencia via addInitScript(localStorage), micro-flash via MutationObserver
+- [Phase ?]: [Fase 5 P01]: computeActiveSection es port verbatim de index.html:6492-6496 (y=scrollY+130, for-loop last-wins sin break, default ''); el +130 (no 124) se asevera load-bearing con un caso frontera 124-falla/130-pasa (scrollY 874 -> offsetTop 1000)
+- [Phase ?]: [Fase 5 P01]: cardNav.ts pure/DOM-free/Nuxt-free/zero-import (window/document/useState solo en JSDoc); pushScroll/popScroll inmutables devuelven {top,rest} para test plano, el controlador del Plan 02 muta su useState y delega la forma LIFO aqui
+- [Phase ?]: [Fase 5 P01]: isFichaTarget = monById.has(id) reemplaza el querySelectorAll('.card') del original (D-02) y ES el gate acotado T-05-01 que consume el Plan 02; id ausente -> salto nativo de seccion
 
 ### Pending Todos
 
@@ -170,6 +174,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-20T22:59:01.462Z
-Stopped at: Phase 5 context gathered
-Resume file: .planning/phases/05-navegaci-n-transversal/05-CONTEXT.md
+Last session: 2026-06-20T23:47:57.609Z
+Stopped at: Completed 05-01-PLAN.md (cardNav pure logic)
+Resume file: None
