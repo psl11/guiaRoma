@@ -37,7 +37,7 @@ Requisitos para la release 1.0. Cada uno se mapea a una fase del roadmap.
 - [x] **UI-01**: Layout / Topbar / NavPills componentizados y visualmente idénticos a hoy
 - [x] **UI-02**: Componente de ficha de atracción (hero, nombre italiano, prosa, enlace a Maps, notas) idéntico a hoy
 - [x] **UI-03**: Timeline componentizado (item / transport / food) idéntico a hoy, respetando el filtrado por ritmo
-- [ ] **UI-04**: Secciones de referencia (Reservas, Gastronomía, Práctica, Arte, Arquitectura) renderizadas desde datos e idénticas a hoy
+- [x] **UI-04**: Secciones de referencia (Reservas, Gastronomía, Práctica, Arte, Arquitectura) renderizadas desde datos e idénticas a hoy
 - [ ] **UI-05**: Componente imagen-con-fallback que reproduce el comportamiento actual (`onerror` → SVG por ficha / motif)
 
 ### Features interactivas — paridad (FEAT)
@@ -123,7 +123,7 @@ Qué fases cubren qué requisitos. Mapeo del roadmap (ver `.planning/ROADMAP.md`
 | FEAT-01 | Phase 3 | Complete |
 | UI-02 | Phase 4 | Complete |
 | UI-03 | Phase 4 | Complete |
-| UI-04 | Phase 4 | Pending |
+| UI-04 | Phase 4 | Complete |
 | FEAT-06 | Phase 4 | Complete |
 | FEAT-07 | Phase 4 | Complete |
 | FEAT-08 | Phase 4 | Complete |

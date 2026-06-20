@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Completed 04-02-PLAN.md
-last_updated: "2026-06-20T11:02:53.616Z"
+last_updated: "2026-06-20T11:22:10.361Z"
 last_activity: 2026-06-20
 progress:
   total_phases: 8
   completed_phases: 3
   total_plans: 20
-  completed_plans: 18
+  completed_plans: 19
   percent: 38
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 ## Current Position
 
 Phase: 04 (render-de-contenido-modos-de-ritmo) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 Status: Ready to execute
 Last activity: 2026-06-20
 
-Progress: [█████████░] 90%
+Progress: [██████████] 95%
 
 ## Performance Metrics
 
@@ -71,6 +71,7 @@ Progress: [█████████░] 90%
 | Phase 04 P01 | 12min | 3 tasks | 5 files |
 | Phase 04 P02 | 35min | 1 tasks | 2 files |
 | Phase 04 P03 | 6min | 2 tasks | 7 files |
+| Phase 04 P04 | 38min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -133,6 +134,10 @@ Recent decisions affecting current work:
 - [Phase ?]: [Fase 4 P02]: card-artists/card-arch — el label es Markdown completo (prefijo+enlace) en los datos F2, no texto plano; se renderiza con <MDC> + override a->ArtLink (repone class=art-link), separador { ' ' } explícito, nota inline VERBATIM; byte-idéntico al original
 - [Phase ?]: [Fase 4 P02]: :tag=false en todos los <MDC>/<MDCRenderer> suprime el <div> envoltorio que MDCRenderer mete por defecto (paridad de marcado); facts.value y culture.text van por <MDC> (llevan Markdown); culture[0]=label del box, slice(1)=ref-items
 - [Phase ?]: [Fase 4 P02]: deferred D-04-A — DetailPhoto.global.vue y TheHero.vue dejan un <div class=''> envoltorio por <MDC unwrap=p> sin :tag=false (planes anteriores, fuera de alcance); arreglo trivial sugerido
+- [Phase ?]: [Fase 4 P04]: Pitfall 6 resuelto — app/utils/foodGroups.ts codifica el ORDEN CANÓNICO de los 7 grupos de gastronomía (array constante FOOD_GROUP_ORDER verbatim del index.html) y ordena por él; queryCollection('food').all() es alfabético por filename (g-bar-* saldría tercero pero su grupo es el último). Verificado en render real
+- [Phase ?]: [Fase 4 P04]: Pitfall 1 honrado en ambos lados — PracticaSection aplica el override LOCAL ul->detail-list (gemelo de MonumentCard); ArtistCard NO lo aplica (las .artist-section usan <ul> plano). Sin conflicto con Plan 01 porque no existe ProseUl global. Verificado: arte=0 detail-list, practica=detail-list
+- [Phase ?]: [Fase 4 P04]: ArtistCard es UN componente que unifica artist/arquitectura/glossary por kind (v-if glossary -> arch-glossary con arch-term; v-else artist-head + artist-section + artist-trip head=note del 1er seenIn, body=labels MDC unidos por ' · ' + note de cierre); ReservasSection tabla con heurística strong/plano para filas sin ref; PracticaSection h2 sin section-title + intro/media inline-styled
+- [Phase ?]: [Fase 4 P04]: BLOQUEANTE D-04-D/D1 CONFIRMADO — queryCollection('artist'/'reference').all() devuelve filas con TODOS los campos null (uniones discriminadas NO se materializan en columnas SQL); .where('trip') matchea 0 filas. Los 5 componentes son correctos (verificado con datos estáticos byte-a-byte), pero #arte/#arquitectura/#reservas/#practica NO renderizarán con datos reales hasta resolver D1. Detalle+opciones en deferred-items.md. Bloquea render-reference.spec del Plan 05
 
 ### Pending Todos
 
@@ -159,6 +164,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-20T11:02:49.368Z
+Last session: 2026-06-20T11:21:55.939Z
 Stopped at: Completed 04-02-PLAN.md
 Resume file: None
