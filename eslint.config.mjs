@@ -76,4 +76,27 @@ export default withNuxt(
       'vue/max-attributes-per-line': 'off',
     },
   },
+  // Secciones de referencia (Plan 04-04) con marcado inline WHITESPACE-SENSIBLE del original:
+  //  · ArtistCard `.artist-trip`: los enlaces de `seenIn` van separados por " · " EXPLÍCITO
+  //    (`{{ ' · ' }}`) y cada `<MDC>` lleva 2+ atributos en una sola línea (gemelo del patrón
+  //    `card-artists` de MonumentCard; reformatear con saltos colapsaría los separadores).
+  //  · ReservasSection `.reservas-confirmadas li` (`rc-when` + " — " + `<MDC>`) y las celdas de
+  //    `.reservas-table` (a/strong + badge + `<MDC>`) van PEGADAS a su contenedor, sin nodos de
+  //    texto en blanco (verbatim index.html:5269/5287).
+  //  · PracticaSection: `<li>` de `.detail-list` con `<MDC>` inline y los `<MDC :components>`
+  //    multi-atributo.
+  // Por eso se relajan SOLO las tres reglas de formato de contenido/atributos en ESTOS ficheros
+  // (mismo precedente que MonumentCard/Timeline); el resto (incl. el CERO CSS) sigue activo.
+  {
+    files: [
+      'app/components/ArtistCard.vue',
+      'app/components/ReservasSection.vue',
+      'app/components/PracticaSection.vue',
+    ],
+    rules: {
+      'vue/singleline-html-element-content-newline': 'off',
+      'vue/multiline-html-element-content-newline': 'off',
+      'vue/max-attributes-per-line': 'off',
+    },
+  },
 )
