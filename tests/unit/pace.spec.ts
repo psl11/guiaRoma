@@ -21,35 +21,35 @@ import { isVisible } from '../../app/utils/pace'
 
 describe('isVisible — matriz de ritmo (FEAT-06, Pitfall 4)', () => {
   // pace === 'optimistic' → todo visible
-  it("optimistic: 'all' visible", () => {
+  it('optimistic: all visible', () => {
     expect(isVisible('all', 'optimistic')).toBe(true)
   })
-  it("optimistic: 'medium' visible", () => {
+  it('optimistic: medium visible', () => {
     expect(isVisible('medium', 'optimistic')).toBe(true)
   })
-  it("optimistic: 'slow-only' visible", () => {
+  it('optimistic: slow-only visible', () => {
     expect(isVisible('slow-only', 'optimistic')).toBe(true)
   })
 
-  // pace === 'neutral' → oculta solo 'slow-only'
-  it("neutral: 'all' visible", () => {
+  // pace === 'neutral' → oculta solo slow-only
+  it('neutral: all visible', () => {
     expect(isVisible('all', 'neutral')).toBe(true)
   })
-  it("neutral: 'medium' visible", () => {
+  it('neutral: medium visible', () => {
     expect(isVisible('medium', 'neutral')).toBe(true)
   })
-  it("neutral: 'slow-only' OCULTO", () => {
+  it('neutral: slow-only OCULTO', () => {
     expect(isVisible('slow-only', 'neutral')).toBe(false)
   })
 
-  // pace === 'slow' → oculta 'slow-only' Y 'medium' (solo 'all' visible)
-  it("slow: 'all' visible", () => {
+  // pace === 'slow' → oculta slow-only Y medium (solo all visible)
+  it('slow: all visible', () => {
     expect(isVisible('all', 'slow')).toBe(true)
   })
-  it("slow: 'medium' OCULTO", () => {
+  it('slow: medium OCULTO', () => {
     expect(isVisible('medium', 'slow')).toBe(false)
   })
-  it("slow: 'slow-only' OCULTO", () => {
+  it('slow: slow-only OCULTO', () => {
     expect(isVisible('slow-only', 'slow')).toBe(false)
   })
 })
