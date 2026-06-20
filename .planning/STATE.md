@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 04-01-PLAN.md
-last_updated: "2026-06-20T10:19:21.977Z"
+stopped_at: Completed 04-02-PLAN.md
+last_updated: "2026-06-20T10:50:20.363Z"
 last_activity: 2026-06-20
 progress:
   total_phases: 8
   completed_phases: 3
   total_plans: 20
-  completed_plans: 16
-  percent: 38
+  completed_plans: 17
+  percent: 85
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 ## Current Position
 
 Phase: 04 (render-de-contenido-modos-de-ritmo) — EXECUTING
-Plan: 2 of 5
+Plan: 3 of 5
 Status: Ready to execute
 Last activity: 2026-06-20
 
-Progress: [████████░░] 80%
+Progress: [█████████░] 85%
 
 ## Performance Metrics
 
@@ -69,6 +69,7 @@ Progress: [████████░░] 80%
 | Phase 03 P04 | 11min | 2 tasks | 2 files |
 | Phase Phase 03 PP05 | 13min | 4 tasks tasks | 5 files files |
 | Phase 04 P01 | 12min | 3 tasks | 5 files |
+| Phase 04 P02 | 35min | 1 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -127,6 +128,10 @@ Recent decisions affecting current work:
 - [Phase ?]: [Fase 4 P01]: useTripModes = estado reactivo único (useState singleton pace/light/resumen, D-03); acopla light->slow sin else (Pitfall 5, no revierte); clases de body via useHead({bodyAttrs}) sin DOM imperativo; restore+persistencia SOLO en onMounted con claves literales roma-* (micro-flash SC#4); isVisible delega en la función pura
 - [Phase ?]: [Fase 4 P01]: app/utils/pace.ts = matriz isVisible pura de 3 ramas exactas (index.html:6525-6531, Pitfall 4 preservado), 9 casos en Vitest plano (TDD RED->GREEN); tipos Pace/ItemPace exportados
 - [Phase ?]: [Fase 4 P01]: DetailPhoto.global.vue = PRIMER .global.vue del repo (sufijo = mecanismo de registro global para <MDC> resolveComponent); img plano sin manejador de error (frontera D-01, fallback SVG es F7); caption via <MDC unwrap=p>; eslint allowlist gemela para Timeline
+- [Phase ?]: [Fase 4 P02]: MonumentCard resuelve Pitfall 1 LOCALMENTE — override ul->DetailListUl (objeto local) en :components de <MDCRenderer>, sin ProseUl global; las listas de artista quedan intactas (decisión b de 04-01 honrada)
+- [Phase ?]: [Fase 4 P02]: card-artists/card-arch — el label es Markdown completo (prefijo+enlace) en los datos F2, no texto plano; se renderiza con <MDC> + override a->ArtLink (repone class=art-link), separador { ' ' } explícito, nota inline VERBATIM; byte-idéntico al original
+- [Phase ?]: [Fase 4 P02]: :tag=false en todos los <MDC>/<MDCRenderer> suprime el <div> envoltorio que MDCRenderer mete por defecto (paridad de marcado); facts.value y culture.text van por <MDC> (llevan Markdown); culture[0]=label del box, slice(1)=ref-items
+- [Phase ?]: [Fase 4 P02]: deferred D-04-A — DetailPhoto.global.vue y TheHero.vue dejan un <div class=''> envoltorio por <MDC unwrap=p> sin :tag=false (planes anteriores, fuera de alcance); arreglo trivial sugerido
 
 ### Pending Todos
 
@@ -153,6 +158,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-20T10:19:21.967Z
-Stopped at: Completed 04-01-PLAN.md
+Last session: 2026-06-20T10:50:20.354Z
+Stopped at: Completed 04-02-PLAN.md
 Resume file: None
