@@ -82,7 +82,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 5 plans
   - [x] 04-01-PLAN.md — Cimientos: matriz isVisible pura + test, composable useTripModes (pace/light/resumen + persistencia + body classes), y los componentes MDC globales (DetailPhoto + ProseUl/ProseLi) + allowlist eslint de Timeline [Wave 1]
   - [x] 04-02-PLAN.md — MonumentCard: la .card verbatim data-driven (prosa MDC con dropcap, detail-photo/detail-list, hero plano, maps-link, notes shell) (UI-02) [Wave 2]
-  - [ ] 04-03-PLAN.md — Familia Timeline: dispatcher por kind + 5 componentes (stop/transport/meta/food/reservation); solo stop/transport filtran por ritmo (UI-03/FEAT-06, Pitfall 4) [Wave 2]
+  - [x] 04-03-PLAN.md — Familia Timeline: dispatcher por kind + 5 componentes (stop/transport/meta/food/reservation); solo stop/transport filtran por ritmo (UI-03/FEAT-06, Pitfall 4) [Wave 2]
   - [ ] 04-04-PLAN.md — Secciones de referencia: GastroCard+GastroSection (agrupado en orden canónico, Pitfall 6), ArtistCard unificado, ReservasSection, PracticaSection (UI-04) [Wave 2]
   - [ ] 04-05-PLAN.md — Cableado + verificación: TheHero→useTripModes + DaySection + enchufar TripView; 4 specs Playwright (render-cards/timeline/reference + modes) + sign-off humano (FEAT-06/07/08, SC#1-4) [Wave 3]
 **UI hint**: yes
@@ -143,7 +143,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 1. Andamiaje + Golden de paridad | 3/3 | Complete   | 2026-06-18 |
 | 2. Esquema de datos + migración del contenido | 7/7 | Complete   | 2026-06-19 |
 | 3. Capa de página, layout y tema | 5/5 | Complete   | 2026-06-19 |
-| 4. Render de contenido + modos de ritmo | 2/5 | In Progress|  |
+| 4. Render de contenido + modos de ritmo | 3/5 | In Progress|  |
 | 5. Navegación transversal | 0/TBD | Not started | - |
 | 6. Derivados de datos — búsqueda y ruta del día | 0/TBD | Not started | - |
 | 7. Isla client-only — mapa, fallback de imagen y notas | 0/TBD | Not started | - |
