@@ -24,8 +24,12 @@
 // desenvuelve en plantilla). `v-if="trip"` estrecha el tipo de TheHero (espera Trip no-nulo) —
 // en `/` (slug 'roma') y en cualquier /trips/[slug] válido `trip` siempre existe (la página
 // [slug] hace el guard 404 antes de montar TripView), así que #inicio nunca se oculta; es solo
-// seguridad de tipos. Los `days.find(...)!` y `refById.get(...)!` usan non-null assertion: en los
-// datos F2 de Roma los 5 días y las 2 entradas de referencia (reservas/practica) SIEMPRE existen.
+// seguridad de tipos. Los días (`dayBySlug(...)`) y las referencias (`refById.get(...)`) se montan
+// tras un `v-if` que comprueba presencia (WR-03): en los datos F2 de Roma los 5 días y las 2
+// entradas de referencia (reservas/practica) SIEMPRE existen, así que el render no cambia; pero si
+// una búsqueda fallara (dato ausente, ventana reactiva de useAsyncData con .data=null antes de
+// resolver, HMR) la sección queda VACÍA en vez de pasar `undefined` a un prop requerido y romper en
+// runtime. El `!` que sigue al `v-if` es seguro: el guard ya garantizó la presencia.
 //
 // #arte / #arquitectura: el `section-eyebrow` + `h2.section-title` (texto estático "Arte"/
 // "Arquitectura", chrome del index.html) + `p.art-intro` (la prosa de `trip.sections.arte/
@@ -42,6 +46,11 @@
 const props = defineProps<{ slug: string }>()
 
 const { trip, days, monById, food, artists, refById } = await useTrip(props.slug)
+
+// Busca un día por su slug. Devuelve `undefined` si falta (WR-03): el `v-if` de cada sección
+// usa esto para no montar `DaySection` con un `day` ausente. Con los datos F2 de Roma siempre
+// resuelve los 5 días (render idéntico).
+const dayBySlug = (slug: string) => days.value.find(d => d.slug === slug)
 </script>
 
 <template>
@@ -55,36 +64,44 @@ const { trip, days, monById, food, artists, refById } = await useTrip(props.slug
     <section id="mapa" />
     <section id="viernes">
       <DaySection
-        :day="days.find(d => d.slug === 'viernes')!"
+        v-if="dayBySlug('viernes')"
+        :day="dayBySlug('viernes')!"
         :mon-by-id="monById"
       />
     </section>
     <section id="sabado">
       <DaySection
-        :day="days.find(d => d.slug === 'sabado')!"
+        v-if="dayBySlug('sabado')"
+        :day="dayBySlug('sabado')!"
         :mon-by-id="monById"
       />
     </section>
     <section id="domingo">
       <DaySection
-        :day="days.find(d => d.slug === 'domingo')!"
+        v-if="dayBySlug('domingo')"
+        :day="dayBySlug('domingo')!"
         :mon-by-id="monById"
       />
     </section>
     <section id="lunes">
       <DaySection
-        :day="days.find(d => d.slug === 'lunes')!"
+        v-if="dayBySlug('lunes')"
+        :day="dayBySlug('lunes')!"
         :mon-by-id="monById"
       />
     </section>
     <section id="martes">
       <DaySection
-        :day="days.find(d => d.slug === 'martes')!"
+        v-if="dayBySlug('martes')"
+        :day="dayBySlug('martes')!"
         :mon-by-id="monById"
       />
     </section>
     <section id="reservas">
-      <ReservasSection :reservas="refById.get('reservas')!" />
+      <ReservasSection
+        v-if="refById.get('reservas')"
+        :reservas="refById.get('reservas')!"
+      />
     </section>
     <section id="gastronomia">
       <GastroSection
@@ -93,7 +110,10 @@ const { trip, days, monById, food, artists, refById } = await useTrip(props.slug
       />
     </section>
     <section id="practica">
-      <PracticaSection :practica="refById.get('practica')!" />
+      <PracticaSection
+        v-if="refById.get('practica')"
+        :practica="refById.get('practica')!"
+      />
     </section>
     <section id="arte">
       <div class="container">
