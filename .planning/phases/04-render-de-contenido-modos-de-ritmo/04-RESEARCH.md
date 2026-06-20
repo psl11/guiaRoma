@@ -668,21 +668,26 @@ export function isVisible(itemPace: ItemPace, pace: Pace): boolean {
 
 **Nota:** la pregunta de mayor prioridad (registro MDC, A1) está **verificada desde fuente**, no asumida — por eso su riesgo es bajo. Los assumptions restantes son detalles de paridad que los specs DOM + golden atrapan.
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+> Las tres preguntas tenían una recomendación clara y quedan **operacionalizadas por los planes de F4** (ninguna es ambigüedad bloqueante para los agentes aguas abajo).
 
 1. **`.detail-list` en listas Markdown nativas (LA decisión de implementación clave de las fichas).**
    - Qué sabemos: los datos usan listas Markdown nativas; MDC las renderiza como `<ul>` sin la clase `detail-list`; el CSS `.detail-list` da los ✦ + bordes.
    - Qué falta: confirmar (grep) que todas las listas de prosa de ficha deben ser `.detail-list`, y elegir entre `ProseUl.global.vue` override (recomendado) vs cambiar datos a `::detail-list` block.
    - Recomendación: `ProseUl.global.vue` + `ProseLi.global.vue` que reproduzcan el markup `.detail-list` (cero cambio de datos). Verificar contra el golden de `#galleria-sciarra` + grep de practica/artist por listas que deban verse distinto.
+   - **RESOLVED (Plan 04-01, Task 3):** crea `ProseUl.global.vue`/`ProseLi.global.vue`, **con un gate de grep obligatorio antes de implementar** — la planificación detectó que las `.artist-section` del index.html usan `<ul>` SIN `.detail-list`, por lo que un override global ingenuo rompería la paridad de artistas; el plan decide por grep y documenta el resultado.
 
 2. **Orden de los grupos de gastronomía.**
    - Qué sabemos: el agrupado por `Map` preserva el orden de `food.all()`.
    - Qué falta: confirmar que ese orden = orden del DOM del index.html.
    - Recomendación: verificar contra el golden de `#gastronomia`; si difiere, introducir un orden explícito (no "a ojo"). Es un cuadre de datos, no de lógica.
+   - **RESOLVED (Plan 04-04, Task 1):** `queryCollection('food').all()` devuelve orden alfabético (≠ orden canónico del DOM), así que el plan **codifica el orden canónico explícito** en `foodGroups.ts` (los grupos listados en sus `<interfaces>`) con test unitario que asevera el orden de primera aparición.
 
 3. **Caption de `:detail-photo` — texto plano vs MDC.**
    - Qué sabemos: galleria-sciarra es texto plano; otras pueden llevar markup.
    - Recomendación: usar `<MDC :value="caption" unwrap="p" />` en `DetailPhoto.global.vue` (seguro para cualquiera); o `{{ caption }}` si el grep confirma que todas son texto plano (un `<MDC>` menos). No bloqueante.
+   - **RESOLVED (Plan 04-01, Task 3):** `DetailPhoto.global.vue` usa `<MDC unwrap="p">` para la caption (seguro para texto plano y markup por igual).
 
 ## Environment Availability
 
