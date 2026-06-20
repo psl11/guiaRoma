@@ -154,6 +154,7 @@ test.describe('render del timeline (5 kinds + orden) en /guiaRoma/ construido (S
 
     // .tl-meta/.tl-food/.tl-resv-meta NO llevan data-pace (no se filtran por ritmo — Pitfall 4).
     await expect(tl.locator('.tl-meta[data-pace]')).toHaveCount(0)
+    await expect(tl.locator('.tl-food[data-pace]')).toHaveCount(0)
     await expect(tl.locator('.tl-resv-meta[data-pace]')).toHaveCount(0)
   })
 
