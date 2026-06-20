@@ -21,9 +21,26 @@
 // CSS verbatim global (base.css) — CERO CSS nuevo y SIN bloque scoped: un data-v-* rompería
 // selectores como `.info-card-value strong { display:block }` (base.css:233) y el resto del
 // shell. La paridad es por construcción.
+//
+// CABLEADO DE LOS MODOS (D-05, FEAT-06/07/08): este componente CONSUME `useTripModes()` para
+// cablear los controles del #inicio que la paridad de F3 dejó YA MONTADOS sin manejadores. NO
+// se reestructura el DOM del #inicio (ni orden, ni clases base, ni el search-input de F6): solo
+// se añaden bindings reactivos sobre los controles existentes.
+//   · Los 3 `.pace-btn` reciben `:class="{ active: pace === '<valor>' }"` + `@click` que asigna
+//     pace. OJO: el 1º pierde su clase estática `active` LITERAL — si se dejara, Vue mergearía
+//     esa clase estática con el binding y el botón quedaría SIEMPRE activo (incluso al elegir
+//     otro ritmo). Por eso pasa a una `class` base sin `active` + el `:class` reactivo.
+//   · `#light-toggle` y `#resumen-toggle` reciben `:aria-pressed` (reactivo, reemplazando el
+//     `aria-pressed="false"` literal) + `@click` que conmuta el booleano. Desactivar "caminar
+//     menos" NO revierte el ritmo: ese acoplamiento light→slow (sin revertir) vive en el `watch`
+//     del composable (Pitfall 5), no aquí.
+//   · NO se añade `aria-pressed` a los `.pace-btn` (el original usa solo `.active`). El
+//     search-input (F6) y todo lo demás quedan intactos.
 import type { Trip } from '~~/shared/schemas'
 
 defineProps<{ trip: Trip }>()
+
+const { pace, light, resumen } = useTripModes()
 </script>
 
 <template>
@@ -65,22 +82,28 @@ defineProps<{ trip: Trip }>()
         <span class="pace-label">Ritmo del viaje</span>
         <div class="pace-options">
           <button
-            class="pace-btn active"
+            class="pace-btn"
+            :class="{ active: pace === 'optimistic' }"
             data-pace="optimistic"
+            @click="pace = 'optimistic'"
           >
             <span class="pace-btn-title">Optimista</span>
             <span class="pace-btn-meta">6-7 paradas/día</span>
           </button>
           <button
             class="pace-btn"
+            :class="{ active: pace === 'neutral' }"
             data-pace="neutral"
+            @click="pace = 'neutral'"
           >
             <span class="pace-btn-title">Neutra</span>
             <span class="pace-btn-meta">5 paradas/día</span>
           </button>
           <button
             class="pace-btn"
+            :class="{ active: pace === 'slow' }"
             data-pace="slow"
+            @click="pace = 'slow'"
           >
             <span class="pace-btn-title">Pesimista</span>
             <span class="pace-btn-meta">3-4 paradas/día</span>
@@ -93,7 +116,8 @@ defineProps<{ trip: Trip }>()
           <button
             id="light-toggle"
             class="light-toggle"
-            aria-pressed="false"
+            :aria-pressed="light"
+            @click="light = !light"
           >
             <span class="light-switch" />
             <span>🦶 Caminar menos</span>
@@ -104,7 +128,8 @@ defineProps<{ trip: Trip }>()
           <button
             id="resumen-toggle"
             class="resumen-toggle"
-            aria-pressed="false"
+            :aria-pressed="resumen"
+            @click="resumen = !resumen"
           >
             <span class="res-switch" />
             <span>📋 Modo resumen</span>

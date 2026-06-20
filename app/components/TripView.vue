@@ -10,24 +10,38 @@
 // y deja las otras 11 como secciones VACÍAS portando únicamente su id, listas para que F4
 // (timeline/cards/food/reference/artists) y F7 (isla Leaflet del #mapa) las cableen.
 //
-// Las 11 secciones no-#inicio son <section id="…"> reales y VACÍAS: sin contenido y sin
-// atributo inline de altura. Una altura fija desplazaría el offset de cada ancla y rompería
-// scrollspy (scroll-padding-top:124px, base.css:3); manteniéndolas vacías, las reglas
-// `section { padding:3rem 0 }` y `section + section { border-top }` (base.css:93-94) aplican
-// igual que en el golden.
+// F4 (Plan 05): las 11 secciones no-#inicio se RELLENAN con el render data-driven de los Planes
+// 02-04, EXCEPTO #mapa, que sigue VACÍO (F7 — la isla Leaflet). Las 5 de día montan `DaySection`
+// (header/stats/dia-ligera/timeline/cards); las 5 de referencia montan ReservasSection /
+// GastroSection / PracticaSection / ArtistCard, alimentadas por las mismas refs del ÚNICO
+// `useTrip` de abajo (mismo patrón que `Topbar :days`: un solo origen de datos, pasado por props).
 //
-// `trip` y `days` son refs de useTrip (Vue las desenvuelve en plantilla). `v-if="trip"`
-// estrecha el tipo de TheHero (espera Trip no-nulo) — en `/` (slug 'roma') y en cualquier
-// /trips/[slug] válido `trip` siempre existe (la página [slug] hace el guard 404 antes de
-// montar TripView), así que #inicio nunca se oculta; es solo seguridad de tipos.
+// El orden de hermanos del <main> se conserva VERBATIM (index.html: #inicio, #mapa, los 5 días,
+// reservas, gastronomía, práctica, arte, arquitectura). Mantener #mapa vacío entre #inicio y los
+// días respeta el offset de scrollspy y la disciplina de prerender (sin altura fija, sin enlaces).
+//
+// `trip`/`days`/`monById`/`food`/`artists`/`refById` son refs/computeds de useTrip (Vue las
+// desenvuelve en plantilla). `v-if="trip"` estrecha el tipo de TheHero (espera Trip no-nulo) —
+// en `/` (slug 'roma') y en cualquier /trips/[slug] válido `trip` siempre existe (la página
+// [slug] hace el guard 404 antes de montar TripView), así que #inicio nunca se oculta; es solo
+// seguridad de tipos. Los `days.find(...)!` y `refById.get(...)!` usan non-null assertion: en los
+// datos F2 de Roma los 5 días y las 2 entradas de referencia (reservas/practica) SIEMPRE existen.
+//
+// #arte / #arquitectura: el `section-eyebrow` + `h2.section-title` (texto estático "Arte"/
+// "Arquitectura", chrome del index.html) + `p.art-intro` (la prosa de `trip.sections.arte/
+// arquitectura`) van FUERA de las cards (index.html:5941-5945 / 6104-6108), igual que la cabecera
+// de GastroSection. Las `<ArtistCard>` se filtran por `kind`: #arte = `artist`; #arquitectura =
+// `arquitectura` + la ficha del glosario (`glossary`), que va al FINAL como en el original
+// (index.html:6202). El `.art-intro` lleva Markdown-inline (arquitectura tiene `**negritas**`) →
+// `<MDC unwrap="p" :tag="false">`.
 //
 // Chrome/footer VERBATIM del index.html; CERO CSS nuevo y SIN bloque scoped (data-v-*
 // rompería selectores globales del shell). NINGÚN enlace de ruta a /trips/* — crawlLinks lo
 // prerenderizaría y rompería la disciplina de prerender D-01; toda la navegación es por
-// anclas #fragmento. Topbar/BackButton/TheHero se auto-importan.
+// anclas #fragmento. Topbar/BackButton/TheHero/DaySection y las secciones se auto-importan.
 const props = defineProps<{ slug: string }>()
 
-const { trip, days } = await useTrip(props.slug)
+const { trip, days, monById, food, artists, refById } = await useTrip(props.slug)
 </script>
 
 <template>
@@ -39,16 +53,109 @@ const { trip, days } = await useTrip(props.slug)
       :trip="trip"
     />
     <section id="mapa" />
-    <section id="viernes" />
-    <section id="sabado" />
-    <section id="domingo" />
-    <section id="lunes" />
-    <section id="martes" />
-    <section id="reservas" />
-    <section id="gastronomia" />
-    <section id="practica" />
-    <section id="arte" />
-    <section id="arquitectura" />
+    <section id="viernes">
+      <DaySection
+        :day="days.find(d => d.slug === 'viernes')!"
+        :mon-by-id="monById"
+      />
+    </section>
+    <section id="sabado">
+      <DaySection
+        :day="days.find(d => d.slug === 'sabado')!"
+        :mon-by-id="monById"
+      />
+    </section>
+    <section id="domingo">
+      <DaySection
+        :day="days.find(d => d.slug === 'domingo')!"
+        :mon-by-id="monById"
+      />
+    </section>
+    <section id="lunes">
+      <DaySection
+        :day="days.find(d => d.slug === 'lunes')!"
+        :mon-by-id="monById"
+      />
+    </section>
+    <section id="martes">
+      <DaySection
+        :day="days.find(d => d.slug === 'martes')!"
+        :mon-by-id="monById"
+      />
+    </section>
+    <section id="reservas">
+      <ReservasSection :reservas="refById.get('reservas')!" />
+    </section>
+    <section id="gastronomia">
+      <GastroSection
+        :food="food"
+        :section="trip?.sections?.gastronomia"
+      />
+    </section>
+    <section id="practica">
+      <PracticaSection :practica="refById.get('practica')!" />
+    </section>
+    <section id="arte">
+      <div class="container">
+        <div
+          v-if="trip?.sections?.arte"
+          class="section-eyebrow"
+        >
+          {{ trip.sections.arte.eyebrow }}
+        </div>
+        <h2 class="section-title">
+          Arte
+        </h2>
+        <p
+          v-if="trip?.sections?.arte"
+          class="art-intro"
+        >
+          <MDC
+            :value="trip.sections.arte.intro"
+            :tag="false"
+            unwrap="p"
+          />
+        </p>
+        <ArtistCard
+          v-for="a in artists.filter(x => x.kind === 'artist')"
+          :key="a.slug"
+          :artist="a"
+        />
+      </div>
+    </section>
+    <section id="arquitectura">
+      <div class="container">
+        <div
+          v-if="trip?.sections?.arquitectura"
+          class="section-eyebrow"
+        >
+          {{ trip.sections.arquitectura.eyebrow }}
+        </div>
+        <h2 class="section-title">
+          Arquitectura
+        </h2>
+        <p
+          v-if="trip?.sections?.arquitectura"
+          class="art-intro"
+        >
+          <MDC
+            :value="trip.sections.arquitectura.intro"
+            :tag="false"
+            unwrap="p"
+          />
+        </p>
+        <ArtistCard
+          v-for="a in artists.filter(x => x.kind === 'arquitectura')"
+          :key="a.slug"
+          :artist="a"
+        />
+        <ArtistCard
+          v-for="a in artists.filter(x => x.kind === 'glossary')"
+          :key="a.slug"
+          :artist="a"
+        />
+      </div>
+    </section>
   </main>
 
   <BackButton />
