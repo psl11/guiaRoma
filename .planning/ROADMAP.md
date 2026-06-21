@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Esquema de datos + migración del contenido** - 6 colecciones zod en Nuxt Content v3 y todo Roma migrado 1:1 a datos tipados, con `day.cards` ordenado y validación que rompe el build (completed 2026-06-19)
 - [x] **Phase 3: Capa de página, layout y tema** - `useTrip(slug)` + `TripView` renderizando un viaje desde datos, routing multi-viaje, layout/Topbar/NavPills idénticos y tema claro/oscuro sin parpadeo (completed 2026-06-19)
 - [x] **Phase 4: Render de contenido + modos de ritmo** - Fichas, timeline y secciones de referencia renderizadas desde datos e idénticas a hoy, con selector de ritmo, "caminar menos" y modo resumen (completed 2026-06-20)
-- [ ] **Phase 5: Navegación transversal** - `useCardNavigation` (scroll-a-ficha, pila volver, scrollspy `+130`) consumida de forma única por enlaces, mapa y búsqueda
+- [x] **Phase 5: Navegación transversal** - `useCardNavigation` (scroll-a-ficha, pila volver, scrollspy `+130`) consumida de forma única por enlaces, mapa y búsqueda (completed 2026-06-21)
 - [ ] **Phase 6: Derivados de datos — búsqueda y ruta del día** - Búsqueda en cliente sobre los datos y "ruta del día" derivada de `day.cards`, ambas con la misma cobertura y resultado que hoy
 - [ ] **Phase 7: Isla client-only — mapa, fallback de imagen y notas** - Mapa Leaflet client-only con marcadores/popups/banner offline, imagen-con-fallback hero/detail y notas por ficha en localStorage
 - [ ] **Phase 8: Verificación de paridad** - Suite Playwright (visual-diff contra el golden, E2E de comportamiento e invariantes de datos) que confirma paridad 100% antes de cualquier merge a producción
@@ -98,7 +98,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 3 plans
   - [x] 05-01-PLAN.md — Lógica pura: `app/utils/cardNav.ts` (selector scrollspy `+130` last-wins, navStack push/pop, predicado ficha-vs-sección) + unit test Vitest (SC#1/SC#2) [Wave 1]
   - [x] 05-02-PLAN.md — `useCardNavigation` singleton (accesor + controller con listener click delegado nativo D-01 + scroll `{passive}`) y cableado de NavPills `.active` / BackButton `.show`+`@click` / TripView (D-02..D-05) [Wave 2]
-  - [ ] 05-03-PLAN.md — Spec Playwright autocontenido (SC#1/SC#2/SC#3), resolución empírica de Pitfall 1 (burbuja vs captura) + sign-off humano de paridad [Wave 3]
+  - [x] 05-03-PLAN.md — Spec Playwright autocontenido (SC#1/SC#2/SC#3), resolución empírica de Pitfall 1 (burbuja vs captura) + sign-off humano de paridad [Wave 3]
 **UI hint**: yes
 
 ### Phase 6: Derivados de datos — búsqueda y ruta del día
@@ -147,7 +147,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 2. Esquema de datos + migración del contenido | 7/7 | Complete   | 2026-06-19 |
 | 3. Capa de página, layout y tema | 5/5 | Complete   | 2026-06-19 |
 | 4. Render de contenido + modos de ritmo | 5/5 | Complete   | 2026-06-20 |
-| 5. Navegación transversal | 2/3 | In Progress|  |
+| 5. Navegación transversal | 3/3 | Complete   | 2026-06-21 |
 | 6. Derivados de datos — búsqueda y ruta del día | 0/TBD | Not started | - |
 | 7. Isla client-only — mapa, fallback de imagen y notas | 0/TBD | Not started | - |
 | 8. Verificación de paridad | 0/TBD | Not started | - |

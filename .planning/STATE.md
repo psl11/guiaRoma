@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 05-02-PLAN.md (useCardNavigation + shell wiring)
-last_updated: "2026-06-20T23:57:49.230Z"
-last_activity: 2026-06-20
+stopped_at: Completed 05-03-PLAN.md (navigation parity spec + A1 capture + onMounted-after-await fix; human sign-off APPROVED)
+last_updated: "2026-06-21T00:00:00.000Z"
+last_activity: 2026-06-21
 progress:
   total_phases: 8
   completed_phases: 4
   total_plans: 23
-  completed_plans: 22
+  completed_plans: 23
   percent: 50
 ---
 
@@ -25,12 +25,12 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 
 ## Current Position
 
-Phase: 05 (Navegación transversal) — EXECUTING
-Plan: 3 of 3
-Status: Ready to execute
-Last activity: 2026-06-20
+Phase: 05 (Navegación transversal) — COMPLETE (3/3 plans)
+Plan: 3 of 3 — done (FEAT-05 proven live; human golden sign-off APPROVED)
+Status: Phase 05 complete — ready for Phase 06 (Derivados de datos — búsqueda y ruta del día)
+Last activity: 2026-06-21
 
-Progress: [██████████] 96%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -76,6 +76,7 @@ Progress: [██████████] 96%
 | Phase 04 P05 | 22min | 3 tasks | 8 files |
 | Phase 05 P01 | 3min | 2 tasks | 2 files |
 | Phase 05 P02 | 5min | 2 tasks | 4 files |
+| Phase 05 P03 | ~20min | 2 tasks (1 auto + 1 human-verify) | 3 files |
 
 ## Accumulated Context
 
@@ -153,6 +154,11 @@ Recent decisions affecting current work:
 - [Phase ?]: [Fase 5 P02]: navigateToCard/goBack port VERBATIM index.html:6390-6409 (preventDefault, push window.scrollY, scrollIntoView smooth block:start, .highlight 2500ms, pop+window.scrollTo); guards intactos; sin offset manual (scroll-padding-top:124px); highlightCard NO portado
 - [Phase ?]: [Fase 5 P02]: click DELEGADO = document.addEventListener nativo en onMounted (NO @click Vue, NO bindCardLinks, NO ProseA.global.vue; Pitfall 1) gated por isFichaTarget (D-02); seccion->salto nativo, ficha->preventDefault (D-03)+navigateToCard; burbuja por ahora (05-03 confirma vs captura)
 - [Phase ?]: [Fase 5 P02]: controller+llamada TripView async/await porque useTrip es async (Rule 1); NavPills/BackButton CABLEADOS no reestructurados (:class active por pastilla; :class show+@click goBack); CERO CSS nuevo, sin <style scoped>, base.css intacto; test:unit+typecheck+lint+generate verde
+- [Phase 5 P03]: A1 RESUELTA = CAPTURA. El spec probó que el listener en burbuja (default 05-02) NO interceptaba la navegación a ficha; el controller usa ahora addEventListener('click', onDelegatedClick, true) + e.stopPropagation() tras preventDefault (y removeEventListener(...,true)) para ganar al onClick de NuxtLink / al salto nativo del ancla. JSDoc de cabecera lo registra
+- [Phase 5 P03]: BUG REAL (Rule 1) bajo el síntoma burbuja-vs-captura: useCardNavigationController era async y registraba onMounted DESPUÉS de await useTrip('roma'). Vue descarta la instancia activa tras un await → los listeners de click y scroll NUNCA se adjuntaban: FEAT-05 estaba MUERTA en el sitio generado (scrollspy sin pastilla; enlaces de ficha saltaban nativamente). pnpm generate y los unit tests pasaban igual (no observan adjunción de listeners en runtime); SOLO el spec contra el sitio real lo detectó (RED)
+- [Phase 5 P03]: FIX = registrar onMounted/onUnmounted SÍNCRONAMENTE antes del await; monById se lee por un holder shallowRef (monByIdRef) rellenado tras el await + watch(monById,...) para mantenerlo al día; el handler lee monByIdRef.value en tiempo de clic; add/remove con la MISMA referencia de función Y la MISMA fase (capture=true). Patrón: nunca registrar hooks de ciclo de vida tras un await en un composable async
+- [Phase 5 P03]: tests/parity/navigation.spec.ts autocontenido (clon de modes.spec, NO el webServer del golden que sirve el index.html VIEJO): generate-once + serve bajo /guiaRoma/ en base de puerto 5720, tolera SOLO el error de hidratación color-mode, 6/6 verde; aserciones de comportamiento (.highlight via toHaveClass, deltas de scrollY, .nav-pill.active, hash de page.url()), sin snapshots de pixel, sin @nuxt/test-utils. SC#2 prueba el punto de conmutación +130 en navegador real (offsetTop-130+1 activa; offsetTop-130-5 no)
+- [Phase 5 P03]: F5 CERRADA — sign-off humano de paridad de navegación APROBADO (idéntica al index.html vivo en claro/oscuro × móvil/desktop: scroll suave a ficha + .highlight ~2.5s + restauración de scroll por pila SC#1, conmutación de .nav-pill.active en +130 SC#2, intercepción de fichas con hash sin cambiar vs salto nativo de #reservas SC#3). FEAT-05 completo. Dos fallos de suite completa fuera de alcance → deferred-items.md (golden-light pixel flake → F8; shell dev test bloqueado por lock de nuxi dev rancio)
 
 ### Pending Todos
 
@@ -165,7 +171,8 @@ None yet.
 [Issues that affect future work]
 
 - [Phase 2]: Bandera de research parcial — las secciones de referencia (`index.html` líneas ~5260-6250) no se leyeron en profundidad; leerlas y afinar el esquema `reference` antes de migrar ese contenido.
-- [Phase 4/5]: Validar al implementar el cableado exacto de interceptación de `a[href^="#"]` en `<MDC>` (componente Prose-`a` custom vs listener delegado).
+- [RESUELTO en Fase 5 P03]: ~~[Phase 4/5]: Validar al implementar el cableado exacto de interceptación de `a[href^="#"]` en `<MDC>` (componente Prose-`a` custom vs listener delegado).~~ → Listener delegado nativo en CAPTURA + stopPropagation, registrado SÍNCRONAMENTE; probado en navegador real por navigation.spec.ts (SC#1/SC#3 verde) y aprobado por humano.
+- [Phase 4/6/7]: BLOQUEANTE D1 abierto (heredado de F4, NO de F5) — las colecciones de unión discriminada `artist`/`reference` devuelven filas SQL todo-null, así que `#arte`/`#arquitectura`/`#reservas`/`#practica` no renderizan con datos reales. `pnpm generate` sigue OK. Resolver antes de que F6/F7 dependan de esas secciones.
 
 ## Deferred Items
 
@@ -179,6 +186,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-20T23:57:49.216Z
-Stopped at: Completed 05-02-PLAN.md (useCardNavigation + shell wiring)
+Last session: 2026-06-21T00:00:00.000Z
+Stopped at: Completed 05-03-PLAN.md (navigation parity spec + A1=capture + onMounted-after-await fix; human golden sign-off APPROVED) — Phase 05 complete (3/3)
 Resume file: None
