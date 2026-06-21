@@ -33,9 +33,13 @@
 // handler de plantilla Vue, NO el `bindCardLinks` del original, NO un `ProseA.global.vue`). Los enlaces de prosa
 // MDC se renderizan como `<NuxtLink>` que adjunta su propio `onClick` al `<a>`; un listener nativo en
 // `document` con `closest('a[href^="#"]')` es el mecanismo que captura esos clics de forma fiable
-// (Pitfall 1). D-02: solo se interceptan los enlaces a FICHA (`isFichaTarget` → `monById.has(id)`);
-// los enlaces de sección caen al salto de ancla nativo. D-03: `navigateToCard` hace `preventDefault`
-// → navegar a una ficha NO cambia el hash de la URL (la pila en memoria es el "volver", no el historial).
+// (Pitfall 1). A1 RESUELTO EMPÍRICAMENTE (Plan 05-03): el listener corre en fase de CAPTURA
+// (`addEventListener(..., true)`) + `stopPropagation()`. En burbuja (default de 05-02) el salto nativo
+// del ancla ganaba la carrera y la navegación NO se interceptaba; la captura corre antes que cualquier
+// handler en burbuja y `stopPropagation` lo corta. Lo decidió tests/parity/navigation.spec.ts.
+// D-02: solo se interceptan los enlaces a FICHA (`isFichaTarget` → `monById.has(id)`); los enlaces de
+// sección caen al salto de ancla nativo. D-03: `navigateToCard` hace `preventDefault` → navegar a una
+// ficha NO cambia el hash de la URL (la pila en memoria es el "volver", no el historial).
 //
 // `computeActiveSection` e `isFichaTarget` se delegan a la lógica PURA de `app/utils/cardNav.ts`
 // (Plan 05-01, auto-importada): la matriz del scrollspy y el discriminador ficha-vs-sección viven en un
@@ -88,31 +92,55 @@ export function useCardNavigation() {
 //
 // `useTrip` es `async` y devuelve `monById` (computed `Map<slug, Monumento>`, keyed por slug = el
 // `#fragmento` de los enlaces). Se consulta el slug 'roma' — el MISMO que `TripView` pasa a `useTrip`
-// (Pitfall 2); ambos awaits en `<script setup>` con top-level await conviven sin orden obligatorio.
+// (Pitfall 2); `useAsyncData` deduplica por clave, así que `monById` es el MISMO computed poblado.
+//
+// REGISTRO SÍNCRONO DE HOOKS (Plan 05-03 — A1 / fix de bug). `onMounted`/`onUnmounted` se registran
+// SÍNCRONAMENTE, ANTES de cualquier `await`. Vue asocia un hook de ciclo de vida a la instancia
+// ACTIVA en el momento de llamarlo; tras un `await` en setup async la instancia activa se PIERDE y
+// el hook se convierte en un no-op SILENCIOSO. La versión 05-02 hacía `await useTrip('roma')` y LUEGO
+// `onMounted(...)` → los listeners de click y scroll NUNCA se adjuntaban (FEAT-05 muerta en el SSG:
+// el scrollspy no marcaba pastilla y los enlaces de ficha saltaban nativos). El spec
+// tests/parity/navigation.spec.ts lo detectó (RED) y exige este orden. `monById` se obtiene tras el
+// await y se guarda en `monByIdRef` (un holder reactivo capturado síncronamente); el handler de
+// click lo lee en el momento del clic (post-hidratación, cuando el await ya resolvió).
+//
+// PITFALL 1 (A1) RESUELTO — FASE DE CAPTURA. El listener de click se registra en fase de CAPTURA
+// (`addEventListener('click', onDelegatedClick, true)`) y hace `e.stopPropagation()` tras el
+// `preventDefault()`. En fase de BURBUJA el salto de ancla nativo del `<a href="#slug">` ganaba la
+// carrera (verificado empíricamente: el hash cambiaba a #slug, sin `.highlight`, sin scroll suave).
+// La captura corre ANTES de cualquier handler en burbuja (incluido el `onClick` de NuxtLink en la
+// prosa MDC) y `stopPropagation` lo corta; `preventDefault` cancela el salto nativo del ancla. Es
+// la diferencia decidida por el spec de 05-03 frente a la burbuja default de 05-02.
 //
 // Mecanismo de los listeners (RESEARCH §Pattern 3): registro en `onMounted`, limpieza en `onUnmounted`
-// con las MISMAS referencias de función. El original (index.html) nunca limpia (la página vive para
-// siempre); aquí `onUnmounted` es higiene defensiva barata (HMR en dev, futura navegación entre
-// `/trips/[slug]`) — la única diferencia con `useTripModes`, que solo usa `onMounted`.
+// con las MISMAS referencias de función Y la MISMA fase (capture=true en ambos, o el navegador no los
+// empareja). El original (index.html) nunca limpia (la página vive para siempre); aquí `onUnmounted`
+// es higiene defensiva barata (HMR en dev, futura navegación entre `/trips/[slug]`).
 //
-// `useTrip`/`onMounted`/`onUnmounted` son auto-importados por Nuxt; `computeActiveSection`/
+// `useTrip`/`shallowRef`/`onMounted`/`onUnmounted` son auto-importados por Nuxt; `computeActiveSection`/
 // `isFichaTarget` se auto-importan de `app/utils/cardNav.ts`.
 export async function useCardNavigationController() {
   const { navigateToCard, activeSection } = useCardNavigation()
-  const { monById } = await useTrip('roma')
+
+  // Holder reactivo de `monById`, capturado SÍNCRONAMENTE para que los hooks se registren antes del
+  // await. Arranca con un Map vacío (paridad con el prerender: nada interceptable hasta hidratar);
+  // se rellena tras `await useTrip('roma')`. El handler de click lo lee en tiempo de clic.
+  const monByIdRef = shallowRef<Map<string, unknown>>(new Map())
 
   // D-01: listener de click delegado. `closest('a[href^="#"]')` encuentra el ancla; si el destino
   // NO es una ficha (`isFichaTarget` → `monById.has(id)` falso) se retorna pronto → salto de ancla
-  // nativo (D-02). Si lo es: `preventDefault` (D-03, la URL no cambia) + `navigateToCard`. Listener
-  // NATIVO en `document` (NO un handler de plantilla Vue, Pitfall 1): gana el clic frente al `onClick` que
-  // NuxtLink adjunta a los `<a>` de la prosa MDC. Reemplaza el `bindCardLinks` DOM-scan del
-  // original (index.html:6420-6429, CLAUDE.md §"Buscar scrapeando el DOM").
+  // nativo (D-02). Si lo es: `preventDefault` (D-03, la URL no cambia) + `stopPropagation` (Pitfall 1,
+  // corta el `onClick` de NuxtLink y el salto nativo) + `navigateToCard`. Listener NATIVO en
+  // `document`, fase de CAPTURA (NO un handler de plantilla Vue): gana el clic frente al `onClick` que
+  // NuxtLink adjunta a los `<a>` de la prosa MDC. Reemplaza el `bindCardLinks` DOM-scan del original
+  // (index.html:6420-6429, CLAUDE.md §"Buscar scrapeando el DOM").
   function onDelegatedClick(e: MouseEvent) {
     const a = (e.target as HTMLElement).closest('a[href^="#"]')
     if (!a) return
     const id = a.getAttribute('href')!.slice(1)
-    if (!isFichaTarget(id, monById.value)) return // sección → salto nativo (D-02)
+    if (!isFichaTarget(id, monByIdRef.value)) return // sección → salto nativo (D-02)
     e.preventDefault() // D-03: la URL no cambia
+    e.stopPropagation() // Pitfall 1: cortar el onClick de NuxtLink / el salto nativo del ancla
     navigateToCard(id, e)
   }
 
@@ -127,14 +155,24 @@ export async function useCardNavigationController() {
     activeSection.value = computeActiveSection(window.scrollY, sections)
   }
 
+  // Hooks SÍNCRONOS (antes del await): así Vue los asocia a la instancia activa de TripView.
   onMounted(() => {
-    document.addEventListener('click', onDelegatedClick) // Pitfall 1: NATIVO, ámbito document
+    document.addEventListener('click', onDelegatedClick, true) // Pitfall 1: NATIVO, document, CAPTURA
     window.addEventListener('scroll', updateActivePill, { passive: true }) // {passive:true} verbatim (6501)
     updateActivePill() // cálculo inicial, espejo de init() index.html:6655
   })
 
   onUnmounted(() => {
-    document.removeEventListener('click', onDelegatedClick) // misma referencia de función
+    document.removeEventListener('click', onDelegatedClick, true) // misma referencia + misma fase (capture)
     window.removeEventListener('scroll', updateActivePill)
   })
+
+  // Tras registrar los hooks, resolver los datos y poblar el holder de monById (deduplicado con el
+  // useTrip de TripView). En SSG resuelve en prerender; el ref se rellena antes de que el usuario
+  // pueda hacer clic.
+  const { monById } = await useTrip('roma')
+  monByIdRef.value = monById.value
+  // Mantener el holder sincronizado si `monById` se recalcula (p. ej. al resolver useAsyncData en
+  // cliente durante la hidratación): el listener siempre ve el índice vigente.
+  watch(monById, v => (monByIdRef.value = v))
 }
