@@ -40,6 +40,16 @@
 // bloque de estilos con scope (un data-v-* rompería `.day-stats-item.walk`, `.dia-ligera li.lg-see`,
 // `body.light-mode .dia-ligera`, `body.modo-resumen .day-stats`). Paridad por construcción.
 // `Timeline`/`MonumentCard`/`MDC` se auto-importan.
+//
+// RUTA DEL DÍA (FEAT-09, Plan 06-03): el botón `.day-route-btn` que cierra la banda `.day-stats`
+// deriva su `href` de `day.cards` EN ORDEN (DATA-03), reutilizando la MISMA cadena que `dayCards`
+// (`day.cards → monById → filter defensivo`) y luego `.map(pointFor)`. NINGÚN filtro por `type`
+// (RESEARCH §Pitfall 2 — el sábado conserva `vaticano`★ + `auditorium`♪, 8 paradas; un filtro de
+// tipo rompería SC#4). Sustituye el `stats.appendChild` imperativo del original (index.html:6644)
+// por un `<a>` reactivo (`:href`/`v-if`) renderizado en SSG (prerender) — sin DOM, sin client-only.
+// Las utilidades puras `pointFor`/`capStops`/`buildDirUrl`/`routeLabel` se auto-importan de
+// `app/utils/dayRoute.ts` (Plan 06-01). `.day-route-btn` ya existe verbatim en base.css:393-413
+// (glifo 🗺️, `margin-left:auto`, hover, regla `<600px width:100%`) → CERO CSS nuevo aquí.
 import type { Day, Monument } from '~~/shared/schemas'
 
 const props = defineProps<{ day: Day, monById: Map<string, Monument> }>()
@@ -49,6 +59,17 @@ const props = defineProps<{ day: Day, monById: Map<string, Monument> }>()
 const dayCards = computed(() =>
   props.day.cards.map(slug => props.monById.get(slug)).filter((m): m is Monument => !!m),
 )
+
+// Paradas de la "ruta del día": MISMA cadena que `dayCards` (mismo filtro defensivo, SIN filtro por
+// type — Pitfall 2) y luego `.map(pointFor)` → strings `"lat,lng"` en orden. `routeHref` arma el
+// enlace de Google Maps a pie (capando a 10 paradas). El botón solo se monta con ≥2 paradas.
+const points = computed(() =>
+  props.day.cards
+    .map(slug => props.monById.get(slug))
+    .filter((m): m is Monument => !!m)
+    .map(pointFor),
+)
+const routeHref = computed(() => buildDirUrl(capStops(points.value)))
 </script>
 
 <template>
@@ -84,6 +105,14 @@ const dayCards = computed(() =>
           unwrap="p"
         />
       </div>
+      <a
+        v-if="points.length >= 2"
+        class="day-route-btn"
+        :href="routeHref"
+        target="_blank"
+        rel="noopener"
+        title="Abre Google Maps con el recorrido del día a pie"
+      >{{ routeLabel(points.length) }}</a>
     </div>
 
     <div
