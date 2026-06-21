@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 06-04-PLAN.md
-last_updated: "2026-06-21T14:08:19.915Z"
+status: verifying
+stopped_at: Completed 06-05-PLAN.md (phase 06 ready_for_verification)
+last_updated: "2026-06-21T21:53:13.223Z"
 last_activity: 2026-06-21
 progress:
   total_phases: 8
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 28
-  completed_plans: 27
-  percent: 96
+  completed_plans: 28
+  percent: 75
 ---
 
 # Project State
@@ -27,10 +27,10 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 
 Phase: 06 (derivados-de-datos-b-squeda-y-ruta-del-d-a) — EXECUTING
 Plan: 5 of 5
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-06-21
 
-Progress: [██████████] 96%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -82,6 +82,7 @@ Progress: [██████████] 96%
 | Phase 06 P02 | 3min | 2 tasks | 2 files |
 | Phase 06 P03 | 2min | 1 tasks | 1 files |
 | Phase 06 P04 | 4min | 2 tasks | 3 files |
+| Phase 06 P05 | ~20min | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -176,6 +177,8 @@ Recent decisions affecting current work:
 - [Phase 6 P04]: índice MiniSearch en shallowRef de módulo (indexRef), NUNCA useState (solo query/isOpen/results plano se serializan); onInput tolera índice null (devuelve []) hasta que onMounted lo construye; resultados mapeados a {slug,name,day} planos para mantener results serializable
 - [Phase 6 P04]: SearchBox.vue renderiza el shell .search-wrap VERBATIM + dropdown SOLO con {{ }} (T-V5: cero v-html, mejora sancionada sobre innerHTML); >=2 chars abre, max 8 filas (slice 0,8), 'Sin resultados' verbatim con estilo inline; input :value+@input (no v-model) para que onSelect limpie query; click -> onSelect -> navigateToCard (F5, hash sin cambiar D-03); cero CSS, sin bloque style
 - [Phase 6 P04]: TheHero sustituye su placeholder #search por <SearchBox/> EN EL MISMO SITIO (D-04, no reubica); el HTML generado tiene EXACTAMENTE un #search/.search-wrap/#search-results (dropdown prerenderiza cerrado con 'Sin resultados' y 0 filas = default results=[]/isOpen=false, sin mismatch de hidratación); índice monuments-only (D-02) = todo resultado resuelve en monById, sin cambio en F5
+- [Phase 6]: F6 CERRADA — sign-off humano de paridad búsqueda+ruta APROBADO: en el sitio /guiaRoma/ generado, la búsqueda cliente alcanza >= paridad (dropdown abre a >=2 chars, <=8 filas con nombre+día, 'Sin resultados' sin match, clic en resultado hace scroll-highlight de la ficha SIN cambiar el hash, SC#2/D-03) y el botón 'Ver ruta del día (N paradas)' es paridad EXACTA por día (misma N, mismas paradas en orden, sábado incl. Vaticano+Auditorium) — verificado claro/oscuro × móvil/desktop, consola limpia salvo el mensaje conocido de hidratación color-mode. FEAT-03 y FEAT-09 completos
+- [Phase 6]: tests/parity/search-route.spec.ts es AUTOCONTENIDO (3er clon del patrón modes/navigation.spec: beforeAll genera+copia a subdir guiaRoma/+sirve bajo /guiaRoma/ en base de puerto 5740, NO el webServer del golden que sirve el index.html VIEJO); asevera comportamiento DOM/texto (no píxeles: Phase 8 posee el visual-diff total): dropdown >=2 abre/<2 cerrado, cap 8, 'Sin resultados', resultado->.highlight+hash-sin-cambiar, botón ruta visible/etiqueta/href con prefijo Google Maps walking NUNCA fetcheado; gate de consola tolera SOLO el error de hidratación color-mode; 10/10 verde. Los 5 fallos PRE-EXISTENTES de suite completa (4× golden.spec pixel-diff -> Phase 8; 1× shell.spec dev-routing por lock nuxi rancio) son fuera de alcance y están en deferred-items.md, NO causados por esta fase
 
 ### Pending Todos
 
@@ -203,6 +206,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-21T14:08:19.906Z
-Stopped at: Completed 06-04-PLAN.md
+Last session: 2026-06-21T21:53:13.212Z
+Stopped at: Completed 06-05-PLAN.md (phase 06 ready_for_verification)
 Resume file: None

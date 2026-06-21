@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Capa de página, layout y tema** - `useTrip(slug)` + `TripView` renderizando un viaje desde datos, routing multi-viaje, layout/Topbar/NavPills idénticos y tema claro/oscuro sin parpadeo (completed 2026-06-19)
 - [x] **Phase 4: Render de contenido + modos de ritmo** - Fichas, timeline y secciones de referencia renderizadas desde datos e idénticas a hoy, con selector de ritmo, "caminar menos" y modo resumen (completed 2026-06-20)
 - [x] **Phase 5: Navegación transversal** - `useCardNavigation` (scroll-a-ficha, pila volver, scrollspy `+130`) consumida de forma única por enlaces, mapa y búsqueda (completed 2026-06-21)
-- [ ] **Phase 6: Derivados de datos — búsqueda y ruta del día** - Búsqueda en cliente sobre los datos y "ruta del día" derivada de `day.cards`, ambas con la misma cobertura y resultado que hoy
+- [x] **Phase 6: Derivados de datos — búsqueda y ruta del día** - Búsqueda en cliente sobre los datos y "ruta del día" derivada de `day.cards`, ambas con la misma cobertura y resultado que hoy (completed 2026-06-21)
 - [ ] **Phase 7: Isla client-only — mapa, fallback de imagen y notas** - Mapa Leaflet client-only con marcadores/popups/banner offline, imagen-con-fallback hero/detail y notas por ficha en localStorage
 - [ ] **Phase 8: Verificación de paridad** - Suite Playwright (visual-diff contra el golden, E2E de comportamiento e invariantes de datos) que confirma paridad 100% antes de cualquier merge a producción
 
@@ -116,7 +116,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   - [x] 06-02-PLAN.md — searchIndex.ts puras (buildHaystack superset + createSearchIndex MiniSearch prefix/fuzzy/boost, D-01/D-02) + searchIndex.spec.ts (SC#1, Pitfall-1) [Wave 1]
   - [x] 06-03-PLAN.md — DaySection.vue: botón .day-route-btn en .day-stats (v-if≥2, label condicional, sin filtro de tipo) [Wave 2]
   - [x] 06-04-PLAN.md — useSearch (singleton+controller, índice client-only hooks-before-await) + SearchBox.vue ({{ }} sin v-html) cableado en TheHero (FEAT-03, SC#2/D-03/D-04) [Wave 2]
-  - [ ] 06-05-PLAN.md — Playwright autocontenido search-route.spec.ts (dropdown, resultado→navigateToCard, botón ruta) + sign-off humano de paridad [Wave 3]
+  - [x] 06-05-PLAN.md — Playwright autocontenido search-route.spec.ts (dropdown, resultado→navigateToCard, botón ruta) + sign-off humano de paridad [Wave 3]
 **UI hint**: yes
 
 ### Phase 7: Isla client-only — mapa, fallback de imagen y notas
@@ -154,6 +154,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 3. Capa de página, layout y tema | 5/5 | Complete   | 2026-06-19 |
 | 4. Render de contenido + modos de ritmo | 5/5 | Complete   | 2026-06-20 |
 | 5. Navegación transversal | 3/3 | Complete   | 2026-06-21 |
-| 6. Derivados de datos — búsqueda y ruta del día | 4/5 | In Progress|  |
+| 6. Derivados de datos — búsqueda y ruta del día | 5/5 | Complete   | 2026-06-21 |
 | 7. Isla client-only — mapa, fallback de imagen y notas | 0/TBD | Not started | - |
 | 8. Verificación de paridad | 0/TBD | Not started | - |
