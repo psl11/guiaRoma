@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 05-03-PLAN.md (navigation parity spec + A1 capture + onMounted-after-await fix; human sign-off APPROVED)
-last_updated: "2026-06-21T00:00:00.000Z"
+status: ready_to_plan
+stopped_at: Phase 05 complete (3/3) — ready to discuss Phase 6
+last_updated: 2026-06-21T09:47:20.006Z
 last_activity: 2026-06-21
 progress:
   total_phases: 8
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** La 1.0 debe ser exactamente igual que la guía de hoy (paridad visual y funcional al 100%), pero construida de forma dinámica, data-driven y mantenible.
-**Current focus:** Phase 05 — Navegación transversal
+**Current focus:** Phase 6 — derivados de datos — búsqueda y ruta del día
 
 ## Current Position
 
-Phase: 05 (Navegación transversal) — COMPLETE (3/3 plans)
-Plan: 3 of 3 — done (FEAT-05 proven live; human golden sign-off APPROVED)
-Status: Phase 05 complete — ready for Phase 06 (Derivados de datos — búsqueda y ruta del día)
+Phase: 6
+Plan: Not started
+Status: Ready to plan
 Last activity: 2026-06-21
 
 Progress: [██████████] 100%
@@ -36,7 +36,7 @@ Progress: [██████████] 100%
 
 **Velocity:**
 
-- Total plans completed: 21
+- Total plans completed: 24
 - Average duration: 9 min
 - Total execution time: 0.15 hours
 
@@ -48,6 +48,7 @@ Progress: [██████████] 100%
 | 02 | 7 | - | - |
 | 03 | 5 | - | - |
 | 04 | 5 | - | - |
+| 05 | 3 | - | - |
 
 **Recent Trend:**
 
