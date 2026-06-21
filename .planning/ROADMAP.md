@@ -110,7 +110,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Seleccionar un resultado de búsqueda navega a la ficha vía el mismo `useCardNavigation` de la Phase 5
   3. La "ruta del día" se deriva de `day.cards` (orden = el del dato): incluye solo monumentos (no restaurantes ni guiados/concierto), abre Google Maps con `dir/?api=1&...walking`, aplica el cap de 10 paradas con el muestreo literal de `capStops`, y el botón solo aparece con ≥2 paradas mostrando el texto condicional `(N paradas)` / `(10 de N paradas)`
   4. Tests unitarios sobre las funciones puras (`pointFor`/`capStops`/`buildDirUrl`) confirman que la URL generada por día coincide con la del `index.html` actual
-**Plans**: TBD
+> **Corrección de paridad (SC#3):** la "ruta del día" incluye **TODAS** las entradas de `day.cards` SIN filtro por `PlaceType` — el original escanea `a.maps-link` en orden de DOM y las 38 fichas lo llevan, así que el sábado incluye `vaticano` (guiado) + `auditorium` (concierto) = 8 paradas. La frase "solo monumentos (no guiados/concierto)" de SC#3 es **factualmente incorrecta** sobre el original; SC#4 (paridad de URL por día) es la fuente de verdad. Además el `haystack` de búsqueda es un **superset** de `card.textContent` (no solo "prosa+italiano+facts+caption").
+**Plans**: 5 plans
+  - [ ] 06-01-PLAN.md — dayRoute.ts puras (pointFor/capStops/buildDirUrl/routeLabel, port verbatim) + dayRoute.spec.ts (SC#4 URL por día, Pitfall-2 sábado=8, Pitfall-3 capStops >10) [Wave 1]
+  - [ ] 06-02-PLAN.md — searchIndex.ts puras (buildHaystack superset + createSearchIndex MiniSearch prefix/fuzzy/boost, D-01/D-02) + searchIndex.spec.ts (SC#1, Pitfall-1) [Wave 1]
+  - [ ] 06-03-PLAN.md — DaySection.vue: botón .day-route-btn en .day-stats (v-if≥2, label condicional, sin filtro de tipo) [Wave 2]
+  - [ ] 06-04-PLAN.md — useSearch (singleton+controller, índice client-only hooks-before-await) + SearchBox.vue ({{ }} sin v-html) cableado en TheHero (FEAT-03, SC#2/D-03/D-04) [Wave 2]
+  - [ ] 06-05-PLAN.md — Playwright autocontenido search-route.spec.ts (dropdown, resultado→navigateToCard, botón ruta) + sign-off humano de paridad [Wave 3]
 **UI hint**: yes
 
 ### Phase 7: Isla client-only — mapa, fallback de imagen y notas
@@ -148,6 +154,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 3. Capa de página, layout y tema | 5/5 | Complete   | 2026-06-19 |
 | 4. Render de contenido + modos de ritmo | 5/5 | Complete   | 2026-06-20 |
 | 5. Navegación transversal | 3/3 | Complete   | 2026-06-21 |
-| 6. Derivados de datos — búsqueda y ruta del día | 0/TBD | Not started | - |
+| 6. Derivados de datos — búsqueda y ruta del día | 0/5 | Planned | - |
 | 7. Isla client-only — mapa, fallback de imagen y notas | 0/TBD | Not started | - |
 | 8. Verificación de paridad | 0/TBD | Not started | - |
