@@ -2,15 +2,18 @@
 // #inicio COMPLETO (D-06) — reproduce index.html:2283-2358 VERBATIM, data-bound.
 //
 // Recibe el viaje (`trip`) como única prop tipada `Trip` y renderiza el masthead
-// (hero-decoration · h1 con <em>Roma</em> · hero-meta · hero-quote), los placeholders
-// SOLO-DE-LAYOUT (search-wrap, pace-wrap con sus 3 pace-btn y 2 light-wrap), la rejilla
-// info-grid desde `trip.infoCards`, y los párrafos de `trip.howTo`. Las dos <h4> ("Datos
-// del viaje" / "Cómo usar esta guía") son TEXTO ESTÁTICO de plantilla: viven en el
-// index.html, NO en trip.yml.
+// (hero-decoration · h1 con <em>Roma</em> · hero-meta · hero-quote), el control de búsqueda
+// `<SearchBox/>` (FEAT-03), los placeholders SOLO-DE-LAYOUT (pace-wrap con sus 3 pace-btn y 2
+// light-wrap), la rejilla info-grid desde `trip.infoCards`, y los párrafos de `trip.howTo`.
+// Las dos <h4> ("Datos del viaje" / "Cómo usar esta guía") son TEXTO ESTÁTICO de plantilla:
+// viven en el index.html, NO en trip.yml.
 //
-// Placeholders de layout (index.html:2295-2332): se reproducen con su markup EXACTO pero
-// SIN manejadores de evento — su comportamiento es F4 (buscador/ritmo) / F6 (modos). Existen
-// aquí para que el ritmo de espaciado/borde masthead→info-grid cuadre con el golden.
+// BÚSQUEDA (FEAT-03): F3 renderizó aquí el shell `.search-wrap` (index.html:2295-2300) SIN
+// manejadores, solo por el ritmo de espaciado masthead→info-grid. F6 sustituye ese placeholder
+// por `<SearchBox/>` EN EL MISMO SITIO (D-04, sin reubicar): el componente reproduce el mismo
+// markup `.search-wrap`/`#search`/`#search-results` VERBATIM y le ata el comportamiento. Hay
+// EXACTAMENTE un `#search` en el DOM (el de SearchBox). El pace-wrap sigue siendo placeholder
+// de layout cableado por los modos (D-05).
 //
 // Prosa vía MDC (componente auto-importado de @nuxt/content): trip.title (dentro del h1) y
 // cada infoCards.value (dentro de .info-card-value) usan la prop unwrap="p" para que MDC NO
@@ -70,19 +73,7 @@ const { pace, light, resumen } = useTripModes()
         </div>
       </div>
 
-      <div class="search-wrap">
-        <input
-          id="search"
-          type="search"
-          class="search-input"
-          placeholder="Buscar lugar, día, anécdota…"
-          autocomplete="off"
-        >
-        <div
-          id="search-results"
-          class="search-results"
-        />
-      </div>
+      <SearchBox />
 
       <div class="pace-wrap">
         <span class="pace-label">Ritmo del viaje</span>
