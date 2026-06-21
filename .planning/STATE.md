@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Completed 06-02-PLAN.md
-last_updated: "2026-06-21T13:51:00.387Z"
+last_updated: "2026-06-21T13:56:40.128Z"
 last_activity: 2026-06-21
 progress:
   total_phases: 8
   completed_phases: 5
   total_plans: 28
-  completed_plans: 25
+  completed_plans: 26
   percent: 63
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 ## Current Position
 
 Phase: 06 (derivados-de-datos-b-squeda-y-ruta-del-d-a) — EXECUTING
-Plan: 3 of 5
+Plan: 4 of 5
 Status: Ready to execute
 Last activity: 2026-06-21
 
-Progress: [█████████░] 89%
+Progress: [█████████░] 93%
 
 ## Performance Metrics
 
@@ -80,6 +80,7 @@ Progress: [█████████░] 89%
 | Phase 05 P03 | ~20min | 2 tasks (1 auto + 1 human-verify) | 3 files |
 | Phase 06 P01 | 2min | 2 tasks | 2 files |
 | Phase 06 P02 | 3min | 2 tasks | 2 files |
+| Phase 06 P03 | 2min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -168,6 +169,8 @@ Recent decisions affecting current work:
 - [Phase Phase 6 P02]: buildHaystack es SUPERCONJUNTO de card.textContent (name/italian/roman + badge + sections + facts + sorrentino + culture + artists/arch label/note); un subconjunto regresaría SC#1 (Pitfall 1)
 - [Phase Phase 6 P02]: createSearchIndex indexa SOLO monumentos (D-02): MiniSearch idField slug, fields name/italian/haystack, storeFields slug/name/day, searchOptions prefix:true + fuzzy:0.2 suave + boost name/italian:3>haystack:1 + combineWith OR (D-01)
 - [Phase Phase 6 P02]: Markdown crudo se concatena sin destripar (tokenizador MiniSearch separa */[]/#/() -> Tardobarroco/Bernini indexables) y no se hace toLowerCase manual; searchIndex.spec en Vitest plano (import relativo, fixtures as Monument, sin @nuxt/test-utils)
+- [Phase ?]: [Phase 6 P03]: ruta del día UI cableada en la banda .day-stats de DaySection — botón <a class=day-route-btn> con :href reactivo derivado de day.cards en SSG prerender (sustituye el stats.appendChild imperativo del index.html), v-if=points.length>=2, target=_blank rel=noopener, etiqueta via routeLabel; CERO CSS nuevo, sin <style scoped>
+- [Phase ?]: [Phase 6 P03]: points reutiliza la MISMA cadena que dayCards (filtro defensivo (m): m is Monument => !!m) + .map(pointFor), SIN filtro por type (Pitfall 2/critical_override) — sábado conserva vaticano+auditorium = 8 paradas, verificado en el HTML generado (5 días: 6/8/7/10/7 paradas); FEAT-09 UI completo
 
 ### Pending Todos
 
@@ -195,6 +198,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-21T13:51:00.377Z
+Last session: 2026-06-21T13:56:16.804Z
 Stopped at: Completed 06-02-PLAN.md
 Resume file: None
