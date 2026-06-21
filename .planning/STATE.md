@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 6 UI-SPEC approved
-last_updated: "2026-06-21T13:43:59.916Z"
+stopped_at: Completed 06-02-PLAN.md
+last_updated: "2026-06-21T13:51:00.387Z"
 last_activity: 2026-06-21
 progress:
   total_phases: 8
   completed_phases: 5
   total_plans: 28
-  completed_plans: 24
+  completed_plans: 25
   percent: 63
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 ## Current Position
 
 Phase: 06 (derivados-de-datos-b-squeda-y-ruta-del-d-a) — EXECUTING
-Plan: 2 of 5
+Plan: 3 of 5
 Status: Ready to execute
 Last activity: 2026-06-21
 
-Progress: [█████████░] 86%
+Progress: [█████████░] 89%
 
 ## Performance Metrics
 
@@ -79,6 +79,7 @@ Progress: [█████████░] 86%
 | Phase 05 P02 | 5min | 2 tasks | 4 files |
 | Phase 05 P03 | ~20min | 2 tasks (1 auto + 1 human-verify) | 3 files |
 | Phase 06 P01 | 2min | 2 tasks | 2 files |
+| Phase 06 P02 | 3min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -164,6 +165,9 @@ Recent decisions affecting current work:
 - [Phase 6 P01]: ruta del dia = TODAS las day.cards SIN filtro por type (Pitfall 2) - el critical_override del plan prevalece sobre SC#3/D-02/D-03 stale; sabado=8 incl. vaticano + auditorium; SC#4 (paridad de URL) es la fuente de verdad
 - [Phase 6 P01]: pointFor devuelve coords (lat,lng) NUNCA mapsQuery (Pitfall 4, coords no-opcional -> rama ?query= muerta); capStops verbatim Math.round((i*(middle.length-1))/(slots-1)) (Pitfall 3, no Math.floor); pass-through con datos reales (max 10), probado con fixture sintetico 12->10 indices [0,1,3,4,5,6,8,9]
 - [Phase 6 P01]: dayRoute.spec.ts en Vitest plano (import relativo, sin @nuxt/test-utils) carga los YAML reales con node:fs+yaml (patron invariants.spec); encadenado del test identico al consumidor DaySection (cards->monById->filter->pointFor); 55 unit tests verde
+- [Phase Phase 6 P02]: buildHaystack es SUPERCONJUNTO de card.textContent (name/italian/roman + badge + sections + facts + sorrentino + culture + artists/arch label/note); un subconjunto regresaría SC#1 (Pitfall 1)
+- [Phase Phase 6 P02]: createSearchIndex indexa SOLO monumentos (D-02): MiniSearch idField slug, fields name/italian/haystack, storeFields slug/name/day, searchOptions prefix:true + fuzzy:0.2 suave + boost name/italian:3>haystack:1 + combineWith OR (D-01)
+- [Phase Phase 6 P02]: Markdown crudo se concatena sin destripar (tokenizador MiniSearch separa */[]/#/() -> Tardobarroco/Bernini indexables) y no se hace toLowerCase manual; searchIndex.spec en Vitest plano (import relativo, fixtures as Monument, sin @nuxt/test-utils)
 
 ### Pending Todos
 
@@ -191,6 +195,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-21T13:43:18.653Z
-Stopped at: Phase 6 UI-SPEC approved
+Last session: 2026-06-21T13:51:00.377Z
+Stopped at: Completed 06-02-PLAN.md
 Resume file: None
