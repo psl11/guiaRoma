@@ -50,7 +50,7 @@ Requisitos para la release 1.0. Cada uno se mapea a una fase del roadmap.
 - [x] **FEAT-06**: Selector de ritmo (optimista / neutral / lento) que muestra u oculta items del timeline, persistido
 - [x] **FEAT-07**: Modo "caminar menos" (movilidad reducida) que además fuerza ritmo lento
 - [x] **FEAT-08**: Modo resumen (vista índice de hora y lugar)
-- [ ] **FEAT-09**: "Ruta del día" derivada de datos: enlace a Google Maps con las paradas del día en orden, con el mismo cap (10 paradas) y muestreo
+- [x] **FEAT-09**: "Ruta del día" derivada de datos: enlace a Google Maps con las paradas del día en orden, con el mismo cap (10 paradas) y muestreo
 
 ### Estático, offline y despliegue (BUILD)
 
@@ -129,7 +129,7 @@ Qué fases cubren qué requisitos. Mapeo del roadmap (ver `.planning/ROADMAP.md`
 | FEAT-08 | Phase 4 | Complete |
 | FEAT-05 | Phase 5 | Complete |
 | FEAT-03 | Phase 6 | Pending |
-| FEAT-09 | Phase 6 | Pending |
+| FEAT-09 | Phase 6 | Complete |
 | FEAT-02 | Phase 7 | Pending |
 | UI-05 | Phase 7 | Pending |
 | FEAT-04 | Phase 7 | Pending |

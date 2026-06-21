@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Phase 6 UI-SPEC approved
-last_updated: "2026-06-21T13:34:49.113Z"
-last_activity: 2026-06-21 -- Phase 06 planning complete
+last_updated: "2026-06-21T13:43:59.916Z"
+last_activity: 2026-06-21
 progress:
   total_phases: 8
   completed_phases: 5
   total_plans: 28
-  completed_plans: 23
+  completed_plans: 24
   percent: 63
 ---
 
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** La 1.0 debe ser exactamente igual que la guía de hoy (paridad visual y funcional al 100%), pero construida de forma dinámica, data-driven y mantenible.
-**Current focus:** Phase 6 — derivados de datos — búsqueda y ruta del día
+**Current focus:** Phase 06 — derivados-de-datos-b-squeda-y-ruta-del-d-a
 
 ## Current Position
 
-Phase: 6
-Plan: Not started
+Phase: 06 (derivados-de-datos-b-squeda-y-ruta-del-d-a) — EXECUTING
+Plan: 2 of 5
 Status: Ready to execute
-Last activity: 2026-06-21 -- Phase 06 planning complete
+Last activity: 2026-06-21
 
-Progress: [██████████] 100%
+Progress: [█████████░] 86%
 
 ## Performance Metrics
 
@@ -78,6 +78,7 @@ Progress: [██████████] 100%
 | Phase 05 P01 | 3min | 2 tasks | 2 files |
 | Phase 05 P02 | 5min | 2 tasks | 4 files |
 | Phase 05 P03 | ~20min | 2 tasks (1 auto + 1 human-verify) | 3 files |
+| Phase 06 P01 | 2min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -160,6 +161,9 @@ Recent decisions affecting current work:
 - [Phase 5 P03]: FIX = registrar onMounted/onUnmounted SÍNCRONAMENTE antes del await; monById se lee por un holder shallowRef (monByIdRef) rellenado tras el await + watch(monById,...) para mantenerlo al día; el handler lee monByIdRef.value en tiempo de clic; add/remove con la MISMA referencia de función Y la MISMA fase (capture=true). Patrón: nunca registrar hooks de ciclo de vida tras un await en un composable async
 - [Phase 5 P03]: tests/parity/navigation.spec.ts autocontenido (clon de modes.spec, NO el webServer del golden que sirve el index.html VIEJO): generate-once + serve bajo /guiaRoma/ en base de puerto 5720, tolera SOLO el error de hidratación color-mode, 6/6 verde; aserciones de comportamiento (.highlight via toHaveClass, deltas de scrollY, .nav-pill.active, hash de page.url()), sin snapshots de pixel, sin @nuxt/test-utils. SC#2 prueba el punto de conmutación +130 en navegador real (offsetTop-130+1 activa; offsetTop-130-5 no)
 - [Phase 5 P03]: F5 CERRADA — sign-off humano de paridad de navegación APROBADO (idéntica al index.html vivo en claro/oscuro × móvil/desktop: scroll suave a ficha + .highlight ~2.5s + restauración de scroll por pila SC#1, conmutación de .nav-pill.active en +130 SC#2, intercepción de fichas con hash sin cambiar vs salto nativo de #reservas SC#3). FEAT-05 completo. Dos fallos de suite completa fuera de alcance → deferred-items.md (golden-light pixel flake → F8; shell dev test bloqueado por lock de nuxi dev rancio)
+- [Phase 6 P01]: ruta del dia = TODAS las day.cards SIN filtro por type (Pitfall 2) - el critical_override del plan prevalece sobre SC#3/D-02/D-03 stale; sabado=8 incl. vaticano + auditorium; SC#4 (paridad de URL) es la fuente de verdad
+- [Phase 6 P01]: pointFor devuelve coords (lat,lng) NUNCA mapsQuery (Pitfall 4, coords no-opcional -> rama ?query= muerta); capStops verbatim Math.round((i*(middle.length-1))/(slots-1)) (Pitfall 3, no Math.floor); pass-through con datos reales (max 10), probado con fixture sintetico 12->10 indices [0,1,3,4,5,6,8,9]
+- [Phase 6 P01]: dayRoute.spec.ts en Vitest plano (import relativo, sin @nuxt/test-utils) carga los YAML reales con node:fs+yaml (patron invariants.spec); encadenado del test identico al consumidor DaySection (cards->monById->filter->pointFor); 55 unit tests verde
 
 ### Pending Todos
 
@@ -187,6 +191,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-21T13:14:11.962Z
+Last session: 2026-06-21T13:43:18.653Z
 Stopped at: Phase 6 UI-SPEC approved
-Resume file: .planning/phases/06-derivados-de-datos-b-squeda-y-ruta-del-d-a/06-UI-SPEC.md
+Resume file: None
