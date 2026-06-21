@@ -127,6 +127,16 @@ None - no external service configuration required.
 - Index is monuments-only (D-02) so every result resolves in `monById` — no F5 change was needed.
 - Carryover (unchanged by this plan): the F4/F6/F7 blocker D1 (discriminated-union `artist`/`reference` collections return all-null SQL rows) remains open but does NOT affect search — the index is built from `monById` (monuments), which materialize fully.
 
+## Self-Check: PASSED
+
+- FOUND: app/composables/useSearch.ts
+- FOUND: app/components/SearchBox.vue
+- FOUND: app/components/TheHero.vue (renders `<SearchBox`)
+- FOUND: .planning/phases/06-derivados-de-datos-b-squeda-y-ruta-del-d-a/06-04-SUMMARY.md
+- FOUND commit: f1743ed (Task 1)
+- FOUND commit: 84f1b6a (Task 2)
+- FOUND commit: 4796204 (SUMMARY)
+
 ---
 *Phase: 06-derivados-de-datos-b-squeda-y-ruta-del-d-a*
 *Completed: 2026-06-21*
