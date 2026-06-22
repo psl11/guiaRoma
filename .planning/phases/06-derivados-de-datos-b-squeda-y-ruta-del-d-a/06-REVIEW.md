@@ -18,7 +18,8 @@ findings:
   warning: 3
   info: 1
   total: 5
-status: issues_found
+status: resolved
+resolved: 2026-06-22
 ---
 
 # Phase 6: Code Review Report
@@ -26,7 +27,21 @@ status: issues_found
 **Reviewed:** 2026-06-21T21:59:52Z
 **Depth:** standard
 **Files Reviewed:** 9
-**Status:** issues_found
+**Status:** resolved (fixes applied 2026-06-22)
+
+## Resolution (2026-06-22)
+
+All Critical + Warning findings fixed on `release/nuxt-4`; Info finding justified-skipped.
+
+| Finding | Severity | Status | Fix commit |
+|---------|----------|--------|------------|
+| CR-01 — result select didn't clear query / close dropdown (F5 capture `stopPropagation` swallowed bubble `@click`) | Critical | ✅ Fixed | `ef2a489` — dropped `:href="#slug"`, kept `:data-card` (mirrors original `navigateToCard(a.dataset.card,e)`); F5 no longer intercepts so the single `@click`→`onSelect` navigates + clears + closes once, hash unchanged by construction |
+| WR-01 — parity spec missed dropdown-close/input-clear | Warning | ✅ Fixed | `ae38300` — added RED assertions (dropdown not `.show` + `#search` empty after select); RED→GREEN proven |
+| WR-02 — `useSearchController()` un-awaited → possible unhandled rejection | Warning | ✅ Fixed | `18f8152` — `.catch` on the un-awaited controller (hooks-before-await preserved) |
+| WR-03 — `closest()` on non-Element target | Warning | ✅ Fixed | `4aef155` — `e.target instanceof Element` guard |
+| IN-01 — `buildDirUrl`/`capStops` empty-input guards | Info | ⏭ Skipped | Call sites gate on `points.length >= 2`; guard would diverge from verbatim port for no live-bug benefit |
+
+**Verification after fixes:** `pnpm typecheck` 0 · `pnpm lint` 0 · `pnpm test:unit` 71/71 · `pnpm test:golden -- search-route` 10/10. Remaining full-suite failures are the 4 known-deferred `golden.spec.ts` pixel-diffs (→ Phase 8), not phase-6 regressions.
 
 ## Summary
 
