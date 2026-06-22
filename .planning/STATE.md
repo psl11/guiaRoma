@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 06-05-PLAN.md (phase 06 ready_for_verification)
-last_updated: "2026-06-21T21:53:13.223Z"
+status: ready_to_plan
+stopped_at: Phase 06 complete (5/5) — ready to discuss Phase 7
+last_updated: 2026-06-22T14:39:42.093Z
 last_activity: 2026-06-21
 progress:
   total_phases: 8
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** La 1.0 debe ser exactamente igual que la guía de hoy (paridad visual y funcional al 100%), pero construida de forma dinámica, data-driven y mantenible.
-**Current focus:** Phase 06 — derivados-de-datos-b-squeda-y-ruta-del-d-a
+**Current focus:** Phase 7 — isla client only — mapa, fallback de imagen y notas
 
 ## Current Position
 
-Phase: 06 (derivados-de-datos-b-squeda-y-ruta-del-d-a) — EXECUTING
-Plan: 5 of 5
-Status: Phase complete — ready for verification
-Last activity: 2026-06-21
+Phase: 7
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-06-22
 
 Progress: [██████████] 100%
 
@@ -36,7 +36,7 @@ Progress: [██████████] 100%
 
 **Velocity:**
 
-- Total plans completed: 24
+- Total plans completed: 29
 - Average duration: 9 min
 - Total execution time: 0.15 hours
 
@@ -49,6 +49,7 @@ Progress: [██████████] 100%
 | 03 | 5 | - | - |
 | 04 | 5 | - | - |
 | 05 | 3 | - | - |
+| 06 | 5 | - | - |
 
 **Recent Trend:**
 
