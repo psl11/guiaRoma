@@ -217,6 +217,13 @@ test.describe('búsqueda + ruta del día en /guiaRoma/ construido (FEAT-03 / FEA
     // de navigation.spec.ts:229.
     expect(new URL(page.url()).hash, 'D-03: navegar a una ficha NO cambia el hash de la URL').not.toBe(`#${slug}`)
 
+    // POST-SELECCIÓN (paridad con index.html:6459-6460 — WR-01): al elegir un resultado el
+    // original cerraba el dropdown y vaciaba el input EN EL MISMO clic. Esto es justo lo que el
+    // listener de captura de F5 rompía (se tragaba el `@click` → onSelect no corría). Aseverar
+    // ambos estados es lo que habría cazado CR-01: el dropdown PIERDE `.show` y el #search queda ''.
+    await expect(dropdown).not.toHaveClass(/\bshow\b/)
+    await expect(search).toHaveValue('')
+
     expect(consoleErrors, `errores de consola inesperados: ${consoleErrors.join(' | ')}`).toHaveLength(0)
   })
 
