@@ -20,8 +20,19 @@
 //
 // Input: `:value="query"` + `@input` que llama a `onInput(value)` (NO `v-model`, para que el
 // `query.value = ''` de onSelect — limpiar al elegir — sea explícito y fiel al original).
-// El click de un resultado llama a `onSelect(slug, $event)`, que delega en `navigateToCard`
-// (F5): este hace `preventDefault` → el hash NO cambia (D-03).
+// El click de un resultado llama a `onSelect(slug, $event)`, que limpia el input + cierra el
+// dropdown y delega en `navigateToCard` (F5): este hace `preventDefault` → el hash NO cambia (D-03).
+//
+// CR-01 (paridad de selección, fiel a index.html:6454-6462): el resultado se renderiza con
+// `:data-card="r.slug"` y SIN `href="#slug"`. El original navegaba con `navigateToCard(a.dataset.card, e)`
+// — leyendo `data-card`, NO el href — y su click corría en burbuja simple (sin `stopPropagation`),
+// limpiando+cerrando antes de navegar. En el port, el listener de F5 (useCardNavigation, fase de
+// CAPTURA) matchea `a[href^="#"]` y hace `stopPropagation`, tragándose el `@click` en burbuja: onSelect
+// nunca corría → el dropdown seguía `.show` y el input conservaba el texto (regresión de paridad). Al
+// NO emitir `href="#slug"`, el resultado deja de casar con `a[href^="#"]`, F5 lo IGNORA, y el único
+// `@click` en burbuja llega a `onSelect`, que navega (vía data-card/`navigateToCard`) + limpia + cierra
+// en un solo camino. Mecanismo idéntico al original (navegación por `data-card`), cero pelea con F5,
+// y al no haber href el hash NO puede cambiar (D-03 reforzado por construcción).
 //
 // CERO CSS nuevo y SIN bloque scoped: todas las clases existen en base.css
 // (`.search-wrap`/`.search-input`/`.search-results`/`.search-results.show`/`.search-result`/
@@ -52,7 +63,6 @@ useSearchController()
         <a
           v-for="r in results"
           :key="r.slug"
-          :href="`#${r.slug}`"
           class="search-result"
           :data-card="r.slug"
           @click="onSelect(r.slug, $event)"
