@@ -40,7 +40,15 @@
 const { query, isOpen, results, onInput, onSelect } = useSearch()
 
 // Efectos secundarios de la búsqueda: se registran AQUÍ una sola vez (CR-01 / Pitfall 4).
-useSearchController()
+// SIN await (WR-02): mantener el setup SÍNCRONO es deliberado — los hooks onMounted/onUnmounted
+// del controller deben asociarse a la instancia ACTIVA de SearchBox, y un await aquí la perdería
+// (igual que el bug A1 de F5). Pero el controller hace `await useTrip('roma')` internamente, que
+// puede rechazar (ventana reactiva de useAsyncData con error, HMR, ruta futura no prerenderizada):
+// sin manejarlo sería un unhandled rejection. Un `.catch` lo degrada con gracia (la búsqueda
+// simplemente se queda vacía) preservando el registro síncrono de hooks.
+useSearchController().catch((e) => {
+  if (import.meta.dev) console.error('[useSearchController]', e)
+})
 </script>
 
 <template>
