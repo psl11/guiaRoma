@@ -115,8 +115,13 @@ export async function useSearchController() {
 
   // Outside-click (port de index.html:6467-6469): si el clic NO cae dentro de `.search-wrap`,
   // cerrar el dropdown. Listener NATIVO en `document` (el original usaba `document.addEventListener`).
+  // WR-03: el `e.target` de un click es casi siempre un Element, pero el cast `as HTMLElement` es
+  // solo una aserción de compilación — si llegara un target no-Element (null/Text node), `.closest`
+  // sería undefined y lanzaría TypeError, encendiendo la puerta de errores de consola del spec de
+  // paridad. Guardar con `instanceof Element` evita el null-deref latente sin cambiar el comportamiento.
   function onDocumentClick(e: MouseEvent) {
-    if (!(e.target as HTMLElement).closest('.search-wrap')) {
+    const t = e.target
+    if (t instanceof Element && !t.closest('.search-wrap')) {
       isOpen.value = false
     }
   }
