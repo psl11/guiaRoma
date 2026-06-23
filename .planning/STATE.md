@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Phase 7 context gathered
-last_updated: "2026-06-23T12:35:47.363Z"
+last_updated: "2026-06-23T12:48:55.811Z"
 last_activity: 2026-06-23
 progress:
   total_phases: 8
   completed_phases: 6
   total_plans: 32
-  completed_plans: 30
+  completed_plans: 31
   percent: 75
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 ## Current Position
 
 Phase: 07 (Isla client-only — mapa, fallback de imagen y notas) — EXECUTING
-Plan: 3 of 4
+Plan: 4 of 4
 Status: Ready to execute
 Last activity: 2026-06-23
 
-Progress: [█████████░] 94%
+Progress: [██████████] 97%
 
 ## Performance Metrics
 
@@ -86,6 +86,7 @@ Progress: [█████████░] 94%
 | Phase 06 P05 | ~20min | 2 tasks | 1 files |
 | Phase 07 P01 | 8min | 3 tasks | 8 files |
 | Phase 07 P02 | 5min | 2 tasks | 2 files |
+| Phase 07 P03 | 14min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -185,6 +186,10 @@ Recent decisions affecting current work:
 - [Phase 7]: [Phase 7 P02]: LeafletMap.client.vue es la PRIMERA isla .client.vue del repo — 3 capas anti-'window is not defined' (sufijo .client + <ClientOnly> en TripView + import('leaflet') dinámico DENTRO de onMounted). pnpm generate limpio (0 'window is not defined'); el HTML prerenderizado tiene 0 custom-marker / 0 leaflet-container (isla genuinamente client-only)
 - [Phase 7]: [Phase 7 P02]: popups card/concert = <a href='#slug'> SIN handler (los intercepta el listener en CAPTURA de F5, gateado por monById.has(id)); guided (Coliseo, vaticano) = TEXTO PLANO sin ancla (onclick inline del original DROPPEADO). Anadir @click reproduciria CR-01
 - [Phase 7]: [Phase 7 P02]: #mapa lleva el chrome estatico verbatim (index.html:2361-2371) y SOLO #leaflet-map dentro de <ClientOnly>; #fallback = caja #leaflet-map VACIA del mismo tamano (D-02, cero salto de layout); #map-offline-banner en el .map-wrapper ESTATICO (fuera de ClientOnly) -> en el HTML prerenderizado y alcanzable por getElementById (A3). Unico useCardNavigationController() intacto
+- [Phase ?]: [Phase 7 P03]: hero/detail @error → motifSvg(monument.motif) via v-html de constante de CONFIANZA (svgMotifs.ts); hero SIN estilos inline (.card-hero svg base.css:719 lo cuadra), detail CON los 4 estilos inline VERBATIM inyectados en la etiqueta <svg> (base.css:825 apunta a img, no a svg). heroHidden/no-motif = rama muerta del original portada por fidelidad
+- [Phase ?]: [Phase 7 P03]: notas persistentes con clave EXACTA roma-note-<slug>, lectura en onMounted (vacío en SSR → sin warning de hidratación), guardado @input con debounce ~200ms en try/catch; :value/@input (no v-model); SÓLO monumentos. Verificado: el textarea prerenderizado está vacío
+- [Phase ?]: [Phase 7 P03]: el motif llega a DetailPhoto.global.vue por provide('monumentMotif')/inject a través del subárbol del MDCRenderer (A2); confirmado hydration-safe por pnpm generate. La aserción de paridad del SVG correcto la hará el spec del Plan 04
+- [Phase ?]: [Phase 7 P03]: eslint.config.mjs relaja SÓLO vue/max-attributes-per-line para DetailPhoto.global.vue (mismo precedente que MonumentCard/Timeline/secciones) por el <span v-else-if v-html> inline en el .detail-photo whitespace-sensible; CERO-CSS y el resto de reglas siguen activas. culture v-for ref→cultureRef (template-shadow del ref importado)
 
 ### Pending Todos
 
@@ -212,6 +217,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-23T12:34:43.599Z
+Last session: 2026-06-23T12:48:47.170Z
 Stopped at: Phase 7 context gathered
 Resume file: None
