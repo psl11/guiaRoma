@@ -10,15 +10,24 @@
 // y deja las otras 11 como secciones VACÍAS portando únicamente su id, listas para que F4
 // (timeline/cards/food/reference/artists) y F7 (isla Leaflet del #mapa) las cableen.
 //
-// F4 (Plan 05): las 11 secciones no-#inicio se RELLENAN con el render data-driven de los Planes
-// 02-04, EXCEPTO #mapa, que sigue VACÍO (F7 — la isla Leaflet). Las 5 de día montan `DaySection`
+// F4 (Plan 05): las 11 secciones no-#inicio se RELLENARON con el render data-driven de los Planes
+// 02-04, EXCEPTO #mapa, que F4 dejó VACÍO. Las 5 de día montan `DaySection`
 // (header/stats/dia-ligera/timeline/cards); las 5 de referencia montan ReservasSection /
 // GastroSection / PracticaSection / ArtistCard, alimentadas por las mismas refs del ÚNICO
 // `useTrip` de abajo (mismo patrón que `Topbar :days`: un solo origen de datos, pasado por props).
 //
+// F7 (Plan 07-02): #mapa se RELLENA con el chrome estático del mapa (eyebrow/h2/intro/.map-wrapper/
+// .map-offline-banner/legend, verbatim index.html:2361-2371) y SOLO `#leaflet-map` va dentro de
+// `<ClientOnly>` con un `#fallback` del MISMO tamaño (caja `#leaflet-map` VACÍA, sin texto, D-02
+// → cero salto de layout). `<LeafletMap>` es la isla `.client.vue` (auto-importada). El
+// `#map-offline-banner` vive en el `.map-wrapper` ESTÁTICO (fuera de `<ClientOnly>`) → está en el
+// HTML prerenderizado y es alcanzable por `document.getElementById` desde la isla (A3). NO se añade
+// un segundo controller de navegación F5: los popups del mapa dependen del único host de la línea ~59.
+//
 // El orden de hermanos del <main> se conserva VERBATIM (index.html: #inicio, #mapa, los 5 días,
-// reservas, gastronomía, práctica, arte, arquitectura). Mantener #mapa vacío entre #inicio y los
-// días respeta el offset de scrollspy y la disciplina de prerender (sin altura fija, sin enlaces).
+// reservas, gastronomía, práctica, arte, arquitectura). #mapa entre #inicio y los días lleva su
+// chrome estático + la isla `<ClientOnly>` (F7); su #fallback es del mismo tamaño (D-02), así que
+// el offset de scrollspy se conserva (la caja del mapa ocupa lo mismo en prerender y tras hidratar).
 //
 // `trip`/`days`/`monById`/`food`/`artists`/`refById` son refs/computeds de useTrip (Vue las
 // desenvuelve en plantilla). `v-if="trip"` estrecha el tipo de TheHero (espera Trip no-nulo) —
@@ -72,7 +81,37 @@ const dayBySlug = (slug: string) => days.value.find(d => d.slug === slug)
       v-if="trip"
       :trip="trip"
     />
-    <section id="mapa" />
+    <section id="mapa">
+      <div class="container">
+        <div class="section-eyebrow">
+          cartografia
+        </div>
+        <h2>El mapa del viaje</h2>
+        <p style="font-style: italic; color: var(--ink-soft); margin-bottom: 1.5rem;">
+          Numeración por orden cronológico de visita. Toca un marcador para abrir su ficha.
+        </p>
+        <div
+          class="map-wrapper"
+          style="position:relative;"
+        >
+          <ClientOnly>
+            <LeafletMap />
+            <template #fallback>
+              <div id="leaflet-map" />
+            </template>
+          </ClientOnly>
+          <div
+            id="map-offline-banner"
+            class="map-offline-banner"
+          >
+            Sin conexión · solo marcadores visibles
+          </div>
+        </div>
+        <p class="map-legend">
+          ✦  Rojos · paradas con ficha · Dorados · eventos guiados · Verde · concierto Einaudi ✦
+        </p>
+      </div>
+    </section>
     <section id="viernes">
       <DaySection
         v-if="dayBySlug('viernes')"
