@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Completed 08-02-PLAN.md (visual-diff spec)
-last_updated: "2026-06-23T20:32:12.895Z"
+last_updated: "2026-06-23T20:37:03.480Z"
 last_activity: 2026-06-23
 progress:
   total_phases: 8
   completed_phases: 7
   total_plans: 39
-  completed_plans: 36
+  completed_plans: 37
   percent: 88
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 ## Current Position
 
 Phase: 08 (Verificación de paridad) — EXECUTING
-Plan: 5 of 7
+Plan: 6 of 7
 Status: Ready to execute
 Last activity: 2026-06-23
 
-Progress: [█████████░] 92%
+Progress: [██████████] 95%
 
 ## Performance Metrics
 
@@ -93,6 +93,7 @@ Progress: [█████████░] 92%
 | Phase 08 P02 | 5min | 1 tasks | 1 files |
 | Phase 08 P03 | 2 | 1 tasks | 2 files |
 | Phase 08 P04 | 6min | 1 tasks | 1 files |
+| Phase 08 P05 | 6min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -205,6 +206,8 @@ Recent decisions affecting current work:
 - [Phase ?]: [Phase 8 P03]: playwright.gate.config.ts extiende la base y fija snapshotPathTemplate a tests/parity/golden.spec.ts-snapshots/{arg}-{projectName}{ext} (D-01) — el toHaveScreenshot de visual-diff.spec.ts (Plan 02) resuelve al PNG congelado (inicio-light + desktop → inicio-light-desktop.png) en vez de crear baseline Nuxt-contra-sí-mismo; forma array prohibida, la plantilla de config es el escape soportado
 - [Phase ?]: [Phase 8 P03]: doble exclusión de puerta — golden.spec.ts por testIgnore a nivel FICHERO (D-04 #1, estable ante renombrados; sigue intacto como herramienta de captura F1) y el test de dev-routing (shell.spec.ts) por --grep-invert 'reutiliza el MISMO TripView' en test:parity (D-04 #2, cinturón a la bandera de entorno de Plan 04). pnpm verify = generate limpio + unit + data + parity (D-03, build al frente). NUNCA --update-snapshots por la puerta
 - [Phase ?]: [Phase 8 P04]: el test de dev-routing (shell.spec.ts) se gatea tras RUN_DEV_ROUTING con un test.skip a NIVEL DE DESCRIBE (evaluado ANTES del beforeAll → el spawn de pnpm dev NO ocurre en el gate) + early-return defensivo en el beforeAll (suspenders). D-04 exclusión #2 completa: el env-flag (no el grep-invert de Plan 03) GARANTIZA que nunca se lanza nuxi dev (T-08-05, lock rancio). Verificado en runtime: flag sin definir → 2 skipped, puerto 5200 libre, 0 procesos dev. Aserciones estáticas del shell intactas; test ejecutable bajo demanda con RUN_DEV_ROUTING=1. eslint-disable no-empty-pattern porque Playwright EXIGE {} como 1er arg del hook
+- [Phase ?]: [Phase 8 P05]: tests/README.md documenta la puerta SC#4 (pnpm verify + 3 capas test:unit/test:data/test:parity), las 2 exclusiones con razon (D-04 #1 golden.spec.ts por testIgnore a nivel fichero, estable ante renombrados; #2 dev-routing shell.spec.ts por RUN_DEV_ROUTING describe-skip que GARANTIZA no spawnear nuxi dev + grep-invert como cinturon), el invariante D-01 (56 PNGs read-only, test:golden:update PROHIBIDO, golden.spec.ts = unica herramienta de captura F1 a demanda) y el conteo REGISTRADO (Pitfall 4)
+- [Phase ?]: [Phase 8 P05]: conteo de puerta derivado EMPIRICAMENTE corriendo --list (no del summary de Plan 03): test:parity = 80 tests/11 ficheros (con grep-invert), config gate en crudo = 82/11 (solo testIgnore golden); README registra AMBOS + comandos de recompute + desglose por fichero. Verificado contra un --list FRESCO antes del commit (match exacto). Delta 82->80 = los 2 dev-routing (mobile+desktop). Solo-documentacion: NO se forzo la puerta a verde (Plan 06) ni se toco el baseline congelado D-01
 
 ### Pending Todos
 
@@ -232,6 +235,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-23T20:31:49.038Z
+Last session: 2026-06-23T20:36:34.487Z
 Stopped at: Completed 08-02-PLAN.md (visual-diff spec)
 Resume file: None
