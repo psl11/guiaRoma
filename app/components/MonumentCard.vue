@@ -261,7 +261,18 @@ const ArtLink: DefineComponent<any, any, any> = defineComponent({
       </MDC>
     </div>
 
-    <div class="facts">
+    <!-- FACTS (paridad de orden por ficha, F8 Plan 06). El index.html NO renderiza el bloque
+         `.facts` cuando la ficha no tiene datos: #vaticano (la única con `facts: []`) va de la
+         última `.card-section` DIRECTAMENTE al `.maps-link`, SIN `.facts`. Un `.facts` vacío añade
+         su `margin-top:1.5rem` + `padding:1rem` + banda de fondo (≈+32px y un rectángulo coloreado
+         espurio) — divergencia REAL verificada contra el DOM del index.html (#vaticano). Por eso el
+         bloque se condiciona a que HAYA facts; las otras 37 fichas siempre los tienen, así que su
+         marcado no cambia. Bug REAL del visual-diff (D-02 path a): se corrige el componente, no el
+         baseline. -->
+    <div
+      v-if="monument.facts.length"
+      class="facts"
+    >
       <div
         v-for="f in monument.facts"
         :key="f.label"
