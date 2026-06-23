@@ -79,7 +79,7 @@
 // rompería en silencio selectores que cruzan componentes y elementos generados por MDC, como
 // `.card-section p:first-of-type::first-letter`, `.detail-list li::before` y `.facts-row .label`.
 // La paridad es por construcción.
-import { defineComponent, h, onMounted, provide, ref } from 'vue'
+import { defineComponent, h, onMounted, onUnmounted, provide, ref, useTemplateRef } from 'vue'
 import type { DefineComponent } from 'vue'
 import type { Monument } from '~~/shared/schemas'
 
@@ -95,6 +95,19 @@ function onHeroError() {
   if (motifSvg(monument.motif)) heroFailed.value = true
   else heroHidden.value = true
 }
+
+// CARRERA error-antes-de-hidratación del HERO (Rule 1, Fase 8 — bug REAL del visual-diff del Plan 06).
+// Mismo problema que DetailPhoto: el original usa `onerror="loadSvgFallback(...)"` inline (síncrono al
+// fallar la <img>), mientras que aquí el fallback es un `@error` de Vue que sólo existe tras hidratar.
+// Si la <img> del hero ya falló (offline / 404 / abort A5) ANTES de la hidratación, el evento `error`
+// ya pasó y el SVG del motivo no se pinta. Se resuelve en onMounted comprobando si la <img> ya está
+// "complete" con naturalWidth 0 (= falló) e invocando el MISMO onHeroError. El `@error` del template
+// sigue cubriendo los fallos posteriores a la hidratación.
+const heroImgRef = useTemplateRef<HTMLImageElement>('heroImg')
+onMounted(() => {
+  const img = heroImgRef.value
+  if (img && img.complete && img.naturalWidth === 0) onHeroError()
+})
 
 // NOTAS persistentes (port de setupNotes, index.html:6471-6483). Clave EXACTA `roma-note-<slug>`.
 // Lectura SÓLO en onMounted (sin warning de hidratación: SSR emite vacío). Guardado en @input con
@@ -211,6 +224,7 @@ const ArtLink: DefineComponent<any, any, any> = defineComponent({
     >
       <img
         v-if="!heroFailed"
+        ref="heroImg"
         :src="monument.hero.src"
         :alt="monument.hero.alt"
         loading="lazy"

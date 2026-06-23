@@ -147,6 +147,44 @@ async function settle(page: Page) {
   await page.evaluate(() => (document as unknown as { fonts?: { ready?: Promise<unknown> } }).fonts?.ready)
   // Asentar el reflow final que provocan los swaps a SVG.
   await page.evaluate(() => new Promise<void>(r => requestAnimationFrame(() => requestAnimationFrame(() => r()))))
+
+  // ── Espera de COMPLETITUD del swap a SVG (Plan 06) — AÑADIDO sólo en este spec (NO en golden.spec.ts,
+  //    que es la herramienta de captura F1 read-only, D-01). Bajo A5 (abort de TODA imagen) las 112 <img>
+  //    de la página (38 hero + 74 detail) deben sustituirse por su SVG de motivo. El swap es REACTIVO en
+  //    Nuxt/Vue (onError/onMounted → re-render), no síncrono como el `onerror=` inline del index.html VIEJO
+  //    (= el golden). El `await img.complete||error` de arriba garantiza que el EVENTO error ya ocurrió,
+  //    pero NO que Vue haya VOLCADO el re-render que cambia `<img>`→`<svg>` en TODA la página. En una página
+  //    de ~32000px (#viernes), con la build hidratando bajo carga, ese volcado tarda varios frames. Si se
+  //    captura antes de que TODOS los swaps cierren, las secciones largas salen más cortas (cada <img> rota
+  //    de 26px que aún no ha pasado a su SVG de 105px resta ~79px de altura) y toHaveScreenshot falla con
+  //    "Failed to take two consecutive stable screenshots". CONDICIÓN DE ASENTAMIENTO REAL: que NO quede
+  //    ninguna `<img>` dentro de `.detail-photo`/`.card-hero` (todas convertidas a su `<svg>`). El bug de
+  //    fondo —la <img> que falla ANTES de hidratar y por tanto no dispara el `@error` reactivo— se corrigió
+  //    en los COMPONENTES (DetailPhoto.global.vue / MonumentCard.vue: chequeo onMounted de img ya fallida,
+  //    Rule 1); aquí sólo se espera a que ese fallback termine de volcarse antes de capturar. Verificado
+  //    (Plan 06): con esto cada `.card` de #viernes cuadra a la ALTURA EXACTA del golden (Δ0px).
+  await page.waitForFunction(
+    () => document.querySelectorAll('.detail-photo img, .card-hero img').length === 0,
+    undefined,
+    { timeout: 30_000 },
+  )
+  // ── Estabilización de altura final: tras cerrar todos los swaps, sondear documentElement.scrollHeight
+  //    hasta que quede estable (3 lecturas consecutivas iguales, 1 rAF entre cada una) — guarda el reflow
+  //    residual antes de la captura por-elemento. Tope defensivo de iteraciones para no colgar. Es una
+  //    mejora del MISMO contrato de determinismo que el resto de settle() (no toca el baseline ni ningún
+  //    componente). Las vistas cortas (#inicio, etc.) ya están estables y convergen al instante.
+  await page.evaluate(async () => {
+    const raf = () => new Promise<void>(r => requestAnimationFrame(() => r()))
+    const measure = () => document.documentElement.scrollHeight
+    let stable = 0
+    let last = measure()
+    for (let i = 0; i < 180 && stable < 3; i++) {
+      await raf()
+      const current = measure()
+      stable = current === last ? stable + 1 : 0
+      last = current
+    }
+  })
 }
 
 // -- Puerta de errores de consola: tolera SOLO el mensaje de hidratación de color-mode; cualquier

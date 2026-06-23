@@ -29,7 +29,7 @@
 // CSS verbatim global (base.css:820-844) — CERO CSS nuevo y SIN bloque de estilos con scope: un
 // `data-v-*` cambiaría la especificidad y rompería en silencio selectores globales como
 // `.detail-photo img` y `[data-theme="dark"] .detail-photo img`. La paridad es por construcción.
-import { computed, inject, ref } from 'vue'
+import { computed, inject, onMounted, ref, useTemplateRef } from 'vue'
 import type { Motif } from '~~/shared/schemas'
 
 defineProps<{ src: string, alt: string, caption: string }>()
@@ -54,12 +54,30 @@ function onError() {
   // se pinta `<span>`), conservando la caption — mirror de `img.style.display='none'` (index.html:2247).
   failed.value = true
 }
+
+// CARRERA error-antes-de-hidratación (Rule 1, Fase 8 — bug REAL detectado por el visual-diff del
+// Plan 06). El original lleva el fallback como ATRIBUTO HTML inline `onerror="loadSvgFallbackDetail(...)"`
+// (index.html, 77 onerror inline), que dispara SÍNCRONAMENTE en cuanto la <img> falla, ANTES de
+// cualquier JS de framework. Aquí el fallback es un listener `@error` de Vue que sólo se adjunta al
+// HIDRATAR: si la imagen SSR ya falló (offline / 404 / petición abortada) ANTES de que Vue adjunte el
+// listener, el evento `error` ya se disparó y NO vuelve a emitirse → la <img> rota se queda y el SVG
+// nunca aparece. Empíricamente esto dejaba 16+ detail-photos sin swap en el sitio generado bajo A5
+// (image-abort), con #viernes 502px más corto que el golden y cajas de imagen rota visibles. FIX
+// canónico SSR: en onMounted, si la <img> ya está "complete" con naturalWidth 0 (= falló), invocar el
+// MISMO onError manualmente. Cubre el caso pre-hidratación; el `@error` del template cubre los fallos
+// posteriores. Restaura la paridad con el onerror inline del original.
+const imgRef = useTemplateRef<HTMLImageElement>('img')
+onMounted(() => {
+  const img = imgRef.value
+  if (img && img.complete && img.naturalWidth === 0) onError()
+})
 </script>
 
 <template>
   <div class="detail-photo">
     <img
       v-if="!failed"
+      ref="img"
       :src="src"
       :alt="alt"
       loading="lazy"
