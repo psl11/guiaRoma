@@ -123,6 +123,10 @@ function onNoteInput(v: string) {
   }, 200)
 }
 
+// WR-02: limpiar el timer de debounce al desmontar (HMR / futura navegación SPA) para no dejar
+// un setTimeout pendiente con una referencia al componente ya desmontado.
+onUnmounted(() => clearTimeout(noteTimer))
+
 // PROVIDE del motivo para el `DetailPhoto.global.vue` anidado (Task 2 lo `inject`a). Hay
 // exactamente un `<DetailPhoto>` por ficha, bajo este componente vía el `<MDCRenderer>` de las
 // secciones (más abajo), así que el provide alcanza al correcto a través del subárbol MDC.

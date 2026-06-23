@@ -95,7 +95,7 @@ const dayBySlug = (slug: string) => days.value.find(d => d.slug === slug)
           style="position:relative;"
         >
           <ClientOnly>
-            <LeafletMap />
+            <LeafletMap :slug="props.slug" />
             <template #fallback>
               <div id="leaflet-map" />
             </template>

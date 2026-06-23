@@ -19,7 +19,7 @@
 // `.map-offline-banner` / `.custom-marker` / `[data-theme="dark"] .leaflet-tile` Y el DOM que
 // Leaflet genera en runtime (que no lleva atributo de scope).
 //
-// DATOS: `useTrip('roma')` (mismo origen que todos los consumidores; `useAsyncData` deduplica
+// DATOS: `useTrip(props.slug)` (mismo origen que todos los consumidores; `useAsyncData` deduplica
 // por clave, así que comparte el `monById` poblado del controller de F5 y del TripView). Se lee
 // `trip.value.map.center/zoom` (setView) y se derivan los 39 marcadores con `deriveMarkers`
 // (Plan 01): 38 monumentos de `monById` + el Coliseo (★) de `trip.mapExtras` (D-01). El predicado
@@ -33,7 +33,22 @@
 // — por eso el Coliseo extra (id='') jamás mete su id vacío en un href (correcto por construcción).
 import type * as LeafletNS from 'leaflet'
 
-const { trip, monById } = await useTrip('roma')
+// WR-03: el slug llega por prop desde TripView (que ya hace `useTrip(props.slug)`) en vez de
+// hardcodear 'roma' — preserva el valor núcleo multi-viaje (añadir un viaje = añadir datos, sin
+// tocar código). Hoy solo existe 'roma', así que el render no cambia.
+const props = defineProps<{ slug: string }>()
+
+// WR-01: la instancia del mapa vive en el scope del setup para que onUnmounted la destruya
+// (limpieza en HMR / futura navegación SPA; sin ella, L.map re-lanza "Map container is already
+// initialized" al recargar en caliente). onUnmounted se registra ANTES del primer await (el de
+// useTrip) para quedar ligado a esta instancia de componente.
+let mapInstance: LeafletNS.Map | undefined
+onUnmounted(() => {
+  mapInstance?.remove()
+  mapInstance = undefined
+})
+
+const { trip, monById } = await useTrip(props.slug)
 
 const mapEl = ref<HTMLElement | null>(null)
 
@@ -50,6 +65,7 @@ onMounted(async () => {
   try {
     map = L.map(mapEl.value!, { scrollWheelZoom: false })
       .setView([trip.value!.map.center.lat, trip.value!.map.center.lng], trip.value!.map.zoom) // index.html:6321
+    mapInstance = map // WR-01: exponer la instancia para destruirla en onUnmounted
     const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       maxZoom: 19, // index.html:6323
@@ -122,8 +138,10 @@ onMounted(async () => {
     map.fitBounds(L.latLngBounds(markers.map(m => [m.lat, m.lng] as [number, number])).pad(0.1))
 
     // Recalcular el tamaño cuando el contenedor es incierto al init (index.html:6377-6378).
+    // IN-01: el `window.addEventListener('load', ...)` del original es código muerto en SSG
+    // (onMounted corre tras el evento 'load' en la hidratación) — omitido; el setTimeout(300)
+    // es la vía de recuperación efectiva.
     setTimeout(() => map!.invalidateSize(), 300)
-    window.addEventListener('load', () => map!.invalidateSize())
   }
 })
 </script>
