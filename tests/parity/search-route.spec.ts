@@ -71,6 +71,21 @@ function ensureBuild(): void {
 
 type PWPage = import('@playwright/test').Page
 
+// Espera a que el scroll deje de moverse (dos lecturas consecutivas iguales): el scroll suave del
+// navegador (scrollIntoView de navigateToCard / scrollTo de goBack) tarda varios frames en asentarse.
+// Clon del helper homónimo de navigation.spec.ts:93-101 — necesario para el back-half de la pila: si
+// se clica "Volver" MIENTRAS el scroll suave de la navegación resultado→ficha sigue en vuelo, el
+// `scrollTo` de goBack compite con ese scrollIntoView en curso y el resultado es no determinista.
+async function settleScroll(page: PWPage): Promise<void> {
+  let prev = -1
+  for (let i = 0; i < 40; i++) {
+    const y = await page.evaluate(() => window.scrollY)
+    if (y === prev) return
+    prev = y
+    await page.waitForTimeout(80)
+  }
+}
+
 test.describe('búsqueda + ruta del día en /guiaRoma/ construido (FEAT-03 / FEAT-09)', () => {
   // Base 5740: modes.spec=5700, navigation.spec=5720 → 5740 para no colisionar.
   const STATIC_PORT = 5740 + Number(process.env.TEST_WORKER_INDEX ?? 0)
@@ -188,12 +203,19 @@ test.describe('búsqueda + ruta del día en /guiaRoma/ construido (FEAT-03 / FEA
     expect(consoleErrors, `errores de consola inesperados: ${consoleErrors.join(' | ')}`).toHaveLength(0)
   })
 
-  test('FEAT-03 resultado → navegación (SC#2 / D-03): clic resalta la ficha y NO cambia el hash', async ({ page }) => {
+  test('FEAT-03 resultado → navegación (SC#2 / D-03): clic resalta la ficha, NO cambia el hash, y "Volver" restaura el scroll', async ({ page }) => {
     const consoleErrors = trackConsoleErrors(page)
     await gotoHydrated(page)
 
     const search = page.locator('#search')
     const dropdown = page.locator('#search-results')
+
+    // ORIGEN del scroll, capturado ANTES de la navegación resultado→ficha. El #search vive en el
+    // masthead #inicio (top), así que `originY` es naturalmente ~0; se asienta el scroll primero
+    // (settleScroll) para fijar un origen FIRME. La pila guardará EXACTAMENTE este `originY` y
+    // "Volver" debe restaurarlo (mirror navigation.spec.ts:216-217 — captura tras settle).
+    await settleScroll(page)
+    const originY = await page.evaluate(() => window.scrollY)
 
     // Consulta con un único candidato fuerte: "Pante" → Pantheon (boost de name). Abrir el dropdown.
     await search.fill('Pante')
@@ -206,7 +228,9 @@ test.describe('búsqueda + ruta del día en /guiaRoma/ construido (FEAT-03 / FEA
     const slug = await firstResult.getAttribute('data-card')
     expect(slug, 'la fila de resultado debe exponer su slug en data-card').toBeTruthy()
 
-    // Clic en el resultado (está en viewport: el #search vive en el masthead #inicio, arriba).
+    // Clic en el resultado (está en viewport: el #search vive en el masthead #inicio, arriba — a
+    // diferencia del popup del mapa/timeline, aquí `.click()` no auto-desplaza una fuente lejana, así
+    // que el scrollY que el controller mete en la pila sigue siendo `originY`).
     // onSelect → limpia query + cierra dropdown + navigateToCard(slug): preventDefault (D-03) +
     // scrollIntoView suave + `.highlight` 2500ms sobre la ficha destino.
     await firstResult.click()
@@ -223,6 +247,23 @@ test.describe('búsqueda + ruta del día en /guiaRoma/ construido (FEAT-03 / FEA
     // ambos estados es lo que habría cazado CR-01: el dropdown PIERDE `.show` y el #search queda ''.
     await expect(dropdown).not.toHaveClass(/\bshow\b/)
     await expect(search).toHaveValue('')
+
+    // BACK-HALF de la pila (D-05) — mirror EXACTO de navigation.spec.ts:231-242, ahora desde el
+    // punto de entrada del RESULTADO DE BÚSQUEDA. ANTES de "Volver" hay que dejar que el scroll suave
+    // de la navegación (scrollIntoView a la ficha) TERMINE: si se clica "Volver" con ese scroll aún
+    // EN VUELO, el `window.scrollTo` de goBack compite con el scrollIntoView en curso y el resultado
+    // es no determinista. settleScroll espera a que el scroll deje de moverse. Tras asentar: "Volver"
+    // está visible (la pila tiene una posición → canGoBack), restaura el scroll al ORIGEN guardado y
+    // vacía la pila → `.show` desaparece. force:true porque el #back-btn es chrome fijo
+    // (actionability), pero `goBack` corre.
+    await expect(page.locator('#back-btn')).toHaveClass(/\bshow\b/)
+    await settleScroll(page)
+    await page.click('#back-btn', { force: true })
+    await expect.poll(
+      () => page.evaluate(() => window.scrollY),
+      { message: 'el scroll debe volver al ORIGEN guardado en la pila tras "Volver" (entrada por resultado de búsqueda)' },
+    ).toBe(originY)
+    await expect(page.locator('#back-btn')).not.toHaveClass(/\bshow\b/)
 
     expect(consoleErrors, `errores de consola inesperados: ${consoleErrors.join(' | ')}`).toHaveLength(0)
   })
