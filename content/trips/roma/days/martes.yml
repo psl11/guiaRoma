@@ -64,10 +64,10 @@ timeline:
           **Metro A** · Termini → Barberini (2 paradas) · el palacio está a 2 min
           de la salida
         tag: recomendado
-        meta: '⏱ **10 min** 💶 **€1,50 p.p.**'
+        meta: '⏱ **10 min**<br>💶 **€1,50 p.p.**'
       - icon: 🚕
         desc: '**Taxi** directo a Piazza Barberini'
-        meta: '⏱ **8 min** 💶 **€9-11 · €3-4 p.p.**'
+        meta: '⏱ **8 min**<br>💶 **€9-11 · €3-4 p.p.**'
     footnote: >-
       Sin Galleria Borghese (no había reserva): la mañana se monta en Piazza
       Barberini, con el museo y la cripta pegados. Casi nada de andar — ideal para
@@ -98,7 +98,7 @@ timeline:
         recommended: true
         desc: Andando · bajáis a Piazza Barberini y un tramo corto de Via Veneto
         tag: recomendado
-        meta: '⏱ **5 min** 💶 **gratis**'
+        meta: '⏱ **5 min**<br>💶 **gratis**'
     footnote: >-
       Los dos están en la misma plaza. La cripta es opcional; si no apetece, un
       café en Via Veneto y a comer.
@@ -124,10 +124,10 @@ timeline:
         recommended: true
         desc: '**Taxi** directo a Monti · cómodo para llegar a la mesa sin andar'
         tag: recomendado
-        meta: '⏱ **8 min** 💶 **€9-11 · €3-4 p.p.**'
+        meta: '⏱ **8 min**<br>💶 **€9-11 · €3-4 p.p.**'
       - icon: 🚶
         desc: Andando · bajada por Via delle Quattro Fontane y Via Nazionale
-        meta: '⏱ **18 min** 💶 **gratis**'
+        meta: '⏱ **18 min**<br>💶 **gratis**'
     footnote: >-
       La mesa es a las 13:00. Desde Barberini, el taxi os deja en Monti en nada.
   - kind: stop
@@ -181,10 +181,10 @@ timeline:
         recommended: true
         desc: '**Taxi** · directo a Piazza San Bernardo, para llegar sentados'
         tag: recomendado
-        meta: '⏱ **6 min** 💶 **€8-10 · €3 p.p.**'
+        meta: '⏱ **6 min**<br>💶 **€8-10 · €3 p.p.**'
       - icon: 🚶
         desc: Andando · subida suave por Via Nazionale
-        meta: '⏱ **15 min** 💶 **gratis**'
+        meta: '⏱ **15 min**<br>💶 **gratis**'
     footnote: >-
       Santa Maria della Vittoria reabre a las 15:30: comed sin prisa, un café, y
       subís para las 15:20-15:30. Llegáis antes a ver la Fontana del Mosè (Acqua
@@ -225,7 +225,7 @@ timeline:
         desc: >-
           Andando · por Via Agostino Depretis · bajada directa hacia el Esquilino
         tag: recomendado
-        meta: '⏱ **12 min** 💶 **gratis**'
+        meta: '⏱ **12 min**<br>💶 **gratis**'
     footnote: >-
       La bajada os deja directamente en la zona del hotel. Ya queda todo cerca.
   - kind: stop
@@ -251,7 +251,7 @@ timeline:
           Andando · hacia Termini · iglesia y museo están pegados a la estación y
           al hotel
         tag: recomendado
-        meta: '⏱ **8 min** 💶 **gratis**'
+        meta: '⏱ **8 min**<br>💶 **gratis**'
     footnote: >-
       Última parada antes del hotel. Elegid **una** de las dos de abajo según el
       calor y las ganas: la iglesia (rápida y gratis) o el museo (climatizado). No
@@ -307,10 +307,10 @@ timeline:
           **Leonardo Express** · directo sin paradas · sale cada 15 min · binari
           23/24 · salid hacia las 18:15 para estar en FCO sobre las 19:00
         tag: recomendado
-        meta: '⏱ **32 min** 💶 **€14 p.p. · €42 total**'
+        meta: '⏱ **32 min**<br>💶 **€14 p.p. · €42 total**'
       - icon: 🚕
         desc: '**Taxi** · tarifa fija a FCO desde dentro del Raccordo Anulare'
-        meta: '⏱ **45-60 min · según tráfico** 💶 **€55 fijo · €18 p.p.**'
+        meta: '⏱ **45-60 min · según tráfico**<br>💶 **€55 fijo · €18 p.p.**'
     footnote: >-
       Comprad el billete en la app Trenitalia/Omio o en las máquinas amarillas.
       Con vuelo a las **21:50**, salir de Termini hacia las 18:15 deja FCO sobre

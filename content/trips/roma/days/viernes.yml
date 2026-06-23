@@ -53,12 +53,12 @@ timeline:
           **Taxi** · tarifa fija oficial FCO → centro · puerta del hotel, sin
           arrastrar maletas por Termini · siendo 3, sale a cuenta
         tag: recomendado a la llegada
-        meta: '⏱ **45-55 min** 💶 **€55 fijo · €18 p.p.**'
+        meta: '⏱ **45-55 min**<br>💶 **€55 fijo · €18 p.p.**'
       - icon: 🚆
         desc: >-
           **Leonardo Express** · directo sin paradas · sale cada 15 min · el
           hotel a 4 min de Termini · más barato e inmune al tráfico
-        meta: '⏱ **32 min** 💶 **€14 p.p. · €42 total**'
+        meta: '⏱ **32 min**<br>💶 **€14 p.p. · €42 total**'
     footnote: >-
       Para **3 con maletas y al final del día de viaje**, el taxi (€55 fijo, ~€18
       p.p.) compensa los ~€13 de diferencia: os deja en la puerta. El tren gana
@@ -85,15 +85,15 @@ timeline:
     modes:
       - icon: 🚶
         desc: Andando · por Via Cavour bajando hacia Trevi
-        meta: '⏱ **25 min** 💶 **gratis**'
+        meta: '⏱ **25 min**<br>💶 **gratis**'
       - icon: Ⓜ️
         desc: '**Metro A** · Termini → Barberini · 1 parada · + 7 min andando'
-        meta: '⏱ **15 min** 💶 **€1,50 p.p. · €4,50 total**'
+        meta: '⏱ **15 min**<br>💶 **€1,50 p.p. · €4,50 total**'
       - icon: 🚕
         recommended: true
         desc: '**Taxi** directo desde el hotel'
         tag: recomendado
-        meta: '⏱ **8-12 min** 💶 **€10-12 · €3-4 p.p.**'
+        meta: '⏱ **8-12 min**<br>💶 **€10-12 · €3-4 p.p.**'
     footnote: >-
       Después del check-in suele apetecer ir directo sin esperas. Pedir taxi
       desde recepción a las 19:15.
@@ -119,7 +119,7 @@ timeline:
           Andando entre todas las paradas · centro histórico peatonalizado ·
           calles iluminadas
         tag: recomendado
-        meta: '⏱ **~1,5 km totales** 💶 **gratis**'
+        meta: '⏱ **~1,5 km totales**<br>💶 **gratis**'
     footnote: >-
       El centro de Roma de noche se patea bien. Distancias entre Sciarra · Trevi
       · Sant'Ignazio · Pantheon · Navona · Campo Fiori: 152m + 357m + 243m +
@@ -247,12 +247,12 @@ timeline:
     modes:
       - icon: 🚶
         desc: Andando · paseo nocturno largo por Via dei Fori Imperiali
-        meta: '⏱ **35-40 min** 💶 **gratis**'
+        meta: '⏱ **35-40 min**<br>💶 **gratis**'
       - icon: 🚕
         recommended: true
         desc: '**Taxi** · cola fácil en la plaza o FreeNow'
         tag: recomendado
-        meta: '⏱ **12-15 min** 💶 **€12-15 · €4-5 p.p.**'
+        meta: '⏱ **12-15 min**<br>💶 **€12-15 · €4-5 p.p.**'
     footnote: >-
       Tras cenar y todo el día con maletas/viaje, el taxi compensa. Metro
       nocturno limitado, no recomendable.

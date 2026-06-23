@@ -60,15 +60,15 @@ timeline:
         recommended: true
         desc: Andando · bajada agradable por Via Nazionale · comercios abiertos
         tag: recomendado
-        meta: '⏱ **28 min** 💶 **gratis**'
+        meta: '⏱ **28 min**<br>💶 **gratis**'
       - icon: Ⓜ️
         desc: >-
           **Metro A** · Termini → Barberini · 1 parada · + 8 min andando hasta
           Casanatense
-        meta: '⏱ **15 min total** 💶 **€1,50 p.p. · €4,50 total**'
+        meta: '⏱ **15 min total**<br>💶 **€1,50 p.p. · €4,50 total**'
       - icon: 🚕
         desc: '**Taxi** directo'
-        meta: '⏱ **10 min** 💶 **€10-12 · €3-4 p.p.**'
+        meta: '⏱ **10 min**<br>💶 **€10-12 · €3-4 p.p.**'
     footnote: >-
       Última mañana en Roma — la bajada por Via Nazionale es agradable y os deja
       con buen sabor. Si lleváis prisa, metro.
@@ -141,7 +141,7 @@ timeline:
           → Tazza d'Oro (4 min) → Torre Scimmia (7 min) → Popolo (13 min, sube Via
           Ripetta) → Spagna (10 min, Via del Babuino)
         tag: recomendado
-        meta: '⏱ **~3 km · 50 min** 💶 **gratis**'
+        meta: '⏱ **~3 km · 50 min**<br>💶 **gratis**'
     footnote: >-
       Todo el centro histórico hilado a pie, por las calles más bonitas de Roma.
       La zona de detrás del Panteón concentra Minerva y San Luigi: dos joyas en
@@ -196,7 +196,7 @@ timeline:
         desc: >-
           Andando · bajáis por Via dei Condotti / Via del Corso hasta la Rotonda
         tag: recomendado
-        meta: '⏱ **13 min** 💶 **gratis**'
+        meta: '⏱ **13 min**<br>💶 **gratis**'
     footnote: >-
       Aprovecháis el hueco del mediodía para el Panteón antes de comer — os queda
       de camino.
@@ -232,14 +232,14 @@ timeline:
           **Taxi** directo a Via del Viminale · cómodo para llegar a la mesa sin
           prisa
         tag: recomendado
-        meta: '⏱ **12 min** 💶 **€10-12 · €3-4 p.p.**'
+        meta: '⏱ **12 min**<br>💶 **€10-12 · €3-4 p.p.**'
       - icon: 🚌
         desc: >-
           **Bus 64/40** desde Largo Argentina (~5 min andando) hasta Termini
-        meta: '⏱ **20 min** 💶 **€1,50 p.p.**'
+        meta: '⏱ **20 min**<br>💶 **€1,50 p.p.**'
       - icon: 🚶
         desc: Andando · por el centro hacia el Esquilino
-        meta: '⏱ **25 min** 💶 **gratis**'
+        meta: '⏱ **25 min**<br>💶 **gratis**'
     footnote: >-
       La mesa es a las 14:15: del Panteón en taxi llegáis con ~30 min de margen.
       La tarde sigue bajando hacia las grandes basílicas — comed ligero, que el
@@ -289,7 +289,7 @@ timeline:
           **Metro A** · Termini → San Giovanni · 3 paradas · la basílica está a la
           salida
         tag: recomendado
-        meta: '⏱ **10 min** 💶 **€1,50 p.p.**'
+        meta: '⏱ **10 min**<br>💶 **€1,50 p.p.**'
     footnote: >-
       San Giovanni abre todo el día sin pausa de mediodía: por eso va primera. San
       Clemente y San Pietro in Vincoli reabren a las 15:00.
@@ -314,7 +314,7 @@ timeline:
         recommended: true
         desc: Andando · por Via di San Giovanni in Laterano hacia el Coliseo
         tag: recomendado
-        meta: '⏱ **12 min** 💶 **gratis**'
+        meta: '⏱ **12 min**<br>💶 **gratis**'
     footnote: >-
       San Clemente reabre a las 15:00. Si llegáis antes, esperad en la cafetería
       de enfrente.
@@ -344,7 +344,7 @@ timeline:
           Andando · bordeáis el Coliseo y subís hacia Monti por la Salita dei
           Borgia
         tag: recomendado
-        meta: '⏱ **15 min** 💶 **gratis**'
+        meta: '⏱ **15 min**<br>💶 **gratis**'
     footnote: >-
       El paseo pasa junto al Coliseo (que veréis por dentro con guía el domingo).
       Aquí solo de refilón, empezando a iluminarse.
@@ -371,7 +371,7 @@ timeline:
           Andando · bajáis a Via dei Serpenti y a la Piazza della Madonna dei
           Monti, corazón del rione
         tag: recomendado
-        meta: '⏱ **6 min** 💶 **gratis**'
+        meta: '⏱ **6 min**<br>💶 **gratis**'
     footnote: >-
       Aperitivo en la fuentecita de la plaza antes de bajar a Testaccio a cenar.
   - kind: stop
@@ -396,10 +396,10 @@ timeline:
         recommended: true
         desc: '**Taxi** directo hasta Via Mastro Giorgio'
         tag: recomendado
-        meta: '⏱ **12 min** 💶 **€12-14 · €4-5 p.p.**'
+        meta: '⏱ **12 min**<br>💶 **€12-14 · €4-5 p.p.**'
       - icon: Ⓜ️
         desc: '**Metro B** · Cavour → Piramide (6 paradas) + 8 min andando'
-        meta: '⏱ **20 min** 💶 **€1,50 p.p.**'
+        meta: '⏱ **20 min**<br>💶 **€1,50 p.p.**'
     footnote: >-
       Salid de Monti sobre las 21:30 para llegar holgados a la mesa de las 22:00.
   - kind: stop

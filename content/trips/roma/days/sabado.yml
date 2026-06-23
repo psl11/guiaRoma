@@ -86,17 +86,17 @@ timeline:
         desc: >-
           Andando · cruzando Ponte Sant'Angelo · vistas espectaculares al
           castillo
-        meta: '⏱ **25-30 min** 💶 **gratis**'
+        meta: '⏱ **25-30 min**<br>💶 **gratis**'
       - icon: Ⓜ️
         desc: >-
           **Metro A** · Barberini → Ottaviano · 4 paradas · + 8 min andando hasta
           entrada
-        meta: '⏱ **25 min total** 💶 **€1,50 p.p. · €4,50 total**'
+        meta: '⏱ **25 min total**<br>💶 **€1,50 p.p. · €4,50 total**'
       - icon: 🚕
         recommended: true
         desc: '**Taxi** directo a la entrada del Vaticano'
         tag: recomendado
-        meta: '⏱ **12-15 min** 💶 **€12-15 · €4-5 p.p.**'
+        meta: '⏱ **12-15 min**<br>💶 **€12-15 · €4-5 p.p.**'
     footnote: >-
       Hay que estar en el punto de encuentro (Touristation, Viale Vaticano 95)
       **a las 11:55** — la franja de las 12:10 es estricta y no admiten retrasos.
@@ -140,10 +140,10 @@ timeline:
           Andando · bajáis a la orilla del Tíber, pasáis junto a Castel
           Sant'Angelo y cruzáis a Trastevere por Ponte Sisto
         tag: recomendado
-        meta: '⏱ **30 min** 💶 **gratis**'
+        meta: '⏱ **30 min**<br>💶 **gratis**'
       - icon: 🚕
         desc: '**Taxi** directo hasta Via della Pelliccia · si el tour se alarga'
-        meta: '⏱ **12 min** 💶 **€12-14 · €4-5 p.p.**'
+        meta: '⏱ **12 min**<br>💶 **€12-14 · €4-5 p.p.**'
     footnote: >-
       El tour acaba a las 15:10 y la mesa es a las 16:00: tiempo justo para el
       paseo y un vistazo a Castel Sant'Angelo de camino.
@@ -191,10 +191,10 @@ timeline:
         recommended: true
         desc: Andando · subís el Gianicolo por Via Garibaldi
         tag: recomendado
-        meta: '⏱ **13 min** 💶 **gratis**'
+        meta: '⏱ **13 min**<br>💶 **gratis**'
       - icon: 🚕
         desc: '**Taxi** · si vais justos para el cierre del Tempietto (18:00)'
-        meta: '⏱ **6 min** 💶 **€8-10 · €3 p.p.**'
+        meta: '⏱ **6 min**<br>💶 **€8-10 · €3 p.p.**'
     footnote: >-
       La subida al Gianicolo es la única cuesta seria del día — después de comer,
       con calma.
@@ -288,10 +288,10 @@ timeline:
         desc: >-
           Andando · cruzáis el Tíber por Ponte Sisto hasta Campo de' Fiori
         tag: recomendado
-        meta: '⏱ **18 min** 💶 **gratis**'
+        meta: '⏱ **18 min**<br>💶 **gratis**'
       - icon: 🚕
         desc: '**Taxi** · si no apetece andar de noche'
-        meta: '⏱ **8 min** 💶 **€8-10 · €3 p.p.**'
+        meta: '⏱ **8 min**<br>💶 **€8-10 · €3 p.p.**'
     footnote: >-
       El cruce por Ponte Sisto de noche es precioso. Salid de Trastevere sobre las
       21:30-21:40 para llegar holgados a la mesa de las 22:00.
@@ -318,10 +318,10 @@ timeline:
         recommended: true
         desc: '**Taxi** · cola fácil en la plaza o con FreeNow'
         tag: recomendado
-        meta: '⏱ **12-15 min** 💶 **€12-15 · €4-5 p.p.**'
+        meta: '⏱ **12-15 min**<br>💶 **€12-15 · €4-5 p.p.**'
       - icon: 🚶
         desc: Andando · paseo nocturno por el centro
-        meta: '⏱ **35 min** 💶 **gratis**'
+        meta: '⏱ **35 min**<br>💶 **gratis**'
     footnote: 'Tras cenar, taxi de vuelta al hotel (junto a Termini).'
 cards:
   - vaticano

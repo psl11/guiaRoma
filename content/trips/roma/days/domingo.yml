@@ -63,17 +63,17 @@ timeline:
     modes:
       - icon: 🚶
         desc: Andando · por Via Cavour · termina con subida al Aventino
-        meta: '⏱ **40 min** 💶 **gratis**'
+        meta: '⏱ **40 min**<br>💶 **gratis**'
       - icon: Ⓜ️
         recommended: true
         desc: >-
           **Metro B** · Termini → Circo Massimo · 3 paradas · + 8 min andando al
           Aventino
         tag: recomendado
-        meta: '⏱ **18 min total** 💶 **€1,50 p.p. · €4,50 total**'
+        meta: '⏱ **18 min total**<br>💶 **€1,50 p.p. · €4,50 total**'
       - icon: 🚕
         desc: '**Taxi** directo al Giardino degli Aranci'
-        meta: '⏱ **12-15 min** 💶 **€12-15 · €4-5 p.p.**'
+        meta: '⏱ **12-15 min**<br>💶 **€12-15 · €4-5 p.p.**'
     footnote: >-
       Domingo mañana con muchos kms por delante: ahorrar 40 min andando vale la
       pena. Andando hasta Termini desde el hotel: 5 min.
@@ -177,7 +177,7 @@ timeline:
           Andando · subís a Piazza Venezia y bajáis por Via dei Fori Imperiali con
           los Foros a ambos lados
         tag: recomendado
-        meta: '⏱ **20 min** 💶 **gratis**'
+        meta: '⏱ **20 min**<br>💶 **gratis**'
     footnote: >-
       Uno de los paseos más espectaculares de Roma. Hoy el tour es a las 15:00,
       así que la mañana va sin prisa: Vittoriano, comida cerca del Coliseo y al
@@ -237,7 +237,7 @@ timeline:
           Andando · al punto de encuentro: **parada de metro Colosseo (Línea B),
           salida de abajo, sobre Via dei Fori Imperiali**
         tag: recomendado
-        meta: '⏱ **5-10 min** 💶 **gratis**'
+        meta: '⏱ **5-10 min**<br>💶 **gratis**'
     footnote: >-
       Llegad 15 min antes. Ojo: es la **salida de abajo del metro Colosseo, en
       Via dei Fori Imperiali** — no la de la plaza del Coliseo.
@@ -308,7 +308,7 @@ timeline:
           **Taxi** · pedidlo con FreeNow al pitido final · es lo único que llega
           bien al Auditorium
         tag: recomendado
-        meta: '⏱ **20-25 min** 💶 **€18-22 · €6-7 p.p.**'
+        meta: '⏱ **20-25 min**<br>💶 **€18-22 · €6-7 p.p.**'
     footnote: >-
       Salid del pub sobre las 19:55-20:10 para llegar holgados. El Auditorium está
       al norte, fuera del centro: el taxi es la opción realista de noche.
