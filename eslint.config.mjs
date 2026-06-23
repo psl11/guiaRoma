@@ -99,4 +99,18 @@ export default withNuxt(
       'vue/max-attributes-per-line': 'off',
     },
   },
+  // `DetailPhoto.global.vue` (Plan 07-03): el fallback SVG de imagen rota va PEGADO dentro de
+  // `.detail-photo` (un `<span v-else-if v-html>` que sustituye a la `<img>` cuando falla, mismo
+  // contenedor whitespace-sensible del original donde `img`/`svg` y `.detail-photo-caption` son
+  // hermanos sin nodos de texto en blanco — index.html:2479-2482 / loadSvgFallbackDetail). Ese
+  // `<span>` lleva 2 directivas en una línea (`v-else-if` + `v-html`) para mantener el comentario
+  // `eslint-disable-next-line vue/no-v-html` adyacente al directivo (la constante SVG es de
+  // CONFIANZA). Por eso se relaja SOLO `max-attributes-per-line` en ESTE fichero (mismo precedente
+  // que MonumentCard/Timeline/secciones de referencia); el resto (incl. el CERO CSS) sigue activo.
+  {
+    files: ['app/components/DetailPhoto.global.vue'],
+    rules: {
+      'vue/max-attributes-per-line': 'off',
+    },
+  },
 )
