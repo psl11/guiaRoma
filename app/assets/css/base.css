@@ -484,14 +484,16 @@ strong { font-weight: 600; color: var(--ink); }
   gap: .3rem .85rem;
   line-height: 1.4;
 }
-.tl-meta-item {
-  font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
-  font-size: .72rem;
-  color: var(--ink-faint);
-  display: flex;
-  align-items: center;
-  gap: .25rem;
-}
+/* PARIDAD F8 (decisión humana "Match the golden", Plan 08-06): en el index.html VIVO esta
+   regla está ORFANADA por un `}` sobrante (index.html:1386, justo antes de `.tl-meta-item`),
+   así que en el sitio vivo NUNCA se aplica y el golden congelado la capturó AUSENTE. Phase 1
+   eliminó ese `}` ("no-op visual" — INEXACTO: era visualmente significativo), des-orfanando la
+   regla y haciendo que `.tl-meta-item` se renderizara distinto del golden (#viernes/timeline
+   502px más corto). Para reproducir FIELMENTE el estado vivo, neutralizamos las declaraciones:
+   `.tl-meta-item` cae a su default (Lora / 16px / display:block), EXACTAMENTE como el golden.
+   No se reintroduce el `}` literal (frágil); se neutraliza limpiamente. Las sub-reglas que SÍ
+   se aplican en el vivo (`.tl-meta-item b`/`.warn b`/`.ok b`) se conservan intactas — no las
+   afectaba el brace huérfano. Excepción puntual y autorizada a "CSS verbatim" (CLAUDE.md §5). */
 .tl-meta-item b {
   color: var(--ink-soft);
   font-weight: 600;
@@ -625,11 +627,15 @@ strong { font-weight: 600; color: var(--ink); }
   }
   .tl-transport { margin-left: 1.5rem; }
   .tl-meta { margin-left: 3em; }
-.tl-transport-mode.recommended {
-  background: color-mix(in srgb, var(--ink) 5%, transparent);
-  border-radius: 3px;
-  padding: .2rem .4rem;
-}
+/* PARIDAD F8 (decisión humana "Match the golden", Plan 08-06): en el index.html VIVO esta
+   regla está ORFANADA por un `}` sobrante (index.html:1528, justo antes de
+   `.tl-transport-mode.recommended`), así que en el sitio vivo NUNCA se aplica: los modos
+   "recomendado" del timeline caen a la base `.tl-transport-mode` (transparent / padding .2rem 0
+   / radius 0). El golden los capturó así. Phase 1 quitó ese `}` (des-orfanando la regla) →
+   el `.recommended` se sombreaba/redondeaba distinto del golden. Neutralizamos las
+   declaraciones para reproducir FIELMENTE el estado vivo (cae a la base). No se reintroduce el
+   `}` literal. NOTA: las dos reglas que en el vivo SÍ aplican (`.tl-transport`/`.tl-meta`
+   margin-left, index.html:1526-1527 — ANTES del `}` huérfano) se conservan arriba intactas. */
 .tl-transport-mode-icon {
   font-family: 'Cormorant Garamond', serif;
   font-style: normal;
