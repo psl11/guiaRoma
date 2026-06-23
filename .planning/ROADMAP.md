@@ -145,7 +145,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Los invariantes de datos pasan (nº de fichas esperado, ids únicos, enlaces cruzados que resuelven, `motif` por monumento completo)
   4. La suite completa pasa en verde como condición previa a dar la 1.0 por buena
 **Plans**: 7 plans
-  - [ ] 08-01-PLAN.md — Back-stack gap-fill (D-05): extend map-fallback-notes + search-route specs with popup/result -> ficha -> Volver -> scroll restored [Wave 1]
+  - [x] 08-01-PLAN.md — Back-stack gap-fill (D-05): extend map-fallback-notes + search-route specs with popup/result -> ficha -> Volver -> scroll restored [Wave 1]
   - [ ] 08-02-PLAN.md — Nuxt-vs-golden visual-diff spec (D-01/SC#1): 5th self-contained clone, VIEWS+settle()+A5 verbatim, 14 views vs the 56 frozen PNGs, port 5780 [Wave 1]
   - [ ] 08-03-PLAN.md — Gate config + package.json scripts (D-01/D-03/D-04#1): pin snapshotPathTemplate to the frozen dir, testIgnore golden.spec.ts, pnpm verify [Wave 2]
   - [ ] 08-04-PLAN.md — Dev-routing env-flag (D-04#2): gate shell.spec.ts dev-routing behind RUN_DEV_ROUTING so the gate never spawns nuxi dev [Wave 3]
@@ -167,4 +167,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 5. Navegación transversal | 3/3 | Complete   | 2026-06-21 |
 | 6. Derivados de datos — búsqueda y ruta del día | 5/5 | Complete   | 2026-06-21 |
 | 7. Isla client-only — mapa, fallback de imagen y notas | 4/4 | Complete   | 2026-06-23 |
-| 8. Verificación de paridad | 0/7 | In progress | - |
+| 8. Verificación de paridad | 1/7 | In Progress|  |

@@ -4,14 +4,14 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Phase 8 context gathered
-last_updated: "2026-06-23T19:44:02.567Z"
-last_activity: 2026-06-23 -- Phase 8 planning complete
+last_updated: "2026-06-23T20:14:33.682Z"
+last_activity: 2026-06-23
 progress:
   total_phases: 8
   completed_phases: 7
   total_plans: 39
-  completed_plans: 32
-  percent: 82
+  completed_plans: 33
+  percent: 85
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-06-18)
 
 **Core value:** La 1.0 debe ser exactamente igual que la guía de hoy (paridad visual y funcional al 100%), pero construida de forma dinámica, data-driven y mantenible.
-**Current focus:** Phase 8 — verificación de paridad
+**Current focus:** Phase 08 — Verificación de paridad
 
 ## Current Position
 
-Phase: 8
-Plan: Not started
+Phase: 08 (Verificación de paridad) — EXECUTING
+Plan: 2 of 7
 Status: Ready to execute
-Last activity: 2026-06-23 -- Phase 8 planning complete
+Last activity: 2026-06-23
 
-Progress: [██████████] 97%
+Progress: [█████████░] 85%
 
 ## Performance Metrics
 
@@ -89,6 +89,7 @@ Progress: [██████████] 97%
 | Phase 07 P02 | 5min | 2 tasks | 2 files |
 | Phase 07 P03 | 14min | 2 tasks | 3 files |
 | Phase 07 P04 | 10min | 1 task auto (+1 human-verify pending) | 1 files |
+| Phase 08 P01 | 24min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -193,6 +194,8 @@ Recent decisions affecting current work:
 - [Phase ?]: [Phase 7 P03]: el motif llega a DetailPhoto.global.vue por provide('monumentMotif')/inject a través del subárbol del MDCRenderer (A2); confirmado hydration-safe por pnpm generate. La aserción de paridad del SVG correcto la hará el spec del Plan 04
 - [Phase ?]: [Phase 7 P03]: eslint.config.mjs relaja SÓLO vue/max-attributes-per-line para DetailPhoto.global.vue (mismo precedente que MonumentCard/Timeline/secciones) por el <span v-else-if v-html> inline en el .detail-photo whitespace-sensible; CERO-CSS y el resto de reglas siguen activas. culture v-for ref→cultureRef (template-shadow del ref importado)
 - [Phase 7 P04]: tests/parity/map-fallback-notes.spec.ts es AUTOCONTENIDO (4º clon del patrón modes/navigation/search-route.spec: beforeAll genera+copia a subdir guiaRoma/+sirve bajo /guiaRoma/ en base de puerto 5760; NO el webServer del golden que sirve el index.html VIEJO). 12/12 verde (SC#1–SC#7 × mobile+desktop): SC#1 39 marcadores+2★ con #leaflet-map vacío en SSG, SC#2 popup card→.highlight con hash sin cambiar (F5), SC#3 ambos popups ★ (Coliseo+vaticano) texto-solo sin ancla (quirk honrado), SC#4 banner offline al abortar tiles, SC#5+6 hero/detail→SVG al abortar imágenes (caption conservada), SC#7 notas round-trip bajo roma-note-<slug>. Los marcadores de Leaflet se solapan físicamente → se abren con dispatchEvent('click') sobre el elemento resuelto (NO .click()/force, que abre el popup del marcador encima en ese píxel); la puerta de consola tolera el net::ERR_FAILED DELIBERADO de los aborts (flag tolerateAborts) además del mensaje color-mode. Task 2 (sign-off humano de paridad) PENDIENTE — requisitos FEAT-02/UI-05/FEAT-04 NO marcados completos hasta la aprobación
+- [Phase ?]: [Phase 8 P01]: back-stack back-half añadida a map-fallback-notes.spec (popup→ficha) y search-route.spec (resultado→ficha) — mirror EXACTO de navigation.spec.ts:217-242 (originY → #back-btn.show → click force → expect.poll(scrollY).toBe(originY) → .show fuera); specs EXTENDIDAS no reescritas, conteos preservados (12/12, 10/10)
+- [Phase ?]: [Phase 8 P01]: settleScroll() (clon de navigation.spec:93-101) load-bearing ANTES del click en Volver — el scrollIntoView suave de la navegación seguía EN VUELO al clicar y el scrollTo de goBack competía → en móvil el scroll no convergía a originY y .show no se limpiaba. navStack instrumentado confirmó UN solo push (sin bug de app); carrera entre dos smooth-scrolls concurrentes (Rule 1, robustez de test, no debilita la aserción)
 
 ### Pending Todos
 
@@ -220,6 +223,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-23T18:52:07.047Z
+Last session: 2026-06-23T20:14:25.776Z
 Stopped at: Phase 8 context gathered
-Resume file: .planning/phases/08-verificaci-n-de-paridad/08-CONTEXT.md
+Resume file: None

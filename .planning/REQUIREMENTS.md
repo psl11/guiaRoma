@@ -61,7 +61,7 @@ Requisitos para la release 1.0. Cada uno se mapea a una fase del roadmap.
 ### Verificación de paridad (PARITY)
 
 - [x] **PARITY-01**: Golden de Playwright capturado desde la versión actual ANTES de divergir, como referencia objetiva de paridad
-- [ ] **PARITY-02**: Suite de verificación visual (visual-diff) y comportamental que confirma paridad 100% con el `index.html` actual; debe pasar antes de dar la 1.0 por buena
+- [x] **PARITY-02**: Suite de verificación visual (visual-diff) y comportamental que confirma paridad 100% con el `index.html` actual; debe pasar antes de dar la 1.0 por buena
 
 ## v2 Requirements
 
@@ -133,7 +133,7 @@ Qué fases cubren qué requisitos. Mapeo del roadmap (ver `.planning/ROADMAP.md`
 | FEAT-02 | Phase 7 | Complete |
 | UI-05 | Phase 7 | Complete |
 | FEAT-04 | Phase 7 | Complete |
-| PARITY-02 | Phase 8 | Pending |
+| PARITY-02 | Phase 8 | Complete |
 
 **Coverage:**
 - v1 requirements: 33 total (PLAT 5 · DATA 6 · ARCH 3 · UI 5 · FEAT 9 · BUILD 3 · PARITY 2)
