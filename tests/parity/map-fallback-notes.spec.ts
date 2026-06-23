@@ -93,6 +93,21 @@ function ensureBuild(): void {
 type PWPage = import('@playwright/test').Page
 type PWContext = import('@playwright/test').BrowserContext
 
+// Espera a que el scroll deje de moverse (dos lecturas consecutivas iguales): el scroll suave del
+// navegador (scrollIntoView de navigateToCard / scrollTo de goBack) tarda varios frames en asentarse.
+// Clon del helper homónimo de navigation.spec.ts:93-101 — necesario para el back-half de la pila
+// (SC#2): si se clica "Volver" MIENTRAS el scroll suave de la navegación popup→ficha sigue en vuelo,
+// el `scrollTo` de goBack compite con ese scrollIntoView en curso y el resultado es no determinista.
+async function settleScroll(page: PWPage): Promise<void> {
+  let prev = -1
+  for (let i = 0; i < 40; i++) {
+    const y = await page.evaluate(() => window.scrollY)
+    if (y === prev) return
+    prev = y
+    await page.waitForTimeout(80)
+  }
+}
+
 // -- Puerta de errores de consola: tolera SOLO el mensaje de hidratación de color-mode; cualquier
 //    otro error (mismatch de hidratación nuevo, fallo de runtime de la isla/fallback/notas) se
 //    acumula y rompe el test (T-07-07). En los tests que ABORTAN peticiones a propósito se pasa
@@ -185,9 +200,16 @@ test.describe('mapa + fallback de imagen + notas en /guiaRoma/ construido (SC#1�
     expect(consoleErrors, `errores de consola inesperados: ${consoleErrors.join(' | ')}`).toHaveLength(0)
   })
 
-  test('SC#2: el popup de una ficha navega (scroll + .highlight) SIN cambiar el hash (listener F5)', async ({ page }) => {
+  test('SC#2: el popup de una ficha navega (scroll + .highlight) SIN cambiar el hash, y "Volver" restaura el scroll (listener F5 + pila)', async ({ page }) => {
     const consoleErrors = trackConsoleErrors(page)
     await gotoMapMounted(page)
+
+    // ORIGEN del scroll, capturado ANTES de la navegación popup→ficha. El mapa (#mapa) está cerca
+    // del top y gotoMapMounted deja la página asentada, así que `originY` es estable. Se asienta el
+    // scroll primero (settleScroll) para fijar un origen FIRME: la pila guardará EXACTAMENTE este
+    // `originY` y "Volver" debe restaurarlo (mirror navigation.spec.ts:216-217 — captura tras settle).
+    await settleScroll(page)
+    const originY = await page.evaluate(() => window.scrollY)
 
     // Abrir el popup del marcador card canónico (galleria-sciarra = roman `I`, ÚNICO con ese texto
     // exacto; `/^I$/` exige texto EXACTO, no substring, así no casa con II/VII/XI…). Se usa
@@ -196,7 +218,9 @@ test.describe('mapa + fallback de imagen + notas en /guiaRoma/ construido (SC#1�
     // captura el marcador que esté ENCIMA en ese píxel (abriría, p. ej., el popup de VII). El click
     // SINTÉTICO se despacha al ELEMENTO resuelto y dispara el handler de popup de Leaflet de ESE
     // marcador (Leaflet liga la apertura del popup a un listener 'click' del DOM del icono), sin
-    // hit-testing de píxel → abre el popup CORRECTO.
+    // hit-testing de píxel → abre el popup CORRECTO. dispatchEvent ADEMÁS evita que Playwright
+    // auto-desplace la fuente, así el `window.scrollY` que el controller mete en la pila sigue siendo
+    // `originY` (no uno alterado por traer el marcador al viewport).
     const cardMarker = page.locator('.custom-marker').filter({ hasText: CARD_ROMAN })
     await expect(cardMarker, 'galleria-sciarra es el único marcador con texto exacto "I"').toHaveCount(1)
     await cardMarker.dispatchEvent('click')
@@ -220,6 +244,24 @@ test.describe('mapa + fallback de imagen + notas en /guiaRoma/ construido (SC#1�
     // … y el hash de la URL NO pasa a `#slug` (D-03: el listener hace preventDefault). Mirror de
     // navigation.spec.ts:229 / search-route.spec.ts:218.
     expect(new URL(page.url()).hash, 'D-03: navegar desde el popup NO cambia el hash').not.toBe(`#${slug}`)
+
+    // BACK-HALF de la pila (D-05) — mirror EXACTO de navigation.spec.ts:231-242, ahora desde el
+    // punto de entrada del POPUP DEL MAPA. ANTES de "Volver" hay que dejar que el scroll suave de la
+    // navegación (scrollIntoView a la ficha) TERMINE: si se clica "Volver" con ese scroll aún EN
+    // VUELO, el `window.scrollTo` de goBack compite con el scrollIntoView en curso y el resultado es
+    // no determinista (visto en móvil: la restauración no converge a originY y `.show` no se limpia
+    // de un clic). settleScroll espera a que el scroll deje de moverse (igual que navigation.spec.ts
+    // hace ANTES de capturar el origen). Tras asentar: "Volver" está visible (la pila tiene una
+    // posición → canGoBack), restaura el scroll al ORIGEN guardado y vacía la pila → `.show`
+    // desaparece. force:true porque el #back-btn es chrome fijo (actionability), pero `goBack` corre.
+    await expect(page.locator('#back-btn')).toHaveClass(/\bshow\b/)
+    await settleScroll(page)
+    await page.click('#back-btn', { force: true })
+    await expect.poll(
+      () => page.evaluate(() => window.scrollY),
+      { message: 'el scroll debe volver al ORIGEN guardado en la pila tras "Volver" (entrada por popup del mapa)' },
+    ).toBe(originY)
+    await expect(page.locator('#back-btn')).not.toHaveClass(/\bshow\b/)
 
     expect(consoleErrors, `errores de consola inesperados: ${consoleErrors.join(' | ')}`).toHaveLength(0)
   })
