@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 8 context gathered
-last_updated: "2026-06-23T20:14:33.682Z"
+stopped_at: Completed 08-02-PLAN.md (visual-diff spec)
+last_updated: "2026-06-23T20:22:01.296Z"
 last_activity: 2026-06-23
 progress:
   total_phases: 8
   completed_phases: 7
   total_plans: 39
-  completed_plans: 33
-  percent: 85
+  completed_plans: 34
+  percent: 87
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 ## Current Position
 
 Phase: 08 (Verificación de paridad) — EXECUTING
-Plan: 2 of 7
+Plan: 3 of 7
 Status: Ready to execute
 Last activity: 2026-06-23
 
-Progress: [█████████░] 85%
+Progress: [█████████░] 87%
 
 ## Performance Metrics
 
@@ -90,6 +90,7 @@ Progress: [█████████░] 85%
 | Phase 07 P03 | 14min | 2 tasks | 3 files |
 | Phase 07 P04 | 10min | 1 task auto (+1 human-verify pending) | 1 files |
 | Phase 08 P01 | 24min | 2 tasks | 2 files |
+| Phase 08 P02 | 5min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -196,6 +197,9 @@ Recent decisions affecting current work:
 - [Phase 7 P04]: tests/parity/map-fallback-notes.spec.ts es AUTOCONTENIDO (4º clon del patrón modes/navigation/search-route.spec: beforeAll genera+copia a subdir guiaRoma/+sirve bajo /guiaRoma/ en base de puerto 5760; NO el webServer del golden que sirve el index.html VIEJO). 12/12 verde (SC#1–SC#7 × mobile+desktop): SC#1 39 marcadores+2★ con #leaflet-map vacío en SSG, SC#2 popup card→.highlight con hash sin cambiar (F5), SC#3 ambos popups ★ (Coliseo+vaticano) texto-solo sin ancla (quirk honrado), SC#4 banner offline al abortar tiles, SC#5+6 hero/detail→SVG al abortar imágenes (caption conservada), SC#7 notas round-trip bajo roma-note-<slug>. Los marcadores de Leaflet se solapan físicamente → se abren con dispatchEvent('click') sobre el elemento resuelto (NO .click()/force, que abre el popup del marcador encima en ese píxel); la puerta de consola tolera el net::ERR_FAILED DELIBERADO de los aborts (flag tolerateAborts) además del mensaje color-mode. Task 2 (sign-off humano de paridad) PENDIENTE — requisitos FEAT-02/UI-05/FEAT-04 NO marcados completos hasta la aprobación
 - [Phase ?]: [Phase 8 P01]: back-stack back-half añadida a map-fallback-notes.spec (popup→ficha) y search-route.spec (resultado→ficha) — mirror EXACTO de navigation.spec.ts:217-242 (originY → #back-btn.show → click force → expect.poll(scrollY).toBe(originY) → .show fuera); specs EXTENDIDAS no reescritas, conteos preservados (12/12, 10/10)
 - [Phase ?]: [Phase 8 P01]: settleScroll() (clon de navigation.spec:93-101) load-bearing ANTES del click en Volver — el scrollIntoView suave de la navegación seguía EN VUELO al clicar y el scrollTo de goBack competía → en móvil el scroll no convergía a originY y .show no se limpiaba. navStack instrumentado confirmó UN solo push (sin bug de app); carrera entre dos smooth-scrolls concurrentes (Rule 1, robustez de test, no debilita la aserción)
+- [Phase 8 P02]: visual-diff.spec.ts (NET-NEW SC#1) = 5º clon del patrón autocontenido (build+serve bajo /guiaRoma/, base 5780); injerta VERBATIM VIEWS+settle()+A5 de golden.spec.ts y SOLO cambia el goto a la build Nuxt servida (no /index.html). Llama toHaveScreenshot(name-theme.png) y DELEGA la resolución del dir de snapshots a la config de la puerta (Plan 03, snapshotPathTemplate) — sin array-path (prohibido) ni workaround que sortee el gate
+- [Phase 8 P02]: baseline congelado read-only POR CONSTRUCCIÓN — guard-assert existsSync(inicio-light-desktop.png) en beforeAll (falla RUIDOSAMENTE si falta, Pitfall 2) + NUNCA el flag de actualización de baseline (D-01). golden.spec.ts byte-unchanged (git diff --quiet=0); sin #mapa en VIEWS (D-06); sin mask/stylePath/maxDiffPixels (D-02: clasificación es Plan 06)
+- [Phase 8 P02]: tests/parity/** está IGNORADO por eslint.config.mjs:16 → 'pnpm lint <spec>' sale 0 sea cual sea el contenido; señal real vía 'eslint --no-ignore' (afloró 2 @stylistic/arrow-parens heredados del settle() verbatim, trimados a 'img =>'/'r =>', cero cambio de comportamiento). Comentarios D-06/D-01 redactados SIN los tokens literales para que el grep de criterios pase
 
 ### Pending Todos
 
@@ -223,6 +227,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-23T20:14:25.776Z
-Stopped at: Phase 8 context gathered
+Last session: 2026-06-23T20:22:01.286Z
+Stopped at: Completed 08-02-PLAN.md (visual-diff spec)
 Resume file: None
