@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Phase 7 context gathered
-last_updated: "2026-06-23T12:24:36.354Z"
+last_updated: "2026-06-23T12:35:47.363Z"
 last_activity: 2026-06-23
 progress:
   total_phases: 8
   completed_phases: 6
   total_plans: 32
-  completed_plans: 29
+  completed_plans: 30
   percent: 75
 ---
 
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 ## Current Position
 
 Phase: 07 (Isla client-only — mapa, fallback de imagen y notas) — EXECUTING
-Plan: 2 of 4
+Plan: 3 of 4
 Status: Ready to execute
 Last activity: 2026-06-23
 
-Progress: [█████████░] 91%
+Progress: [█████████░] 94%
 
 ## Performance Metrics
 
@@ -85,6 +85,7 @@ Progress: [█████████░] 91%
 | Phase 06 P04 | 4min | 2 tasks | 3 files |
 | Phase 06 P05 | ~20min | 2 tasks | 1 files |
 | Phase 07 P01 | 8min | 3 tasks | 8 files |
+| Phase 07 P02 | 5min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -181,6 +182,9 @@ Recent decisions affecting current work:
 - [Phase 6 P04]: TheHero sustituye su placeholder #search por <SearchBox/> EN EL MISMO SITIO (D-04, no reubica); el HTML generado tiene EXACTAMENTE un #search/.search-wrap/#search-results (dropdown prerenderiza cerrado con 'Sin resultados' y 0 filas = default results=[]/isOpen=false, sin mismatch de hidratación); índice monuments-only (D-02) = todo resultado resuelve en monById, sin cambio en F5
 - [Phase 6]: F6 CERRADA — sign-off humano de paridad búsqueda+ruta APROBADO: en el sitio /guiaRoma/ generado, la búsqueda cliente alcanza >= paridad (dropdown abre a >=2 chars, <=8 filas con nombre+día, 'Sin resultados' sin match, clic en resultado hace scroll-highlight de la ficha SIN cambiar el hash, SC#2/D-03) y el botón 'Ver ruta del día (N paradas)' es paridad EXACTA por día (misma N, mismas paradas en orden, sábado incl. Vaticano+Auditorium) — verificado claro/oscuro × móvil/desktop, consola limpia salvo el mensaje conocido de hidratación color-mode. FEAT-03 y FEAT-09 completos
 - [Phase 6]: tests/parity/search-route.spec.ts es AUTOCONTENIDO (3er clon del patrón modes/navigation.spec: beforeAll genera+copia a subdir guiaRoma/+sirve bajo /guiaRoma/ en base de puerto 5740, NO el webServer del golden que sirve el index.html VIEJO); asevera comportamiento DOM/texto (no píxeles: Phase 8 posee el visual-diff total): dropdown >=2 abre/<2 cerrado, cap 8, 'Sin resultados', resultado->.highlight+hash-sin-cambiar, botón ruta visible/etiqueta/href con prefijo Google Maps walking NUNCA fetcheado; gate de consola tolera SOLO el error de hidratación color-mode; 10/10 verde. Los 5 fallos PRE-EXISTENTES de suite completa (4× golden.spec pixel-diff -> Phase 8; 1× shell.spec dev-routing por lock nuxi rancio) son fuera de alcance y están en deferred-items.md, NO causados por esta fase
+- [Phase 7]: [Phase 7 P02]: LeafletMap.client.vue es la PRIMERA isla .client.vue del repo — 3 capas anti-'window is not defined' (sufijo .client + <ClientOnly> en TripView + import('leaflet') dinámico DENTRO de onMounted). pnpm generate limpio (0 'window is not defined'); el HTML prerenderizado tiene 0 custom-marker / 0 leaflet-container (isla genuinamente client-only)
+- [Phase 7]: [Phase 7 P02]: popups card/concert = <a href='#slug'> SIN handler (los intercepta el listener en CAPTURA de F5, gateado por monById.has(id)); guided (Coliseo, vaticano) = TEXTO PLANO sin ancla (onclick inline del original DROPPEADO). Anadir @click reproduciria CR-01
+- [Phase 7]: [Phase 7 P02]: #mapa lleva el chrome estatico verbatim (index.html:2361-2371) y SOLO #leaflet-map dentro de <ClientOnly>; #fallback = caja #leaflet-map VACIA del mismo tamano (D-02, cero salto de layout); #map-offline-banner en el .map-wrapper ESTATICO (fuera de ClientOnly) -> en el HTML prerenderizado y alcanzable por getElementById (A3). Unico useCardNavigationController() intacto
 
 ### Pending Todos
 
@@ -208,6 +212,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-23T12:24:28.232Z
+Last session: 2026-06-23T12:34:43.599Z
 Stopped at: Phase 7 context gathered
 Resume file: None
