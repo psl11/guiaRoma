@@ -75,6 +75,13 @@
 // ref-item más metería un `.ref-item` espurio vacío y un label incorrecto → divergencia. El texto
 // de cada ref-item lleva Markdown-inline (p. ej. `_Fornarina_`), así que va por `<MDC unwrap="p">`.
 //
+// ORDEN culture-box / notes-area (F8 Plan 06). El index.html NO renderiza el par en orden fijo: la
+// mayoría de las 18 fichas con `.culture-box` rinde culture→notes, pero 4 (piazza-navona, campo-fiori,
+// ghetto, laterano) rinde notes→culture. Se modela con el campo OPCIONAL `boxOrder` del esquema:
+// `'notes-first'` (esas 4) invierte el orden; ausente = culture→notes (el resto). El marcado de cada
+// bloque es idéntico en ambas ramas (mismo `.culture-box`, mismo `.notes-area`); SÓLO cambia el orden,
+// que es exactamente lo que el original varía por ficha. Verificado contra el DOM del index.html por id.
+//
 // CSS verbatim global (base.css) — CERO CSS nuevo y SIN bloque de estilos con scope: un `data-v-*`
 // rompería en silencio selectores que cruzan componentes y elementos generados por MDC, como
 // `.card-section p:first-of-type::first-letter`, `.detail-list li::before` y `.facts-row .label`.
@@ -287,34 +294,75 @@ const ArtLink: DefineComponent<any, any, any> = defineComponent({
       />
     </div>
 
-    <div
-      v-if="monument.culture"
-      class="culture-box"
-    >
-      <span class="label">{{ monument.culture[0]?.title }}</span>
-      <div
-        v-for="cultureRef in monument.culture.slice(1)"
-        :key="cultureRef.title"
-        class="ref-item"
-      >
-        <span class="ref-title">{{ cultureRef.title }}</span> <MDC
-          :value="cultureRef.text"
-          :tag="false"
-          unwrap="p"
+    <!-- ORDEN culture-box / notes-area (F8 Plan 06, paridad de orden por ficha). El index.html NO es
+         uniforme: la mayoría de fichas con culture rinde culture→notes, pero 4 (piazza-navona,
+         campo-fiori, ghetto, laterano) rinde notes→culture. `monument.boxOrder === 'notes-first'`
+         invierte el orden SÓLO en esas 4 (verificado contra el DOM del index.html por id de ficha).
+         Ambos bloques se extraen a <template>s con nombre y se emiten en el orden correcto; la marca
+         (presencia/ausencia de culture, contenido de notes) es IDÉNTICA en las dos ramas → cero
+         divergencia de marcado salvo el ORDEN, que es justo lo que el original varía. -->
+    <template v-if="monument.boxOrder === 'notes-first'">
+      <div class="notes-area">
+        <label :for="'note-' + monument.slug">Notas in situ</label>
+        <textarea
+          :id="'note-' + monument.slug"
+          class="notes-textarea"
+          :data-note-key="monument.slug"
+          placeholder="Lo que quieras recordar de aquí…"
+          :value="noteText"
+          @input="onNoteInput(($event.target as HTMLTextAreaElement).value)"
         />
       </div>
-    </div>
 
-    <div class="notes-area">
-      <label :for="'note-' + monument.slug">Notas in situ</label>
-      <textarea
-        :id="'note-' + monument.slug"
-        class="notes-textarea"
-        :data-note-key="monument.slug"
-        placeholder="Lo que quieras recordar de aquí…"
-        :value="noteText"
-        @input="onNoteInput(($event.target as HTMLTextAreaElement).value)"
-      />
-    </div>
+      <div
+        v-if="monument.culture"
+        class="culture-box"
+      >
+        <span class="label">{{ monument.culture[0]?.title }}</span>
+        <div
+          v-for="cultureRef in monument.culture.slice(1)"
+          :key="cultureRef.title"
+          class="ref-item"
+        >
+          <span class="ref-title">{{ cultureRef.title }}</span> <MDC
+            :value="cultureRef.text"
+            :tag="false"
+            unwrap="p"
+          />
+        </div>
+      </div>
+    </template>
+
+    <template v-else>
+      <div
+        v-if="monument.culture"
+        class="culture-box"
+      >
+        <span class="label">{{ monument.culture[0]?.title }}</span>
+        <div
+          v-for="cultureRef in monument.culture.slice(1)"
+          :key="cultureRef.title"
+          class="ref-item"
+        >
+          <span class="ref-title">{{ cultureRef.title }}</span> <MDC
+            :value="cultureRef.text"
+            :tag="false"
+            unwrap="p"
+          />
+        </div>
+      </div>
+
+      <div class="notes-area">
+        <label :for="'note-' + monument.slug">Notas in situ</label>
+        <textarea
+          :id="'note-' + monument.slug"
+          class="notes-textarea"
+          :data-note-key="monument.slug"
+          placeholder="Lo que quieras recordar de aquí…"
+          :value="noteText"
+          @input="onNoteInput(($event.target as HTMLTextAreaElement).value)"
+        />
+      </div>
+    </template>
   </article>
 </template>

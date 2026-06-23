@@ -329,6 +329,11 @@ export function encodeMapsQuery(q: string): string {
 const STRUCTURAL_KEYS = new Set<string>([
   'slug', 'trip', 'id', 'ref', 'href', 'src', 'mapsQuery',
   'motif', 'type', 'kind', 'variant', 'level', 'category', 'badgeKind', 'group',
+  // `boxOrder` (F8 Plan 06) es una BANDERA estructural (enum 'culture-first'|'notes-first') que
+  // decide el ORDEN de .culture-box/.notes-area en MonumentCard; NO es prosa visible. Como `type`/
+  // `variant`/`level`, se excluye del multiset de texto (si no, las 4 fichas con boxOrder darían
+  // "notes-first" como texto sobrante).
+  'boxOrder',
   'order', 'zoom', 'lat', 'lng', 'icon', 'avatar',
   // `day` viene del array `places` (metadato del popup del mapa), NO del texto de la ficha
   // (la `article.card` no contiene "Viernes"). Como `coords`/`type`, es estructural: excluirlo

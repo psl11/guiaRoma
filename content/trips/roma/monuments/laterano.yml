@@ -9,6 +9,8 @@ coords:
   lng: 12.5057860
 type: card
 motif: church
+# Paridad de orden (F8 Plan 06): el index.html rinde .notes-area ANTES de .culture-box en esta ficha.
+boxOrder: notes-first
 arch:
   - ref: arq-medieval
     label: 'Arquitectura: [Paleocristiano](#arq-medieval)'

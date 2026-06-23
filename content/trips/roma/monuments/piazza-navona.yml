@@ -9,6 +9,8 @@ coords:
   lng: 12.4730742
 type: card
 motif: obelisk
+# Paridad de orden (F8 Plan 06): el index.html rinde .notes-area ANTES de .culture-box en esta ficha.
+boxOrder: notes-first
 artists:
   - ref: art-bernini
     label: 'Artistas: [Bernini](#art-bernini)'

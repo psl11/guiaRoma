@@ -9,6 +9,8 @@ coords:
   lng: 12.4721821
 type: card
 motif: statue
+# Paridad de orden (F8 Plan 06): el index.html rinde .notes-area ANTES de .culture-box en esta ficha.
+boxOrder: notes-first
 hero:
   src: https://upload.wikimedia.org/wikipedia/commons/1/1f/Il_Valle_delle_Rose_....JPG
   alt: Estatua de Giordano Bruno en Campo de' Fiori

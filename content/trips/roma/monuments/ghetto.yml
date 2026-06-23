@@ -9,6 +9,8 @@ coords:
   lng: 12.4799083
 type: card
 motif: arch
+# Paridad de orden (F8 Plan 06): el index.html rinde .notes-area ANTES de .culture-box en esta ficha.
+boxOrder: notes-first
 arch:
   - ref: arq-antigua
     label: 'Arquitectura: [Roma antigua](#arq-antigua)'

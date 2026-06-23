@@ -62,6 +62,13 @@ export const MonumentSchema = z.object({
   mapsQuery: z.string(), // texto del query de .maps-link (Google Maps search)
   sorrentino: z.object({ label: z.string(), text: Md }).optional(), // .sorrentino-box (label + prosa)
   culture: z.array(z.object({ title: z.string(), text: Md })).optional(), // .culture-box (ref-title + prosa)
+  // ORDEN del par .culture-box / .notes-area dentro de la ficha (F8 Plan 06, paridad de orden).
+  // El index.html NO es uniforme: la mayoría de las 18 fichas con culture renderiza culture→notes,
+  // pero 4 (piazza-navona, campo-fiori, ghetto, laterano) renderiza notes→culture. MonumentCard.vue
+  // emite culture→notes por defecto; este campo OPCIONAL invierte ese orden SÓLO en esas 4 fichas.
+  // Default ausente = 'culture-first' (orden por defecto del componente). Verificado contra el DOM
+  // del index.html por id de ficha (notes-area antes/después de culture-box dentro del mismo <article>).
+  boxOrder: z.enum(['culture-first', 'notes-first']).optional(),
 })
 
 // ── Day (.section del día) — timeline discriminado + cards ordenado (RESEARCH 330-396) ──
