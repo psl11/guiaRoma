@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: ready_to_plan
-stopped_at: Phase 06 complete (5/5) — ready to discuss Phase 7
-last_updated: 2026-06-22T14:39:42.093Z
-last_activity: 2026-06-21
+status: planning
+stopped_at: Phase 7 context gathered
+last_updated: "2026-06-23T11:24:41.520Z"
+last_activity: 2026-06-22
 progress:
   total_phases: 8
   completed_phases: 6
@@ -207,6 +207,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-21T21:53:13.212Z
-Stopped at: Completed 06-05-PLAN.md (phase 06 ready_for_verification)
-Resume file: None
+Last session: 2026-06-23T11:24:41.506Z
+Stopped at: Phase 7 context gathered
+Resume file: .planning/phases/07-isla-client-only-mapa-fallback-de-imagen-y-notas/07-CONTEXT.md
