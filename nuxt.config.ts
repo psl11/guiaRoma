@@ -63,25 +63,38 @@ export default defineNuxtConfig({
   },
 
   // Self-host de las 3 familias (BUILD-02 offline). Pesos/itálicas EXACTOS de index.html línea 13.
+  //
+  // PARIDAD (F8 / 08-06): provider 'fontsource', NO 'google'. El golden (index.html vivo)
+  // carga de Google las instancias ESTÁTICAS de Lora/Cormorant/JetBrains; el provider 'google'
+  // de @nuxt/fonts servía en cambio una Lora VARIABLE (sfnt 76160, con fvar/gvar/HVAR) ~3.8%
+  // más ancha → cada vista reflowaba y rompía la paridad-pixel (toHaveScreenshot falla en deltas
+  // de dimensión, no absorbibles por maxDiffPixelRatio). El provider 'fontsource' con PESOS
+  // DISCRETOS (no rangos) resuelve la rama ESTÁTICA de unifont (variants[weight][style][subset],
+  // NO la :vf), sirviendo las MISMAS masters estáticas de Google que usa el golden
+  // (lora-latin-400-normal.woff2 = 21148 B / sfnt 47652, byte-equivalente al estático del golden).
+  // Sigue 100% self-hosted/offline: @nuxt/fonts descarga los woff2 en BUILD y los sirve bajo
+  // /guiaRoma/_fonts/ — sin petición a fonts.gstatic.com NI a fontsource en RUNTIME. Los paquetes
+  // @fontsource/* (devDependencies) fijan las versiones estáticas en el árbol y documentan la fuente.
   fonts: {
+    provider: 'fontsource',
     families: [
       {
         name: 'Cormorant Garamond',
-        provider: 'google',
+        provider: 'fontsource',
         weights: [400, 500, 600, 700],
         styles: ['normal', 'italic'],
         subsets: ['latin', 'latin-ext'],
       },
       {
         name: 'Lora',
-        provider: 'google',
+        provider: 'fontsource',
         weights: [400, 500, 600],
         styles: ['normal', 'italic'],
         subsets: ['latin', 'latin-ext'],
       },
       {
         name: 'JetBrains Mono',
-        provider: 'google',
+        provider: 'fontsource',
         weights: [400, 500],
         styles: ['normal'],
         subsets: ['latin', 'latin-ext'],
