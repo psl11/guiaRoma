@@ -64,6 +64,33 @@ async function settle(page: Page) {
       ),
   )
   await page.evaluate(() => (document as unknown as { fonts?: { ready?: Promise<unknown> } }).fonts?.ready)
+
+  // ── ENDURECIMIENTO A5 (F8 Plan 06, re-captura correctiva) — forzar DETERMINISTAMENTE el
+  //    fallback SVG en TODA hero/detail. La captura original de F1 dejó FOTOS REALES coladas en
+  //    el baseline (Trevi en dia-viernes, Campo de' Fiori en dia-domingo, etc.): el abort de A5
+  //    dispara `onerror` PERO hay una carrera (imagen ya en caché / el evento error llega tras el
+  //    primer paint) en la que algunas <img> nunca disparan su `onerror=` inline y la foto queda.
+  //    Aquí NO inventamos un SVG: invocamos el PROPIO `onerror` de cada <img> que siga presente
+  //    (el handler inline del index.html — `loadSvgFallback(this,'id')` / `loadSvgFallbackDetail`),
+  //    de modo que el swap a SVG lo hace el CÓDIGO DEL SITIO VIVO, no el test. Idempotente: una
+  //    <img> que ya se sustituyó por su <svg> ya no existe, así que sólo se actúa sobre las que
+  //    se colaron. Tras esto NO debe quedar NINGUNA <img> dentro de `.card-hero`/`.detail-photo`.
+  await page.evaluate(() => {
+    document.querySelectorAll<HTMLImageElement>('.card-hero img, .detail-photo img').forEach((img) => {
+      const handler = img.onerror
+      if (typeof handler === 'function') {
+        handler.call(img, new Event('error'))
+      }
+    })
+  })
+  // Garantía de COMPLETITUD del swap: que no quede ninguna <img> en las cajas de imagen (todas
+  // convertidas a su <svg> de motivo). Si algo quedara, falla RUIDOSAMENTE aquí en vez de capturar
+  // una foto real (el bug de F1). Estado offline-determinista de A5, ahora SIN fugas.
+  await page.waitForFunction(
+    () => document.querySelectorAll('.card-hero img, .detail-photo img').length === 0,
+    undefined,
+    { timeout: 30_000 },
+  )
   // Asentar el reflow final que provocan los swaps a SVG.
   await page.evaluate(() => new Promise<void>((r) => requestAnimationFrame(() => requestAnimationFrame(() => r()))))
 }
