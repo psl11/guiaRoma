@@ -15,11 +15,13 @@
 // EXACTAMENTE un `#search` en el DOM (el de SearchBox). El pace-wrap sigue siendo placeholder
 // de layout cableado por los modos (D-05).
 //
-// Prosa vía MDC (componente auto-importado de @nuxt/content): trip.title (dentro del h1) y
-// cada infoCards.value (dentro de .info-card-value) usan la prop unwrap="p" para que MDC NO
-// envuelva el inline en un párrafo extra que rompa el ritmo vertical; en howTo el párrafo SÍ
-// se quiere, así que ahí MDC va sin unwrap. Cuadre de ritmo verificado contra el golden en el
-// Plan 05 (RESEARCH §Open Q 1 RESUELTA #1) — es afinado CSS/markup, no lógica nueva.
+// Prosa vía MDC (componente auto-importado de @nuxt/content): trip.title (dentro del h1),
+// cada infoCards.value (dentro de .info-card-value) Y cada párrafo de howTo (dentro de su `<p>`)
+// usan la prop unwrap="p" para que MDC emita SOLO el contenido inline, sin su propio `<p>` ni el
+// `<div class="">` con que `<MDCRenderer>` envuelve por defecto. En los tres casos la plantilla YA
+// aporta el contenedor correcto (h1 / .info-card-value / `<p>`), así que cualquier envoltorio extra
+// de MDC rompe el ritmo vertical y, en howTo, el wrap de línea de la prosa con italica (Plan 06,
+// D-02). Cuadre verificado contra el golden (RESEARCH §Open Q 1 RESUELTA #1 + visual-diff F8).
 //
 // CSS verbatim global (base.css) — CERO CSS nuevo y SIN bloque scoped: un data-v-* rompería
 // selectores como `.info-card-value strong { display:block }` (base.css:233) y el resto del
@@ -155,11 +157,30 @@ const { pace, light, resumen } = useTripModes()
       </div>
 
       <h4>Cómo usar esta guía</h4>
+      <!-- howTo: el `<p>` de la plantilla YA es el párrafo (paridad con index.html, que tiene un
+           `<p>` plano con prosa inline + `<em>`). Por eso MDC va con `unwrap="p"` (igual que
+           trip.title e infoCards.value arriba): emite SOLO el contenido inline DENTRO de este `<p>`,
+           sin su `<p>` propio NI el `<div class="">` con que `<MDCRenderer>` envuelve por defecto.
+           Bug REAL de paridad del visual-diff (F8 Plan 06, D-02 path a): el wrapper `<div class="">`
+           extra metía un `<p>` dentro de otro `<p>` (anidamiento inválido) Y desplazaba el wrap de
+           línea en los párrafos con italica/upright mezclados (`<em>in situ</em>`) → cada párrafo del
+           #inicio ~26px más corto que el golden (390×2174 vs 390×2200 en móvil). Con unwrap="p" el
+           markup queda 1:1 con index.html y la altura cuadra. -->
       <p
         v-for="(paragraph, i) in trip.howTo"
         :key="i"
       >
-        <MDC :value="paragraph" />
+        <MDC
+          v-slot="{ body }"
+          :value="paragraph"
+        >
+          <MDCRenderer
+            v-if="body"
+            :body="body"
+            :tag="false"
+            unwrap="p"
+          />
+        </MDC>
       </p>
     </div>
   </section>

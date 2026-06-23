@@ -42,6 +42,16 @@ const motif = inject<Motif | undefined>('monumentMotif', undefined)
 // `<img>` por el `<span v-html>` con el SVG. `detailSvg` inyecta los CUATRO estilos inline VERBATIM
 // (index.html:2238-2241) en la etiqueta `<svg ...>` — `.detail-photo img` (base.css:825) apunta a
 // `img`, no al `<svg>`, así que los estilos van en el propio SVG (= `svg.style.*` del original).
+//
+// HOST `display:block` (F8 / 08-06 — bug REAL de paridad-pixel, Blocker desktop day-views). El
+// original hace `img.replaceWith(svg)`: el `<svg>` queda como HIJO DIRECTO de `.detail-photo` (un
+// bloque de 380px), así que su `width:100%` resuelve contra esos 380px y `height:auto` lo escala a
+// ~133px (viewBox 800×280). Aquí el SVG va dentro de un `<span>` por `v-html`; un `<span>` es INLINE
+// (shrink-to-fit), así que el `width:100%` del SVG resolvía contra el ancho-degenerado del span y el
+// SVG COLAPSABA a ~47-87px → cada detail-photo ~133px más corto que el golden (verificado: 6 detail
+// en #viernes sumaban −798px). Por eso el `<span>` host lleva `display:block` (su `width` queda
+// `auto`=100% del bloque padre por ser block), reponiendo el contexto de bloque que el `replaceWith`
+// del original daba gratis. El SVG vuelve a escalar a la altura correcta y las vistas de día cuadran.
 const failed = ref(false)
 const detailSvg = computed(() => {
   const svg = motifSvg(motif)
@@ -83,8 +93,12 @@ onMounted(() => {
       loading="lazy"
       @error="onError"
     >
-    <!-- eslint-disable-next-line vue/no-v-html — constante estática de CONFIANZA (svgMotifs.ts), nunca dato de usuario (T-07-06 mitigate) -->
-    <span v-else-if="detailSvg" v-html="detailSvg" />
+    <!-- `display:block` para reponer el contexto de bloque del `img.replaceWith(svg)` del original
+         (si no, el `<span>` inline colapsa el `width:100%` del SVG → detail-photo demasiado corto).
+         `v-html` es de la constante estática de CONFIANZA (svgMotifs.ts), nunca dato de usuario
+         (T-07-06 mitigate). -->
+    <!-- eslint-disable-next-line vue/no-v-html -->
+    <span v-else-if="detailSvg" style="display:block" v-html="detailSvg" />
     <div class="detail-photo-caption">
       <MDC
         :value="caption"

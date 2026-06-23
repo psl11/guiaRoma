@@ -15,7 +15,10 @@ export default defineNuxtConfig({
   },
 
   // CSS editorial VERBATIM, cargado UNA sola vez. ORDEN crítico: base consume las variables de tokens.
+  // fonts.css PRIMERO: declara las @font-face vendorizadas (woff2 EXACTOS del golden) antes de que
+  // base.css las use en `font-family` (F8 / 08-06 — paridad-pixel del wrap, Blocker B).
   css: [
+    '~/assets/css/fonts.css',
     '~/assets/css/tokens.css',
     '~/assets/css/base.css',
     '~/assets/css/leaflet.css',
@@ -62,43 +65,31 @@ export default defineNuxtConfig({
     },
   },
 
-  // Self-host de las 3 familias (BUILD-02 offline). Pesos/itálicas EXACTOS de index.html línea 13.
+  // FUENTES — VENDORIZADAS, self-host EXACTO del golden (BUILD-02 offline + PARIDAD-PIXEL F8/08-06).
   //
-  // PARIDAD (F8 / 08-06): provider 'fontsource', NO 'google'. El golden (index.html vivo)
-  // carga de Google las instancias ESTÁTICAS de Lora/Cormorant/JetBrains; el provider 'google'
-  // de @nuxt/fonts servía en cambio una Lora VARIABLE (sfnt 76160, con fvar/gvar/HVAR) ~3.8%
-  // más ancha → cada vista reflowaba y rompía la paridad-pixel (toHaveScreenshot falla en deltas
-  // de dimensión, no absorbibles por maxDiffPixelRatio). El provider 'fontsource' con PESOS
-  // DISCRETOS (no rangos) resuelve la rama ESTÁTICA de unifont (variants[weight][style][subset],
-  // NO la :vf), sirviendo las MISMAS masters estáticas de Google que usa el golden
-  // (lora-latin-400-normal.woff2 = 21148 B / sfnt 47652, byte-equivalente al estático del golden).
-  // Sigue 100% self-hosted/offline: @nuxt/fonts descarga los woff2 en BUILD y los sirve bajo
-  // /guiaRoma/_fonts/ — sin petición a fonts.gstatic.com NI a fontsource en RUNTIME. Los paquetes
-  // @fontsource/* (devDependencies) fijan las versiones estáticas en el árbol y documentan la fuente.
+  // GROUND TRUTH (medido en el Playwright Chromium que captura el golden): el index.html vivo carga
+  // de Google las instancias VARIABLES de Lora (woff2 normal-latin = 37792 B, italic-latin = 40648 B,
+  // v37) y renderiza la prosa a 388px (cadena de prueba) → el golden tiene ESA métrica. El intento
+  // previo (provider 'fontsource', estático) servía una Lora DISTINTA y más ESTRECHA (374px) → cada
+  // párrafo con italica/upright mezclados (`<em>in situ</em>`) caía a 9 líneas vs 10 del golden
+  // (#inicio móvil 2174 vs 2200; toHaveScreenshot falla por DIMENSIÓN, no absorbible por
+  // maxDiffPixelRatio). La clasificación previa invirtió el signo (creyó la variable "más ancha de más"
+  // y que fontsource == Google; AMBAS premisas eran falsas — los woff2 difieren en bytes Y en ~3.6% de
+  // avance). CORRECCIÓN: se vendorizan los woff2 EXACTOS que Google sirve a Chromium (subsets latin +
+  // latin-ext, los únicos que el contenido es/it usa) en app/assets/fonts/, declarados en
+  // app/assets/css/fonts.css. Vite los empaqueta y los sirve self-hosted bajo /guiaRoma/_nuxt/ → CERO
+  // petición a fonts.gstatic.com/googleapis.com en RUNTIME (offline preservado), y byte-idénticos al
+  // golden por construcción → el wrap cuadra al píxel.
+  //
+  // @nuxt/fonts queda registrado (otros usos futuros) pero con las 3 familias en `provider: 'none'`:
+  // NO debe resolver ni inyectar @font-face/caras-fallback propias para Lora/Cormorant/JetBrains (eso
+  // reintroduciría la fuente equivocada y las caras métricas "X Fallback:" que el original no tiene).
+  // Las @font-face vivas son SOLO las de fonts.css.
   fonts: {
-    provider: 'fontsource',
     families: [
-      {
-        name: 'Cormorant Garamond',
-        provider: 'fontsource',
-        weights: [400, 500, 600, 700],
-        styles: ['normal', 'italic'],
-        subsets: ['latin', 'latin-ext'],
-      },
-      {
-        name: 'Lora',
-        provider: 'fontsource',
-        weights: [400, 500, 600],
-        styles: ['normal', 'italic'],
-        subsets: ['latin', 'latin-ext'],
-      },
-      {
-        name: 'JetBrains Mono',
-        provider: 'fontsource',
-        weights: [400, 500],
-        styles: ['normal'],
-        subsets: ['latin', 'latin-ext'],
-      },
+      { name: 'Cormorant Garamond', provider: 'none' },
+      { name: 'Lora', provider: 'none' },
+      { name: 'JetBrains Mono', provider: 'none' },
     ],
   },
 })
