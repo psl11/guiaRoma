@@ -4,7 +4,7 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Phase 7 context gathered
-last_updated: "2026-06-23T12:48:55.811Z"
+last_updated: "2026-06-23T13:06:00.000Z"
 last_activity: 2026-06-23
 progress:
   total_phases: 8
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 
 Phase: 07 (Isla client-only — mapa, fallback de imagen y notas) — EXECUTING
 Plan: 4 of 4
-Status: Ready to execute
+Status: 07-04 Task 1 done (parity spec green); Task 2 human paridad sign-off PENDING
 Last activity: 2026-06-23
 
 Progress: [██████████] 97%
@@ -87,6 +87,7 @@ Progress: [██████████] 97%
 | Phase 07 P01 | 8min | 3 tasks | 8 files |
 | Phase 07 P02 | 5min | 2 tasks | 2 files |
 | Phase 07 P03 | 14min | 2 tasks | 3 files |
+| Phase 07 P04 | 10min | 1 task auto (+1 human-verify pending) | 1 files |
 
 ## Accumulated Context
 
@@ -190,6 +191,7 @@ Recent decisions affecting current work:
 - [Phase ?]: [Phase 7 P03]: notas persistentes con clave EXACTA roma-note-<slug>, lectura en onMounted (vacío en SSR → sin warning de hidratación), guardado @input con debounce ~200ms en try/catch; :value/@input (no v-model); SÓLO monumentos. Verificado: el textarea prerenderizado está vacío
 - [Phase ?]: [Phase 7 P03]: el motif llega a DetailPhoto.global.vue por provide('monumentMotif')/inject a través del subárbol del MDCRenderer (A2); confirmado hydration-safe por pnpm generate. La aserción de paridad del SVG correcto la hará el spec del Plan 04
 - [Phase ?]: [Phase 7 P03]: eslint.config.mjs relaja SÓLO vue/max-attributes-per-line para DetailPhoto.global.vue (mismo precedente que MonumentCard/Timeline/secciones) por el <span v-else-if v-html> inline en el .detail-photo whitespace-sensible; CERO-CSS y el resto de reglas siguen activas. culture v-for ref→cultureRef (template-shadow del ref importado)
+- [Phase 7 P04]: tests/parity/map-fallback-notes.spec.ts es AUTOCONTENIDO (4º clon del patrón modes/navigation/search-route.spec: beforeAll genera+copia a subdir guiaRoma/+sirve bajo /guiaRoma/ en base de puerto 5760; NO el webServer del golden que sirve el index.html VIEJO). 12/12 verde (SC#1–SC#7 × mobile+desktop): SC#1 39 marcadores+2★ con #leaflet-map vacío en SSG, SC#2 popup card→.highlight con hash sin cambiar (F5), SC#3 ambos popups ★ (Coliseo+vaticano) texto-solo sin ancla (quirk honrado), SC#4 banner offline al abortar tiles, SC#5+6 hero/detail→SVG al abortar imágenes (caption conservada), SC#7 notas round-trip bajo roma-note-<slug>. Los marcadores de Leaflet se solapan físicamente → se abren con dispatchEvent('click') sobre el elemento resuelto (NO .click()/force, que abre el popup del marcador encima en ese píxel); la puerta de consola tolera el net::ERR_FAILED DELIBERADO de los aborts (flag tolerateAborts) además del mensaje color-mode. Task 2 (sign-off humano de paridad) PENDIENTE — requisitos FEAT-02/UI-05/FEAT-04 NO marcados completos hasta la aprobación
 
 ### Pending Todos
 
@@ -217,6 +219,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-23T12:48:47.170Z
-Stopped at: Phase 7 context gathered
-Resume file: None
+Last session: 2026-06-23T13:06:00.000Z
+Stopped at: 07-04 Task 1 committed (cb31237, parity spec green 12/12); Task 2 human paridad sign-off pending
+Resume file: .planning/phases/07-isla-client-only-mapa-fallback-de-imagen-y-notas/07-04-PLAN.md (Task 2 checkpoint:human-verify)
