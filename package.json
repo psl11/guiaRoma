@@ -15,7 +15,9 @@
     "test:golden:update": "playwright test --update-snapshots",
     "test:subpath": "playwright test tests/parity/subpath.spec.ts",
     "test:data": "vitest run tests/data",
-    "test:unit": "vitest run tests/unit"
+    "test:unit": "vitest run tests/unit",
+    "test:parity": "playwright test -c playwright.gate.config.ts --grep-invert \"reutiliza el MISMO TripView\"",
+    "verify": "pnpm generate && pnpm test:unit && pnpm test:data && pnpm test:parity"
   },
   "devDependencies": {
     "@playwright/test": "1.61.0",
