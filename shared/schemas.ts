@@ -328,6 +328,17 @@ export const TripSchema = z.object({
   infoCards: z.array(z.object({ label: z.string(), value: Md })), // info-grid (label + value)
   howTo: z.array(Md), // 'Cómo usar esta guía' (párrafos)
   map: z.object({ center: Coords, zoom: z.number() }), // setView([41.8989,12.477],14)
+  // Marcadores extra del mapa SIN ficha propia (D-01): el ÚNICO es el Coliseo (★), que el
+  // index.html tenía en `places[]` (línea 6292) pero NO como `.card`. Sin él, derivar los
+  // marcadores SOLO de los monumentos daría 38 pines en vez de 39 (regresión de paridad).
+  // Reusa `Coords` (:24) y `PlaceType` (:37); NO lleva `slug`/`id` (no hay ficha que anclar).
+  mapExtras: z.array(z.object({
+    roman: z.string(), // '★' (= places[].n del Coliseo)
+    name: z.string(), // 'Coliseo + Foro + Palatino (guiado)'
+    day: z.string(), // 'Domingo'
+    coords: Coords, // de places[]
+    type: PlaceType, // 'guided'
+  })).optional(),
   // Eyebrow + intro de las secciones-página, keyed por id de sección (= ancla #gastronomia/
   // #arte/#arquitectura del index.html). Opcional a nivel esquema (un viaje futuro podría no
   // tener estas secciones) pero Roma DEBE poblar las tres (paridad: prosa visible en el HTML).

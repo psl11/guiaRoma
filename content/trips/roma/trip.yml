@@ -37,6 +37,13 @@ howTo:
 map:
   center: { lat: 41.8989, lng: 12.477 }
   zoom: 14
+# Marcador extra del mapa SIN ficha (el ÚNICO): el Coliseo (★), verbatim de index.html:6292.
+mapExtras:
+  - roman: '★'
+    name: 'Coliseo + Foro + Palatino (guiado)'
+    day: Domingo
+    coords: { lat: 41.8902102, lng: 12.4922309 }
+    type: guided
 # Eyebrow + intro de las secciones-página, verbatim de index.html (fuera de toda card):
 #   gastronomia → 5337 / 5340 · arte → 5943 / 5945 · arquitectura → 6106 / 6108.
 sections:
