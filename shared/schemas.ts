@@ -350,6 +350,7 @@ export const TripSchema = z.object({
 })
 
 // ── Tipos TS derivados (gratis, una sola fuente de verdad) ────────────────────
+export type Motif = z.infer<typeof Motif> // los 19 motivos (clave de svgMotifs.ts)
 export type Monument = z.infer<typeof MonumentSchema>
 export type Day = z.infer<typeof DaySchema>
 export type Food = z.infer<typeof FoodSchema>
