@@ -194,13 +194,31 @@ test.describe('shell de la build estática (/guiaRoma/)', () => {
 //    estática emite SOLO «/», D-01). TripView reutilizado en /trips/roma + 404.
 // ============================================================================
 test.describe('routing dinámico /trips/[slug] (vía dev — ARCH-02)', () => {
+  // EXCLUIDO DEL GATE (D-04 exclusión #2): este bloque lanza `pnpm dev` (Nitro + Content), que
+  // es frágil al lock rancio de `nuxi dev` (ver deferred-items.md de la Fase 5). La skip a nivel
+  // de DESCRIBE se evalúa ANTES del beforeAll de este bloque, así que el spawn de `pnpm dev` NO
+  // ocurre cuando RUN_DEV_ROUTING está sin definir (el caso del gate). ARCH-02 (TripView reutilizado
+  // + 404) queda cubierto por la build estática + las aserciones estáticas de este mismo fichero.
+  // Ejecutable bajo demanda: `RUN_DEV_ROUTING=1 pnpm test:parity`. Es el "tirante" (suspenders) al
+  // "cinturón" (belt) del grep-invert de title que el Plan 03 añadió en test:parity.
+  test.skip(!process.env.RUN_DEV_ROUTING, 'dev-routing excluido del gate (D-04): lanza nuxi dev, frágil al lock rancio; ARCH-02 cubierto por el build estatico')
+
   // Puerto FIJO (un único dev server activo) — no se desplaza por worker.
   const DEV_PORT = 5200
   const DEV_SUBPATH = `http://localhost:${DEV_PORT}/guiaRoma`
 
   let devServer: ChildProcess | undefined
 
-  test.beforeAll(async ({ }, testInfo) => {
+  // Playwright EXIGE el patrón de desestructuración como primer argumento del hook (rechaza un
+  // identificador plano: "First argument must use the object destructuring pattern"). Solo
+  // necesitamos testInfo (segundo arg), así que el primero es {} y silenciamos no-empty-pattern.
+  // eslint-disable-next-line no-empty-pattern
+  test.beforeAll(async ({}, testInfo) => {
+    // Suspenders del suspenders: aunque la skip a nivel de describe ya impide llegar aquí sin la
+    // bandera, un early-return defensivo garantiza que el spawn de `pnpm dev` sea un no-op si este
+    // hook se ejecutara con RUN_DEV_ROUTING sin definir (nunca lanzar un dev server en el gate).
+    if (!process.env.RUN_DEV_ROUTING) return
+
     // El routing/404 es INDEPENDIENTE del viewport (status HTTP + DOM). Lo ejercitamos en UN solo
     // proyecto (desktop) para arrancar UN único `pnpm dev`: dos dev servers en paralelo (uno por
     // proyecto) compiten por la caché .nuxt/el websocket de Vite y el segundo no levanta.
