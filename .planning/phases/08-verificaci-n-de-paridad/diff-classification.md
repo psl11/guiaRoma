@@ -1,5 +1,66 @@
 # F8 / Plan 08-06 — Visual-diff classification (D-02)
 
+> ## UPDATE (4th decision — corrective golden re-capture): major corrections + remaining sub-pixel residual
+>
+> **Status:** `pnpm verify` STILL NOT green, but the picture changed substantially after the
+> authorized corrective re-capture and a corrected font root-cause. Summary of what this session
+> established and fixed (commits 90874d3, 31216e9, 9f47f75):
+>
+> 1. **Blocker A (leaked hero photos) — FIXED by corrective re-capture.** CONFIRMED REAL: the F1
+>    golden had real Trevi/Campo-de'-Fiori/etc. photos baked into the multi-card views (cropped
+>    `dia-viernes-light-desktop.png` and SAW the marble Trevi fountain, not the SVG). Root cause: an
+>    `onerror` race where some `<img>` loaded the photo before A5's abort fired. FIX: `golden.spec.ts`
+>    `settle()` now deterministically invokes each remaining hero/detail `<img>`'s OWN inline
+>    `onerror` (the index.html `loadSvgFallback*` — the live site's code) and waits until no `<img>`
+>    remains in `.card-hero`/`.detail-photo`. Re-captured from **index.html** (base config webServer),
+>    golden.spec.ts ONLY, never `visual-diff.spec.ts` (not circular). 33/56 PNGs changed = exactly the
+>    leaked-photo views; heights unchanged (photo→SVG, same box); 23 already-correct views byte-identical.
+>
+> 2. **Blocker B root cause — CORRECTED (the prior analysis below had the font backwards).** GROUND
+>    TRUTH (measured in the Playwright Chromium that captures the golden): index.html loads Google's
+>    **VARIABLE** Lora woff2 (normal-latin 37792 B, italic 40648 B, v37) and renders the probe string at
+>    **388px**. The "static fontsource" fix (recorded below) served a **different, ~3.6% NARROWER** Lora
+>    (374px). BOTH premises in the original record were false: `@fontsource/lora` is NOT byte-identical
+>    to Google's Lora (different bytes 21148 vs 21128 AND different advance widths 374 vs 388), and the
+>    variable Lora is what the golden actually uses (not "too wide"). The narrower font made
+>    italic/upright-mixed paragraphs wrap one fewer line → #inicio mobile 2174 vs golden 2200. FIX:
+>    **vendored the EXACT Google woff2** (latin + latin-ext) into `app/assets/fonts/` +
+>    `app/assets/css/fonts.css`, self-hosted by Vite (offline preserved, 0 runtime CDN refs);
+>    `@nuxt/fonts` families → `provider:'none'` (no wrong font, no injected "X Fallback:" metric faces).
+>    Also fixed two MDC-wrapper bugs: `TheHero` howTo now uses `<MDCRenderer :tag="false" unwrap="p">`
+>    (was nesting `<p>` in a `<div class="">`), and `DetailPhoto`'s v-html SVG span is `display:block`
+>    (an inline span collapsed the SVG `width:100%`). **#inicio now matches the golden EXACTLY**
+>    (mobile 2200=2200; desktop identical wrap, only uniform sub-pixel AA at ratio 0.02).
+>
+> 3. **Blocker C (#vaticano empty `.facts`) — FIXED.** `v-if="monument.facts.length"` (commit 90874d3).
+>
+> **REMAINING (the genuine blocker, returned for human/architectural decision):** after all the above,
+> `pnpm verify` still fails on **sub-pixel / AA-class DIMENSION deltas** on the tallest views:
+> - mobile: dia-lunes (54950 vs 54949 = 1px), dia-martes (4px), ref-arquitectura (20px),
+>   ref-gastronomia (9px), ref-arte (4px), ref-reservas (1px); ref-practica = same-dims AA (ratio 0.02).
+> - desktop: inicio = same-dims AA (ratio 0.02, content provably identical — cropped & compared);
+>   dia-viernes (21390 vs 21679 ≈ 289px), dia-sabado (≈688px), dia-domingo, dia-lunes, dia-martes.
+> The desktop day-view deltas localize to cumulative line-height rounding + detail-photo SVG
+> sub-pixel height across long prose (not a single fixable element; live index.html vs live Nuxt
+> measure IDENTICAL line counts for the same sections, so the residual is sub-pixel rasterization /
+> capture-timing, not a content/markup difference). These manifest as **dimension mismatches**, which
+> `toHaveScreenshot` hard-fails regardless of `maxDiffPixelRatio`, and which the plan's guard
+> explicitly forbids working around ("never a dimension workaround"). Accepting a narrow per-view
+> dimension tolerance would change the parity gate's contract → an architectural/human decision
+> (Rule 4), hence returned as a CHECKPOINT, not silently masked.
+>
+> **Also surfaced (out of scope — pre-existing, not introduced here):**
+> - `search-route.spec.ts` "Volver restaura el scroll" FAILS identically (scrollY 24 vs 0) on **pure
+>   HEAD (ec7cadc)** with zero changes — a pre-existing smooth-scroll-from-deep timing issue in the
+>   test (the `expect.poll` 5s window is too short for a `behavior:'smooth'` scroll back from a deep
+>   card). Independent of the golden/font work. Logged to deferred-items.md.
+> - Search ranking divergence: index.html "Pante" → fontana-trevi first; Nuxt → castel-santangelo
+>   first. A real MiniSearch-config parity gap, but separate from the visual-diff plan. Logged.
+> - `origin/main` index.html has drifted from this release branch (Coliseo tour 15:30→15:00, 8 lines)
+>   — main is the living version; the golden is correctly captured from THIS branch's index.html.
+>
+> --- original record (the static-font analysis; **superseded by point 2 above for the font direction**) ---
+
 **Status:** `pnpm verify` NOT green. The static-font fix (the third human decision, "serve static
 fonts") was implemented and **succeeded at its stated goal** — but it exposed that the remaining
 residual is NOT a font-metric problem. Three font-independent blockers remain; two require a human
