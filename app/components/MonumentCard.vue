@@ -41,11 +41,22 @@
 // `<span>` con el estilo inline VERBATIM del index.html. La fidelidad de label/href la validó la
 // migration-diff de F2 (palabras + hrefs).
 //
-// FRONTERAS DEL ROADMAP:
-//  · D-01 (hero plano): la `<img>` del hero es PLANA — `src`/`alt`/`loading` y NADA de manejador
-//    de error. El fallback SVG de imagen rota (el patrón del index.html) es trabajo de la Fase 7.
-//  · D-02 (notas shell): el `<textarea>` es un SHELL — `data-note-key` presente pero SIN v-model
-//    ni persistencia (la persistencia de notas, FEAT-04, es Fase 7).
+// HERO @ERROR → SVG (UI-05, Fase 7). Port 1:1 de `loadSvgFallback` (index.html:2215-2227): al
+// fallar la `<img>` del hero (URL de Wikimedia caída/offline), se sustituye su contenido por el
+// SVG del `monument.motif` vía `v-html` de la constante de CONFIANZA `motifSvg` (svgMotifs.ts,
+// Plan 01 auto-importado). El SVG NO lleva estilos inline: `.card-hero svg` (base.css:719) ya lo
+// dimensiona igual que la `<img>`. RAMA MUERTA portada por fidelidad: si `motifSvg` devuelve
+// `undefined` (motif ausente) se oculta `.card-hero` (mirror de `img.parentElement.style.display
+// ='none'`, index.html:2222) — para monumentos `motif` es obligatorio, así que nunca ocurre.
+//
+// NOTAS PERSISTENTES (FEAT-04, Fase 7). Port 1:1 de `setupNotes` (index.html:6471-6483): clave
+// EXACTA `roma-note-<slug>`, lectura en `onMounted` (jamás en setup → sin warning de hidratación,
+// SSR emite vacío y se rellena un frame después, micro-flash sancionado igual que useTripModes),
+// y guardado en `input` con un debounce inocuo (~200ms, D-03). Se enlaza con `:value`/`@input`
+// (binding explícito en vez del azúcar bidireccional) para mantener el default de SSR explícito
+// (paralelo a SearchBox:62-64). El texto
+// de la nota es del propio usuario y SÓLO se refleja en `:value`, nunca en `v-html` → sin
+// superficie de XSS almacenado (T-07-05 accept). Las notas son SÓLO de monumentos (este componente).
 //
 // FACTS: `facts[].value` está tipado plano (z.string) pero 2 fichas (san-luigi, pantheon) llevan
 // Markdown-inline en el valor (un enlace, un **negrita**); el original los renderiza como HTML. Por
@@ -68,11 +79,54 @@
 // rompería en silencio selectores que cruzan componentes y elementos generados por MDC, como
 // `.card-section p:first-of-type::first-letter`, `.detail-list li::before` y `.facts-row .label`.
 // La paridad es por construcción.
-import { defineComponent, h } from 'vue'
+import { defineComponent, h, onMounted, provide, ref } from 'vue'
 import type { DefineComponent } from 'vue'
 import type { Monument } from '~~/shared/schemas'
 
-defineProps<{ monument: Monument }>()
+const { monument } = defineProps<{ monument: Monument }>()
+
+// HERO @error → SVG (port de loadSvgFallback, index.html:2215-2227). `heroFailed` conmuta la
+// `<img>` por el `<span v-html>` con el SVG del motivo; `heroHidden` es la RAMA MUERTA (motif
+// ausente → ocultar `.card-hero`, mirror de index.html:2222). `motifSvg` viene auto-importado
+// de svgMotifs.ts (Plan 01). Sin estilos inline en el SVG: `.card-hero svg` (base.css:719) lo cuadra.
+const heroFailed = ref(false)
+const heroHidden = ref(false)
+function onHeroError() {
+  if (motifSvg(monument.motif)) heroFailed.value = true
+  else heroHidden.value = true
+}
+
+// NOTAS persistentes (port de setupNotes, index.html:6471-6483). Clave EXACTA `roma-note-<slug>`.
+// Lectura SÓLO en onMounted (sin warning de hidratación: SSR emite vacío). Guardado en @input con
+// debounce inocuo (~200ms, D-03). try/catch como el original (localStorage puede estar bloqueado).
+const noteText = ref('')
+const NOTE_KEY = `roma-note-${monument.slug}`
+onMounted(() => {
+  try {
+    noteText.value = localStorage.getItem(NOTE_KEY) ?? ''
+  }
+  catch {
+    // localStorage bloqueado (modo privado, sin permisos): se queda vacío, como el original.
+  }
+})
+let noteTimer: ReturnType<typeof setTimeout> | undefined
+function onNoteInput(v: string) {
+  noteText.value = v
+  clearTimeout(noteTimer)
+  noteTimer = setTimeout(() => {
+    try {
+      localStorage.setItem(NOTE_KEY, v)
+    }
+    catch {
+      // localStorage bloqueado: el guardado se descarta en silencio, como el original.
+    }
+  }, 200)
+}
+
+// PROVIDE del motivo para el `DetailPhoto.global.vue` anidado (Task 2 lo `inject`a). Hay
+// exactamente un `<DetailPhoto>` por ficha, bajo este componente vía el `<MDCRenderer>` de las
+// secciones (más abajo), así que el provide alcanza al correcto a través del subárbol MDC.
+provide('monumentMotif', monument.motif)
 
 // Componente LOCAL (objeto, no `.global.vue`) que sustituye `<ul>` SOLO en las listas de prosa de
 // MonumentCard, emitiendo el `<ul class="detail-list">` del original. Se pasa por valor en el mapa
@@ -147,12 +201,19 @@ const ArtLink: DefineComponent<any, any, any> = defineComponent({
       <template v-for="(link, i) in monument.arch" :key="link.ref"><template v-if="i !== 0">{{ ' ' }}</template><MDC v-slot="{ body }" :value="link.label"><MDCRenderer v-if="body" :body="body" :tag="false" :components="{ a: ArtLink }" unwrap="p" /></MDC><template v-if="link.note">{{ ' ' }}<span style="color:var(--ink-faint);font-style:italic;">{{ link.note }}</span></template></template>
     </div>
 
-    <div class="card-hero">
+    <div
+      v-show="!heroHidden"
+      class="card-hero"
+    >
       <img
+        v-if="!heroFailed"
         :src="monument.hero.src"
         :alt="monument.hero.alt"
         loading="lazy"
+        @error="onHeroError"
       >
+      <!-- eslint-disable-next-line vue/no-v-html — constante estática de CONFIANZA (svgMotifs.ts), nunca dato de usuario (T-07-06 mitigate) -->
+      <span v-else v-html="motifSvg(monument.motif)" />
     </div>
 
     <div
@@ -214,12 +275,12 @@ const ArtLink: DefineComponent<any, any, any> = defineComponent({
     >
       <span class="label">{{ monument.culture[0]?.title }}</span>
       <div
-        v-for="ref in monument.culture.slice(1)"
-        :key="ref.title"
+        v-for="cultureRef in monument.culture.slice(1)"
+        :key="cultureRef.title"
         class="ref-item"
       >
-        <span class="ref-title">{{ ref.title }}</span> <MDC
-          :value="ref.text"
+        <span class="ref-title">{{ cultureRef.title }}</span> <MDC
+          :value="cultureRef.text"
           :tag="false"
           unwrap="p"
         />
@@ -233,6 +294,8 @@ const ArtLink: DefineComponent<any, any, any> = defineComponent({
         class="notes-textarea"
         :data-note-key="monument.slug"
         placeholder="Lo que quieras recordar de aquí…"
+        :value="noteText"
+        @input="onNoteInput(($event.target as HTMLTextAreaElement).value)"
       />
     </div>
   </article>
