@@ -400,7 +400,7 @@ await expect(page.locator('#back-btn')).not.toHaveClass(/\bshow\b/)
 
 **If this table is empty:** it is not — three assumptions are flagged, all low-risk and all resolvable within F8's own work (the font one is literally D-02's mandated investigation).
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **build-once vs per-spec builds for gate runtime**
    - What we know: 5 self-contained specs each call `pnpm generate` (guarded by `ensureBuild`, which skips if `.output/public/index.html` exists — so within one `playwright test` invocation they share the first build). The new spec adds a 6th.
