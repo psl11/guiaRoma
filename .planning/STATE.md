@@ -4,7 +4,7 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Completed 08-02-PLAN.md (visual-diff spec)
-last_updated: "2026-06-23T20:37:03.480Z"
+last_updated: "2026-06-23T21:29:40.126Z"
 last_activity: 2026-06-23
 progress:
   total_phases: 8
@@ -222,6 +222,7 @@ None yet.
 - [Phase 2]: Bandera de research parcial — las secciones de referencia (`index.html` líneas ~5260-6250) no se leyeron en profundidad; leerlas y afinar el esquema `reference` antes de migrar ese contenido.
 - [RESUELTO en Fase 5 P03]: ~~[Phase 4/5]: Validar al implementar el cableado exacto de interceptación de `a[href^="#"]` en `<MDC>` (componente Prose-`a` custom vs listener delegado).~~ → Listener delegado nativo en CAPTURA + stopPropagation, registrado SÍNCRONAMENTE; probado en navegador real por navigation.spec.ts (SC#1/SC#3 verde) y aprobado por humano.
 - [Phase 4/6/7]: BLOQUEANTE D1 abierto (heredado de F4, NO de F5) — las colecciones de unión discriminada `artist`/`reference` devuelven filas SQL todo-null, así que `#arte`/`#arquitectura`/`#reservas`/`#practica` no renderizan con datos reales. `pnpm generate` sigue OK. Resolver antes de que F6/F7 dependan de esas secciones.
+- [Phase 8 P06] F8 visual-diff gate NOT green — plan premise incomplete. Two dominant blockers beyond the classified Class-A/Class-B: (1) @nuxt/fonts self-hosted Lora renders ~3.5% WIDER than the live Google-network Lora at capture (17px text 603px live vs 624px nuxt; the size-adjusted Lora Fallback metric font is active at capture, not the real woff2) → cumulative line-wrap → every tall day view +289..737px taller than the frozen golden; maxDiffPixelRatio CANNOT absorb DIMENSION mismatches. (2) notes-area/culture-box order is per-card in live index.html (4 cards notes-THEN-culture: piazza-navona/campo-fiori/ghetto/laterano; other 14 culture-THEN-notes); MonumentCard.vue hardcodes culture-THEN-notes → 4 cards mismatch golden (needs schema field = Rule 4). Class-B timeline neutralization + 50 transport-meta <br> data fix are CORRECT (timeline matches golden 0px); keep them. Golden baseline + golden.spec.ts byte-unchanged.
 
 ## Deferred Items
 
