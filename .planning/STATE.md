@@ -4,14 +4,14 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Completed 08-02-PLAN.md (visual-diff spec)
-last_updated: "2026-06-23T20:22:01.296Z"
+last_updated: "2026-06-23T20:26:28.814Z"
 last_activity: 2026-06-23
 progress:
   total_phases: 8
   completed_phases: 7
   total_plans: 39
-  completed_plans: 34
-  percent: 87
+  completed_plans: 35
+  percent: 88
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 ## Current Position
 
 Phase: 08 (Verificación de paridad) — EXECUTING
-Plan: 3 of 7
+Plan: 4 of 7
 Status: Ready to execute
 Last activity: 2026-06-23
 
-Progress: [█████████░] 87%
+Progress: [█████████░] 90%
 
 ## Performance Metrics
 
@@ -91,6 +91,7 @@ Progress: [█████████░] 87%
 | Phase 07 P04 | 10min | 1 task auto (+1 human-verify pending) | 1 files |
 | Phase 08 P01 | 24min | 2 tasks | 2 files |
 | Phase 08 P02 | 5min | 1 tasks | 1 files |
+| Phase 08 P03 | 2 | 1 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -200,6 +201,8 @@ Recent decisions affecting current work:
 - [Phase 8 P02]: visual-diff.spec.ts (NET-NEW SC#1) = 5º clon del patrón autocontenido (build+serve bajo /guiaRoma/, base 5780); injerta VERBATIM VIEWS+settle()+A5 de golden.spec.ts y SOLO cambia el goto a la build Nuxt servida (no /index.html). Llama toHaveScreenshot(name-theme.png) y DELEGA la resolución del dir de snapshots a la config de la puerta (Plan 03, snapshotPathTemplate) — sin array-path (prohibido) ni workaround que sortee el gate
 - [Phase 8 P02]: baseline congelado read-only POR CONSTRUCCIÓN — guard-assert existsSync(inicio-light-desktop.png) en beforeAll (falla RUIDOSAMENTE si falta, Pitfall 2) + NUNCA el flag de actualización de baseline (D-01). golden.spec.ts byte-unchanged (git diff --quiet=0); sin #mapa en VIEWS (D-06); sin mask/stylePath/maxDiffPixels (D-02: clasificación es Plan 06)
 - [Phase 8 P02]: tests/parity/** está IGNORADO por eslint.config.mjs:16 → 'pnpm lint <spec>' sale 0 sea cual sea el contenido; señal real vía 'eslint --no-ignore' (afloró 2 @stylistic/arrow-parens heredados del settle() verbatim, trimados a 'img =>'/'r =>', cero cambio de comportamiento). Comentarios D-06/D-01 redactados SIN los tokens literales para que el grep de criterios pase
+- [Phase ?]: [Phase 8 P03]: playwright.gate.config.ts extiende la base y fija snapshotPathTemplate a tests/parity/golden.spec.ts-snapshots/{arg}-{projectName}{ext} (D-01) — el toHaveScreenshot de visual-diff.spec.ts (Plan 02) resuelve al PNG congelado (inicio-light + desktop → inicio-light-desktop.png) en vez de crear baseline Nuxt-contra-sí-mismo; forma array prohibida, la plantilla de config es el escape soportado
+- [Phase ?]: [Phase 8 P03]: doble exclusión de puerta — golden.spec.ts por testIgnore a nivel FICHERO (D-04 #1, estable ante renombrados; sigue intacto como herramienta de captura F1) y el test de dev-routing (shell.spec.ts) por --grep-invert 'reutiliza el MISMO TripView' en test:parity (D-04 #2, cinturón a la bandera de entorno de Plan 04). pnpm verify = generate limpio + unit + data + parity (D-03, build al frente). NUNCA --update-snapshots por la puerta
 
 ### Pending Todos
 
@@ -227,6 +230,6 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-06-23T20:22:01.286Z
+Last session: 2026-06-23T20:26:07.910Z
 Stopped at: Completed 08-02-PLAN.md (visual-diff spec)
 Resume file: None
