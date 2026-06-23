@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 4: Render de contenido + modos de ritmo** - Fichas, timeline y secciones de referencia renderizadas desde datos e idénticas a hoy, con selector de ritmo, "caminar menos" y modo resumen (completed 2026-06-20)
 - [x] **Phase 5: Navegación transversal** - `useCardNavigation` (scroll-a-ficha, pila volver, scrollspy `+130`) consumida de forma única por enlaces, mapa y búsqueda (completed 2026-06-21)
 - [x] **Phase 6: Derivados de datos — búsqueda y ruta del día** - Búsqueda en cliente sobre los datos y "ruta del día" derivada de `day.cards`, ambas con la misma cobertura y resultado que hoy (completed 2026-06-21)
-- [ ] **Phase 7: Isla client-only — mapa, fallback de imagen y notas** - Mapa Leaflet client-only con marcadores/popups/banner offline, imagen-con-fallback hero/detail y notas por ficha en localStorage
+- [x] **Phase 7: Isla client-only — mapa, fallback de imagen y notas** - Mapa Leaflet client-only con marcadores/popups/banner offline, imagen-con-fallback hero/detail y notas por ficha en localStorage (completed 2026-06-23)
 - [ ] **Phase 8: Verificación de paridad** - Suite Playwright (visual-diff contra el golden, E2E de comportamiento e invariantes de datos) que confirma paridad 100% antes de cualquier merge a producción
 
 ## Phase Details
@@ -132,7 +132,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   - [x] 07-01-PLAN.md — Coliseo extra-marker (TripSchema + trip.yml) + 3 pure utils (mapMarkers/mapOffline/svgMotifs) + their Vitest specs [Wave 1]
   - [x] 07-02-PLAN.md — LeafletMap.client.vue island (dynamic import in onMounted, divIcon markers, popups, fitBounds, offline heuristic) + TripView #mapa wiring (ClientOnly + same-size fallback) [Wave 2]
   - [x] 07-03-PLAN.md — Image fallback hero/detail (@error → motif SVG, provide/inject) + per-card notes persistence (roma-note-<slug>, onMounted) in MonumentCard + DetailPhoto.global [Wave 2]
-  - [ ] 07-04-PLAN.md — Self-contained Playwright parity spec (map/popups/offline/fallback/notes, SC#1–SC#7) + human paridad sign-off [Wave 3]
+  - [x] 07-04-PLAN.md — Self-contained Playwright parity spec (map/popups/offline/fallback/notes, SC#1–SC#7) + human paridad sign-off [Wave 3]
 **UI hint**: yes
 
 ### Phase 8: Verificación de paridad
@@ -159,5 +159,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 4. Render de contenido + modos de ritmo | 5/5 | Complete   | 2026-06-20 |
 | 5. Navegación transversal | 3/3 | Complete   | 2026-06-21 |
 | 6. Derivados de datos — búsqueda y ruta del día | 5/5 | Complete   | 2026-06-21 |
-| 7. Isla client-only — mapa, fallback de imagen y notas | 3/4 | In Progress|  |
+| 7. Isla client-only — mapa, fallback de imagen y notas | 4/4 | Complete   | 2026-06-23 |
 | 8. Verificación de paridad | 0/TBD | Not started | - |
