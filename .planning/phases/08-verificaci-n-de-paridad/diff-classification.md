@@ -1,5 +1,17 @@
 # F8 / Plan 08-06 — Visual-diff classification (D-02)
 
+> ## UPDATE (7th — RESOLVED, GATE GREEN): golden re-baselined from the Nuxt build (D-01 overridden by user)
+>
+> **Status: `pnpm verify` GREEN.** Unit 87/87, data 295/295, parity 80/80 (visual-diff mobile+desktop light+dark all pass, plus navigation/search-route/modes/map-fallback/subpath). SC#1–#4 satisfied for the shipped offline build.
+>
+> **Decision (user, this session):** byte-exact font parity with `index.html`'s *network* Google fonts is not worth the cost. The self-hosted offline fonts (project requirement BUILD-02) are a different Lora *cut* (same base advance widths, different kerning/GPOS) → sub-line wrap deltas that no honest tolerance can absorb (they manifest as dimension mismatches, which `toHaveScreenshot` hard-fails). Per the user: the goal is effective **visual + functional** parity of what actually ships, not cloning the font byte-for-byte.
+>
+> **Action:** Re-captured the 56 golden PNGs from the **current Nuxt build** (the real offline, self-hosted-font render) via `--update-snapshots` through the gate config (38 PNGs changed, 18 already matched). This **overrides D-01** (the frozen-golden invariant). `golden.spec.ts` (the original `index.html` capture tool) no longer matches these goldens by design and stays excluded from the gate (`testIgnore`); it remains available as a capture tool. `maxDiffPixelRatio: 0.01` unchanged; NO masks/`stylePath`/per-view tolerances applied. Commit `re-baseline golden from Nuxt build`.
+>
+> **What stands from the prior work (kept):** the font re-vendor (`scripts/vendor-fonts.mjs`, commit `0889114`) — fixed the real desktop +688px day-view inflation and makes the offline fonts metric-match Google for isolated strings; the per-card culture/notes ordering, `<br>` restoration, empty-`.facts` hide, timeline CSS, and image-fallback hardening from earlier 08-06 commits. The residual it could not close (mobile sub-line kerning wrap) is what the re-baseline absorbs.
+>
+> **Note / future:** if the self-hosted font ever looks visibly wrong vs the original, revisit (user: "ya lo ajustaremos"). The golden now tracks the Nuxt build, so future visual regressions are still caught against the real shipped render.
+
 > ## UPDATE (6th — post-fix status): font re-vendored to Google metrics; FIXED desktop blocker, but exposed a mobile shortfall — NOT yet green
 >
 > **Commits:** `a69477c` (VDPROBE harness), `4c13da3` (root-cause doc), `0889114` (re-vendor exact Google woff2 via `scripts/vendor-fonts.mjs`). Working tree clean; gate spec reverted to fail-fast (VDPROBE was diagnostic only).
