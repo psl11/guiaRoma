@@ -13,7 +13,7 @@ stats:
   - variant: metro
     text: '**Metro B** Termini→Circo Massimo (mañana)'
   - variant: ticket
-    text: '**Coliseo guiado · 15:00** · Arena + Foro + Palatino (2h 30min)'
+    text: '**Coliseo guiado · 15:30** · Arena + Foro + Palatino (2h 30min)'
   - variant: taxi
     text: '**Taxi al Auditorium** · concierto Einaudi 21:00 (~€20)'
 light:
@@ -27,7 +27,7 @@ light:
     - kind: see
       text: >-
         **Imprescindibles:** comida en Ristoro Della Salute (13:30, junto al
-        Coliseo), tour Coliseo + Arena (15:00, reservado), España en el pub
+        Coliseo), tour Coliseo + Arena (15:30, reservado), España en el pub
         (18:00, sentados) y concierto Einaudi (21:00, sentados).
     - kind: skip
       text: >-
@@ -152,7 +152,7 @@ timeline:
     footnote: >-
       Estas dos son por si os apetece la cucina ebraica al pasar; pero hoy **la
       comida está pensada más cerca del Coliseo** (ver más abajo, ~13:30) para
-      llegar al tour de las 15:00. Si coméis aquí, contad 15-20 min hasta el punto
+      llegar al tour de las 15:30. Si coméis aquí, contad 15-20 min hasta el punto
       de encuentro. Fichas en [Gastronomía](#gastronomia).
   - kind: stop
     pace: slow-only
@@ -179,7 +179,7 @@ timeline:
         tag: recomendado
         meta: '⏱ **20 min**<br>💶 **gratis**'
     footnote: >-
-      Uno de los paseos más espectaculares de Roma. Hoy el tour es a las 15:00,
+      Uno de los paseos más espectaculares de Roma. Hoy el tour es a las 15:30,
       así que la mañana va sin prisa: Vittoriano, comida cerca del Coliseo y al
       punto de encuentro.
   - kind: stop
@@ -202,7 +202,7 @@ timeline:
     reservedEvent: true
     tag: reservado
     note: >-
-      A pie de Coliseo, perfecto para llegar al tour de las 15:00 sin moveros de
+      A pie de Coliseo, perfecto para llegar al tour de las 15:30 sin moveros de
       la zona.
   - kind: reservation
     text: >-
@@ -243,7 +243,7 @@ timeline:
       Via dei Fori Imperiali** — no la de la plaza del Coliseo.
   - kind: stop
     pace: all
-    time: '15:00'
+    time: '15:30'
     title: Tour Coliseo (Arena) + Foro + Palatino · Civitatis
     disabled: true
     tag: guiado
@@ -253,7 +253,7 @@ timeline:
   - kind: meta
     items:
       - level: ok
-        text: '⏱ **2h 30min** · hasta ~17:30 · Coliseo con Arena + Foro Romano + Palatino'
+        text: '⏱ **2h 30min** · hasta ~18:00 · Coliseo con Arena + Foro Romano + Palatino'
       - level: plain
         text: '🚶 hasta el bar del partido: **3-12 min**'
   - kind: stop
