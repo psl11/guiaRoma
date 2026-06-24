@@ -1,10 +1,7 @@
-/* fonts.css — VENDORED desde Google Fonts (css2, Lora v37 etc.) para PARIDAD-PIXEL EXACTA con
- * el index.html vivo (F8 / 08-06). El golden se captura de index.html, que carga estas MISMAS
- * instancias estaticas de Google; @fontsource/* servia una Lora DISTINTA (~3.6% mas estrecha:
- * 374px vs 388px en la cadena de prueba), rompiendo el wrap de linea. Estos woff2 son los BYTES
- * EXACTOS que sirve Google a Chromium (subsets latin + latin-ext, los unicos que el contenido
- * es/it necesita). Self-hosted bajo /guiaRoma/_nuxt/ por Vite (offline, BUILD-02): CERO peticion
- * a fonts.gstatic.com/googleapis.com en runtime. Generado por vendor-fonts-tmp.mjs. */
+/* fonts.css — GENERADO por scripts/vendor-fonts.mjs desde la MISMA URL css2 que carga
+ * index.html (el golden). woff2 = bytes EXACTOS que Google sirve a Chromium (UA Chrome) → paridad
+ * métrica con el golden (F8/08-06). Self-hosted bajo /guiaRoma/_nuxt/ por Vite (offline, BUILD-02):
+ * CERO petición a fonts.gstatic.com/googleapis.com en runtime. NO editar a mano; regenerar con el script. */
 
 /* Cormorant Garamond 400 italic latin-ext */
 @font-face {

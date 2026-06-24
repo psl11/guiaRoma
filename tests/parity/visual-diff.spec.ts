@@ -276,19 +276,11 @@ test.describe('visual-diff nuxt↔golden en /guiaRoma/ construido (SC#1)', () =>
       // {projectName} al PNG congelado correspondiente (p. ej. inicio-light-desktop.png). Honra
       // maxDiffPixelRatio:0.01 heredado de playwright.config.ts. Sin mask/stylePath/maxDiffPixels
       // a priori (D-02: la clasificación de diffs es el Plan 06).
-      const PROBE: Record<string, string> = {}
       for (const [name, sel] of VIEWS) {
         const locator = page.locator(sel)
         await locator.scrollIntoViewIfNeeded()
-        try {
-          await expect(locator).toHaveScreenshot(`${name}-${theme}.png`, { timeout: 20_000 })
-          PROBE[`${name}-${theme}`] = 'PASS'
-        }
-        catch (e) {
-          PROBE[`${name}-${theme}`] = 'FAIL: ' + String((e as Error).message).replace(/\n/g, ' ').slice(0, 220)
-        }
+        await expect(locator).toHaveScreenshot(`${name}-${theme}.png`)
       }
-      console.log('VDPROBE', JSON.stringify(PROBE))
 
       expect(consoleErrors, `errores de consola inesperados: ${consoleErrors.join(' | ')}`).toHaveLength(0)
     })
