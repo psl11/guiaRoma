@@ -19,7 +19,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 5: Navegación transversal** - `useCardNavigation` (scroll-a-ficha, pila volver, scrollspy `+130`) consumida de forma única por enlaces, mapa y búsqueda (completed 2026-06-21)
 - [x] **Phase 6: Derivados de datos — búsqueda y ruta del día** - Búsqueda en cliente sobre los datos y "ruta del día" derivada de `day.cards`, ambas con la misma cobertura y resultado que hoy (completed 2026-06-21)
 - [x] **Phase 7: Isla client-only — mapa, fallback de imagen y notas** - Mapa Leaflet client-only con marcadores/popups/banner offline, imagen-con-fallback hero/detail y notas por ficha en localStorage (completed 2026-06-23)
-- [ ] **Phase 8: Verificación de paridad** - Suite Playwright (visual-diff contra el golden, E2E de comportamiento e invariantes de datos) que confirma paridad 100% antes de cualquier merge a producción
+- [x] **Phase 8: Verificación de paridad** - Suite Playwright (visual-diff contra el golden, E2E de comportamiento e invariantes de datos) que confirma paridad 100% antes de cualquier merge a producción (completed 2026-06-24)
 
 ## Phase Details
 
@@ -151,7 +151,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   - [x] 08-04-PLAN.md — Dev-routing env-flag (D-04#2): gate shell.spec.ts dev-routing behind RUN_DEV_ROUTING so the gate never spawns nuxi dev [Wave 3]
   - [x] 08-05-PLAN.md — tests/README.md (D-04/D-01): document both gate exclusions, the frozen-baseline invariant, and the recorded gate test count [Wave 4]
   - [x] 08-06-PLAN.md — Run gate once + classify diffs (D-02) + green pnpm verify (SC#4): real -> fix component to 0.01, artifact -> justified threshold; baseline untouched [Wave 5]
-  - [ ] 08-07-PLAN.md — Close pending F7 sign-off (prereq, D-07) + F8 global parity sign-off (D-07/D-06); STOP at green + sign-off (D-08, no merge/deploy) [Wave 6]
+  - [x] 08-07-PLAN.md — Close pending F7 sign-off (prereq, D-07) + F8 global parity sign-off (D-07/D-06); STOP at green + sign-off (D-08, no merge/deploy) [Wave 6]
 
 ## Progress
 
@@ -167,4 +167,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8
 | 5. Navegación transversal | 3/3 | Complete   | 2026-06-21 |
 | 6. Derivados de datos — búsqueda y ruta del día | 5/5 | Complete   | 2026-06-21 |
 | 7. Isla client-only — mapa, fallback de imagen y notas | 4/4 | Complete   | 2026-06-23 |
-| 8. Verificación de paridad | 6/7 | In Progress|  |
+| 8. Verificación de paridad | 7/7 | Complete   | 2026-06-24 |
