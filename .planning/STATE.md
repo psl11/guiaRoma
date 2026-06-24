@@ -1,11 +1,11 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.0
-milestone_name: milestone
-status: Awaiting next milestone
+milestone_name: Migración a Nuxt 4
+status: v1.0 shipped — PR branch release/nuxt-4-pr pushed (PR pending manual creation; gh unavailable)
 stopped_at: Completed 08-02-PLAN.md (visual-diff spec)
-last_updated: "2026-06-24T11:16:39.846Z"
-last_activity: 2026-06-24 — Milestone v1.0 completed and archived
+last_updated: "2026-06-24T11:43:18.119Z"
+last_activity: 2026-06-24
 progress:
   total_phases: 8
   completed_phases: 8
@@ -27,8 +27,8 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 
 Phase: Milestone v1.0 complete
 Plan: —
-Status: Awaiting next milestone
-Last activity: 2026-06-24 — Milestone v1.0 completed and archived
+Status: v1.0 shipped — PR branch release/nuxt-4-pr pushed (PR pending manual creation; gh unavailable)
+Last activity: 2026-06-24
 
 ## Performance Metrics
 
