@@ -1,0 +1,44 @@
+kind: arquitectura
+slug: arq-antigua
+trip: roma
+avatar: I
+name: Roma antigua
+dates: s. VIII a.C. – V d.C. · la revolución del arco
+epithet: «Grecia construyó con columnas; Roma inventó el arco, la bóveda y la cúpula — y con ellos, el espacio interior.»
+sections:
+  - heading: Qué la define
+    body: >-
+      Los griegos levantaban templos a base de **columnas y dinteles** (líneas
+      rectas): hermosos por fuera, pequeños por dentro. Roma adoptó el **arco** de
+      los etruscos y lo multiplicó gracias a un invento decisivo, el **hormigón**
+      (_opus caementicium_): de golpe pudo cubrir espacios gigantescos **sin
+      columnas en medio**. Nacen así la bóveda, la cúpula y los grandes interiores.
+      Los órdenes griegos siguen ahí, pero ya como **decoración** superpuesta piso
+      a piso.
+  - heading: En qué fijarse
+    body: |
+      - El **arco de medio punto** y la **bóveda de cañón**: las arcadas del
+      Coliseo, los acueductos.
+      - La **cúpula y el óculo**: el Panteón, la mayor cúpula de hormigón no armado
+      de la historia, abierta al cielo por un agujero de 9 m.
+      - Los **órdenes superpuestos** del Coliseo: dórico abajo, jónico en medio,
+      corintio arriba.
+      - El **ladrillo y el hormigón vistos** allí donde el mármol fue expoliado
+      (Foro, Palatino, Castel Sant'Angelo): así se ve "el esqueleto".
+      - La **escala imperial**: todo pensado para apabullar al ciudadano.
+  - heading: Por qué importa
+    body: >-
+      La ingeniería romana —arco, bóveda, cúpula, hormigón— es el **cimiento de
+      toda la arquitectura occidental**. El Renacimiento y el Barroco no harán otra
+      cosa que releerla.
+seenIn:
+  - ref: pantheon
+    label: '[el Panteón](#pantheon)'
+    note: ✦ Dónde la verás en este viaje · el **Coliseo + Foro + Palatino** (guiado)
+  - ref: ghetto
+    label: '[el Teatro de Marcello](#ghetto)'
+  - ref: castel-santangelo
+    label: '[Castel Sant''Angelo](#castel-santangelo)'
+  - ref: fontanone
+    label: '[Acqua Paola](#fontanone)'
+    note: y los acueductos en sus fuentes terminales ( ).

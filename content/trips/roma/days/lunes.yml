@@ -1,0 +1,440 @@
+slug: lunes
+trip: roma
+order: 4
+roman: IV
+eyebrow: lunedì · 22 giugno
+title: Tridente y la Roma cristiana
+subtitle: >-
+  El primer día sin guías. La mañana en el Tridente y la tarde bajando por las
+  grandes basílicas: el Laterano, los tres niveles de San Clemente y el Moisés de
+  Miguel Ángel.
+stats:
+  - variant: walk
+    text: '**~6 km** a pie'
+  - variant: metro
+    text: '**Metro A** Termini→San Giovanni · centro a pie'
+  - variant: ticket
+    text: '**Basílicas gratuitas** · cerradas 12:30-15:00 (el Laterano no)'
+light:
+  title: 🦶 Versión ligera · lunes
+  items:
+    - kind: see
+      text: >-
+        **Imprescindibles:** [Biblioteca Casanatense](#casanatense), comida en
+        [La Matriciana](#g-matriciana) (14:15), [San Giovanni in
+        Laterano](#laterano), el [Moisés](#san-pietro-vincoli) de San Pietro in
+        Vincoli y cena en [Felice](#g-felice) (22:00).
+    - kind: move
+      text: >-
+        **Cómo moverse:** metro y taxi entre zonas (Spagna→Termini en metro,
+        Termini→San Giovanni en metro, a Testaccio en taxi). Evitad los tramos
+        largos a pie del Tridente.
+    - kind: skip
+      text: >-
+        **Saltar hoy:** subir la escalinata de Piazza di Spagna (vedla desde
+        abajo), los niveles subterráneos de [San Clemente](#san-clemente) (son
+        escaleras a la excavación; quedaos en la basílica de arriba) y la Torre
+        della Scimmia.
+    - kind: care
+      text: >-
+        **Ojo:** escaleras = la escalinata de Spagna y el subsuelo de San
+        Clemente. Sáltatelos.
+    - kind: rest
+      text: '**Descanso:** comida sentada en La Matriciana y cena en Felice.'
+timeline:
+  - kind: stop
+    pace: all
+    time: '08:30'
+    title: Desayuno + check-out · maletas en consigna
+    disabled: true
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **60 min** · desayuno + check-out + dejar maletas en consigna'
+  - kind: transport
+    pace: all
+    variant: walk
+    header: Hotel → Biblioteca Casanatense · ~2,2 km
+    modes:
+      - icon: 🚶
+        recommended: true
+        desc: Andando · bajada agradable por Via Nazionale · comercios abiertos
+        tag: recomendado
+        meta: '⏱ **28 min**<br>💶 **gratis**'
+      - icon: Ⓜ️
+        desc: >-
+          **Metro A** · Termini → Barberini · 1 parada · + 8 min andando hasta
+          Casanatense
+        meta: '⏱ **15 min total**<br>💶 **€1,50 p.p. · €4,50 total**'
+      - icon: 🚕
+        desc: '**Taxi** directo'
+        meta: '⏱ **10 min**<br>💶 **€10-12 · €3-4 p.p.**'
+    footnote: >-
+      Última mañana en Roma — la bajada por Via Nazionale es agradable y os deja
+      con buen sabor. Si lleváis prisa, metro.
+  - kind: stop
+    pace: all
+    time: '09:30'
+    title: Biblioteca Casanatense
+    ref: casanatense
+    note: Única ventana semanal. Solo lunes-viernes.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **45 min** · suficiente para la Sala Monumental — es pequeña pero densa'
+      - level: plain
+        text: '🚶 hasta siguiente: **2 min** · hasta la Minerva, detrás del Panteón'
+  - kind: stop
+    pace: medium
+    time: '10:15'
+    title: Santa Maria sopra Minerva
+    ref: minerva
+    note: >-
+      Detrás del Panteón. El elefantino de Bernini fuera; el Cristo de Miguel
+      Ángel dentro.
+  - kind: meta
+    items:
+      - level: ok
+        text: >-
+          ⏱ **20 min** · la única iglesia gótica de Roma · el Cristo de Miguel
+          Ángel y la bóveda azul estrellada
+      - level: plain
+        text: '🚶 hasta siguiente: **4 min** · hasta San Luigi dei Francesi'
+  - kind: stop
+    pace: medium
+    time: '10:35'
+    title: San Luigi dei Francesi
+    ref: san-luigi
+    tag: Caravaggio
+    note: >-
+      El ciclo de San Mateo: tres Caravaggios en la Cappella Contarelli. Entrada
+      gratis.
+  - kind: meta
+    items:
+      - level: warn
+        text: '⏱ **20 min** · llevad monedas para iluminar la capilla · cierra a mediodía (12:45)'
+      - level: plain
+        text: '🚶 hasta Tazza d''Oro: **4 min**'
+  - kind: stop
+    pace: medium
+    time: '11:00'
+    title: Tazza d'Oro · espresso
+    ref: tazza-doro
+    note: >-
+      A 2 min del Panteón. El mejor espresso de Roma según muchos. Granita di
+      caffè en barra.
+  - kind: meta
+    items:
+      - level: ok
+        text: >-
+          ⏱ **15 min** · espresso en barra — la granita di caffè necesita 5 min
+          más pero merece
+  - kind: transport
+    pace: all
+    variant: walk
+    header: Recorrido mañana del lunes (entre paradas)
+    modes:
+      - icon: 🚶
+        recommended: true
+        desc: >-
+          Andando · Casanatense → Minerva (2 min) → San Luigi dei Francesi (4 min)
+          → Tazza d'Oro (4 min) → Torre Scimmia (7 min) → Popolo (13 min, sube Via
+          Ripetta) → Spagna (10 min, Via del Babuino)
+        tag: recomendado
+        meta: '⏱ **~3 km · 50 min**<br>💶 **gratis**'
+    footnote: >-
+      Todo el centro histórico hilado a pie, por las calles más bonitas de Roma.
+      La zona de detrás del Panteón concentra Minerva y San Luigi: dos joyas en
+      cuatro minutos.
+  - kind: stop
+    pace: medium
+    time: '11:15'
+    title: Torre della Scimmia
+    ref: torre-scimmia
+    note: Por Via della Scrofa. Leyenda medieval del mono.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **5 min** · exterior — es un vistazo rápido desde la calle, no un museo'
+      - level: plain
+        text: '🚶 hasta siguiente: **13 min** · ~1 km por Via Ripetta hasta Piazza del Popolo'
+  - kind: stop
+    pace: all
+    time: '11:35'
+    title: Piazza del Popolo · Santa Maria del Popolo
+    ref: popolo
+    note: >-
+      Dos Caravaggios más. Iglesia cierra 12:00 — id directos a la Cappella
+      Cerasi.
+  - kind: meta
+    items:
+      - level: warn
+        text: >-
+          ⏱ **25 min** · cierra a las 12:00 — ir directo a la Cappella Cerasi
+          (izquierda al entrar)
+      - level: plain
+        text: '🚶 hasta siguiente: **10 min** · 750 m por Via del Babuino hasta Piazza di Spagna'
+  - kind: stop
+    pace: all
+    time: '12:15'
+    title: Piazza di Spagna · Barcaccia
+    ref: spagna
+    note: Bajada por Via Margutta (la calle de Fellini).
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **25 min** · escalinata + fuente + Via Margutta — sin prisa'
+      - level: plain
+        text: '🚶 hasta el Panteón: **13 min** · bajando por el centro'
+  - kind: transport
+    pace: all
+    variant: walk
+    header: Piazza di Spagna → Panteón · ~1,2 km
+    modes:
+      - icon: 🚶
+        recommended: true
+        desc: >-
+          Andando · bajáis por Via dei Condotti / Via del Corso hasta la Rotonda
+        tag: recomendado
+        meta: '⏱ **13 min**<br>💶 **gratis**'
+    footnote: >-
+      Aprovecháis el hueco del mediodía para el Panteón antes de comer — os queda
+      de camino.
+  - kind: stop
+    pace: all
+    time: '13:00'
+    title: Panteón · interior
+    ref: pantheon
+    reservedEvent: true
+    tag: reservado
+    note: >-
+      Franja reservada 13:00-14:00. Con luz natural por el óculo: a mediodía el
+      haz de luz es espectacular.
+  - kind: reservation
+    text: >-
+      ✅ **Reserva confirmada · Panteón (Musei Italiani)** — lun 22 jun, franja
+      **13:00-14:00** · 3 entradas nominales (Alejandro, Pablo, Víctor) · acceso
+      por la Piazza della Rotonda.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **30 min** · el interior es un espacio único, no un museo'
+      - level: plain
+        text: '🚶 a comer: **~12 min** en taxi a Via del Viminale'
+  - kind: transport
+    pace: all
+    variant: taxi
+    header: Panteón → Esquilino · pranzo · ~2 km
+    modes:
+      - icon: 🚕
+        recommended: true
+        desc: >-
+          **Taxi** directo a Via del Viminale · cómodo para llegar a la mesa sin
+          prisa
+        tag: recomendado
+        meta: '⏱ **12 min**<br>💶 **€10-12 · €3-4 p.p.**'
+      - icon: 🚌
+        desc: >-
+          **Bus 64/40** desde Largo Argentina (~5 min andando) hasta Termini
+        meta: '⏱ **20 min**<br>💶 **€1,50 p.p.**'
+      - icon: 🚶
+        desc: Andando · por el centro hacia el Esquilino
+        meta: '⏱ **25 min**<br>💶 **gratis**'
+    footnote: >-
+      La mesa es a las 14:15: del Panteón en taxi llegáis con ~30 min de margen.
+      La tarde sigue bajando hacia las grandes basílicas — comed ligero, que el
+      calor de las 14h aprieta.
+  - kind: stop
+    pace: all
+    time: '14:15'
+    title: Pranzo en La Matriciana dal 1870 · Esquilino
+    disabled: true
+    reservedEvent: true
+    tag: reservado
+    note: >-
+      La patria de la amatriciana (sale en Stanley Tucci). Junto al Teatro
+      dell'Opera.
+  - kind: reservation
+    text: >-
+      ✅ **Reserva confirmada · La Matriciana dal 1870** — lun 22 jun, 14:15 · 3
+      comensales · Via del Viminale 44 · ☎ +39 06 488 1775. A 5 min de Termini;
+      desde aquí bajáis en metro a San Giovanni para las basílicas.
+  - kind: meta
+    items:
+      - level: ok
+        text: >-
+          ⏱ **75-90 min** · comida tranquila · la mañana acaba sobre las 12:00,
+          tenéis margen de sobra antes de la mesa (café o paseo por el centro)
+      - level: plain
+        text: '🚶 hasta el metro: **5 min** · Termini'
+  - kind: food
+    pace: all
+    header: 🍴 Tu mesa del lunes (mediodía)
+    entries:
+      - ref: g-matriciana
+        name: La Matriciana dal 1870
+        reserved: true
+        badge: ✓ reservado 14:15
+        desc: >-
+          Junto al Teatro dell'Opera · la patria de la amatriciana (Tucci) ·
+          **~€35-50**
+    footnote: 'Ficha completa en [Gastronomía](#gastronomia).'
+  - kind: transport
+    pace: medium
+    header: Termini → San Giovanni in Laterano · ~2,5 km
+    modes:
+      - icon: Ⓜ️
+        recommended: true
+        desc: >-
+          **Metro A** · Termini → San Giovanni · 3 paradas · la basílica está a la
+          salida
+        tag: recomendado
+        meta: '⏱ **10 min**<br>💶 **€1,50 p.p.**'
+    footnote: >-
+      San Giovanni abre todo el día sin pausa de mediodía: por eso va primera. San
+      Clemente y San Pietro in Vincoli reabren a las 15:00.
+  - kind: stop
+    pace: medium
+    time: '15:45'
+    title: San Giovanni in Laterano · Scala Santa
+    ref: laterano
+    note: La catedral de Roma. La Escalera Santa, enfrente.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **60 min** · basílica + claustro + (opcional) Scala Santa enfrente'
+      - level: plain
+        text: '🚶 hasta siguiente: **12 min** · ~900 m hacia el Coliseo'
+  - kind: transport
+    pace: medium
+    variant: walk
+    header: Laterano → San Clemente · ~12 min
+    modes:
+      - icon: 🚶
+        recommended: true
+        desc: Andando · por Via di San Giovanni in Laterano hacia el Coliseo
+        tag: recomendado
+        meta: '⏱ **12 min**<br>💶 **gratis**'
+    footnote: >-
+      San Clemente reabre a las 15:00. Si llegáis antes, esperad en la cafetería
+      de enfrente.
+  - kind: stop
+    pace: all
+    time: '17:00'
+    title: Basilica di San Clemente
+    ref: san-clemente
+    note: Tres niveles, tres épocas. La máquina del tiempo de Roma.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **45-55 min** · basílica superior gratis + niveles inferiores con ticket'
+      - level: warn
+        text: >-
+          Cierra 18:00 · última entrada a los niveles inferiores ~17:20 — entrad
+          directos a comprar el ticket. Si vais justos, ved solo la basílica
+          superior
+  - kind: transport
+    pace: all
+    variant: walk
+    header: San Clemente → San Pietro in Vincoli · ~15 min
+    modes:
+      - icon: 🚶
+        recommended: true
+        desc: >-
+          Andando · bordeáis el Coliseo y subís hacia Monti por la Salita dei
+          Borgia
+        tag: recomendado
+        meta: '⏱ **15 min**<br>💶 **gratis**'
+    footnote: >-
+      El paseo pasa junto al Coliseo (que veréis por dentro con guía el domingo).
+      Aquí solo de refilón, empezando a iluminarse.
+  - kind: stop
+    pace: all
+    time: '18:15'
+    title: San Pietro in Vincoli · Moisés
+    ref: san-pietro-vincoli
+    note: El Moisés de Miguel Ángel. Cierra ~19:00.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **30 min** · el Moisés + las cadenas de San Pedro · llevad monedas para la luz'
+      - level: plain
+        text: '🚶 hasta Monti: **6 min** · estáis a un paso del rione'
+  - kind: transport
+    pace: all
+    variant: walk
+    header: San Pietro in Vincoli → Monti · ~6 min
+    modes:
+      - icon: 🚶
+        recommended: true
+        desc: >-
+          Andando · bajáis a Via dei Serpenti y a la Piazza della Madonna dei
+          Monti, corazón del rione
+        tag: recomendado
+        meta: '⏱ **6 min**<br>💶 **gratis**'
+    footnote: >-
+      Aperitivo en la fuentecita de la plaza antes de bajar a Testaccio a cenar.
+  - kind: stop
+    pace: all
+    time: '19:00'
+    title: Rione Monti · aperitivo
+    ref: monti
+    note: >-
+      Vermut en la piazza de la Madonna dei Monti. Descanso antes de la cena.
+  - kind: meta
+    items:
+      - level: ok
+        text: >-
+          ⏱ **~2h** · aperitivo y paseo tranquilo por el rione hasta la hora de
+          bajar a Testaccio
+  - kind: transport
+    pace: all
+    variant: taxi
+    header: Monti → Testaccio (Felice) · ~3,5 km
+    modes:
+      - icon: 🚕
+        recommended: true
+        desc: '**Taxi** directo hasta Via Mastro Giorgio'
+        tag: recomendado
+        meta: '⏱ **12 min**<br>💶 **€12-14 · €4-5 p.p.**'
+      - icon: Ⓜ️
+        desc: '**Metro B** · Cavour → Piramide (6 paradas) + 8 min andando'
+        meta: '⏱ **20 min**<br>💶 **€1,50 p.p.**'
+    footnote: >-
+      Salid de Monti sobre las 21:30 para llegar holgados a la mesa de las 22:00.
+  - kind: stop
+    pace: all
+    time: '22:00'
+    title: Cena en Felice a Testaccio
+    disabled: true
+    reservedEvent: true
+    tag: reservado
+    note: >-
+      La cacio e pepe más famosa de Roma, mezclada en la mesa. Cierre redondo del
+      viaje.
+  - kind: reservation
+    text: >-
+      ✅ **Reserva confirmada · Felice a Testaccio** — lun 22 jun, 22:00 · 3
+      comensales · Via Mastro Giorgio 29 (Testaccio). Pedid la cacio e pepe y el
+      tonnarello que montan en la mesa; de segundo, abbacchio o el quinto quarto.
+  - kind: food
+    pace: all
+    header: 🍴 Tu cena del lunes (noche)
+    entries:
+      - ref: g-felice
+        name: Felice a Testaccio
+        reserved: true
+        badge: ✓ reservado 22:00
+        desc: 'Cacio e pepe legendaria mezclada en la mesa · quinto quarto · **~€35-50**'
+    footnote: 'Ficha completa en [Gastronomía](#gastronomia).'
+cards:
+  - minerva
+  - san-luigi
+  - casanatense
+  - torre-scimmia
+  - popolo
+  - spagna
+  - tazza-doro
+  - laterano
+  - san-clemente
+  - san-pietro-vincoli

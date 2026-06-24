@@ -1,0 +1,70 @@
+slug: angeli
+trip: roma
+roman: XXXIV
+name: Santa Maria degli Angeli
+italian: Basilica di Santa Maria degli Angeli e dei Martiri · Piazza della Repubblica
+day: Martes
+coords:
+  lat: 41.9030300
+  lng: 12.4961000
+type: card
+motif: church
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Santa_Maria_degli_Angeli_%28Rome%29_-_Facade.jpg/900px-Santa_Maria_degli_Angeli_%28Rome%29_-_Facade.jpg
+  alt: Interior de Santa Maria degli Angeli
+sections:
+  - heading: Qué es
+    body: >-
+      Una basílica diseñada por **Miguel Ángel** construida _dentro_ de las
+      ruinas de las **Termas de Diocleciano**, las mayores de la Roma antigua. El
+      gigantesco _frigidarium_ (la sala de los baños fríos) reconvertido en
+      iglesia: bóvedas colosales, columnas de granito egipcio de 15 metros, y en
+      el suelo una **línea meridiana** de bronce, un reloj solar que cruza la
+      nave. El cierre perfecto del viaje, y a un paso de Termini.
+  - heading: Historia
+    body: >-
+      Las **Termas de Diocleciano** (298-306 d.C.) fueron las más grandes jamás
+      construidas en Roma: cabían 3.000 personas. La tradición cristiana sostiene
+      que se levantaron con el trabajo forzado de prisioneros cristianos — de ahí
+      el «_dei Martiri_» del nombre. En 1561, el Papa Pío IV encargó al ya anciano
+      **Miguel Ángel** (tenía 86 años) que consagrara aquel espacio pagano
+      convirtiendo el frigidarium en iglesia, sin destruir la arquitectura
+      romana, sino habitándola. Fue una de sus últimas obras. En el siglo XVIII,
+      Luigi Vanvitelli la reformó dándole su aspecto actual.
+  - heading: Anécdotas
+    body: >-
+      En el suelo recorre la nave la **Linea Clementina o Meridiana** (1702),
+      encargada por el Papa Clemente XI al astrónomo Francesco Bianchini: una
+      franja de bronce con los signos del zodiaco incrustada en el pavimento. Por
+      un pequeño **agujero (gnomon)** en lo alto del muro entra un rayo de sol que,
+      al mediodía solar, cruza la línea marcando el día del año. Servía para fijar
+      el calendario y —crucial para la Iglesia— comprobar la fecha de la
+      **Pascua**. Es un instrumento científico monumental dentro de una iglesia.
+
+
+      Las **ocho columnas de granito rosa de Asuán** que sostienen la nave son
+      _originales romanas_ de las termas: monolitos de 15 metros que llevan aquí
+      1.700 años. Por su escala y su solemnidad, esta es la iglesia donde el
+      Estado italiano celebra los **funerales de Estado**. Al salir, la Piazza
+      della Repubblica os recibe con la exuberante **Fontana delle Naiadi** y sus
+      ninfas. Buen último plano de Roma antes del aeropuerto.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Santa_Maria_degli_Angeli_%28Rome%29_-_Facade.jpg/800px-Santa_Maria_degli_Angeli_%28Rome%29_-_Facade.jpg" alt="Fachada de Santa Maria degli Angeli — el ábside de las Termas de Diocleciano, Roma" caption="Lo que veis desde Piazza della Repubblica es el ábside exterior de las Termas de Diocleciano (298-306 d.C.), no una iglesia construida. Miguel Ángel en 1561 simplemente abrió una puerta y colocó un altar dentro. Dentro, la meridiana de bronce cruza el suelo: un reloj solar de 1702 que aún funciona."}
+
+      - La **escala del frigidarium**: levantad la vista. Esa bóveda es romana original, de hace 1.700 años.
+      - Las **columnas de granito rosa** de Asuán: las ocho originales son las más oscuras; las demás se añadieron imitándolas.
+      - La **Meridiana**: seguid la línea de bronce por el suelo, con sus constelaciones. Buscad el agujero del gnomon en lo alto.
+      - La sensación de **termas convertidas en templo**: Miguel Ángel apenas tocó la estructura; entendió que las ruinas ya eran sublimes.
+      - Al salir, la **Fontana delle Naiadi** en Piazza della Repubblica.
+      - Gratis y rápida: el **último monumento** del viaje, a 7 minutos del hotel.
+facts:
+  - label: Horario
+    value: L-S 9-19 · dom 9-19:30 (aprox.)
+  - label: Acceso
+    value: Gratuito
+  - label: Tiempo de visita
+    value: 20-30 minutos
+  - label: Metro
+    value: A · Repubblica · junto a Termini
+mapsQuery: Santa Maria degli Angeli e dei Martiri Roma

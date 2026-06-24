@@ -1,0 +1,121 @@
+slug: santa-teresa
+trip: roma
+roman: XXXII
+name: Éxtasis de Santa Teresa · Santa Maria della Vittoria
+italian: Cappella Cornaro · Via XX Settembre 17 · Piazza San Bernardo
+day: Martes
+coords:
+  lat: 41.9028000
+  lng: 12.4888000
+type: card
+motif: statue
+artists:
+  - ref: art-bernini
+    label: 'Artistas: [Bernini](#art-bernini)'
+arch:
+  - ref: arq-barroco
+    label: 'Arquitectura: [Barroco](#arq-barroco)'
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Ecstasy_of_St._Teresa_HDR.jpg/900px-Ecstasy_of_St._Teresa_HDR.jpg
+  alt: Éxtasis de Santa Teresa, Bernini, 1647-52, Cappella Cornaro
+sections:
+  - heading: Qué es
+    body: >-
+      En una iglesia discreta de Via XX Settembre, una capilla lateral esconde lo
+      que muchos consideran **la escultura más erótica y más espiritual del arte
+      occidental** — y las dos cosas a la vez. El _Éxtasis de Santa Teresa_ de
+      Gian Lorenzo Bernini (1647-1652): Teresa de Ávila en mármol blanco,
+      suspendida sobre una nube dorada, con los ojos en blanco y la boca
+      entreabierta, mientras un ángel sonriente le hunde un dardo de oro en el
+      pecho. La luz viene de arriba, de una ventana oculta. En los palcos
+      laterales de mármol, los miembros de la familia Cornaro observan la escena
+      como en un teatro. Es un **espacio total** — arquitectura, escultura,
+      pintura, luz — concebido como una sola obra.
+  - heading: Historia
+    body: >-
+      El cardenal veneciano **Federico Cornaro** encargó a Bernini la renovación
+      completa de su capilla funeraria en Santa Maria della Vittoria entre 1645 y
+      1652. Bernini tenía 47 años y estaba en la cima de su poder. Tomó como
+      protagonista a **Teresa de Ávila** (1515-1582), la mística castellana que en
+      1622 había sido canonizada con inusual velocidad. Teresa describió en su
+      autobiografía las visiones en que un ángel la atravesaba con un dardo de
+      fuego, dejándola «del todo enamorada de Dios». El pasaje es uno de los textos
+      espirituales más físicamente explícitos que existen.
+
+
+      Bernini convirtió ese pasaje en mármol. La figura de Teresa flota sobre una
+      nube real esculpida en piedra; los pliegues de su hábito siguen una lógica
+      imposible, de tela mojada o de sueño. El ángel, de una belleza insolente,
+      tiene la expresión ambigua de quien disfruta de lo que hace. La **luz
+      dorada** que baña la escena viene de una ventana oculta en el techo de la
+      capilla — Bernini calculó el ángulo para que en las horas de la tarde los
+      rayos cayeran exactamente sobre el grupo escultórico. Las rayas doradas de
+      estuco que bajan desde la ventana representan la luz divina hecha material.
+
+
+      Los **palcos laterales** — con los miembros de la familia Cornaro esculpidos
+      en bajorrelieve, cuchicheando entre ellos como espectadores de un palco de
+      ópera — convierten la capilla en un _teatro sagrado_: el espectador que
+      entra forma parte de la audiencia de un drama espiritual representado para
+      siempre.
+  - heading: Anécdotas
+    body: >-
+      El presidente francés Charles de Brosses visitó la capilla en 1740 y
+      escribió en sus cartas: _«Si ese es el amor divino, yo lo conozco»_. La
+      frase resume siglos de debate sobre si la obra representa éxtasis místico o
+      placer sensual — y la respuesta honesta es que Bernini hizo la pregunta a
+      propósito, sin responderla.
+
+
+      **Freud** tenía una fotografía de la escultura en su consulta vienesa. La
+      usaba como punto de discusión sobre la indistinción entre experiencia
+      mística y experiencia erótica. **Georges Bataille** le dedicó un ensayo
+      largo. **Lacan** la citó en sus seminarios como ejemplo de un goce que va
+      más allá del principio del placer. Es, en términos de impacto cultural
+      acumulado, una de las obras más comentadas de Occidente fuera de los grandes
+      museos.
+
+
+      El vecindario inmediato es interesante: en la misma **Piazza San Bernardo**
+      está la _Fontana dell'Acqua Felice_, encargada por Sixto V en 1587 con el
+      _Mosè_ —el Moisés en bronce— en la hornacina central. El papa quiso que le
+      esculpieran como Moisés haciendo brotar el agua del desierto. El resultado
+      fue tan feo que según la leyenda el escultor **Prospero Antichi** murió de
+      vergüenza al ver su obra. Hoy los romanos la llaman cariñosamente «il Mosè»
+      y está bien.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Ecstasy_of_St._Teresa_HDR.jpg/700px-Ecstasy_of_St._Teresa_HDR.jpg" alt="Detalle del ángel del Éxtasis de Santa Teresa — la expresión ambigua de Bernini." caption="El ángel de Bernini. La sonrisa tiene una ambigüedad calculada que Bernini nunca quiso resolver."}
+
+      - La **expresión de Teresa**: los ojos en blanco, la boca entreabierta, los pies abandonados. No es quietud — es convulsión detenida en mármol.
+      - La **sonrisa del ángel** — y el dardo. Mirarlo de frente, luego de cada lado. La ambigüedad es el mensaje.
+      - Los **pliegues del hábito**: tela imposible, sin lógica de gravedad. Son los pliegues de una experiencia interior, no de tela real.
+      - La **nube de mármol** sobre la que flotan: piedra dura, efecto de algodón.
+      - Las **rayas de estuco dorado** que bajan del techo: la luz divina materializada. Mirad de dónde vienen — la ventana oculta a la derecha.
+      - Los **palcos laterales** con los Cornaro: fijaos en sus gestos y posiciones. Son espectadores del drama eterno.
+      - Echad **monedas en la caja** junto a la capilla para encender la luz — sin iluminación la profundidad del mármol desaparece.
+      - Horario de tarde: la iglesia cierra 12:00-15:30. Llegad a las **15:30 exactas**.
+facts:
+  - label: Horario
+    value: L-S 7:00-12:00 y 15:30-18:00 · Dom 15:30-18:00
+  - label: Acceso
+    value: Gratuito · monedas para la iluminación
+  - label: Tiempo de visita
+    value: 25-30 minutos
+  - label: Cómo llegar
+    value: Metro A · Barberini · 12 min andando por Via XX Settembre
+mapsQuery: Santa Maria della Vittoria Via XX Settembre Roma
+culture:
+  - title: Referencias culturales
+    text: ''
+  - title: Ángeles y Demonios
+    text: >-
+      (Dan Brown / Ron Howard) — la iglesia aparece en la novela y la película
+      como una de las cuatro paradas del «Camino de la Iluminación». Excesivo
+      como siempre, pero la capilla es exactamente tan teatral como Brown la
+      describe.
+  - title: I Segreti di Roma
+    text: >-
+      (Corrado Augias, 2005) — Augias dedica un pasaje a la ambigüedad deliberada
+      de Bernini: «creó algo que parece sagrado y parece profano, y esa es
+      exactamente su grandeza».

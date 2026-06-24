@@ -1,0 +1,127 @@
+slug: ghetto
+trip: roma
+roman: XVI
+name: Ghetto · Teatro Marcello · Portico d'Ottavia
+italian: Rione Sant'Angelo · Ghetto Ebraico
+day: Domingo
+coords:
+  lat: 41.8919308
+  lng: 12.4799083
+type: card
+motif: arch
+# Paridad de orden (F8 Plan 06): el index.html rinde .notes-area ANTES de .culture-box en esta ficha.
+boxOrder: notes-first
+arch:
+  - ref: arq-antigua
+    label: 'Arquitectura: [Roma antigua](#arq-antigua)'
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/0/0f/P-Octavia1.JPG
+  alt: Teatro di Marcello
+sections:
+  - heading: Qué es
+    body: >-
+      El barrio judío más antiguo de Europa, en pie sin interrupción desde el
+      siglo II a.C. Y, mezclados entre sus casas medievales, dos monumentos
+      romanos que parecen flotar entre las callejuelas: el **Teatro de Marcello**
+      (un mini-Coliseo con apartamentos modernos en el último piso) y el
+      **Portico d'Ottavia** (un arco romano del año 23 a.C. que sigue siendo la
+      puerta natural de entrada al barrio).
+  - heading: Historia
+    body: >-
+      La comunidad judía de Roma es la más antigua de Europa: existe sin
+      interrupción desde el siglo II a.C., antes incluso de que el cristianismo
+      apareciera. Roma siempre fue tolerante con los judíos en términos relativos
+      — los emperadores los usaban como diplomáticos y comerciantes — hasta que
+      llegó el Papa Pablo IV. En 1555, mediante la bula _Cum nimis absurdum_,
+      decretó la creación del **ghetto**: un perímetro amurallado en una zona
+      insalubre junto al Tíber, propensa a inundaciones, donde toda la población
+      judía romana fue obligada a vivir, encerrada con llave cada noche. Los
+      muros del ghetto se mantuvieron de 1555 a 1870 — más de tres siglos — y se
+      demolieron solo cuando los Saboya tomaron Roma. Pero la comunidad
+      sobrevivió, y el barrio sigue siendo el corazón de la vida judía italiana.
+
+
+      El **Teatro de Marcello** fue iniciado por Julio César y terminado por
+      Augusto en el año 13 a.C., dedicado a su sobrino Marco Claudio Marcelo
+      (muerto joven). Era un anfiteatro al aire libre para representaciones
+      teatrales — el modelo del Coliseo, que se inspiraría en él 90 años después.
+      Tras la caída del imperio, las arcadas exteriores se rellenaron y la
+      estructura se convirtió en fortaleza medieval (familia Savelli, los mismos
+      del Aventino), y luego en palacio aristocrático. Hoy **los pisos superiores
+      son apartamentos de lujo habitados** — gente real vive dentro del Teatro de
+      Marcello. Hubo un escándalo en los años 80 cuando se intentó expropiarlos
+      para hacer museo; los inquilinos ganaron en tribunales.
+
+
+      El **Portico d'Ottavia** es lo que queda de un complejo monumental que
+      Augusto dedicó a su hermana **Octavia** en el año 23 a.C. Originariamente
+      cuadrangular, con 300 columnas, dos templos en su interior y una
+      biblioteca, era uno de los espacios cívicos más importantes del Campo de
+      Marte. Hoy solo sobreviven la entrada propilea (el arco que se ve) y
+      algunas columnas fragmentadas. Durante la Edad Media, el Portico se
+      convirtió en mercado de pescado — las inscripciones medievales sobre el
+      portal todavía recuerdan las dimensiones mínimas para pescados destinados
+      al conservatorio: lo que excediera ese tamaño se entregaba al gobierno
+      municipal.
+  - heading: Anécdotas
+    body: >-
+      El **16 de octubre de 1943** es la fecha más oscura de la historia del
+      ghetto. A las 5:15 de la mañana, las SS rodearon el barrio y deportaron a
+      1.022 judíos romanos a Auschwitz. De ellos, 16 sobrevivieron. La **Sinagoga
+      Maggiore** (a 100 metros del Portico) tiene un memorial. Hay
+      _stolpersteine_ — adoquines dorados con el nombre y la fecha de deportación
+      — embutidos en el suelo frente a las casas de las víctimas. Camina mirando
+      hacia abajo cuando pases por las callejuelas del ghetto.
+
+
+      La **cocina giudaico-romanesca** es uno de los grandes patrimonios
+      culinarios de la ciudad. Los platos clásicos: _carciofi alla giudia_
+      (alcachofas fritas dos veces hasta quedar crujientes como flores doradas),
+      _fritto misto_ de verduras rebozadas, _baccalà_ (bacalao) frito, y la
+      _concia di zucchine_ (calabacín macerado con menta y vinagre). Son recetas
+      centenarias creadas para hacer comida buena con ingredientes de calidad
+      media — y han sobrevivido cinco siglos.
+
+
+      El compositor Felix Mendelssohn visitó el ghetto en 1830 y lo describió con
+      horror en sus cartas. Las calles eran las más angostas de Roma, el río
+      crecía cada invierno y las casas más bajas se inundaban regularmente, y la
+      peste se cebaba con la población encerrada. La paradoja: gracias a ese
+      encierro forzado durante tres siglos, la comunidad mantuvo intacta una
+      identidad cultural y lingüística (el _giudaico-romanesco_, dialecto
+      judío-romano) que ninguna otra comunidad judía europea conserva con tanta
+      pureza.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Teatro_di_Marcello_intero.jpg/800px-Teatro_di_Marcello_intero.jpg" alt="Teatro di Marcello, Roma — arcos romanos y pisos renacentistas" caption="Los dos pisos de arcos — dórico abajo, jónico arriba — con los apartamentos renacentistas encima: tres épocas en la misma fachada. Augusto lo inauguró en el año 13 a.C. El Coliseo, décadas posterior, copió exactamente este sistema de arcadas superpuestas."}
+
+      - El **Teatro de Marcello**: cuenta los dos pisos de arcadas. Son dóricas en el primero, jónicas en el segundo (Augusto inventó esta jerarquía de órdenes superpuestos que el Coliseo copiaría). Mira al tercer piso: las ventanas son de los apartamentos habitados.
+      - Las **columnas fragmentadas** junto al Teatro: pertenecen al Templo de Apolo Sosiano (vecino), del año 433 a.C., uno de los templos más antiguos de Roma.
+      - El **Portico d'Ottavia**: pasa por debajo del arco. La inscripción central sigue siendo legible — letras latinas talladas hace 2.000 años.
+      - Las **inscripciones medievales** sobre el portal del Portico: la regulación del mercado de pescado del siglo XV. Lápida de mármol con frases en latín bajomedieval.
+      - Las **stolpersteine** en el suelo: cuadrados de bronce dorado embutidos en el adoquinado, frente a las casas. Hay decenas en este barrio. Léelas.
+      - La **Sinagoga Maggiore**: edificio art nouveau de 1904, con cúpula cuadrada visible desde lejos. Hay control de seguridad para entrar.
+      - La **Via del Portico d'Ottavia**: la arteria principal del barrio. En esta calle están los mejores restaurantes giudaico-romaneschi (Nonna Betta, Sora Margherita, Da Giggetto).
+facts:
+  - label: Acceso al barrio
+    value: Libre 24/7
+  - label: Teatro de Marcello
+    value: Exterior libre · interior cerrado
+  - label: Sinagoga + Museo
+    value: Domingo-jueves 10-17 · viernes hasta 14
+  - label: Tiempo de visita
+    value: 30 minutos paseo · más si comes
+mapsQuery: Teatro di Marcello Portico d'Ottavia Roma
+culture:
+  - title: Referencias literarias
+    text: ''
+  - title: I Segreti di Roma
+    text: >-
+      (Corrado Augias, 2005) — Uno de los capítulos más cargados del libro.
+      Augias recorre la historia del ghetto desde su creación por Pablo IV en
+      1555 hasta la _razzia_ nazi del 16 de octubre de 1943, cuando más de 1.000
+      judíos romanos fueron deportados a Auschwitz. Solo 16 volvieron. Describe
+      cómo el Papa Pío XII no intervino públicamente, un silencio que sigue
+      siendo el nudo moral más discutido de su papado. Las _stolpersteine_ en el
+      suelo del barrio — los adoquines de bronce con los nombres de los
+      deportados — son el mapa de esa mañana.
