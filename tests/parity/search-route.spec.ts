@@ -228,12 +228,20 @@ test.describe('búsqueda + ruta del día en /guiaRoma/ construido (FEAT-03 / FEA
     const slug = await firstResult.getAttribute('data-card')
     expect(slug, 'la fila de resultado debe exponer su slug en data-card').toBeTruthy()
 
-    // Clic en el resultado (está en viewport: el #search vive en el masthead #inicio, arriba — a
-    // diferencia del popup del mapa/timeline, aquí `.click()` no auto-desplaza una fuente lejana, así
-    // que el scrollY que el controller mete en la pila sigue siendo `originY`).
-    // onSelect → limpia query + cierra dropdown + navigateToCard(slug): preventDefault (D-03) +
-    // scrollIntoView suave + `.highlight` 2500ms sobre la ficha destino.
-    await firstResult.click()
+    // Disparar el clic en el resultado con `dispatchEvent('click')` — NO `.click()` — mirror EXACTO
+    // del helper `navigateToCard` de navigation.spec.ts:193-196 (y por la MISMA razón). El resultado
+    // es un `<a class="search-result" href="#slug">`; `firstResult.click()` ejecuta el clic NATIVO
+    // del navegador, que tiene un EFECTO LATERAL: enfocar/activar el ancla nudgea `window.scrollY` a
+    // ~24px ANTES de que el manejador corra. onSelect → navigateToCard hace `navStack.push(window.scrollY)`
+    // SÍNCRONAMENTE → la pila guarda ESE 24, no el `originY` (0) que el test capturó antes de buscar; y
+    // "Volver" restaura FIELMENTE 24 (verificado: `goBack` llama `scrollTo({top:24,…})`, no un undershoot
+    // del scroll suave). El síntoma —`expect.poll(scrollY).toBe(0)` recibía 24— era el test capturando
+    // un origen que NO es el que la app guarda. `dispatchEvent('click')` hace pasar el evento sintético
+    // por el MISMO listener de CAPTURA de F5 (la ruta de interceptación REAL: closest('a[href^="#"]') +
+    // preventDefault + stopPropagation + navigateToCard), PERO sin el efecto lateral de scroll del clic
+    // nativo → el scrollY que la pila guarda ES `originY`, y "Volver" lo restaura al píxel (toBe(originY)
+    // EXACTO, sin tolerancia, 3/3 sin flakiness). onSelect además limpia query + cierra dropdown.
+    await firstResult.dispatchEvent('click')
 
     // La ficha destino recibe `.highlight` (SC#2: navegación cableada) …
     await expect(page.locator(`#${slug}`)).toHaveClass(/\bhighlight\b/)
