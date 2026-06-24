@@ -1,5 +1,21 @@
 # F8 / Plan 08-06 — Visual-diff classification (D-02)
 
+> ## UPDATE (5th decision — VDPROBE empirical root-cause): the residual is a REAL font-metric mismatch, NOT sub-pixel rasterization
+>
+> **Status:** `pnpm verify` still RED, but the residual is now fully root-caused with measurements and is a **REAL, FIXABLE diff (D-02 path a)** — the prior "sub-pixel rasterization / capture-timing" conclusion (4th-decision block below) is **REFUTED**. No tolerance/mask is warranted.
+>
+> **Method.** Committed a `VDPROBE` harness (wrap each `toHaveScreenshot` in try/catch → emit a per-view PASS/FAIL map in one run) so the full failing set surfaced without fail-fast. Fresh `pnpm generate`, then ran `visual-diff.spec.ts` under the gate config. Then localized with standalone Playwright measurements at the desktop viewport (1280×800, DPR 1), serving the Nuxt build under `/guiaRoma/` and the live `index.html` side-by-side, both under the golden's determinism contract (abort all image requests → SVG fallback, `fonts.ready`, double rAF).
+>
+> **Empirical results.**
+> - **Mobile (390 CSS-px):** all day-views PASS except tiny dimension deltas — `dia-lunes` 1px, `dia-martes` 4px, `ref-reservas` 1px, `ref-arte` +4px, `ref-gastronomia` +9px, `ref-arquitectura` −20px; `ref-practica` = same-dims pure-AA (ratio 0.02). `inicio` + the 3 card representatives PASS.
+> - **Desktop (1280-px):** `inicio` same-dims (AA only). Day-views inflate: `dia-viernes` **+289px**, `dia-domingo` **+378px**, `dia-sabado` **+688px** (Nuxt TALLER). (The desktop test times out before its VDPROBE line because each failing view burns the 20s retry budget; deltas measured from the captured `*-actual.png` vs frozen `*-desktop.png` IHDR dims.)
+> - **Localization (`#sabado`, desktop):** the +688px is spread across EVERY card (+29…+122 each, Σ≈667), not one element. Inside `#vaticano` (+122): card width, padding, prose-`<p>` width (654px), font-size (17px), line-height (28.05px), section margins (mb 20px) are all **identical**; rendered text is **identical** (only Vue SSR fragment markers `<!--[-->`/`<!--]-->` differ, which take no space). The delta is **per-`<li>`/per-paragraph height** — Nuxt wraps near-full desktop lines to **one extra line**.
+> - **Root cause (decisive).** A fixed Lora-17px probe string renders **735px in `index.html` vs 762px in Nuxt (+27px, ~3.7% wider)**; ASCII-only 468→489 (+21), accented 485→501 (+16), digits 276→287 (+11) — **the WHOLE font is wider, not a glyph-fallback on accents.** Confirmed `index.html` loads **genuine Google Lora v37** over the network (`fonts.gstatic.com/s/lora/v37/*.woff2`, status 200, `document.fonts.check('17px Lora')===true`) — i.e. exactly what the frozen golden encodes. The self-hosted `app/assets/fonts/lora-400-*.woff2` (37792 B, claimed byte-identical to Google in `fonts.css` / `nuxt.config.ts`) is **NOT** metric-identical to the woff2 Google actually serves Chromium: wider advance widths → near-full desktop prose lines overflow → +1 line per affected paragraph → cumulative card/page inflation (mobile mostly absorbs it via narrower lines + DPR-3 rounding, hence near-parity there).
+>
+> **Classification: REAL diff (D-02 path a) — fix the Nuxt side, do NOT relax the gate.** The 56 frozen PNGs stay frozen (D-01). The fix is to self-host the **exact gstatic woff2 bytes Chromium fetches** for Lora v37 (the files `index.html` loads: `fonts.gstatic.com/s/lora/v37/...`), replacing the currently-vendored (wider) Lora — preserving offline (BUILD-02) AND achieving pixel parity. The current vendor step evidently fetched a different Lora cut (likely a non-Chromium-UA Google response or a fontsource-equivalent), despite the matching byte count. Cormorant (headings) / JetBrains (mono) are not implicated in the prose inflation but should be re-checked once Lora is corrected.
+>
+> **Threshold/mask ledger: still NONE applied.** `maxDiffPixelRatio: 0.01` unchanged; no per-view `maxDiffPixels`/`mask`/`stylePath`; no `--update-snapshots`. The blocker is resolved by fixing the font, not by tolerating dimension deltas.
+
 > ## UPDATE (4th decision — corrective golden re-capture): major corrections + remaining sub-pixel residual
 >
 > **Status:** `pnpm verify` STILL NOT green, but the picture changed substantially after the
