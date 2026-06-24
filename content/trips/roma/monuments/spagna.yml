@@ -1,0 +1,122 @@
+slug: spagna
+trip: roma
+roman: XXIII
+name: Piazza di Spagna
+italian: Piazza di Spagna · Scalinata di Trinità dei Monti
+day: Lunes
+coords:
+  lat: 41.9059900
+  lng: 12.4827750
+type: card
+motif: stairs
+arch:
+  - ref: arq-moderna
+    label: 'Arquitectura: [Tardobarroco](#arq-moderna)'
+hero:
+  src: https://cdn.blastness.biz/media/820/blog/thumbs/medium/piazza-di-spagna-trinita-scalinata-sera.jpg
+  alt: Piazza di Spagna
+sections:
+  - heading: Qué es
+    body: >-
+      La plaza romana con más glamour histórico: 135 escalones de mármol
+      travertino blanco que ascienden desde el nivel inferior hasta la iglesia de
+      la Trinità dei Monti en lo alto. A los pies, la _Barcaccia_ — fuente de
+      Pietro Bernini (el padre del Gian Lorenzo). Alrededor, las calles más caras
+      de Roma. En la esquina sureste, el Antico Caffè Greco, el café más antiguo
+      de la ciudad (desde 1760). El paseo termina del viaje.
+  - heading: Historia
+    body: >-
+      La plaza se llama Spagna por el palacio de la embajada de España ante la
+      Santa Sede, instalada aquí desde 1647. Durante los siglos XVII y XVIII,
+      esta zona se convirtió en el barrio extranjero por excelencia de Roma — los
+      embajadores, los artistas, los _milord_ ingleses del Grand Tour, los
+      escritores nórdicos que venían a hacer la peregrinación cultural a la ciudad
+      antigua. _Via Margutta_ y _Via del Babuino_, las dos calles paralelas que
+      bajan de la plaza, eran las direcciones bohemias: Goethe vivió aquí,
+      Stendhal, Keats, Shelley, Byron, Liszt, Wagner. En el siglo XX, Fellini
+      vivió en Via Margutta 110 — hay una placa en su antigua casa.
+
+
+      La **Scalinata di Trinità dei Monti** se construyó entre 1723 y 1726 por el
+      arquitecto Francesco De Sanctis para conectar la plaza con la iglesia
+      francesa de la Trinità dei Monti en lo alto del Pincio. La financiación fue
+      francesa — el cardenal Mazarino, francés, dejó un legado para esta obra. La
+      escalinata tiene 135 escalones distribuidos en 12 rampas con balaustradas
+      curvas, terrazas intermedias y juegos de geometría barroca. Es una de las
+      grandes obras urbanísticas del Barroco tardío romano.
+
+
+      La **fuente de la Barcaccia** (1627-1629) es de **Pietro Bernini**, el
+      padre del famoso Gian Lorenzo (que probablemente colaboró cuando era joven).
+      Representa una barca medio hundida — la leyenda dice que en una crecida del
+      Tíber en 1598, una pequeña barca fue arrastrada hasta esta plaza y quedó
+      varada. Pietro Bernini la usó como concepto para la fuente. Es una de las
+      fuentes más sutiles de Roma: en lugar de elevarse, se hunde.
+  - heading: Anécdotas
+    body: >-
+      El poeta inglés **John Keats** murió de tuberculosis en una casa al pie de
+      la Scalinata, en el lado derecho del que sube, en febrero de 1821. Tenía 25
+      años. La casa es hoy el _Keats-Shelley Memorial House_, museo dedicado a los
+      poetas románticos ingleses en Roma. Si tenéis 30 minutos extras (no en este
+      viaje, pero apuntad para futuras), es un lugar emocionante. Keats está
+      enterrado en el Cimitero Acattolico de Testaccio con un epitafio que él
+      mismo escribió: "_Here lies one whose name was writ in water_".
+
+
+      La **Via dei Condotti**, que sale al sur de la plaza, es la calle más cara
+      de Roma. Tiendas: Bulgari, Gucci, Ferragamo, Hermès, Cartier, Tod's. En
+      esta calle abre el **Antico Caffè Greco** en 1760, el café más antiguo de
+      Roma todavía activo. Goethe escribía allí. Stendhal pasaba mañanas enteras.
+      Casanova, Liszt, Wagner, Andersen, Mendelssohn — todos en algún momento
+      dejaron sus cartas con la lista de los nombres en las paredes del café. Es
+      turístico hoy pero culturalmente intacto: vale 6€ un espresso sentado a una
+      mesa con un Stendhal en la pared. No es caro por el café — es caro por el
+      rincón.
+
+
+      La famosa imagen de Audrey Hepburn comiendo gelato sentada en los escalones
+      (en _Vacaciones en Roma_, 1953) hizo de la Scalinata un escenario
+      instantáneo. Hoy **está prohibido sentarse** — multa de €250 si te pillan
+      los policías municipales. La razón: el desgaste del mármol travertino blanco
+      por el roce de millones de turistas. Se puede subir y bajar, pararse a hacer
+      foto, pero no sentarse. Cumple la norma — los policías sí ponen multas.
+
+
+      Cada año, en mayo, las gradas se cubren de **azaleas** en flor — 200
+      macetones distribuidos por toda la escalinata. Junio queda fuera de la
+      temporada pero a veces algunas macetas tardías. La imagen con flores es la
+      postal de Roma por excelencia.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Barcaccia_e_scalinata.jpg/960px-Barcaccia_e_scalinata.jpg" alt="La Barcaccia de Pietro Bernini (1627-29) — barca semihundida. Encuentra las abejas Barberini esculpidas, emblema del Pap" caption="La Barcaccia de Pietro Bernini (1627-29) — barca semihundida. Encuentra las abejas Barberini esculpidas, emblema del Papa Urbano VIII."}
+
+      - La **Barcaccia** al pie de la escalinata: barca hundida con surtidores en proa y popa. Mira los soles esculpidos — emblema heráldico del Papa Urbano VIII Barberini, que encargó la fuente.
+      - Las **abejas Barberini**: las verás también en la fuente — emblema de la familia Barberini. Las encontrarás por toda Roma.
+      - La **simetría rota** de la escalinata: las dos balaustradas son levemente diferentes. De Sanctis introdujo asimetrías sutiles para que el ojo no se aburriera.
+      - La **iglesia de la Trinità dei Monti** en lo alto: con dos campanarios gemelos. Es la iglesia francesa de Roma. Acceso gratuito si subes.
+      - El **obelisco de la Trinità dei Monti**: en lo alto, frente a la iglesia. Es un obelisco romano antiguo, no egipcio — los romanos imitaban obeliscos para sus tumbas imperiales.
+      - La **casa de Keats**: en el número 26 de Piazza di Spagna, esquina inferior derecha al subir. Placa en la fachada.
+      - La **Via Margutta**: subiendo desde Piazza del Popolo, primer cruce a la izquierda. Calle bohemia donde vivió Fellini. Placa en el #110.
+      - El **Antico Caffè Greco** en Via dei Condotti 86: el café histórico. Espresso de pie en barra €2,50, espresso sentado €5,50. Vale la pena entrar a ver las salas con cuadros y retratos del XIX.
+facts:
+  - label: Plaza y escalinata
+    value: Libre 24/7 · prohibido sentarse
+  - label: Trinità dei Monti
+    value: 10:00-18:00 · gratuita
+  - label: Multa por sentarse
+    value: €250 · estricta
+  - label: Metro
+    value: A · Spagna · acceso directo
+mapsQuery: Piazza di Spagna Roma
+culture:
+  - title: Referencias culturales
+    text: ''
+  - title: Vacaciones en Roma
+    text: >-
+      (William Wyler, 1953) — la imagen de Audrey Hepburn comiendo gelato
+      sentada en los escalones de la Scalinata. Hoy está prohibido sentarse,
+      multa €250.
+  - title: La Grande Bellezza
+    text: >-
+      (Paolo Sorrentino, 2013) — la cuarta planta de Via Margutta 110, donde
+      vivió Fellini, aparece como una de las casas de Jep Gambardella.

@@ -1,0 +1,334 @@
+slug: sabado
+trip: roma
+order: 2
+roman: II
+eyebrow: sabato · 20 giugno
+title: Vaticano y Trastevere
+subtitle: Mañana eficiente · Vaticano guiado · tarde y cena sin prisa en Trastevere.
+stats:
+  - variant: walk
+    text: '**~7 km** a pie'
+  - variant: taxi
+    text: '**2 taxis** · centro↔Vaticano · Trastevere→hotel'
+  - variant: metro
+    text: '**Opción metro** centro→Vaticano (línea A · Ottaviano)'
+light:
+  title: 🦶 Versión ligera · sábado
+  items:
+    - kind: see
+      text: >-
+        **Imprescindibles:** Tour del Vaticano (reservado), comida en Otello
+        (Trastevere, 16:00), [Santa Maria in Trastevere](#smt) y cena en
+        [Mercato Hostaria](#g-mercato-hostaria) (Campo de' Fiori, 22:00).
+    - kind: move
+      text: >-
+        **Cómo moverse:** taxi hotel→Vaticano y taxi Vaticano→Otello
+        (Trastevere) directo — os ahorráis el tramo a pie junto al río. Trastevere
+        es llano.
+    - kind: skip
+      text: >-
+        **Saltar hoy:** la subida al Gianicolo ([Tempietto](#tempietto) y [Acqua
+        Paola](#fontanone)), la única cuesta seria del día; y Doria Pamphilj /
+        Sant'Eustachio de la mañana si preferís guardar fuerzas.
+    - kind: care
+      text: >-
+        **Ojo:** el tour del Vaticano son ~3h de pie sobre suelo duro y con poco
+        donde sentarse. Avisad al guía del esguince y marcad vuestro ritmo.
+    - kind: rest
+      text: >-
+        **Descanso:** la comida larga en Otello y la cena en Campo de' Fiori
+        (Mercato Hostaria), ambas sentadas y en zona plana.
+timeline:
+  - kind: stop
+    pace: all
+    time: '09:00'
+    title: Desayuno hotel
+    disabled: true
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **45 min** · desayuno tranquilo antes de la mañana de museos'
+      - level: plain
+        text: '🚶 hasta siguiente: **8 min** · 500 m hasta Galleria Doria Pamphilj'
+  - kind: stop
+    pace: slow-only
+    time: '09:45'
+    title: Galleria Doria Pamphilj
+    ref: doria-pamphilj
+    note: El Velázquez del Papa Inocencio X.
+  - kind: meta
+    items:
+      - level: warn
+        text: >-
+          ⏱ **90 min** · justo para una galería con 400 obras — lo
+          imprescindible: sala Velázquez + Caravaggio
+      - level: plain
+        text: '🚶 hasta siguiente: **8 min** · ~600 m hasta Sant''Eustachio'
+  - kind: stop
+    pace: slow-only
+    time: '11:30'
+    title: Sant'Eustachio · caffè rápido
+    ref: santeustachio
+    note: La cornamenta y el mejor espresso. Solo si vais sobrados de tiempo.
+  - kind: meta
+    items:
+      - level: warn
+        text: >-
+          ⏱ **10 min máx** · espresso en barra al vuelo · con la hora estricta
+          del Vaticano (11:55) salid hacia el taxi a las 11:40 como tarde — si
+          vais justos, saltáoslo
+  - kind: transport
+    pace: all
+    variant: taxi
+    header: Centro → Vaticano (Musei) · ~2 km
+    modes:
+      - icon: 🚶
+        desc: >-
+          Andando · cruzando Ponte Sant'Angelo · vistas espectaculares al
+          castillo
+        meta: '⏱ **25-30 min**<br>💶 **gratis**'
+      - icon: Ⓜ️
+        desc: >-
+          **Metro A** · Barberini → Ottaviano · 4 paradas · + 8 min andando hasta
+          entrada
+        meta: '⏱ **25 min total**<br>💶 **€1,50 p.p. · €4,50 total**'
+      - icon: 🚕
+        recommended: true
+        desc: '**Taxi** directo a la entrada del Vaticano'
+        tag: recomendado
+        meta: '⏱ **12-15 min**<br>💶 **€12-15 · €4-5 p.p.**'
+    footnote: >-
+      Hay que estar en el punto de encuentro (Touristation, Viale Vaticano 95)
+      **a las 11:55** — la franja de las 12:10 es estricta y no admiten retrasos.
+      El taxi os ahorra ese margen sin riesgo. Si vais con tiempo, andar es de los
+      mejores tramos de Roma, pero llegáis algo cansados de la mañana.
+  - kind: stop
+    pace: all
+    time: '12:10'
+    title: Tour guiado Vaticano · GetYourGuide
+    ref: vaticano
+    reservedEvent: true
+    tag: reservado
+    note: >-
+      Hasta 15:10. Museos + Sixtina + San Pedro. **Llegad 11:55**. Preparad la
+      visita con la ficha (qué buscar).
+  - kind: reservation
+    text: >-
+      ✅ **Reserva confirmada · Tour Vaticano (GetYourGuide)** — sáb 20 jun,
+      franja **12:10**. Punto de encuentro: **Touristation Vaticano, Viale
+      Vaticano 95** (~50 m de la entrada a los Museos Vaticanos). ⚠️ **Presentaos
+      a las 11:55** (15 min antes): la hora es estricta y **no admiten retrasos**
+      — si llegáis tarde, perdéis la franja.
+  - kind: meta
+    items:
+      - level: ok
+        text: >-
+          ⏱ **3h fijas** · 3h es el tiempo justo para esto — no esperes
+          profundidad, espera impacto
+      - level: plain
+        text: >-
+          🚶 hasta siguiente: **30 min** · ~2,5 km hasta Trastevere (Otello),
+          pasando por Castel Sant'Angelo
+  - kind: transport
+    pace: all
+    variant: walk
+    header: Vaticano → Trastevere (Otello) · ~2,5 km
+    modes:
+      - icon: 🚶
+        recommended: true
+        desc: >-
+          Andando · bajáis a la orilla del Tíber, pasáis junto a Castel
+          Sant'Angelo y cruzáis a Trastevere por Ponte Sisto
+        tag: recomendado
+        meta: '⏱ **30 min**<br>💶 **gratis**'
+      - icon: 🚕
+        desc: '**Taxi** directo hasta Via della Pelliccia · si el tour se alarga'
+        meta: '⏱ **12 min**<br>💶 **€12-14 · €4-5 p.p.**'
+    footnote: >-
+      El tour acaba a las 15:10 y la mesa es a las 16:00: tiempo justo para el
+      paseo y un vistazo a Castel Sant'Angelo de camino.
+  - kind: stop
+    pace: medium
+    time: '15:25'
+    title: Castel Sant'Angelo · Ponte (exterior)
+    ref: castel-santangelo
+    note: >-
+      De paso hacia Trastevere. Los diez ángeles de Bernini en el puente. Solo
+      exterior.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **20 min** · puente + foto al Tíber, sin entrar — vais a comer'
+      - level: plain
+        text: '🚶 hasta Otello: **18 min** · cruzando Ponte Sisto'
+  - kind: stop
+    pace: all
+    time: '16:00'
+    title: Comida en Otello · Trastevere
+    disabled: true
+    reservedEvent: true
+    tag: reservado
+    note: >-
+      Trattoria romana clásica de Trastevere. Vuestra mesa del sábado, comida
+      tardía sin prisa.
+  - kind: reservation
+    text: >-
+      ✅ **Reserva confirmada · Otello (Trastevere)** — sáb 20 jun, 16:00 · 3
+      comensales · Via della Pelliccia 47/53 · vía TheFork. A 3 min de Santa
+      Maria in Trastevere; después subís al Gianicolo.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **75 min** · comida sin agobios antes de la tarde'
+      - level: plain
+        text: '🚶 hasta siguiente: **13 min** · subida al Gianicolo hasta el Tempietto'
+  - kind: transport
+    pace: medium
+    variant: walk
+    header: Otello → Tempietto del Bramante · ~1 km (subida)
+    modes:
+      - icon: 🚶
+        recommended: true
+        desc: Andando · subís el Gianicolo por Via Garibaldi
+        tag: recomendado
+        meta: '⏱ **13 min**<br>💶 **gratis**'
+      - icon: 🚕
+        desc: '**Taxi** · si vais justos para el cierre del Tempietto (18:00)'
+        meta: '⏱ **6 min**<br>💶 **€8-10 · €3 p.p.**'
+    footnote: >-
+      La subida al Gianicolo es la única cuesta seria del día — después de comer,
+      con calma.
+  - kind: stop
+    pace: medium
+    time: '17:30'
+    title: Tempietto del Bramante
+    ref: tempietto
+    tag: Sorrentino
+    note: Cierra 18:00. Llegar antes.
+  - kind: meta
+    items:
+      - level: warn
+        text: >-
+          ⏱ **20 min** · muy justo con el cierre a las 18:00 — llegar a las 17:30
+          máximo
+      - level: plain
+        text: '🚶 hasta siguiente: **3 min** · 250 m hasta Fontanone (solo en plan optimista)'
+  - kind: stop
+    pace: slow-only
+    time: '17:50'
+    title: Fontana dell'Acqua Paola
+    ref: fontanone
+    tag: Sorrentino
+    note: >-
+      A 5 min del Tempietto. Vista panorámica al atardecer. La escena de apertura
+      de La Grande Bellezza.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **25 min** · la fuente + el panorama al atardecer valen cada minuto'
+      - level: plain
+        text: >-
+          🚶 hasta siguiente: **9 min** · 700 m bajando el Gianicolo hasta Santa
+          Maria in Trastevere
+  - kind: stop
+    pace: all
+    time: '18:15'
+    title: Santa Maria in Trastevere
+    ref: smt
+    note: >-
+      Mosaicos del siglo XII en el ábside. Y el corazón de la mejor noche de
+      Trastevere.
+  - kind: meta
+    items:
+      - level: ok
+        text: >-
+          ⏱ **20 min** · iglesia · luego, la plaza y las callejuelas de
+          Trastevere para vosotros
+  - kind: stop
+    pace: all
+    time: '19:00'
+    title: Aperitivo y paseo por Trastevere
+    disabled: true
+    note: >-
+      El concierto pasó al domingo: la tarde-noche en Trastevere queda libre para
+      vermut y vicoli, y sobre las 21:30 cruzáis a Campo de' Fiori para la cena
+      reservada.
+  - kind: meta
+    items:
+      - level: ok
+        text: >-
+          ⏱ **a vuestro ritmo** · vermut en la plaza y paseo por los callejones
+          hasta ~21:30
+      - level: plain
+        text: '🚶 hasta Campo de'' Fiori: **18 min** · por Ponte Sisto'
+  - kind: food
+    pace: all
+    header: 🍸 Aperitivo en Trastevere (antes de cruzar a cenar)
+    entries:
+      - ref: g-tonnarello
+        name: Tonnarello
+        time: '🚶 1 min'
+        desc: >-
+          En la misma plaza · para un vermut o algo de picar antes de cruzar ·
+          animado
+      - ref: g-fior-di-luna
+        name: Fior di Luna
+        time: '🚶 4 min'
+        desc: 'Gelato artesanal por si apetece algo dulce · **~€3-4**'
+    footnote: >-
+      La cena está reservada en Campo de' Fiori a las 22:00: en Trastevere, solo
+      aperitivo y paseo. Salid sobre las 21:30.
+  - kind: transport
+    pace: all
+    variant: walk
+    header: Trastevere → Campo de' Fiori (cena) · ~1,5 km
+    modes:
+      - icon: 🚶
+        recommended: true
+        desc: >-
+          Andando · cruzáis el Tíber por Ponte Sisto hasta Campo de' Fiori
+        tag: recomendado
+        meta: '⏱ **18 min**<br>💶 **gratis**'
+      - icon: 🚕
+        desc: '**Taxi** · si no apetece andar de noche'
+        meta: '⏱ **8 min**<br>💶 **€8-10 · €3 p.p.**'
+    footnote: >-
+      El cruce por Ponte Sisto de noche es precioso. Salid de Trastevere sobre las
+      21:30-21:40 para llegar holgados a la mesa de las 22:00.
+  - kind: stop
+    pace: all
+    time: '22:00'
+    title: Cena en Mercato Hostaria · Campo de' Fiori
+    ref: g-mercato-hostaria
+    reservedEvent: true
+    tag: reservado
+    note: >-
+      La cena que estaba el viernes, ahora aquí. En la propia plaza, frente a
+      Giordano Bruno.
+  - kind: reservation
+    text: >-
+      ✅ **Reserva confirmada · Mercato Hostaria** — sáb 20 jun, 22:00 · 3
+      comensales · Campo de' Fiori 53 · vía Restoo.
+  - kind: transport
+    pace: all
+    variant: taxi
+    header: Campo de' Fiori → hotel · ~3 km
+    modes:
+      - icon: 🚕
+        recommended: true
+        desc: '**Taxi** · cola fácil en la plaza o con FreeNow'
+        tag: recomendado
+        meta: '⏱ **12-15 min**<br>💶 **€12-15 · €4-5 p.p.**'
+      - icon: 🚶
+        desc: Andando · paseo nocturno por el centro
+        meta: '⏱ **35 min**<br>💶 **gratis**'
+    footnote: 'Tras cenar, taxi de vuelta al hotel (junto a Termini).'
+cards:
+  - vaticano
+  - doria-pamphilj
+  - santeustachio
+  - castel-santangelo
+  - tempietto
+  - smt
+  - fontanone
+  - auditorium

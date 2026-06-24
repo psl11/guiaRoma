@@ -1,1 +1,34 @@
+# Dependencies
+node_modules
+
+# Nuxt build / output
+.output
+.nuxt
+.nitro
+.cache
+dist
+
+# Nuxt Content — caché local de SQLite (artefacto de build, NO versionar)
+.data
+
+# Playwright runtime artifacts (NOT the golden snapshots — those live in
+# tests/parity/golden.spec.ts-snapshots/ and MUST be versioned, Pitfall 2)
+test-results
+playwright-report
+blob-report
+.playwright
+
+# Logs
+*.log
+logs
+
+# Editor / OS
+.DS_Store
 .idea
+.vscode/*
+!.vscode/extensions.json
+
+# Env
+.env
+.env.*
+!.env.example

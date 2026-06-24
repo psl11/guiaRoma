@@ -1,0 +1,107 @@
+slug: bocca-verita
+trip: roma
+roman: XV
+name: Bocca della Verità
+italian: Santa Maria in Cosmedin · Foro Boario
+day: Domingo
+coords:
+  lat: 41.8882378
+  lng: 12.4814441
+type: card
+motif: mask
+arch:
+  - ref: arq-medieval
+    label: 'Arquitectura: [Medieval](#arq-medieval)'
+hero:
+  src: https://www.scuolaromit.com/esp/wp-content/uploads/sites/3/2015/01/audrey-hepburn-vacanze-romane-550x413.jpg
+  alt: Bocca della Verità
+sections:
+  - heading: Qué es
+    body: >-
+      Un disco de mármol de 1,75 metros de diámetro con la cara grotesca de un
+      dios fluvial pagano del siglo I d.C. tallada en él, montado en el atrio de
+      la iglesia medieval de Santa Maria in Cosmedin. La leyenda medieval — y la
+      película _Vacaciones en Roma_ de 1953 — dicen que si metes la mano y
+      mientes, te la arranca de un mordisco. No es verdad. Pero todos lo prueban
+      igual.
+  - heading: Historia
+    body: >-
+      El disco es probablemente la **tapa de una cloaca antigua** o un _relieve
+      de fontana_ del Foro Boario (el antiguo mercado de bueyes romano), datado
+      en los siglos I-II d.C. La cara es la de un dios fluvial — posiblemente
+      Oceanus o el dios Tiber — con barba, ojos huecos y boca abierta. Habría
+      servido en su origen como punto de salida de agua de alguna fuente romana
+      cercana, o como tapa pesada de un registro de alcantarillado.
+
+
+      En el siglo XII, durante la reconstrucción medieval de la iglesia bizantina
+      de Santa Maria in Cosmedin, alguien recogió el disco abandonado entre las
+      ruinas del foro y lo instaló en una pared del atrio. La leyenda de la mano
+      cortada se documenta por primera vez en el siglo XIV: dicen que era usado
+      por confesores medievales para asustar a esposas sospechosas de adulterio.
+      La amenaza era teatral pero efectiva — al meter la mano en la cara
+      grotesca, en penumbra, con el confesor recitando una fórmula, muchas
+      confesaban.
+
+
+      La popularidad turística contemporánea viene casi enteramente de la escena
+      en _Vacaciones en Roma_ (William Wyler, 1953), donde Gregory Peck mete la
+      mano y simula que se la arrancan para asustar a Audrey Hepburn. La escena
+      fue improvisada: Peck no avisó a Hepburn de que iba a esconder la mano
+      dentro de la manga. La reacción de susto de Hepburn es totalmente genuina y
+      permaneció en el corte final.
+  - heading: Anécdotas
+    body: >-
+      La iglesia de **Santa Maria in Cosmedin** donde está montado el disco
+      merece más atención que la Bocca misma. Es del siglo VIII (era de las
+      primeras iglesias bizantinas de Roma), reformada en el siglo XII por los
+      Cosmati (familia de mosaiquistas a la que se debe el suelo en mosaico
+      geométrico de inspiración bizantina, mismo estilo que viste en Santa Maria
+      in Trastevere). Bajo el suelo está la _cripta de Adriano I_, donde se
+      conservan reliquias paleocristianas. Y en una capilla a la izquierda: una
+      calavera atribuida a **San Valentín**. Sí, el santo de los enamorados. Tu
+      colega que viene por primera vez no espera ver una calavera de San Valentín
+      en Roma, pero está aquí.
+
+
+      Si la cola para la Bocca es razonable (menos de 20 minutos), entra al atrio
+      y mete la mano. Si es más larga, foto desde fuera (es perfectamente visible
+      desde el portal exterior). Hay un voluntario que coge la foto por ti con tu
+      móvil — propina sugerida 2-5€. En 2025-2026 la entrada al atrio se hizo de
+      pago (€2 para mantener la limpieza), gestionada por la diócesis.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Et%C3%A0_imperiale%2C_chiusino_a_forma_di_mascherone_di_divinit%C3%A0_fluviale%2C_detta_bocca_della_verit%C3%A0%2C_collocata_qui_nel_1632.jpg/800px-Et%C3%A0_imperiale%2C_chiusino_a_forma_di_mascherone_di_divinit%C3%A0_fluviale%2C_detta_bocca_della_verit%C3%A0%2C_collocata_qui_nel_1632.jpg" alt="Bocca della Verità, Santa Maria in Cosmedin, Roma" caption="La boca abierta del mascherón: colmillos, cuencas vacías, barba rizada. Una tapa de alcantarilla del siglo IV a.C., no una trampa para perjuros — Augias la desmitifica. La profundidad de los agujeros de los ojos es lo que inquieta. La foto real de Audrey Hepburn metiendo la mano fue aquí."}
+
+      - El **disco mismo**: identifica los detalles — barba rizada, agujeros de los ojos profundos, boca abierta con dos colmillos. Es un grotesco romano clásico.
+      - Las **columnas del atrio**: _spolia_ antiguas, columnas reutilizadas de templos paganos demolidos.
+      - El **suelo cosmatesco** del atrio: dibujo geométrico con teselas de mármol antiguo. Mismo estilo y misma escuela que el suelo de Santa Maria in Trastevere.
+      - El **campanario románico** de la iglesia (siglo XII): siete pisos de ladrillo con ventanas de mármol blanco. Uno de los campanarios medievales más bellos de Roma.
+      - Si entras a la iglesia (gratis): el **suelo cosmatesco completo**, la **cripta paleocristiana** y la **calavera de San Valentín** en una capilla. Vale los 5 minutos extras.
+      - La **orientación al Foro Boario**: la iglesia mira a la antigua plaza del mercado de bueyes romano. Si te giras desde el atrio, ves el _Tempio di Ercole Vincitore_ y el _Tempio di Portuno_, dos templos del siglo II a.C. casi intactos.
+facts:
+  - label: Horario
+    value: 9:30 - 17:50 todos los días
+  - label: Acceso al atrio
+    value: €2 · iglesia gratuita
+  - label: Cola
+    value: 15-45 min según hora
+  - label: Tiempo total
+    value: 15-25 minutos
+mapsQuery: Bocca della Verità Santa Maria in Cosmedin Roma
+culture:
+  - title: Referencias culturales y literarias
+    text: ''
+  - title: Vacaciones en Roma
+    text: >-
+      (William Wyler, 1953) — la escena más famosa: Gregory Peck mete la mano en
+      la Bocca y simula que se la arranca para asustar a Audrey Hepburn. La
+      reacción de Hepburn es genuina — Peck no la avisó.
+  - title: I Segreti di Roma
+    text: >-
+      (Corrado Augias, 2005) — Augias desmonta el mito: la Bocca no es ninguna
+      trampa para perjuros sino una simple tapa de alcantarilla romana del siglo
+      IV a.C., probablemente del desagüe del Foro Boario. Su identidad exacta
+      sigue en discusión. Augias lo usa como ejemplo de la tendencia romana a
+      fabricar leyendas sobre objetos ordinarios: «Roma convierte en sagrado lo
+      que toca».

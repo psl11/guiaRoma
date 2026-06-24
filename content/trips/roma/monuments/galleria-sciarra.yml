@@ -1,0 +1,90 @@
+slug: galleria-sciarra
+trip: roma
+roman: I
+name: Galleria Sciarra
+italian: Galleria Sciarra · Rione Trevi
+day: Viernes
+coords:
+  lat: 41.8999403
+  lng: 12.4820553
+type: card
+motif: arch
+badge: Sorrentino
+hero:
+  src: https://turismoroma.it/sites/default/files/Galleria%20Sciarra.jpg
+  alt: Galleria Sciarra
+sections:
+  - heading: Qué es
+    body: >-
+      Un patio cubierto de hierro y cristal en pleno centro, escondido entre dos
+      calles, completamente decorado con frescos Liberty. Casi nadie sabe que
+      existe. Atraviesa el Palazzo Sciarra-Colonna y conecta Via Marco Minghetti
+      con Piazza dell'Oratorio.
+  - heading: Historia
+    body: >-
+      Lo construyó entre 1885 y 1888 el príncipe Maffeo Sciarra, heredero de una
+      de las familias más antiguas de Roma — los Colonna — y mecenas de la
+      cultura italiana de su tiempo. Sciarra fundó un periódico, una editorial y
+      un imperio cultural, y quiso atravesar su propio palazzo con un pasaje
+      peatonal que sirviese de cortocircuito urbano y a la vez de homenaje a la
+      mujer. Encargó las pinturas a Giuseppe Cellini, uno de los grandes
+      muralistas italianos del momento, y le pidió un programa iconográfico
+      inusual para la época: la _Glorificación de la Mujer_, retratada en sus
+      múltiples virtudes domésticas y cívicas — la pudorosa, la fiel, la
+      prudente, la modesta — pero también en sus papeles activos: la oradora, la
+      patrona, la educadora.
+
+
+      El resultado es un manifiesto Art Nouveau italiano antes incluso de que el
+      Art Nouveau tuviese nombre. Maffeo Sciarra se arruinó pocos años después
+      en operaciones inmobiliarias fallidas y tuvo que vender. Hoy la galleria
+      es de propiedad mixta y permanece abierta como pasaje público los días
+      laborables. Por algún motivo administrativo no comprensible, está cerrada
+      los fines de semana. De ahí su rareza: muy pocos turistas la pisan.
+  - heading: Anécdotas
+    body: >-
+      El cuadro central del techo, _La Donna è Tutto_, indignó a la sociedad
+      clerical de finales del XIX por considerarse demasiado laico. Los frescos
+      se cubrieron con cortinajes durante visitas papales hasta los años
+      cincuenta. Cellini incluyó retratos disimulados de su esposa y de la
+      duquesa Sciarra entre las figuras alegóricas — un detalle que solo se sabe
+      desde hace pocos años, cuando se restauraron los frescos. Sorrentino la
+      rueda en _La Grande Bellezza_ en un plano corto cuando Jep Gambardella
+      pasea con un personaje secundario — apenas se ve, pero queda.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Galleria_Sciarra.jpg/800px-Galleria_Sciarra.jpg" alt="Interior de la Galleria Sciarra, Roma" caption="El interior de la Galleria Sciarra: la bóveda de hierro forjado y cristal con pinturas alegóricas de finales del XIX. La galería es un pasaje cubierto entre dos calles — entra por Via Marco Minghetti y sal por Via della Gatta."}
+
+      - El **techo de hierro y cristal**: filtra una luz cenital teatral que hace
+      que los frescos cambien según la hora del día.
+
+      - Las **cuatro virtudes en las esquinas superiores**: _Pudica, Forte,
+      Umile, Prudente_. Identifícalas por sus atributos (espejo, columna,
+      paloma, serpiente).
+
+      - Los **medallones con escenas de vida cotidiana**: una mujer recibiendo
+      una carta, una madre con su hijo, una novia preparándose. Cellini quería
+      que pareciese un álbum doméstico monumentalizado.
+
+      - Las **iniciales entrelazadas "MS"** (Maffeo Sciarra) en los herrajes —
+      discretas pero presentes en casi todos los detalles ornamentales.
+
+      - El **contraste con el exterior**: sales por Piazza dell'Oratorio y a 30
+      metros tienes la Fontana di Trevi rodeada de masas. Aquí dentro, silencio
+      total.
+facts:
+  - label: Horario crítico
+    value: L-V 9:00-20:00 · cerrada finde
+  - label: Acceso
+    value: Gratuito
+  - label: Tiempo de visita
+    value: 15 minutos
+  - label: Cómo llegar
+    value: Metro A Barberini + 5' a pie
+mapsQuery: Galleria Sciarra Roma
+sorrentino:
+  label: La Grande Bellezza
+  text: >-
+    Aparece en un travelling fugaz hacia el minuto 0:45 de la película.
+    Sorrentino la usa como una "joya escondida" — exactamente lo que es. No la
+    reconocerás si no la buscas.

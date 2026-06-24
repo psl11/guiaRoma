@@ -1,0 +1,80 @@
+slug: san-luigi
+trip: roma
+roman: XXXVI
+name: San Luigi dei Francesi
+italian: Chiesa di San Luigi dei Francesi · entre el Panteón y Navona
+day: Lunes
+coords:
+  lat: 41.8990000
+  lng: 12.4745000
+type: card
+motif: painting
+badge: Caravaggio
+artists:
+  - ref: art-caravaggio
+    label: 'Artistas: [Caravaggio](#art-caravaggio)'
+hero:
+  src: https://commons.wikimedia.org/wiki/Special:FilePath/The%20Calling%20of%20Saint%20Matthew-Caravaggio%20(1599-1600).jpg?width=900
+  alt: La Vocación de San Mateo, de Caravaggio, en San Luigi dei Francesi
+sections:
+  - heading: Qué es
+    body: >-
+      La **iglesia nacional de los franceses** en Roma. Por fuera, una fachada
+      renacentista correcta; por dentro, en la última capilla de la izquierda
+      —la **Capilla Contarelli**—, tres de los cuadros más importantes de la
+      historia de la pintura: el **ciclo de San Mateo de Caravaggio** (la
+      _Vocación_, la _Inspiración_ y el _Martirio_). Y todo, gratis. Es
+      probablemente el lugar con más arte por metro cuadrado y menos turistas
+      relativos del centro.
+  - heading: Historia
+    body: >-
+      La iglesia se construyó entre **1518 y 1589** para la comunidad francesa
+      de Roma, y está dedicada a **San Luis** (Luis IX de Francia). En
+      1599-1600, el joven **Caravaggio** recibió el encargo de decorar la
+      capilla del cardenal Contarelli (Cointrel) con escenas de la vida de San
+      Mateo. Era su **primera gran comisión pública**, y lo cambió todo: la
+      ciudad entera acudió a ver aquellos cuadros revolucionarios, oscuros y
+      reales, y Caravaggio pasó de pintor prometedor a celebridad de la noche a
+      la mañana.
+
+
+      La primera versión de la _Inspiración de San Mateo_ fue **rechazada** por
+      demasiado terrenal: mostraba a un Mateo viejo y zafio, con los pies
+      sucios, y a un ángel guiándole la mano como a un analfabeto. Caravaggio
+      tuvo que repintarla en la versión, más decorosa, que cuelga hoy sobre el
+      altar.
+  - heading: Anécdotas
+    body: >-
+      La _Vocación de San Mateo_ es la joya. Cristo entra por la derecha, en
+      penumbra, y **señala** a Mateo con un gesto que es una cita directa: la
+      mano de Cristo repite la de Adán en la _Creación_ de la Capilla Sixtina de
+      Miguel Ángel. Un **rayo de luz** entra con él y cae sobre el grupo de
+      recaudadores sentados a la mesa. ¿Quién es Mateo? El debate dura siglos:
+      ¿el hombre barbado que se señala a sí mismo («¿yo?»), o el joven inclinado
+      que sigue contando monedas, sordo a la llamada? Esa ambigüedad es parte
+      del genio.
+
+
+      Caravaggio pinta a los publicanos como **jóvenes de su Roma** —con plumas,
+      espadas y ropa de moda de 1600, no de tiempos de Jesús—: el milagro
+      irrumpe en el presente, en una taberna cualquiera. Es la gran idea
+      caravaggesca: lo sagrado ocurre aquí y ahora, entre gente común.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://commons.wikimedia.org/wiki/Special:FilePath/Caravaggio%20-%20Martirio%20di%20San%20Matteo.jpg?width=800" alt="El Martirio de San Mateo, de Caravaggio" caption="Las tres telas rodean la Capilla Contarelli: a la izquierda la _Vocación_, sobre el altar la _Inspiración_, a la derecha el _Martirio de San Mateo_ (en la foto), el más violento y teatral. En el fondo, entre las sombras, asoma un autorretrato de Caravaggio mirando la escena."}
+
+      - La **Vocación** (pared izquierda): seguid el rayo de luz y la mano de Cristo. Buscad quién es Mateo.
+      - La **Inspiración** (sobre el altar): el ángel dictándole el Evangelio, Mateo a punto de caerse del taburete.
+      - El **Martirio** (pared derecha): el caos, el verdugo, y al fondo la cara del propio Caravaggio.
+      - Llevad **monedas de 1€**: la capilla se ilumina con un temporizador. Sin luz, los cuadros quedan en sombra.
+      - El **contraste**: el resto de la iglesia es ornamentado y dorado; los Caravaggios, crudos y oscuros. Esa tensión es el salto al Barroco.
+facts:
+  - label: Horario
+    value: ~9:30-12:45 y 14:30-18:30 · entrada libre
+  - label: Cómo llegar
+    value: A 4 min de la Minerva · entre el Panteón y Navona
+  - label: Tiempo
+    value: 20 min · llevad monedas para la luz
+  - label: Artista
+    value: Caravaggio · ver [ficha en Arte](#art-caravaggio)
+mapsQuery: San Luigi dei Francesi Roma

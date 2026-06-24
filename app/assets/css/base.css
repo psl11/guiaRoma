@@ -1,0 +1,1314 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 124px; }
+
+body {
+  font-family: 'Lora', Georgia, 'Times New Roman', serif;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse at top, rgba(196,163,115,.06), transparent 60%),
+    radial-gradient(ellipse at bottom, rgba(139,58,58,.04), transparent 60%);
+  background-attachment: fixed;
+  transition: background-color .4s ease, color .4s ease;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* === Layout === */
+.container { max-width: 760px; margin: 0 auto; padding: 0 1.25rem; }
+
+/* === Header / Nav === */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  border-bottom: 1px solid var(--line-soft);
+}
+.topbar-inner {
+  max-width: 760px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  padding: .75rem 1.25rem;
+}
+.topbar-inner .brand { grid-column: 2; text-align: center; }
+.topbar-inner .theme-btn { grid-column: 3; justify-self: end; }
+.brand {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-size: 1.2rem; font-weight: 600;
+  font-style: italic;
+  letter-spacing: .01em;
+  color: var(--accent);
+}
+.brand-dot { color: var(--gold); margin: 0 .35em; }
+.theme-btn {
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .3s ease;
+  font-size: 1rem;
+}
+.theme-btn:hover { color: var(--accent); border-color: var(--accent); }
+[data-theme="light"] .theme-btn .moon { display: block; }
+[data-theme="light"] .theme-btn .sun { display: none; }
+[data-theme="dark"] .theme-btn .moon { display: none; }
+[data-theme="dark"] .theme-btn .sun { display: block; }
+
+.nav-pills {
+  display: flex; gap: .35rem;
+  padding: .5rem 1.25rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--bg);
+}
+/* En pantallas anchas los pills caben enteros: se centran. En móvil
+   se mantienen scrollables desde la izquierda para no recortar el primero. */
+@media (min-width: 680px) {
+  .nav-pills { justify-content: center; }
+}
+.nav-pills::-webkit-scrollbar { display: none; }
+.nav-pill {
+  flex-shrink: 0;
+  padding: .35rem .85rem;
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-size: .95rem; font-weight: 500;
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-radius: 99px;
+  border: 1px solid transparent;
+  transition: all .2s ease;
+  letter-spacing: .02em;
+}
+.nav-pill:hover { color: var(--accent); border-color: var(--line); }
+.nav-pill.active { color: var(--accent); border-color: var(--accent); background: var(--bg-elev); }
+
+/* === Sections === */
+section { padding: 3rem 0; }
+section + section { border-top: 1px solid var(--line-soft); }
+
+.section-eyebrow {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-size: .85rem; font-weight: 600;
+  letter-spacing: .25em; text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: .5rem;
+  display: flex; align-items: center; gap: .75rem;
+}
+.section-eyebrow::before, .section-eyebrow::after {
+  content: ""; flex: 1; height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold-soft), transparent);
+  max-width: 60px;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+h1 {
+  font-size: clamp(2.5rem, 7vw, 4rem);
+  font-weight: 500;
+  letter-spacing: -.01em;
+  margin-bottom: 1rem;
+}
+h1 em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+h2 {
+  font-size: clamp(1.8rem, 4.5vw, 2.4rem);
+  font-weight: 500;
+  margin-bottom: .5rem;
+  letter-spacing: -.005em;
+}
+h3 {
+  font-size: 1.45rem;
+  font-weight: 600;
+  margin-bottom: .35rem;
+  letter-spacing: -.005em;
+}
+h4 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 1.5rem 0 .5rem;
+}
+
+p { margin-bottom: 1rem; }
+p + p { text-indent: 1.5em; }
+
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--line); }
+a:hover { border-bottom-color: var(--accent); }
+
+em { font-style: italic; color: var(--ink-soft); }
+strong { font-weight: 600; color: var(--ink); }
+
+/* === Hero === */
+.hero {
+  text-align: center;
+  padding: 4rem 0 3rem;
+}
+.hero-decoration {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  color: var(--gold);
+  letter-spacing: .4em;
+  font-size: .95rem;
+  margin-bottom: 1.5rem;
+}
+.hero-meta {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+  margin-top: 1rem;
+}
+.hero-quote {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--ink-soft);
+  max-width: 460px;
+  margin: 2rem auto 0;
+  position: relative;
+  padding: 0 1.5rem;
+}
+.hero-quote::before, .hero-quote::after {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-size: 2.5rem;
+  color: var(--gold-soft);
+  position: absolute;
+  line-height: 1;
+}
+.hero-quote::before { content: "«"; left: -.5rem; top: -.25rem; }
+.hero-quote::after { content: "»"; right: -.5rem; bottom: -.5rem; }
+.hero-quote-attr {
+  display: block;
+  font-style: normal;
+  font-size: .85rem;
+  color: var(--ink-faint);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  margin-top: 1rem;
+}
+
+/* === Info cards === */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+@media (min-width: 640px) {
+  .info-grid { grid-template-columns: 1fr 1fr; }
+}
+.info-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--line-soft);
+  padding: 1.25rem 1.4rem;
+  border-radius: 6px;
+}
+.info-card-label {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-size: .75rem; font-weight: 600;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: .35rem;
+}
+.info-card-value {
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  color: var(--ink);
+  line-height: 1.4;
+}
+.info-card-value strong { display: block; font-weight: 600; }
+
+/* === Search === */
+.search-wrap {
+  margin: 1.5rem auto 0;
+  max-width: 480px;
+}
+.search-input {
+  width: 100%;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: .7rem 1.25rem .7rem 2.75rem;
+  font-family: 'Lora', serif;
+  font-size: .95rem;
+  color: var(--ink);
+  transition: all .2s ease;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238a8074' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 1rem center;
+}
+.search-input:focus { outline: none; border-color: var(--accent); }
+.search-results {
+  margin-top: .5rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  max-height: 320px;
+  overflow-y: auto;
+  display: none;
+  box-shadow: var(--shadow);
+}
+.search-results.show { display: block; }
+.search-result {
+  display: block; padding: .65rem 1rem;
+  border-bottom: 1px solid var(--line-soft);
+  text-decoration: none; border-bottom: 1px solid var(--line-soft);
+  font-family: 'Lora', serif;
+  color: var(--ink);
+}
+.search-result:last-child { border-bottom: none; }
+.search-result:hover { background: var(--bg-soft); color: var(--accent); }
+.search-result-meta { font-size: .8rem; color: var(--ink-faint); margin-top: .15rem; font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif; font-style: italic; }
+
+/* === Map === */
+#leaflet-map {
+  height: 520px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  margin: 1rem 0;
+  background: var(--bg-soft);
+  background-image:
+    repeating-linear-gradient(45deg, transparent, transparent 20px, color-mix(in srgb, var(--gold) 6%, transparent) 20px, color-mix(in srgb, var(--gold) 6%, transparent) 21px),
+    repeating-linear-gradient(-45deg, transparent, transparent 20px, color-mix(in srgb, var(--accent) 4%, transparent) 20px, color-mix(in srgb, var(--accent) 4%, transparent) 21px);
+  position: relative;
+}
+.map-offline-banner {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  padding: .5rem 1rem;
+  border-radius: 99px;
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: .85rem;
+  color: var(--ink-soft);
+  box-shadow: var(--shadow);
+  z-index: 1000;
+  pointer-events: none;
+  display: none;
+}
+.map-offline-banner.show { display: block; }
+[data-theme="dark"] .leaflet-tile { filter: brightness(.7) contrast(1.1) saturate(.8); }
+[data-theme="dark"] .leaflet-container { background: #1a1612 !important; }
+.map-legend {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: .95rem;
+  text-align: center;
+  margin-top: .75rem;
+}
+.map-marker-icon {
+  width: 32px; height: 32px;
+  background: var(--accent);
+  color: #fbf7f0;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-weight: 600;
+  font-size: .75rem;
+  border: 2px solid #fbf7f0;
+  box-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+
+/* === Day timeline === */
+.day-header {
+  display: flex; align-items: baseline; gap: 1rem;
+  margin-bottom: .5rem;
+  flex-wrap: wrap;
+}
+.day-number {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 4rem;
+  font-weight: 400;
+  color: var(--gold-soft);
+  line-height: 1;
+  letter-spacing: -.02em;
+}
+.day-subtitle {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  margin: .5rem 0 1.5rem;
+}
+
+.day-stats {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin: -.5rem 0 1.75rem;
+  padding: .85rem 1rem;
+  background: var(--bg-soft);
+  border-left: 2px solid var(--gold-soft);
+  border-radius: 0 4px 4px 0;
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: .92rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.day-stats-item {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+.day-stats-item strong {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--ink);
+  font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+  font-size: .85rem;
+}
+.day-stats-item::before {
+  font-style: normal;
+  font-size: 1rem;
+}
+.day-stats-item.walk::before { content: "🚶"; }
+.day-stats-item.metro::before { content: "🚇"; }
+.day-stats-item.taxi::before { content: "🚕"; }
+.day-stats-item.train::before { content: "🚆"; }
+.day-stats-item.ticket::before { content: "🎟️"; }
+
+/* Botón "Ver ruta del día": abre Google Maps con todas las paradas del día (modo direcciones) */
+.day-route-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  margin-left: auto;
+  padding: .35rem .9rem;
+  background: var(--accent);
+  color: var(--bg-elev);
+  border: 1px solid var(--accent);
+  border-radius: 99px;
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: .9rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: filter .2s ease, transform .2s ease;
+}
+.day-route-btn::before { content: "🗺️"; font-style: normal; font-size: .95rem; }
+.day-route-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+@media (max-width: 600px) {
+  .day-route-btn { margin-left: 0; width: 100%; justify-content: center; }
+}
+
+.timeline { position: relative; padding-left: 1.75rem; margin-top: 2rem; }
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: .4rem; top: .5rem; bottom: .5rem;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--gold-soft), var(--line), transparent);
+}
+.tl-item {
+  position: relative;
+  padding-bottom: 1.85rem;
+}
+.tl-item::before {
+  content: "";
+  position: absolute;
+  left: -1.55rem; top: .65rem;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+}
+.tl-item.fixed-event::before { background: var(--accent); }
+.tl-time {
+  font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+  font-size: .8rem; font-weight: 500;
+  letter-spacing: .05em;
+  color: var(--gold);
+  display: inline-block;
+  min-width: 4em;
+}
+.tl-title {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: none;
+  margin-left: .5rem;
+}
+.tl-title:hover { color: var(--accent); }
+.tl-title.disabled { color: var(--ink-faint); pointer-events: none; cursor: default; }
+.tl-title.disabled:hover { color: var(--ink-faint); }
+.tl-note {
+  margin: .25rem 0 0 4.5em;
+  font-size: .9rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+.tl-tag {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-size: .75rem;
+  font-style: italic;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  padding: .1rem .55rem;
+  border-radius: 99px;
+  margin-left: .4rem;
+  vertical-align: middle;
+  letter-spacing: .05em;
+}
+
+.tl-meta {
+  margin: .2rem 0 .75rem 4.5em;
+  padding: .4rem .65rem;
+  background: color-mix(in srgb, var(--ink) 3%, transparent);
+  border-radius: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem .85rem;
+  line-height: 1.4;
+}
+/* PARIDAD F8 (decisión humana "Match the golden", Plan 08-06): en el index.html VIVO esta
+   regla está ORFANADA por un `}` sobrante (index.html:1386, justo antes de `.tl-meta-item`),
+   así que en el sitio vivo NUNCA se aplica y el golden congelado la capturó AUSENTE. Phase 1
+   eliminó ese `}` ("no-op visual" — INEXACTO: era visualmente significativo), des-orfanando la
+   regla y haciendo que `.tl-meta-item` se renderizara distinto del golden (#viernes/timeline
+   502px más corto). Para reproducir FIELMENTE el estado vivo, neutralizamos las declaraciones:
+   `.tl-meta-item` cae a su default (Lora / 16px / display:block), EXACTAMENTE como el golden.
+   No se reintroduce el `}` literal (frágil); se neutraliza limpiamente. Las sub-reglas que SÍ
+   se aplican en el vivo (`.tl-meta-item b`/`.warn b`/`.ok b`) se conservan intactas — no las
+   afectaba el brace huérfano. Excepción puntual y autorizada a "CSS verbatim" (CLAUDE.md §5). */
+.tl-meta-item b {
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+.tl-meta-item.warn b { color: #c47a2a; }
+.tl-meta-item.ok b   { color: #5a7a3a; }
+
+.tl-transport {
+  margin: .3rem 0 1.6rem 2.5rem;
+  padding: .75rem .9rem;
+  background: color-mix(in srgb, var(--gold) 8%, transparent);
+  border-left: 2px solid var(--gold-soft);
+  border-radius: 0 5px 5px 0;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+  font-size: .78rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.tl-transport.metro { background: color-mix(in srgb, #d4801a 10%, transparent); border-left-color: #d4801a; }
+.tl-transport.metro-b { background: color-mix(in srgb, #2c5aa0 10%, transparent); border-left-color: #2c5aa0; }
+.tl-transport.taxi { background: color-mix(in srgb, #5a7a3a 10%, transparent); border-left-color: #5a7a3a; }
+.tl-transport.walk { background: color-mix(in srgb, var(--gold) 6%, transparent); border-left-color: var(--gold-soft); }
+
+/* Recomendaciones gastronómicas dentro del timeline (enlazan a la sección Gastronomía) */
+.tl-food {
+  margin: .35rem 0 1.6rem 2.5rem;
+  padding: .7rem .95rem;
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+  border-left: 2px solid var(--accent-soft);
+  border-radius: 0 5px 5px 0;
+  font-size: .85rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.tl-food-header {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: .98rem;
+  color: var(--ink);
+  margin-bottom: .55rem;
+  display: flex; align-items: center; gap: .4rem;
+}
+.tl-food-list { display: flex; flex-direction: column; gap: .55rem; }
+.tl-food-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: .15rem .8rem;
+  align-items: baseline;
+}
+.tl-food-name {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-size: 1.08rem; font-weight: 600;
+  color: var(--accent);
+  text-decoration: none; border-bottom: 1px solid var(--line);
+}
+.tl-food-name:hover { border-bottom-color: var(--accent); }
+.tl-food-time {
+  font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+  font-size: .72rem; color: var(--ink-faint); white-space: nowrap;
+}
+.tl-food-desc { grid-column: 1 / -1; font-style: italic; font-size: .82rem; color: var(--ink-soft); }
+.tl-food-foot { margin-top: .6rem; font-style: italic; font-size: .8rem; color: var(--ink-faint); }
+.tl-food-foot a { color: var(--accent); }
+/* Reserva confirmada dentro del bloque de comida */
+.tl-food-item.reserved {
+  background: color-mix(in srgb, var(--gold) 14%, transparent);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 5px 5px 0;
+  padding: .4rem .6rem; margin: -.1rem 0;
+}
+.tl-resv-badge {
+  font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+  font-size: .62rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase;
+  color: #fff; background: var(--accent);
+  padding: .12em .5em; border-radius: 3px;
+  margin-left: .5em; white-space: nowrap; vertical-align: middle;
+}
+/* Evento de reserva en la línea de tiempo (estilo dorado) */
+.tl-item.reserved-event::before { background: var(--gold) !important; box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 30%, transparent); }
+.tl-item.reserved-event .tl-title { color: var(--accent); }
+.tl-resv-meta {
+  margin: -.6rem 0 1.1rem 2.5rem; padding: .5rem .8rem;
+  background: color-mix(in srgb, var(--gold) 12%, transparent);
+  border-left: 3px solid var(--gold); border-radius: 0 5px 5px 0;
+  font-size: .78rem; color: var(--ink-soft); line-height: 1.5;
+}
+.tl-resv-meta strong { color: var(--ink); }
+.tl-resv-meta .tl-resv-tel { font-family: 'JetBrains Mono', monospace; font-size: .74rem; }
+/* Bloque Plan B (alternativa sin reserva) */
+.tl-planb {
+  margin: .35rem 0 1.4rem 2.5rem; padding: .8rem 1rem;
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  border-left: 3px solid var(--ink-soft); border-radius: 0 6px 6px 0;
+  font-size: .84rem; color: var(--ink-soft); line-height: 1.55;
+}
+.tl-planb-header {
+  font-family: 'Cormorant Garamond','Garamond','Hoefler Text','Times New Roman',serif;
+  font-style: italic; font-size: 1.02rem; color: var(--ink); margin-bottom: .45rem;
+}
+.tl-planb ul { margin: .5rem 0; padding-left: 1.1rem; }
+.tl-planb li { margin: .35rem 0; }
+.tl-planb a { color: var(--accent); }
+.tl-planb strong { color: var(--ink); }
+
+.tl-transport-header {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: .92rem;
+  color: var(--ink);
+  margin-bottom: .55rem;
+  letter-spacing: .02em;
+}
+.tl-transport-modes {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+}
+.tl-transport-mode {
+  display: grid;
+  grid-template-columns: 1.4em 1fr auto;
+  gap: .55rem;
+  align-items: baseline;
+  padding: .15rem 0;
+}
+.tl-transport-mode .tl-transport-mode-meta {
+    grid-column: 2;
+    text-align: left;
+    margin-top: -.15rem;
+    padding-bottom: .15rem;
+  }
+  .tl-transport { margin-left: 1.5rem; }
+  .tl-meta { margin-left: 3em; }
+/* PARIDAD F8 (decisión humana "Match the golden", Plan 08-06): en el index.html VIVO esta
+   regla está ORFANADA por un `}` sobrante (index.html:1528, justo antes de
+   `.tl-transport-mode.recommended`), así que en el sitio vivo NUNCA se aplica: los modos
+   "recomendado" del timeline caen a la base `.tl-transport-mode` (transparent / padding .2rem 0
+   / radius 0). El golden los capturó así. Phase 1 quitó ese `}` (des-orfanando la regla) →
+   el `.recommended` se sombreaba/redondeaba distinto del golden. Neutralizamos las
+   declaraciones para reproducir FIELMENTE el estado vivo (cae a la base). No se reintroduce el
+   `}` literal. NOTA: las dos reglas que en el vivo SÍ aplican (`.tl-transport`/`.tl-meta`
+   margin-left, index.html:1526-1527 — ANTES del `}` huérfano) se conservan arriba intactas. */
+.tl-transport-mode-icon {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: normal;
+  font-size: 1rem;
+  line-height: 1;
+  text-align: center;
+}
+.tl-transport-mode-desc {
+  font-size: .76rem;
+  line-height: 1.45;
+}
+.tl-transport-mode-desc strong { font-weight: 600; color: var(--ink); }
+.tl-transport-mode-meta {
+  font-size: .72rem;
+  color: var(--ink-faint);
+  white-space: nowrap;
+  text-align: right;
+}
+.tl-transport-mode-meta b {
+  color: var(--ink);
+  font-weight: 600;
+}
+.tl-transport-mode-tag {
+  display: inline-block;
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: .68rem;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  padding: 0 .4rem;
+  border-radius: 99px;
+  margin-left: .35rem;
+  letter-spacing: .03em;
+  vertical-align: middle;
+}
+.tl-transport-footnote {
+  margin-top: .4rem;
+  padding-top: .35rem;
+  border-top: 1px dashed color-mix(in srgb, var(--ink) 12%, transparent);
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: .82rem;
+  color: var(--ink-faint);
+  line-height: 1.45;
+}
+
+/* === Cards (fichas) === */
+.cards-list { display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem; }
+
+.card {
+  background: var(--bg-elev);
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+  padding: 1.75rem 1.5rem;
+  scroll-margin-top: 0;
+  position: relative;
+  transition: box-shadow .4s ease, border-color .4s ease;
+}
+@media (min-width: 640px) {
+  .card { padding: 2.25rem 2rem; }
+}
+.card.highlight {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-elev);
+}
+
+.card-header {
+  display: flex;
+  align-items: baseline;
+  gap: .85rem;
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.card-hero {
+  margin: 0 -1.5rem 1.5rem;
+  overflow: hidden;
+  position: relative;
+  background: var(--bg-soft);
+  height: 220px;
+}
+@media (min-width: 640px) {
+  .card-hero { margin: 0 -2rem 1.75rem; height: 280px; }
+}
+.card-hero svg, .card-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+.card-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent 70%, color-mix(in srgb, var(--bg-elev) 60%, transparent));
+}
+[data-theme="dark"] .card-hero {
+  filter: brightness(.7) saturate(.85);
+}
+.card-roman {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--gold);
+  letter-spacing: .05em;
+  line-height: 1;
+}
+.card-title { flex: 1; min-width: 60%; }
+.card-title h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  margin-bottom: .15rem;
+}
+.card-italian {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: .95rem;
+  letter-spacing: .01em;
+}
+.card-badge {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-size: .72rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  padding: .25rem .7rem;
+  border-radius: 99px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.card-section { margin-bottom: 1.25rem; }
+.card-section:last-child { margin-bottom: 0; }
+.card-section h4 {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-size: .8rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 1.4rem 0 .65rem;
+  font-weight: 600;
+}
+
+.card-section p:first-of-type::first-letter {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-size: 3.4rem;
+  font-weight: 500;
+  float: left;
+  line-height: .85;
+  margin: .1rem .25rem -.1rem 0;
+  color: var(--accent);
+  font-style: italic;
+}
+.card-section.no-dropcap p:first-of-type::first-letter {
+  font-family: inherit; font-size: inherit; float: none;
+  margin: 0; color: inherit; font-style: inherit; font-weight: inherit;
+}
+
+.detail-list {
+  list-style: none;
+  padding: 0;
+}
+.detail-list li {
+  padding: .55rem 0 .55rem 1.5rem;
+  border-bottom: 1px solid var(--line-soft);
+  position: relative;
+  font-size: .98rem;
+  line-height: 1.55;
+}
+.detail-list li:last-child { border-bottom: none; }
+.detail-list li::before {
+  content: "✦";
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-size: .8rem;
+  top: .75rem;
+}
+
+.detail-photo {
+  margin: 1rem auto 1.5rem;
+  max-width: 380px;
+  display: block;
+}
+.detail-photo img {
+  width: 100%;
+  border-radius: 4px;
+  display: block;
+  box-shadow: var(--shadow);
+  background: var(--bg-soft);
+}
+.detail-photo-caption {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: .88rem;
+  color: var(--ink-soft);
+  text-align: center;
+  margin-top: .5rem;
+  line-height: 1.4;
+  padding: 0 .5rem;
+}
+[data-theme="dark"] .detail-photo img {
+  filter: brightness(.9) saturate(.9);
+}
+
+.facts {
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-soft);
+  border-radius: 4px;
+  font-size: .9rem;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+}
+.facts-row {
+  display: flex;
+  justify-content: space-between;
+  padding: .3rem 0;
+  border-bottom: 1px dashed var(--line);
+  gap: 1rem;
+}
+.facts-row:last-child { border-bottom: none; }
+.facts-row .label {
+  color: var(--ink-faint);
+  font-size: .75rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.facts-row .value {
+  color: var(--ink);
+  text-align: right;
+  font-size: .85rem;
+}
+
+.maps-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  margin-top: .85rem;
+  padding: .55rem 1rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: .9rem;
+  color: var(--accent);
+  text-decoration: none;
+  transition: all .2s ease;
+}
+.maps-link:hover {
+  background: var(--accent);
+  color: var(--bg-elev);
+  border-color: var(--accent);
+}
+.maps-link::before {
+  content: "📍";
+  font-style: normal;
+  font-size: .95rem;
+}
+
+.sorrentino-box {
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, transparent), color-mix(in srgb, var(--gold) 5%, transparent));
+  border-left: 3px solid var(--accent);
+  border-radius: 0 4px 4px 0;
+  font-size: .92rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+.sorrentino-box .label {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: .05em;
+  display: block;
+  margin-bottom: .25rem;
+  font-size: .85rem;
+}
+
+.culture-box {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  background: color-mix(in srgb, var(--gold) 6%, transparent);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 4px 4px 0;
+  font-size: .92rem;
+  color: var(--ink-soft);
+}
+.culture-box .label {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: .05em;
+  display: block;
+  margin-bottom: .35rem;
+  font-size: .85rem;
+}
+.culture-box .ref-item { margin-bottom: .5rem; line-height: 1.5; }
+.culture-box .ref-item:last-child { margin-bottom: 0; }
+.culture-box .ref-title { font-style: italic; color: var(--ink); font-weight: 500; }
+
+.notes-area {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px dashed var(--line);
+}
+.notes-area label {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: .85rem;
+  color: var(--ink-faint);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: .35rem;
+  display: block;
+}
+.notes-textarea {
+  width: 100%;
+  min-height: 60px;
+  padding: .65rem .85rem;
+  background: var(--bg);
+  border: 1px solid var(--line-soft);
+  border-radius: 4px;
+  color: var(--ink);
+  font-family: 'Lora', serif;
+  font-size: .95rem;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color .2s ease;
+}
+.notes-textarea:focus { outline: none; border-color: var(--accent); }
+
+/* === Final flourish === */
+.flourish {
+  text-align: center;
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  color: var(--gold);
+  margin: 3rem 0;
+  letter-spacing: .3em;
+}
+
+footer {
+  padding: 3rem 0;
+  text-align: center;
+  border-top: 1px solid var(--line-soft);
+  margin-top: 2rem;
+}
+footer p {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: .95rem;
+}
+
+/* === Volver button (floating) === */
+.back-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(120%);
+  background: var(--accent);
+  color: #fbf7f0;
+  border: none;
+  padding: .7rem 1.5rem .7rem 1.2rem;
+  border-radius: 99px;
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-size: 1rem;
+  font-style: italic;
+  letter-spacing: .03em;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(60,40,20,.3), 0 8px 32px rgba(139,58,58,.2);
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  transition: transform .3s cubic-bezier(.34,1.4,.64,1), opacity .3s ease;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 200;
+}
+.back-btn.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.back-btn:hover { background: color-mix(in srgb, var(--accent) 85%, black); }
+.back-btn-arrow {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* === Gastronomía section === */
+.gastro-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+@media (min-width: 640px) {
+  .gastro-grid { grid-template-columns: 1fr 1fr; }
+}
+.gastro-card {
+  background: var(--bg-elev);
+  border: 1px solid var(--line-soft);
+  border-radius: 8px;
+  padding: 1.1rem 1.25rem;
+  transition: box-shadow .2s ease;
+}
+.gastro-card:hover { box-shadow: var(--shadow); }
+.gastro-card-header { display: flex; align-items: flex-start; gap: .65rem; margin-bottom: .65rem; }
+.gastro-card-badge {
+  flex-shrink: 0;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+  font-size: .62rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  padding: .18rem .5rem;
+  border-radius: 3px;
+  margin-top: .2rem;
+  white-space: nowrap;
+}
+.badge-trattoria { background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); }
+.badge-quinto    { background: color-mix(in srgb, #8b4026 18%, transparent); color: #8b4026; }
+.badge-pizza     { background: color-mix(in srgb, #7a5a1a 14%, transparent); color: #7a5a1a; }
+.badge-gelato    { background: color-mix(in srgb, #2c6080 14%, transparent); color: #2c6080; }
+.badge-pasticceria { background: color-mix(in srgb, var(--gold) 22%, transparent); color: #7a5a1a; }
+.badge-deli      { background: color-mix(in srgb, #3a6040 14%, transparent); color: #3a6040; }
+.badge-ghetto    { background: color-mix(in srgb, #6040a0 14%, transparent); color: #6040a0; }
+.badge-caffe     { background: color-mix(in srgb, var(--gold) 15%, transparent); color: #8b6c43; }
+.gastro-card-name {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.25;
+}
+.gastro-card-address {
+  font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+  font-size: .68rem;
+  color: var(--ink-faint);
+  margin-top: .1rem;
+}
+.gastro-card-desc { font-size: .9rem; color: var(--ink-soft); line-height: 1.55; margin-bottom: .6rem; }
+.gastro-plato {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: .88rem;
+  color: var(--ink);
+  padding: .4rem .7rem;
+  background: color-mix(in srgb, var(--gold) 8%, transparent);
+  border-left: 2px solid var(--gold-soft);
+  border-radius: 0 3px 3px 0;
+  margin-bottom: .6rem;
+  line-height: 1.4;
+}
+.gastro-plato strong { font-style: normal; font-weight: 600; }
+.gastro-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-top: .6rem;
+  padding-top: .5rem;
+  border-top: 1px dashed var(--line-soft);
+  font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+  font-size: .68rem;
+  color: var(--ink-faint);
+}
+.gastro-maps-link {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: .82rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+.gastro-maps-link:hover { text-decoration: underline; }
+.gastro-itinerary-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+  font-size: .6rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: #5a7a3a;
+  background: color-mix(in srgb, #5a7a3a 12%, transparent);
+  padding: .1rem .4rem;
+  border-radius: 3px;
+}
+/* Cuadro de reservas */
+.reservas-box {
+  margin: 1.5rem 0 2rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.reservas-box-header {
+  background: color-mix(in srgb, var(--accent) 10%, var(--bg-soft));
+  padding: .65rem 1.1rem;
+  font-family: 'Cormorant Garamond','Garamond',serif;
+  font-size: .88rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.reservas-table { width: 100%; border-collapse: collapse; }
+.reservas-table td {
+  padding: .55rem 1.1rem;
+  vertical-align: top;
+  font-size: .85rem;
+  line-height: 1.55;
+  border-bottom: 1px solid var(--line-soft);
+  font-family: 'Lora','Georgia',serif;
+}
+.reservas-table tr:last-child td { border-bottom: none; }
+.reservas-table td:first-child {
+  width: 45%;
+  font-family: 'Cormorant Garamond','Garamond',serif;
+  font-size: .98rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.reservas-table td a { color: var(--accent); border-bottom: 1px solid var(--line); }
+.reservas-badge {
+  display: inline-block;
+  font-size: .68rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: .1rem .5rem;
+  border-radius: 99px;
+  vertical-align: middle;
+  margin-left: .35rem;
+}
+.badge-urgent { background: color-mix(in srgb,var(--accent) 15%,transparent); color: var(--accent); }
+.badge-rec    { background: color-mix(in srgb,var(--gold) 15%,transparent); color: var(--gold); }
+.badge-done   { background: #2e7d4f; color: #fff; }
+.reservas-table tr.is-done td:first-child { border-left: 3px solid #2e7d4f; }
+.reservas-confirmadas {
+  margin: 0 0 1rem; padding: .85rem 1rem;
+  background: color-mix(in srgb, #2e7d4f 9%, transparent);
+  border: 1px solid color-mix(in srgb, #2e7d4f 35%, transparent);
+  border-radius: 8px; font-size: .85rem; line-height: 1.55;
+}
+.reservas-confirmadas h4 {
+  font-family: 'JetBrains Mono','SF Mono',monospace; font-size: .72rem;
+  letter-spacing: .08em; text-transform: uppercase; color: #2e7d4f;
+  margin: 0 0 .5rem;
+}
+.reservas-confirmadas ul { margin: 0; padding-left: 1.1rem; }
+.reservas-confirmadas li { margin: .2rem 0; }
+.reservas-confirmadas .rc-when { font-family: 'JetBrains Mono',monospace; font-size: .76rem; color: var(--ink); font-weight: 700; }
+
+.gastro-section-title {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--gold);
+  letter-spacing: .04em;
+  margin: 1.75rem 0 .75rem;
+  padding-bottom: .4rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+.gastro-intro {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: .93rem;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  padding: .75rem 1rem;
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+  border-left: 2px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  border-radius: 0 3px 3px 0;
+  margin-bottom: 1rem;
+}
+
+/* === Animation for highlighted card === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.card { animation: fadeIn .5s ease backwards; }
+
+/* === Mobile adjustments === */
+@media (max-width: 540px) {
+  body { font-size: 16px; }
+  section { padding: 2.25rem 0; }
+  .day-number { font-size: 3.2rem; }
+  .tl-title { display: block; margin-left: 0; margin-top: .15rem; }
+  .tl-note { margin-left: 0; }
+  .tl-meta { margin-left: 0; }
+  .tl-transport { margin-left: .5rem; }
+  .nav-pill { font-size: .9rem; padding: .3rem .75rem; }
+  #leaflet-map { height: 420px; }
+  .tl-transport-mode {
+    grid-template-columns: 1.4em 1fr;
+    grid-template-rows: auto auto;
+  }
+  .tl-transport-mode .tl-transport-mode-meta {
+    grid-column: 2;
+    text-align: left;
+    margin-top: -.1rem;
+    padding-bottom: .1rem;
+  }
+}
+
+/* === Sección Arte · fichas de artistas === */
+.art-intro { font-family: 'Cormorant Garamond','Garamond','Hoefler Text','Times New Roman',serif; font-style: italic; font-size: 1.05rem; color: var(--ink-soft); line-height: 1.6; margin-bottom: 1.5rem; }
+.artist-card {
+  background: var(--bg-elev); border: 1px solid var(--line-soft);
+  border-radius: 6px; padding: 1.6rem 1.5rem; margin-bottom: 1.5rem;
+  scroll-margin-top: 0; position: relative;
+}
+.artist-head { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.1rem; }
+.artist-avatar {
+  flex: none; width: 58px; height: 58px; border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, #a44a4a, #8b3a3a 70%, #6f2e2e);
+  color: #f5f0e8; font-family: 'Cormorant Garamond','Garamond',serif; font-weight: 600;
+  font-size: 2rem; display: flex; align-items: center; justify-content: center;
+  border: 2px solid var(--gold); box-shadow: 0 2px 10px rgba(0,0,0,.18);
+}
+.artist-head h3 { font-family: 'Cormorant Garamond','Garamond','Hoefler Text','Times New Roman',serif; font-size: 1.7rem; font-weight: 600; color: var(--accent); margin: 0 0 .15rem; line-height: 1.1; }
+.artist-dates { font-family: 'JetBrains Mono','SF Mono','Consolas',monospace; font-size: .68rem; letter-spacing: .04em; color: var(--ink-faint); text-transform: uppercase; }
+.artist-epithet { font-family: 'Cormorant Garamond','Garamond',serif; font-style: italic; font-size: 1.05rem; color: var(--gold); margin-top: .35rem; line-height: 1.3; }
+.artist-section { margin: 1rem 0; }
+.artist-section h4 { font-family: 'JetBrains Mono','SF Mono','Consolas',monospace; font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin: 0 0 .45rem; }
+.artist-section p { font-size: .92rem; line-height: 1.65; color: var(--ink-soft); margin: 0 0 .6rem; }
+.artist-section ul { margin: 0; padding-left: 1.1rem; }
+.artist-section li { font-size: .9rem; line-height: 1.55; color: var(--ink-soft); margin: .3rem 0; }
+.artist-section strong { color: var(--ink); }
+.artist-section em { color: var(--ink); }
+.artist-trip {
+  margin-top: 1.1rem; padding: .85rem 1rem; border-radius: 0 8px 8px 0;
+  background: color-mix(in srgb, var(--gold) 9%, transparent);
+  border-left: 3px solid var(--gold); font-size: .9rem; line-height: 1.7; color: var(--ink-soft);
+}
+.artist-trip-head { font-family: 'Cormorant Garamond','Garamond',serif; font-style: italic; font-size: 1.05rem; color: var(--ink); margin-bottom: .3rem; }
+.artist-trip a { color: var(--accent); border-bottom: 1px solid var(--line); white-space: nowrap; }
+.artist-trip a:hover { border-bottom-color: var(--accent); }
+
+/* Chip de artistas dentro de una ficha de monumento (back-link) */
+.card-artists {
+  margin: -.4rem 0 1.1rem; font-size: .8rem; color: var(--ink-faint);
+  font-family: 'JetBrains Mono','SF Mono','Consolas',monospace; letter-spacing: .02em;
+}
+.card-artists .art-link {
+  display: inline-block; color: var(--accent); text-decoration: none;
+  background: color-mix(in srgb, var(--accent) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  border-radius: 99px; padding: .1rem .6rem; margin: .15rem .25rem .15rem 0;
+}
+.card-artists .art-link:hover { background: color-mix(in srgb, var(--accent) 18%, transparent); }
+.card-artists .art-link::before { content: "✦ "; color: var(--gold); }
+.card-artists + .card-artists.card-arch { margin-top: -.9rem; }
+.card-artists.card-arch .art-link::before { content: "▣ "; }
+
+/* Glosario de arquitectura */
+.arch-glossary { display: grid; grid-template-columns: 1fr; gap: .6rem; margin: 1.1rem 0 .5rem; }
+@media (min-width: 640px) { .arch-glossary { grid-template-columns: 1fr 1fr; } }
+.arch-term {
+  background: var(--bg-elev); border: 1px solid var(--line-soft);
+  border-left: 3px solid var(--gold); border-radius: 0 7px 7px 0; padding: .65rem .9rem;
+}
+.arch-term b { display: block; color: var(--accent); font-family: 'Cormorant Garamond','Garamond','Hoefler Text','Times New Roman',serif; font-size: 1.12rem; font-weight: 600; margin-bottom: .15rem; }
+.arch-term span { font-size: .85rem; line-height: 1.5; color: var(--ink-soft); }
+.arch-term span em { color: var(--ink); font-style: italic; }

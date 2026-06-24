@@ -1,0 +1,113 @@
+slug: popolo
+trip: roma
+roman: XXII
+name: Piazza del Popolo · Santa Maria del Popolo
+italian: Rione Campo Marzio · Porta del Popolo
+day: Lunes
+coords:
+  lat: 41.9107038
+  lng: 12.4763579
+type: card
+motif: obelisk
+artists:
+  - ref: art-caravaggio
+    label: 'Artistas: [Caravaggio](#art-caravaggio)'
+  - ref: art-rafael
+    label: '[Rafael](#art-rafael)'
+arch:
+  - ref: arq-moderna
+    label: 'Arquitectura: [Neoclásico](#arq-moderna)'
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Piazza_del_Popolo_Rome.jpg/960px-Piazza_del_Popolo_Rome.jpg
+  alt: Piazza del Popolo
+sections:
+  - heading: Qué es
+    body: >-
+      Una plaza ovalada monumental que durante siglos fue la **puerta de entrada
+      a Roma** para todo viajero que llegaba desde el norte. En el centro, un
+      obelisco egipcio de 24 metros traído por Augusto en el año 10 a.C. En su
+      flanco norte, la **iglesia de Santa Maria del Popolo** — aparentemente
+      discreta, sorprendentemente rica: dos Caravaggios, frescos de Pinturicchio,
+      una capilla diseñada por Rafael. Una de las iglesias clave del Renacimiento
+      y el Barroco romanos.
+  - heading: Historia
+    body: >-
+      La plaza es la puerta norte histórica de Roma. La **Porta del Popolo** (el
+      arco de mármol que se ve al fondo, mirando hacia el norte) fue parte de las
+      murallas Aurelianas del siglo III d.C. y se reconstruyó en el siglo XV. Por
+      aquí entraban en Roma los peregrinos, los embajadores extranjeros, los
+      viajeros del Grand Tour. La _Via Flaminia_ — la calzada romana que
+      conectaba con el norte de Italia — desemboca exactamente aquí. Hasta el
+      siglo XIX fue el punto donde Roma "comenzaba" para todo el que llegaba en
+      carruaje.
+
+
+      La plaza se rediseñó en su forma actual entre 1811 y 1822 por el arquitecto
+      neoclásico **Giuseppe Valadier**, por encargo del régimen napoleónico que
+      entonces administraba Roma. Valadier la convirtió en óvalo perfecto, con
+      dos hemicíclos con bancos de piedra, esfinges, fuentes con figuras de
+      tritones, y rampas que suben al **Pincio** (el jardín-mirador elevado a un
+      lado). El obelisco egipcio del centro lo trajo a Roma el emperador Augusto
+      desde Heliópolis, Egipto, en el año 10 a.C., para celebrar la anexión de
+      Egipto al imperio. Inicialmente estuvo en el Circo Máximo; el Papa Sixto V
+      lo trasladó aquí en 1589.
+
+
+      La **iglesia de Santa Maria del Popolo** fue fundada en 1099 sobre las
+      tumbas de la familia Domicia (los emperadores Nerón y Domiciano,
+      supuestamente, estaban enterrados aquí). La tradición medieval decía que el
+      lugar estaba poseído por demonios — el alma de Nerón aparecía como cuervos
+      en un olmo cercano. El Papa Pascual II demolió el olmo, exorcizó la zona y
+      mandó construir la iglesia para purificar el lugar. La iglesia se
+      reconstruyó casi enteramente en estilo renacentista entre 1472 y 1477 bajo
+      el papado de Sixto IV (el mismo que construyó la Capilla Sixtina del
+      Vaticano). Bernini la reformó en el siglo XVII.
+  - heading: Anécdotas
+    body: >-
+      La iglesia contiene **dos Caravaggios** en la misma capilla — la Cappella
+      Cerasi, a la izquierda del altar mayor. Son la _Crucifixión de San Pedro_ y
+      la _Conversión de San Pablo en el camino de Damasco_, ambos de 1601. Son
+      obras maestras absolutas del tenebrismo caravaggesco. La _Conversión de San
+      Pablo_ es probablemente uno de los cuadros más perturbadores del barroco —
+      Pablo derribado del caballo, tumbado en el suelo con los brazos extendidos
+      como en un éxtasis epiléptico, mientras el caballo (un protagonista igual
+      de importante que el santo) llena casi toda la composición.
+
+
+      La **Cappella Chigi**, también en esta iglesia, fue diseñada por **Rafael
+      Sanzio** en 1513 para el banquero Agostino Chigi. Es una obra maestra del
+      Renacimiento alto. La cúpula tiene mosaicos diseñados por Rafael
+      representando los planetas y los signos zodiacales. Bernini intervino aquí
+      en 1652 añadiendo dos esculturas marmóreas — un _Habacuc y el ángel_ y un
+      _Daniel en el foso de los leones_. La capilla es un palimpsesto Renacimiento
+      + Barroco que da pista de cómo evolucionó el gusto romano en 150 años.
+
+
+      La cantante **Cristina di Svezia** — la reina sueca que abdicó del trono
+      protestante y se convirtió al catolicismo en 1654 — entró en Roma por esta
+      puerta en 1655 con escolta papal. Bernini diseñó el adornamiento de la
+      puerta para su entrada triunfal: una inscripción del Papa Alejandro VII que
+      reza "_Felici Faustoque Ingressui_" — para la entrada feliz y afortunada —
+      sigue tallada en el arco interior de la Porta del Popolo.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Crucifixion_of_Saint_Peter-Caravaggio_%28c.1600%29.jpg/960px-Crucifixion_of_Saint_Peter-Caravaggio_%28c.1600%29.jpg" alt="Crucifixión de San Pedro de Caravaggio (1601), en la Cappella Cerasi. Pon 1€ en la caja de la luz — sin iluminación se v" caption="_Crucifixión de San Pedro_ de Caravaggio (1601), en la Cappella Cerasi. Pon 1€ en la caja de la luz — sin iluminación se ve poco."}
+
+      - El **obelisco egipcio** de 24 metros: traído por Augusto. Tiene jeroglíficos del faraón Ramsés II. Una de las piedras más viejas de Roma a la vista.
+      - Las **dos iglesias gemelas** al sur de la plaza (Santa Maria dei Miracoli y Santa Maria in Montesanto): son _casi_ idénticas. Si te fijas, una tiene cúpula ovalada y otra circular. La asimetría fue intencional: Bernini quería compensar el ligero desnivel del terreno.
+      - El **pavimento de Valadier**: en gris y blanco, con motivos geométricos que se aprecian mejor desde la rampa que sube al Pincio.
+      - Las **fuentes laterales** con tritones: del siglo XIX, Valadier.
+      - Las **rampas al Pincio**: subid 50 metros hacia el este y tendréis una de las mejores vistas de la plaza desde arriba.
+      - Dentro de **Santa Maria del Popolo**: la _Cappella Cerasi_ (segunda capilla a la izquierda del altar mayor) — los dos Caravaggios. Poned 1€ en la caja para encender la luz, sin ella se ven mal.
+      - La **Cappella Chigi** (segunda a la derecha del altar, justo enfrente de la anterior): cúpula con mosaicos de Rafael, esculturas de Bernini, todo en un espacio mínimo. Una bomba renacentista-barroca.
+      - Las **tumbas pintadas** de Pinturicchio en el ábside: del siglo XV, con escenas marianas. Anterior y muy distinto al Caravaggio.
+facts:
+  - label: Plaza
+    value: Acceso libre 24/7
+  - label: Iglesia lunes
+    value: 8:30-9:45 · 10:30-12:00 · 16-18
+  - label: Acceso iglesia
+    value: Gratuito
+  - label: Importante
+    value: Entrar antes de las 12:00 (cierre matinal)
+mapsQuery: Piazza del Popolo Roma

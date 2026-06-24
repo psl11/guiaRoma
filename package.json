@@ -1,0 +1,50 @@
+{
+  "name": "guiaroma",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.32.1",
+  "scripts": {
+    "dev": "nuxi dev",
+    "build": "nuxi build",
+    "generate": "nuxi generate",
+    "preview": "nuxi preview",
+    "typecheck": "nuxi typecheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test:golden": "playwright test",
+    "test:golden:update": "playwright test --update-snapshots",
+    "test:subpath": "playwright test tests/parity/subpath.spec.ts",
+    "test:data": "vitest run tests/data",
+    "test:unit": "vitest run tests/unit",
+    "test:parity": "playwright test -c playwright.gate.config.ts --grep-invert \"reutiliza el MISMO TripView\"",
+    "verify": "pnpm generate && pnpm test:unit && pnpm test:data && pnpm test:parity"
+  },
+  "devDependencies": {
+    "@fontsource/cormorant-garamond": "5.2.11",
+    "@fontsource/jetbrains-mono": "5.2.8",
+    "@fontsource/lora": "5.2.8",
+    "@playwright/test": "1.61.0",
+    "@types/leaflet": "1.9.21",
+    "better-sqlite3": "^12.11.1",
+    "cheerio": "^1.2.0",
+    "prettier": "3.8.4",
+    "vitest": "4.1.9",
+    "yaml": "^2.9.0"
+  },
+  "dependencies": {
+    "@nuxt/content": "3.14.0",
+    "@nuxt/eslint": "1.16.0",
+    "@nuxt/fonts": "0.14.0",
+    "@nuxtjs/color-mode": "4.0.1",
+    "eslint": "^10.5.0",
+    "leaflet": "1.9.4",
+    "minisearch": "7.2.0",
+    "nuxt": "4.4.8",
+    "zod": "4.4.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3"
+    ]
+  }
+}
