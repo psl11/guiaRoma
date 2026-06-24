@@ -1,5 +1,21 @@
 # F8 / Plan 08-06 — Visual-diff classification (D-02)
 
+> ## UPDATE (6th — post-fix status): font re-vendored to Google metrics; FIXED desktop blocker, but exposed a mobile shortfall — NOT yet green
+>
+> **Commits:** `a69477c` (VDPROBE harness), `4c13da3` (root-cause doc), `0889114` (re-vendor exact Google woff2 via `scripts/vendor-fonts.mjs`). Working tree clean; gate spec reverted to fail-fast (VDPROBE was diagnostic only).
+>
+> **What the font fix achieved (gate-confirmed, fresh `pnpm generate`):**
+> - All four families' isolated probe widths now Δ=0 vs `index.html` (Lora/Cormorant/JetBrains).
+> - **Desktop day-views FIXED:** `dia-viernes`/`dia-sabado`/`dia-domingo` (was +289/+688/+378px) now PASS; desktop residual is `dia-lunes` −1px and `dia-martes` ~−5px (sub-pixel).
+>
+> **What it exposed (the new blocker):** with Nuxt's Lora now matching Google's *base* advance widths, the gate shows **mobile views render short across the board** — `inicio` −26px, `ref-reservas` −65px, up to `dia-sabado` −1053px / `dia-lunes` ~−1500px. Pre-fix (the wider Lora cut) mobile mostly PASSED; the correct-metric font under-shoots mobile.
+>
+> **Root cause of the residual (measured, but not resolved):** the same exact paragraph text in explicit `font-family:'Lora'` 16px renders **3092px in `index.html` vs 2971px in Nuxt (−3.9%)** — BUT only with `text-rendering: optimizeLegibility` (kerning on); with kerning off, and for short isolated strings, the two match exactly. So Nuxt's vendored Lora and the Google Lora `index.html` loads share base advance widths but differ in **kerning/GPOS** data — a different woff2 *cut* of Lora v37. On desktop (wide prose, few lines) this doesn't cross wrap boundaries → passes; on mobile (narrow prose, many lines) it accumulates → fewer lines → short. NOT a CSS-width issue (mobile prose widths byte-identical: introP 350, cardProse 300, paddings equal) and NOT Vue's SSR fragment comments (tested: no layout effect).
+>
+> **Unresolved paradox for the human to weigh:** pre-fix the wider cut matched the golden on mobile but overshot desktop; post-fix the Google-metric cut matches desktop but undershoots mobile. A single faithful font should match the golden on BOTH (the golden is one capture from `index.html`+Google fonts; today's `index.html` measures `#inicio` mobile = 2200 = the frozen golden). That it doesn't suggests either (a) the vendored woff2 cut still isn't byte-identical to what Playwright-Chromium loads (kerning differs), or (b) something about the golden's capture provenance. An attempt to vendor the *exact* bytes by intercepting Playwright-Chromium's woff2 responses failed (browser only downloads needed subsets + caches them) and was reverted.
+>
+> **Decision still OPEN — returned to human.** Font cut is the prime suspect; next candidates: (1) extract the exact per-subset woff2 the golden-capture browser uses (force all subsets, clear cache) and diff GPOS/kern vs current; (2) reconsider golden provenance; (3) only if the residual proves to be true DPR-dependent rasterization, a documented narrow tolerance. No tolerance/mask applied; `maxDiffPixelRatio: 0.01` unchanged; 56 goldens frozen (D-01).
+
 > ## UPDATE (5th decision — VDPROBE empirical root-cause): the residual is a REAL font-metric mismatch, NOT sub-pixel rasterization
 >
 > **Status:** `pnpm verify` still RED, but the residual is now fully root-caused with measurements and is a **REAL, FIXABLE diff (D-02 path a)** — the prior "sub-pixel rasterization / capture-timing" conclusion (4th-decision block below) is **REFUTED**. No tolerance/mask is warranted.
