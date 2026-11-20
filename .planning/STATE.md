@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 11
 current_phase_name: Portada y rutas multi-viaje
 status: executing
-stopped_at: Completed 11-02-PLAN.md
-last_updated: "2026-11-20T19:21:23.095Z"
+stopped_at: Completed 11-03-PLAN.md
+last_updated: "2026-11-20T19:32:09.648Z"
 last_activity: 2026-11-20
 last_activity_desc: Phase 11 execution started
-state_head: 078bffa6b3b5857a85d2086ecc510b4873950ef1
+state_head: 895888bd443748cb62a52a3b6d63e1038112a0c5
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 17
-  completed_plans: 12
+  completed_plans: 13
   percent: 0
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 11 (Portada y rutas multi-viaje) — EXECUTING
-Plan: 3 of 7
+Plan: 4 of 7
 Status: Ready to execute
 Last activity: 2026-11-20 — Phase 11 execution started
 
@@ -115,6 +115,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 10 P05 | 6min | 2 tasks | 4 files |
 | Phase 11 P01 | 4min | 3 tasks | 12 files |
 | Phase 11 P02 | 10 min | 2 tasks | 13 files |
+| Phase 11 P03 | 6 min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -268,6 +269,10 @@ Recent decisions affecting current work:
 - [Phase 11]: 11-02: drafts are excluded from Nuxt Content outside nuxi dev via source.exclude (trips/<slug>/**) computed at config load from scripts/tripManifest.mjs (.mjs + .d.mts, D-23); only NODE_ENV=development keeps drafts (fail-closed)
 - [Phase 11]: 11-02: readTripManifest is fail-closed — non-boolean draft or folder outside ^[a-z0-9]+$ throws naming the file/folder; prerenderRoutes = ['/', ...'/trips/<slug>/'] sorted by slug, ['/'] with no published trips
 - [Phase 11]: 11-02: published-output scans must decode __nuxt_content/<col>/sql_dump.txt (base64+gzip) and keep a positive control; failure collects an offenders list
+- [Phase 11]: 11-03: The D-18 move (prerender routes from the manifest + ROMA_URL flip + shell/build-isolation/romaChrome inversions) landed as one commit with the gate green; only the ROMA_URL value changed in the Roma specs
+- [Phase 11]: 11-03: build-isolation/romaChrome skip only without any build (.output/public/index.html) and then assert trips/roma/index.html exists, so a build without Roma fails
+- [Phase 11]: 11-03: p.trip-back is a direct child of <footer> after .container (footer .container p stays strict-unique); full-document <a> to the runtime baseURL, zero new CSS
+- [Phase 11]: 11-03: trips/[slug].vue page key is trip:<slug>, never the full route (the hash would remount TripView)
 
 ### Pending Todos
 
@@ -304,8 +309,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-20T19:21:22.992Z
-Stopped at: Completed 11-02-PLAN.md
+Last session: 2026-11-20T19:32:09.546Z
+Stopped at: Completed 11-03-PLAN.md
 Resume file: None
 
 ## Operator Next Steps

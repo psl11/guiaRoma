@@ -27,7 +27,7 @@
 ### Rutas y portada (ROUTE)
 
 - [ ] **ROUTE-01**: Al abrir `/guiaRoma/` el usuario ve una portada con una tarjeta por viaje publicado (título, fechas, destinos, resumen) que enlaza a su guía
-- [ ] **ROUTE-02**: La guía de Roma está en `/guiaRoma/trips/roma/` y la de Campania en `/guiaRoma/trips/campania/`
+- [x] **ROUTE-02**: La guía de Roma está en `/guiaRoma/trips/roma/` y la de Campania en `/guiaRoma/trips/campania/`
 - [ ] **ROUTE-03**: Un enlace antiguo `/guiaRoma/#ancla` (p. ej. `#viernes`, `#pantheon`) lleva automáticamente a la misma ancla dentro de `/trips/roma/`, sin bucles al pulsar «Atrás»
 - [ ] **ROUTE-04**: Todas las guías publicadas se generan como páginas estáticas para GitHub Pages y cargan sin descargar la base de datos de contenido (`sql_dump`/WASM)
 - [ ] **ROUTE-05**: Un viaje marcado como borrador (`draft`) no aparece en la portada ni se publica
@@ -110,7 +110,7 @@
 | SHAPE-04 | Phase 10 | Complete |
 | SHAPE-05 | Phase 10 | Complete |
 | ROUTE-01 | Phase 11 | Pending |
-| ROUTE-02 | Phase 11 | Pending |
+| ROUTE-02 | Phase 11 | Complete |
 | ROUTE-03 | Phase 11 | Pending |
 | ROUTE-04 | Phase 11 | Pending |
 | ROUTE-05 | Phase 11 | Pending |
