@@ -1,228 +1,266 @@
 import { describe, it, expect } from 'vitest'
-import { globSync, readFileSync } from 'node:fs'
-import { basename, join } from 'node:path'
-import { parse as parseYaml } from 'yaml'
+import { join } from 'node:path'
+import { stringify } from 'yaml'
+import {
+  RULES,
+  checkTrip,
+  extractAnchors,
+  formatViolations,
+  listTripDirs,
+  loadTrip,
+  loadTripFromFiles,
+  type Rule,
+  type Violation,
+} from './trips'
 
 /**
- * Puerta de invariantes entre colecciones (DATA-03 / SC#4).
+ * Puerta de invariantes POR VIAJE (DATA-03 / PLAT-04 / SC4 de la Fase 9).
  *
- * zod valida la FORMA de cada fichero por separado, pero NO puede ver las otras colecciones
- * (los `.refine()` se pierden al convertir a JSON-Schema y no tienen contexto global —
- * RESEARCH Pitfall 6). Las invariantes ENTRE ficheros viven aquí, la única capa que carga
- * TODAS las colecciones a la vez:
+ * zod valida la FORMA de cada fichero por separado (schema.spec.ts), pero no ve el resto del
+ * viaje. Las invariantes ENTRE ficheros viven en `tests/data/trips.ts` (`checkTrip`, Node
+ * puro) y este spec solo afirma que la lista de violaciones está vacía, usando esa misma
+ * lista como mensaje: cada fallo nombra fichero + regla + detalle (D-10).
  *
- *  - ids (slugs) ÚNICOS en todo el viaje (Set sin duplicados = nº de ficheros).
- *  - cada cross-ref resuelve a un slug existente:
- *      day.cards[]                      → monument
- *      timeline[kind∈{stop,food}].ref   → monument | food
- *      monument.artists[].ref           → artist(kind:artist)
- *      monument.arch[].ref              → artist(kind:arquitectura)
- *      artist.seenIn[].ref              → monument
- *      reservas.table[].ref             → monument | food
- *  - cada ancla `(#id)` dentro de los campos de prosa (Md) resuelve (cubre el `archLink`
- *    inline de las edades de arquitectura y cualquier `[texto](#id)` — RESEARCH Open Q 676).
- *  - basename(fichero) === slug (RESEARCH Pattern 1): mantiene resolubles las anclas `#id`
- *    de la prosa y las claves `localStorage['roma-note-<id>']` de la Fase 7.
+ *  - D-09: se iteran TODAS las carpetas de content/trips con `describe.each`, borradores
+ *    incluidos y con el mismo rigor. Estar incompleto no es error; estar roto sí.
+ *  - D-05: slug de viaje ASCII `^[a-z0-9]+$` (TRIP_SLUG_RE) e igual a la carpeta.
+ *  - D-10: ids únicos en el viaje, sin colisión con anclas fijas de TripView, sin claves
+ *    reservadas de Content, sin ficheros fuera de las colecciones, sin YAML roto o vacío.
+ *  - D-11: los enlaces `[t](#x)` resuelven DENTRO del viaje; no hay enlaces entre viajes.
+ *  - D-12: los conteos por colección y migration-diff siguen siendo solo de Roma (no aquí).
  *
- * Node puro (readFileSync + parseYaml). Los asertos sobre ficheros toleran conjuntos vacíos
- * mientras Wave 2 no haya migrado; los casos FIXTURE in-line corren siempre y prueban que la
- * puerta DETECTA una ref rota sin depender de datos. Tras Wave 2 es la puerta dura de SC#4.
+ * El bloque «la puerta tiene dientes» prueba cada regla con un fixture (en memoria con
+ * `loadTripFromFiles` o en disco en tests/data/fixtures/trips/, NUNCA bajo content/).
  */
 
-const ROOT = join(process.cwd(), 'content', 'trips', 'roma')
-const glob = (sub: string) => globSync(join(ROOT, sub)).sort()
+const FIXTURES = join(process.cwd(), 'tests', 'data', 'fixtures', 'trips')
 
-interface Doc { slug: string, file: string, kind?: string, data: Record<string, unknown> }
+// ── Invariantes sobre los viajes reales ───────────────────────────────────────
+const trips = listTripDirs()
 
-function load(sub: string): Doc[] {
-  return glob(sub).map((file) => {
-    const data = parseYaml(readFileSync(file, 'utf8')) as Record<string, unknown>
-    return { slug: String(data?.slug ?? ''), file, kind: data?.kind as string | undefined, data }
+it('la puerta no está vacía (incluye el viaje roma)', () => {
+  expect(trips).toContain('roma')
+})
+
+describe.each(trips)('viaje %s', (dir) => {
+  const violations = checkTrip(loadTrip(dir))
+  it.each(RULES)('regla %s', (rule) => {
+    const mine = violations.filter(v => v.rule === rule)
+    expect(mine, formatViolations(mine)).toEqual([])
   })
+})
+
+// ── Fixtures en memoria ───────────────────────────────────────────────────────
+const validTrip = {
+  slug: 'prueba',
+  title: 'Viaje de _prueba_',
+  decoration: '·  PRUEBA  ·',
+  heroMeta: '2027',
+  quote: 'Cita.',
+  quoteAttr: '— AUTOR',
+  infoCards: [{ label: 'Alojamiento', value: '**Hotel**' }],
+  howTo: ['Cómo usar la guía.'],
+  map: { center: { lat: 41.9, lng: 12.48 }, zoom: 14 },
 }
 
-const monuments = load('monuments/*.yml')
-const days = load('days/*.yml')
-const food = load('food/*.yml')
-const artists = load('artists/*.yml')
-const reference = load('reference/*.yml')
-const trip = load('trip.yml')
-const all = [...monuments, ...days, ...food, ...artists, ...reference, ...trip]
-
-const monumentSlugs = new Set(monuments.map(d => d.slug))
-const foodSlugs = new Set(food.map(d => d.slug))
-const artistArtSlugs = new Set(artists.filter(d => d.kind === 'artist').map(d => d.slug))
-const artistArchSlugs = new Set(artists.filter(d => d.kind === 'arquitectura').map(d => d.slug))
-const allSlugs = new Set(all.map(d => d.slug))
-
-// ── Helpers PUROS (testeados por fixtures aunque no haya datos) ───────────────
-
-/** Extrae las anclas `#id` de un string Markdown-inline (`[texto](#id)`). */
-export function extractAnchors(md: string): string[] {
-  const out: string[] = []
-  // [texto](#ancla) — sólo enlaces a fragmentos internos (#…), no URLs externas.
-  const re = /\]\(#([a-z0-9-]+)\)/gi
-  let m: RegExpExecArray | null
-  while ((m = re.exec(md)) !== null) out.push(m[1])
-  return out
+const validDay = {
+  slug: 'viernes',
+  trip: 'prueba',
+  order: 1,
+  roman: 'I',
+  eyebrow: 'venerdì',
+  title: 'Día',
+  subtitle: 'Subtítulo',
+  stats: [],
+  timeline: [],
+  cards: [] as string[],
 }
 
-/** Recorre recursivamente un valor recogiendo todos los strings (para escanear prosa). */
-function collectStrings(value: unknown, acc: string[] = []): string[] {
-  if (typeof value === 'string') acc.push(value)
-  else if (Array.isArray(value)) for (const v of value) collectStrings(v, acc)
-  else if (value && typeof value === 'object') for (const v of Object.values(value)) collectStrings(v, acc)
-  return acc
+const validMonument = {
+  slug: 'galeria',
+  trip: 'prueba',
+  roman: 'I',
+  name: 'Galería',
+  italian: 'Galleria',
+  day: 'Viernes',
+  coords: { lat: 41.9, lng: 12.48 },
+  type: 'card',
+  motif: 'arch',
+  hero: { src: 'https://example.org/x.jpg', alt: 'Galería' },
+  sections: [{ heading: 'Qué es', body: 'Un patio.' }],
+  facts: [{ label: 'Acceso', value: 'Gratuito' }],
+  mapsQuery: 'Galleria',
 }
 
-// ── Invariante 1: slugs únicos (SC#4) ─────────────────────────────────────────
-describe('slugs únicos en todo el viaje', () => {
-  it('no hay slugs duplicados (Set === nº de ficheros)', () => {
-    // Mientras no haya datos, all=[] y el aserto es 0===0 (trivial pero correcto).
-    const slugs = all.map(d => d.slug)
-    expect(allSlugs.size).toBe(slugs.length)
+const validFood = {
+  slug: 'g-trattoria',
+  trip: 'prueba',
+  group: 'Trattorias',
+  badge: 'trattoria',
+  badgeKind: 'trattoria',
+  name: 'Trattoria',
+  address: 'Via X 1',
+  desc: 'Cocina romana.',
+  footer: '12-15h · €€',
+  mapsQuery: 'Trattoria',
+}
+
+const y = (o: unknown) => stringify(o)
+
+/** Un viaje en memoria con trip.yml válido para `dir` más los ficheros extra dados. */
+function memTrip(dir: string, extra: Record<string, string> = {}, tripOver: Record<string, unknown> = {}) {
+  return loadTripFromFiles(dir, { 'trip.yml': y({ ...validTrip, slug: dir, ...tripOver }), ...extra })
+}
+
+const monument = (dir: string, slug: string, over: Record<string, unknown> = {}) =>
+  y({ ...validMonument, slug, trip: dir, ...over })
+
+const withProse = (body: string) => ({ sections: [{ heading: 'Qué es', body }] })
+
+/** Afirma que hay al menos una violación `rule` cuyo fichero contiene `file`. */
+function expectRule(vs: Violation[], rule: Rule, file: string) {
+  expect(vs, formatViolations(vs)).toEqual(
+    expect.arrayContaining([expect.objectContaining({ rule, file: expect.stringContaining(file) })]),
+  )
+}
+
+describe('la puerta tiene dientes (fixtures)', () => {
+  it('listTripDirs lista solo carpetas, ordenadas (fixtures en disco)', () => {
+    expect(listTripDirs(FIXTURES)).toEqual(['campania-2027', 'suelto'])
   })
 
-  it('ningún slug está vacío', () => {
-    for (const d of all) {
-      expect(d.slug, `fichero sin slug: ${d.file}`).not.toBe('')
-    }
+  it('trip-slug: slug con guion en disco (campania-2027, D-05)', () => {
+    const vs = checkTrip(loadTrip('campania-2027', FIXTURES))
+    expect(vs).toEqual(expect.arrayContaining([expect.objectContaining({
+      rule: 'trip-slug',
+      file: 'tests/data/fixtures/trips/campania-2027/trip.yml',
+      message: expect.stringContaining('campania-2027'),
+    })]))
+  })
+
+  it('trip-yml + stray-file: carpeta sin trip.yml y con un YAML suelto (en disco)', () => {
+    const vs = checkTrip(loadTrip('suelto', FIXTURES))
+    expect(vs).toEqual(expect.arrayContaining([
+      expect.objectContaining({ rule: 'trip-yml', file: 'tests/data/fixtures/trips/suelto/trip.yml' }),
+      expect.objectContaining({ rule: 'stray-file', file: 'tests/data/fixtures/trips/suelto/notas.yml' }),
+    ]))
+  })
+
+  it('trip-slug: slug "distinto" en la carpeta "otro"', () => {
+    const vs = checkTrip(memTrip('otro', {}, { slug: 'distinto' }))
+    expectRule(vs, 'trip-slug', 'content/trips/otro/trip.yml')
+  })
+
+  it('trip-field: monumento con trip "roma" en la carpeta "prueba"', () => {
+    const vs = checkTrip(memTrip('prueba', { 'monuments/galeria.yml': monument('roma', 'galeria') }))
+    expectRule(vs, 'trip-field', 'content/trips/prueba/monuments/galeria.yml')
+  })
+
+  it('dup-id: monuments/x.yml y food/x.yml con el mismo slug nombran ambos ficheros', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'monuments/x.yml': monument('prueba', 'x'),
+      'food/x.yml': y({ ...validFood, slug: 'x' }),
+    }))
+    expectRule(vs, 'dup-id', 'prueba/monuments/x.yml')
+    expectRule(vs, 'dup-id', 'prueba/food/x.yml')
+    const dup = vs.find(v => v.rule === 'dup-id')!
+    expect(dup.message).toContain('monuments/x.yml')
+    expect(dup.message).toContain('food/x.yml')
+  })
+
+  it('fixed-anchor: un monumento con slug "mapa" choca con TripView', () => {
+    const vs = checkTrip(memTrip('prueba', { 'monuments/mapa.yml': monument('prueba', 'mapa') }))
+    expectRule(vs, 'fixed-anchor', 'prueba/monuments/mapa.yml')
+  })
+
+  it('fixed-anchor: un slug con prefijo "note-" choca con las notas de MonumentCard', () => {
+    const vs = checkTrip(memTrip('prueba', { 'monuments/note-a.yml': monument('prueba', 'note-a') }))
+    expectRule(vs, 'fixed-anchor', 'prueba/monuments/note-a.yml')
+  })
+
+  it('reserved-key: "meta" en el nivel superior', () => {
+    const vs = checkTrip(memTrip('prueba', { 'monuments/galeria.yml': monument('prueba', 'galeria', { meta: 'x' }) }))
+    expectRule(vs, 'reserved-key', 'prueba/monuments/galeria.yml')
+  })
+
+  it('unknown-key: "boxorder" (zod lo tiraría sin avisar)', () => {
+    const vs = checkTrip(memTrip('prueba', { 'monuments/galeria.yml': monument('prueba', 'galeria', { boxorder: 'notes-first' }) }))
+    expectRule(vs, 'unknown-key', 'prueba/monuments/galeria.yml')
+    expect(vs.find(v => v.rule === 'unknown-key')!.message).toContain('boxorder')
+  })
+
+  it('ref: day.cards apunta a un monumento inexistente', () => {
+    const vs = checkTrip(memTrip('prueba', { 'days/viernes.yml': y({ ...validDay, cards: ['no-existe'] }) }))
+    expectRule(vs, 'ref', 'prueba/days/viernes.yml')
+  })
+
+  it('anchor: [x](#pantheon) en "prueba" no resuelve (la ficha es de otro viaje)', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'monuments/galeria.yml': monument('prueba', 'galeria', withProse('Cerca del [Panteón](#pantheon).')),
+    }))
+    expectRule(vs, 'anchor', 'prueba/monuments/')
+    expect(vs.find(v => v.rule === 'anchor')!.message).toContain('#pantheon')
+  })
+
+  it('anchor: [x](#Galeria) NO resuelve a "galeria" (comparación exacta, sin normalizar)', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'monuments/galeria.yml': monument('prueba', 'galeria', withProse('Ver [la galería](#Galeria).')),
+    }))
+    expectRule(vs, 'anchor', 'prueba/monuments/galeria.yml')
+  })
+
+  it('cross-trip-link: [x](/trips/roma#pantheon) no se admite (D-11)', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'monuments/galeria.yml': monument('prueba', 'galeria', withProse('Ver [Panteón](/trips/roma#pantheon).')),
+    }))
+    expectRule(vs, 'cross-trip-link', 'prueba/monuments/galeria.yml')
+  })
+
+  it('yaml-parse: un YAML que no parsea nombra su fichero', () => {
+    const vs = checkTrip(memTrip('prueba', { 'monuments/roto.yml': 'slug: [sin cerrar' }))
+    expectRule(vs, 'yaml-parse', 'prueba/monuments/roto.yml')
+  })
+
+  it('yaml-object: un YAML vacío nombra su fichero', () => {
+    const vs = checkTrip(memTrip('prueba', { 'monuments/vacio.yml': '' }))
+    expectRule(vs, 'yaml-object', 'prueba/monuments/vacio.yml')
+  })
+
+  it('stray-file: monuments/sub/x.yml no casa con ninguna colección', () => {
+    const vs = checkTrip(memTrip('prueba', { 'monuments/sub/x.yml': monument('prueba', 'x') }))
+    expectRule(vs, 'stray-file', 'prueba/monuments/sub/x.yml')
+  })
+
+  it('basename-slug: monuments/a.yml con slug "b"', () => {
+    const vs = checkTrip(memTrip('prueba', { 'monuments/a.yml': monument('prueba', 'b') }))
+    expectRule(vs, 'basename-slug', 'prueba/monuments/a.yml')
+  })
+
+  // Controles negativos: la puerta no da falsos rojos.
+  it('D-09: un viaje con solo un trip.yml válido no tiene violaciones', () => {
+    const vs = checkTrip(memTrip('borrador'))
+    expect(vs, formatViolations(vs)).toEqual([])
+  })
+
+  it('[x](#reservas) resuelve aunque el viaje no tenga ficheros reference', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'monuments/galeria.yml': monument('prueba', 'galeria', withProse('Ver [reservas](#reservas).')),
+    }))
+    expect(vs, formatViolations(vs)).toEqual([])
   })
 })
 
-// ── Invariante 2: basename === slug (SC#4 / Pattern 1) ────────────────────────
-describe('basename del fichero === slug', () => {
-  // trip.yml es el único fichero cuyo basename ('trip') NO es su slug ('roma'): es un
-  // singleton por viaje, no una entidad direccionable por ancla. Se exceptúa explícitamente.
-  for (const d of all.filter(x => basename(x.file) !== 'trip.yml')) {
-    it(`${d.file}`, () => {
-      expect(basename(d.file, '.yml')).toBe(d.slug)
-    })
-  }
-  if (all.filter(x => basename(x.file) !== 'trip.yml').length === 0) {
-    it.skip('(sin ficheros direccionables todavía — migración pendiente)', () => {})
-  }
-})
-
-// ── Invariante 3: cross-refs resuelven (SC#4) ─────────────────────────────────
-describe('cross-refs resuelven a slugs existentes', () => {
-  it('day.cards[] → monument', () => {
-    for (const d of days) {
-      for (const ref of (d.data.cards as string[] ?? [])) {
-        expect(monumentSlugs.has(ref), `${d.file}: cards "${ref}" no existe en monuments`).toBe(true)
-      }
-    }
-  })
-
-  it('timeline[stop|food].ref → monument | food', () => {
-    const known = new Set([...monumentSlugs, ...foodSlugs])
-    for (const d of days) {
-      for (const row of (d.data.timeline as Array<Record<string, unknown>> ?? [])) {
-        if (row.kind === 'stop' && typeof row.ref === 'string') {
-          expect(known.has(row.ref), `${d.file}: timeline stop ref "${row.ref}" no resuelve`).toBe(true)
-        }
-        if (row.kind === 'food') {
-          for (const e of (row.entries as Array<Record<string, unknown>> ?? [])) {
-            if (typeof e.ref === 'string') {
-              expect(known.has(e.ref), `${d.file}: timeline food ref "${e.ref}" no resuelve`).toBe(true)
-            }
-          }
-        }
-      }
-    }
-  })
-
-  it('monument.artists[].ref → artist(kind:artist)', () => {
-    for (const d of monuments) {
-      for (const link of (d.data.artists as Array<Record<string, unknown>> ?? [])) {
-        expect(artistArtSlugs.has(String(link.ref)), `${d.file}: artists ref "${String(link.ref)}" no es un artist`).toBe(true)
-      }
-    }
-  })
-
-  it('monument.arch[].ref → artist(kind:arquitectura)', () => {
-    for (const d of monuments) {
-      for (const link of (d.data.arch as Array<Record<string, unknown>> ?? [])) {
-        expect(artistArchSlugs.has(String(link.ref)), `${d.file}: arch ref "${String(link.ref)}" no es arquitectura`).toBe(true)
-      }
-    }
-  })
-
-  it('artist.seenIn[].ref → monument', () => {
-    for (const d of artists) {
-      for (const link of (d.data.seenIn as Array<Record<string, unknown>> ?? [])) {
-        expect(monumentSlugs.has(String(link.ref)), `${d.file}: seenIn ref "${String(link.ref)}" no es un monument`).toBe(true)
-      }
-    }
-  })
-
-  it('reservas.table[].ref → monument | food', () => {
-    const known = new Set([...monumentSlugs, ...foodSlugs])
-    for (const d of reference.filter(x => x.slug === 'reservas')) {
-      for (const row of (d.data.table as Array<Record<string, unknown>> ?? [])) {
-        if (typeof row.ref === 'string') {
-          expect(known.has(row.ref), `${d.file}: reservas.table ref "${row.ref}" no resuelve`).toBe(true)
-        }
-      }
-    }
-  })
-})
-
-// ── Invariante 4: anclas (#id) inline en la prosa resuelven (cubre archLink) ──
-// Anclas de SECCIÓN de página (no entidades): el index.html enlaza, dentro de la prosa,
-// a las landings `<section id="…">` de la página única (la nav-pill y los `tl-food-foot`
-// «Fichas en [Gastronomía](#gastronomia)»). NO son slugs de contenido — no hay una entidad
-// `gastronomia`/`arte` (gastronomía = toda la colección food). Los días (`viernes`…) y
-// `reservas`/`practica` SÍ son slugs y resuelven por sí mismos; aquí sólo se listan las
-// secciones puramente navegacionales sin entidad de respaldo. Fase 4/5 renderiza estas
-// anclas como landings de sección. Excluirlas mantiene los dientes del gate (una ancla de
-// ENTIDAD mal escrita sigue fallando) sin romper la fidelidad 1:1 (DATA-04) de los enlaces.
-const PAGE_SECTIONS = new Set(['inicio', 'mapa', 'arte', 'arquitectura', 'gastronomia'])
-
-describe('anclas (#id) dentro de la prosa Md resuelven', () => {
-  it('cada [texto](#id) de cualquier campo resuelve a un slug existente (o a una sección de página)', () => {
-    for (const d of all) {
-      for (const str of collectStrings(d.data)) {
-        for (const anchor of extractAnchors(str)) {
-          expect(
-            allSlugs.has(anchor) || PAGE_SECTIONS.has(anchor),
-            `${d.file}: ancla inline #${anchor} no resuelve`,
-          ).toBe(true)
-        }
-      }
-    }
-  })
-})
-
-// ── Casos FIXTURE in-line: prueban que la PUERTA detecta refs rotas sin datos ──
-describe('puerta de invariantes (fixtures, siempre corren)', () => {
-  it('un Set de slugs detecta una ref inexistente (la puerta tiene dientes)', () => {
-    const slugs = new Set(['galleria-sciarra', 'fontana-trevi', 'g-felice'])
-    expect(slugs.has('galleria-sciarra')).toBe(true) // ref válida resuelve
-    expect(slugs.has('no-existe')).toBe(false) // ref rota NO resuelve → en datos reales sería rojo
-  })
-
-  it('detecta slugs duplicados', () => {
-    const docs = [{ slug: 'a' }, { slug: 'b' }, { slug: 'a' }]
-    const set = new Set(docs.map(d => d.slug))
-    expect(set.size).not.toBe(docs.length) // 2 !== 3 → duplicado detectado
-  })
-
-  it('extractAnchors saca las anclas internas y NO las URLs externas', () => {
+// ── extractAnchors (helper puro) ──────────────────────────────────────────────
+describe('extractAnchors', () => {
+  it('saca las anclas internas y NO las URLs externas', () => {
     const md = 'Cerca de [Trevi](#fontana-trevi) y [Maps](https://maps.google.com/?q=x), ver [Pozzo](#art-pozzo).'
     expect(extractAnchors(md)).toEqual(['fontana-trevi', 'art-pozzo'])
   })
 
-  it('extractAnchors sobre un archLink inline (Barroco → #art-bernini) lo captura', () => {
+  it('captura un archLink inline (Barroco → #art-bernini)', () => {
     const body = 'El Barroco lo encarnan [Bernini](#art-bernini) y [Borromini](#art-borromini).'
     const anchors = extractAnchors(body)
     expect(anchors).toContain('art-bernini')
     expect(anchors).toContain('art-borromini')
-  })
-
-  it('basename(fichero) === slug: una desalineación se detectaría', () => {
-    const file = 'content/trips/roma/monuments/galleria-sciarra.yml'
-    expect(basename(file, '.yml')).toBe('galleria-sciarra')
-    expect(basename(file, '.yml')).not.toBe('otro-slug')
   })
 })

@@ -1,0 +1,12 @@
+# Fixture NEGATIVO (09-02): día mínimo VÁLIDO en una carpeta de viaje SIN trip.yml → la
+# regla `trip-yml` debe dispararse (file = …/suelto/trip.yml).
+slug: viernes
+trip: suelto
+order: 1
+roman: I
+eyebrow: venerdì
+title: Día de prueba
+subtitle: Fixture de la puerta de datos.
+stats: []
+timeline: []
+cards: []

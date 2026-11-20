@@ -1,0 +1,17 @@
+# Fixture NEGATIVO (09-02, D-05): trip.yml completo y válido SALVO el slug, que lleva un
+# guion. TRIP_SLUG_RE (^[a-z0-9]+$) lo rechaza → la regla `trip-slug` debe dispararse con
+# este fichero. Vive fuera de content/ para que Content nunca lo ingiera.
+slug: campania-2027
+title: Campania _2027_
+decoration: '·  CAMPANIA  ·'
+heroMeta: 2027
+quote: Vedi Napoli e poi muori.
+quoteAttr: — PROVERBIO
+infoCards:
+  - label: Alojamiento
+    value: '**Hotel** de prueba'
+howTo:
+  - Fixture de la puerta de datos.
+map:
+  center: { lat: 40.8518, lng: 14.2681 }
+  zoom: 13
