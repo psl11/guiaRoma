@@ -345,6 +345,20 @@ const SectionMeta = z.object({ eyebrow: z.string(), intro: Md })
 // puerta tests/data exige además slug == nombre de carpeta (invariante trip-slug).
 export const TRIP_SLUG_RE = /^[a-z0-9]+$/
 
+// Fecha de calendario ISO `YYYY-MM-DD` (Fase 11, D-23). Es un `z.string()` con regex + refine,
+// NUNCA `z.iso.date()`: ese tipo exporta `format: date` en el JSON-Schema y Content crearía una
+// columna DATE, que puede desplazar la fecha un día por zona horaria. Como string, la columna es
+// de texto y la portada recibe exactamente lo escrito en el YAML. El refine rechaza fechas que
+// cumplen el patrón pero no existen («2026-02-30»): el día debe sobrevivir al ida y vuelta UTC.
+function isCalendarDate(s: string): boolean {
+  const d = new Date(`${s}T00:00:00Z`)
+  return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === s
+}
+const IsoDate = z.string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/, 'fecha ISO YYYY-MM-DD')
+  .refine(isCalendarDate, { error: iss => `fecha inexistente: «${String(iss.input)}»` })
+const DESTINATIONS_MSG = 'destinations vacío o con un elemento vacío'
+
 // ── Trip — RESEARCH 482-491 ──────────────────────────────────────────────────
 export const TripSchema = z.object({
   slug: z.string().regex(TRIP_SLUG_RE), // 'roma' (D-05)
@@ -395,6 +409,19 @@ export const TripSchema = z.object({
   // cargando y es accesible por URL, pero nunca se lista en la portada. Booleano estricto: un
   // `draft: "yes"` se rechaza (y scripts/tripManifest.mjs lanza), nunca se publica por defecto.
   draft: z.boolean().optional(),
+  // ── Portada (Fase 11, D-08) ────────────────────────────────────────────────
+  // Datos de la tarjeta del viaje en la portada. TODOS opcionales (esquema aditivo): sin ellos la
+  // tarjeta simplemente no pinta esa pieza. TripView no los usa (Roma no cambia, D-02/D-19).
+  //  · startDate / endDate (D-08, D-23): string ISO con regex + refine de calendario, NUNCA
+  //    `z.iso.date()` (daría `format: date` → columna DATE con desfase por zona horaria).
+  //    `endDate >= startDate` NO es un refine de objeto: es la regla `trip-dates` de la puerta.
+  startDate: IsoDate.optional(),
+  endDate: IsoDate.optional(),
+  //  · destinations (D-08): lista no vacía de nombres no vacíos; se unen con « · » en la tarjeta.
+  destinations: z.array(z.string().min(1, DESTINATIONS_MSG)).min(1, DESTINATIONS_MSG).optional(),
+  //  · summary (D-08, D-07): Markdown-inline no vacío, SIN enlaces (la tarjeta entera ya es un
+  //    `<a>`): lo vigila la regla `trip-summary-link` de tests/data/trips.ts.
+  summary: Md.min(1).optional(),
 })
 
 // ── Tipos TS derivados (gratis, una sola fuente de verdad) ────────────────────

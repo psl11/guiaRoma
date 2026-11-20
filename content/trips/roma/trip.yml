@@ -88,3 +88,12 @@ footer:
   - 'Itinerario preparado para _Pay_ y dos colegas'
   - 'Roma · 19—23 giugno 2026'
   - '"Roma no se cuenta, se camina."'
+# Portada (Fase 11, D-08): datos de la tarjeta de Roma en la portada (UI-SPEC §«Datos de Roma»).
+#   Fechas entre comillas: son strings ISO (D-23). El resumen no lleva enlaces (D-07).
+startDate: '2026-06-19'
+endDate: '2026-06-23'
+destinations:
+  - Roma
+summary: >-
+  Cinco días a pie por Roma, del viernes por la tarde al martes por la noche: una
+  ficha para cada parada, el mapa del viaje y dónde comer como los romanos.
