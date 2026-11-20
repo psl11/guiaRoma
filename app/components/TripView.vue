@@ -79,10 +79,21 @@ await useCardNavigationController(props.slug)
 // usa esto para no montar `DaySection` con un `day` ausente. Con los datos F2 de Roma siempre
 // resuelve los 5 días (render idéntico).
 const dayBySlug = (slug: string) => days.value.find(d => d.slug === slug)
+
+// F10 (Plan 10-01, D-06): la forma de la página sale de UNA lista pura. Se calcula aquí una sola
+// vez y con ella se pintan las pastillas (Topbar → NavPills). Durante la ventana de hidratación
+// (`.data` = null) cada fuente cae a vacío con `??`, así que nada se monta vacío ni lanza.
+const layout = computed(() => buildTripLayout({
+  days: days.value ?? [],
+  hasReservas: !!refById.value.get('reservas'),
+  hasPractica: !!refById.value.get('practica'),
+  foodCount: food.value?.length ?? 0,
+  artistKinds: new Set((artists.value ?? []).map(a => a.kind)),
+}))
 </script>
 
 <template>
-  <Topbar :days="days" />
+  <Topbar :layout="layout" />
 
   <main>
     <TheHero

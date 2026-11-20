@@ -7,12 +7,15 @@
 // DESCENDIENTE `.topbar-inner .theme-btn`, base.css:37). NavPills es HERMANO de
 // .topbar-inner, aún dentro de <header>, exactamente como el <nav> del index.html:2264.
 //
-// CSS verbatim global (base.css) — NO se añade <style scoped>: inyectaría data-v-* que
+// CSS verbatim global (base.css) — NO se añade bloque de estilos scoped: inyectaría data-v-* que
 // rompe selectores descendientes cross-componente (`.topbar-inner .theme-btn`,
 // `[data-theme] .theme-btn .moon`). ThemeToggle y NavPills se auto-importan.
-import type { Day } from '~~/shared/schemas'
+//
+// F10 (Plan 10-01, D-06): recibe de TripView el `layout` del viaje (la MISMA lista con la que se
+// montan las secciones de `<main>`) y lo reenvía tal cual a NavPills.
+import type { LayoutEntry } from '~/utils/tripLayout'
 
-defineProps<{ days: Day[] }>()
+defineProps<{ layout: LayoutEntry[] }>()
 </script>
 
 <template>
@@ -23,6 +26,6 @@ defineProps<{ days: Day[] }>()
       </div>
       <ThemeToggle />
     </div>
-    <NavPills :days="days" />
+    <NavPills :layout="layout" />
   </header>
 </template>

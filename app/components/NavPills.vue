@@ -1,27 +1,24 @@
 <script setup lang="ts">
-// Barra de pastillas de navegación HÍBRIDA (D-03) — reproduce index.html:2264-2277.
+// Barra de pastillas de navegación — reproduce index.html:2264-2277.
 //
-// 7 pastillas ESTRUCTURALES literales (Inicio, Mapa, Reservas, Gastronomía, Pratica,
-// Arte, Arquitectura — grafías verbatim del index.html, incl. la italiana "Pratica") +
-// 5 pastillas de DÍA DERIVADAS de `props.days`: el v-for emite un a.nav-pill por día
-// (ya ordenados ASC por useTrip), con href = '#' + slug (anclas españolas #viernes…
-// #martes) y etiqueta vía dayLabel(d.eyebrow) (D-04, auto-importado de app/utils/).
-// El bloque de días va INTERCALADO entre Mapa y Reservas, manteniendo el ORDEN BLOQUEADO.
+// F10 (Plan 10-01, D-06): las pastillas SON el layout del viaje. TripView calcula UNA vez la lista
+// de `buildTripLayout` (app/utils/tripLayout.ts) y con ESA MISMA lista monta las `<section>` de
+// `<main>`; aquí llega vía Topbar como prop `layout` y se pinta con un único v-for. No queda ninguna
+// ancla literal: id, etiqueta y orden salen del layout (orden fijo D-07, presencia por datos D-08,
+// etiquetas estructurales verbatim D-09 incl. la italiana "Pratica", pastilla de día = `pill` o
+// la etiqueta derivada del `eyebrow`, D-03). En Roma salen las 12 pastillas de siempre, en el
+// mismo orden, con href = '#' + id (anclas españolas #viernes…#martes para los días).
 //
-// id="nav-pills" se conserva (la navegación reactiva de F5 lo apunta). En F3 son anclas
-// planas: sin estado de pastilla resaltada y sin observador de desplazamiento (eso es
-// FEAT-05/F5). CSS verbatim global (base.css): NO se añade bloque scoped (data-v-*
-// rompería los selectores .nav-pill de hover/resaltado ya definidos en base.css:89-90).
+// id="nav-pills" se conserva (la navegación reactiva de F5 lo apunta). CSS verbatim global
+// (base.css): NO se añade bloque scoped (data-v-* rompería los selectores .nav-pill de
+// hover/resaltado ya definidos en base.css:89-90).
 //
-// F5 (Plan 05-02): se CABLEA el resaltado reactivo sobre el shell YA montado (patrón F3→F4),
-// SIN reestructurar el markup. Cada pastilla recibe `:class="{ active: ... }"` contra
-// `activeSection` (el scrollspy lo mantiene; las 7 estructurales por id literal, las 5 de día
-// por `d.slug`). Reemplaza el `classList.toggle('active')` imperativo del original
-// (index.html:6497-6499) por el binding declarativo; togglea SOLO `.nav-pill.active`
-// (base.css:90), CERO CSS nuevo. `useCardNavigation()` es el accesor PURO (sin efectos).
-import type { Day } from '~~/shared/schemas'
+// F5 (Plan 05-02): resaltado reactivo `:class="{ active: ... }"` contra `activeSection` (el
+// scrollspy lo mantiene), comparando con el id de cada entrada del layout. Togglea SOLO
+// `.nav-pill.active` (base.css:90), CERO CSS nuevo. `useCardNavigation()` es el accesor PURO.
+import type { LayoutEntry } from '~/utils/tripLayout'
 
-const props = defineProps<{ days: Day[] }>()
+const props = defineProps<{ layout: LayoutEntry[] }>()
 
 const { activeSection } = useCardNavigation()
 </script>
@@ -32,46 +29,11 @@ const { activeSection } = useCardNavigation()
     class="nav-pills"
   >
     <a
-      href="#inicio"
+      v-for="e in props.layout"
+      :key="e.id"
+      :href="`#${e.id}`"
       class="nav-pill"
-      :class="{ active: activeSection === 'inicio' }"
-    >Inicio</a>
-    <a
-      href="#mapa"
-      class="nav-pill"
-      :class="{ active: activeSection === 'mapa' }"
-    >Mapa</a>
-    <a
-      v-for="d in props.days"
-      :key="d.slug"
-      :href="`#${d.slug}`"
-      class="nav-pill"
-      :class="{ active: activeSection === d.slug }"
-    >{{ dayLabel(d.eyebrow) }}</a>
-    <a
-      href="#reservas"
-      class="nav-pill"
-      :class="{ active: activeSection === 'reservas' }"
-    >Reservas</a>
-    <a
-      href="#gastronomia"
-      class="nav-pill"
-      :class="{ active: activeSection === 'gastronomia' }"
-    >Gastronomía</a>
-    <a
-      href="#practica"
-      class="nav-pill"
-      :class="{ active: activeSection === 'practica' }"
-    >Pratica</a>
-    <a
-      href="#arte"
-      class="nav-pill"
-      :class="{ active: activeSection === 'arte' }"
-    >Arte</a>
-    <a
-      href="#arquitectura"
-      class="nav-pill"
-      :class="{ active: activeSection === 'arquitectura' }"
-    >Arquitectura</a>
+      :class="{ active: activeSection === e.id }"
+    >{{ e.label }}</a>
   </nav>
 </template>
