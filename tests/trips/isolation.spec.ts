@@ -20,7 +20,7 @@ import { expect, test, type BrowserContext, type Page } from '@playwright/test'
  */
 
 const ORIGIN = 'http://localhost:5300'
-const ROMA_URL = `${ORIGIN}/guiaRoma/`
+const ROMA_URL = `${ORIGIN}/guiaRoma/trips/roma/`
 const PRUEBA_URL = `${ORIGIN}/guiaRoma/trips/prueba`
 
 // Determinista y offline: aborta toda petición fuera del dev server (tiles OSM, Wikimedia,

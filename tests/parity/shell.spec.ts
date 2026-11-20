@@ -3,7 +3,7 @@ import { cpSync, existsSync, mkdtempSync, mkdirSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, test } from '@playwright/test'
-import { ROMA_HTML, romaUrlAt } from './_harness'
+import { ROMA_HTML, SITE_BASE, romaUrlAt } from './_harness'
 
 /**
  * PARIDAD DE SHELL del «/» CONSTRUIDO (SC#2/ARCH-01) + cabecera de paridad (D-09) +
@@ -182,6 +182,30 @@ test.describe('shell de la build estática (/guiaRoma/)', () => {
     await expect(lightMeta).toHaveAttribute('content', '#f5f0e8')
     // Exactamente 2 metas theme-color (ni más ni menos).
     await expect(page.locator('meta[name="theme-color"]')).toHaveCount(2)
+  })
+
+  test('la portada vive en «/» y ROMA_URL sirve Roma (D-18)', async ({ page }) => {
+    // D-18 (paso 3): ningún spec de Roma puede pasar en verde contra la portada. La raíz del sitio
+    // es la portada (sin chrome de viaje) y ROMA_URL es la guía de Roma (12 pastillas + #inicio).
+    const HOME_URL = `http://localhost:${STATIC_PORT}${SITE_BASE}`
+    expect(HOME_URL, 'la portada y Roma deben vivir en URLs distintas').not.toBe(STATIC_URL)
+
+    const home = await page.goto(HOME_URL)
+    expect(home?.status(), 'la portada bajo /guiaRoma/ debe responder 200').toBe(200)
+    await expect(page).toHaveTitle('Guías de viaje')
+    await expect(page.locator('.trip-index')).toHaveCount(1)
+    await expect(page.locator('h1')).toHaveText('Guías de viaje')
+    await expect(page.locator('nav.nav-pills')).toHaveCount(0)
+    await expect(page.locator('[id="inicio"]')).toHaveCount(0)
+    await expect(page.locator('section')).toHaveCount(0)
+    await expect(page.locator('footer')).toHaveCount(0)
+    await expect(page.locator('a.trip-index-card[href="/guiaRoma/trips/roma/"]')).toHaveCount(1)
+
+    await page.goto(STATIC_URL)
+    await expect(page.locator('.nav-pill')).toHaveText(EXPECTED_PILLS)
+    await expect(page.locator('[id="inicio"]')).toBeVisible()
+    await expect(page.locator('.trip-index')).toHaveCount(0)
+    await expect(page).toHaveTitle(TITLE)
   })
 
   test('la build emite la guía de Roma en trips/roma/ y ningún borrador (D-13/D-17)', () => {

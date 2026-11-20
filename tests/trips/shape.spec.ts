@@ -36,7 +36,7 @@ import { findRomaLeaks } from './romaLeaks'
 const ORIGIN = 'http://localhost:5300'
 const FORMA_URL = `${ORIGIN}/guiaRoma/trips/forma`
 const PRUEBA_URL = `${ORIGIN}/guiaRoma/trips/prueba`
-const ROMA_URL = `${ORIGIN}/guiaRoma/`
+const ROMA_URL = `${ORIGIN}/guiaRoma/trips/roma/`
 
 // Determinista y offline: aborta toda petición fuera del dev server (tiles OSM, las heros
 // `https://example.invalid/…` de los viajes de ensayo).

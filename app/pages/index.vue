@@ -1,12 +1,14 @@
-<template>
-  <!--
-    «/» = el HOGAR de Roma (D-02): el viaje por defecto es 'roma' HARDCODEADO (no «el primer
-    viaje de la colección» ni configuración). Un viaje futuro (v2) vivirá en /trips/<slug>
-    sin tocar este home. TripView llama a useTrip('roma') y posee chrome + las 12 secciones.
+<script setup lang="ts">
+// «/» = la PORTADA de la Fase 11 (ROUTE-01, D-06): lista los viajes publicados y cada tarjeta
+// lleva a su guía en /trips/<slug>/. Sin chrome de viaje (D-11): ni Topbar, ni pastillas, ni
+// buscador, ni mapa, ni conmutador de tema; todo el markup lo pone TripIndex.
+//
+// El <title> de la portada es fijo, «Guías de viaje» (D-11): no sale de ningún trip.yml. La
+// redirección de las anclas antiguas de Roma (`/guiaRoma/#viernes` → `/guiaRoma/trips/roma/#viernes`)
+// la añade el plan 11-06.
+useHead({ title: 'Guías de viaje' })
+</script>
 
-    SIN <NuxtLink to="/trips/…"> en NINGÚN sitio: crawlLinks (nuxt.config.ts:41) seguiría el
-    enlace y prerenderizaría /trips/roma → duplicado de «/» (rompe D-01). Toda la navegación es
-    por anclas #fragmento, no rutas.
-  -->
-  <TripView slug="roma" />
+<template>
+  <TripIndex />
 </template>
