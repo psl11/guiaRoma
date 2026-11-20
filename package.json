@@ -17,6 +17,7 @@
     "test:data": "vitest run tests/data",
     "test:unit": "vitest run tests/unit",
     "test:parity": "playwright test -c playwright.gate.config.ts --grep-invert \"reutiliza el MISMO TripView\"",
+    "test:trips": "playwright test -c playwright.trips.config.ts",
     "verify": "pnpm generate && pnpm test:unit && pnpm test:data && pnpm test:parity"
   },
   "devDependencies": {
