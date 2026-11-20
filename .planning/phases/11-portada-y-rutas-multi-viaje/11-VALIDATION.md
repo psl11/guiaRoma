@@ -2,11 +2,12 @@
 phase: "11"
 slug: "portada-y-rutas-multi-viaje"
 # status lifecycle: draft (seeded by plan-phase) → validated (set by validate-phase §6)
-# audit-milestone §5.5 distinguishes NOT-VALIDATED (draft) from PARTIAL (validated + nyquist_compliant: false) (#2117)
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+# audit-milestone §5.5 distinguishes NOT-VALIDATED (draft) from PARTIAL (validated + nyquist_compliant: true) (#2117)
+status: validated
+nyquist_compliant: true
+wave_0_complete: true
 created: "2026-11-20"
+validated: "2026-11-20"
 ---
 
 # Phase 11 — Validation Strategy
@@ -41,21 +42,21 @@ created: "2026-11-20"
 
 | Req / SC | Behavior | Test Type | Automated Command | File Exists | Status |
 |----------|----------|-----------|-------------------|-------------|--------|
-| ROUTE-01 | Portada: `<title>`/`<h1>` «Guías de viaje», una tarjeta por viaje publicado (título plano, fechas, destinos, resumen, `href` `/guiaRoma/trips/roma/`), sin `id`, estado vacío | e2e (gate) | `pnpm exec playwright test -c playwright.gate.config.ts tests/parity/portada.spec.ts` | ❌ W0 | ⬜ pending |
-| ROUTE-01 | `formatTripDates` / orden de viajes | unit | `pnpm exec vitest run tests/unit/tripDates.spec.ts` | ❌ W0 | ⬜ pending |
-| ROUTE-01/05 | En dev la portada lista solo Roma; `/trips/prueba` sigue funcionando | e2e dev | `pnpm test:trips` | ❌ W0 | ⬜ pending |
-| ROUTE-02 | `trips/roma/index.html` existe; `/` sirve la portada y `ROMA_URL` sirve Roma | e2e + node | `pnpm test:parity` (shell.spec) + `pnpm test:data` (build-isolation) | ✅ modificar | ⬜ pending |
-| ROUTE-02 | `readTripManifest()` y rutas `['/','/trips/roma/']` | unit | `pnpm exec vitest run tests/unit/tripManifest.spec.ts` | ❌ W0 | ⬜ pending |
-| ROUTE-03 | `/#viernes`, `/#pantheon`, `/index.html#gastronomia` → `/trips/roma/#x` (como carga directa); sin hash / hash inválido se queda; Atrás sin bucle | e2e (gate, servidor tipo Pages) | `pnpm exec playwright test -c playwright.gate.config.ts tests/parity/legacy-redirect.spec.ts` | ❌ W0 | ⬜ pending |
-| ROUTE-03 | Script de redirección en el `<head>` de la portada antes del primer stylesheet y ausente en Roma | static | dentro de `legacy-redirect.spec.ts` | ❌ W0 | ⬜ pending |
-| ROUTE-04 | 0 peticiones a `__nuxt_content/`, `sql_dump`, `.wasm` al cargar portada y Roma | e2e (gate) | `portada.spec.ts` | ❌ W0 | ⬜ pending |
-| ROUTE-05 | Sin `trips/prueba` ni `trips/forma`; ningún fichero de `.output/public` (dumps decodificados) contiene los centinelas; control positivo con Roma | node | `pnpm test:data` (build-isolation) | ✅ invertir | ⬜ pending |
-| ROUTE-05 | Esquema acepta/rechaza `draft`, `startDate`, `endDate`, `destinations`, `summary` (incl. `2026-02-30`) | data | `pnpm test:data` | ✅ ampliar | ⬜ pending |
-| ROUTE-06 | Roma: `footer .trip-back a` «← Todos los viajes» → baseURL; `footer .container p` = 1; prueba: pie solo con el enlace | e2e | `pnpm test:parity` (shell/portada) + `pnpm test:trips` (shape.spec) | ✅/❌ | ⬜ pending |
-| D-13 | Clic en pastilla no remonta TripView | e2e (gate) | `portada.spec.ts` | ❌ W0 | ⬜ pending |
-| D-21 | Todo selector de `multitrip.css` empieza por `.trip-index` | unit (static) | `pnpm exec vitest run tests/unit/multitripCss.spec.ts` | ❌ W0 | ⬜ pending |
-| PAR-01 | 56 goldens sin `--update-snapshots`; snapshots sin diff | e2e (gate) + git | `pnpm test:parity` + `git diff --quiet -- tests/parity/golden.spec.ts-snapshots/` | ✅ | ⬜ pending |
-| PAR-02 | Toda la suite de Roma verde en `ROMA_URL=/guiaRoma/trips/roma/` | e2e (gate) | `pnpm test:parity` | ✅ vía harness | ⬜ pending |
+| ROUTE-01 | Portada: `<title>`/`<h1>` «Guías de viaje», una tarjeta por viaje publicado (título plano, fechas, destinos, resumen, `href` `/guiaRoma/trips/roma/`), sin `id`, estado vacío | e2e (gate) | `pnpm exec playwright test -c playwright.gate.config.ts tests/parity/portada.spec.ts` | ✅ | ✅ green |
+| ROUTE-01 | `formatTripDates` / orden de viajes | unit | `pnpm exec vitest run tests/unit/tripDates.spec.ts` | ✅ | ✅ green |
+| ROUTE-01/05 | En dev la portada lista solo Roma; `/trips/prueba` sigue funcionando | e2e dev | `pnpm test:trips` | ✅ | ✅ green |
+| ROUTE-02 | `trips/roma/index.html` existe; `/` sirve la portada y `ROMA_URL` sirve Roma | e2e + node | `pnpm test:parity` (shell.spec) + `pnpm test:data` (build-isolation) | ✅ modificado | ✅ green |
+| ROUTE-02 | `readTripManifest()` y rutas `['/','/trips/roma/']` | unit | `pnpm exec vitest run tests/unit/tripManifest.spec.ts` | ✅ | ✅ green |
+| ROUTE-03 | `/#viernes`, `/#pantheon`, `/index.html#gastronomia` → `/trips/roma/#x` (como carga directa); sin hash / hash inválido se queda; Atrás sin bucle | e2e (gate, servidor tipo Pages) | `pnpm exec playwright test -c playwright.gate.config.ts tests/parity/legacy-redirect.spec.ts` | ✅ | ✅ green |
+| ROUTE-03 | Script de redirección en el `<head>` de la portada antes del primer stylesheet y ausente en Roma | static | dentro de `legacy-redirect.spec.ts` | ✅ | ✅ green |
+| ROUTE-04 | 0 peticiones a `__nuxt_content/`, `sql_dump`, `.wasm` al cargar portada y Roma | e2e (gate) | `portada.spec.ts` | ✅ | ✅ green |
+| ROUTE-05 | Sin `trips/prueba` ni `trips/forma`; ningún fichero de `.output/public` (dumps decodificados) contiene los centinelas; control positivo con Roma | node | `pnpm test:data` (build-isolation) | ✅ invertido | ✅ green |
+| ROUTE-05 | Esquema acepta/rechaza `draft`, `startDate`, `endDate`, `destinations`, `summary` (incl. `2026-02-30`) | data | `pnpm test:data` | ✅ ampliado | ✅ green |
+| ROUTE-06 | Roma: `footer .trip-back a` «← Todos los viajes» → baseURL; `footer .container p` = 1; prueba: pie solo con el enlace | e2e | `pnpm test:parity` (shell/portada) + `pnpm test:trips` (shape.spec) | ✅ | ✅ green |
+| D-13 | Clic en pastilla no remonta TripView | e2e (gate) | `portada.spec.ts` | ✅ | ✅ green |
+| D-21 | Todo selector de `multitrip.css` empieza por `.trip-index` | unit (static) | `pnpm exec vitest run tests/unit/multitripCss.spec.ts` | ✅ | ✅ green |
+| PAR-01 | 56 goldens sin `--update-snapshots`; snapshots sin diff | e2e (gate) + git | `pnpm test:parity` + `git diff --quiet -- tests/parity/golden.spec.ts-snapshots/` | ✅ | ✅ green |
+| PAR-02 | Toda la suite de Roma verde en `ROMA_URL=/guiaRoma/trips/roma/` | e2e (gate) | `pnpm test:parity` | ✅ vía harness | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -63,13 +64,13 @@ created: "2026-11-20"
 
 ## Wave 0 Requirements
 
-- [ ] `tests/parity/_harness.ts` — `ROMA_URL`/`ROMA_HTML` (commit propio, valor actual `/guiaRoma/`)
-- [ ] `tests/parity/_pagesServer.ts` — servidor que imita GitHub Pages (301 a barra final, `404.html`)
-- [ ] `tests/parity/portada.spec.ts` — ROUTE-01/04/06, D-13
-- [ ] `tests/parity/legacy-redirect.spec.ts` — ROUTE-03
-- [ ] `tests/unit/tripDates.spec.ts`, `tests/unit/tripManifest.spec.ts`, `tests/unit/multitripCss.spec.ts`
-- [ ] Ampliar `tests/data/schema.spec.ts` / `invariants.spec.ts`; invertir `build-isolation.spec.ts`
-- [ ] Test dev en `tests/trips/` (portada oculta drafts)
+- [x] `tests/parity/_harness.ts` — `ROMA_URL`/`ROMA_HTML` (commit propio, valor actual `/guiaRoma/`)
+- [x] `tests/parity/_pagesServer.ts` — servidor que imita GitHub Pages (301 a barra final, `404.html`)
+- [x] `tests/parity/portada.spec.ts` — ROUTE-01/04/06, D-13
+- [x] `tests/parity/legacy-redirect.spec.ts` — ROUTE-03
+- [x] `tests/unit/tripDates.spec.ts`, `tests/unit/tripManifest.spec.ts`, `tests/unit/multitripCss.spec.ts`
+- [x] Ampliar `tests/data/schema.spec.ts` / `invariants.spec.ts`; invertir `build-isolation.spec.ts`
+- [x] Test dev en `tests/trips/` (portada oculta drafts)
 
 ---
 
@@ -83,11 +84,25 @@ created: "2026-11-20"
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 10s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 10s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-11-20 (validate-phase --auto, retroactive audit)
+
+**Evidence (orchestrator-run at HEAD after 11-07, Node 22, caches cleared):**
+- `pnpm verify`: unit **301/301**, data **377/377**, parity **110/110** (13 files; 56 goldens, sin `--update-snapshots`); EXIT=0.
+- `pnpm test:trips`: **19/19** (aislamiento + forma/trampa/chrome/título + portada dev).
+- `git diff 6315f26 HEAD -- tests/parity/golden.spec.ts-snapshots/ tests/parity/golden.spec.ts app/assets/css/{base,tokens,fonts,leaflet}.css` vacío.
+- Nuevos specs estables: `portada.spec.ts` 70/70 con `--repeat-each 5`; `legacy-redirect.spec.ts` 56/56 con `--repeat-each 4`.
+
+## Validation Audit 2026-11-20
+
+| Metric | Count |
+|---|---|
+| Gaps found | 0 |
+| Resolved | 0 |
+| Escalated | 0 |
