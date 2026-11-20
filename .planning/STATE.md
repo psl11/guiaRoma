@@ -3,10 +3,10 @@ gsd_state_version: "1.0"
 milestone: v1.1
 milestone_name: Multi-viaje + Campania
 status: planning
-last_updated: "2026-11-20T06:06:06.070Z"
+last_updated: "2026-11-20T06:22:47.000Z"
 last_activity: 2026-11-20
 progress:
-  total_phases: 0
+  total_phases: 6
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,18 +17,19 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-06-18)
+See: .planning/PROJECT.md (updated 2026-11-20)
 
-**Core value:** La 1.0 debe ser exactamente igual que la guía de hoy (paridad visual y funcional al 100%), pero construida de forma dinámica, data-driven y mantenible.
-**Current focus:** Milestone complete
+**Core value:** La guía se consulta paseando por el destino y debe ser fiel, editorial y fiable (también offline). Lo ya publicado no se rompe: Roma sigue exactamente igual (paridad verificada) mientras la plataforma crece a varios viajes.
+**Current focus:** Phase 9 — Plataforma por viaje (milestone v1.1 Multi-viaje + Campania)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-11-20 — Milestone v1.1 started
+Phase: 9 of 14 (Plataforma por viaje)
+Plan: 0 of TBD in current phase
+Status: Ready to plan (roadmap v1.1 en borrador, pendiente de aprobación del usuario)
+Last activity: 2026-11-20 — Roadmap v1.1 creado (6 fases, 32/32 requisitos mapeados)
 
+Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 
@@ -100,6 +101,18 @@ Last activity: 2026-11-20 — Milestone v1.1 started
 
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
+
+#### v1.1 — Roadmap (2026-11-20, borrador)
+
+- [Roadmap v1.1]: orden 9 desacople (Roma en `/`, `tests/parity/` sin diff) → 10 forma/chrome desde datos (Roma en `/`) → 11 portada + rutas (único diff en los specs de Roma = `ROMA_URL`) → 12 extensiones con esqueleto de Campania → 13 contenido → 14 verificación. Cada fallo de paridad tiene un único sospechoso (código → datos → URL → extensiones → contenido)
+- [Roadmap v1.1]: cero re-baseline de los 56 goldens en todo el hito salvo excepción aprobada explícitamente por el usuario (candidata única: captura del pie si se aprueba ROUTE-06)
+- [Roadmap v1.1]: PAR-01/PAR-02 asignados a la Fase 11 (primera en la que Roma vive en `/trips/roma/`); las fases 12-14 los re-verifican como criterio de éxito. PAR-03 (upgrade real desde el `index.html` de `main`) y PAR-04 (sign-off humano en móvil real) en la Fase 14
+- [Roadmap v1.1]: el mecanismo `draft` (ROUTE-05) se construye en la Fase 11; el esqueleto de Campania de la Fase 12 nace `draft: true`; la publicación se decide al cerrar la Fase 13. `/trips/campania/` se materializa en la 13
+- [Roadmap v1.1]: persistencia `${slug}-${key}` plegada en la Fase 9 (las claves `roma-*` ya cumplen el esquema → migración = identidad); `storageKey: 'roma-theme'` del tema sigue global
+- [Roadmap v1.1]: cero dependencias nuevas (diff de `package.json` vacío; Playwright 1.61.0 fijado porque subirlo cambia el Chromium de los goldens); navegación portada → guía por documento completo (no SPA); slug de viaje `^[a-z0-9]+$` (Campania = `campania`)
+- [Roadmap v1.1]: research flags en las fases 11 (GitHub Pages barra final/301, scroll al hash), 12 (fila `choice`, motifs) y 13 (datos de campo de Campania); 9, 10 y 14 sin research
+
+#### v1.0 — decisiones de fase (archivo)
 
 - [Roadmap]: Fases horizontales/ordenadas por dependencia siguiendo el BUILD ORDER del research (andamiaje+golden → datos → página/layout/tema → render+modos → navegación → derivados → isla mapa → verificación)
 - [Roadmap]: El golden de Playwright se captura en la Phase 1 desde `main` ANTES de divergir — red de seguridad de toda la paridad
@@ -218,10 +231,17 @@ None yet.
 
 [Issues that affect future work]
 
-- [Phase 2]: Bandera de research parcial — las secciones de referencia (`index.html` líneas ~5260-6250) no se leyeron en profundidad; leerlas y afinar el esquema `reference` antes de migrar ese contenido.
-- [RESUELTO en Fase 5 P03]: ~~[Phase 4/5]: Validar al implementar el cableado exacto de interceptación de `a[href^="#"]` en `<MDC>` (componente Prose-`a` custom vs listener delegado).~~ → Listener delegado nativo en CAPTURA + stopPropagation, registrado SÍNCRONAMENTE; probado en navegador real por navigation.spec.ts (SC#1/SC#3 verde) y aprobado por humano.
-- [Phase 4/6/7]: BLOQUEANTE D1 abierto (heredado de F4, NO de F5) — las colecciones de unión discriminada `artist`/`reference` devuelven filas SQL todo-null, así que `#arte`/`#arquitectura`/`#reservas`/`#practica` no renderizan con datos reales. `pnpm generate` sigue OK. Resolver antes de que F6/F7 dependan de esas secciones.
-- [Phase 8 P06] F8 visual-diff gate NOT green — plan premise incomplete. Two dominant blockers beyond the classified Class-A/Class-B: (1) @nuxt/fonts self-hosted Lora renders ~3.5% WIDER than the live Google-network Lora at capture (17px text 603px live vs 624px nuxt; the size-adjusted Lora Fallback metric font is active at capture, not the real woff2) → cumulative line-wrap → every tall day view +289..737px taller than the frozen golden; maxDiffPixelRatio CANNOT absorb DIMENSION mismatches. (2) notes-area/culture-box order is per-card in live index.html (4 cards notes-THEN-culture: piazza-navona/campo-fiori/ghetto/laterano; other 14 culture-THEN-notes); MonumentCard.vue hardcodes culture-THEN-notes → 4 cards mismatch golden (needs schema field = Rule 4). Class-B timeline neutralization + 50 transport-meta <br> data fix are CORRECT (timeline matches golden 0px); keep them. Golden baseline + golden.spec.ts byte-unchanged.
+- [Roadmap v1.1]: REQUIREMENTS.md y ROADMAP.md de v1.1 son **borradores** preparados de forma autónoma; pendientes de aprobación del usuario y sin commit.
+- [Roadmap v1.1] ⚠ ROUTE-06 — enlace «← Todos los viajes» en Roma (cambia una captura del pie) o ninguno en v1.1: **resolver antes de planificar la Fase 11**.
+- [Roadmap v1.1] ⚠ EXT-01 — opciones A/B apiladas (recomendado) vs selector; ⚠ EXT-04 — motifs SVG nuevos de naturaleza vs reutilizar existentes: **resolver antes de planificar la Fase 12**.
+- [Roadmap v1.1] ⚠ CAMP-01 — fecha de devolución del coche (25 vs 26), decide si el sábado 26 (día VIII) es en coche o en transporte público: **pendiente del usuario, necesaria antes de redactar ese día en la Fase 13**.
+- [Roadmap v1.1] ⚠ ROUTE-05 — publicar Campania solo completa (`draft`) vs con días provisionales: **resolver antes de cerrar la Fase 13**.
+- [Phase 13]: datos de campo de Campania sin verificar (vehículos en Procida/Ischia 2027, horarios/muelles de ferry, Sorgeto de noche con niños, fechas de conciertos, carrera Spaccanapoli) — research flag.
+- [Deuda v1.0 aceptada, no bloqueante]: divergencia de ranking de búsqueda MiniSearch (`"Pante"`), warnings de tooling del code review, golden re-baselinado desde el build Nuxt (D-01 anulado), `#mapa` verificado solo por comportamiento (D-06), test de dev-routing gateado tras `RUN_DEV_ROUTING`. Detalle en `milestones/v1.0-MILESTONE-AUDIT.md`.
+- [RESUELTO en v1.0]: ~~[Phase 2]: bandera de research parcial sobre las secciones de referencia~~ → migradas en F2 P07 (reservas + práctica tipadas).
+- [RESUELTO en Fase 5 P03]: ~~[Phase 4/5]: cableado de interceptación de `a[href^="#"]` en `<MDC>`~~ → listener delegado nativo en CAPTURA + stopPropagation, registrado síncronamente.
+- [RESUELTO en v1.0]: ~~[Phase 4/6/7]: BLOQUEANTE D1 (uniones discriminadas `artist`/`reference` con filas SQL todo-null)~~ → `#arte`/`#arquitectura`/`#reservas`/`#practica` renderizan con datos reales desde F4 P05.
+- [RESUELTO en Fase 8]: ~~[Phase 8 P06]: visual-diff no verde por el corte de Lora self-hosted y el orden notas/culture por ficha~~ → golden re-baselinado desde el build Nuxt por decisión del usuario; `pnpm verify` VERDE y auditoría v1.0 sin bloqueantes.
 
 ## Deferred Items
 
@@ -230,15 +250,18 @@ Items acknowledged and carried forward from previous milestone close:
 | Category | Item | Status | Deferred At |
 |----------|------|--------|-------------|
 | Backend | BACK-01/02/03 (auth, uploads, API Nitro activa) | v2 | Init |
-| PWA | PWA-01/02 (app instalable, caché offline real de tiles) | v2 | Init |
-| Multi-viaje | TRIP-01 (segundo viaje con contenido real) | Futuro | Init |
+| PWA | PWA-01/02 (app instalable, caché offline real de tiles) | v2 (en v1.1 anotado como PLAT-06 futuro) | Init |
+| Multi-viaje | TRIP-01 de v1.0 (segundo viaje con contenido real) | En curso en v1.1 → CAMP-01..06 (no confundir con el TRIP-01 futuro de v1.1, «estado del viaje») | Init |
+| Ship | Merge `release/nuxt-4` → `main` + deploy/CI GitHub Pages (D-08) | Acto de ship separado tras v1.1 (primer deploy = v1.0 + v1.1) | v1.0 close |
 
 ## Session Continuity
 
-Last session: 2026-06-24T10:53:48.918Z
-Stopped at: Completed 08-02-PLAN.md (visual-diff spec)
+Last session: 2026-11-20T06:22:47.000Z
+Stopped at: Roadmap v1.1 creado (ROADMAP.md + STATE.md + trazabilidad de REQUIREMENTS.md), pendiente de aprobación del usuario; sin commit
 Resume file: None
 
 ## Operator Next Steps
 
-- Start the next milestone with /gsd-new-milestone
+- Revisar y aprobar `.planning/REQUIREMENTS.md` y `.planning/ROADMAP.md` (borradores v1.1)
+- Resolver ROUTE-06 antes de la Fase 11 (no bloquea las fases 9-10)
+- Empezar la Fase 9 con /gsd-discuss-phase 9 (o /gsd-plan-phase 9)
