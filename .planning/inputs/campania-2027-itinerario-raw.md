@@ -6,8 +6,8 @@
 > NO es contenido final.
 >
 > Notas de revisión (a confirmar con el usuario en la fase de contenido):
-> - El texto dice «2026», pero los días de la semana (sábado 19 de junio…) corresponden a **2027**. Asumido 2027.
-> - El viernes 25 se devuelve el coche, pero el sábado 26 dice «con el coche de alquiler disponible» → ¿se devuelve el 26?
+> - ✓ Año **2027** CONFIRMADO por el usuario (2026-11-20); el «2026» del texto es una errata.
+> - El viernes 25 se devuelve el coche, pero el sábado 26 dice «con el coche de alquiler disponible» → ¿se devuelve el 26? — **PENDIENTE: el usuario lo confirmará.**
 > - Viaje en familia con niños; Arantxa llega el 23 y se va con los niños el 27.
 
 ---
