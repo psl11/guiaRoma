@@ -128,10 +128,25 @@ export const TimelineRow = z.discriminatedUnion('kind', [
     text: Md,
   }),
 ])
+// Slug de día (D-02, Fase 10): minúsculas ASCII, dígitos y guiones. El slug es el id de la
+// `<section>` del día y su ancla `#slug`, así que no admite mayúsculas, acentos, espacios ni
+// `_`. Convención (documentada, NO impuesta) para viajes nuevos: slug con fecha que empieza por
+// letra (`sabado-19`), para que dos sábados no choquen y el id sirva como selector CSS. Roma
+// conserva viernes…martes. Se declara aquí (y no junto a TRIP_SLUG_RE) porque DaySchema la usa
+// al evaluarse el módulo.
+export const DAY_SLUG_RE = /^[a-z0-9-]+$/
+
 export const DaySchema = z.object({
-  slug: z.string(), // 'viernes'
+  slug: z.string().regex(DAY_SLUG_RE), // 'viernes' | 'sabado-19' (D-02)
   trip: z.string(),
-  order: z.number(), // 1..5
+  // Orden del día en el viaje: único y contiguo 1..N, sin límite de número de días. Lo exige
+  // la regla `day-order` de la puerta tests/data (D-04); zod solo ve un fichero.
+  order: z.number(),
+  // Etiqueta de la pastilla del día (D-03). Si falta, la UI la deriva con `dayLabel(eyebrow)`
+  // (dayPillLabel de app/utils/tripLayout.ts). String no vacío sin espacios en los extremos;
+  // sin límite de longitud (UI-SPEC recomienda ≤ 12 caracteres, no bloqueante). La puerta
+  // exige etiquetas únicas por viaje (regla `day-pill`).
+  pill: z.string().regex(/^\S(?:.*\S)?$/).optional(), // 'Sáb 19'
   roman: z.string(), // 'I' (day-number)
   eyebrow: z.string(), // 'venerdì · 19 giugno' (section-eyebrow del día)
   title: z.string(), // 'Centro Storico nocturno'

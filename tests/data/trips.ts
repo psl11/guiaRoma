@@ -14,9 +14,20 @@
 //  - Un viaje incompleto (solo trip.yml) no es error (D-09); uno roto sí.
 //  - Igualdad de slugs/anclas = comparación EXACTA de strings (sin minúsculas ni
 //    normalización Unicode): `[x](#Galeria)` no resuelve a `galeria`.
+//
+// Fase 10 (forma desde datos):
+//  - D-03: etiquetas de pastilla de día únicas por viaje (`day-pill`), calculadas con la MISMA
+//    `dayPillLabel` de app/utils/tripLayout.ts y comparadas tras NFC + trim + minúsculas.
+//  - D-04: `order` de los días único y contiguo 1..N (`day-order`), sin límite de días.
+//  - D-05: los slugs de día son anclas reservadas (`dup-id`/`fixed-anchor` ya los incluyen) y
+//    los enlaces de la prosa van en lista blanca (`cross-trip-link`: solo `#id` o http(s)://).
+//  - D-08: `anchor` solo resuelve a las secciones que `buildTripLayout` emite para la presencia
+//    leída del YAML del viaje (cierra WR-01/WR-02 de la revisión de la Fase 9).
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { basename, join, relative, sep } from 'node:path'
 import { parse as parseYaml } from 'yaml'
+// Import RELATIVO (Vitest plano, sin alias): la puerta usa la MISMA función que la UI (Pitfall 5).
+import { dayPillLabel } from '../../app/utils/tripLayout'
 import {
   ArtistRowSchema,
   ArtistSchema,
@@ -61,6 +72,7 @@ const NOTE_PREFIX = 'note-'
 export const RULES = [
   'yaml-parse', 'yaml-object', 'trip-yml', 'trip-slug', 'trip-field', 'stray-file', 'reserved-key',
   'unknown-key', 'basename-slug', 'dup-id', 'fixed-anchor', 'ref', 'anchor', 'cross-trip-link',
+  'day-order', 'day-pill',
 ] as const
 export type Rule = typeof RULES[number]
 
@@ -170,11 +182,17 @@ export function collectStrings(value: unknown, acc: string[] = []): string[] {
   return acc
 }
 
+/**
+ * Clave de comparación de etiquetas de pastilla (D-03): NFC + trim + minúsculas en español, para
+ * que «Sáb 19», «sáb 19 » y «Sáb 19» escrito en NFD se consideren la misma pastilla.
+ */
+const pillKey = (label: string) => label.normalize('NFC').trim().toLocaleLowerCase('es')
+
 const rowKeys = new Map<CollectionName, ReadonlySet<string>>(
   COLLECTIONS.map(c => [c.name, new Set(Object.keys(c.row.shape))]),
 )
 
-/** Aplica las 14 reglas de la puerta a un viaje cargado. Lista vacía = viaje sano. */
+/** Aplica las 16 reglas de la puerta (`RULES`) a un viaje cargado. Lista vacía = viaje sano. */
 export function checkTrip(t: LoadedTrip): Violation[] {
   const vs: Violation[] = [...t.loadViolations]
   const push = (file: string, rule: Rule, message: string) => vs.push({ file, rule, message })
@@ -272,6 +290,26 @@ export function checkTrip(t: LoadedTrip): Violation[] {
     for (const row of asArray(d.data.table)) {
       if (typeof row.ref === 'string' && !stopOrFood.has(row.ref)) push(d.file, 'ref', `reservas.table ref "${row.ref}" no resuelve`)
     }
+  }
+
+  // day-pill (D-03, Fase 10): etiquetas de pastilla únicas en el viaje. La etiqueta sale de
+  // `dayPillLabel` (la misma que pinta NavPills) y se compara con `pillKey`.
+  const byPill = new Map<string, { label: string, docs: Doc[] }>()
+  for (const d of days) {
+    const label = dayPillLabel({
+      slug: d.slug,
+      eyebrow: String(d.data.eyebrow ?? ''),
+      pill: typeof d.data.pill === 'string' ? d.data.pill : undefined,
+    })
+    const key = pillKey(label)
+    const g = byPill.get(key) ?? { label, docs: [] }
+    g.docs.push(d)
+    byPill.set(key, g)
+  }
+  for (const { label, docs } of byPill.values()) {
+    if (docs.length < 2) continue
+    const list = docs.map(x => x.file).join(', ')
+    for (const d of docs) push(d.file, 'day-pill', `pastilla «${label}» repetida (D-03) en ${list}`)
   }
 
   // anchor / cross-trip-link (D-11) — en cualquier string de cualquier fichero (incl. trip.yml).
