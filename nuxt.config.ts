@@ -19,11 +19,16 @@ export default defineNuxtConfig({
   // CSS editorial VERBATIM, cargado UNA sola vez. ORDEN crítico: base consume las variables de tokens.
   // fonts.css PRIMERO: declara las @font-face vendorizadas (woff2 EXACTOS del golden) antes de que
   // base.css las use en `font-family` (F8 / 08-06 — paridad-pixel del wrap, Blocker B).
+  // multitrip.css (Fase 11, D-21): estilos de la portada, TODOS bajo `.trip-index` (guardián en
+  // tests/unit/multitripCss.spec.ts). Va el ÚLTIMO para que sus anulaciones de las reglas globales
+  // no dependan del orden de carga; como la raíz `.trip-index` solo existe en «/», nunca alcanza el
+  // DOM de Roma (los cuatro ficheros anteriores siguen congelados).
   css: [
     '~/assets/css/fonts.css',
     '~/assets/css/tokens.css',
     '~/assets/css/base.css',
     '~/assets/css/leaflet.css',
+    '~/assets/css/multitrip.css',
   ],
 
   // Tema: registrar el módulo en Fase 1 (el ThemeToggle/uso es Fase 3).
