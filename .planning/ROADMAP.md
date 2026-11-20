@@ -52,10 +52,17 @@ Re-plataforma el `index.html` único (6.665 líneas) a Nuxt 4 SSG con paridad vi
   5. La puerta de paridad de Roma sigue verde en `/` sin ningún cambio en `tests/parity/` ni re-baseline de goldens
 **Plans**: 5 plans
 Plans:
+**Wave 1**
 - [ ] 09-01-PLAN.md — Tracer: contexto de viaje (provide/inject) + navegación y preferencias/notas por viaje, probado en Roma (`/`) con la paridad intacta (PLAT-02, PLAT-03)
 - [ ] 09-02-PLAN.md — Puerta de datos por viaje: `tests/data/trips.ts` (loader + `checkTrip`, mensajes con el fichero culpable), `describe.each` en esquema e invariantes, fixtures «dientes», `TRIP_SLUG_RE` (PLAT-04)
+
+**Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 09-03-PLAN.md — Viaje ficticio `prueba` (dev-only) validado por la puerta + búsqueda por viaje (índice MiniSearch por slug) (PLAT-01, PLAT-04)
+
+**Wave 3** *(blocked on Wave 2 completion)*
 - [ ] 09-04-PLAN.md — E2E de aislamiento en `/trips/prueba` (`pnpm test:trips`, fuera de la puerta) + guardián de acoplamiento en `test:unit` (PLAT-01..03)
+
+**Wave 4** *(blocked on Wave 3 completion)*
 - [ ] 09-05-PLAN.md — Cierre: centinela de build, `verify` desde cachés limpias, README y puerta completa de la fase (PLAT-01..04, SC4/SC5)
 **Research**: no (refactor mecánico; inventario `file:line` de acoplamientos ya hecho en `research/ARCHITECTURE.md`)
 **Notas**: barrido `grep` de `useTrip('roma')`, claves `useState`/`localStorage` globales e índice MiniSearch de módulo convertido en tareas; `tests/data` parametrizado por viaje (conteos y `migration-diff` solo para Roma). La persistencia por viaje usa `${slug}-${key}`, por lo que las claves actuales de Roma ya cumplen el esquema (la prueba real de upgrade desde `main` va a la Fase 14).
