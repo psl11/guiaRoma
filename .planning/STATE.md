@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 11
 current_phase_name: Portada y rutas multi-viaje
 status: executing
-stopped_at: Completed 11-04-PLAN.md
-last_updated: "2026-11-20T19:44:44.779Z"
+stopped_at: Completed 11-05-PLAN.md
+last_updated: "2026-11-20T19:56:51.523Z"
 last_activity: 2026-11-20
 last_activity_desc: Phase 11 execution started
-state_head: 784f7d46ba2c5581caeb2ce009ee10a527e03882
+state_head: b3b07c5ad2c1a3905e87e98c39945f1f930dc9e7
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 17
-  completed_plans: 14
+  completed_plans: 15
   percent: 0
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 11 (Portada y rutas multi-viaje) — EXECUTING
-Plan: 5 of 7
+Plan: 6 of 7
 Status: Ready to execute
 Last activity: 2026-11-20 — Phase 11 execution started
 
@@ -117,6 +117,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 11 P02 | 10 min | 2 tasks | 13 files |
 | Phase 11 P03 | 6 min | 2 tasks | 8 files |
 | Phase 11 P04 | 10min | 3 tasks | 8 files |
+| Phase 11 P05 | 8 min | 3 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -277,6 +278,8 @@ Recent decisions affecting current work:
 - [Phase 11]: 11-04: Trip dates are IsoDate = z.string() + regex + calendar refine, never z.iso.date() (Content keeps a text column; tested with z.toJSONSchema)
 - [Phase 11]: 11-04: endDate >= startDate and no-links-in-summary are data-gate rules (trip-dates, trip-summary-link), not object refines; gate now has 18 rules
 - [Phase 11]: 11-04: listedTrips returns null while rows are null/undefined and [] only when loaded and nothing is published, so 11-05 never shows the empty state during hydration
+- [Phase 11]: TripIndex maps listedTrips(data) to plain card objects in one computed; null stays null so the template separates loading from empty (11-05)
+- [Phase 11]: multitrip.css is the UI-SPEC block extracted verbatim, last in css[], every selector under .trip-index, enforced by tests/unit/multitripCss.spec.ts which also pins the css[] order (11-05)
 
 ### Pending Todos
 
@@ -313,8 +316,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-20T19:44:44.676Z
-Stopped at: Completed 11-04-PLAN.md
+Last session: 2026-11-20T19:56:51.416Z
+Stopped at: Completed 11-05-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
