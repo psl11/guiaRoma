@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 9
 current_phase_name: Plataforma por viaje
 status: executing
-stopped_at: Completed 09-02-PLAN.md
-last_updated: "2026-11-20T10:24:17.845Z"
+stopped_at: Completed 09-03-PLAN.md
+last_updated: "2026-11-20T10:36:33.696Z"
 last_activity: 2026-11-20
 last_activity_desc: Phase 9 execution started
-state_head: 335d9f4363149bc239bf2099876b649987851eef
+state_head: 5cb1e2fbbd12e6c91b78d9ef314b60c6e6a2905c
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 5
-  completed_plans: 2
+  completed_plans: 3
   percent: 0
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 9 (Plataforma por viaje) — EXECUTING
-Plan: 3 of 5
+Plan: 4 of 5
 Status: Ready to execute
 Last activity: 2026-11-20 — Phase 9 execution started
 
@@ -105,6 +105,7 @@ Progress: [░░░░░░░░░░] 0%
 |------|----------|-------|-------|
 | Phase 09 P01 | 5min | 2 tasks | 7 files |
 | Phase 09 P02 | 5min | 2 tasks | 7 files |
+| Phase 09 P03 | 9min | 2 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -237,6 +238,8 @@ Recent decisions affecting current work:
 - [Phase 09]: 09-02: data gate iterates every content/trips folder (describe.each) with 14 checkTrip rules returning { file, rule, message }; no fail-open for stray/empty/broken YAML
 - [Phase 09]: 09-02: TRIP_SLUG_RE ^[a-z0-9]+$ on TripSchema.slug plus trip-slug invariant (slug == folder)
 - [Phase 09]: 09-02: anchor extraction widened to any char except space/paren so non-ASCII or mixed-case anchors are compared exactly and fail
+- [Phase 09]: 09-03: search haystack drops Markdown link destinations (link text stays indexed) so in-trip links do not create hidden search hits
+- [Phase 09]: 09-03: one MiniSearch index per trip slug in a client-only module Map; search state keys search:query|open|results:<slug>
 
 ### Pending Todos
 
@@ -273,8 +276,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-20T10:24:17.817Z
-Stopped at: Completed 09-02-PLAN.md
+Last session: 2026-11-20T10:36:33.671Z
+Stopped at: Completed 09-03-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
