@@ -4,17 +4,17 @@ milestone: v1.1
 milestone_name: Multi-viaje + Campania
 current_phase: 9
 current_phase_name: Plataforma por viaje
-status: planning
-stopped_at: Phase 9 context gathered
-last_updated: "2026-11-20T08:05:28.927Z"
+status: executing
+stopped_at: Completed 09-01-PLAN.md
+last_updated: "2026-11-20T10:16:45.187Z"
 last_activity: 2026-11-20
-last_activity_desc: Roadmap v1.1 creado (6 fases, 32/32 requisitos mapeados)
-state_head: 20c1277cede2e5afd0b08edab4dfd3000adb2ed1
+last_activity_desc: Phase 9 execution started
+state_head: 1c8fbaf4a29ea367fcbb0e24a0e4614377301155
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 5
-  completed_plans: 0
+  completed_plans: 1
   percent: 0
 ---
 
@@ -25,14 +25,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-11-20)
 
 **Core value:** La guía se consulta paseando por el destino y debe ser fiel, editorial y fiable (también offline). Lo ya publicado no se rompe: Roma sigue exactamente igual (paridad verificada) mientras la plataforma crece a varios viajes.
-**Current focus:** Phase 9 — Plataforma por viaje (milestone v1.1 Multi-viaje + Campania)
+**Current focus:** Phase 9 — Plataforma por viaje
 
 ## Current Position
 
-Phase: 9 (Plataforma por viaje) — READY TO EXECUTE
-Plan: 0 of TBD in current phase
-Status: Ready to plan (roadmap v1.1 en borrador, pendiente de aprobación del usuario)
-Last activity: 2026-11-20 — Roadmap v1.1 creado (6 fases, 32/32 requisitos mapeados)
+Phase: 9 (Plataforma por viaje) — EXECUTING
+Plan: 2 of 5
+Status: Ready to execute
+Last activity: 2026-11-20 — Phase 9 execution started
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -99,6 +99,11 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 08 P03 | 2 | 1 tasks | 2 files |
 | Phase 08 P04 | 6min | 1 tasks | 1 files |
 | Phase 08 P05 | 6min | 1 tasks | 1 files |
+**Per-Plan Metrics:**
+
+| Plan | Duration | Tasks | Files |
+|------|----------|-------|-------|
+| Phase 09 P01 | 5min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -225,6 +230,9 @@ Recent decisions affecting current work:
 - [Phase ?]: [Phase 8 P04]: el test de dev-routing (shell.spec.ts) se gatea tras RUN_DEV_ROUTING con un test.skip a NIVEL DE DESCRIBE (evaluado ANTES del beforeAll → el spawn de pnpm dev NO ocurre en el gate) + early-return defensivo en el beforeAll (suspenders). D-04 exclusión #2 completa: el env-flag (no el grep-invert de Plan 03) GARANTIZA que nunca se lanza nuxi dev (T-08-05, lock rancio). Verificado en runtime: flag sin definir → 2 skipped, puerto 5200 libre, 0 procesos dev. Aserciones estáticas del shell intactas; test ejecutable bajo demanda con RUN_DEV_ROUTING=1. eslint-disable no-empty-pattern porque Playwright EXIGE {} como 1er arg del hook
 - [Phase ?]: [Phase 8 P05]: tests/README.md documenta la puerta SC#4 (pnpm verify + 3 capas test:unit/test:data/test:parity), las 2 exclusiones con razon (D-04 #1 golden.spec.ts por testIgnore a nivel fichero, estable ante renombrados; #2 dev-routing shell.spec.ts por RUN_DEV_ROUTING describe-skip que GARANTIZA no spawnear nuxi dev + grep-invert como cinturon), el invariante D-01 (56 PNGs read-only, test:golden:update PROHIBIDO, golden.spec.ts = unica herramienta de captura F1 a demanda) y el conteo REGISTRADO (Pitfall 4)
 - [Phase ?]: [Phase 8 P05]: conteo de puerta derivado EMPIRICAMENTE corriendo --list (no del summary de Plan 03): test:parity = 80 tests/11 ficheros (con grep-invert), config gate en crudo = 82/11 (solo testIgnore golden); README registra AMBOS + comandos de recompute + desglose por fichero. Verificado contra un --list FRESCO antes del commit (match exacto). Delta 82->80 = los 2 dev-routing (mobile+desktop). Solo-documentacion: NO se forzo la puerta a verde (Plan 06) ni se toco el baseline congelado D-01
+- [Phase 09]: useTripSlug() throws outside a TripView descendant (no default), so a wrong-trip slug fails the prerender instead of mixing notes between trips
+- [Phase 09]: useCardNavigationController(slug) takes a mandatory slug: TripView cannot inject its own provide (Vue 3.5 self-inject trap)
+- [Phase 09]: Builds must run under Node 22 (better-sqlite3 is compiled for Node 22; shell default nvm lts/* is Node 24)
 
 ### Pending Todos
 
@@ -261,9 +269,9 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-20T07:18:18.145Z
-Stopped at: Phase 9 context gathered
-Resume file: .planning/phases/09-plataforma-por-viaje/09-CONTEXT.md
+Last session: 2026-11-20T10:16:45.164Z
+Stopped at: Completed 09-01-PLAN.md
+Resume file: None
 
 ## Operator Next Steps
 

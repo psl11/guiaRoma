@@ -50,10 +50,10 @@ Re-plataforma el `index.html` único (6.665 líneas) a Nuxt 4 SSG con paridad vi
   3. Quien ya usa Roma abre la guía y encuentra sus notas, su ritmo, «caminar menos» y el modo resumen tal como los dejó (claves `roma-*` intactas, sin migración destructiva); las notas y preferencias de otro viaje no se mezclan con las de Roma
   4. Un YAML inválido en cualquier viaje (slug de viaje no válido, carpeta distinta del slug, id duplicado, id que choca con un ancla de sección, enlace `#ficha` que apunta fuera del viaje, nombre reservado de Content) hace fallar `pnpm verify` señalando el fichero culpable
   5. La puerta de paridad de Roma sigue verde en `/` sin ningún cambio en `tests/parity/` ni re-baseline de goldens
-**Plans**: 5 plans
+**Plans**: 1/5 plans executed
 Plans:
 **Wave 1**
-- [ ] 09-01-PLAN.md — Tracer: contexto de viaje (provide/inject) + navegación y preferencias/notas por viaje, probado en Roma (`/`) con la paridad intacta (PLAT-02, PLAT-03)
+- [x] 09-01-PLAN.md — Tracer: contexto de viaje (provide/inject) + navegación y preferencias/notas por viaje, probado en Roma (`/`) con la paridad intacta (PLAT-02, PLAT-03)
 - [ ] 09-02-PLAN.md — Puerta de datos por viaje: `tests/data/trips.ts` (loader + `checkTrip`, mensajes con el fichero culpable), `describe.each` en esquema e invariantes, fixtures «dientes», `TRIP_SLUG_RE` (PLAT-04)
 
 **Wave 2** *(blocked on Wave 1 completion)*
@@ -169,7 +169,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 6. Derivados de datos — búsqueda y ruta del día | v1.0 | 5/5 | Complete | 2026-06-21 |
 | 7. Isla client-only — mapa, fallback, notas | v1.0 | 4/4 | Complete | 2026-06-23 |
 | 8. Verificación de paridad | v1.0 | 7/7 | Complete | 2026-06-24 |
-| 9. Plataforma por viaje | v1.1 | 0/5 | Planned | - |
+| 9. Plataforma por viaje | v1.1 | 1/5 | In Progress | - |
 | 10. Forma y chrome desde datos | v1.1 | 0/TBD | Not started | - |
 | 11. Portada y rutas multi-viaje | v1.1 | 0/TBD | Not started | - |
 | 12. Formas nuevas de viaje | v1.1 | 0/TBD | Not started | - |
