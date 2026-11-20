@@ -23,6 +23,13 @@
 //    los enlaces de la prosa van en lista blanca (`cross-trip-link`: solo `#id` o http(s)://).
 //  - D-08: `anchor` solo resuelve a las secciones que `buildTripLayout` emite para la presencia
 //    leída del YAML del viaje (cierra WR-01/WR-02 de la revisión de la Fase 9).
+//
+// Fase 11 (portada, datos de la tarjeta del viaje):
+//  - D-08: `trip-dates` — en trip.yml, `endDate` no puede ser anterior a `startDate` (strings ISO
+//    `YYYY-MM-DD` validados por el esquema, así que la comparación de strings es la de fechas).
+//  - D-07: `trip-summary-link` — el `summary` de trip.yml no lleva enlaces (Markdown `[t](x)`,
+//    autoenlace `<scheme:…>` ni URL suelta `http(s)://`/`www.`): la tarjeta entera de la portada ya
+//    es un `<a>`, y un enlace dentro daría `<a>` anidado (HTML inválido, hidratación rota).
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { basename, join, relative, sep } from 'node:path'
 import { parse as parseYaml } from 'yaml'
@@ -77,7 +84,7 @@ const NOTE_PREFIX = 'note-'
 export const RULES = [
   'yaml-parse', 'yaml-object', 'trip-yml', 'trip-slug', 'trip-field', 'stray-file', 'reserved-key',
   'unknown-key', 'basename-slug', 'dup-id', 'fixed-anchor', 'ref', 'anchor', 'cross-trip-link',
-  'day-order', 'day-pill',
+  'day-order', 'day-pill', 'trip-dates', 'trip-summary-link',
 ] as const
 export type Rule = typeof RULES[number]
 
@@ -171,6 +178,16 @@ function extractLinkTargets(md: string): string[] {
 }
 
 /**
+ * ¿Lleva enlace un texto Markdown-inline? Destino `[t](x)`, autoenlace `<scheme:…>` (lo que MDC
+ * convierte en `<a>`) o URL suelta `http(s)://` / `www.` (autolink de GFM). Regla trip-summary-link.
+ */
+function hasLink(md: string): boolean {
+  return extractLinkTargets(md).length > 0
+    || /<[a-z][a-z0-9+.-]*:[^>\s]*>/i.test(md)
+    || /\bhttps?:\/\/|\bwww\./i.test(md)
+}
+
+/**
  * Anclas `#id` de los enlaces internos `[texto](#id)`. Captura cualquier carácter salvo
  * espacio/paréntesis (no solo [a-z0-9-]) para que un ancla con mayúsculas o Unicode se
  * compare tal cual y falle, en vez de escaparse del escaneo.
@@ -197,7 +214,7 @@ const rowKeys = new Map<CollectionName, ReadonlySet<string>>(
   COLLECTIONS.map(c => [c.name, new Set(Object.keys(c.row.shape))]),
 )
 
-/** Aplica las 16 reglas de la puerta (`RULES`) a un viaje cargado. Lista vacía = viaje sano. */
+/** Aplica las 18 reglas de la puerta (`RULES`) a un viaje cargado. Lista vacía = viaje sano. */
 export function checkTrip(t: LoadedTrip): Violation[] {
   const vs: Violation[] = [...t.loadViolations]
   const push = (file: string, rule: Rule, message: string) => vs.push({ file, rule, message })
@@ -216,6 +233,17 @@ export function checkTrip(t: LoadedTrip): Violation[] {
   for (const d of tripDocs) {
     if (!TRIP_SLUG_RE.test(d.slug)) push(d.file, 'trip-slug', `slug "${d.slug}" no cumple ^[a-z0-9]+$ (D-05)`)
     else if (d.slug !== t.dir) push(d.file, 'trip-slug', `slug "${d.slug}" ≠ carpeta "${t.dir}"`)
+  }
+
+  // trip-dates (D-08) / trip-summary-link (D-07) — datos de la tarjeta de la portada.
+  for (const d of tripDocs) {
+    const { startDate, endDate, summary } = d.data
+    if (typeof startDate === 'string' && typeof endDate === 'string' && endDate < startDate) {
+      push(d.file, 'trip-dates', `endDate (${endDate}) anterior a startDate (${startDate})`)
+    }
+    if (typeof summary === 'string' && hasLink(summary)) {
+      push(d.file, 'trip-summary-link', 'summary con enlace: la tarjeta de la portada ya es un enlace; quita [texto](destino)')
+    }
   }
 
   for (const d of t.docs) {
