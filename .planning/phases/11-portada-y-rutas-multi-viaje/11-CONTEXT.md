@@ -30,7 +30,9 @@ arreglos de CSS de Roma (desbordamiento de pastillas → Fase 12/13).
   la del pie queda **sin usar**; si alguna golden falla tras añadir el enlace, es un bug de layout que se arregla, nunca
   `--update-snapshots`. — **Reversibility:** reversible
 - **D-03:** El pie existe en **todas** las guías porque aloja el enlace: las líneas `trip.footer` (si las hay) van
-  primero, como hoy; el enlace va después, en su propio elemento. Un viaje sin `footer` muestra un pie solo con el enlace.
+  primero, como hoy; el enlace va después, en su propio elemento: **hijo directo de `<footer>`, después de
+  `.container`** — `<p class="trip-back"><a :href="baseURL">← Todos los viajes</a></p>` (**corregido por research:**
+  dentro de `footer .container` rompería el locator único de `shell.spec.ts:158`; así no necesita CSS nuevo). Un viaje sin `footer` muestra un pie solo con el enlace.
   Esto **sustituye** la parte «sin pie» de D-14 de la Fase 10; el test `tests/trips/shape.spec.ts:317`
   (`footer` con count 0 en `prueba`) se actualiza a «el pie solo contiene el enlace de vuelta». El aserto de
   `shell.spec.ts:158` (`toContainText('Roma · 19—23 giugno 2026')`) sigue verde porque es `toContainText`.
@@ -63,7 +65,8 @@ arreglos de CSS de Roma (desbordamiento de pastillas → Fase 12/13).
 - **D-13:** Roma sirve en `/guiaRoma/trips/roma/` desde `app/pages/trips/[slug].vue` (el mismo `TripView`).
   `nitro.prerender.routes` = `['/']` + `/trips/<slug>/` de cada viaje **no draft**, derivado en build leyendo
   `content/trips/*/trip.yml` (no lista a mano); `crawlLinks` sigue activo como red y `failOnError: true`. Fijar
-  `definePageMeta({ key: route => route.fullPath })` en `trips/[slug].vue`. Todo enlace interno a una guía lleva
+  `definePageMeta({ key: route => `trip:${String(route.params.slug)}` })` en `trips/[slug].vue` (**corregido por
+  research:** `fullPath` incluye el hash y remontaría TripView en cada clic de pastilla). Todo enlace interno a una guía lleva
   **barra final** (evita el 301 de GitHub Pages). El comportamiento real de Pages (barra final, 301, `autoSubfolderIndex`)
   lo investiga el researcher; plan B `autoSubfolderIndex: false` o `trailing-slash` si hiciera falta.
 - **D-14 (redirección legacy, ROUTE-03):** script inline en `<head>` **solo en la portada** (`useHead`,
@@ -106,6 +109,11 @@ arreglos de CSS de Roma (desbordamiento de pastillas → Fase 12/13).
   portada van en un fichero nuevo (p. ej. `app/assets/css/multitrip.css`) con **todos** los selectores bajo una clase
   raíz propia de la portada (p. ej. `.trip-index`), usando los tokens existentes; sin `<style scoped>`, sin `v-html`.
   Un test asevera que ningún selector de ese fichero alcanza el DOM de Roma (o la puerta de paridad lo demuestra).
+- **D-23 (research):** La lectura de `trip.yml` en tiempo de config (rutas de prerender, exclusión draft) va en
+  `scripts/tripManifest.mjs` + `scripts/tripManifest.d.mts` (sin `@types/node`, un helper `.ts` con `node:fs` rompe
+  `pnpm typecheck`). Fechas `startDate`/`endDate` como string con regex + validación de calendario, **no**
+  `z.iso.date()` (columna DATE con desfase de zona horaria). Se permiten **specs nuevos** en `tests/parity/`
+  (redirección, portada) además de D-18; editar specs existentes sigue limitado a D-18.
 - **D-22:** Builds y Playwright con Node 22; `rm -rf .data .nuxt .output` antes de generar; nunca `test:trips` a la vez
   que `generate`/`verify`; todo en `release/nuxt-4`.
 
