@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 11
 current_phase_name: Portada y rutas multi-viaje
 status: executing
-stopped_at: Phase 11 UI-SPEC approved
-last_updated: "2026-11-20T19:03:19.056Z"
+stopped_at: Completed 11-01-PLAN.md
+last_updated: "2026-11-20T19:08:43.205Z"
 last_activity: 2026-11-20
 last_activity_desc: Phase 11 execution started
-state_head: 311033a8bf0e05cc693b5cd7bd40744233cf925a
+state_head: 85bd9744b0fb262493f08bdab2c0372d664af9f5
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 17
-  completed_plans: 10
+  completed_plans: 11
   percent: 0
 ---
 
@@ -30,8 +30,8 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 11 (Portada y rutas multi-viaje) — EXECUTING
-Plan: 1 of 7
-Status: Executing Phase 11
+Plan: 2 of 7
+Status: Ready to execute
 Last activity: 2026-11-20 — Phase 11 execution started
 
 Progress: [░░░░░░░░░░] 0%
@@ -113,6 +113,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 10 P03 | 3min | 2 tasks | 4 files |
 | Phase 10 P04 | 4min | 3 tasks | 16 files |
 | Phase 10 P05 | 6min | 2 tasks | 4 files |
+| Phase 11 P01 | 4min | 3 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -262,6 +263,7 @@ Recent decisions affecting current work:
 - [Phase 10]: Phase 10-04: build-isolation guards FORMA-CENTINELA-10A absent from index.html/_payload.json, with an always-run presence check in content/trips/forma/trip.yml (non-vacuous)
 - [Phase 10]: Trap scans document.title, body innerText and a script-free body clone textContent; the Nuxt payload is not scanned (guiaRoma baseURL is not a leak)
 - [Phase 10]: TDD RED evidence for Vitest is captured with the JUnit reporter (the classifier rejects Vitest TAP multi-line diffs)
+- [Phase 11]: 11-01: tests/parity/_harness.ts es el punto único de ROMA_URL/ROMA_HTML para la puerta; el movimiento de URL de 11-03 es un diff de una línea
 
 ### Pending Todos
 
@@ -298,9 +300,9 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-20T18:22:01.551Z
-Stopped at: Phase 11 UI-SPEC approved
-Resume file: .planning/phases/11-portada-y-rutas-multi-viaje/11-UI-SPEC.md
+Last session: 2026-11-20T19:08:43.136Z
+Stopped at: Completed 11-01-PLAN.md
+Resume file: None
 
 ## Operator Next Steps
 
