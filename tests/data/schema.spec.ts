@@ -204,8 +204,9 @@ describe('chrome del viaje (D-10…D-14)', () => {
   it('D-10: el trip.yml de Roma SIN brand/footer/mapLegend/pageTitle valida (esquema aditivo)', () => {
     const doc = loadTrip('roma').docs.find(d => d.collection === 'trip')
     expect(doc, 'content/trips/roma/trip.yml no cargado').toBeDefined()
-    const data: Record<string, unknown> = { ...doc!.data }
-    for (const k of ['brand', 'footer', 'mapLegend', 'pageTitle']) delete data[k]
+    const chromeKeys = new Set(['brand', 'footer', 'mapLegend', 'pageTitle'])
+    const data = Object.fromEntries(Object.entries(doc!.data).filter(([k]) => !chromeKeys.has(k)))
+    expect(Object.keys(data).some(k => chromeKeys.has(k))).toBe(false)
     const r = TripSchema.safeParse(data)
     expect(r.success, r.success ? '' : z.prettifyError(r.error)).toBe(true)
   })

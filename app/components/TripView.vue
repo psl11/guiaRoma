@@ -78,6 +78,13 @@ const layout = computed(() => buildTripLayout({
   foodCount: food.value?.length ?? 0,
   artistKinds: new Set((artists.value ?? []).map(a => a.kind)),
 }))
+
+// F10 (Plan 10-02, D-13/D-14): la pestaña la pone CADA viaje desde su trip.yml (`pageTitle`); app.vue
+// ya no fija título global. Sin `pageTitle`, el respaldo es NEUTRO: el `title` del propio viaje sin
+// Markdown (`plainTitle`), que también usa la marca cuando el viaje no define `brand`. Content
+// entrega `null` para un opcional ausente → se lee con `||`/`??`, nunca comparando con undefined.
+const plainTitle = computed(() => inlineMdToPlain(trip.value?.title ?? ''))
+useHead({ title: () => trip.value?.pageTitle || plainTitle.value })
 </script>
 
 <template>

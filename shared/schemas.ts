@@ -360,6 +360,20 @@ export const TripSchema = z.object({
     arte: SectionMeta.optional(),
     arquitectura: SectionMeta.optional(),
   }).optional(),
+  // ── Chrome del viaje (Fase 10, D-10…D-14) ──────────────────────────────────
+  // Marca de cabecera, pie, leyenda del mapa y título de la pestaña salen del trip.yml de cada
+  // viaje. TODOS opcionales (D-10: esquema estrictamente aditivo; un viaje que no los define
+  // sigue validando). Sin ellos la UI cae a un respaldo NEUTRO derivado del propio viaje (D-14):
+  // la pestaña y la marca muestran el `title` sin Markdown; el pie y la leyenda no se pintan.
+  // Nunca un texto de otro viaje como valor por defecto.
+  //  · brand (D-11): los dos textos que rodean el `✦` de `.brand` — texto plano, nunca HTML.
+  brand: z.object({ before: z.string().min(1), after: z.string().min(1) }).optional(),
+  //  · footer (D-12): una línea Markdown-inline por elemento; se unen con `<br>` en un `<p>`.
+  footer: z.array(z.string().min(1)).min(1).optional(),
+  //  · mapLegend: texto plano de `p.map-legend` (verbatim, espacios incluidos).
+  mapLegend: z.string().min(1).optional(),
+  //  · pageTitle (D-13): `<title>` de la pestaña; vacío rechazado (edge SHAPE-04 empty).
+  pageTitle: z.string().min(1).optional(),
 })
 
 // ── Tipos TS derivados (gratis, una sola fuente de verdad) ────────────────────

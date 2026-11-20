@@ -17,14 +17,15 @@ useHead({
 
 // Cabecera de PARIDAD (D-09) — reproduce index.html VERBATIM, INDEPENDIENTE del tema:
 //  · htmlAttrs.lang='es' (index.html:2)
-//  · <title> exacta (index.html:8) — el guion es un EM-DASH «—», no un guion normal
+//  · el <title> NO se fija aquí: lo pone cada viaje desde TripView con su `pageTitle` del
+//    trip.yml (o su título plano como respaldo neutro) — F10, D-13. Un título global aquí
+//    competiría con el del viaje.
 //  · DOS <meta name="theme-color" media="(prefers-color-scheme: …)"> (index.html:6-7) que
 //    fijan el color del chrome del navegador por esquema del SO (paridad móvil). NO los
 //    inyecta @nuxtjs/color-mode (su única inyección en <head> es el script anti-FOUC); van
 //    aquí a mano. Ambos se conservan.
 useHead({
   htmlAttrs: { lang: 'es' },
-  title: 'Roma · 19—23 giugno 2026',
   meta: [
     { name: 'theme-color', content: '#1a1612', media: '(prefers-color-scheme: dark)' },
     { name: 'theme-color', content: '#f5f0e8', media: '(prefers-color-scheme: light)' },
@@ -38,6 +39,7 @@ useHead({
     NavPills/BackButton/footer) NO vive en un layout: lo posee TripView (convención A3 del
     Plan 02/04). Las páginas (index.vue, trips/[slug].vue) son one-liners <TripView :slug>,
     así que NO hay app/layouts/ y NuxtPage monta directamente el árbol de la página.
+    El <title> tampoco vive aquí: lo pone cada viaje desde TripView (F10, D-13).
   -->
   <NuxtPage />
 </template>
