@@ -1,0 +1,24 @@
+slug: faro-del-ensayo
+trip: forma
+roman: I
+name: Faro del Ensayo
+italian: 'Faro del Ensayo · Punta de la Forma'
+day: Sábado 19
+coords:
+  lat: 43.3857
+  lng: -8.4065
+type: card
+motif: tower
+hero:
+  src: https://example.invalid/forma/faro-del-ensayo.jpg
+  alt: Faro del Ensayo
+sections:
+  - heading: Qué es
+    body: >-
+      Un faro inventado sobre una punta de roca, ficticio como todo este viaje.
+      Sirve para que el primer sábado del ensayo tenga una ficha propia y un
+      marcador en el mapa.
+facts:
+  - label: Acceso
+    value: 'Libre · todo el día'
+mapsQuery: Faro del Ensayo
