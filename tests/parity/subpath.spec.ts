@@ -3,6 +3,7 @@ import { cpSync, existsSync, mkdtempSync, mkdirSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, test } from '@playwright/test'
+import { ROMA_HTML, ROMA_URL } from './_harness'
 
 /**
  * Verificación local del subpath de producción `/guiaRoma/` (BUILD-01/02/03, D-06).
@@ -28,7 +29,7 @@ import { expect, test } from '@playwright/test'
 // no colisionen en el mismo puerto (EADDRINUSE) — sin tocar playwright.config.ts.
 const PORT = 5000 + Number(process.env.TEST_WORKER_INDEX ?? 0)
 const BASE = `http://localhost:${PORT}`
-const SUBPATH_URL = `${BASE}/guiaRoma/`
+const SUBPATH_URL = `${BASE}${ROMA_URL}`
 const OUTPUT_DIR = join(process.cwd(), '.output', 'public')
 
 // @nuxtjs/color-mode en SSG inyecta el script anti-FOUC que fija `data-theme` en <html> ANTES
@@ -65,11 +66,11 @@ test.beforeAll(async () => {
   //    Si `.output/public/index.html` ya existe (el flujo normal lo genera antes: ver script
   //    `test:subpath` / verify del plan, que corre `pnpm generate` primero) NO se regenera:
   //    así varios workers paralelos no rebuildan a la vez (race en .output). Standalone sí build.
-  if (!existsSync(join(OUTPUT_DIR, 'index.html'))) {
+  if (!existsSync(ROMA_HTML)) {
     const gen = spawnSync('pnpm', ['generate'], { stdio: 'inherit', shell: false })
     expect(gen.status, 'pnpm generate debe salir 0').toBe(0)
   }
-  expect(existsSync(join(OUTPUT_DIR, 'index.html')), '.output/public/index.html debe existir').toBe(true)
+  expect(existsSync(ROMA_HTML), 'la página de Roma de la build (ROMA_HTML) debe existir').toBe(true)
 
   // 2) Reproducir la topología de Pages: copiar .output/public a <tmp>/guiaRoma/ y servir el PADRE.
   previewRoot = mkdtempSync(join(tmpdir(), 'guiaroma-pages-'))

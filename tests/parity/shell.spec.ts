@@ -3,6 +3,7 @@ import { cpSync, existsSync, mkdtempSync, mkdirSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, test } from '@playwright/test'
+import { ROMA_HTML, romaUrlAt } from './_harness'
 
 /**
  * PARIDAD DE SHELL del «/» CONSTRUIDO (SC#2/ARCH-01) + cabecera de paridad (D-09) +
@@ -71,11 +72,11 @@ function killGroup(proc: ChildProcess | undefined): void {
 
 /** Asegura la build estática una sola vez (workers paralelos NO recompilan a la vez). */
 function ensureBuild(): void {
-  if (!existsSync(join(OUTPUT_DIR, 'index.html'))) {
+  if (!existsSync(ROMA_HTML)) {
     const gen = spawnSync('pnpm', ['generate'], { stdio: 'inherit', shell: false })
     expect(gen.status, 'pnpm generate debe salir 0').toBe(0)
   }
-  expect(existsSync(join(OUTPUT_DIR, 'index.html')), '.output/public/index.html debe existir').toBe(true)
+  expect(existsSync(ROMA_HTML), 'la página de Roma de la build (ROMA_HTML) debe existir').toBe(true)
 }
 
 // ============================================================================
@@ -83,7 +84,7 @@ function ensureBuild(): void {
 // ============================================================================
 test.describe('shell de la build estática (/guiaRoma/)', () => {
   const STATIC_PORT = 5100 + Number(process.env.TEST_WORKER_INDEX ?? 0)
-  const STATIC_URL = `http://localhost:${STATIC_PORT}/guiaRoma/`
+  const STATIC_URL = romaUrlAt(STATIC_PORT)
 
   let server: ChildProcess | undefined
   let previewRoot: string | undefined
@@ -184,7 +185,7 @@ test.describe('shell de la build estática (/guiaRoma/)', () => {
   })
 
   test('la build NO emite el directorio trips/ (disciplina de prerender D-01)', () => {
-    expect(existsSync(join(OUTPUT_DIR, 'index.html')), 'la build debe existir').toBe(true)
+    expect(existsSync(ROMA_HTML), 'la build debe existir').toBe(true)
     expect(existsSync(join(OUTPUT_DIR, 'trips')), '.output/public/trips NO debe existir (solo «/» se prerenderiza)').toBe(false)
   })
 })

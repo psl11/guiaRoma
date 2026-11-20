@@ -3,6 +3,7 @@ import { cpSync, existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync } from
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, test } from '@playwright/test'
+import { ROMA_HTML, ROMA_URL } from './_harness'
 
 /**
  * TEMA SIN FOUC (SC#3) + ICONO CSS-ONLY (SC#4) sobre la build ESTÁTICA.
@@ -59,17 +60,17 @@ function killGroup(proc: ChildProcess | undefined): void {
 }
 
 function ensureBuild(): void {
-  if (!existsSync(join(OUTPUT_DIR, 'index.html'))) {
+  if (!existsSync(ROMA_HTML)) {
     const gen = spawnSync('pnpm', ['generate'], { stdio: 'inherit', shell: false })
     expect(gen.status, 'pnpm generate debe salir 0').toBe(0)
   }
-  expect(existsSync(join(OUTPUT_DIR, 'index.html')), '.output/public/index.html debe existir').toBe(true)
+  expect(existsSync(ROMA_HTML), 'la página de Roma de la build (ROMA_HTML) debe existir').toBe(true)
 }
 
 test.describe('tema sin FOUC + icono CSS-only (build estática)', () => {
   const STATIC_PORT = 5300 + Number(process.env.TEST_WORKER_INDEX ?? 0)
   const STATIC_ORIGIN = `http://localhost:${STATIC_PORT}`
-  const STATIC_URL = `${STATIC_ORIGIN}/guiaRoma/`
+  const STATIC_URL = `${STATIC_ORIGIN}${ROMA_URL}`
 
   let server: ChildProcess | undefined
   let previewRoot: string | undefined
@@ -100,7 +101,7 @@ test.describe('tema sin FOUC + icono CSS-only (build estática)', () => {
   })
 
   test('SC#3 presencia: el <head> generado lleva el script anti-FOUC (roma-theme → data-theme)', () => {
-    const html = readFileSync(join(OUTPUT_DIR, 'index.html'), 'utf8')
+    const html = readFileSync(ROMA_HTML, 'utf8')
     const head = html.slice(0, html.indexOf('</head>'))
 
     // El storageKey templado (lee la preferencia guardada de la versión viva).
