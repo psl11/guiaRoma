@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 11
 current_phase_name: Portada y rutas multi-viaje
 status: executing
-stopped_at: Completed 11-03-PLAN.md
-last_updated: "2026-11-20T19:32:09.648Z"
+stopped_at: Completed 11-04-PLAN.md
+last_updated: "2026-11-20T19:44:44.779Z"
 last_activity: 2026-11-20
 last_activity_desc: Phase 11 execution started
-state_head: 895888bd443748cb62a52a3b6d63e1038112a0c5
+state_head: 784f7d46ba2c5581caeb2ce009ee10a527e03882
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 17
-  completed_plans: 13
+  completed_plans: 14
   percent: 0
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 11 (Portada y rutas multi-viaje) — EXECUTING
-Plan: 4 of 7
+Plan: 5 of 7
 Status: Ready to execute
 Last activity: 2026-11-20 — Phase 11 execution started
 
@@ -116,6 +116,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 11 P01 | 4min | 3 tasks | 12 files |
 | Phase 11 P02 | 10 min | 2 tasks | 13 files |
 | Phase 11 P03 | 6 min | 2 tasks | 8 files |
+| Phase 11 P04 | 10min | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -273,6 +274,9 @@ Recent decisions affecting current work:
 - [Phase 11]: 11-03: build-isolation/romaChrome skip only without any build (.output/public/index.html) and then assert trips/roma/index.html exists, so a build without Roma fails
 - [Phase 11]: 11-03: p.trip-back is a direct child of <footer> after .container (footer .container p stays strict-unique); full-document <a> to the runtime baseURL, zero new CSS
 - [Phase 11]: 11-03: trips/[slug].vue page key is trip:<slug>, never the full route (the hash would remount TripView)
+- [Phase 11]: 11-04: Trip dates are IsoDate = z.string() + regex + calendar refine, never z.iso.date() (Content keeps a text column; tested with z.toJSONSchema)
+- [Phase 11]: 11-04: endDate >= startDate and no-links-in-summary are data-gate rules (trip-dates, trip-summary-link), not object refines; gate now has 18 rules
+- [Phase 11]: 11-04: listedTrips returns null while rows are null/undefined and [] only when loaded and nothing is published, so 11-05 never shows the empty state during hydration
 
 ### Pending Todos
 
@@ -309,8 +313,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-20T19:32:09.546Z
-Stopped at: Completed 11-03-PLAN.md
+Last session: 2026-11-20T19:44:44.676Z
+Stopped at: Completed 11-04-PLAN.md
 Resume file: None
 
 ## Operator Next Steps

@@ -107,7 +107,7 @@ Plans:
   3. Un enlace antiguo (`/guiaRoma/#viernes`, `/guiaRoma/#pantheon`, `/guiaRoma/index.html#gastronomia`) lleva a la misma ancla dentro de `/trips/roma/` y pulsar «Atrás» no entra en bucle; `/guiaRoma/` sin hash se queda en la portada
   4. Desde cualquier guía el usuario puede volver a la portada con el enlace discreto que decida el usuario para ROUTE-06 (recomendado: «← Todos los viajes» en el pie, con re-captura documentada solo de esa captura de Roma); si el usuario decide no añadirlo, ROUTE-06 se mueve a Future y no se toca ningún golden
   5. En `/trips/roma/` los 56 goldens pasan sin `--update-snapshots` (salvo la excepción aprobada de ROUTE-06) y toda la suite de comportamiento de Roma sigue verde; un test asevera que `/` sirve la portada y la URL de Roma sirve Roma (evita specs «verdes» contra la portada)
-**Plans**: 3/7 plans executed
+**Plans**: 4/7 plans executed
 Plans:
 **Wave 1**
 - [x] 11-01-PLAN.md — Harness de paridad (D-18 paso 1): `tests/parity/_harness.ts` con `ROMA_URL` sin cambiar su valor y los 11 specs de Roma usándolo, puerta verde (PAR-01, PAR-02)
@@ -115,7 +115,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 - [x] 11-03-PLAN.md — Roma en `/guiaRoma/trips/roma/` (commit del movimiento: rutas del manifiesto + flip de `ROMA_URL` + inversiones de shell/build-isolation/romaChrome) + «← Todos los viajes» en el pie + clave de página por slug (ROUTE-02, ROUTE-04, ROUTE-06, PAR-01, PAR-02)
-- [ ] 11-04-PLAN.md — Datos de la tarjeta: `startDate`/`endDate`/`destinations`/`summary` en el esquema y en Roma, `app/utils/tripDates.ts`, reglas `trip-dates`/`trip-summary-link` (ROUTE-01)
+- [x] 11-04-PLAN.md — Datos de la tarjeta: `startDate`/`endDate`/`destinations`/`summary` en el esquema y en Roma, `app/utils/tripDates.ts`, reglas `trip-dates`/`trip-summary-link` (ROUTE-01)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 - [ ] 11-05-PLAN.md — Portada en `/` (`TripIndex`), `multitrip.css` bajo `.trip-index` con guardián, test portada-vs-Roma en shell.spec, `tests/trips` en la nueva URL y portada en dev sin borradores (ROUTE-01, ROUTE-05, PAR-01, PAR-02)
@@ -207,7 +207,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 8. Verificación de paridad | v1.0 | 7/7 | Complete | 2026-06-24 |
 | 9. Plataforma por viaje | v1.1 | 5/5 | In Progress | - |
 | 10. Forma y chrome desde datos | v1.1 | 5/5 | In Progress | - |
-| 11. Portada y rutas multi-viaje | v1.1 | 3/7 | In Progress | - |
+| 11. Portada y rutas multi-viaje | v1.1 | 4/7 | In Progress | - |
 | 12. Formas nuevas de viaje | v1.1 | 0/TBD | Not started | - |
 | 13. Contenido Campania 2027 | v1.1 | 0/TBD | Not started | - |
 | 14. Verificación del milestone | v1.1 | 0/TBD | Not started | - |
