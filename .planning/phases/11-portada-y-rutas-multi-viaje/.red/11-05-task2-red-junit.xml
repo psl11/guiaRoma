@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="13" failures="2" errors="0" time="0.00735383">
+    <testsuite name="tests/unit/multitripCss.spec.ts" timestamp="2026-11-20T19:51:57.849Z" hostname="NewVaktorPC" tests="13" failures="2" errors="0" skipped="0" time="0.00735383">
+        <testcase classname="tests/unit/multitripCss.spec.ts" name="cssSelectors / unscopedSelectors (dientes, D-21) &gt; los comentarios no cuentan como selectores" time="0.00108546">
+        </testcase>
+        <testcase classname="tests/unit/multitripCss.spec.ts" name="cssSelectors / unscopedSelectors (dientes, D-21) &gt; acepta la raíz y los selectores que empiezan por «.trip-index »" time="0.000250246">
+        </testcase>
+        <testcase classname="tests/unit/multitripCss.spec.ts" name="cssSelectors / unscopedSelectors (dientes, D-21) &gt; señala «a»" time="0.000120666">
+        </testcase>
+        <testcase classname="tests/unit/multitripCss.spec.ts" name="cssSelectors / unscopedSelectors (dientes, D-21) &gt; señala «.trip-index-card»" time="0.000102506">
+        </testcase>
+        <testcase classname="tests/unit/multitripCss.spec.ts" name="cssSelectors / unscopedSelectors (dientes, D-21) &gt; señala «[data-theme=&quot;dark&quot;] .trip-index»" time="0.000109588">
+        </testcase>
+        <testcase classname="tests/unit/multitripCss.spec.ts" name="cssSelectors / unscopedSelectors (dientes, D-21) &gt; señala «.trip-index .trip-back»" time="0.000083751">
+        </testcase>
+        <testcase classname="tests/unit/multitripCss.spec.ts" name="cssSelectors / unscopedSelectors (dientes, D-21) &gt; señala «:root»" time="0.00008396">
+        </testcase>
+        <testcase classname="tests/unit/multitripCss.spec.ts" name="cssSelectors / unscopedSelectors (dientes, D-21) &gt; señala «html»" time="0.000079281">
+        </testcase>
+        <testcase classname="tests/unit/multitripCss.spec.ts" name="cssSelectors / unscopedSelectors (dientes, D-21) &gt; señala «body»" time="0.000082415">
+        </testcase>
+        <testcase classname="tests/unit/multitripCss.spec.ts" name="cssSelectors / unscopedSelectors (dientes, D-21) &gt; dentro de @media cuenta el selector, no la at-rule" time="0.000116536">
+        </testcase>
+        <testcase classname="tests/unit/multitripCss.spec.ts" name="cssSelectors / unscopedSelectors (dientes, D-21) &gt; en una lista de selectores señala solo el que se sale" time="0.000099167">
+        </testcase>
+        <testcase classname="tests/unit/multitripCss.spec.ts" name="multitrip.css real (D-21) &gt; existe, tiene las reglas de la portada y todas van bajo .trip-index" time="0.002843245">
+            <failure message="app/assets/css/multitrip.css debe existir: expected false to be true // Object.is equality" type="AssertionError">
+AssertionError: app/assets/css/multitrip.css debe existir: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/unit/multitripCss.spec.ts:106:80
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/multitripCss.spec.ts" name="multitrip.css real (D-21) &gt; nuxt.config.ts carga multitrip.css el último, detrás de los cuatro CSS congelados" time="0.001418775">
+            <failure message="expected [ &apos;fonts.css&apos;, &apos;tokens.css&apos;, …(2) ] to deeply equal [ &apos;fonts.css&apos;, &apos;tokens.css&apos;, …(3) ]" type="AssertionError">
+AssertionError: expected [ &apos;fonts.css&apos;, &apos;tokens.css&apos;, …(2) ] to deeply equal [ &apos;fonts.css&apos;, &apos;tokens.css&apos;, …(3) ]
+
+- Expected
++ Received
+
+  [
+    &quot;fonts.css&quot;,
+    &quot;tokens.css&quot;,
+    &quot;base.css&quot;,
+    &quot;leaflet.css&quot;,
+-   &quot;multitrip.css&quot;,
+  ]
+
+ ❯ tests/unit/multitripCss.spec.ts:115:21
+            </failure>
+        </testcase>
+    </testsuite>
+</testsuites>
