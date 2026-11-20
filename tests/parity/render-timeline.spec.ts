@@ -3,6 +3,7 @@ import { cpSync, existsSync, mkdtempSync, mkdirSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, test } from '@playwright/test'
+import { ROMA_HTML, romaUrlAt } from './_harness'
 
 /**
  * RENDER DEL TIMELINE (.timeline) sobre el «/» CONSTRUIDO (SC#2/UI-03).
@@ -55,16 +56,16 @@ function killGroup(proc: ChildProcess | undefined): void {
 }
 
 function ensureBuild(): void {
-  if (!existsSync(join(OUTPUT_DIR, 'index.html'))) {
+  if (!existsSync(ROMA_HTML)) {
     const gen = spawnSync('pnpm', ['generate'], { stdio: 'inherit', shell: false })
     expect(gen.status, 'pnpm generate debe salir 0').toBe(0)
   }
-  expect(existsSync(join(OUTPUT_DIR, 'index.html')), '.output/public/index.html debe existir').toBe(true)
+  expect(existsSync(ROMA_HTML), 'la página de Roma de la build (ROMA_HTML) debe existir').toBe(true)
 }
 
 test.describe('render del timeline (5 kinds + orden) en /guiaRoma/ construido (SC#2/UI-03)', () => {
   const STATIC_PORT = 5500 + Number(process.env.TEST_WORKER_INDEX ?? 0)
-  const STATIC_URL = `http://localhost:${STATIC_PORT}/guiaRoma/`
+  const STATIC_URL = romaUrlAt(STATIC_PORT)
 
   let server: ChildProcess | undefined
   let previewRoot: string | undefined
