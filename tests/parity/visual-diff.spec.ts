@@ -3,6 +3,7 @@ import { cpSync, existsSync, mkdtempSync, mkdirSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, test, type Page } from '@playwright/test'
+import { ROMA_HTML, ROMA_URL } from './_harness'
 
 /**
  * VISUAL-DIFF Nuxt ↔ golden congelado sobre el «/guiaRoma/» CONSTRUIDO — el spec
@@ -101,11 +102,11 @@ function killGroup(proc: ChildProcess | undefined): void {
 }
 
 function ensureBuild(): void {
-  if (!existsSync(join(OUTPUT_DIR, 'index.html'))) {
+  if (!existsSync(ROMA_HTML)) {
     const gen = spawnSync('pnpm', ['generate'], { stdio: 'inherit', shell: false })
     expect(gen.status, 'pnpm generate debe salir 0').toBe(0)
   }
-  expect(existsSync(join(OUTPUT_DIR, 'index.html')), '.output/public/index.html debe existir').toBe(true)
+  expect(existsSync(ROMA_HTML), 'la página de Roma de la build (ROMA_HTML) debe existir').toBe(true)
 }
 
 type PWPage = import('@playwright/test').Page
@@ -206,7 +207,7 @@ function trackConsoleErrors(page: PWPage, tolerateAborts = false): string[] {
 test.describe('visual-diff nuxt↔golden en /guiaRoma/ construido (SC#1)', () => {
   const STATIC_PORT = 5780 + Number(process.env.TEST_WORKER_INDEX ?? 0)
   const STATIC_ORIGIN = `http://localhost:${STATIC_PORT}`
-  const STATIC_URL = `${STATIC_ORIGIN}/guiaRoma/`
+  const STATIC_URL = `${STATIC_ORIGIN}${ROMA_URL}`
 
   let server: ChildProcess | undefined
   let previewRoot: string | undefined

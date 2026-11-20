@@ -3,6 +3,7 @@ import { cpSync, existsSync, mkdtempSync, mkdirSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, test } from '@playwright/test'
+import { ROMA_HTML, ROMA_URL } from './_harness'
 
 /**
  * BÚSQUEDA EN CLIENTE (FEAT-03) + RUTA DEL DÍA (FEAT-09) sobre el «/» CONSTRUIDO — el
@@ -62,11 +63,11 @@ function killGroup(proc: ChildProcess | undefined): void {
 }
 
 function ensureBuild(): void {
-  if (!existsSync(join(OUTPUT_DIR, 'index.html'))) {
+  if (!existsSync(ROMA_HTML)) {
     const gen = spawnSync('pnpm', ['generate'], { stdio: 'inherit', shell: false })
     expect(gen.status, 'pnpm generate debe salir 0').toBe(0)
   }
-  expect(existsSync(join(OUTPUT_DIR, 'index.html')), '.output/public/index.html debe existir').toBe(true)
+  expect(existsSync(ROMA_HTML), 'la página de Roma de la build (ROMA_HTML) debe existir').toBe(true)
 }
 
 type PWPage = import('@playwright/test').Page
@@ -90,7 +91,7 @@ test.describe('búsqueda + ruta del día en /guiaRoma/ construido (FEAT-03 / FEA
   // Base 5740: modes.spec=5700, navigation.spec=5720 → 5740 para no colisionar.
   const STATIC_PORT = 5740 + Number(process.env.TEST_WORKER_INDEX ?? 0)
   const STATIC_ORIGIN = `http://localhost:${STATIC_PORT}`
-  const STATIC_URL = `${STATIC_ORIGIN}/guiaRoma/`
+  const STATIC_URL = `${STATIC_ORIGIN}${ROMA_URL}`
 
   let server: ChildProcess | undefined
   let previewRoot: string | undefined

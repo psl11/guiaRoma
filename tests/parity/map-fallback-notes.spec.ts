@@ -3,6 +3,7 @@ import { cpSync, existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync } from
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, test } from '@playwright/test'
+import { ROMA_HTML, ROMA_URL } from './_harness'
 
 /**
  * MAPA + FALLBACK DE IMAGEN + NOTAS sobre el «/» CONSTRUIDO — la verificación Nyquist Wave-0 de
@@ -83,11 +84,11 @@ function killGroup(proc: ChildProcess | undefined): void {
 }
 
 function ensureBuild(): void {
-  if (!existsSync(join(OUTPUT_DIR, 'index.html'))) {
+  if (!existsSync(ROMA_HTML)) {
     const gen = spawnSync('pnpm', ['generate'], { stdio: 'inherit', shell: false })
     expect(gen.status, 'pnpm generate debe salir 0').toBe(0)
   }
-  expect(existsSync(join(OUTPUT_DIR, 'index.html')), '.output/public/index.html debe existir').toBe(true)
+  expect(existsSync(ROMA_HTML), 'la página de Roma de la build (ROMA_HTML) debe existir').toBe(true)
 }
 
 type PWPage = import('@playwright/test').Page
@@ -127,7 +128,7 @@ function trackConsoleErrors(page: PWPage, tolerateAborts = false): string[] {
 test.describe('mapa + fallback de imagen + notas en /guiaRoma/ construido (SC#1–SC#7)', () => {
   const STATIC_PORT = 5760 + Number(process.env.TEST_WORKER_INDEX ?? 0)
   const STATIC_ORIGIN = `http://localhost:${STATIC_PORT}`
-  const STATIC_URL = `${STATIC_ORIGIN}/guiaRoma/`
+  const STATIC_URL = `${STATIC_ORIGIN}${ROMA_URL}`
 
   let server: ChildProcess | undefined
   let previewRoot: string | undefined
@@ -181,7 +182,7 @@ test.describe('mapa + fallback de imagen + notas en /guiaRoma/ construido (SC#1�
     // `ensureBuild` (beforeAll) ya probó que `pnpm generate` salió 0 y existe index.html. El HTML
     // PRERENDERIZADO trae `<div id="leaflet-map">` VACÍO (la caja fallback de D-02) y CERO
     // `.leaflet-container`/`custom-marker` (la isla es genuinamente client-only).
-    const html = readFileSync(join(OUTPUT_DIR, 'index.html'), 'utf8')
+    const html = readFileSync(ROMA_HTML, 'utf8')
     expect(html, 'el SSG debe contener la caja #leaflet-map (fallback D-02)').toContain('<div id="leaflet-map"')
     expect(html, 'el SSG NO debe traer la .leaflet-container (la crea Leaflet en cliente)').not.toContain('leaflet-container')
     expect(html, 'el SSG NO debe traer marcadores (se montan en cliente)').not.toContain('custom-marker')
