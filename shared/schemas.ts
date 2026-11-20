@@ -389,6 +389,12 @@ export const TripSchema = z.object({
   mapLegend: z.string().min(1).optional(),
   //  · pageTitle (D-13): `<title>` de la pestaña; vacío rechazado (edge SHAPE-04 empty).
   pageTitle: z.string().min(1).optional(),
+  // ── Borrador (Fase 11, D-16) ───────────────────────────────────────────────
+  // `draft: true` saca el viaje de la build de producción: content.config.ts lo excluye de
+  // las 6 colecciones (ni ruta ni filas en los `sql_dump` públicos). En `nuxi dev` se sigue
+  // cargando y es accesible por URL, pero nunca se lista en la portada. Booleano estricto: un
+  // `draft: "yes"` se rechaza (y scripts/tripManifest.mjs lanza), nunca se publica por defecto.
+  draft: z.boolean().optional(),
 })
 
 // ── Tipos TS derivados (gratis, una sola fuente de verdad) ────────────────────

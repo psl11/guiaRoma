@@ -14,7 +14,7 @@
 # Fase 11 (ROUTE-05): descomentar la línea siguiente cuando exista el campo `draft` en el
 # esquema del viaje. Ese filtro deberá excluir también las filas de prueba del sql_dump
 # público de la build, no solo las rutas de prerender.
-# draft: true
+draft: true
 slug: prueba
 title: Dos días de _Prueba_
 decoration: '·  ITER PROBATIONIS  ·'
