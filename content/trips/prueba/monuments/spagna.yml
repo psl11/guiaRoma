@@ -1,0 +1,42 @@
+slug: spagna
+trip: prueba
+roman: III
+name: Escalinata de Ensayo
+italian: Scalinata del Collaudo
+day: Sábado
+coords:
+  lat: 40.4180
+  lng: -3.7012
+type: card
+motif: stairs
+hero:
+  src: https://example.invalid/prueba/escalinata-ensayo.jpg
+  alt: Escalinata de Ensayo
+sections:
+  - heading: Qué es
+    body: >-
+      Una escalinata de granito con cuarenta escalones y tres rellanos, ficticia
+      como todo este viaje. Comparte identificador con una ficha de otra guía a
+      propósito: sirve para comprobar que las notas y el buscador de cada viaje
+      no se cruzan aunque dos fichas se llamen igual por dentro.
+  - heading: Historia
+    body: >-
+      La levantaron los vecinos del barrio para salvar el desnivel entre la plaza
+      baja y el mirador. Cada rellano tiene un banco de piedra y una farola de
+      hierro forjado.
+
+
+      En las fiestas del barrio se cubre de macetas con geranios y por la noche
+      se ilumina con farolillos de papel. Es el punto de encuentro habitual del
+      fin de semana de ensayo.
+  - heading: En qué fijarse
+    body: >-
+      Los escalones del tramo central son más bajos que los demás para que se
+      suban sin esfuerzo, y en el último rellano hay una baldosa con una brújula
+      grabada que señala el norte.
+facts:
+  - label: Acceso
+    value: Libre · 24 h
+  - label: Escalones
+    value: 40 · tres rellanos
+mapsQuery: Escalinata de Ensayo

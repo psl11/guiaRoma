@@ -1,0 +1,30 @@
+slug: viernes
+trip: prueba
+order: 1
+roman: I
+eyebrow: venerdì · prova uno
+title: El surtidor y la torre
+subtitle: Mañana corta entre dos fichas ficticias, sin prisa y sin cuestas.
+stats:
+  - variant: walk
+    text: '**~2 km** a pie'
+timeline:
+  - kind: stop
+    pace: all
+    time: '10:00'
+    title: Surtidor de las Pruebas
+    ref: fontana-pruebas
+    note: El primer punto de control del recorrido de ensayo.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **40 min** · tiempo de sobra para leer la ficha'
+      - level: plain
+        text: '🚶 hasta siguiente: **9 min** · 650 m hasta la torre'
+  - kind: stop
+    pace: all
+    time: '11:00'
+    title: Torre del Ensayo
+    ref: torre-ensayo
+    note: Subida opcional al mirador del último piso.
+cards: [fontana-pruebas, torre-ensayo]

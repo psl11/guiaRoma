@@ -1,0 +1,44 @@
+slug: fontana-pruebas
+trip: prueba
+roman: I
+name: Fontana de las Pruebas
+italian: Fontana delle Prove · Quartiere del Collaudo
+day: Viernes
+coords:
+  lat: 40.4172
+  lng: -3.7046
+type: card
+motif: fountain
+hero:
+  src: https://example.invalid/prueba/fontana-pruebas.jpg
+  alt: Fontana de las Pruebas
+sections:
+  - heading: Qué es
+    body: >-
+      Una fuente inventada para comprobar que cada guía busca solo en sus propias
+      fichas. Tiene tres caños de bronce, un pilón octogonal de granito gris y un
+      banco corrido donde sentarse a la sombra. Marca de control
+      PRUEBA-CENTINELA-9F3: si aparece en la guía de otro viaje, algo se ha
+      mezclado.
+  - heading: Historia
+    body: >-
+      Se levantó, según la leyenda de este fin de semana ficticio, para dar agua a
+      los ensayadores que recorrían el barrio midiendo distancias y tiempos. Cada
+      caño lleva grabado un número: el primero marca la salida, el segundo la
+      mitad del recorrido y el tercero la llegada.
+
+
+      Con los años el pilón se llenó de monedas, de pequeñas notas dobladas y de
+      piedras de colores. Nadie sabe quién empezó la costumbre, pero los vecinos
+      dicen que quien deja algo aquí vuelve siempre a comprobarlo.
+  - heading: En qué fijarse
+    body: >-
+      En el borde del pilón hay una inscripción casi borrada que solo se lee con
+      la luz de la mañana. Mira también los mascarones de los caños: cada uno
+      tiene una expresión distinta, de la sorpresa a la calma.
+facts:
+  - label: Acceso
+    value: Libre · todo el día
+  - label: Agua
+    value: Potable en el caño central
+mapsQuery: Fontana de las Pruebas

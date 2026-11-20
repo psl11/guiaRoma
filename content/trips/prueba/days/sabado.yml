@@ -1,0 +1,18 @@
+slug: sabado
+trip: prueba
+order: 2
+roman: II
+eyebrow: sabato · prova due
+title: La escalinata
+subtitle: Una sola parada para cerrar el fin de semana de ensayo.
+stats:
+  - variant: walk
+    text: '**~1 km** a pie'
+timeline:
+  - kind: stop
+    pace: all
+    time: '11:30'
+    title: Escalinata de Ensayo
+    ref: spagna
+    note: Mismo identificador que una ficha de otro viaje, con otro nombre.
+cards: [spagna]
