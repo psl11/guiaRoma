@@ -46,6 +46,29 @@ playwright test -c playwright.gate.config.ts --grep-invert "reutiliza el MISMO T
 Usa la **config con alcance de puerta** (`playwright.gate.config.ts`, no la base)
 y aplica el grep-invert que es el «cinturón» de la exclusión #2 (ver §2).
 
+### Dónde vive la URL de Roma (Fase 11, D-18)
+
+Desde la Fase 11 la raíz del sitio (`/guiaRoma/`) es la **portada** y la guía de Roma vive en
+**`/guiaRoma/trips/roma/`**. La URL de Roma está en un **único punto**:
+`tests/parity/_harness.ts` → `ROMA_URL = '/guiaRoma/trips/roma/'` (junto a `SITE_BASE`,
+`OUTPUT_DIR`, `ROMA_HTML` = el `index.html` prerenderizado de Roma, y `romaUrlAt(port)`). Los
+specs de Roma de `tests/parity/` nunca escriben la base ni la ruta a mano: el movimiento de URL
+de la Fase 11 fue un diff de una sola línea en el harness (más el import del harness y la línea
+de la URL/HTML de cada spec). `_harness.ts` no casa con `*.spec.ts`: Playwright no lo ejecuta.
+
+### Servidor tipo GitHub Pages para los specs de la Fase 11
+
+Los specs de Roma sirven la build copiándola a `<tmp>/guiaRoma/` con `pnpm dlx serve`. Los dos
+specs nuevos de la Fase 11 — **`legacy-redirect.spec.ts`** (redirección de enlaces antiguos
+`/#ancla` → `/trips/roma/#ancla`) y **`portada.spec.ts`** (portada, publicación, vuelta a la
+portada, borradores) — usan en su lugar **`tests/parity/_pagesServer.ts`**
+(`startPagesServer(outDir, port, base?)`): un servidor HTTP en proceso, en `127.0.0.1`, que
+imita a Pages sobre `.output/public` bajo `/guiaRoma/`: `301` de `/guiaRoma` y de los
+directorios sin barra final a la forma con barra (conservando la query), `index.html` de cada
+directorio y **`404.html` real** para lo inexistente. `serve` no vale ahí porque su `cleanUrls`
+reescribe y oculta justo esa conducta. Puertos base: 5850 (`legacy-redirect`) y 5800
+(`portada`), más `TEST_WORKER_INDEX`. Las dos exclusiones de §2 no cambian.
+
 ---
 
 ## 2. Las DOS exclusiones de la puerta (con razón — D-04)
@@ -71,12 +94,12 @@ caída silenciosa de cobertura debe ser detectable (Pitfall 4, ver §4).
 ### Exclusión #2 — el test de dev-routing (`shell.spec.ts`), por env-flag + grep-invert
 
 - **Test:** `routing dinámico /trips/[slug]` → `/trips/roma reutiliza el MISMO
-  TripView y un slug desconocido 404 (ARCH-02)` (`shell.spec.ts:242`, en ambos
+  TripView y un slug desconocido 404 (ARCH-02)` (`shell.spec.ts:268`, en ambos
   proyectos mobile+desktop).
 - **Mecanismo (cinturón y tirantes):**
   1. **Tirantes (el que GARANTIZA):** `test.skip(!process.env.RUN_DEV_ROUTING, …)`
-     a **nivel de describe** (`shell.spec.ts:204`) + early-return defensivo en el
-     `beforeAll` (`shell.spec.ts:220`). Playwright evalúa la skip de describe en
+     a **nivel de describe** (`shell.spec.ts:230`) + early-return defensivo en el
+     `beforeAll` (`shell.spec.ts:246`). Playwright evalúa la skip de describe en
      tiempo de colección, **antes** del `beforeAll` → con el flag sin definir, el
      `spawn` de `pnpm dev` **nunca** ocurre. (Plan 04.)
   2. **Cinturón:** `--grep-invert "reutiliza el MISMO TripView"` en `test:parity`
@@ -132,42 +155,50 @@ fresco es la **señal de alarma**.
 
 | Magnitud | Valor | Cómo se obtiene |
 |----------|-------|-----------------|
-| Tests que la puerta **ejecuta** (`test:parity`, con el cinturón grep-invert) | **80** en **11 ficheros** | `pnpm exec playwright test -c playwright.gate.config.ts --grep-invert "reutiliza el MISMO TripView" --list` → línea `Total:` |
-| Config de puerta **en crudo** (solo `testIgnore` golden, antes del grep-invert) | **82** en **11 ficheros** | `pnpm exec playwright test -c playwright.gate.config.ts --list` → línea `Total:` |
+| Tests que la puerta **ejecuta** (`test:parity`, con el cinturón grep-invert) | **110** en **13 ficheros** | `pnpm exec playwright test -c playwright.gate.config.ts --grep-invert "reutiliza el MISMO TripView" --list` → línea `Total:` |
+| Config de puerta **en crudo** (solo `testIgnore` golden, antes del grep-invert) | **112** en **13 ficheros** | `pnpm exec playwright test -c playwright.gate.config.ts --list` → línea `Total:` |
 
-La diferencia **82 → 80** son exactamente los **2** del test de dev-routing
+La diferencia **112 → 110** son exactamente los **2** del test de dev-routing
 (mobile + desktop) que retira el grep-invert. (Con `RUN_DEV_ROUTING` sin definir,
 la skip de describe de Plan 04 deja esos 2 como `skipped` en una corrida real;
-en `--list` el grep-invert los retira de la cuenta, dejando 80 seleccionados.)
+en `--list` el grep-invert los retira de la cuenta, dejando 110 seleccionados.)
+
+Historia del conteo: **80 / 11** hasta la Fase 10; la Fase 11 suma **30** — 2 del test
+«la portada vive en / y ROMA_URL sirve Roma» de `shell.spec.ts` (11-05), 14 de
+`legacy-redirect.spec.ts` (7 × mobile + desktop, 11-06) y 14 de `portada.spec.ts`
+(7 × mobile + desktop, 11-07) — y dos ficheros nuevos.
 `golden.spec.ts` aporta **0** a ambos conteos (excluido a nivel de fichero).
 
-Desglose por fichero de los **80** seleccionados (suma = 80):
+Desglose por fichero de los **110** seleccionados (suma = 110):
 
 | Fichero | Tests |
 |---------|------:|
+| `portada.spec.ts` | 14 |
 | `modes.spec.ts` | 14 |
+| `legacy-redirect.spec.ts` | 14 |
 | `map-fallback-notes.spec.ts` | 12 |
 | `search-route.spec.ts` | 10 |
+| `shell.spec.ts` | 8 |
 | `render-reference.spec.ts` | 8 |
 | `theme.spec.ts` | 6 |
-| `shell.spec.ts` | 6 |
 | `render-timeline.spec.ts` | 6 |
 | `render-cards.spec.ts` | 6 |
 | `navigation.spec.ts` | 6 |
 | `visual-diff.spec.ts` | 4 |
 | `subpath.spec.ts` | 2 |
 
-**Recalcular y comparar** (si el `Total:` ya no es 80 / 11 ficheros, una
+**Recalcular y comparar** (si el `Total:` ya no es 110 / 13 ficheros, una
 exclusión cambió — investigar ANTES de tocar este README):
 
 ```bash
 pnpm exec playwright test -c playwright.gate.config.ts \
   --grep-invert "reutiliza el MISMO TripView" --list | tail -1
-# Esperado: «Total: 80 tests in 11 files»
+# Esperado: «Total: 110 tests in 13 files»
 ```
 
-> Conteos medidos empíricamente el 2026-06-23 contra `playwright.gate.config.ts`
-> + `package.json` de esta rama (no estimados). Re-medir si se añade/retira un
+> Conteos medidos empíricamente el 2026-11-20 (cierre de la Fase 11, plan 11-07) contra
+> `playwright.gate.config.ts` + `package.json` de esta rama con `--list` (no estimados;
+> la medida anterior, 80 / 11 y 82 / 11, es del 2026-06-23). Re-medir si se añade/retira un
 > spec de paridad o cambia cualquiera de las dos exclusiones.
 
 ---
@@ -185,9 +216,10 @@ de `pnpm verify` y una fuera.
 pnpm test:trips   # = playwright test -c playwright.trips.config.ts
 ```
 
-- **Qué cubre:** **17 tests en 2 ficheros** (`tests/trips/isolation.spec.ts`, 5, y
-  `tests/trips/shape.spec.ts`, 12). Los de `isolation.spec.ts`, en `/trips/prueba` frente
-  a Roma:
+- **Qué cubre:** **19 tests en 3 ficheros** (`tests/trips/isolation.spec.ts`, 5,
+  `tests/trips/shape.spec.ts`, 12, y `tests/trips/portada.spec.ts`, 2). En dev, la portada
+  está en `/guiaRoma/` y Roma en **`/guiaRoma/trips/roma/`** (Fase 11), como en la build. Los
+  de `isolation.spec.ts`, en `/trips/prueba` frente a Roma:
   - *navegación en /trips/prueba (PLAT-02)* (2): un enlace a ficha (timeline y prosa)
     resalta la ficha dentro de prueba y «Volver» restaura el scroll; la pastilla activa
     sigue al scroll entre los días de prueba.
@@ -209,12 +241,16 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
   - `chrome:` (2): forma muestra su marca, su leyenda y su pie; prueba, sin campos de
     chrome, usa el respaldo neutro.
   - `título:` (1): la pestaña de cada viaje es EXACTAMENTE su `pageTitle` o su título plano.
+- Los de `portada.spec.ts` (Fase 11, §5.7): `portada (dev):` (2): la portada en dev lista
+  solo los viajes publicados aunque prueba y forma se cargan (ningún enlace a ellos), y el
+  control positivo: los borradores siguen abriéndose por URL en dev con su título plano.
 - **Config:** `playwright.trips.config.ts` (autocontenida, no importa las de paridad):
   `nuxi dev` en el **puerto 5300** con `NUXT_APP_BASE_URL=/guiaRoma/`, que Playwright
   arranca y para (`reuseExistingServer: false`); **un worker**, `retries: 0`, un solo
   proyecto **desktop** (1280×800, chromium); las peticiones externas se abortan.
 - **Por qué está FUERA de `verify`:** necesita un **dev server**, porque `/trips/prueba`
-  **no se prerenderiza** hasta la Fase 11 (la build estática solo emite «/»), y el dev
+  y `/trips/forma` son **borradores** (`draft: true`, Fase 11): **no se prerenderizan** ni
+  entran en la build, solo existen en dev; y el dev
   server es frágil (primera compilación lenta, lock rancio de `nuxi dev`, recargas de
   Vite). Meterlo en la puerta la volvería no determinista, como la exclusión #2 de §2.
 - **Cómo ejecutarlo:**
@@ -234,10 +270,13 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
   y 3 monumentos (`fontana-pruebas`, `spagna`, `torre-ensayo`). Algunos nombres e ids
   coinciden a propósito con Roma (`spagna`, «Fontana») para que una fuga entre viajes
   sea visible.
-- **Solo dev:** se ve en `pnpm dev` → `/trips/prueba`. No se enlaza desde ningún sitio
-  ni se prerenderiza (`nitro.prerender.routes` sigue siendo `['/']`). Se marcará
-  **`draft: true` en la Fase 11** (ROUTE-05); ese filtro tendrá que excluir también sus
-  filas del `sql_dump` público de Content, no solo las rutas de prerender.
+- **Solo dev — `draft: true` (Fase 11, ROUTE-05):** su `trip.yml` declara `draft: true`
+  (el único cambio del viaje en la Fase 11). `scripts/tripManifest.mjs` lo lee en tiempo de
+  config y, **fuera de `nuxi dev`**, `content.config.ts` excluye sus ficheros de las 6
+  colecciones de Nuxt Content: no entra en la build de producción, ni en sus rutas de
+  prerender, ni en ninguna fila de los `sql_dump` públicos. En `pnpm dev` **sí se carga**
+  (`/guiaRoma/trips/prueba/`), para poder escribirlo y revisarlo, pero la portada no lo lista
+  (tampoco en dev). En la build, `/guiaRoma/trips/prueba/` responde **404**.
 - **Centinela `PRUEBA-CENTINELA-9F3`:** vive solo en prueba (howTo de `trip.yml` y la
   ficha `fontana-pruebas`). Si aparece en la página de Roma, algo del viaje de prueba se
   ha colado en la build (lo comprueba §5.5).
@@ -272,33 +311,42 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
 - Fija además el cableado por viaje (TripView publica el slug antes de su primer `await`;
   los controllers de búsqueda y modos leen el slug inyectado antes de esperar nada) y
   tiene su propio bloque «dientes del guardián».
-- **Excepciones documentadas** (no se escanean): `app/pages/index.vue`
-  (`<TripView slug="roma" />` es el hogar de «/» hasta la Fase 11) y `nuxt.config.ts`
+- **Excepciones documentadas** (no se escanean): `app/pages/index.vue` (la portada «/»
+  desde la Fase 11; solo fija la constante de migración de la redirección de anclas antiguas
+  de Roma) y `nuxt.config.ts`
   (`storageKey: 'roma-theme'` de color-mode: el tema es global, D-07).
 
 ### 5.5 Centinela de build (`tests/data/build-isolation.spec.ts`, dentro de `verify`)
 
 Corre en `test:data` sobre la build que `pnpm generate` acaba de producir:
 
-- `index.html` contiene «Galleria Sciarra» (es Roma; el spec no pasa en vacío);
-- `PRUEBA-CENTINELA-9F3` no aparece ni en `index.html` ni en `_payload.json`;
-- no existe `.output/public/trips`;
+- Roma se prerenderiza en **`trips/roma/index.html`** (Fase 11), y esa página contiene
+  «Galleria Sciarra» (es Roma; el spec no pasa en vacío);
+- `PRUEBA-CENTINELA-9F3` y `FORMA-CENTINELA-10A` no aparecen ni en el HTML de Roma ni en
+  `_payload.json`;
+- **no existen `trips/prueba` ni `trips/forma`**: los borradores no se prerenderizan (D-17);
 - el payload `__NUXT_DATA__` usa claves de estado sufijadas (`"$space:roma"`,
-  `"$scardNav:stack:roma"`, `"$ssearch:query:roma"`) y ninguna `"$space"` global.
+  `"$scardNav:stack:roma"`, `"$ssearch:query:roma"`) y ninguna `"$space"` global;
+- **escaneo de `.output/public` entero con los dumps DECODIFICADOS** (Fase 11, D-16): los
+  `__nuxt_content/<colección>/sql_dump.txt` de las 6 colecciones son base64 + gzip, así que
+  un `grep` sobre el fichero no vería nada; `decodeDump` los descomprime y el spec comprueba
+  que ningún fichero publicado contiene un centinela de borrador, con un control positivo
+  (los dumps decodificados llevan Roma). Cierra **CR-01** (filas de borradores en los dumps
+  públicos).
 
-Sin build (`.output/public/index.html` ausente) el describe **se salta**, no falla en
-falso. Ninguno de estos specs vive en `tests/parity/`: el conteo de §4 (80 / 11) no
-cambia.
+Sin build (`.output/public/index.html` ausente) los bloques post-build **se
+saltan**, no fallan en falso; los centinelas de los propios `trip.yml` se comprueban siempre.
+Ninguno de estos specs vive en `tests/parity/`: no cuentan en §4.
 
-> Medido el 2026-11-20 en esta rama (tras la Fase 10): `pnpm test:trips` → 17 tests en
-> 2 ficheros.
+> Medido el 2026-11-20 en esta rama (cierre de la Fase 11): `pnpm test:trips` → 19 tests
+> en 3 ficheros.
 
 ### 5.6 Forma y chrome desde datos (Fase 10)
 
 La Fase 10 hace que la **forma** de la guía (qué secciones y pastillas hay, cuántos días)
 y su **chrome** (marca de cabecera, leyenda del mapa, pie y título de la pestaña) salgan
-de los datos de cada viaje. Roma tiene que seguir idéntica (§1-§4: la puerta de 80 tests
-y 56 goldens no cambia); lo nuevo se defiende con estas piezas:
+de los datos de cada viaje. Roma tiene que seguir idéntica (§1-§4: la puerta —80 tests al
+cierre de la Fase 10— y los 56 goldens no cambian); lo nuevo se defiende con estas piezas:
 
 - **El viaje dev-only `content/trips/forma/`** (fixture, no un viaje real): 10 días con
   slugs con fecha (`sabado-19` … `lunes-28`, `order` 1..10) que repiten día de la semana
@@ -306,7 +354,7 @@ y 56 goldens no cambia); lo nuevo se defiende con estas piezas:
   (el mapa siempre tiene marcadores) y 1 ficha de comida. **No** tiene Arte,
   Arquitectura, Reservas ni Práctica: sus secciones y pastillas no deben aparecer. Define
   todo su chrome (`pageTitle`, `brand`, `mapLegend`, `footer`). Como prueba, solo se ve en
-  dev (`/trips/forma`), no se prerenderiza y se marcará `draft: true` en la Fase 11.
+  dev (`/trips/forma`), no se prerenderiza y es `draft: true` desde la Fase 11 (§5.2).
   **Centinela `FORMA-CENTINELA-10A`** (en su howTo): `tests/data/build-isolation.spec.ts`
   comprueba que no aparece en `index.html` ni en `_payload.json` de la build (§5.5).
   `content/trips/prueba/` **no se toca**: se queda sin campos de chrome a propósito, para
@@ -354,3 +402,50 @@ y «giugno»: la trampa no puede pasar en vacío.
 > **Regla de oro:** si la trampa salta, se arregla el **código** de `app/` o los **datos**
 > del viaje afectado. **Nunca** se quita una palabra de la lista, ni se excluye un viaje o
 > una parte del `body` para que pase.
+
+### 5.7 Portada y rutas multi-viaje (Fase 11)
+
+La Fase 11 convierte `/guiaRoma/` en la **portada** («Guías de viaje») y mueve cada guía a
+**`/guiaRoma/trips/<slug>/`**. Roma sigue idéntica (56 goldens sin re-baseline, la suite de
+Roma en `ROMA_URL`); lo nuevo se defiende con estas piezas:
+
+- **La portada** — `app/pages/index.vue` (`<title>` «Guías de viaje» + `<TripIndex />`) y
+  `app/components/TripIndex.vue`: una tarjeta `a.trip-index-card` por viaje publicado
+  (título plano, línea meta, resumen MDC), enlace de documento completo a
+  `${baseURL}trips/<slug>/`, sin `id` en ningún elemento, sin chrome de viaje y sin tocar
+  `localStorage`. Sus datos se resuelven en prerender: la portada **no descarga** el
+  `sql_dump` ni el WASM de Nuxt Content (ROUTE-04).
+- **`scripts/tripManifest.mjs`** (+ `tripManifest.d.mts`): manifiesto de viajes leído en
+  tiempo de config — `readTripManifest()` (`{ slug, draft }` por carpeta con `trip.yml`,
+  fail-closed ante nombres o `draft` inválidos), `draftExcludes()` (excluye los borradores
+  de las 6 colecciones fuera de dev, §5.2) y `prerenderRoutes()` (`['/', '/trips/<slug>/']`
+  de los publicados → `nitro.prerender.routes`). Añadir un viaje = añadir su carpeta.
+  Probado en `tests/unit/tripManifest.spec.ts`.
+- **`app/utils/tripDates.ts`**: `formatTripDates`, `tripMetaLine` («19–23 de junio de 2026 ·
+  Roma»), `sortTrips` (por `startDate` descendente) y `listedTrips` (quita borradores; `null`
+  mientras no hay datos). Probado en `tests/unit/tripDates.spec.ts`.
+- **`app/assets/css/multitrip.css`** + guardián **`tests/unit/multitripCss.spec.ts`**
+  (`test:unit`, D-21): todas las reglas de la portada van bajo `.trip-index` y el fichero se
+  carga el último, detrás de los cuatro CSS congelados (que no cambian).
+- **Reglas nuevas de la puerta de datos** (§5.3): `trip-dates` (`endDate` no anterior a
+  `startDate`) y `trip-summary-link` (el `summary` no lleva enlaces: la tarjeta ya es un
+  `<a>`).
+- **Redirección de enlaces antiguos** — script inline `legacy-hash-redirect` en el `<head>`
+  de la portada: `/guiaRoma/#ancla` (y `/guiaRoma/index.html#ancla`) hace `location.replace`
+  a `/guiaRoma/trips/roma/#ancla` antes del primer pintado, solo si el hash cumple
+  `^#[a-z0-9-]+$`. Lo prueba `tests/parity/legacy-redirect.spec.ts` (7 tests).
+- **«← Todos los viajes»** — `TripView.vue` termina el `<footer>` de **toda** guía con
+  `p.trip-back` → enlace de documento completo a la portada, fuera de `.container` (el
+  locator `footer .container p` de la puerta sigue siendo único). Sin CSS nuevo.
+- **`tests/parity/portada.spec.ts`** (7 tests × mobile + desktop, en la puerta), por
+  prefijo `portada:` sobre la build servida con `_pagesServer.ts`: tarjetas = publicados
+  del manifiesto con los textos del UI-SPEC y clic a Roma como documento nuevo (ROUTE-01);
+  ni la portada ni Roma piden `__nuxt_content/`, `sql_dump` ni `.wasm`, con control de no
+  vacuidad (ROUTE-04); el pie de Roma vuelve a la portada (ROUTE-06); pulsar pastillas no
+  remonta la guía (D-13, clave de página por slug en `app/pages/trips/[slug].vue`); cada
+  borrador del manifiesto da 404 (ROUTE-05, lista no vacía); backstops de tema guardado
+  (`roma-theme`, sin claves nuevas) y de textos largos a 375 px.
+- **`tests/parity/shell.spec.ts`**: la build emite `trips/roma/` y ningún borrador, y «la
+  portada vive en / y ROMA_URL sirve Roma».
+- **`tests/trips/portada.spec.ts`** (dev, §5.1): la portada en dev no lista borradores
+  aunque estén cargados.
