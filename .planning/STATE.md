@@ -5,11 +5,11 @@ milestone_name: Multi-viaje + Campania
 current_phase: 10
 current_phase_name: Forma y chrome desde datos
 status: verifying
-stopped_at: Phase 11 context gathered
-last_updated: "2026-11-20T17:32:42.634Z"
+stopped_at: Phase 11 UI-SPEC approved
+last_updated: "2026-11-20T18:22:01.791Z"
 last_activity: 2026-11-20
 last_activity_desc: Phase 10 execution started
-state_head: 7cddc5a5b54f10530a1d6314644f695230a1c532
+state_head: 45504bc48e4206e4c29e75f23327fc708ebc52ee
 progress:
   total_phases: 6
   completed_phases: 0
@@ -298,9 +298,9 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-20T17:32:42.401Z
-Stopped at: Phase 11 context gathered
-Resume file: .planning/phases/11-portada-y-rutas-multi-viaje/11-CONTEXT.md
+Last session: 2026-11-20T18:22:01.551Z
+Stopped at: Phase 11 UI-SPEC approved
+Resume file: .planning/phases/11-portada-y-rutas-multi-viaje/11-UI-SPEC.md
 
 ## Operator Next Steps
 
