@@ -7,8 +7,11 @@ import { gunzipSync } from 'node:zlib'
  * Centinela de build: la página estática de Roma no lleva nada de los viajes de desarrollo
  * (Fase 9: `prueba`; Fase 10: `forma`).
  *
+ *  - D-13 (Fase 11): Roma vive en su ruta de viaje, `.output/public/trips/roma/index.html` (con su
+ *    `_payload.json` al lado); «/» pasará a ser la portada. Los ficheros `index.html` y
+ *    `_payload.json` de abajo son SIEMPRE los de `trips/roma/`.
  *  - D-02: el viaje ficticio `prueba` es solo de dev. No se prerenderiza (no existe
- *    `.output/public/trips`) ni se cuela en la página de Roma: el centinela
+ *    `.output/public/trips/prueba`) ni se cuela en la página de Roma: el centinela
  *    `PRUEBA-CENTINELA-9F3`, que solo vive en `content/trips/prueba/` (howTo de `trip.yml` y la
  *    ficha `fontana-pruebas`), no puede aparecer en `index.html` ni en `_payload.json`.
  *  - D-15 (Fase 10): el viaje ficticio `forma` también es solo de dev. Su centinela
@@ -23,21 +26,23 @@ import { gunzipSync } from 'node:zlib'
  *    negativo). El recorrido de abajo decodifica los dumps y lee el resto como `latin1`; un
  *    control positivo (Roma SÍ está en los dumps) impide que la ausencia se afirme en vacío.
  *  - D-08: las claves `useState` van sufijadas por viaje y son visibles en claro en el payload
- *    `__NUXT_DATA__` de `index.html` (`"$space:roma"`, `"$scardNav:stack:roma"`,
+ *    `__NUXT_DATA__` de `trips/roma/index.html` (`"$space:roma"`, `"$scardNav:stack:roma"`,
  *    `"$ssearch:query:roma"`). Una clave sin sufijo (`"$space"`) indicaría estado global
  *    compartido entre viajes.
  *
  * Corre dentro de `pnpm verify` porque `generate` va antes de `test:data`, así que lee la build
  * recién generada desde cachés limpias. Node puro (`node:fs`), sin runtime Nuxt.
  *
- * Sin build (`.output/public/index.html` ausente, p. ej. un `vitest run tests/data` suelto) el
- * describe se SALTA en vez de fallar en falso. La aserción de «Galleria Sciarra» evita que el
- * spec pase en vacío sobre una build que no renderice Roma en «/».
+ * Sin build (`.output/public/index.html` ausente, p. ej. un `vitest run tests/data` suelto) los
+ * describe se SALTAN en vez de fallar en falso. Con build, el bloque de Roma NO se salta aunque
+ * falte su página: su primer `it` afirma que existe `trips/roma/index.html` (D-17, vacuidad), así
+ * que una build sin Roma FALLA. La aserción de «Galleria Sciarra» evita que el spec pase en vacío
+ * sobre una build que no renderice Roma en `trips/roma/`.
  */
 
 const OUT = join(process.cwd(), '.output', 'public')
-const INDEX = join(OUT, 'index.html')
-const PAYLOAD = join(OUT, '_payload.json')
+const INDEX = join(OUT, 'trips', 'roma', 'index.html')
+const PAYLOAD = join(OUT, 'trips', 'roma', '_payload.json')
 const SENTINEL = 'PRUEBA-CENTINELA-9F3'
 const FORMA_SENTINEL = 'FORMA-CENTINELA-10A'
 const FORMA_TRIP = join(process.cwd(), 'content', 'trips', 'forma', 'trip.yml')
@@ -83,10 +88,14 @@ describe('centinela del viaje prueba (D-16)', () => {
   })
 })
 
-describe.skipIf(!existsSync(INDEX))('build estática: Roma sin datos de prueba ni de forma (D-02, D-08, D-15)', () => {
+describe.skipIf(!existsSync(BUILD_INDEX))('build estática: Roma sin datos de prueba ni de forma (D-02, D-08, D-13, D-15)', () => {
   const html = () => readFileSync(INDEX, 'utf8')
 
-  it('index.html es la guía de Roma (contiene «Galleria Sciarra»; el spec no es vacuo)', () => {
+  it('existe trips/roma/index.html: Roma se prerenderiza en su URL (D-13)', () => {
+    expect(existsSync(INDEX), '.output/public/trips/roma/index.html debe existir').toBe(true)
+  })
+
+  it('trips/roma/index.html es la guía de Roma (contiene «Galleria Sciarra»; el spec no es vacuo)', () => {
     expect(html()).toContain('Galleria Sciarra')
   })
 
@@ -104,8 +113,9 @@ describe.skipIf(!existsSync(INDEX))('build estática: Roma sin datos de prueba n
     }
   })
 
-  it('no existe .output/public/trips (solo «/» se prerenderiza)', () => {
-    expect(existsSync(join(OUT, 'trips')), '.output/public/trips NO debe existir').toBe(false)
+  it('no existen trips/prueba ni trips/forma: los borradores no se prerenderizan (D-17)', () => {
+    expect(existsSync(join(OUT, 'trips', 'prueba')), '.output/public/trips/prueba NO debe existir').toBe(false)
+    expect(existsSync(join(OUT, 'trips', 'forma')), '.output/public/trips/forma NO debe existir').toBe(false)
   })
 
   it('el payload usa claves de estado sufijadas por viaje y ninguna "$space" global', () => {

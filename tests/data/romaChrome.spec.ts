@@ -18,7 +18,7 @@ import { inlineMdToPlain } from '../../app/utils/tripLayout'
  *    primer ✦ se conserva verbatim en el YAML); el pie, por su texto plano (`inlineMdToPlain`),
  *    el número de `<br>` y los fragmentos enfatizados (`_Pay_` → `<em>Pay</em>`).
  *  - «chrome en el HTML prerenderizado» (solo con build): marca, leyenda y pie están en
- *    `.output/public/index.html`, es decir, en el render de servidor y no en una isla
+ *    `.output/public/trips/roma/index.html` (la URL de Roma desde la Fase 11, D-13), es decir, en el render de servidor y no en una isla
  *    client-only, así que ninguna carrera de hidratación muestra antes un respaldo
  *    (edge SHAPE-03 concurrency); y hay exactamente UN `<title>` con el `pageTitle` de Roma
  *    (edge SHAPE-04 ordering: app.vue ya no fija título y TripView pone el del viaje).
@@ -26,7 +26,9 @@ import { inlineMdToPlain } from '../../app/utils/tripLayout'
  *    extrae con una RegExp sobre el HTML crudo (cheerio re-serializaría las entidades `&quot;`).
  *
  * Corre dentro de `pnpm verify` porque `generate` va antes de `test:data`. Sin build (un
- * `vitest run tests/data` suelto) el bloque post-build se SALTA en vez de fallar en falso.
+ * `vitest run tests/data` suelto: no hay `.output/public/index.html`) el bloque post-build se
+ * SALTA en vez de fallar en falso; con build, si falta la página de Roma el bloque FALLA al
+ * leerla en vez de saltarse (D-17).
  * Node puro: sin runtime Nuxt.
  */
 
@@ -38,7 +40,8 @@ const TRIP = parse(readFileSync(join(ROOT, 'content', 'trips', 'roma', 'trip.yml
   mapLegend: string
   footer: string[]
 }
-const BUILT = join(ROOT, '.output', 'public', 'index.html')
+const BUILT = join(ROOT, '.output', 'public', 'trips', 'roma', 'index.html')
+const BUILD_INDEX = join(ROOT, '.output', 'public', 'index.html')
 
 const norm = (s: string) => s.replace(/\s+/g, ' ').trim()
 const stripHtmlComments = (s: string) => s.replace(/<!--[\s\S]*?-->/g, '')
@@ -68,7 +71,7 @@ describe('chrome de Roma: verbatim contra index.html (SHAPE-03/SHAPE-04)', () =>
   })
 })
 
-describe.skipIf(!existsSync(BUILT))('chrome de Roma en el HTML prerenderizado (edges SHAPE-03 concurrency / SHAPE-04 ordering)', () => {
+describe.skipIf(!existsSync(BUILD_INDEX))('chrome de Roma en el HTML prerenderizado (edges SHAPE-03 concurrency / SHAPE-04 ordering)', () => {
   const html = () => stripHtmlComments(readFileSync(BUILT, 'utf8'))
 
   it('exactamente un <title> y es el pageTitle de Roma', () => {

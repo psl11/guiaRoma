@@ -16,7 +16,7 @@ import { join } from 'node:path'
 export const SITE_BASE = '/guiaRoma/'
 
 /** Ruta (con la base del sitio) en la que se sirve la guía de Roma. */
-export const ROMA_URL = '/guiaRoma/'
+export const ROMA_URL = '/guiaRoma/trips/roma/'
 
 /** Salida estática de `nuxi generate`. */
 export const OUTPUT_DIR = join(process.cwd(), '.output', 'public')

@@ -2,6 +2,8 @@
 // Plan 02: modules / app.baseURL / css / colorMode / typescript / eslint / fonts.
 // Plan 03 (AÑADIDO): nitro.preset github_pages + prerender (failOnError), favicons bajo el subpath.
 // compatibilityVersion 4 es el DEFAULT en Nuxt 4 — NO hace falta future.compatibilityVersion.
+import { prerenderRoutes, readTripManifest } from './scripts/tripManifest.mjs'
+
 export default defineNuxtConfig({
   modules: ['@nuxt/content', '@nuxtjs/color-mode', '@nuxt/fonts', '@nuxt/eslint'],
 
@@ -38,11 +40,17 @@ export default defineNuxtConfig({
   // el preset github_pages prerenderiza a .output/public con la estructura de Pages
   // (incl. .nojekyll); failOnError convierte un enlace interno roto en fallo de build
   // (parity guard). El routing es history (default) — las anclas #id son fragmentos, no rutas.
+  //
+  // Rutas (Fase 11, D-13): se prerenderizan «/» y `/trips/<slug>/` de cada viaje NO borrador,
+  // derivadas de content/trips/*/trip.yml por el manifiesto (scripts/tripManifest.mjs), nunca de
+  // una lista escrita a mano: añadir un viaje = añadir su carpeta. Siempre con barra final
+  // (GitHub Pages responde 301 a la forma sin barra). crawlLinks sigue activo como red de
+  // seguridad para cualquier enlace interno que la lista no cubra.
   nitro: {
     preset: 'github_pages',
     prerender: {
       crawlLinks: true,
-      routes: ['/'],
+      routes: prerenderRoutes(readTripManifest()),
       failOnError: true,
     },
   },

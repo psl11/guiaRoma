@@ -16,7 +16,7 @@ import { ROMA_HTML, romaUrlAt } from './_harness'
  *
  * DOS bloques con ciclos de vida SEPARADOS para no acoplar el server estático (rápido) al dev
  * server (arranque lento de Nitro + Content):
- *   1) describe «build estática» → solo static server (shell/head/no-trips-dir).
+ *   1) describe «build estática» → solo static server (shell/head/trips-roma-sin-borradores).
  *   2) describe «routing dinámico» → solo `pnpm dev` (TripView reutilizado en /trips/roma + 404),
  *      porque la salida estática SOLO emite «/» (D-01) y no puede ejercitar /trips/* ni 404 reales.
  *
@@ -80,7 +80,7 @@ function ensureBuild(): void {
 }
 
 // ============================================================================
-// 1) Build estática servida bajo /guiaRoma/ — shell + head + no-trips-dir.
+// 1) Build estática servida bajo /guiaRoma/ — shell + head + trips/roma/ sin borradores.
 // ============================================================================
 test.describe('shell de la build estática (/guiaRoma/)', () => {
   const STATIC_PORT = 5100 + Number(process.env.TEST_WORKER_INDEX ?? 0)
@@ -184,9 +184,10 @@ test.describe('shell de la build estática (/guiaRoma/)', () => {
     await expect(page.locator('meta[name="theme-color"]')).toHaveCount(2)
   })
 
-  test('la build NO emite el directorio trips/ (disciplina de prerender D-01)', () => {
-    expect(existsSync(ROMA_HTML), 'la build debe existir').toBe(true)
-    expect(existsSync(join(OUTPUT_DIR, 'trips')), '.output/public/trips NO debe existir (solo «/» se prerenderiza)').toBe(false)
+  test('la build emite la guía de Roma en trips/roma/ y ningún borrador (D-13/D-17)', () => {
+    expect(existsSync(join(OUTPUT_DIR, 'trips', 'roma', 'index.html')), '.output/public/trips/roma/index.html debe existir').toBe(true)
+    expect(existsSync(join(OUTPUT_DIR, 'trips', 'prueba')), '.output/public/trips/prueba NO debe existir (borrador)').toBe(false)
+    expect(existsSync(join(OUTPUT_DIR, 'trips', 'forma')), '.output/public/trips/forma NO debe existir (borrador)').toBe(false)
   })
 })
 
