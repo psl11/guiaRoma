@@ -21,7 +21,9 @@ import { describe, expect, it } from 'vitest'
  *     `localStorage.key(` / `clear(` / `removeItem(`), que tocaría claves de otros viajes.
  *
  * EXCEPCIONES documentadas (NO se escanean):
- *   · `app/pages/index.vue`: `<TripView slug="roma" />` es el hogar de «/» hasta la Fase 11.
+ *   · `app/pages/index.vue`: la portada «/» (Fase 11); es una página, fuera de los directorios
+ *     escaneados, y no fija ningún viaje salvo la constante de migración de la redirección de
+ *     anclas antiguas de Roma (11-06).
  *   · `nuxt.config.ts`: `storageKey: 'roma-theme'` de @nuxtjs/color-mode (D-07, tema global).
  *
  * Además fija la forma del cableado por viaje: TripView publica el slug antes de su primer `await`
