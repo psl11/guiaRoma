@@ -22,10 +22,18 @@ const TRIPS_ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', 'content'
  */
 export const TRIP_FOLDER_RE = /^[a-z0-9]+$/
 
+/** Orden estable por slug (ASCII: los slugs válidos son `[a-z0-9]`, sin depender del locale). */
+const bySlug = (a, b) => (a.slug < b.slug ? -1 : a.slug > b.slug ? 1 : 0)
+
 /**
  * Viajes de `root` (por defecto content/trips): subdirectorios no ocultos con trip.yml, como
  * `{ slug, draft }` ordenados por slug. `slug` = nombre de carpeta (la puerta tests/data ya
  * exige carpeta == slug).
+ *
+ * FAIL-CLOSED (T-11-04): una carpeta con trip.yml cuyo nombre no cumple `TRIP_FOLDER_RE` lanza
+ * (el slug acaba tal cual en la URL `/trips/<slug>/`: nunca hace falta codificarlo), y un `draft`
+ * presente que no sea booleano también (un `draft: "yes"` nunca se publica por defecto).
+ * `draft` ausente o `null` = `false`.
  * @param {string} [root]
  * @returns {{ slug: string, draft: boolean }[]}
  */
@@ -33,10 +41,18 @@ export function readTripManifest(root = TRIPS_ROOT) {
   return readdirSync(root, { withFileTypes: true })
     .filter(d => d.isDirectory() && !d.name.startsWith('.') && existsSync(join(root, d.name, 'trip.yml')))
     .map((d) => {
+      if (!TRIP_FOLDER_RE.test(d.name)) {
+        throw new Error(`content/trips/${d.name}: nombre de carpeta de viaje inválido; debe cumplir ${TRIP_FOLDER_RE} (minúsculas ASCII y dígitos, sin guiones) porque es el slug y el segmento de la URL /trips/<slug>/`)
+      }
+      const file = `content/trips/${d.name}/trip.yml`
       const parsed = parse(readFileSync(join(root, d.name, 'trip.yml'), 'utf8'))
-      return { slug: d.name, draft: parsed?.draft === true }
+      const draft = parsed?.draft
+      if (draft !== undefined && draft !== null && typeof draft !== 'boolean') {
+        throw new Error(`${file}: la clave draft debe ser booleana (true/false) y vale ${JSON.stringify(draft)}`)
+      }
+      return { slug: d.name, draft: draft === true }
     })
-    .sort((a, b) => (a.slug < b.slug ? -1 : a.slug > b.slug ? 1 : 0))
+    .sort(bySlug)
 }
 
 /**
@@ -49,4 +65,14 @@ export function readTripManifest(root = TRIPS_ROOT) {
 export function draftExcludes(entries, keepDrafts) {
   if (keepDrafts) return []
   return entries.filter(t => t.draft).map(t => `trips/${t.slug}/**`)
+}
+
+/**
+ * Rutas a prerenderizar (D-13): la portada y la guía de cada viaje NO borrador, en orden de slug
+ * y SIEMPRE con barra final (`/trips/<slug>/`). Sin viajes publicados → solo `['/']`.
+ * @param {readonly { slug: string, draft: boolean }[]} entries
+ * @returns {string[]}
+ */
+export function prerenderRoutes(entries) {
+  return ['/', ...[...entries].filter(t => !t.draft).sort(bySlug).map(t => `/trips/${t.slug}/`)]
 }
