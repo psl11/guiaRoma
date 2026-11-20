@@ -77,7 +77,7 @@ Plans:
   3. La marca de la cabecera, el pie y la leyenda del mapa de cada guía salen de su `trip.yml`, y la pestaña del navegador muestra el título propio del viaje; en Roma son exactamente los textos actuales (pestaña «Roma · 19—23 giugno 2026»)
   4. En la guía de un viaje de prueba no aparece ningún texto propio de Roma («Roma», «Einaudi», «giugno 2026»…): un test-trampa falla si alguno se cuela
   5. Tras mover los textos de Roma a datos, la puerta de paridad sigue verde en `/` con los 56 goldens sin re-baseline
-**Plans**: 2/5 plans executed
+**Plans**: 3/5 plans executed
 Plans:
 **Wave 1**
 - [x] 10-01-PLAN.md — Tracer: `buildTripLayout` puro → pastillas y `<main>` de TripView desde el layout (una sección por día, solo secciones con datos), Roma idéntica (SHAPE-01, SHAPE-02)
@@ -86,7 +86,7 @@ Plans:
 - [x] 10-02-PLAN.md — Chrome desde `trip.yml`: esquema aditivo (test D-10 primero), `pageTitle`/`brand`/`mapLegend`/`footer` de Roma verbatim, respaldo neutro, test verbatim contra index.html y guardián D-17 (SHAPE-03, SHAPE-04, SHAPE-05)
 
 **Wave 3** *(blocked on Wave 2 completion)*
-- [ ] 10-03-PLAN.md — Puerta de datos de forma: `DAY_SLUG_RE` + `pill`, reglas `day-pill`/`day-order`, anclas según presencia, `cross-trip-link` en lista blanca (cierra WR-01/WR-02) (SHAPE-01, SHAPE-02)
+- [x] 10-03-PLAN.md — Puerta de datos de forma: `DAY_SLUG_RE` + `pill`, reglas `day-pill`/`day-order`, anclas según presencia, `cross-trip-link` en lista blanca (cierra WR-01/WR-02) (SHAPE-01, SHAPE-02)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 - [ ] 10-04-PLAN.md — Viaje dev-only `forma` (10 días, dos sábados, sin Arte/Arquitectura) + E2E de forma + centinela de build (SHAPE-01, SHAPE-02, SHAPE-05)
@@ -185,7 +185,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 7. Isla client-only — mapa, fallback, notas | v1.0 | 4/4 | Complete | 2026-06-23 |
 | 8. Verificación de paridad | v1.0 | 7/7 | Complete | 2026-06-24 |
 | 9. Plataforma por viaje | v1.1 | 5/5 | In Progress | - |
-| 10. Forma y chrome desde datos | v1.1 | 2/5 | In Progress | - |
+| 10. Forma y chrome desde datos | v1.1 | 3/5 | In Progress | - |
 | 11. Portada y rutas multi-viaje | v1.1 | 0/TBD | Not started | - |
 | 12. Formas nuevas de viaje | v1.1 | 0/TBD | Not started | - |
 | 13. Contenido Campania 2027 | v1.1 | 0/TBD | Not started | - |
