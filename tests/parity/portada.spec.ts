@@ -173,4 +173,125 @@ test.describe('portada y rutas multi-viaje (ROUTE-01/04/05/06)', () => {
     expect(heavy, `Roma no descarga la base de contenido: ${heavy.join(', ')}`).toHaveLength(0)
     expect(nuxtAssets.length, 'control de no vacuidad: Roma pidió assets /_nuxt/').toBeGreaterThan(assetsBeforeRoma)
   })
+
+  test('portada: el pie de Roma lleva «← Todos los viajes» a la portada (ROUTE-06)', async ({ page }) => {
+    await blockOffOrigin(page, ORIGIN)
+    await page.goto(`${ORIGIN}${ROMA_URL}`)
+    await page.waitForLoadState('networkidle')
+    await hydrated(page)
+
+    const back = page.locator('footer .trip-back a')
+    await expect(back).toHaveText('← Todos los viajes')
+    await expect(back).toHaveAttribute('href', SITE_BASE)
+    // El enlace va fuera de `.container`: el locator estricto de la puerta sigue siendo único.
+    await expect(page.locator('footer .container p')).toHaveCount(1)
+
+    // D-04: navegación de documento completo de vuelta a la portada.
+    await page.evaluate(() => {
+      (window as unknown as { __romaDoc?: boolean }).__romaDoc = true
+    })
+    await back.click()
+    await page.waitForURL(`${ORIGIN}${SITE_BASE}`)
+    await expect(page.locator('.trip-index')).toBeVisible()
+    expect(await page.evaluate(() => (window as unknown as { __romaDoc?: boolean }).__romaDoc)).toBeUndefined()
+  })
+
+  test('portada: pulsar pastillas en /trips/roma/ no remonta la guía (D-13)', async ({ page }) => {
+    await blockOffOrigin(page, ORIGIN)
+    await page.goto(`${ORIGIN}${ROMA_URL}`)
+    await page.waitForLoadState('networkidle')
+    await hydrated(page)
+
+    // Marca como PROPIEDAD JS (no atributo): un remontaje crearía un elemento nuevo sin ella,
+    // aunque el HTML re-renderizado fuese idéntico.
+    await page.locator('[id="inicio"]').evaluate((el) => {
+      (el as unknown as { __mark?: string }).__mark = 'mismo-elemento'
+    })
+
+    for (const hash of ['#reservas', '#gastronomia', '#viernes']) {
+      await page.locator(`.nav-pill[href="${hash}"]`).click()
+      await expect.poll(() => new URL(page.url()).hash, { message: `la pastilla ${hash} cambia el hash` }).toBe(hash)
+    }
+
+    await expect(page.locator('[id="inicio"]')).toHaveCount(1)
+    expect(await page.locator('[id="inicio"]').evaluate(el => (el as unknown as { __mark?: string }).__mark)).toBe('mismo-elemento')
+  })
+
+  test('portada: los borradores no se publican — dan 404 (ROUTE-05)', async ({ page }) => {
+    // No vacuidad: hoy hay dos borradores de ensayo en el manifiesto.
+    expect(DRAFTS, 'el manifiesto declara borradores (prueba y forma)').toEqual(expect.arrayContaining(['prueba', 'forma']))
+    await blockOffOrigin(page, ORIGIN)
+    for (const slug of DRAFTS) {
+      const res = await page.goto(`${ORIGIN}${SITE_BASE}trips/${slug}/`)
+      expect(res?.status(), `/trips/${slug}/ responde 404`).toBe(404)
+    }
+  })
+
+  test('portada: respeta el tema guardado sin escribir claves nuevas (backstop tema, D-11/D-20)', async ({ browser, page }) => {
+    const expected = { dark: 'rgb(34, 29, 24)', light: 'rgb(251, 247, 240)' } as const
+    for (const theme of ['dark', 'light'] as const) {
+      const context = await browser.newContext({ viewport: page.viewportSize() })
+      try {
+        await context.addInitScript((t) => {
+          localStorage.setItem('roma-theme', t)
+        }, theme)
+        const p = await context.newPage()
+        await blockOffOrigin(p, ORIGIN)
+        await p.goto(`${ORIGIN}${SITE_BASE}`)
+        await p.waitForLoadState('networkidle')
+        await hydrated(p)
+
+        await expect(p.locator('html'), `tema ${theme}`).toHaveAttribute('data-theme', theme)
+        await expect(p.locator('a.trip-index-card').first(), `fondo de la tarjeta en ${theme}`).toHaveCSS('background-color', expected[theme])
+        const otherKeys = await p.evaluate(() => Object.keys(localStorage).filter(k => k !== 'roma-theme'))
+        expect(otherKeys, `la portada no escribe claves nuevas en localStorage (${theme})`).toEqual([])
+      }
+      finally {
+        await context.close()
+      }
+    }
+  })
+
+  test('portada: textos largos parten línea sin desbordar a 375 px (backstop long-text)', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 })
+    await blockOffOrigin(page, ORIGIN)
+    await page.goto(`${ORIGIN}${SITE_BASE}`)
+    await page.waitForLoadState('networkidle')
+    await hydrated(page)
+
+    const card = page.locator('a.trip-index-card').first()
+    await card.evaluate((el) => {
+      const set = (sel: string, text: string) => {
+        const node = el.querySelector(sel)
+        if (node) node.textContent = text
+      }
+      // ~80 caracteres, 6 destinos y 3 frases (UI-SPEC E2).
+      set('.trip-index-title', 'Un viaje larguísimo por las ciudades del norte de Italia, de Milán hasta Venecia')
+      set('.trip-index-meta', '1–14 de septiembre de 2027 · Milán · Bérgamo · Verona · Vicenza · Padua · Venecia')
+      set('.trip-index-summary', 'Dos semanas en tren por el norte de Italia, de ciudad en ciudad y sin prisa. Cada día tiene su ruta a pie, sus fichas y su mapa. Y al final de cada jornada, una mesa donde comer como se come allí.')
+    })
+
+    const m = await card.evaluate((el) => {
+      const h2 = el.querySelector('.trip-index-title') as HTMLElement
+      const cs = getComputedStyle(h2)
+      const lh = Number.parseFloat(cs.lineHeight)
+      const lineHeight = Number.isNaN(lh) ? Number.parseFloat(cs.fontSize) * 1.2 : lh
+      return {
+        docScroll: document.documentElement.scrollWidth,
+        inner: window.innerWidth,
+        h2Height: h2.getBoundingClientRect().height,
+        lineHeight,
+        h2Scroll: h2.scrollWidth,
+        h2Client: h2.clientWidth,
+        textOverflow: cs.textOverflow,
+        cardScroll: el.scrollWidth,
+        cardClient: el.clientWidth,
+      }
+    })
+    expect(m.docScroll, 'la página no desborda en horizontal').toBeLessThanOrEqual(m.inner)
+    expect(m.h2Height, 'el título largo parte línea').toBeGreaterThan(1.5 * m.lineHeight)
+    expect(m.h2Scroll, 'el título no se recorta').toBeLessThanOrEqual(m.h2Client)
+    expect(m.textOverflow, 'sin elipsis').not.toBe('ellipsis')
+    expect(m.cardScroll, 'la tarjeta no desborda').toBeLessThanOrEqual(m.cardClient)
+  })
 })
