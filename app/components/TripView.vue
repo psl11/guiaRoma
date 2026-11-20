@@ -41,8 +41,8 @@
 // (index.html:6202). El `.art-intro` lleva Markdown-inline (arquitectura tiene `**negritas**`) →
 // `<MDC unwrap="p" :tag="false">`.
 //
-// Chrome/footer VERBATIM del index.html; CERO CSS nuevo y SIN bloque de estilos scoped (data-v-*
-// rompería selectores globales del shell). NINGÚN enlace de ruta a /trips/* — crawlLinks lo
+// Chrome VERBATIM del index.html (marca, leyenda y pie salen del trip.yml desde F10); CERO CSS
+// nuevo y SIN bloque de estilos scoped (data-v-* rompería selectores globales del shell). NINGÚN enlace de ruta a /trips/* — crawlLinks lo
 // prerenderizaría y rompería la disciplina de prerender D-01; toda la navegación es por
 // anclas #fragmento. Topbar/BackButton/TheHero/DaySection y las secciones se auto-importan.
 //
@@ -85,10 +85,20 @@ const layout = computed(() => buildTripLayout({
 // entrega `null` para un opcional ausente → se lee con `||`/`??`, nunca comparando con undefined.
 const plainTitle = computed(() => inlineMdToPlain(trip.value?.title ?? ''))
 useHead({ title: () => trip.value?.pageTitle || plainTitle.value })
+
+// F10 (Plan 10-02, D-12/D-14): el pie son las líneas Markdown-inline de `trip.footer`, unidas con
+// `<br>` dentro de un único `<p>` (cada línea por `<MDC :tag="false" unwrap="p">`, el mismo idioma
+// que `#arte`). Sin `footer` no se pinta el pie; sin `mapLegend` no hay `p.map-legend`; sin `brand`
+// la marca es `plainTitle`. Ningún texto de otro viaje como respaldo.
+const footerLines = computed(() => trip.value?.footer ?? [])
 </script>
 
 <template>
-  <Topbar :layout="layout" />
+  <Topbar
+    :layout="layout"
+    :brand="trip?.brand ?? null"
+    :fallback-title="plainTitle"
+  />
 
   <main>
     <template
@@ -128,8 +138,11 @@ useHead({ title: () => trip.value?.pageTitle || plainTitle.value })
               Sin conexión · solo marcadores visibles
             </div>
           </div>
-          <p class="map-legend">
-            ✦  Rojos · paradas con ficha · Dorados · eventos guiados · Verde · concierto Einaudi ✦
+          <p
+            v-if="trip?.mapLegend"
+            class="map-legend"
+          >
+            {{ trip.mapLegend }}
           </p>
         </div>
       </section>
@@ -246,9 +259,21 @@ useHead({ title: () => trip.value?.pageTitle || plainTitle.value })
     ·  ·  ·  ✦  ·  ·  ·
   </div>
 
-  <footer>
+  <footer v-if="footerLines.length > 0">
     <div class="container">
-      <p>Itinerario preparado para <em>Pay</em> y dos colegas<br>Roma · 19—23 giugno 2026<br>"Roma no se cuenta, se camina."</p>
+      <p>
+        <template
+          v-for="(line, i) in footerLines"
+          :key="i"
+        >
+          <br v-if="i > 0">
+          <MDC
+            :value="line"
+            :tag="false"
+            unwrap="p"
+          />
+        </template>
+      </p>
     </div>
   </footer>
 </template>

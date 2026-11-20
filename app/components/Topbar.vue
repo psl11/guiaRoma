@@ -13,16 +13,35 @@
 //
 // F10 (Plan 10-01, D-06): recibe de TripView el `layout` del viaje (la MISMA lista con la que se
 // montan las secciones de `<main>`) y lo reenvía tal cual a NavPills.
+//
+// F10 (Plan 10-02, D-11/D-14): la marca `.brand` sale del trip.yml del viaje. Con `brand`, el DOM
+// es el de siempre: `before` + UN espacio + el span del punto (✦) + UN espacio +
+// `after` (ni más ni menos espacios alrededor del span: el margen lo pone la clase del punto en
+// base.css). Sin `brand`, la marca es el título plano del propio viaje (`fallbackTitle`), sin
+// punto. Solo interpolación `{{ }}` (Vue escapa): nunca HTML crudo desde los datos.
 import type { LayoutEntry } from '~/utils/tripLayout'
 
-defineProps<{ layout: LayoutEntry[] }>()
+defineProps<{
+  layout: LayoutEntry[]
+  brand: { before: string, after: string } | null
+  fallbackTitle: string
+}>()
 </script>
 
 <template>
   <header class="topbar">
     <div class="topbar-inner">
-      <div class="brand">
-        Roma <span class="brand-dot">✦</span> giugno MMXXVI
+      <div
+        v-if="brand"
+        class="brand"
+      >
+        {{ brand.before }} <span class="brand-dot">✦</span> {{ brand.after }}
+      </div>
+      <div
+        v-else
+        class="brand"
+      >
+        {{ fallbackTitle }}
       </div>
       <ThemeToggle />
     </div>

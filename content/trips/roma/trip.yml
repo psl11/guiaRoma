@@ -77,3 +77,14 @@ sections:
 # Chrome del viaje (Fase 10, D-10…D-14), verbatim de index.html:
 #   pestaña ← línea 8.
 pageTitle: 'Roma · 19—23 giugno 2026'
+#   marca ← línea 2259 (texto a cada lado del ✦ de .brand, D-11).
+brand:
+  before: 'Roma'
+  after: 'giugno MMXXVI'
+#   leyenda del mapa ← línea 2370 (DOS espacios tras el primer ✦, verbatim).
+mapLegend: '✦  Rojos · paradas con ficha · Dorados · eventos guiados · Verde · concierto Einaudi ✦'
+#   pie ← líneas 6236-6240 (una línea Markdown-inline por elemento, unidas con <br>, D-12).
+footer:
+  - 'Itinerario preparado para _Pay_ y dos colegas'
+  - 'Roma · 19—23 giugno 2026'
+  - '"Roma no se cuenta, se camina."'
