@@ -47,7 +47,7 @@ key-decisions:
   - "shape.spec FORMA_DAYS also carries each day's title so the per-day test asserts the exact h2 (.day-header h2), not just its presence"
   - "Forma sentinel presence check lives in its own always-running describe outside the build skipIf, so the absence assertion is never vacuous"
 
-requirements-completed: [SHAPE-01, SHAPE-02, SHAPE-05]
+requirements-completed: [SHAPE-01, SHAPE-02]  # SHAPE-05 (trap test) is delivered by 10-05; this plan provides its base
 
 duration: 4min
 completed: 2026-11-20

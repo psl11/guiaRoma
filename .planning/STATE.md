@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 10
 current_phase_name: Forma y chrome desde datos
 status: executing
-stopped_at: Completed 10-03-PLAN.md
-last_updated: "2026-11-20T14:21:43.665Z"
+stopped_at: Completed 10-04-PLAN.md
+last_updated: "2026-11-20T14:29:10.349Z"
 last_activity: 2026-11-20
 last_activity_desc: Phase 10 execution started
-state_head: b1dc2a9c4cc60809058e78b8796da747a0839b89
+state_head: 858d471081db28d27a17fe4babb23cd513eadfb5
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 10
-  completed_plans: 8
+  completed_plans: 9
   percent: 0
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 10 (Forma y chrome desde datos) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 Status: Ready to execute
 Last activity: 2026-11-20 — Phase 10 execution started
 
@@ -111,6 +111,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 10 P01 | 7min | 2 tasks | 5 files |
 | Phase 10 P02 | 7 min | 3 tasks | 8 files |
 | Phase 10 P03 | 3min | 2 tasks | 4 files |
+| Phase 10 P04 | 4min | 3 tasks | 16 files |
 
 ## Accumulated Context
 
@@ -256,6 +257,8 @@ Recent decisions affecting current work:
 - [Phase 10]: Phase 10-03: DAY_SLUG_RE declared before DaySchema (module-eval order), not next to TRIP_SLUG_RE
 - [Phase 10]: Phase 10-03: day-pill compares dayPillLabel output after NFC + trim + es lowercase
 - [Phase 10]: Phase 10-03: anchor rule resolves section anchors only via buildTripLayout over YAML presence; prose links whitelisted to #id or http(s)://
+- [Phase 10]: Phase 10-04: dev-only trip forma (10 dated days, two Saturdays, no Arte/Arquitectura/Reservas/Práctica) proves SHAPE-01/SHAPE-02 end-to-end in tests/trips/shape.spec.ts; pill navigation checked by href + section[id] + location.hash, never .active (Pitfall 6)
+- [Phase 10]: Phase 10-04: build-isolation guards FORMA-CENTINELA-10A absent from index.html/_payload.json, with an always-run presence check in content/trips/forma/trip.yml (non-vacuous)
 
 ### Pending Todos
 
@@ -292,8 +295,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-20T14:21:43.602Z
-Stopped at: Completed 10-03-PLAN.md
+Last session: 2026-11-20T14:29:10.286Z
+Stopped at: Completed 10-04-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
