@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 11
 current_phase_name: Portada y rutas multi-viaje
 status: executing
-stopped_at: Completed 11-01-PLAN.md
-last_updated: "2026-11-20T19:08:43.205Z"
+stopped_at: Completed 11-02-PLAN.md
+last_updated: "2026-11-20T19:21:23.095Z"
 last_activity: 2026-11-20
 last_activity_desc: Phase 11 execution started
-state_head: 85bd9744b0fb262493f08bdab2c0372d664af9f5
+state_head: 078bffa6b3b5857a85d2086ecc510b4873950ef1
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 17
-  completed_plans: 11
+  completed_plans: 12
   percent: 0
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 11 (Portada y rutas multi-viaje) — EXECUTING
-Plan: 2 of 7
+Plan: 3 of 7
 Status: Ready to execute
 Last activity: 2026-11-20 — Phase 11 execution started
 
@@ -114,6 +114,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 10 P04 | 4min | 3 tasks | 16 files |
 | Phase 10 P05 | 6min | 2 tasks | 4 files |
 | Phase 11 P01 | 4min | 3 tasks | 12 files |
+| Phase 11 P02 | 10 min | 2 tasks | 13 files |
 
 ## Accumulated Context
 
@@ -264,6 +265,9 @@ Recent decisions affecting current work:
 - [Phase 10]: Trap scans document.title, body innerText and a script-free body clone textContent; the Nuxt payload is not scanned (guiaRoma baseURL is not a leak)
 - [Phase 10]: TDD RED evidence for Vitest is captured with the JUnit reporter (the classifier rejects Vitest TAP multi-line diffs)
 - [Phase 11]: 11-01: tests/parity/_harness.ts es el punto único de ROMA_URL/ROMA_HTML para la puerta; el movimiento de URL de 11-03 es un diff de una línea
+- [Phase 11]: 11-02: drafts are excluded from Nuxt Content outside nuxi dev via source.exclude (trips/<slug>/**) computed at config load from scripts/tripManifest.mjs (.mjs + .d.mts, D-23); only NODE_ENV=development keeps drafts (fail-closed)
+- [Phase 11]: 11-02: readTripManifest is fail-closed — non-boolean draft or folder outside ^[a-z0-9]+$ throws naming the file/folder; prerenderRoutes = ['/', ...'/trips/<slug>/'] sorted by slug, ['/'] with no published trips
+- [Phase 11]: 11-02: published-output scans must decode __nuxt_content/<col>/sql_dump.txt (base64+gzip) and keep a positive control; failure collects an offenders list
 
 ### Pending Todos
 
@@ -300,8 +304,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-20T19:08:43.136Z
-Stopped at: Completed 11-01-PLAN.md
+Last session: 2026-11-20T19:21:22.992Z
+Stopped at: Completed 11-02-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
