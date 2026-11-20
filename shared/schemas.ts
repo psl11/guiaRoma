@@ -324,9 +324,15 @@ export const ReferenceRowSchema = z.object({
 // de index.html (gastronomia 5337/5340, arte 5943/5945, arquitectura 6106/6108).
 const SectionMeta = z.object({ eyebrow: z.string(), intro: Md })
 
+// Slug de viaje (D-05, Fase 9): ASCII en minúsculas y dígitos, SIN guiones. Es el prefijo
+// `${slug}-` de las claves de usuario en localStorage (tripStorageKey) y acabará en URLs:
+// sin guiones, el prefijo de un viaje nunca puede solaparse con otro ('roma' cumple). La
+// puerta tests/data exige además slug == nombre de carpeta (invariante trip-slug).
+export const TRIP_SLUG_RE = /^[a-z0-9]+$/
+
 // ── Trip — RESEARCH 482-491 ──────────────────────────────────────────────────
 export const TripSchema = z.object({
-  slug: z.string(), // 'roma'
+  slug: z.string().regex(TRIP_SLUG_RE), // 'roma' (D-05)
   title: z.string(), // 'Cinque giorni a Roma' (con <em> en h1)
   decoration: z.string(), // hero-decoration '·  ROMA AETERNA  ·'
   heroMeta: z.string(), // hero-meta '19 — 23 giugno 2026 · Hotel Royal Court' — NO usar 'meta': es nombre RESERVADO de Content v3 (se sobrescribe → '[object Object]', CR-01), igual que 'id'
