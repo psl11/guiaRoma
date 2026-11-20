@@ -14,7 +14,7 @@
 - [ ] **PLAT-01**: La búsqueda de una guía solo devuelve fichas de ese viaje
 - [ ] **PLAT-02**: Los enlaces entre fichas, la pila de «Volver» y el scrollspy funcionan dentro de cualquier viaje, no solo en Roma
 - [ ] **PLAT-03**: Las notas, el ritmo, «caminar menos» y el modo resumen se guardan por viaje, y quien ya usa Roma conserva sus notas y preferencias sin hacer nada (claves `roma-*` intactas)
-- [ ] **PLAT-04**: El contenido de cada viaje se valida contra el esquema y sus invariantes (slug de viaje, carpeta = slug, ids únicos, sin colisión con anclas de sección, enlaces `#ficha` dentro del mismo viaje); un YAML inválido de cualquier viaje rompe `pnpm verify`
+- [x] **PLAT-04**: El contenido de cada viaje se valida contra el esquema y sus invariantes (slug de viaje, carpeta = slug, ids únicos, sin colisión con anclas de sección, enlaces `#ficha` dentro del mismo viaje); un YAML inválido de cualquier viaje rompe `pnpm verify`
 
 ### Forma del viaje desde datos (SHAPE)
 
@@ -103,7 +103,7 @@
 | PLAT-01 | Phase 9 | Pending |
 | PLAT-02 | Phase 9 | Pending |
 | PLAT-03 | Phase 9 | Pending |
-| PLAT-04 | Phase 9 | Pending |
+| PLAT-04 | Phase 9 | Complete |
 | SHAPE-01 | Phase 10 | Pending |
 | SHAPE-02 | Phase 10 | Pending |
 | SHAPE-03 | Phase 10 | Pending |
