@@ -236,6 +236,48 @@ describe('la puerta tiene dientes (fixtures)', () => {
     expectRule(vs, 'basename-slug', 'prueba/monuments/a.yml')
   })
 
+  // ── D-03 (Fase 10): etiquetas de pastilla únicas por viaje, con la MISMA dayPillLabel de la UI ──
+  /** Dos sábados (`sabado-19` / `sabado-26`) con los `pill` dados (undefined = sin pill). */
+  const twoSaturdays = (pill19?: string, pill26?: string) => memTrip('prueba', {
+    'days/sabado-19.yml': y({
+      ...validDay, slug: 'sabado-19', order: 1, eyebrow: 'sábado · 19 de septiembre',
+      ...(pill19 === undefined ? {} : { pill: pill19 }),
+    }),
+    'days/sabado-26.yml': y({
+      ...validDay, slug: 'sabado-26', order: 2, eyebrow: 'sábado · 26 de septiembre',
+      ...(pill26 === undefined ? {} : { pill: pill26 }),
+    }),
+  })
+
+  it('day-pill: dos sábados sin pill derivan los dos «Sábado» → violación en AMBOS ficheros', () => {
+    const vs = checkTrip(twoSaturdays())
+    expectRule(vs, 'day-pill', 'prueba/days/sabado-19.yml')
+    expectRule(vs, 'day-pill', 'prueba/days/sabado-26.yml')
+    const msg = vs.find(v => v.rule === 'day-pill')!.message
+    expect(msg).toContain('Sábado')
+    expect(msg).toContain('days/sabado-19.yml')
+    expect(msg).toContain('days/sabado-26.yml')
+  })
+
+  it('day-pill: con pill «Sáb 19» / «Sáb 26» no hay violación day-pill', () => {
+    const vs = checkTrip(twoSaturdays('Sáb 19', 'Sáb 26'))
+    expect(vs.filter(v => v.rule === 'day-pill'), formatViolations(vs)).toEqual([])
+  })
+
+  it('day-pill: «Sáb 19» frente a «sáb 19» colisionan (sin distinguir mayúsculas)', () => {
+    const vs = checkTrip(twoSaturdays('Sáb 19', 'sáb 19'))
+    expectRule(vs, 'day-pill', 'prueba/days/sabado-19.yml')
+    expectRule(vs, 'day-pill', 'prueba/days/sabado-26.yml')
+  })
+
+  it('day-pill: «Sáb 19» en NFC frente a la misma en NFD colisionan (encoding)', () => {
+    const nfd = 'Sáb 19'
+    expect(nfd).not.toBe('Sáb 19')
+    const vs = checkTrip(twoSaturdays('Sáb 19', nfd))
+    expectRule(vs, 'day-pill', 'prueba/days/sabado-19.yml')
+    expectRule(vs, 'day-pill', 'prueba/days/sabado-26.yml')
+  })
+
   // Controles negativos: la puerta no da falsos rojos.
   it('D-09: un viaje con solo un trip.yml válido no tiene violaciones', () => {
     const vs = checkTrip(memTrip('borrador'))

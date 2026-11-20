@@ -127,6 +127,29 @@ describe('puerta DATA-05 (fixtures, siempre corren)', () => {
     expect(r.success).toBe(false)
   })
 
+  // D-02 / D-03 (Fase 10): slug de día `^[a-z0-9-]+$` (DAY_SLUG_RE) y `pill` opcional sin
+  // espacios en los extremos. Mismo día mínimo válido; solo varía el campo bajo prueba.
+  const minDay = {
+    slug: 'viernes', trip: 'roma', order: 1, roman: 'I', eyebrow: 'venerdì · 19 giugno',
+    title: 't', subtitle: 's', stats: [], timeline: [], cards: [],
+  }
+
+  it('DaySchema acepta un slug con fecha que empieza por letra ("sabado-19", D-02)', () => {
+    expect(DaySchema.safeParse({ ...minDay, slug: 'sabado-19' }).success).toBe(true)
+  })
+
+  it.each(['Sabado', 'sábado', 'sabado 19', 'sabado_19'])('DaySchema rechaza el slug de día "%s" (D-02)', (slug) => {
+    expect(DaySchema.safeParse({ ...minDay, slug }).success).toBe(false)
+  })
+
+  it('DaySchema acepta pill "Sáb 19" (D-03)', () => {
+    expect(DaySchema.safeParse({ ...minDay, slug: 'sabado-19', pill: 'Sáb 19' }).success).toBe(true)
+  })
+
+  it.each(['', ' Sáb 19', 'Sáb 19 '])('DaySchema rechaza pill %j (vacía o con espacios en los extremos, D-03)', (pill) => {
+    expect(DaySchema.safeParse({ ...minDay, pill }).success).toBe(false)
+  })
+
   // DATA-06: la prosa es Markdown-inline guardada como string.
   it('los campos de prosa (Md) son strings con Markdown-inline (DATA-06)', () => {
     const parsed = MonumentSchema.safeParse(validMonument)
