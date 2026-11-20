@@ -176,6 +176,69 @@ describe('puerta DATA-05 (fixtures, siempre corren)', () => {
   })
 })
 
+// ── Chrome del viaje (Fase 10, D-10…D-14) ────────────────────────────────────
+// Marca, pie, leyenda del mapa y título de pestaña viven en el trip.yml de cada viaje, como
+// campos OPCIONALES (esquema estrictamente aditivo, D-10): un viaje que no los define sigue
+// validando y la UI cae a un respaldo neutro (D-14). `brand` es texto estructurado (D-11, nunca
+// HTML); `footer` es una lista de líneas Markdown-inline (D-12); `pageTitle` vacío se rechaza
+// (edge SHAPE-04 empty).
+describe('chrome del viaje (D-10…D-14)', () => {
+  const baseTrip = {
+    slug: 'campania',
+    title: 'Viaje',
+    decoration: '·  X  ·',
+    heroMeta: '2027',
+    quote: 'Cita.',
+    quoteAttr: '— AUTOR',
+    infoCards: [{ label: 'Alojamiento', value: '**Hotel**' }],
+    howTo: ['Cómo usar la guía.'],
+    map: { center: { lat: 40.85, lng: 14.27 }, zoom: 13 },
+  }
+  const fullChrome = {
+    brand: { before: 'Napoli', after: 'maggio MMXXVII' },
+    footer: ['Preparado para _alguien_', 'Napoli · 2027'],
+    mapLegend: '✦ Leyenda ✦',
+    pageTitle: 'Napoli · 2027',
+  }
+
+  it('D-10: el trip.yml de Roma SIN brand/footer/mapLegend/pageTitle valida (esquema aditivo)', () => {
+    const doc = loadTrip('roma').docs.find(d => d.collection === 'trip')
+    expect(doc, 'content/trips/roma/trip.yml no cargado').toBeDefined()
+    const data: Record<string, unknown> = { ...doc!.data }
+    for (const k of ['brand', 'footer', 'mapLegend', 'pageTitle']) delete data[k]
+    const r = TripSchema.safeParse(data)
+    expect(r.success, r.success ? '' : z.prettifyError(r.error)).toBe(true)
+  })
+
+  it('acepta un viaje con los cuatro campos de chrome bien formados', () => {
+    expect(TripSchema.safeParse({ ...baseTrip, ...fullChrome }).success).toBe(true)
+  })
+
+  it('rechaza brand como string (D-11: objeto { before, after })', () => {
+    expect(TripSchema.safeParse({ ...baseTrip, brand: 'Roma' }).success).toBe(false)
+  })
+
+  it('rechaza brand sin after (D-11)', () => {
+    expect(TripSchema.safeParse({ ...baseTrip, brand: { before: 'Roma' } }).success).toBe(false)
+  })
+
+  it('rechaza footer que no es lista (D-12)', () => {
+    expect(TripSchema.safeParse({ ...baseTrip, footer: 'x' }).success).toBe(false)
+  })
+
+  it('rechaza footer vacío (D-12: al menos una línea)', () => {
+    expect(TripSchema.safeParse({ ...baseTrip, footer: [] }).success).toBe(false)
+  })
+
+  it('rechaza pageTitle vacío (edge SHAPE-04 empty, D-13)', () => {
+    expect(TripSchema.safeParse({ ...baseTrip, pageTitle: '' }).success).toBe(false)
+  })
+
+  it('rechaza mapLegend vacío', () => {
+    expect(TripSchema.safeParse({ ...baseTrip, mapLegend: '' }).success).toBe(false)
+  })
+})
+
 // ── Conteo por colección (SC#1) — SOLO roma (D-12) ───────────────────────────
 // Los totales son la huella de la migración del index.html y siguen siendo solo de Roma.
 // Ningún conteo para otros viajes: un borrador incompleto no es error (D-09).
