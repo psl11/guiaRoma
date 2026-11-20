@@ -26,12 +26,12 @@
 
 ### Rutas y portada (ROUTE)
 
-- [ ] **ROUTE-01**: Al abrir `/guiaRoma/` el usuario ve una portada con una tarjeta por viaje publicado (título, fechas, destinos, resumen) que enlaza a su guía
+- [x] **ROUTE-01**: Al abrir `/guiaRoma/` el usuario ve una portada con una tarjeta por viaje publicado (título, fechas, destinos, resumen) que enlaza a su guía
 - [x] **ROUTE-02**: La guía de Roma está en `/guiaRoma/trips/roma/` y la de Campania en `/guiaRoma/trips/campania/`
 - [x] **ROUTE-03**: Un enlace antiguo `/guiaRoma/#ancla` (p. ej. `#viernes`, `#pantheon`) lleva automáticamente a la misma ancla dentro de `/trips/roma/`, sin bucles al pulsar «Atrás»
-- [ ] **ROUTE-04**: Todas las guías publicadas se generan como páginas estáticas para GitHub Pages y cargan sin descargar la base de datos de contenido (`sql_dump`/WASM)
-- [ ] **ROUTE-05**: Un viaje marcado como borrador (`draft`) no aparece en la portada ni se publica
-- [ ] **ROUTE-06** ⚠: Desde cualquier guía el usuario puede volver a la portada (recomendado: enlace discreto «← Todos los viajes» en el pie, con re-captura documentada solo de esa captura de Roma — **pendiente de decisión**)
+- [x] **ROUTE-04**: Todas las guías publicadas se generan como páginas estáticas para GitHub Pages y cargan sin descargar la base de datos de contenido (`sql_dump`/WASM)
+- [x] **ROUTE-05**: Un viaje marcado como borrador (`draft`) no aparece en la portada ni se publica
+- [x] **ROUTE-06** ⚠: Desde cualquier guía el usuario puede volver a la portada (recomendado: enlace discreto «← Todos los viajes» en el pie, con re-captura documentada solo de esa captura de Roma — **pendiente de decisión**)
 
 ### Formas nuevas de viaje (EXT)
 
@@ -54,8 +54,8 @@
 
 ### Paridad de Roma (PAR)
 
-- [ ] **PAR-01**: Los 56 goldens de Roma pasan en su nueva URL sin re-baseline (salvo excepción aprobada explícitamente por el usuario, p. ej. ROUTE-06)
-- [ ] **PAR-02**: La suite de comportamiento de Roma (navegación, búsqueda, ruta del día, mapa, notas, modos) sigue en verde en `/trips/roma/`
+- [x] **PAR-01**: Los 56 goldens de Roma pasan en su nueva URL sin re-baseline (salvo excepción aprobada explícitamente por el usuario, p. ej. ROUTE-06)
+- [x] **PAR-02**: La suite de comportamiento de Roma (navegación, búsqueda, ruta del día, mapa, notas, modos) sigue en verde en `/trips/roma/`
 - [ ] **PAR-03**: Un usuario de la guía viva (`index.html` de `main`) que actualiza a la nueva versión conserva sus notas y preferencias de Roma (test de upgrade en el mismo origen)
 - [ ] **PAR-04**: Sign-off humano de Roma y Campania en móvil real, incluido el comportamiento sin conexión
 
@@ -109,12 +109,12 @@
 | SHAPE-03 | Phase 10 | Complete |
 | SHAPE-04 | Phase 10 | Complete |
 | SHAPE-05 | Phase 10 | Complete |
-| ROUTE-01 | Phase 11 | Pending |
+| ROUTE-01 | Phase 11 | Complete |
 | ROUTE-02 | Phase 11 | Complete |
 | ROUTE-03 | Phase 11 | Complete |
-| ROUTE-04 | Phase 11 | Pending |
-| ROUTE-05 | Phase 11 | Pending |
-| ROUTE-06 | Phase 11 | Pending |
+| ROUTE-04 | Phase 11 | Complete |
+| ROUTE-05 | Phase 11 | Complete |
+| ROUTE-06 | Phase 11 | Complete |
 | EXT-01 | Phase 12 | Pending |
 | EXT-02 | Phase 12 | Pending |
 | EXT-03 | Phase 12 | Pending |
@@ -128,8 +128,8 @@
 | CAMP-04 | Phase 13 | Pending |
 | CAMP-05 | Phase 13 | Pending |
 | CAMP-06 | Phase 13 | Pending |
-| PAR-01 | Phase 11 | Pending |
-| PAR-02 | Phase 11 | Pending |
+| PAR-01 | Phase 11 | Complete |
+| PAR-02 | Phase 11 | Complete |
 | PAR-03 | Phase 14 | Pending |
 | PAR-04 | Phase 14 | Pending |
 

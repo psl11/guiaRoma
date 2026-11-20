@@ -4,17 +4,17 @@ milestone: v1.1
 milestone_name: Multi-viaje + Campania
 current_phase: 11
 current_phase_name: Portada y rutas multi-viaje
-status: executing
-stopped_at: Completed 11-06-PLAN.md
-last_updated: "2026-11-20T20:16:46.730Z"
+status: verifying
+stopped_at: Completed 11-07-PLAN.md
+last_updated: "2026-11-20T20:27:38.080Z"
 last_activity: 2026-11-20
 last_activity_desc: Phase 11 execution started
-state_head: 1cb93b54693bfdf7b8dfb79c46022c05c89d1fcf
+state_head: fde3d6a8283d4927dd33694b42fc508e46f72a27
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 17
-  completed_plans: 16
+  completed_plans: 17
   percent: 0
 ---
 
@@ -31,7 +31,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 
 Phase: 11 (Portada y rutas multi-viaje) — EXECUTING
 Plan: 7 of 7
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-11-20 — Phase 11 execution started
 
 Progress: [░░░░░░░░░░] 0%
@@ -119,6 +119,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 11 P04 | 10min | 3 tasks | 8 files |
 | Phase 11 P05 | 8 min | 3 tasks | 10 files |
 | Phase 11 P06 | 45min | 2 tasks | 3 files |
+| Phase 11 P07 | ~7min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -284,6 +285,7 @@ Recent decisions affecting current work:
 - [Phase 11]: 11-06: legacy-redirect position tests hold image requests pending (not aborted) — aborted lazy-image fallbacks make mobile deep-anchor positions vary in 105 px steps even between direct loads
 - [Phase 11]: 11-06: legacy-hash-redirect = critical head script on the portada only; location.replace to JSON.stringify(base+'trips/'+LEGACY_TRIP+'/') + hash matching ^#[a-z0-9-]+$; no whitelist, no hashchange
 - [Phase 11]: 11-06: tests/parity/_pagesServer.ts (startPagesServer) is the Pages-like server for new specs (127.0.0.1, 301 trailing slash, 404.html, contained in outDir)
+- [Phase 11]: 11-07: portada.spec.ts derives expected cards and draft 404s from readTripManifest(); ROUTE-04 matcher proven non-vacuous against the draft 404 page (WASM + 6 sql_dump); gate re-registered at 110 tests / 13 files
 
 ### Pending Todos
 
@@ -320,8 +322,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-20T20:16:46.624Z
-Stopped at: Completed 11-06-PLAN.md
+Last session: 2026-11-20T20:27:37.971Z
+Stopped at: Completed 11-07-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
