@@ -14,6 +14,10 @@ import { findRomaLeaks } from './romaLeaks'
  * ni Práctica. Aquí se comprueba en el navegador que su guía tiene exactamente la forma que dicen
  * sus datos: tantas secciones y pastillas de día como días, en orden, y ninguna sección vacía.
  *
+ * Además (Plan 10-05): el bloque `trampa:` comprueba que ningún texto de Roma aparece en la guía
+ * de otro viaje (SHAPE-05, D-16), y los bloques `chrome:` / `título:` que marca, leyenda, pie y
+ * pestaña salen del trip.yml de cada viaje, con el respaldo neutro en prueba (SHAPE-03/04, D-13/14).
+ *
  * Corre contra `nuxi dev` (playwright.trips.config.ts, puerto 5300, base /guiaRoma/): `forma` y
  * `prueba` son viajes de desarrollo que no se prerenderizan hasta la Fase 11.
  *
@@ -265,6 +269,66 @@ test.describe('trampa: ningún texto de Roma en la guía de otro viaje (SHAPE-05
     const leaks = findRomaLeaks(`${texts.title}\n${texts.innerText}`)
     expect(leaks, 'en la guía de Roma el matcher encuentra «Roma»').toContain('Roma')
     expect(leaks, 'en la guía de Roma el matcher encuentra «giugno»').toContain('giugno')
+
+    await context.close()
+  })
+})
+
+// ── CHROME Y PESTAÑA POR VIAJE (SHAPE-03, SHAPE-04; D-13, D-14) ────────────────────────────
+//
+// Marca, leyenda del mapa, pie y título de pestaña salen del trip.yml de cada viaje. forma los
+// define todos; prueba no define ninguno y usa el respaldo neutro (D-14): la marca y la pestaña
+// son su título plano, sin punto ✦, sin pie y sin leyenda (el `.flourish` no es chrome del viaje
+// y se queda). Los títulos se comparan EXACTOS: si alguna plantilla de título concatenara algo
+// (« · Roma», un sufijo global…), la igualdad fallaría (edge SHAPE-04 adjacency).
+
+test.describe('chrome y pestaña desde los datos de cada viaje (SHAPE-03, SHAPE-04)', () => {
+  test('chrome: forma muestra su marca, su leyenda y su pie', async ({ browser }) => {
+    const { context, page } = await newIsolatedPage(browser)
+    await gotoHydrated(page, FORMA_URL)
+
+    const brand = page.locator('.topbar-inner .brand')
+    await expect(brand).toHaveCount(1)
+    expect(await visibleText(page, '.topbar-inner .brand')).toBe('Forma ✦ diez días de ensayo')
+    await expect(brand.locator('.brand-dot')).toHaveCount(1)
+
+    await expect(page.locator('p.map-legend')).toHaveCount(1)
+    expect(await visibleText(page, 'p.map-legend')).toBe('✦ Rojos · paradas con ficha ✦')
+
+    const footerP = page.locator('footer .container p')
+    await expect(footerP).toHaveCount(1)
+    await expect(footerP.locator('br')).toHaveCount(2)
+    await expect(footerP.locator('em')).toHaveText('comprobar')
+    const footerText = await visibleText(page, 'footer .container p')
+    expect(footerText).toContain('Guía de ensayo para comprobar la forma')
+    expect(footerText).toContain('Forma · diez días de prueba')
+    expect(footerText).toContain('"Toda guía se mide por sus días."')
+
+    await context.close()
+  })
+
+  test('chrome: prueba sin campos de chrome usa el respaldo neutro (D-14)', async ({ browser }) => {
+    const { context, page } = await newIsolatedPage(browser)
+    await gotoHydrated(page, PRUEBA_URL)
+
+    await expect(page.locator('.topbar-inner .brand')).toHaveCount(1)
+    expect(await visibleText(page, '.topbar-inner .brand')).toBe('Dos días de Prueba')
+    await expect(page.locator('.brand-dot')).toHaveCount(0)
+    await expect(page.locator('footer')).toHaveCount(0)
+    await expect(page.locator('p.map-legend')).toHaveCount(0)
+    await expect(page.locator('.flourish')).toHaveCount(1)
+
+    await context.close()
+  })
+
+  test('título: cada viaje pone su propia pestaña (D-13)', async ({ browser }) => {
+    const { context, page } = await newIsolatedPage(browser)
+
+    await gotoHydrated(page, FORMA_URL)
+    await expect(page).toHaveTitle('Forma · diez días de ensayo')
+
+    await gotoHydrated(page, PRUEBA_URL)
+    await expect(page).toHaveTitle('Dos días de Prueba')
 
     await context.close()
   })

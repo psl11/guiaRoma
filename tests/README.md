@@ -185,8 +185,9 @@ de `pnpm verify` y una fuera.
 pnpm test:trips   # = playwright test -c playwright.trips.config.ts
 ```
 
-- **Qué cubre:** los **5 tests** de `tests/trips/isolation.spec.ts`, en `/trips/prueba`
-  frente a Roma:
+- **Qué cubre:** **17 tests en 2 ficheros** (`tests/trips/isolation.spec.ts`, 5, y
+  `tests/trips/shape.spec.ts`, 12). Los de `isolation.spec.ts`, en `/trips/prueba` frente
+  a Roma:
   - *navegación en /trips/prueba (PLAT-02)* (2): un enlace a ficha (timeline y prosa)
     resalta la ficha dentro de prueba y «Volver» restaura el scroll; la pastilla activa
     sigue al scroll entre los días de prueba.
@@ -197,6 +198,17 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
   - *preferencias y notas por viaje (PLAT-03)* (1): con preferencias `roma-*` sembradas,
     prueba arranca con los valores por defecto, y lo que se escribe en prueba va a
     claves `prueba-*` sin pisar las de Roma.
+- Los de `shape.spec.ts` (Fase 10, detalle en §5.6), por prefijo de título (útil con `-g`):
+  - `forma:` (4): forma no tiene Arte/Arquitectura/Reservas/Práctica; `main` sale del
+    layout (10 días en orden y Gastronomía al final); cada día muestra su nombre y su
+    fecha; 10 pastillas de día distintas que llevan cada una a su día.
+  - `prueba:` (1): solo Inicio, Mapa y sus dos días.
+  - `trampa:` (4): la lista de viajes no-Roma incluye prueba y forma; un test por viaje
+    no-Roma (hoy forma y prueba) que no muestra ningún texto de Roma; control positivo en
+    Roma.
+  - `chrome:` (2): forma muestra su marca, su leyenda y su pie; prueba, sin campos de
+    chrome, usa el respaldo neutro.
+  - `título:` (1): la pestaña de cada viaje es EXACTAMENTE su `pageTitle` o su título plano.
 - **Config:** `playwright.trips.config.ts` (autocontenida, no importa las de paridad):
   `nuxi dev` en el **puerto 5300** con `NUXT_APP_BASE_URL=/guiaRoma/`, que Playwright
   arranca y para (`reuseExistingServer: false`); **un worker**, `retries: 0`, un solo
@@ -278,4 +290,67 @@ Sin build (`.output/public/index.html` ausente) el describe **se salta**, no fal
 falso. Ninguno de estos specs vive en `tests/parity/`: el conteo de §4 (80 / 11) no
 cambia.
 
-> Medido el 2026-11-20 en esta rama: `pnpm test:trips` → 5 tests en 1 fichero.
+> Medido el 2026-11-20 en esta rama (tras la Fase 10): `pnpm test:trips` → 17 tests en
+> 2 ficheros.
+
+### 5.6 Forma y chrome desde datos (Fase 10)
+
+La Fase 10 hace que la **forma** de la guía (qué secciones y pastillas hay, cuántos días)
+y su **chrome** (marca de cabecera, leyenda del mapa, pie y título de la pestaña) salgan
+de los datos de cada viaje. Roma tiene que seguir idéntica (§1-§4: la puerta de 80 tests
+y 56 goldens no cambia); lo nuevo se defiende con estas piezas:
+
+- **El viaje dev-only `content/trips/forma/`** (fixture, no un viaje real): 10 días con
+  slugs con fecha (`sabado-19` … `lunes-28`, `order` 1..10) que repiten día de la semana
+  (dos sábados, con `pill` propia: «Sáb 19», «Sáb 26»…), 2 monumentos con coordenadas
+  (el mapa siempre tiene marcadores) y 1 ficha de comida. **No** tiene Arte,
+  Arquitectura, Reservas ni Práctica: sus secciones y pastillas no deben aparecer. Define
+  todo su chrome (`pageTitle`, `brand`, `mapLegend`, `footer`). Como prueba, solo se ve en
+  dev (`/trips/forma`), no se prerenderiza y se marcará `draft: true` en la Fase 11.
+  **Centinela `FORMA-CENTINELA-10A`** (en su howTo): `tests/data/build-isolation.spec.ts`
+  comprueba que no aparece en `index.html` ni en `_payload.json` de la build (§5.5).
+  `content/trips/prueba/` **no se toca**: se queda sin campos de chrome a propósito, para
+  probar el respaldo neutro.
+- **`tests/trips/shape.spec.ts`** (`test:trips`, FUERA de `verify`, §5.1): forma y prueba
+  en el navegador (bloques `forma:`/`prueba:`), el test-trampa (`trampa:`), el chrome
+  (`chrome:`) y la pestaña (`título:`). Valores esperados: forma → pestaña «Forma · diez
+  días de ensayo», marca «Forma ✦ diez días de ensayo» con `.brand-dot`, leyenda
+  «✦ Rojos · paradas con ficha ✦», pie de 3 líneas (2 `<br>`, «comprobar» en `<em>`);
+  prueba → marca y pestaña «Dos días de Prueba», sin `.brand-dot`, sin `<footer>` y sin
+  `p.map-legend` (el `.flourish` se queda).
+- **`tests/data/romaChrome.spec.ts`** (`test:data`, dentro de `verify`): el chrome de Roma
+  en su `trip.yml` es **verbatim** el del `index.html` heredado (leído con cheerio, solo
+  lectura), y un bloque **post-build** comprueba que marca, leyenda, pie y un único
+  `<title>` están en `.output/public/index.html` (render de servidor, no isla de
+  cliente). Sin build, ese bloque se salta.
+- **`tests/unit/tripLayout.spec.ts`** (`test:unit`): `buildTripLayout` (orden fijo,
+  presencia solo por datos, etiqueta de día = `pill` o `dayLabel(eyebrow)`, 0/1/N días),
+  `dayPillLabel` e `inlineMdToPlain`; el caso Roma lee sus YAML reales y espera las 12
+  pastillas de la paridad.
+- **`tests/unit/romaLeaks.spec.ts`** (`test:unit`): los dientes del matcher de la trampa
+  (`tests/trips/romaLeaks.ts`, ver abajo): «aroma», «Romaña», «romano», «guiaRoma»,
+  «payment» no casan; «Roma», «ROMA», «ROYAL COURT», «Royal Court» partido por un salto de línea sí.
+- **`tests/unit/romaChromeGuard.spec.ts`** (`test:unit`, guardián **D-17**): escanea el
+  fichero ENTERO de cada `app/**/*.{vue,ts}` (incluidos `app/app.vue` y `app/pages/`),
+  sin comentarios, y falla si reaparece un literal de chrome de Roma
+  (`ROMA_CHROME_LITERALS`: `giugno MMXXVI`, `concierto Einaudi`, `19—23 giugno 2026`,
+  `dos colegas`). Con sus propios dientes en memoria.
+- **Reglas nuevas de la puerta de datos** (§5.3, `tests/data/trips.ts`): `day-order`
+  (`order` de los días único y contiguo 1..N, sin límite de días), `day-pill` (etiquetas
+  de pastilla únicas en el viaje, calculadas igual que en la UI); `anchor` valida contra
+  los slugs de entidad más las secciones que el viaje **tiene** según `buildTripLayout`
+  (un `#reservas` en un viaje sin reservas falla); `cross-trip-link` pasa a **lista
+  blanca**: en la prosa solo `#id` o `http(s)://` (nada de `/…`, `../…`, `javascript:`).
+
+**La lista trampa (D-16).** `ROMA_MARKERS` = «Roma», «Einaudi», «giugno», «MMXXVI», «Pay»,
+«Fellini», «Royal Court». El test-trampa recorre **todos** los viajes de `content/trips`
+salvo `roma` y busca esas palabras (límites de palabra Unicode, sin distinguir
+mayúsculas) en `document.title`, en el texto visible del `body` y en el `textContent` de
+un clon del `body` sin `script`/`style`/`noscript`/`template`. Antes de escanear comprueba
+que la página se renderizó (h1 de `#inicio` = título del viaje, ≥ 3 pastillas, pestaña no
+vacía), y un control positivo comprueba que en Roma el mismo matcher SÍ encuentra «Roma»
+y «giugno»: la trampa no puede pasar en vacío.
+
+> **Regla de oro:** si la trampa salta, se arregla el **código** de `app/` o los **datos**
+> del viaje afectado. **Nunca** se quita una palabra de la lista, ni se excluye un viaje o
+> una parte del `body` para que pase.
