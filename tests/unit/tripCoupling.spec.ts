@@ -89,10 +89,32 @@ function useStateFirstArgs(code: string): string[] {
 
 /** Una etiqueta legible por cada patrón de acoplamiento encontrado en `code` (ya sin comentarios). */
 export function scanSource(code: string): string[] {
-  // RED: el escáner aún no detecta nada (los «dientes» deben fallar).
-  void code
-  void useStateFirstArgs
-  return []
+  const found: string[] = []
+  if (/\buseTrip\s*\(\s*['"`]/.test(code)) {
+    found.push('viaje fijo: useTrip con slug literal')
+  }
+  if (/['"`]roma-/.test(code)) {
+    found.push('clave literal roma-…')
+  }
+  for (const arg of useStateFirstArgs(code)) {
+    if (!arg.startsWith('tripStateKey(')) {
+      found.push(`useState sin tripStateKey: useState(${arg.split('\n')[0]}…`)
+    }
+  }
+  if (/\bshallowRef\s*<\s*MiniSearch\b/.test(code)) {
+    found.push('índice MiniSearch único de módulo (shallowRef<MiniSearch>)')
+  }
+  if (/\b(?:getItem|setItem)\s*\(\s*['"`]/.test(code)) {
+    found.push('getItem/setItem con clave literal')
+  }
+  if (
+    /\bfor\s*\(\s*(?:const|let|var)\s+\w+\s+in\s+(?:window\.)?localStorage\b/.test(code)
+    || /\bObject\.(?:keys|values|entries)\s*\(\s*(?:window\.)?localStorage\b/.test(code)
+    || /\blocalStorage\s*\.\s*(?:key|clear|removeItem)\s*\(/.test(code)
+  ) {
+    found.push('enumeración o borrado de localStorage')
+  }
+  return found
 }
 
 const FILES: string[] = SCANNED_DIRS.flatMap(([dir, ext]) =>
