@@ -41,11 +41,18 @@ import { isVisible as isVisibleForPace, type ItemPace } from '~/utils/pace'
 // aquí como `isVisibleForPace` para no auto-sombrearse con el método que el composable expone):
 // la matriz de ritmo vive en un solo sitio, testeada en Vitest plano (tests/unit/pace.spec.ts).
 //
-// `useState`/`computed` son auto-importados por Nuxt.
-export function useTripModes() {
-  const pace = useState<'optimistic' | 'neutral' | 'slow'>('pace', () => 'optimistic') // DEFAULT = prerenderizado
-  const light = useState('light', () => false)
-  const resumen = useState('resumen', () => false)
+// POR VIAJE (Fase 9, D-08): los tres estados viven en claves `useState` sufijadas con el slug
+// (`tripStateKey(slug, 'pace')` → `pace:<slug>`), así que el ritmo y los modos de un viaje no se
+// mezclan con los de otro. El slug llega por argumento o, si falta, por `useTripSlug()` (inject
+// desde TripView; TheHero y los Timeline* son descendientes). Los defaults son los MISMOS para
+// todos los viajes (D-06: sin defaults por viaje ni campo nuevo en el esquema).
+//
+// `useState`/`computed` son auto-importados por Nuxt; `tripStateKey`/`tripStorageKey` de
+// `app/utils/tripStorage.ts`; `useTripSlug` de `app/composables/useTripContext.ts`.
+export function useTripModes(slug: string = useTripSlug()) {
+  const pace = useState<'optimistic' | 'neutral' | 'slow'>(tripStateKey(slug, 'pace'), () => 'optimistic') // DEFAULT = prerenderizado
+  const light = useState(tripStateKey(slug, 'light'), () => false)
+  const resumen = useState(tripStateKey(slug, 'resumen'), () => false)
 
   // El método expuesto delega en la función pura (la matriz no se reimplementa aquí).
   const isVisible = (itemPace: ItemPace) => isVisibleForPace(itemPace, pace.value)
@@ -60,13 +67,21 @@ export function useTripModes() {
 // Clases de `<body>` vía `useHead({ bodyAttrs })` (declarativo, SSR-safe), NUNCA tocando el DOM
 // a mano. `useHead`/`onMounted`/`watch` son auto-importados por Nuxt.
 //
-// Claves de localStorage LITERALES (paridad con la versión viva — una preferencia guardada hoy
-// sigue siendo válida): `roma-pace` ('optimistic'|'neutral'|'slow'), `roma-light` ('1'|'0'),
-// `roma-resumen` ('1'|'0'). `roma-pace` se VALIDA contra los tres literales antes de asignar
-// (T-04-01: un valor manipulado en localStorage solo podría activar clases CSS conocidas, sin
-// sink de inyección; un valor fuera del enum se ignora).
+// Claves de localStorage POR VIAJE (Fase 9, D-04): `tripStorageKey(slug, 'pace'|'light'|'resumen')`
+// → `<slug>-pace` ('optimistic'|'neutral'|'slow'), `<slug>-light` ('1'|'0'), `<slug>-resumen`
+// ('1'|'0'). En Roma coinciden BYTE A BYTE con las de la guía viva (`roma-pace`, `roma-light`,
+// `roma-resumen`): una preferencia guardada hoy sigue siendo válida, sin migración. Solo se lee y
+// escribe por clave exacta (nunca se enumera, borra ni renombra nada de localStorage). El ritmo
+// guardado se VALIDA contra los tres literales antes de asignar (T-04-01/T-09-01: un valor
+// manipulado solo podría activar clases CSS conocidas, sin sink de inyección; un valor fuera del
+// enum se ignora). El tema claro/oscuro NO es por viaje: sigue global con su propia clave en
+// `nuxt.config.ts` (`colorMode.storageKey`, D-07).
+//
+// El slug se lee con `useTripSlug()` como PRIMERA sentencia (tramo síncrono): TheHero, su host,
+// es descendiente de TripView, así que el inject resuelve.
 export function useTripModesController() {
-  const { pace, light, resumen } = useTripModes()
+  const slug = useTripSlug()
+  const { pace, light, resumen } = useTripModes(slug)
 
   // Activar light fuerza el ritmo tranquilo (index.html:6552). SIN else: desactivar NO
   // revierte pace (Pitfall 5) — el usuario decide si volver a subirlo.
@@ -89,17 +104,20 @@ export function useTripModesController() {
     // Restauración SOLO en cliente (micro-flash intencional, SC#4). El orden importa:
     // pace ANTES que light, porque al poner light=true el watch fuerza pace='slow'
     // (index.html:6650-6652 restorePace() → restoreLightMode()).
-    const savedPace = localStorage.getItem('roma-pace')
+    const kPace = tripStorageKey(slug, 'pace')
+    const kLight = tripStorageKey(slug, 'light')
+    const kResumen = tripStorageKey(slug, 'resumen')
+    const savedPace = localStorage.getItem(kPace)
     if (savedPace === 'optimistic' || savedPace === 'neutral' || savedPace === 'slow') {
       pace.value = savedPace
     }
-    if (localStorage.getItem('roma-light') === '1') light.value = true
-    if (localStorage.getItem('roma-resumen') === '1') resumen.value = true
+    if (localStorage.getItem(kLight) === '1') light.value = true
+    if (localStorage.getItem(kResumen) === '1') resumen.value = true
 
     // Persistencia DENTRO de onMounted: registrar los watch en cliente evita escribir en
-    // prerender. Claves literales, mismos valores que la versión viva.
-    watch(pace, v => localStorage.setItem('roma-pace', v))
-    watch(light, v => localStorage.setItem('roma-light', v ? '1' : '0'))
-    watch(resumen, v => localStorage.setItem('roma-resumen', v ? '1' : '0'))
+    // prerender. Claves por viaje, mismos valores que la versión viva.
+    watch(pace, v => localStorage.setItem(kPace, v))
+    watch(light, v => localStorage.setItem(kLight, v ? '1' : '0'))
+    watch(resumen, v => localStorage.setItem(kResumen, v ? '1' : '0'))
   })
 }

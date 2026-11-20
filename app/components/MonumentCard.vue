@@ -49,9 +49,10 @@
 // `undefined` (motif ausente) se oculta `.card-hero` (mirror de `img.parentElement.style.display
 // ='none'`, index.html:2222) — para monumentos `motif` es obligatorio, así que nunca ocurre.
 //
-// NOTAS PERSISTENTES (FEAT-04, Fase 7). Port 1:1 de `setupNotes` (index.html:6471-6483): clave
-// EXACTA `roma-note-<slug>`, lectura en `onMounted` (jamás en setup → sin warning de hidratación,
-// SSR emite vacío y se rellena un frame después, micro-flash sancionado igual que useTripModes),
+// NOTAS PERSISTENTES (FEAT-04, Fase 7). Port 1:1 de `setupNotes` (index.html:6471-6483): clave por
+// viaje `tripStorageKey(slug, 'note-<ficha>')` (Fase 9, D-04), que en Roma es EXACTAMENTE la de
+// siempre (`roma-note-<ficha>`, sin migración), lectura en `onMounted` (jamás en setup → sin
+// warning de hidratación, SSR emite vacío y se rellena un frame después, micro-flash sancionado igual que useTripModes),
 // y guardado en `input` con un debounce inocuo (~200ms, D-03). Se enlaza con `:value`/`@input`
 // (binding explícito en vez del azúcar bidireccional) para mantener el default de SSR explícito
 // (paralelo a SearchBox:62-64). El texto
@@ -116,11 +117,14 @@ onMounted(() => {
   if (img && img.complete && img.naturalWidth === 0) onHeroError()
 })
 
-// NOTAS persistentes (port de setupNotes, index.html:6471-6483). Clave EXACTA `roma-note-<slug>`.
+// NOTAS persistentes (port de setupNotes, index.html:6471-6483). Clave por viaje
+// `tripStorageKey(slug, 'note-<ficha>')` (Fase 9, D-04): el slug del viaje se lee por inject
+// (`useTripSlug()`; MonumentCard es descendiente de DaySection → TripView) y en Roma la clave es
+// la de siempre, sin migración. Solo getItem/setItem por clave exacta.
 // Lectura SÓLO en onMounted (sin warning de hidratación: SSR emite vacío). Guardado en @input con
 // debounce inocuo (~200ms, D-03). try/catch como el original (localStorage puede estar bloqueado).
 const noteText = ref('')
-const NOTE_KEY = `roma-note-${monument.slug}`
+const NOTE_KEY = tripStorageKey(useTripSlug(), `note-${monument.slug}`)
 onMounted(() => {
   try {
     noteText.value = localStorage.getItem(NOTE_KEY) ?? ''
