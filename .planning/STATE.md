@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 10
 current_phase_name: Forma y chrome desde datos
 status: executing
-stopped_at: Completed 10-01-PLAN.md
-last_updated: "2026-11-20T14:04:17.779Z"
+stopped_at: Completed 10-02-PLAN.md
+last_updated: "2026-11-20T14:15:14.181Z"
 last_activity: 2026-11-20
 last_activity_desc: Phase 10 execution started
-state_head: 3c36233da15f4b9ba8f994479922953ba2f482a5
+state_head: 0fc9ae7b18f8a241d2424bb6857bf203615dc5d2
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 10
-  completed_plans: 6
+  completed_plans: 7
   percent: 0
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 10 (Forma y chrome desde datos) — EXECUTING
-Plan: 2 of 5
+Plan: 3 of 5
 Status: Ready to execute
 Last activity: 2026-11-20 — Phase 10 execution started
 
@@ -109,6 +109,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 09 P04 | 7min | 2 tasks | 4 files |
 | Phase 09 P05 | 8min | 2 tasks | 3 files |
 | Phase 10 P01 | 7min | 2 tasks | 5 files |
+| Phase 10 P02 | 7 min | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -249,6 +250,8 @@ Recent decisions affecting current work:
 - [Phase 09]: 09-05: build-isolation.spec.ts in test:data guards that the static Roma build carries no prueba data (sentinel PRUEBA-CENTINELA-9F3) and uses suffixed state keys; it is a regression guard proven by mutating the build output
 - [Phase 10]: buildTripLayout (app/utils/tripLayout.ts) es la única fuente de secciones y pastillas: TripView <main> y NavPills recorren la misma lista (D-06)
 - [Phase 10]: dayPillLabel trata pill null/undefined/'' como ausente (Content entrega null para opcionales)
+- [Phase 10]: Chrome del viaje (brand/footer/mapLegend/pageTitle) son campos opcionales del trip.yml; sin ellos respaldo neutro = título plano del viaje o no se renderiza (D-10…D-14)
+- [Phase 10]: El <title> lo pone TripView con useHead por viaje; app.vue ya no fija título global (D-13)
 
 ### Pending Todos
 
@@ -285,8 +288,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-20T14:04:17.716Z
-Stopped at: Completed 10-01-PLAN.md
+Last session: 2026-11-20T14:15:14.119Z
+Stopped at: Completed 10-02-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
