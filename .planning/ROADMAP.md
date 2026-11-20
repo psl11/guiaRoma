@@ -50,7 +50,7 @@ Re-plataforma el `index.html` único (6.665 líneas) a Nuxt 4 SSG con paridad vi
   3. Quien ya usa Roma abre la guía y encuentra sus notas, su ritmo, «caminar menos» y el modo resumen tal como los dejó (claves `roma-*` intactas, sin migración destructiva); las notas y preferencias de otro viaje no se mezclan con las de Roma
   4. Un YAML inválido en cualquier viaje (slug de viaje no válido, carpeta distinta del slug, id duplicado, id que choca con un ancla de sección, enlace `#ficha` que apunta fuera del viaje, nombre reservado de Content) hace fallar `pnpm verify` señalando el fichero culpable
   5. La puerta de paridad de Roma sigue verde en `/` sin ningún cambio en `tests/parity/` ni re-baseline de goldens
-**Plans**: 4/5 plans executed
+**Plans**: 5/5 plans executed
 Plans:
 **Wave 1**
 - [x] 09-01-PLAN.md — Tracer: contexto de viaje (provide/inject) + navegación y preferencias/notas por viaje, probado en Roma (`/`) con la paridad intacta (PLAT-02, PLAT-03)
@@ -63,7 +63,7 @@ Plans:
 - [x] 09-04-PLAN.md — E2E de aislamiento en `/trips/prueba` (`pnpm test:trips`, fuera de la puerta) + guardián de acoplamiento en `test:unit` (PLAT-01..03)
 
 **Wave 4** *(blocked on Wave 3 completion)*
-- [ ] 09-05-PLAN.md — Cierre: centinela de build, `verify` desde cachés limpias, README y puerta completa de la fase (PLAT-01..04, SC4/SC5)
+- [x] 09-05-PLAN.md — Cierre: centinela de build, `verify` desde cachés limpias, README y puerta completa de la fase (PLAT-01..04, SC4/SC5)
 **Research**: no (refactor mecánico; inventario `file:line` de acoplamientos ya hecho en `research/ARCHITECTURE.md`)
 **Notas**: barrido `grep` de `useTrip('roma')`, claves `useState`/`localStorage` globales e índice MiniSearch de módulo convertido en tareas; `tests/data` parametrizado por viaje (conteos y `migration-diff` solo para Roma). La persistencia por viaje usa `${slug}-${key}`, por lo que las claves actuales de Roma ya cumplen el esquema (la prueba real de upgrade desde `main` va a la Fase 14).
 
@@ -169,7 +169,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 6. Derivados de datos — búsqueda y ruta del día | v1.0 | 5/5 | Complete | 2026-06-21 |
 | 7. Isla client-only — mapa, fallback, notas | v1.0 | 4/4 | Complete | 2026-06-23 |
 | 8. Verificación de paridad | v1.0 | 7/7 | Complete | 2026-06-24 |
-| 9. Plataforma por viaje | v1.1 | 4/5 | In Progress | - |
+| 9. Plataforma por viaje | v1.1 | 5/5 | In Progress | - |
 | 10. Forma y chrome desde datos | v1.1 | 0/TBD | Not started | - |
 | 11. Portada y rutas multi-viaje | v1.1 | 0/TBD | Not started | - |
 | 12. Formas nuevas de viaje | v1.1 | 0/TBD | Not started | - |

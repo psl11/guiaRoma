@@ -4,17 +4,17 @@ milestone: v1.1
 milestone_name: Multi-viaje + Campania
 current_phase: 9
 current_phase_name: Plataforma por viaje
-status: executing
-stopped_at: Completed 09-04-PLAN.md
-last_updated: "2026-11-20T10:46:41.892Z"
+status: verifying
+stopped_at: Completed 09-05-PLAN.md
+last_updated: "2026-11-20T10:54:57.677Z"
 last_activity: 2026-11-20
 last_activity_desc: Phase 9 execution started
-state_head: f87653056f5e0d1c04432d06b1fa1ed5036be21a
+state_head: 4d2e96f52f90b1b2b1bca3646fd2fe75254f5a96
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 5
-  completed_plans: 4
+  completed_plans: 5
   percent: 0
 ---
 
@@ -31,7 +31,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 
 Phase: 9 (Plataforma por viaje) — EXECUTING
 Plan: 5 of 5
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-11-20 — Phase 9 execution started
 
 Progress: [░░░░░░░░░░] 0%
@@ -107,6 +107,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 09 P02 | 5min | 2 tasks | 7 files |
 | Phase 09 P03 | 9min | 2 tasks | 11 files |
 | Phase 09 P04 | 7min | 2 tasks | 4 files |
+| Phase 09 P05 | 8min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -243,6 +244,8 @@ Recent decisions affecting current work:
 - [Phase 09]: 09-03: one MiniSearch index per trip slug in a client-only module Map; search state keys search:query|open|results:<slug>
 - [Phase 09]: 09-04: test:trips (playwright.trips.config.ts, nuxi dev :5300, 1 worker) proves per-trip search/navigation/prefs on /trips/prueba; stays outside pnpm verify and the parity gate
 - [Phase 09]: 09-04: tests/unit/tripCoupling.spec.ts guards app/composables, components and utils (comment-stripped) against fixed useTrip slugs, roma- literals, useState without tripStateKey, module-wide MiniSearch, literal storage keys and localStorage enumeration; index.vue and nuxt.config.ts are documented exceptions
+- [Phase 09]: 09-05: pnpm verify starts with rm -rf .data .nuxt .output, so the gate can no longer validate stale Content data
+- [Phase 09]: 09-05: build-isolation.spec.ts in test:data guards that the static Roma build carries no prueba data (sentinel PRUEBA-CENTINELA-9F3) and uses suffixed state keys; it is a regression guard proven by mutating the build output
 
 ### Pending Todos
 
@@ -279,8 +282,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-20T10:46:41.867Z
-Stopped at: Completed 09-04-PLAN.md
+Last session: 2026-11-20T10:54:57.650Z
+Stopped at: Completed 09-05-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
