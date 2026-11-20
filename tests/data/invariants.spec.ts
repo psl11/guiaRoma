@@ -39,6 +39,11 @@ import {
  *    del YAML; `[x](#reservas)` sin reference/reservas.yml es rojo (cierra WR-01; el control
  *    negativo de la Fase 9 queda invertido).
  *
+ * Fase 11 (portada) — reglas nuevas sobre trip.yml:
+ *  - D-08 `trip-dates`: `endDate` no puede ser anterior a `startDate` (comparación de strings ISO).
+ *  - D-07 `trip-summary-link`: el `summary` no lleva enlaces (Markdown `[t](x)`, autoenlace
+ *    `<scheme:…>` ni URL suelta `http(s)://`/`www.`): la tarjeta de la portada ya es un `<a>`.
+ *
  * El bloque «la puerta tiene dientes» prueba cada regla con un fixture (en memoria con
  * `loadTripFromFiles` o en disco en tests/data/fixtures/trips/, NUNCA bajo content/).
  */
@@ -399,6 +404,43 @@ describe('la puerta tiene dientes (fixtures)', () => {
     const vs = checkTrip(memTrip('prueba', {
       'monuments/galeria.yml': monument('prueba', 'galeria', withProse('Ver [la web](https://example.org/x).')),
     }))
+    expect(vs, formatViolations(vs)).toEqual([])
+  })
+
+  // ── Fase 11 (portada, D-08/D-07): fechas del viaje y resumen sin enlaces ─────
+  /** Violaciones de una sola regla en un viaje en memoria con solo trip.yml (+ los campos dados). */
+  const tripRule = (rule: Rule, over: Record<string, unknown>) =>
+    checkTrip(memTrip('prueba', {}, over)).filter(v => v.rule === rule)
+
+  it('trip-dates: endDate 2026-06-18 anterior a startDate 2026-06-19 → una violación en trip.yml', () => {
+    expect(tripRule('trip-dates', { startDate: '2026-06-19', endDate: '2026-06-18' })).toEqual([{
+      file: 'content/trips/prueba/trip.yml',
+      rule: 'trip-dates',
+      message: 'endDate (2026-06-18) anterior a startDate (2026-06-19)',
+    }])
+  })
+
+  it('trip-dates: fechas iguales → sin violación', () => {
+    expect(tripRule('trip-dates', { startDate: '2026-06-19', endDate: '2026-06-19' })).toEqual([])
+  })
+
+  it('trip-dates: solo endDate → sin violación', () => {
+    expect(tripRule('trip-dates', { endDate: '2026-06-23' })).toEqual([])
+  })
+
+  it.each(['[x](#inicio)', 'Ver https://example.org', '<https://example.org>', 'Ver www.example.org'])(
+    'trip-summary-link: summary %j → violación en trip.yml',
+    (summary) => {
+      expect(tripRule('trip-summary-link', { summary })).toEqual([{
+        file: 'content/trips/prueba/trip.yml',
+        rule: 'trip-summary-link',
+        message: 'summary con enlace: la tarjeta de la portada ya es un enlace; quita [texto](destino)',
+      }])
+    },
+  )
+
+  it('trip-summary-link: «Cinco días a pie por Roma.» → sin violaciones', () => {
+    const vs = checkTrip(memTrip('prueba', {}, { summary: 'Cinco días a pie por Roma.' }))
     expect(vs, formatViolations(vs)).toEqual([])
   })
 })

@@ -267,19 +267,20 @@ describe('chrome del viaje (D-10…D-14)', () => {
 // `draft` es un booleano OPCIONAL: `true` saca el viaje de la build de producción (content.config.ts
 // lo excluye de las 6 colecciones). Booleano estricto: un `draft: 'yes'` se rechaza aquí y hace
 // lanzar a scripts/tripManifest.mjs, así que un borrador mal escrito nunca se publica por defecto.
-describe('borradores (D-16)', () => {
-  const baseTrip = {
-    slug: 'campania',
-    title: 'Viaje',
-    decoration: '·  X  ·',
-    heroMeta: '2027',
-    quote: 'Cita.',
-    quoteAttr: '— AUTOR',
-    infoCards: [{ label: 'Alojamiento', value: '**Hotel**' }],
-    howTo: ['Cómo usar la guía.'],
-    map: { center: { lat: 40.85, lng: 14.27 }, zoom: 13 },
-  }
+// Viaje base válido mínimo: lo comparten los describes de borradores (D-16) y de portada (D-08).
+const baseTrip = {
+  slug: 'campania',
+  title: 'Viaje',
+  decoration: '·  X  ·',
+  heroMeta: '2027',
+  quote: 'Cita.',
+  quoteAttr: '— AUTOR',
+  infoCards: [{ label: 'Alojamiento', value: '**Hotel**' }],
+  howTo: ['Cómo usar la guía.'],
+  map: { center: { lat: 40.85, lng: 14.27 }, zoom: 13 },
+}
 
+describe('borradores (D-16)', () => {
   it('acepta draft: true', () => {
     expect(TripSchema.safeParse({ ...baseTrip, draft: true }).success).toBe(true)
   })
@@ -294,6 +295,52 @@ describe('borradores (D-16)', () => {
 
   it('rechaza draft: \'yes\' (booleano estricto, fail-closed)', () => {
     expect(TripSchema.safeParse({ ...baseTrip, draft: 'yes' }).success).toBe(false)
+  })
+})
+
+// ── Portada: campos del viaje (Fase 11, D-08, D-23) ────────────────────────────
+// startDate/endDate son strings ISO con regex + refine de calendario (nunca `z.iso.date()`);
+// destinations es una lista no vacía de nombres no vacíos; summary, Markdown-inline no vacío.
+describe('portada: campos del viaje (D-08, D-23)', () => {
+  const issues = (data: unknown) => {
+    const r = TripSchema.safeParse(data)
+    return r.success ? [] : r.error.issues.map(i => i.message)
+  }
+
+  it('acepta fechas, destinos y resumen sobre un viaje base válido', () => {
+    const r = TripSchema.safeParse({
+      ...baseTrip,
+      startDate: '2026-06-19',
+      endDate: '2026-06-23',
+      destinations: ['Roma'],
+      summary: 'Texto.',
+    })
+    expect(r.success, JSON.stringify(r.error?.issues)).toBe(true)
+  })
+
+  it('rechaza startDate «2026-02-30» con «fecha inexistente: «2026-02-30»»', () => {
+    expect(issues({ ...baseTrip, startDate: '2026-02-30' })).toContain('fecha inexistente: «2026-02-30»')
+  })
+
+  it.each(['2026-6-19', '19/06/2026'])('rechaza startDate %s (no es ISO YYYY-MM-DD)', (bad) => {
+    expect(issues({ ...baseTrip, startDate: bad })).toContain('fecha ISO YYYY-MM-DD')
+  })
+
+  it.each([[[]], [['']]])('rechaza destinations %j con «destinations vacío o con un elemento vacío»', (bad) => {
+    expect(issues({ ...baseTrip, destinations: bad })).toContain('destinations vacío o con un elemento vacío')
+  })
+
+  it('rechaza summary vacío', () => {
+    expect(TripSchema.safeParse({ ...baseTrip, summary: '' }).success).toBe(false)
+  })
+
+  it('D-23: el JSON-Schema de startDate/endDate no lleva format: date (columna de texto en Content)', () => {
+    const props = (z.toJSONSchema(TripSchema) as { properties: Record<string, { type?: string, format?: string }> }).properties
+    for (const key of ['startDate', 'endDate']) {
+      expect(props[key], key).toBeDefined()
+      expect(props[key]?.type, key).toBe('string')
+      expect(props[key]?.format, key).toBeUndefined()
+    }
   })
 })
 
