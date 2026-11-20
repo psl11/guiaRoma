@@ -27,7 +27,7 @@ import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { basename, join, relative, sep } from 'node:path'
 import { parse as parseYaml } from 'yaml'
 // Import RELATIVO (Vitest plano, sin alias): la puerta usa la MISMA función que la UI (Pitfall 5).
-import { dayPillLabel } from '../../app/utils/tripLayout'
+import { STRUCTURAL_SECTION_IDS, buildTripLayout, dayPillLabel } from '../../app/utils/tripLayout'
 import {
   ArtistRowSchema,
   ArtistSchema,
@@ -58,8 +58,13 @@ export const COLLECTIONS = [
 
 export type CollectionName = typeof COLLECTIONS[number]['name']
 
-/** Anclas de sección que emite TripView/TheHero (TripView.vue:84-196, TheHero.vue:57). */
-export const SECTION_ANCHORS = ['inicio', 'mapa', 'reservas', 'gastronomia', 'practica', 'arte', 'arquitectura'] as const
+/**
+ * Ids de TODAS las secciones estructurales posibles (D-06: una sola lista). Es la misma
+ * `STRUCTURAL_SECTION_IDS` con la que `buildTripLayout` monta `<main>` y las pastillas; se
+ * re-exporta con este nombre para no romper consumidores. Qué secciones existen EN un viaje
+ * concreto lo decide `buildTripLayout` con la presencia del YAML (regla `anchor`, D-08).
+ */
+export const SECTION_ANCHORS = STRUCTURAL_SECTION_IDS
 /** ids de «chrome» que emiten los componentes (mapa, toggles, buscador, navegación). */
 export const CHROME_IDS = ['leaflet-map', 'map-offline-banner', 'light-toggle', 'resumen-toggle', 'back-btn', 'search', 'search-results', 'nav-pills'] as const
 /** ids fijos del DOM con los que no puede chocar el slug de una ficha (D-10). */
@@ -292,6 +297,20 @@ export function checkTrip(t: LoadedTrip): Violation[] {
     }
   }
 
+  // day-order (D-04, Fase 10): `order` único y contiguo 1..N. Se ordena por `order` (desempate
+  // por fichero) y cada día debe ocupar exactamente la posición `order`. Un `order` no numérico
+  // también es violación (se ordena al final).
+  const orderOf = (d: Doc) => {
+    const n = d.data.order
+    return typeof n === 'number' && Number.isFinite(n) ? n : Number.POSITIVE_INFINITY
+  }
+  const sortedDays = [...days].sort((a, b) => orderOf(a) - orderOf(b) || a.file.localeCompare(b.file))
+  sortedDays.forEach((d, i) => {
+    if (d.data.order !== i + 1) {
+      push(d.file, 'day-order', `order ${String(d.data.order)} ≠ ${i + 1} (1..N contiguo, D-04)`)
+    }
+  })
+
   // day-pill (D-03, Fase 10): etiquetas de pastilla únicas en el viaje. La etiqueta sale de
   // `dayPillLabel` (la misma que pinta NavPills) y se compara con `pillKey`.
   const byPill = new Map<string, { label: string, docs: Doc[] }>()
@@ -312,16 +331,32 @@ export function checkTrip(t: LoadedTrip): Violation[] {
     for (const d of docs) push(d.file, 'day-pill', `pastilla «${label}» repetida (D-03) en ${list}`)
   }
 
-  // anchor / cross-trip-link (D-11) — en cualquier string de cualquier fichero (incl. trip.yml).
-  const anchorable = new Set<string>([...entities.map(d => d.slug), ...SECTION_ANCHORS])
+  // anchor / cross-trip-link — en cualquier string de cualquier fichero (incl. trip.yml).
+  // D-08: las anclas de sección válidas son SOLO las que `buildTripLayout` emite para la
+  // presencia leída del YAML (mismas reglas que la plantilla): sin reference/reservas.yml no
+  // hay `#reservas` (WR-01 de la Fase 9). D-05 (b): lista blanca de destinos — `#id` (se
+  // valida como ancla) o `http(s)://`; todo lo demás (`/#x`, `/guiaRoma/#x`, `../roma#x`,
+  // `/trips/…`, `javascript:`) es `cross-trip-link` (WR-02 de la Fase 9).
+  const layout = buildTripLayout({
+    days: sortedDays.map(d => ({
+      slug: d.slug,
+      eyebrow: String(d.data.eyebrow ?? ''),
+      pill: typeof d.data.pill === 'string' ? d.data.pill : undefined,
+    })),
+    hasReservas: reference.some(d => d.slug === 'reservas'),
+    hasPractica: reference.some(d => d.slug === 'practica'),
+    foodCount: food.length,
+    artistKinds: new Set(artists.map(d => d.kind).filter((k): k is string => k !== undefined)),
+  })
+  const anchorable = new Set<string>([...entities.map(d => d.slug), ...layout.map(e => e.id)])
   for (const d of t.docs) {
     for (const str of collectStrings(d.data)) {
       for (const target of extractLinkTargets(str)) {
-        if (target.includes('/trips/') || target.startsWith('trips/')) {
-          push(d.file, 'cross-trip-link', `enlace entre viajes no admitido (D-11): "${target}"`)
+        if (target.startsWith('#')) {
+          if (!anchorable.has(target.slice(1))) push(d.file, 'anchor', `ancla ${target} no existe en el viaje "${t.dir}"`)
         }
-        else if (target.startsWith('#') && !anchorable.has(target.slice(1))) {
-          push(d.file, 'anchor', `ancla ${target} no existe en el viaje "${t.dir}"`)
+        else if (!/^https?:\/\//i.test(target)) {
+          push(d.file, 'cross-trip-link', `enlace no admitido (D-05): "${target}" — solo #id o http(s)://`)
         }
       }
     }

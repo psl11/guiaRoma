@@ -29,6 +29,16 @@ import {
  *  - D-11: los enlaces `[t](#x)` resuelven DENTRO del viaje; no hay enlaces entre viajes.
  *  - D-12: los conteos por colección y migration-diff siguen siendo solo de Roma (no aquí).
  *
+ * Fase 10 (forma desde datos) — reglas nuevas y endurecidas:
+ *  - D-03 `day-pill`: etiquetas de pastilla únicas por viaje (misma `dayPillLabel` de la UI,
+ *    comparación NFC + trim + minúsculas).
+ *  - D-04 `day-order`: `order` de los días único y contiguo 1..N.
+ *  - D-05 (a): un slug de día es un ancla reservada (`dup-id` / `fixed-anchor` lo cubren);
+ *    (b): `cross-trip-link` es lista blanca — solo `#id` o `http(s)://` (cierra WR-02).
+ *  - D-08 `anchor`: solo resuelve a las secciones que `buildTripLayout` emite para la presencia
+ *    del YAML; `[x](#reservas)` sin reference/reservas.yml es rojo (cierra WR-01; el control
+ *    negativo de la Fase 9 queda invertido).
+ *
  * El bloque «la puerta tiene dientes» prueba cada regla con un fixture (en memoria con
  * `loadTripFromFiles` o en disco en tests/data/fixtures/trips/, NUNCA bajo content/).
  */
