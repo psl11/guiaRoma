@@ -24,6 +24,8 @@ import { inlineMdToPlain } from '../../app/utils/tripLayout'
  *    (edge SHAPE-04 ordering: app.vue ya no fija título y TripView pone el del viaje).
  *    Los comentarios de fragmento de Vue (`<!--[-->`) se quitan antes de comparar. El pie se
  *    extrae con una RegExp sobre el HTML crudo (cheerio re-serializaría las entidades `&quot;`).
+ *    Desde la Fase 11 (D-01/D-03) el pie termina con `p.trip-back` («← Todos los viajes»), hijo
+ *    directo de `<footer>` tras `.container`, así que `footer .container p` sigue siendo uno solo.
  *
  * Corre dentro de `pnpm verify` porque `generate` va antes de `test:data`. Sin build (un
  * `vitest run tests/data` suelto: no hay `.output/public/index.html`) el bloque post-build se
@@ -92,8 +94,14 @@ describe.skipIf(!existsSync(BUILD_INDEX))('chrome de Roma en el HTML prerenderiz
   })
 
   it('el pie prerenderizado es el de siempre (mismo HTML que la build anterior)', () => {
-    const m = html().match(/<footer><div class="container"><p>([\s\S]*?)<\/p><\/div><\/footer>/)
+    const m = html().match(/<footer><div class="container"><p>([\s\S]*?)<\/p><\/div>/)
     expect(m, 'no hay <footer><div class="container"><p>… en la build').not.toBeNull()
     expect(m![1]).toBe('Itinerario preparado para <em>Pay</em> y dos colegas<br>Roma · 19—23 giugno 2026<br>&quot;Roma no se cuenta, se camina.&quot;')
+  })
+
+  it('el pie termina con el enlace de vuelta a la portada (D-01/D-03)', () => {
+    const page = html()
+    expect(page).toContain('<p class="trip-back"><a href="/guiaRoma/">← Todos los viajes</a></p></footer>')
+    expect(load(page)('footer .container p')).toHaveLength(1)
   })
 })

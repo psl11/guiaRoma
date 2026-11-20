@@ -42,9 +42,11 @@
 // `<MDC unwrap="p" :tag="false">`.
 //
 // Chrome VERBATIM del index.html (marca, leyenda y pie salen del trip.yml desde F10); CERO CSS
-// nuevo y SIN bloque de estilos scoped (data-v-* rompería selectores globales del shell). NINGÚN enlace de ruta a /trips/* — crawlLinks lo
-// prerenderizaría y rompería la disciplina de prerender D-01; toda la navegación es por
-// anclas #fragmento. Topbar/BackButton/TheHero/DaySection y las secciones se auto-importan.
+// nuevo y SIN bloque de estilos scoped (data-v-* rompería selectores globales del shell). El
+// único enlace que sale de una guía es el de vuelta a la portada del pie, de documento completo
+// (D-04); los enlaces a las guías viven solo en la portada, con barra final (D-13). Dentro de la
+// guía toda la navegación es por anclas #fragmento. Topbar/BackButton/TheHero/DaySection y las
+// secciones se auto-importan.
 //
 // F5 (Plan 05-02): TripView es el dueño de la página (montado una vez) → es el ÚNICO host del
 // controller de navegación (FEAT-05, D-05). El controller registra el listener de click delegado
@@ -58,6 +60,11 @@
 // salga por viaje.
 const props = defineProps<{ slug: string }>()
 provideTripSlug(props.slug)
+
+// F11 (Plan 11-03, D-04): href del enlace de vuelta a la portada. Mismo idioma que app/app.vue:
+// el baseURL de runtime con barra final garantizada, nunca la base del sitio escrita a mano.
+const { app } = useRuntimeConfig()
+const homeHref = app.baseURL.endsWith('/') ? app.baseURL : `${app.baseURL}/`
 
 const { trip, days, monById, food, artists, refById } = await useTrip(props.slug)
 
@@ -88,8 +95,15 @@ useHead({ title: () => trip.value?.pageTitle || plainTitle.value })
 
 // F10 (Plan 10-02, D-12/D-14): el pie son las líneas Markdown-inline de `trip.footer`, unidas con
 // `<br>` dentro de un único `<p>` (cada línea por `<MDC :tag="false" unwrap="p">`, el mismo idioma
-// que `#arte`). Sin `footer` no se pinta el pie; sin `mapLegend` no hay `p.map-legend`; sin `brand`
-// la marca es `plainTitle`. Ningún texto de otro viaje como respaldo.
+// que `#arte`). Sin `mapLegend` no hay `p.map-legend`; sin `brand` la marca es `plainTitle`.
+// Ningún texto de otro viaje como respaldo.
+//
+// F11 (Plan 11-03, D-01/D-03): el `<footer>` existe en TODA guía. Primero van las líneas de
+// `trip.footer` dentro de `div.container` (solo si las hay, byte-idénticas a antes); después, como
+// hijo DIRECTO de `<footer>` y fuera de `.container`, el `p.trip-back` con el enlace a la portada.
+// Fuera de `.container` porque el locator estricto `footer .container p` de la puerta de paridad
+// debe seguir resolviendo a UN elemento. `<a href>` simple: sin enlace de router ni handler de
+// click (navegación de documento completo), sin CSS nuevo (lo pintan `footer p` y `a` de base.css).
 const footerLines = computed(() => trip.value?.footer ?? [])
 </script>
 
@@ -259,8 +273,11 @@ const footerLines = computed(() => trip.value?.footer ?? [])
     ·  ·  ·  ✦  ·  ·  ·
   </div>
 
-  <footer v-if="footerLines.length > 0">
-    <div class="container">
+  <footer>
+    <div
+      v-if="footerLines.length > 0"
+      class="container"
+    >
       <p>
         <template
           v-for="(line, i) in footerLines"
@@ -275,5 +292,8 @@ const footerLines = computed(() => trip.value?.footer ?? [])
         </template>
       </p>
     </div>
+    <p class="trip-back">
+      <a :href="homeHref">← Todos los viajes</a>
+    </p>
   </footer>
 </template>

@@ -278,8 +278,9 @@ test.describe('trampa: ningún texto de Roma en la guía de otro viaje (SHAPE-05
 //
 // Marca, leyenda del mapa, pie y título de pestaña salen del trip.yml de cada viaje. forma los
 // define todos; prueba no define ninguno y usa el respaldo neutro (D-14): la marca y la pestaña
-// son su título plano, sin punto ✦, sin pie y sin leyenda (el `.flourish` no es chrome del viaje
-// y se queda). Los títulos se comparan EXACTOS: si alguna plantilla de título concatenara algo
+// son su título plano, sin punto ✦ y sin leyenda (el `.flourish` no es chrome del viaje y se
+// queda). D-03 de la Fase 11 sustituye la parte «sin pie» de D-14: toda guía tiene `<footer>`, y
+// el de un viaje sin `footer` solo lleva el enlace de vuelta `p.trip-back` («← Todos los viajes»). Los títulos se comparan EXACTOS: si alguna plantilla de título concatenara algo
 // (« · Roma», un sufijo global…), la igualdad fallaría (edge SHAPE-04 adjacency).
 
 test.describe('chrome y pestaña desde los datos de cada viaje (SHAPE-03, SHAPE-04)', () => {
@@ -314,7 +315,11 @@ test.describe('chrome y pestaña desde los datos de cada viaje (SHAPE-03, SHAPE-
     await expect(page.locator('.topbar-inner .brand')).toHaveCount(1)
     expect(await visibleText(page, '.topbar-inner .brand')).toBe('Dos días de Prueba')
     await expect(page.locator('.brand-dot')).toHaveCount(0)
-    await expect(page.locator('footer')).toHaveCount(0)
+    await expect(page.locator('footer')).toHaveCount(1)
+    await expect(page.locator('footer .container')).toHaveCount(0)
+    const back = page.locator('footer .trip-back a')
+    await expect(back).toHaveText('← Todos los viajes')
+    await expect(back).toHaveAttribute('href', '/guiaRoma/')
     await expect(page.locator('p.map-legend')).toHaveCount(0)
     await expect(page.locator('.flourish')).toHaveCount(1)
 
