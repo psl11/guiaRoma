@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 9
 current_phase_name: Plataforma por viaje
 status: executing
-stopped_at: Completed 09-03-PLAN.md
-last_updated: "2026-11-20T10:36:33.696Z"
+stopped_at: Completed 09-04-PLAN.md
+last_updated: "2026-11-20T10:46:41.892Z"
 last_activity: 2026-11-20
 last_activity_desc: Phase 9 execution started
-state_head: 5cb1e2fbbd12e6c91b78d9ef314b60c6e6a2905c
+state_head: f87653056f5e0d1c04432d06b1fa1ed5036be21a
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 5
-  completed_plans: 3
+  completed_plans: 4
   percent: 0
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 9 (Plataforma por viaje) — EXECUTING
-Plan: 4 of 5
+Plan: 5 of 5
 Status: Ready to execute
 Last activity: 2026-11-20 — Phase 9 execution started
 
@@ -106,6 +106,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 09 P01 | 5min | 2 tasks | 7 files |
 | Phase 09 P02 | 5min | 2 tasks | 7 files |
 | Phase 09 P03 | 9min | 2 tasks | 11 files |
+| Phase 09 P04 | 7min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -240,6 +241,8 @@ Recent decisions affecting current work:
 - [Phase 09]: 09-02: anchor extraction widened to any char except space/paren so non-ASCII or mixed-case anchors are compared exactly and fail
 - [Phase 09]: 09-03: search haystack drops Markdown link destinations (link text stays indexed) so in-trip links do not create hidden search hits
 - [Phase 09]: 09-03: one MiniSearch index per trip slug in a client-only module Map; search state keys search:query|open|results:<slug>
+- [Phase 09]: 09-04: test:trips (playwright.trips.config.ts, nuxi dev :5300, 1 worker) proves per-trip search/navigation/prefs on /trips/prueba; stays outside pnpm verify and the parity gate
+- [Phase 09]: 09-04: tests/unit/tripCoupling.spec.ts guards app/composables, components and utils (comment-stripped) against fixed useTrip slugs, roma- literals, useState without tripStateKey, module-wide MiniSearch, literal storage keys and localStorage enumeration; index.vue and nuxt.config.ts are documented exceptions
 
 ### Pending Todos
 
@@ -276,8 +279,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-20T10:36:33.671Z
-Stopped at: Completed 09-03-PLAN.md
+Last session: 2026-11-20T10:46:41.867Z
+Stopped at: Completed 09-04-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
