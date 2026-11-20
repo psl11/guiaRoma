@@ -284,9 +284,110 @@ describe('la puerta tiene dientes (fixtures)', () => {
     expect(vs, formatViolations(vs)).toEqual([])
   })
 
-  it('[x](#reservas) resuelve aunque el viaje no tenga ficheros reference', () => {
+  // ── D-04 (Fase 10): order único y contiguo 1..N ─────────────────────────────
+  /** Un día `slug` con `order` dado; eyebrow distinto por slug para no disparar day-pill. */
+  const dayFile = (slug: string, order: unknown) => y({ ...validDay, slug, order, eyebrow: `${slug} · x` })
+
+  it('day-order: órdenes [1, 3] → violación en el día con 3 (esperado 2)', () => {
+    const vs = checkTrip(memTrip('prueba', { 'days/viernes.yml': dayFile('viernes', 1), 'days/sabado.yml': dayFile('sabado', 3) }))
+    expectRule(vs, 'day-order', 'prueba/days/sabado.yml')
+    const v = vs.filter(x => x.rule === 'day-order')
+    expect(v, formatViolations(v)).toHaveLength(1)
+    expect(v[0]!.message).toContain('order 3 ≠ 2')
+  })
+
+  it('day-order: órdenes [1, 1] → violación (orden repetido)', () => {
+    const vs = checkTrip(memTrip('prueba', { 'days/viernes.yml': dayFile('viernes', 1), 'days/sabado.yml': dayFile('sabado', 1) }))
+    expect(vs.filter(v => v.rule === 'day-order'), formatViolations(vs)).toHaveLength(1)
+  })
+
+  it('day-order: un único día con order 2 → violación (debe empezar en 1)', () => {
+    const vs = checkTrip(memTrip('prueba', { 'days/viernes.yml': dayFile('viernes', 2) }))
+    expectRule(vs, 'day-order', 'prueba/days/viernes.yml')
+  })
+
+  it('day-order: un order no numérico es violación', () => {
+    const vs = checkTrip(memTrip('prueba', { 'days/viernes.yml': dayFile('viernes', 'uno') }))
+    expectRule(vs, 'day-order', 'prueba/days/viernes.yml')
+  })
+
+  it('day-order: [2, 1] en ficheros desordenados → sin violación (se ordena por order)', () => {
+    const vs = checkTrip(memTrip('prueba', { 'days/aaa.yml': dayFile('aaa', 2), 'days/zzz.yml': dayFile('zzz', 1) }))
+    expect(vs, formatViolations(vs)).toEqual([])
+  })
+
+  // ── D-08 (Fase 10): `anchor` solo resuelve a las secciones presentes (WR-01) ──
+  const validReservas = { slug: 'reservas', trip: 'prueba', order: 1, title: 'Reservas', eyebrow: 'e', intro: 'i', confirmed: [], table: [] }
+  const validGlossary = {
+    kind: 'glossary', slug: 'arq-glosario', trip: 'prueba', avatar: '?', name: 'Glosario', dates: '', epithet: '',
+    terms: [{ term: 'Frontón', def: 'remate triangular' }],
+  }
+  const linkTo = (anchor: string) => monument('prueba', 'galeria', withProse(`Ver [la sección](#${anchor}).`))
+
+  it('anchor: [x](#reservas) en un viaje sin ficheros reference → violación (control de la Fase 9 invertido)', () => {
+    const vs = checkTrip(memTrip('prueba', { 'monuments/galeria.yml': linkTo('reservas') }))
+    expectRule(vs, 'anchor', 'prueba/monuments/galeria.yml')
+    expect(vs.find(v => v.rule === 'anchor')!.message).toContain('#reservas')
+  })
+
+  it('anchor: [x](#reservas) con reference/reservas.yml válido → sin violaciones', () => {
     const vs = checkTrip(memTrip('prueba', {
-      'monuments/galeria.yml': monument('prueba', 'galeria', withProse('Ver [reservas](#reservas).')),
+      'monuments/galeria.yml': linkTo('reservas'),
+      'reference/reservas.yml': y(validReservas),
+    }))
+    expect(vs, formatViolations(vs)).toEqual([])
+  })
+
+  it('anchor: [x](#arte) en un viaje cuyo único artista es el glosario → violación', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'monuments/galeria.yml': linkTo('arte'),
+      'artists/arq-glosario.yml': y(validGlossary),
+    }))
+    expectRule(vs, 'anchor', 'prueba/monuments/galeria.yml')
+  })
+
+  it('anchor: [x](#arquitectura) en un viaje cuyo único artista es el glosario → resuelve', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'monuments/galeria.yml': linkTo('arquitectura'),
+      'artists/arq-glosario.yml': y(validGlossary),
+    }))
+    expect(vs, formatViolations(vs)).toEqual([])
+  })
+
+  it('anchor: [x](#inicio) y [x](#mapa) resuelven en un viaje con solo trip.yml', () => {
+    const vs = checkTrip(memTrip('borrador', {}, { quote: 'Ver [inicio](#inicio) y [el mapa](#mapa).' }))
+    expect(vs, formatViolations(vs)).toEqual([])
+  })
+
+  // ── D-05 (a) (Fase 10): los slugs de día son anclas reservadas ──────────────
+  it('dup-id (D-05a): monumento "lunes" + día "lunes" → dup-id en ambos ficheros', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'monuments/lunes.yml': monument('prueba', 'lunes'),
+      'days/lunes.yml': dayFile('lunes', 1),
+    }))
+    expectRule(vs, 'dup-id', 'prueba/monuments/lunes.yml')
+    expectRule(vs, 'dup-id', 'prueba/days/lunes.yml')
+  })
+
+  it('fixed-anchor (D-05a): un día con slug "mapa" choca con la sección fija', () => {
+    const vs = checkTrip(memTrip('prueba', { 'days/mapa.yml': dayFile('mapa', 1) }))
+    expectRule(vs, 'fixed-anchor', 'prueba/days/mapa.yml')
+  })
+
+  // ── D-05 (b) (Fase 10): enlaces de prosa en lista blanca (WR-02) ─────────────
+  it.each(['/#pantheon', '/guiaRoma/#x', '../roma#x', 'javascript:alert(1)'])(
+    'cross-trip-link: el destino %s no está en la lista blanca',
+    (target) => {
+      const vs = checkTrip(memTrip('prueba', {
+        'monuments/galeria.yml': monument('prueba', 'galeria', withProse(`Ver [esto](${target}).`)),
+      }))
+      expectRule(vs, 'cross-trip-link', 'prueba/monuments/galeria.yml')
+    },
+  )
+
+  it('cross-trip-link: https://example.org/x se admite (sin violaciones)', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'monuments/galeria.yml': monument('prueba', 'galeria', withProse('Ver [la web](https://example.org/x).')),
     }))
     expect(vs, formatViolations(vs)).toEqual([])
   })
