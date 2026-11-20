@@ -42,8 +42,9 @@ const { query, isOpen, results, onInput, onSelect } = useSearch()
 // Efectos secundarios de la búsqueda: se registran AQUÍ una sola vez (CR-01 / Pitfall 4).
 // SIN await (WR-02): mantener el setup SÍNCRONO es deliberado — los hooks onMounted/onUnmounted
 // del controller deben asociarse a la instancia ACTIVA de SearchBox, y un await aquí la perdería
-// (igual que el bug A1 de F5). Pero el controller hace `await useTrip('roma')` internamente, que
-// puede rechazar (ventana reactiva de useAsyncData con error, HMR, ruta futura no prerenderizada):
+// (igual que el bug A1 de F5). Pero el controller resuelve su viaje por inject (el slug que publica
+// TripView, D-08) y hace `await useTrip(slug)` internamente, que puede rechazar (ventana
+// reactiva de useAsyncData con error, HMR, ruta futura no prerenderizada):
 // sin manejarlo sería un unhandled rejection. Un `.catch` lo degrada con gracia (la búsqueda
 // simplemente se queda vacía) preservando el registro síncrono de hooks.
 useSearchController().catch((e) => {
