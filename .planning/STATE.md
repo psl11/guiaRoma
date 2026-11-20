@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 10
 current_phase_name: Forma y chrome desde datos
 status: executing
-stopped_at: Phase 10 UI-SPEC approved
-last_updated: "2026-11-20T13:56:59.846Z"
+stopped_at: Completed 10-01-PLAN.md
+last_updated: "2026-11-20T14:04:17.779Z"
 last_activity: 2026-11-20
-last_activity_desc: Phase 9 execution started
-state_head: f04967a06ad7978221153ec9d96419be48c55d25
+last_activity_desc: Phase 10 execution started
+state_head: 3c36233da15f4b9ba8f994479922953ba2f482a5
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 10
-  completed_plans: 5
+  completed_plans: 6
   percent: 0
 ---
 
@@ -25,14 +25,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-11-20)
 
 **Core value:** La guía se consulta paseando por el destino y debe ser fiel, editorial y fiable (también offline). Lo ya publicado no se rompe: Roma sigue exactamente igual (paridad verificada) mientras la plataforma crece a varios viajes.
-**Current focus:** Phase 9 — Plataforma por viaje
+**Current focus:** Phase 10 — Forma y chrome desde datos
 
 ## Current Position
 
-Phase: 10 (Forma y chrome desde datos) — READY TO EXECUTE
-Plan: 5 of 5
+Phase: 10 (Forma y chrome desde datos) — EXECUTING
+Plan: 2 of 5
 Status: Ready to execute
-Last activity: 2026-11-20 — Phase 9 execution started
+Last activity: 2026-11-20 — Phase 10 execution started
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -108,6 +108,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 09 P03 | 9min | 2 tasks | 11 files |
 | Phase 09 P04 | 7min | 2 tasks | 4 files |
 | Phase 09 P05 | 8min | 2 tasks | 3 files |
+| Phase 10 P01 | 7min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -246,6 +247,8 @@ Recent decisions affecting current work:
 - [Phase 09]: 09-04: tests/unit/tripCoupling.spec.ts guards app/composables, components and utils (comment-stripped) against fixed useTrip slugs, roma- literals, useState without tripStateKey, module-wide MiniSearch, literal storage keys and localStorage enumeration; index.vue and nuxt.config.ts are documented exceptions
 - [Phase 09]: 09-05: pnpm verify starts with rm -rf .data .nuxt .output, so the gate can no longer validate stale Content data
 - [Phase 09]: 09-05: build-isolation.spec.ts in test:data guards that the static Roma build carries no prueba data (sentinel PRUEBA-CENTINELA-9F3) and uses suffixed state keys; it is a regression guard proven by mutating the build output
+- [Phase 10]: buildTripLayout (app/utils/tripLayout.ts) es la única fuente de secciones y pastillas: TripView <main> y NavPills recorren la misma lista (D-06)
+- [Phase 10]: dayPillLabel trata pill null/undefined/'' como ausente (Content entrega null para opcionales)
 
 ### Pending Todos
 
@@ -282,9 +285,9 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-20T13:24:20.963Z
-Stopped at: Phase 10 UI-SPEC approved
-Resume file: .planning/phases/10-forma-y-chrome-desde-datos/10-UI-SPEC.md
+Last session: 2026-11-20T14:04:17.716Z
+Stopped at: Completed 10-01-PLAN.md
+Resume file: None
 
 ## Operator Next Steps
 

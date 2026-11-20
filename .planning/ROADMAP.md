@@ -77,10 +77,10 @@ Plans:
   3. La marca de la cabecera, el pie y la leyenda del mapa de cada guía salen de su `trip.yml`, y la pestaña del navegador muestra el título propio del viaje; en Roma son exactamente los textos actuales (pestaña «Roma · 19—23 giugno 2026»)
   4. En la guía de un viaje de prueba no aparece ningún texto propio de Roma («Roma», «Einaudi», «giugno 2026»…): un test-trampa falla si alguno se cuela
   5. Tras mover los textos de Roma a datos, la puerta de paridad sigue verde en `/` con los 56 goldens sin re-baseline
-**Plans**: 5 plans
+**Plans**: 1/5 plans executed
 Plans:
 **Wave 1**
-- [ ] 10-01-PLAN.md — Tracer: `buildTripLayout` puro → pastillas y `<main>` de TripView desde el layout (una sección por día, solo secciones con datos), Roma idéntica (SHAPE-01, SHAPE-02)
+- [x] 10-01-PLAN.md — Tracer: `buildTripLayout` puro → pastillas y `<main>` de TripView desde el layout (una sección por día, solo secciones con datos), Roma idéntica (SHAPE-01, SHAPE-02)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 10-02-PLAN.md — Chrome desde `trip.yml`: esquema aditivo (test D-10 primero), `pageTitle`/`brand`/`mapLegend`/`footer` de Roma verbatim, respaldo neutro, test verbatim contra index.html y guardián D-17 (SHAPE-03, SHAPE-04, SHAPE-05)
@@ -185,7 +185,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 7. Isla client-only — mapa, fallback, notas | v1.0 | 4/4 | Complete | 2026-06-23 |
 | 8. Verificación de paridad | v1.0 | 7/7 | Complete | 2026-06-24 |
 | 9. Plataforma por viaje | v1.1 | 5/5 | In Progress | - |
-| 10. Forma y chrome desde datos | v1.1 | 0/TBD | Not started | - |
+| 10. Forma y chrome desde datos | v1.1 | 1/5 | In Progress | - |
 | 11. Portada y rutas multi-viaje | v1.1 | 0/TBD | Not started | - |
 | 12. Formas nuevas de viaje | v1.1 | 0/TBD | Not started | - |
 | 13. Contenido Campania 2027 | v1.1 | 0/TBD | Not started | - |
