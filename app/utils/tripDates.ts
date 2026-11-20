@@ -13,9 +13,22 @@
  * `tripMetaLine` une la línea de fechas y los destinos con « · » (U+00B7) y devuelve null si no
  * queda nada (la tarjeta no pinta `p.trip-index-meta`).
  *
- * Vive en `app/utils/` para que Nuxt la auto-importe en la portada (TripIndex, plan 11-05). No
- * importa nada con alias, así que Vitest plano la carga tal cual: tests/unit/tripDates.spec.ts.
+ * D-10 — `sortTrips` ordena la portada: `startDate` descendente (comparación de strings ISO, que
+ * equivale a la de fechas), los viajes sin `startDate` al final, y el empate (o el orden entre los
+ * que no tienen fecha) por el título plano (`inlineMdToPlain`) con `localeCompare(…, 'es')`.
+ * Devuelve una copia: nunca muta la entrada.
+ *
+ * D-16 — `listedTrips` es la lista que pinta la portada: los viajes con `draft` distinto de `true`
+ * (null o ausente = publicado), ordenados con `sortTrips`; también en dev, donde los borradores sí
+ * se cargan. Estado vacío frente a cargando: devuelve `null` mientras los datos no han llegado
+ * (null/undefined) y `[]` solo cuando han llegado y no hay nada publicado, así la portada (11-05)
+ * nunca enseña «Todavía no hay viajes publicados» durante la hidratación.
+ *
+ * Vive en `app/utils/` para que Nuxt la auto-importe en la portada (TripIndex, plan 11-05). Su
+ * único import es el relativo `./tripLayout` (sin alias), así que Vitest plano la carga tal cual:
+ * tests/unit/tripDates.spec.ts.
  */
+import { inlineMdToPlain } from './tripLayout'
 
 const MONTHS = [
   'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
@@ -53,4 +66,26 @@ export function tripMetaLine(t: {
   const parts = [formatTripDates(t.startDate, t.endDate), t.destinations?.join(' · ')]
     .filter((p): p is string => typeof p === 'string' && p.length > 0)
   return parts.length > 0 ? parts.join(' · ') : null
+}
+
+/** Orden de la portada (D-10): fecha de inicio descendente, sin fecha al final, empate por título. */
+export function sortTrips<T extends { title: string, startDate?: string | null }>(trips: readonly T[]): T[] {
+  return [...trips].sort((a, b) => {
+    const sa = a.startDate ?? ''
+    const sb = b.startDate ?? ''
+    if (sa !== sb) {
+      if (!sa) return 1
+      if (!sb) return -1
+      return sa < sb ? 1 : -1
+    }
+    return inlineMdToPlain(a.title).localeCompare(inlineMdToPlain(b.title), 'es')
+  })
+}
+
+/** Viajes publicados y ordenados (D-16); null mientras los datos no han llegado. */
+export function listedTrips<T extends { title: string, startDate?: string | null, draft?: boolean | null }>(
+  rows: readonly T[] | null | undefined,
+): T[] | null {
+  if (rows == null) return null
+  return sortTrips(rows.filter(t => t.draft !== true))
 }
