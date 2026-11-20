@@ -1,4 +1,9 @@
+import { readdirSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import { expect, test, type BrowserContext, type Page } from '@playwright/test'
+import { parse } from 'yaml'
+import { inlineMdToPlain } from '../../app/utils/tripLayout'
+import { findRomaLeaks } from './romaLeaks'
 
 /**
  * FORMA DE LA GUÍA DESDE LOS DATOS con un viaje distinto de Roma (Fase 10: SHAPE-01, SHAPE-02;
@@ -27,6 +32,7 @@ import { expect, test, type BrowserContext, type Page } from '@playwright/test'
 const ORIGIN = 'http://localhost:5300'
 const FORMA_URL = `${ORIGIN}/guiaRoma/trips/forma`
 const PRUEBA_URL = `${ORIGIN}/guiaRoma/trips/prueba`
+const ROMA_URL = `${ORIGIN}/guiaRoma/`
 
 // Determinista y offline: aborta toda petición fuera del dev server (tiles OSM, las heros
 // `https://example.invalid/…` de los viajes de ensayo).
@@ -58,7 +64,7 @@ async function gotoHydrated(page: Page, url: string): Promise<void> {
 test.beforeAll(async ({ browser }) => {
   test.setTimeout(180_000)
   const { context, page } = await newIsolatedPage(browser)
-  for (const url of [FORMA_URL, PRUEBA_URL]) {
+  for (const url of [FORMA_URL, PRUEBA_URL, ROMA_URL]) {
     await page.goto(url, { timeout: 120_000 })
     await page.waitForLoadState('networkidle', { timeout: 120_000 })
   }
@@ -165,6 +171,100 @@ test.describe('forma de la guía desde los datos (SHAPE-01, SHAPE-02)', () => {
 
     expect(await sectionIds(page)).toEqual(['inicio', 'mapa', 'viernes', 'sabado'])
     await expect(page.locator('#nav-pills .nav-pill')).toHaveText(['Inicio', 'Mapa', 'Venerdì', 'Sabato'])
+
+    await context.close()
+  })
+})
+
+// ── TRAMPA (D-16 / SHAPE-05) ────────────────────────────────────────────────────────────────
+//
+// Ningún texto de Roma en la guía de otro viaje. Se escanean TODOS los viajes de content/trips
+// salvo roma (no una lista a mano: un viaje nuevo entra solo en la trampa). Por cada uno se
+// recogen tres fuentes: `document.title`, el texto visible del body (`innerText`) y el
+// `textContent` de un clon del body sin `script`/`style`/`noscript`/`template` (cubre el texto
+// oculto, p. ej. banners o variantes de ritmo, sin escanear el payload, donde «guiaRoma» de la
+// baseURL no es una fuga). El matcher (tests/trips/romaLeaks.ts) usa límites Unicode y tiene sus
+// dientes en tests/unit/romaLeaks.spec.ts.
+//
+// No pasa en vacío: la lista de viajes debe incluir prueba y forma, cada página debe estar
+// renderizada (h1 de #inicio = título del viaje, ≥ 3 pastillas, pestaña no vacía) y el control
+// positivo comprueba que el mismo matcher SÍ encuentra los textos de Roma en su guía.
+//
+// Regla de oro: si la trampa salta, se arregla el código de app/ o los datos del viaje afectado;
+// nunca se quitan palabras de la lista ni se excluyen viajes o partes del body.
+
+const TRIPS_ROOT = join(process.cwd(), 'content', 'trips')
+
+const NON_ROMA_TRIPS: string[] = readdirSync(TRIPS_ROOT, { withFileTypes: true })
+  .filter(entry => entry.isDirectory() && !entry.name.startsWith('.') && entry.name !== 'roma')
+  .map(entry => entry.name)
+  .sort()
+
+function tripPlainTitle(slug: string): string {
+  const trip = parse(readFileSync(join(TRIPS_ROOT, slug, 'trip.yml'), 'utf8')) as { title: string }
+  return inlineMdToPlain(trip.title)
+}
+
+async function visibleText(page: Page, selector: string): Promise<string> {
+  const text = await page.locator(selector).innerText()
+  return text.replace(/\s+/g, ' ').trim()
+}
+
+interface PageTexts {
+  title: string
+  innerText: string
+  textContent: string
+}
+
+async function collectTexts(page: Page): Promise<PageTexts> {
+  return page.evaluate(() => {
+    const clone = document.body.cloneNode(true) as HTMLElement
+    clone.querySelectorAll('script, style, noscript, template').forEach(el => el.remove())
+    return {
+      title: document.title,
+      innerText: document.body.innerText,
+      textContent: clone.textContent ?? '',
+    }
+  })
+}
+
+test.describe('trampa: ningún texto de Roma en la guía de otro viaje (SHAPE-05, D-16)', () => {
+  test('trampa: la lista de viajes no-Roma incluye prueba y forma', () => {
+    expect(NON_ROMA_TRIPS).toContain('prueba')
+    expect(NON_ROMA_TRIPS).toContain('forma')
+    expect(NON_ROMA_TRIPS).not.toContain('roma')
+  })
+
+  for (const slug of NON_ROMA_TRIPS) {
+    test(`trampa: ${slug} no muestra ningún texto de Roma`, async ({ browser }) => {
+      const { context, page } = await newIsolatedPage(browser)
+      await gotoHydrated(page, `${ORIGIN}/guiaRoma/trips/${slug}`)
+
+      // Precondición de render: sin ella, un body vacío pasaría la trampa en vacío.
+      await expect.poll(() => visibleText(page, '[id="inicio"] h1'), {
+        message: `${slug}: el h1 de #inicio muestra el título del viaje`,
+      }).toBe(tripPlainTitle(slug))
+      expect(await page.locator('.nav-pill').count(), `${slug}: al menos 3 pastillas`).toBeGreaterThanOrEqual(3)
+      await expect.poll(() => page.title(), { message: `${slug}: la pestaña tiene título` }).not.toBe('')
+
+      const texts = await collectTexts(page)
+      for (const source of ['title', 'innerText', 'textContent'] as const) {
+        const leaks = findRomaLeaks(texts[source])
+        expect(leaks, `${slug} · ${source}: textos de Roma encontrados → ${leaks.join(', ')}`).toEqual([])
+      }
+
+      await context.close()
+    })
+  }
+
+  test('trampa: control positivo — en Roma el matcher sí encuentra sus textos', async ({ browser }) => {
+    const { context, page } = await newIsolatedPage(browser)
+    await gotoHydrated(page, ROMA_URL)
+
+    const texts = await collectTexts(page)
+    const leaks = findRomaLeaks(`${texts.title}\n${texts.innerText}`)
+    expect(leaks, 'en la guía de Roma el matcher encuentra «Roma»').toContain('Roma')
+    expect(leaks, 'en la guía de Roma el matcher encuentra «giugno»').toContain('giugno')
 
     await context.close()
   })
