@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="8" failures="6" errors="0" time="0.014652006">
+    <testsuite name="tests/unit/tripDates.spec.ts" timestamp="2026-11-20T19:33:52.639Z" hostname="NewVaktorPC" tests="8" failures="6" errors="0" skipped="0" time="0.014652006">
+        <testcase classname="tests/unit/tripDates.spec.ts" name="trip.yml real de Roma → línea meta de su tarjeta (D-08) &gt; valida con TripSchema y su línea meta es «19–23 de junio de 2026 · Roma»" time="0.011240893">
+            <failure message="expected null to be &apos;19–23 de junio de 2026 · Roma&apos; // Object.is equality" type="AssertionError">
+AssertionError: expected null to be &apos;19–23 de junio de 2026 · Roma&apos; // Object.is equality
+
+- Expected:
+&quot;19–23 de junio de 2026 · Roma&quot;
+
++ Received:
+null
+
+ ❯ tests/unit/tripDates.spec.ts:30:32
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="formatTripDates (D-09) &gt; rango en el mismo mes: 2026-06-19 + 2026-06-23 → «19–23 de junio de 2026»" time="0.000536036">
+            <failure message="expected null to be &apos;19–23 de junio de 2026&apos; // Object.is equality" type="AssertionError">
+AssertionError: expected null to be &apos;19–23 de junio de 2026&apos; // Object.is equality
+
+- Expected:
+&quot;19–23 de junio de 2026&quot;
+
++ Received:
+null
+
+ ❯ tests/unit/tripDates.spec.ts:36:57
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="formatTripDates (D-09) &gt; solo inicio, fin null o inicio = fin → fecha completa «19 de junio de 2026»" time="0.000409818">
+            <failure message="expected null to be &apos;19 de junio de 2026&apos; // Object.is equality" type="AssertionError">
+AssertionError: expected null to be &apos;19 de junio de 2026&apos; // Object.is equality
+
+- Expected:
+&quot;19 de junio de 2026&quot;
+
++ Received:
+null
+
+ ❯ tests/unit/tripDates.spec.ts:40:43
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="formatTripDates (D-09) &gt; sin inicio (con o sin fin) → null" time="0.000211647">
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="tripMetaLine (línea meta de la tarjeta) &gt; solo fechas → «19–23 de junio de 2026»" time="0.000358601">
+            <failure message="expected null to be &apos;19–23 de junio de 2026&apos; // Object.is equality" type="AssertionError">
+AssertionError: expected null to be &apos;19–23 de junio de 2026&apos; // Object.is equality
+
+- Expected:
+&quot;19–23 de junio de 2026&quot;
+
++ Received:
+null
+
+ ❯ tests/unit/tripDates.spec.ts:53:78
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="tripMetaLine (línea meta de la tarjeta) &gt; solo destinos [Roma] → «Roma»" time="0.000367697">
+            <failure message="expected null to be &apos;Roma&apos; // Object.is equality" type="AssertionError">
+AssertionError: expected null to be &apos;Roma&apos; // Object.is equality
+
+- Expected:
+&quot;Roma&quot;
+
++ Received:
+null
+
+ ❯ tests/unit/tripDates.spec.ts:57:54
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="tripMetaLine (línea meta de la tarjeta) &gt; varios destinos con fechas de 2027 → termina en « · Nápoles · Procida · Ischia»" time="0.000374969">
+            <failure message="expected null to be &apos;1–10 de mayo de 2027 · Nápoles · Proc…&apos; // Object.is equality" type="AssertionError">
+AssertionError: expected null to be &apos;1–10 de mayo de 2027 · Nápoles · Proc…&apos; // Object.is equality
+
+- Expected:
+&quot;1–10 de mayo de 2027 · Nápoles · Procida · Ischia&quot;
+
++ Received:
+null
+
+ ❯ tests/unit/tripDates.spec.ts:66:18
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="tripMetaLine (línea meta de la tarjeta) &gt; sin fechas ni destinos → null" time="0.000139931">
+        </testcase>
+    </testsuite>
+</testsuites>
