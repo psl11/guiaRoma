@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="16" failures="8" errors="0" time="0.033554774">
+    <testsuite name="tests/unit/tripManifest.spec.ts" timestamp="2026-11-20T19:17:01.530Z" hostname="NewVaktorPC" tests="16" failures="8" errors="0" skipped="0" time="0.033554774">
+        <testcase classname="tests/unit/tripManifest.spec.ts" name="manifiesto real (content/trips) &gt; forma y prueba son borradores y roma no, en orden de slug (D-16)" time="0.010714928">
+        </testcase>
+        <testcase classname="tests/unit/tripManifest.spec.ts" name="manifiesto real (content/trips) &gt; prerenderRoutes del manifiesto real = [&apos;/&apos;, &apos;/trips/roma/&apos;] (D-13)" time="0.005811305">
+            <failure message="prerenderRoutes is not a function" type="TypeError">
+TypeError: prerenderRoutes is not a function
+ ❯ tests/unit/tripManifest.spec.ts:60:12
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripManifest.spec.ts" name="manifiesto real (content/trips) &gt; draftExcludes del manifiesto real: los dos borradores fuera de producción, nada en dev" time="0.007145515">
+        </testcase>
+        <testcase classname="tests/unit/tripManifest.spec.ts" name="prerenderRoutes (D-13, edges ROUTE-02) &gt; sin viajes → [&apos;/&apos;] (edge empty)" time="0.000451039">
+            <failure message="prerenderRoutes is not a function" type="TypeError">
+TypeError: prerenderRoutes is not a function
+ ❯ tests/unit/tripManifest.spec.ts:71:12
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripManifest.spec.ts" name="prerenderRoutes (D-13, edges ROUTE-02) &gt; solo borradores → [&apos;/&apos;] (edge empty)" time="0.000359342">
+            <failure message="prerenderRoutes is not a function" type="TypeError">
+TypeError: prerenderRoutes is not a function
+ ❯ tests/unit/tripManifest.spec.ts:75:12
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripManifest.spec.ts" name="prerenderRoutes (D-13, edges ROUTE-02) &gt; un único viaje publicado → [&apos;/&apos;, &apos;/trips/roma/&apos;]" time="0.000283297">
+            <failure message="prerenderRoutes is not a function" type="TypeError">
+TypeError: prerenderRoutes is not a function
+ ❯ tests/unit/tripManifest.spec.ts:79:12
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripManifest.spec.ts" name="prerenderRoutes (D-13, edges ROUTE-02) &gt; dos publicados → ambas rutas en orden de slug; los borradores nunca" time="0.00033951">
+            <failure message="prerenderRoutes is not a function" type="TypeError">
+TypeError: prerenderRoutes is not a function
+ ❯ tests/unit/tripManifest.spec.ts:83:20
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripManifest.spec.ts" name="prerenderRoutes (D-13, edges ROUTE-02) &gt; toda ruta de guía empieza por /trips/ y termina en / (edge encoding)" time="0.000296512">
+            <failure message="prerenderRoutes is not a function" type="TypeError">
+TypeError: prerenderRoutes is not a function
+ ❯ tests/unit/tripManifest.spec.ts:92:20
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripManifest.spec.ts" name="draftExcludes (D-16) &gt; keepDrafts (nuxi dev) → [] aunque haya borradores" time="0.000219466">
+        </testcase>
+        <testcase classname="tests/unit/tripManifest.spec.ts" name="draftExcludes (D-16) &gt; sin keepDrafts → solo trips/&lt;slug&gt;/** de los borradores" time="0.000148901">
+        </testcase>
+        <testcase classname="tests/unit/tripManifest.spec.ts" name="readTripManifest con fixtures temporales (fail-closed) &gt; directorio vacío → []" time="0.000425621">
+        </testcase>
+        <testcase classname="tests/unit/tripManifest.spec.ts" name="readTripManifest con fixtures temporales (fail-closed) &gt; ignora carpetas sin trip.yml y carpetas ocultas" time="0.000827197">
+        </testcase>
+        <testcase classname="tests/unit/tripManifest.spec.ts" name="readTripManifest con fixtures temporales (fail-closed) &gt; draft ausente o null → false; draft: true → true" time="0.001077562">
+        </testcase>
+        <testcase classname="tests/unit/tripManifest.spec.ts" name="readTripManifest con fixtures temporales (fail-closed) &gt; draft no booleano (&quot;yes&quot;) → lanza un error que nombra el trip.yml y la clave draft" time="0.002306948">
+            <failure message="expected [Function] to throw an error" type="AssertionError">
+AssertionError: expected [Function] to throw an error
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ tests/unit/tripManifest.spec.ts:135:42
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripManifest.spec.ts" name="readTripManifest con fixtures temporales (fail-closed) &gt; carpeta con slug inválido (campania-2027) → lanza un error que nombra la carpeta (edge encoding)" time="0.000868574">
+            <failure message="expected [Function] to throw an error" type="AssertionError">
+AssertionError: expected [Function] to throw an error
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ tests/unit/tripManifest.spec.ts:141:42
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripManifest.spec.ts" name="readTripManifest con fixtures temporales (fail-closed) &gt; TRIP_FOLDER_RE es el mismo patrón que TRIP_SLUG_RE de shared/schemas.ts" time="0.000187129">
+        </testcase>
+    </testsuite>
+</testsuites>

@@ -263,6 +263,40 @@ describe('chrome del viaje (D-10…D-14)', () => {
   })
 })
 
+// ── Borradores (Fase 11, D-16) ───────────────────────────────────────────────
+// `draft` es un booleano OPCIONAL: `true` saca el viaje de la build de producción (content.config.ts
+// lo excluye de las 6 colecciones). Booleano estricto: un `draft: 'yes'` se rechaza aquí y hace
+// lanzar a scripts/tripManifest.mjs, así que un borrador mal escrito nunca se publica por defecto.
+describe('borradores (D-16)', () => {
+  const baseTrip = {
+    slug: 'campania',
+    title: 'Viaje',
+    decoration: '·  X  ·',
+    heroMeta: '2027',
+    quote: 'Cita.',
+    quoteAttr: '— AUTOR',
+    infoCards: [{ label: 'Alojamiento', value: '**Hotel**' }],
+    howTo: ['Cómo usar la guía.'],
+    map: { center: { lat: 40.85, lng: 14.27 }, zoom: 13 },
+  }
+
+  it('acepta draft: true', () => {
+    expect(TripSchema.safeParse({ ...baseTrip, draft: true }).success).toBe(true)
+  })
+
+  it('acepta draft: false', () => {
+    expect(TripSchema.safeParse({ ...baseTrip, draft: false }).success).toBe(true)
+  })
+
+  it('acepta un viaje sin draft (campo opcional)', () => {
+    expect(TripSchema.safeParse(baseTrip).success).toBe(true)
+  })
+
+  it('rechaza draft: \'yes\' (booleano estricto, fail-closed)', () => {
+    expect(TripSchema.safeParse({ ...baseTrip, draft: 'yes' }).success).toBe(false)
+  })
+})
+
 // ── Conteo por colección (SC#1) — SOLO roma (D-12) ───────────────────────────
 // Los totales son la huella de la migración del index.html y siguen siendo solo de Roma.
 // Ningún conteo para otros viajes: un borrador incompleto no es error (D-09).
