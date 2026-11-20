@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 11
 current_phase_name: Portada y rutas multi-viaje
 status: executing
-stopped_at: Completed 11-05-PLAN.md
-last_updated: "2026-11-20T19:56:51.523Z"
+stopped_at: Completed 11-06-PLAN.md
+last_updated: "2026-11-20T20:16:46.730Z"
 last_activity: 2026-11-20
 last_activity_desc: Phase 11 execution started
-state_head: b3b07c5ad2c1a3905e87e98c39945f1f930dc9e7
+state_head: 1cb93b54693bfdf7b8dfb79c46022c05c89d1fcf
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 17
-  completed_plans: 15
+  completed_plans: 16
   percent: 0
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 11 (Portada y rutas multi-viaje) — EXECUTING
-Plan: 6 of 7
+Plan: 7 of 7
 Status: Ready to execute
 Last activity: 2026-11-20 — Phase 11 execution started
 
@@ -118,6 +118,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 11 P03 | 6 min | 2 tasks | 8 files |
 | Phase 11 P04 | 10min | 3 tasks | 8 files |
 | Phase 11 P05 | 8 min | 3 tasks | 10 files |
+| Phase 11 P06 | 45min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -280,6 +281,9 @@ Recent decisions affecting current work:
 - [Phase 11]: 11-04: listedTrips returns null while rows are null/undefined and [] only when loaded and nothing is published, so 11-05 never shows the empty state during hydration
 - [Phase 11]: TripIndex maps listedTrips(data) to plain card objects in one computed; null stays null so the template separates loading from empty (11-05)
 - [Phase 11]: multitrip.css is the UI-SPEC block extracted verbatim, last in css[], every selector under .trip-index, enforced by tests/unit/multitripCss.spec.ts which also pins the css[] order (11-05)
+- [Phase 11]: 11-06: legacy-redirect position tests hold image requests pending (not aborted) — aborted lazy-image fallbacks make mobile deep-anchor positions vary in 105 px steps even between direct loads
+- [Phase 11]: 11-06: legacy-hash-redirect = critical head script on the portada only; location.replace to JSON.stringify(base+'trips/'+LEGACY_TRIP+'/') + hash matching ^#[a-z0-9-]+$; no whitelist, no hashchange
+- [Phase 11]: 11-06: tests/parity/_pagesServer.ts (startPagesServer) is the Pages-like server for new specs (127.0.0.1, 301 trailing slash, 404.html, contained in outDir)
 
 ### Pending Todos
 
@@ -316,8 +320,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-20T19:56:51.416Z
-Stopped at: Completed 11-05-PLAN.md
+Last session: 2026-11-20T20:16:46.624Z
+Stopped at: Completed 11-06-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
