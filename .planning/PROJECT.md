@@ -2,11 +2,22 @@
 
 ## What This Is
 
-guiaRoma es una guía de viaje editorial, cuidada al detalle, que hoy existe como un único `index.html` (6.665 líneas / 734 KB) con la planificación de un viaje de 5 días a Roma. Este proyecto la **migra a Nuxt 4**: el mismo resultado visual y funcional, pero con el contenido extraído a **datos estructurados y tipados**, la UI partida en **componentes reutilizables**, y una arquitectura **multi-viaje** (añadir un viaje futuro = añadir archivos de datos, sin tocar código). Está pensada para consultarse paseando por la ciudad, por lo que debe seguir funcionando con conexión pobre o nula.
+guiaRoma es una guía de viaje editorial, cuidada al detalle, que hoy existe como un único `index.html` (6.665 líneas / 734 KB) con la planificación de un viaje de 5 días a Roma. La v1.0 la **migró a Nuxt 4**: el mismo resultado visual y funcional, pero con el contenido extraído a **datos estructurados y tipados**, la UI partida en **componentes reutilizables**, y una arquitectura **multi-viaje** (añadir un viaje futuro = añadir archivos de datos, sin tocar código). Está pensada para consultarse paseando por la ciudad, por lo que debe seguir funcionando con conexión pobre o nula.
 
 ## Core Value
 
-La 1.0 debe ser **exactamente igual que la guía de hoy** (paridad visual y funcional al 100%), pero construida de forma dinámica y mantenible. Si todo lo demás se simplifica, esto no se negocia: lo que el usuario ve y puede hacer no cambia.
+La guía se consulta paseando por el destino y debe ser **fiel, editorial y fiable** (también offline). Lo ya publicado no se rompe: Roma sigue **exactamente igual** (paridad verificada) mientras la plataforma crece a varios viajes. Si todo lo demás se simplifica, esto no se negocia.
+
+## Current Milestone: v1.1 Multi-viaje + Campania
+
+**Goal:** Que la guía soporte varios viajes de verdad, data-driven, publicando Campania 2027 como segundo viaje sin que Roma cambie lo más mínimo.
+
+**Target features:**
+- Plataforma multi-viaje: días/secciones variables, chrome desde `trip.yml`, mapa multi-ciudad, búsqueda y navegación por viaje
+- Persistencia en navegador por viaje (migrando `roma-*` sin pérdida)
+- Portada `/` con índice de viajes; Roma en `/trips/roma` con redirección de enlaces antiguos; prerender de todos los viajes
+- Contenido del viaje Campania 2027 (Nápoles, Procida, Ischia, Salerno/Cilento, Vesubio, Casertavecchia…) a partir de `.planning/inputs/campania-2027-itinerario-raw.md`
+- Roma intacta: suite de paridad verde
 
 ## Requirements
 
@@ -27,32 +38,35 @@ La 1.0 debe ser **exactamente igual que la guía de hoy** (paridad visual y func
 - ✓ Navegación con pila de retroceso + scrollspy de pastillas de navegación — existing
 - ✓ Secciones de referencia: Reservas, Gastronomía, Práctica, Arte, Arquitectura — existing
 - ✓ Diseño editorial responsive y accesible (Cormorant Garamond / Lora / JetBrains Mono; paleta romana terracota+oro; aria labels) — existing
+- ✓ Migración a Nuxt 4 con paridad visual y funcional 100% con el `index.html` (golden 56 PNGs + `pnpm verify` VERDE + sign-off humano) — v1.0
+- ✓ Contenido de Roma en datos tipados (Nuxt Content v3 `type:data` YAML + zod, 6 colecciones, 85 ficheros) — v1.0
+- ✓ UI componentizada (TripView, fichas, timeline, modos de ritmo, navegación, búsqueda MiniSearch, ruta del día, isla Leaflet, fallback de imagen, notas) — v1.0
+- ✓ Base multi-viaje en datos: `useTrip(slug)` + colecciones con glob `trips/*/…` + ruta `/trips/[slug]` (sin prerender) — v1.0
+- ✓ Salida estática bajo `/guiaRoma/` con offline conservado (fuentes y Leaflet self-host) — v1.0
+- ✓ Estandarización: TS estricto, ESLint stylistic, design tokens CSS verbatim, validación zod — v1.0
+- ✓ Backend Nitro preparado pero dormido — v1.0
 
 ### Active
 
-<!-- Objetivos de la migración. TODOS validados en v1.0 (2026-06-24) — la 1.0 está completa y firmada como «paridad-buena». Quedan como registro; los objetivos de v2 se definen con /gsd:new-milestone. -->
+<!-- Milestone v1.1 — Multi-viaje + Campania 2027. Hipótesis hasta enviarse. -->
 
-> **v1.0 COMPLETO (2026-06-24):** los 9 objetivos de migración de abajo están todos ✓ validados. 33/33 requisitos completos, `pnpm verify` VERDE, paridad firmada por humano. El merge `release/nuxt-4`→`main` y el deploy/CI son un acto de ship separado (D-08, fuera de v1.0); `main` intacto.
-
-- [x] Proyecto Nuxt 4 funcionando (estructura, build estático, dev server) — ✓ **Fase 1**
-- [x] Todo el contenido de Roma extraído a datos estructurados y **tipados** (esquema de viaje validado) — ✓ **Fase 2** (6 colecciones zod en Nuxt Content, 85 ficheros YAML, migración 1:1 verificada por harness de diff)
-- [x] UI partida en **componentes reutilizables** — parcial: **shell de layout** (Topbar, NavPills, ThemeToggle, BackButton) + **página** (`TripView`, `TheHero` con el `#inicio` completo) componentizados ✓ **Fase 3**; **fichas, timeline (5 componentes por `kind`), secciones de referencia y los 3 modos de ritmo** (MonumentCard, Timeline*, GastroCard/GastroSection, ArtistCard, ReservasSection, PracticaSection, DaySection, DetailPhoto, `useTripModes`) ✓ **Fase 4**; **navegación transversal** (`useCardNavigation` singleton — scroll-a-ficha + resaltado, pila de "volver", scrollspy `+130`, intercepción por delegación de enlaces de ficha) ✓ **Fase 5**; **búsqueda en cliente y "ruta del día"** (`useSearch` singleton + `SearchBox` sobre MiniSearch indexando los datos tipados, `dayRoute` utils puras `pointFor`/`capStops`/`buildDirUrl` + botón en `DaySection`) ✓ **Fase 6**; **mapa Leaflet (isla client-only), imagen-con-fallback (hero/detail) y notas por ficha** (`LeafletMap.client.vue` + `app/utils/{mapMarkers,mapOffline,svgMotifs}`, `@error`→SVG por `motif`, notas `roma-note-<slug>`) ✓ **Fase 7** — UI completamente componentizada
-- [x] Arquitectura **multi-viaje**: la app renderiza un viaje a partir de sus datos; añadir otro = añadir archivos — ✓ **Fase 3** (`useTrip(slug)` agrega las 6 colecciones con índices por id; un único `TripView` se renderiza en `/` (Roma por defecto) y en `/trips/[slug]`, estructura lista sin prerender en 1.0)
-- [x] **Paridad 100%** visual y funcional con el `index.html` actual (verificada) — ✓ **Fase 8**: *golden* de referencia capturado en Fase 1 (56 PNGs); sign-offs humanos por fase (shell+`#inicio` F3, render+modos F4, navegación F5, búsqueda+ruta F6, mapa+fallback+notas F7); y el **visual-diff pixel total + suite de comportamiento + invariantes de datos** en la puerta `pnpm verify` VERDE (80 parity + 87 unit + 295 data) con el **sign-off humano de paridad global** que declara la 1.0 «paridad-buena». Excepción única documentada (D-06): `#mapa` solo-comportamiento. El golden se re-baselinó desde el build Nuxt offline (D-01 anulado): paridad efectiva de lo que se envía
-- [x] **Salida estática** desplegable como ahora (`nuxt generate`) y **comportamiento offline conservado** — ✓ build estático bajo `/guiaRoma/` + fuentes/Leaflet self-host (0×CDN) en **Fase 1**, verificado offline (banner de tiles, fallback SVG de imágenes, notas localStorage) en **Fase 7** y en la suite de paridad de **Fase 8**
-- [x] **Estandarización**: TypeScript, ESLint/Prettier, *design tokens*, validación de esquema de datos — ✓ TS estricto + ESLint (stylistic) + *design tokens* (CSS verbatim) en **Fase 1**; validación zod (6 colecciones, puerta que rompe el build) en **Fase 2**
-- [x] Backend (Nitro) **preparado pero dormido**: estructura lista para v2, sin funcionalidad de servidor activa en 1.0 — ✓ **Fase 1** (`server/api/README.md`, cero endpoints)
+- [ ] La UI se adapta a la forma de cada viaje desde sus datos: nº y nombres de días variables, secciones opcionales, chrome (marca, `<title>`, pie, leyenda del mapa) desde `trip.yml`
+- [ ] El mapa soporta viajes de varias ciudades (encuadre sobre todos los marcadores del viaje)
+- [ ] Búsqueda y navegación entre fichas acotadas al viaje que se está viendo (sin `useTrip('roma')` fijo)
+- [ ] Persistencia en navegador separada por viaje, migrando las claves `roma-*` existentes sin pérdida
+- [ ] Portada `/` = índice de viajes; Roma vive en `/trips/roma`; enlaces antiguos (`/#viernes`…) redirigen; todos los viajes se prerenderizan para GitHub Pages
+- [ ] Viaje **Campania 2027** (19–28 junio, en familia) publicado con su contenido: días, fichas, gastronomía y práctica, en el tono slow/auténtico del planning del usuario
+- [ ] Roma sin regresiones: la suite de paridad (goldens + comportamiento) sigue verde en su nueva URL
 
 ### Out of Scope
 
 <!-- Límites explícitos con su razón, para no re-añadirlos. -->
 
-- Backend real, autenticación, subida de imágenes/vídeos — **v2** (Nitro queda preparado; no se activa en 1.0)
-- PWA instalable con caché offline real — **v2** (anotado expresamente; la 1.0 conserva el offline actual, no añade PWA)
-- Añadir un segundo viaje con contenido real — **futuro** (la arquitectura lo soporta; 1.0 entrega solo Roma)
-- Rediseño visual o nuevas funcionalidades de producto — la 1.0 es **paridad**, no mejora de producto
-- CMS / panel de edición de viajes — **futuro**
-- i18n / multidioma — no solicitado (el contenido es español con toques de italiano)
+- Backend real, autenticación, subida de imágenes/vídeos — **v2** (Nitro queda preparado; no se activa)
+- PWA instalable con caché offline real — **v2** (se conserva el offline actual, no se añade PWA)
+- CMS / panel de edición de viajes — **futuro** (los viajes se añaden por PR de ficheros YAML)
+- i18n / multidioma — la UI sigue en español fijo; lo específico del viaje sale de sus datos (decidido v1.1)
+- Rediseño visual de Roma — Roma se mantiene idéntica; Campania reutiliza el mismo sistema visual
 
 ## Context
 
@@ -87,6 +101,9 @@ La 1.0 debe ser **exactamente igual que la guía de hoy** (paridad visual y func
 | Paridad efectiva > clon byte-exacto de fuentes (re-baseline del golden desde el build Nuxt) | El cut de Lora self-hosted offline (BUILD-02) difiere en kerning/GPOS de las fuentes Google de red del `index.html` → deltas de wrap sub-línea que ninguna tolerancia honesta absorbe; clonar la fuente byte a byte no compensa | ✓ Fase 8: D-01 anulado, 56 goldens re-capturados del build Nuxt; `maxDiffPixelRatio:0.01` sin máscaras intacto → sigue cazando regresiones reales |
 | F8 PARA en verde + sign-off; merge/deploy fuera de v1.0 | El roadmap acaba en verificación; el ship es un acto separado (honra "main intacto") | ✓ Fase 8 (D-08): 1.0 firmada «paridad-buena»; `main` sin tocar, deploy diferido |
 | `#mapa` = única excepción a la paridad-pixel | Tiles OSM no deterministas (red); F1 no capturó baseline del mapa | ✓ Fase 8 (D-06): verificado por comportamiento (`map-fallback-notes.spec.ts`, 12/12) dentro del gate |
+| v1.1: `/` = índice de viajes; Roma se mueve a `/trips/roma` con redirección de enlaces antiguos | Escala a N viajes; ningún viaje es «el principal» | — Pending |
+| v1.1: UI en español fijo; lo específico del viaje (marca, título, pie, leyenda) en `trip.yml` | Evita i18n; mantiene un único sistema de textos | — Pending |
+| v1.1: Campania 2027 entra en el hito con contenido real redactado a partir del planning del usuario | El usuario quiere usarla en el viaje de junio 2027 | — Pending |
 
 ## Evolution
 
@@ -106,4 +123,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-06-24 — **Fase 8 completada — milestone v1.0 de verificación CERRADO.** Puerta de paridad `pnpm verify` VERDE (generate + 87 unit + 295 data + 80 parity, exit 0): el visual-diff Nuxt↔golden (14 vistas × claro/oscuro × móvil/desktop vs 56 PNGs, `maxDiffPixelRatio:0.01` sin máscaras), los specs de comportamiento (incl. pila «Volver» desde timeline + mapa + búsqueda, D-05) y los invariantes de datos. Excepción pixel única documentada (D-06): `#mapa` es solo-comportamiento (tiles OSM no deterministas), verificado por `map-fallback-notes.spec.ts`. El golden se re-baselinó desde el build Nuxt offline (D-01 anulado esta sesión): paridad efectiva de lo que se envía, no clon byte-exacto de las fuentes Google de red. **Sign-off humano F7 (prerequisito) + F8 global APROBADOS** → la 1.0 se declara «paridad-buena» (PARITY-02, FEAT-02/UI-05/FEAT-04 completos). Frontera D-08: el merge `release/nuxt-4`→`main` y el deploy/CI quedan FUERA de F8 (acto de ship separado; `main` intacto). Code review F8: 0 blockers / 6 warnings / 5 info (advisory, en tooling/anti-tamper, no en la app). Registro en `parity-signoff.md` + `diff-classification.md` + `08-VERIFICATION.md` (passed, 4/4 SC).*
+*Last updated: 2026-11-20 — inicio del milestone v1.1 Multi-viaje + Campania (portada índice, UI data-driven por viaje, contenido Campania 2027, Roma intacta).*

@@ -1,17 +1,16 @@
 ---
-gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: Migración a Nuxt 4
-status: v1.0 shipped — PR branch release/nuxt-4-pr pushed (PR pending manual creation; gh unavailable)
-stopped_at: Completed 08-02-PLAN.md (visual-diff spec)
-last_updated: "2026-06-24T11:43:18.119Z"
-last_activity: 2026-06-24
+gsd_state_version: "1.0"
+milestone: v1.1
+milestone_name: Multi-viaje + Campania
+status: planning
+last_updated: "2026-11-20T06:06:06.070Z"
+last_activity: 2026-11-20
 progress:
-  total_phases: 8
-  completed_phases: 8
-  total_plans: 39
-  completed_plans: 39
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -25,10 +24,11 @@ See: .planning/PROJECT.md (updated 2026-06-18)
 
 ## Current Position
 
-Phase: Milestone v1.0 complete
+Phase: Not started (defining requirements)
 Plan: —
-Status: v1.0 shipped — PR branch release/nuxt-4-pr pushed (PR pending manual creation; gh unavailable)
-Last activity: 2026-06-24
+Status: Defining requirements
+Last activity: 2026-11-20 — Milestone v1.1 started
+
 
 ## Performance Metrics
 
