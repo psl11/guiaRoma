@@ -1,15 +1,13 @@
 import { describe, it, expect } from 'vitest'
-import { globSync, readFileSync } from 'node:fs'
-import { join } from 'node:path'
-import { parse as parseYaml } from 'yaml'
+import { z } from 'zod'
 import {
   MonumentSchema,
   DaySchema,
-  FoodSchema,
   ArtistSchema,
   ReferenceSchema,
   TripSchema,
 } from '../../shared/schemas'
+import { COLLECTIONS, listTripDirs, loadTrip, type CollectionName } from './trips'
 
 /**
  * Puerta de validación de esquema (DATA-05 / DATA-02 / DATA-06).
@@ -21,49 +19,42 @@ import {
  * `Schema.safeParse` por FICHERO (un `it` por fichero → locus de fallo claro).
  *
  * NO usa `queryCollection` (RESEARCH 617): Content "limpia" los datos inválidos (defaults/meta)
- * y ocultaría justo los fallos que DATA-05 debe atrapar. Node puro: readFileSync + parseYaml +
- * safeParse, sin runtime Nuxt ni SQLite.
+ * y ocultaría justo los fallos que DATA-05 debe atrapar. Node puro: el loader compartido de
+ * `./trips` (readFileSync + yaml.parse) + safeParse, sin runtime Nuxt ni SQLite.
  *
+ *  - PLAT-04 / D-09: se valida CADA fichero de CADA carpeta de content/trips (`describe.each`),
+ *    borradores incluidos; el mensaje nombra el fichero y el detalle de `z.prettifyError`.
+ *  - D-05: TripSchema exige un slug ASCII `^[a-z0-9]+$` (TRIP_SLUG_RE).
  *  - DATA-05: un dato inválido (enum/required/tipo) FALLA safeParse (casos fixture in-line).
  *  - DATA-02: un día con timeline discriminado por `kind` + `pace` por fila valida.
  *  - DATA-06: los campos de prosa (`Md`) son strings (Markdown-inline, render en Fase 4).
+ *  - D-12: el `describe` de conteo (1/5/38/26/13/2) sigue siendo SOLO de Roma.
  *
- * Los casos fixture corren AUNQUE Wave 2 no haya migrado ningún `.yml`: garantizan que la
- * PUERTA existe (evita un test vacuo verde). Cuando los datos existan, el `describe` de
- * conteo comprueba los totales esperados por colección (SC#1).
+ * Los casos fixture corren siempre: garantizan que la PUERTA existe (evita un test vacuo verde).
  */
 
-const ROOT = join(process.cwd(), 'content', 'trips', 'roma')
-const glob = (sub: string) => globSync(join(ROOT, sub)).sort()
+// ── Validación por fichero de TODOS los viajes (D-09, PLAT-04) ────────────────
+// Borradores incluidos y con el mismo rigor: cada YAML de cada carpeta de content/trips se
+// valida con el esquema ESTRICTO de su colección (uniones incluidas). El mensaje es el
+// fichero seguido de `z.prettifyError` (formato «✖ … → at campo»), legible en un PR.
+// Los YAML que no parsean / no son objeto / no casan con una colección los señala
+// invariants.spec.ts (reglas yaml-parse, yaml-object, stray-file) con su fichero.
+const strictOf = new Map(COLLECTIONS.map(c => [c.name, c.strict]))
 
-// Mapa colección → (glob de sus ficheros, schema). Una sola fuente que reusan el loop
-// por-fichero y el describe de conteo.
-const collections = [
-  { name: 'trip', files: glob('trip.yml'), schema: TripSchema, expected: 1 },
-  { name: 'day', files: glob('days/*.yml'), schema: DaySchema, expected: 5 },
-  { name: 'monument', files: glob('monuments/*.yml'), schema: MonumentSchema, expected: 38 },
-  { name: 'food', files: glob('food/*.yml'), schema: FoodSchema, expected: 26 },
-  { name: 'artist', files: glob('artists/*.yml'), schema: ArtistSchema, expected: 13 },
-  { name: 'reference', files: glob('reference/*.yml'), schema: ReferenceSchema, expected: 2 },
-] as const
+describe.each(listTripDirs())('esquema · viaje %s', (dir) => {
+  const t = loadTrip(dir)
 
-// ── Validación por fichero (DATA-05 sobre los datos reales) ───────────────────
-for (const { name, files, schema } of collections) {
-  describe(`esquema ${name}`, () => {
-    if (files.length === 0) {
-      // Wave 2 aún no ha migrado esta colección: el gate real lo prueban los fixtures.
-      it.skip(`(sin ficheros .yml todavía — migración pendiente)`, () => {})
-      return
-    }
-    for (const f of files) {
-      it(`valida ${f}`, () => {
-        const data = parseYaml(readFileSync(f, 'utf8'))
-        const r = schema.safeParse(data)
-        expect(r.success, r.success ? '' : JSON.stringify(r.error.issues, null, 2)).toBe(true)
-      })
-    }
+  it('contiene trip.yml', () => {
+    expect(t.hasTripYml, `${t.base}/trip.yml no existe`).toBe(true)
   })
-}
+
+  for (const doc of t.docs) {
+    it(`valida ${doc.file}`, () => {
+      const r = strictOf.get(doc.collection)!.safeParse(doc.data)
+      expect(r.success, r.success ? '' : `${doc.file}\n${z.prettifyError(r.error)}`).toBe(true)
+    })
+  }
+})
 
 // ── Casos fixture in-line: prueban la PUERTA DATA-05 sin depender de ficheros ──
 describe('puerta DATA-05 (fixtures, siempre corren)', () => {
@@ -158,19 +149,42 @@ describe('puerta DATA-05 (fixtures, siempre corren)', () => {
     expect(ReferenceSchema.safeParse({ slug: 'reservas', trip: 'roma', order: 1, title: 't', eyebrow: 'e', intro: 'i', confirmed: [], table: [] }).success).toBe(true)
     expect(ReferenceSchema.safeParse({ slug: 'practica', trip: 'roma', order: 2, title: 't', eyebrow: 'e', intro: 'i', sections: [], media: [] }).success).toBe(true)
   })
+
+  // D-05: slug de viaje ASCII ^[a-z0-9]+$ (TRIP_SLUG_RE). Mismo trip válido, solo varía el slug.
+  const validTrip = {
+    slug: 'campania',
+    title: 'Viaje',
+    decoration: '·  X  ·',
+    heroMeta: '2027',
+    quote: 'Cita.',
+    quoteAttr: '— AUTOR',
+    infoCards: [{ label: 'Alojamiento', value: '**Hotel**' }],
+    howTo: ['Cómo usar la guía.'],
+    map: { center: { lat: 40.85, lng: 14.27 }, zoom: 13 },
+  }
+
+  it('TripSchema acepta un slug ASCII sin guiones ("campania", D-05)', () => {
+    expect(TripSchema.safeParse(validTrip).success).toBe(true)
+  })
+
+  it('TripSchema rechaza un slug con guion ("campania-2027", D-05)', () => {
+    expect(TripSchema.safeParse({ ...validTrip, slug: 'campania-2027' }).success).toBe(false)
+  })
+
+  it('TripSchema rechaza un slug con mayúsculas ("Roma", D-05)', () => {
+    expect(TripSchema.safeParse({ ...validTrip, slug: 'Roma' }).success).toBe(false)
+  })
 })
 
-// ── Conteo por colección (SC#1) — tolerante a 0 mientras Wave 2 no haya migrado ──
-describe('conteo de ficheros por colección (SC#1)', () => {
-  for (const { name, files, expected } of collections) {
-    it(`${name}: ${files.length === 0 ? '0 (migración pendiente)' : files.length} ficheros`, () => {
-      if (files.length === 0) {
-        // Aún sin migrar: tolerar 0. Tras Wave 2 debe igualar `expected`.
-        expect(files.length).toBe(0)
-      }
-      else {
-        expect(files.length).toBe(expected)
-      }
+// ── Conteo por colección (SC#1) — SOLO roma (D-12) ───────────────────────────
+// Los totales son la huella de la migración del index.html y siguen siendo solo de Roma.
+// Ningún conteo para otros viajes: un borrador incompleto no es error (D-09).
+describe('conteo de ficheros por colección (SOLO roma, D-12)', () => {
+  const roma = loadTrip('roma')
+  const expected: Record<CollectionName, number> = { trip: 1, day: 5, monument: 38, food: 26, artist: 13, reference: 2 }
+  for (const [name, n] of Object.entries(expected) as Array<[CollectionName, number]>) {
+    it(`${name}: ${n} ficheros`, () => {
+      expect(roma.docs.filter(d => d.collection === name).length).toBe(n)
     })
   }
 })
