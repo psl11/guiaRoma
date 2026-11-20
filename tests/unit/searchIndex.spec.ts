@@ -102,6 +102,17 @@ describe('buildHaystack — SUPERCONJUNTO de card.textContent (FEAT-03 SC#1 / Pi
     expect(hay).toContain('litteram')
   })
 
+  it('indexa el texto de un enlace Markdown pero no su destino (#ficha)', () => {
+    const linked = {
+      ...caravaggio,
+      sections: [{ heading: 'Cerca', body: 'A dos pasos de [la galería](#galleria-sciarra).' }],
+    } as Monument
+    const hay3 = buildHaystack(linked)
+    expect(hay3).toContain('la galería')
+    expect(hay3).not.toContain('galleria-sciarra')
+    expect(createSearchIndex([linked]).search('Sciarra')).toEqual([])
+  })
+
   it('aplica las guardas ?? [] sin lanzar cuando faltan los arrays opcionales', () => {
     // caravaggio NO tiene sorrentino/culture/arch/artists → no debe lanzar y sí incluir lo presente.
     const hay2 = buildHaystack(caravaggio)

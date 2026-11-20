@@ -41,6 +41,9 @@
 import MiniSearch from 'minisearch'
 import type { Monument } from '~~/shared/schemas'
 
+/** Destino de un enlace Markdown-inline: `](#ficha)` / `](https://…)`. */
+const MD_LINK_TARGET = /\]\([^)\s]*\)/g
+
 /**
  * Construye el haystack de búsqueda de un monumento: una única cadena con TODOS los campos
  * de texto visibles del antiguo `.card` (SUPERCONJUNTO de `card.textContent`, RESEARCH
@@ -57,7 +60,11 @@ export function buildHaystack(m: Monument): string {
   for (const c of m.culture ?? []) parts.push(c.title, c.text)
   for (const a of m.artists ?? []) parts.push(a.label, a.note ?? '')
   for (const a of m.arch ?? []) parts.push(a.label, a.note ?? '')
-  return parts.join(' ')
+  // Fuera los DESTINOS de los enlaces Markdown `[texto](#ficha)` → `[texto]` (Fase 9, 09-03): el
+  // texto del enlace se queda (es lo visible, lo que `card.textContent` indexaba), pero el href
+  // nunca fue texto de la ficha. Sin esto, una ficha que enlaza a `#fontana-pruebas` con otro
+  // texto aparecía al buscar «Fontana» por un token que el lector no ve.
+  return parts.join(' ').replace(MD_LINK_TARGET, ']')
 }
 
 /**
