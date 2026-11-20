@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="10" failures="1" errors="0" time="0.030404364">
+    <testsuite name="tests/data/build-isolation.spec.ts" timestamp="2026-11-20T19:10:58.199Z" hostname="NewVaktorPC" tests="10" failures="1" errors="0" skipped="0" time="0.030404364">
+        <testcase classname="tests/data/build-isolation.spec.ts" name="centinela del viaje forma (D-15) &gt; content/trips/forma/trip.yml contiene FORMA-CENTINELA-10A" time="0.000800669">
+        </testcase>
+        <testcase classname="tests/data/build-isolation.spec.ts" name="centinela del viaje prueba (D-16) &gt; content/trips/prueba/trip.yml contiene PRUEBA-CENTINELA-9F3" time="0.000142766">
+        </testcase>
+        <testcase classname="tests/data/build-isolation.spec.ts" name="build estática: Roma sin datos de prueba ni de forma (D-02, D-08, D-15) &gt; index.html es la guía de Roma (contiene «Galleria Sciarra»; el spec no es vacuo)" time="0.001387355">
+        </testcase>
+        <testcase classname="tests/data/build-isolation.spec.ts" name="build estática: Roma sin datos de prueba ni de forma (D-02, D-08, D-15) &gt; el centinela PRUEBA-CENTINELA-9F3 no aparece en index.html ni en _payload.json" time="0.003999866">
+        </testcase>
+        <testcase classname="tests/data/build-isolation.spec.ts" name="build estática: Roma sin datos de prueba ni de forma (D-02, D-08, D-15) &gt; el centinela FORMA-CENTINELA-10A no aparece en index.html ni en _payload.json" time="0.004124368">
+        </testcase>
+        <testcase classname="tests/data/build-isolation.spec.ts" name="build estática: Roma sin datos de prueba ni de forma (D-02, D-08, D-15) &gt; no existe .output/public/trips (solo «/» se prerenderiza)" time="0.000218576">
+        </testcase>
+        <testcase classname="tests/data/build-isolation.spec.ts" name="build estática: Roma sin datos de prueba ni de forma (D-02, D-08, D-15) &gt; el payload usa claves de estado sufijadas por viaje y ninguna &quot;$space&quot; global" time="0.002331536">
+        </testcase>
+        <testcase classname="tests/data/build-isolation.spec.ts" name="build estática: ningún fichero publicado lleva datos de un borrador (D-16, D-17) &gt; existen los sql_dump de las 6 colecciones (trip, day, monument, food, artist, reference)" time="0.000195166">
+        </testcase>
+        <testcase classname="tests/data/build-isolation.spec.ts" name="build estática: ningún fichero publicado lleva datos de un borrador (D-16, D-17) &gt; control positivo: los dumps decodificados llevan Roma (el escaneo no es vacuo)" time="0.002230232">
+        </testcase>
+        <testcase classname="tests/data/build-isolation.spec.ts" name="build estática: ningún fichero publicado lleva datos de un borrador (D-16, D-17) &gt; ningún fichero de .output/public contiene PRUEBA-CENTINELA-9F3 ni FORMA-CENTINELA-10A (dumps decodificados)" time="0.014105652">
+            <failure message="ficheros publicados con datos de un borrador: expected [ …(3) ] to deeply equal []" type="AssertionError">
+AssertionError: ficheros publicados con datos de un borrador: expected [ …(3) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   &quot;__nuxt_content/monument/sql_dump.txt lleva PRUEBA-CENTINELA-9F3&quot;,
++   &quot;__nuxt_content/trip/sql_dump.txt lleva PRUEBA-CENTINELA-9F3&quot;,
++   &quot;__nuxt_content/trip/sql_dump.txt lleva FORMA-CENTINELA-10A&quot;,
++ ]
+
+ ❯ tests/data/build-isolation.spec.ts:137:71
+            </failure>
+        </testcase>
+    </testsuite>
+</testsuites>

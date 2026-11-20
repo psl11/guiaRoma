@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
-import { existsSync, readFileSync } from 'node:fs'
-import { join } from 'node:path'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
+import { join, relative } from 'node:path'
+import { gunzipSync } from 'node:zlib'
 
 /**
  * Centinela de build: la página estática de Roma no lleva nada de los viajes de desarrollo
@@ -14,9 +15,13 @@ import { join } from 'node:path'
  *    `FORMA-CENTINELA-10A` (howTo de `content/trips/forma/trip.yml`) tampoco puede aparecer en
  *    `index.html` ni en `_payload.json`. Un `it` FUERA del `skipIf` comprueba que el centinela
  *    sigue en el trip.yml de forma, para que la ausencia en la build nunca se afirme en vacío.
- *  - CR-01 (diferido a la Fase 11): las filas de `prueba` y `forma` siguen viajando en el
- *    `sql_dump` público de Nuxt Content. Son ficticias y sin datos personales; se excluirán con
- *    el campo `draft` (ROUTE-05) de la Fase 11.
+ *  - CR-01 (cerrado en la Fase 11, D-16/D-17): `prueba` y `forma` llevan `draft: true` en su
+ *    trip.yml y content.config.ts los excluye de las 6 colecciones fuera de `nuxi dev`, así que
+ *    la build de producción no lleva ni una fila suya. Hay que comprobarlo DECODIFICANDO cada
+ *    `__nuxt_content/<colección>/sql_dump.txt`: es base64(gzip(JSON con el SQL)), de modo que un
+ *    grep plano sobre `.output/public` no encuentra los centinelas ni cuando SÍ están (falso
+ *    negativo). El recorrido de abajo decodifica los dumps y lee el resto como `latin1`; un
+ *    control positivo (Roma SÍ está en los dumps) impide que la ausencia se afirme en vacío.
  *  - D-08: las claves `useState` van sufijadas por viaje y son visibles en claro en el payload
  *    `__NUXT_DATA__` de `index.html` (`"$space:roma"`, `"$scardNav:stack:roma"`,
  *    `"$ssearch:query:roma"`). Una clave sin sufijo (`"$space"`) indicaría estado global
@@ -36,12 +41,45 @@ const PAYLOAD = join(OUT, '_payload.json')
 const SENTINEL = 'PRUEBA-CENTINELA-9F3'
 const FORMA_SENTINEL = 'FORMA-CENTINELA-10A'
 const FORMA_TRIP = join(process.cwd(), 'content', 'trips', 'forma', 'trip.yml')
+const PRUEBA_TRIP = join(process.cwd(), 'content', 'trips', 'prueba', 'trip.yml')
+const BUILD_INDEX = join(OUT, 'index.html')
+const COLLECTIONS = ['trip', 'day', 'monument', 'food', 'artist', 'reference'] as const
+const dumpPath = (col: string) => join(OUT, '__nuxt_content', col, 'sql_dump.txt')
+
+/** `sql_dump.txt` = base64(gzip(JSON)); devuelve el JSON en claro. */
+const decodeDump = (txt: string) => gunzipSync(Buffer.from(txt, 'base64')).toString('utf8')
+
+/** Texto de cada fichero publicado: los `sql_dump.txt` decodificados, el resto en `latin1`. */
+function publishedTexts(dir: string = OUT): Array<{ file: string, text: string }> {
+  const out: Array<{ file: string, text: string }> = []
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name)
+    if (entry.isDirectory()) {
+      out.push(...publishedTexts(full))
+    }
+    else if (entry.isFile()) {
+      const text = entry.name === 'sql_dump.txt'
+        ? decodeDump(readFileSync(full, 'utf8'))
+        : readFileSync(full, 'latin1')
+      out.push({ file: relative(OUT, full), text })
+    }
+  }
+  return out
+}
 
 // Fuera del skipIf: corre siempre (con o sin build) para que el centinela de forma no pueda
 // desaparecer del contenido y dejar vacua la aserción de ausencia de abajo.
 describe('centinela del viaje forma (D-15)', () => {
   it(`content/trips/forma/trip.yml contiene ${FORMA_SENTINEL}`, () => {
     expect(readFileSync(FORMA_TRIP, 'utf8')).toContain(FORMA_SENTINEL)
+  })
+})
+
+// Gemelo del de forma, también FUERA del skipIf (D-16): el centinela de prueba tiene que seguir
+// en su trip.yml para que su ausencia en la build no se afirme en vacío.
+describe('centinela del viaje prueba (D-16)', () => {
+  it(`content/trips/prueba/trip.yml contiene ${SENTINEL}`, () => {
+    expect(readFileSync(PRUEBA_TRIP, 'utf8')).toContain(SENTINEL)
   })
 })
 
@@ -76,5 +114,26 @@ describe.skipIf(!existsSync(INDEX))('build estática: Roma sin datos de prueba n
       expect(page, `falta la clave de estado ${key}`).toContain(key)
     }
     expect(page, 'clave de estado sin sufijo de viaje "$space"').not.toContain('"$space"')
+  })
+})
+
+describe.skipIf(!existsSync(BUILD_INDEX))('build estática: ningún fichero publicado lleva datos de un borrador (D-16, D-17)', () => {
+  it('existen los sql_dump de las 6 colecciones (trip, day, monument, food, artist, reference)', () => {
+    for (const col of COLLECTIONS) {
+      expect(existsSync(dumpPath(col)), `falta __nuxt_content/${col}/sql_dump.txt`).toBe(true)
+    }
+  })
+
+  it('control positivo: los dumps decodificados llevan Roma (el escaneo no es vacuo)', () => {
+    expect(decodeDump(readFileSync(dumpPath('monument'), 'utf8'))).toContain('Galleria Sciarra')
+    expect(decodeDump(readFileSync(dumpPath('trip'), 'utf8'))).toContain('trips/roma/')
+  })
+
+  it(`ningún fichero de .output/public contiene ${SENTINEL} ni ${FORMA_SENTINEL} (dumps decodificados)`, () => {
+    // Lista de culpables (fichero + centinela) en vez de un expect por fichero: el diff de un
+    // dump decodificado entero sería ilegible; así el fallo nombra directamente cada fichero.
+    const offenders = publishedTexts().flatMap(({ file, text }) =>
+      [SENTINEL, FORMA_SENTINEL].filter(s => text.includes(s)).map(s => `${file} lleva ${s}`))
+    expect(offenders, 'ficheros publicados con datos de un borrador').toEqual([])
   })
 })
