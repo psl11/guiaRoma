@@ -20,9 +20,9 @@
 
 - [x] **SHAPE-01**: Una guía muestra tantos días como tenga su viaje, con sus nombres y fechas, aunque se repita el día de la semana (dos sábados en Campania) y con pastillas de navegación únicas
 - [x] **SHAPE-02**: Una guía solo muestra las secciones y pastillas para las que su viaje tiene datos (p. ej. Campania sin Arte/Arquitectura si no los tiene)
-- [ ] **SHAPE-03**: La marca de la cabecera, el pie y la leyenda del mapa salen de los datos del viaje
-- [ ] **SHAPE-04**: La pestaña del navegador muestra el título propio de cada viaje
-- [ ] **SHAPE-05**: Ningún texto específico de Roma («Roma», «Einaudi», «giugno 2026»…) aparece en la guía de otro viaje (test-trampa con viaje fixture)
+- [x] **SHAPE-03**: La marca de la cabecera, el pie y la leyenda del mapa salen de los datos del viaje
+- [x] **SHAPE-04**: La pestaña del navegador muestra el título propio de cada viaje
+- [x] **SHAPE-05**: Ningún texto específico de Roma («Roma», «Einaudi», «giugno 2026»…) aparece en la guía de otro viaje (test-trampa con viaje fixture)
 
 ### Rutas y portada (ROUTE)
 
@@ -106,9 +106,9 @@
 | PLAT-04 | Phase 9 | Complete |
 | SHAPE-01 | Phase 10 | Complete |
 | SHAPE-02 | Phase 10 | Complete |
-| SHAPE-03 | Phase 10 | Pending |
-| SHAPE-04 | Phase 10 | Pending |
-| SHAPE-05 | Phase 10 | Pending |
+| SHAPE-03 | Phase 10 | Complete |
+| SHAPE-04 | Phase 10 | Complete |
+| SHAPE-05 | Phase 10 | Complete |
 | ROUTE-01 | Phase 11 | Pending |
 | ROUTE-02 | Phase 11 | Pending |
 | ROUTE-03 | Phase 11 | Pending |

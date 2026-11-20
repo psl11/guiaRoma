@@ -4,17 +4,17 @@ milestone: v1.1
 milestone_name: Multi-viaje + Campania
 current_phase: 10
 current_phase_name: Forma y chrome desde datos
-status: executing
-stopped_at: Completed 10-04-PLAN.md
-last_updated: "2026-11-20T14:29:10.349Z"
+status: verifying
+stopped_at: Completed 10-05-PLAN.md
+last_updated: "2026-11-20T14:39:19.276Z"
 last_activity: 2026-11-20
 last_activity_desc: Phase 10 execution started
-state_head: 858d471081db28d27a17fe4babb23cd513eadfb5
+state_head: e5797ee4f425a77bb60a74facc7ed10b027fbfcb
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 10
-  completed_plans: 9
+  completed_plans: 10
   percent: 0
 ---
 
@@ -31,7 +31,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 
 Phase: 10 (Forma y chrome desde datos) — EXECUTING
 Plan: 5 of 5
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-11-20 — Phase 10 execution started
 
 Progress: [░░░░░░░░░░] 0%
@@ -112,6 +112,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 10 P02 | 7 min | 3 tasks | 8 files |
 | Phase 10 P03 | 3min | 2 tasks | 4 files |
 | Phase 10 P04 | 4min | 3 tasks | 16 files |
+| Phase 10 P05 | 6min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -259,6 +260,8 @@ Recent decisions affecting current work:
 - [Phase 10]: Phase 10-03: anchor rule resolves section anchors only via buildTripLayout over YAML presence; prose links whitelisted to #id or http(s)://
 - [Phase 10]: Phase 10-04: dev-only trip forma (10 dated days, two Saturdays, no Arte/Arquitectura/Reservas/Práctica) proves SHAPE-01/SHAPE-02 end-to-end in tests/trips/shape.spec.ts; pill navigation checked by href + section[id] + location.hash, never .active (Pitfall 6)
 - [Phase 10]: Phase 10-04: build-isolation guards FORMA-CENTINELA-10A absent from index.html/_payload.json, with an always-run presence check in content/trips/forma/trip.yml (non-vacuous)
+- [Phase 10]: Trap scans document.title, body innerText and a script-free body clone textContent; the Nuxt payload is not scanned (guiaRoma baseURL is not a leak)
+- [Phase 10]: TDD RED evidence for Vitest is captured with the JUnit reporter (the classifier rejects Vitest TAP multi-line diffs)
 
 ### Pending Todos
 
@@ -295,8 +298,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-20T14:29:10.286Z
-Stopped at: Completed 10-04-PLAN.md
+Last session: 2026-11-20T14:39:19.212Z
+Stopped at: Completed 10-05-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
