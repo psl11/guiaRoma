@@ -46,12 +46,19 @@
 // solo sitio, testeados en Vitest plano (tests/unit/cardNavigation.spec.ts) — mismo precedente de
 // delegación que `useTripModes.isVisible` → `pace.isVisible`.
 //
+// POR VIAJE (Fase 9, D-08): el estado vive en claves `useState` sufijadas con el slug
+// (`tripStateKey(slug, 'cardNav:stack')` → `cardNav:stack:<slug>`), así que la pila de «Volver» y la
+// pastilla activa de un viaje no se mezclan con las de otro. El slug llega por argumento o, si falta,
+// por `useTripSlug()` (inject desde TripView): NavPills/BackButton, descendientes de TripView, llaman
+// sin argumento; TripView, que no puede inyectarse a sí mismo, lo pasa explícito vía el controller.
+//
 // `useState`/`computed`/`onMounted`/`onUnmounted` son auto-importados por Nuxt; `computeActiveSection`/
-// `isFichaTarget` son auto-importados de `app/utils/cardNav.ts`.
-export function useCardNavigation() {
+// `isFichaTarget` son auto-importados de `app/utils/cardNav.ts`; `tripStateKey` de
+// `app/utils/tripStorage.ts`; `useTripSlug` de `app/composables/useTripContext.ts`.
+export function useCardNavigation(slug: string = useTripSlug()) {
   // DEFAULT = prerenderizado: [] → BackButton sin `.show`; '' → ninguna pastilla `.active`.
-  const navStack = useState<number[]>('cardNav:stack', () => [])
-  const activeSection = useState<string>('cardNav:activeSection', () => '')
+  const navStack = useState<number[]>(tripStateKey(slug, 'cardNav:stack'), () => [])
+  const activeSection = useState<string>(tripStateKey(slug, 'cardNav:activeSection'), () => '')
 
   // Reemplaza el `updateBackBtn()` imperativo (index.html:6385-6388): el binding
   // `:class="{ show: canGoBack }"` de BackButton se actualiza solo al cambiar navStack.length.
@@ -90,15 +97,21 @@ export function useCardNavigation() {
 // NavPills/BackButton ni desde los futuros consumidores F6/F7: ellos solo necesitan el accesor puro
 // `useCardNavigation()`.
 //
+// SLUG POR ARGUMENTO, OBLIGATORIO (Fase 9, D-08). El host es TripView, que publica el slug con
+// `provideTripSlug` pero NO puede leerlo con `inject` (en Vue 3.5 `inject` mira los provides del
+// PADRE: trampa del self-inject). Por eso el controller recibe el slug y llama al accesor SIEMPRE con
+// él (`useCardNavigation(slug)`), nunca sin argumento.
+//
 // `useTrip` es `async` y devuelve `monById` (computed `Map<slug, Monumento>`, keyed por slug = el
-// `#fragmento` de los enlaces). Se consulta el slug 'roma' — el MISMO que `TripView` pasa a `useTrip`
-// (Pitfall 2); `useAsyncData` deduplica por clave, así que `monById` es el MISMO computed poblado.
+// `#fragmento` de los enlaces). Se consulta el viaje recibido — el MISMO slug que `TripView` pasa a
+// su propio `useTrip`; `useAsyncData` deduplica por clave, así que `monById` es el MISMO computed
+// poblado. El discriminador ficha-vs-sección usa así las fichas del viaje que se está viendo.
 //
 // REGISTRO SÍNCRONO DE HOOKS (Plan 05-03 — A1 / fix de bug). `onMounted`/`onUnmounted` se registran
 // SÍNCRONAMENTE, ANTES de cualquier `await`. Vue asocia un hook de ciclo de vida a la instancia
 // ACTIVA en el momento de llamarlo; tras un `await` en setup async la instancia activa se PIERDE y
-// el hook se convierte en un no-op SILENCIOSO. La versión 05-02 hacía `await useTrip('roma')` y LUEGO
-// `onMounted(...)` → los listeners de click y scroll NUNCA se adjuntaban (FEAT-05 muerta en el SSG:
+// el hook se convierte en un no-op SILENCIOSO. La versión 05-02 hacía primero el `await useTrip(...)`
+// y LUEGO `onMounted(...)` → los listeners de click y scroll NUNCA se adjuntaban (FEAT-05 muerta en el SSG:
 // el scrollspy no marcaba pastilla y los enlaces de ficha saltaban nativos). El spec
 // tests/parity/navigation.spec.ts lo detectó (RED) y exige este orden. `monById` se obtiene tras el
 // await y se guarda en `monByIdRef` (un holder reactivo capturado síncronamente); el handler de
@@ -119,12 +132,12 @@ export function useCardNavigation() {
 //
 // `useTrip`/`shallowRef`/`onMounted`/`onUnmounted` son auto-importados por Nuxt; `computeActiveSection`/
 // `isFichaTarget` se auto-importan de `app/utils/cardNav.ts`.
-export async function useCardNavigationController() {
-  const { navigateToCard, activeSection } = useCardNavigation()
+export async function useCardNavigationController(slug: string) {
+  const { navigateToCard, activeSection } = useCardNavigation(slug)
 
   // Holder reactivo de `monById`, capturado SÍNCRONAMENTE para que los hooks se registren antes del
   // await. Arranca con un Map vacío (paridad con el prerender: nada interceptable hasta hidratar);
-  // se rellena tras `await useTrip('roma')`. El handler de click lo lee en tiempo de clic.
+  // se rellena tras el `await useTrip(slug)` del final. El handler de click lo lee en tiempo de clic.
   const monByIdRef = shallowRef<Map<string, unknown>>(new Map())
 
   // D-01: listener de click delegado. `closest('a[href^="#"]')` encuentra el ancla; si el destino
@@ -170,7 +183,7 @@ export async function useCardNavigationController() {
   // Tras registrar los hooks, resolver los datos y poblar el holder de monById (deduplicado con el
   // useTrip de TripView). En SSG resuelve en prerender; el ref se rellena antes de que el usuario
   // pueda hacer clic.
-  const { monById } = await useTrip('roma')
+  const { monById } = await useTrip(slug)
   monByIdRef.value = monById.value
   // Mantener el holder sincronizado si `monById` se recalcula (p. ej. al resolver useAsyncData en
   // cliente durante la hidratación): el listener siempre ve el índice vigente.

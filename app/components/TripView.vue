@@ -59,13 +59,21 @@
 // los enlaces a ficha — prosa MDC + timeline — vía un `document.addEventListener` nativo,
 // Pitfall 1) y el de scroll (scrollspy de pastillas) UNA SOLA VEZ. NO se añade un `<div>`
 // envoltorio ni un handler de plantilla al `<main>`: el listener es nativo sobre `document` (D-01).
+//
+// F9 (Plan 09-01, D-08): TripView PUBLICA el slug del viaje (`provideTripSlug`) como primera
+// sentencia ejecutable, antes de cualquier `await`, para que todo su árbol (NavPills, BackButton,
+// TheHero, Timeline*, MonumentCard, SearchBox) lo lea con `useTripSlug()` y su estado/persistencia
+// salga por viaje.
 const props = defineProps<{ slug: string }>()
+provideTripSlug(props.slug)
 
 const { trip, days, monById, food, artists, refById } = await useTrip(props.slug)
 
-// Efectos de navegación: se registran AQUÍ una sola vez (Pitfall 4). El controller hace su
-// propio `await useTrip('roma')` para `monById`; va tras el useTrip de arriba por coherencia.
-await useCardNavigationController()
+// Efectos de navegación: se registran AQUÍ una sola vez (Pitfall 4). El slug va POR ARGUMENTO:
+// TripView no puede leer con `inject` el valor que él mismo provee (en Vue 3.5 `inject` mira los
+// provides del padre — trampa del self-inject). El controller consulta `useTrip` con ese mismo slug
+// (deduplicado con el de arriba por `useAsyncData`) para saber qué `#id` son fichas de este viaje.
+await useCardNavigationController(props.slug)
 
 // Busca un día por su slug. Devuelve `undefined` si falta (WR-03): el `v-if` de cada sección
 // usa esto para no montar `DaySection` con un `day` ausente. Con los datos F2 de Roma siempre
