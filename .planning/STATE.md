@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 12
 current_phase_name: Formas nuevas de viaje
 status: executing
-stopped_at: Completed 12-04-PLAN.md
-last_updated: "2026-11-21T10:53:43.747Z"
+stopped_at: Completed 12-05-PLAN.md
+last_updated: "2026-11-21T11:09:45.978Z"
 last_activity: 2026-11-21
 last_activity_desc: Phase 12 execution started
-state_head: 20717820c2696d15d9a61bea043d6c9c7049106f
+state_head: a249d75a52a12a0dbe9990adf6d4b2252e691b8b
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 24
-  completed_plans: 21
+  completed_plans: 22
   percent: 0
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 12 (Formas nuevas de viaje) — EXECUTING
-Plan: 5 of 7
+Plan: 6 of 7
 Status: Ready to execute
 Last activity: 2026-11-21 — Phase 12 execution started
 
@@ -124,6 +124,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 12 P02 | 9min | 3 tasks | 12 files |
 | Phase 12 P03 | 8min | 2 tasks | 14 files |
 | Phase 12 P04 | 12min | 3 tasks | 16 files |
+| Phase 12 P05 | 11min | 2 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -301,6 +302,9 @@ Recent decisions affecting current work:
 - [Phase 12]: 12-04: color y popup del marcador salen de MARKER_STYLE (Record<PlaceType, { bg }>) y markerPopupHtml en app/utils/mapMarkers.ts; nature = #2f6f73 con ancla plana sin manejador; Roma fijada byte a byte en mapMarkers.spec
 - [Phase 12]: 12-04: markerPopupHtml escapa & < > " de name/day/id y deja la comilla simple intacta (siete nombres de Roma la llevan)
 - [Phase 12]: 12-04: los motivos de naturaleza (sea, thermal, river, trail) van al final de Motif y de SVG_MOTIFS; los 19 de Roma quedan byte a byte; los tests derivan la lista de Motif.options
+- [Phase 12]: 12-05: TransportVariant y StatVariant como enums con nombre; tests/unit/enumStyles.spec.ts recorre sus .options contra los CSS reales; única exención PARITY_EXEMPT_TRANSPORT = ['train'] (Pitfall 1)
+- [Phase 12]: 12-05: bloque EXT-03 de UI-SPEC verbatim en tripshapes.css (bandas color-mix + glifos de cabecera y stats), sin componentes tocados ni regla de tren
+- [Phase 12]: 12-05: los cinco días de Campania tienen stay (ROADMAP SC#2 completo); sábado 19 con un tramo sin variante a propósito (edge EXT-03)
 
 ### Pending Todos
 
@@ -337,8 +341,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-21T10:53:43.587Z
-Stopped at: Completed 12-04-PLAN.md
+Last session: 2026-11-21T11:09:45.809Z
+Stopped at: Completed 12-05-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
