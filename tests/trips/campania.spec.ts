@@ -424,3 +424,36 @@ test.describe('campania: formas de las alternativas (EXT-01, D-02, D-03, D-05)',
     await context.close()
   })
 })
+
+// ── D-15: los cinco días del esqueleto ──────────────────────────────────────────────────────
+
+interface YamlDayHead { slug: string, order: number, pill: string }
+
+test.describe('campania: los días del esqueleto (D-15)', () => {
+  test('campania: los cinco días aparecen en orden con su pastilla (D-15)', async ({ browser }) => {
+    const days = readdirSync(join(CAMPANIA_ROOT, 'days'))
+      .filter(f => f.endsWith('.yml'))
+      .map(f => readYaml<YamlDayHead>(`days/${f}`))
+      .sort((a, b) => a.order - b.order)
+    expect(days.map(d => d.order), 'order contiguo 1..5').toEqual([1, 2, 3, 4, 5])
+    const slugs = days.map(d => d.slug)
+    const slugSet = new Set(slugs)
+
+    const { context, page } = await newIsolatedPage(browser)
+    await gotoHydrated(page, CAMPANIA_URL)
+
+    // Las secciones de día de <main>, en el orden del DOM = los slugs ordenados por `order`.
+    const ids = await page.locator('main > section[id]').evaluateAll(els => els.map(e => e.id))
+    expect(ids.filter(id => slugSet.has(id))).toEqual(slugs)
+
+    // Pitfall 6 (Fase 10): por `href` + `section[id]`, nunca por la pastilla `.active`.
+    for (const d of days) {
+      const pill = page.locator(`#nav-pills .nav-pill[href="#${d.slug}"]`)
+      await expect(pill, `una sola pastilla para ${d.slug}`).toHaveCount(1)
+      await expect(pill).toHaveText(d.pill)
+      await expect(page.locator(`section[id="${d.slug}"]`)).toHaveCount(1)
+    }
+
+    await context.close()
+  })
+})
