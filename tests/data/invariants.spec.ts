@@ -55,6 +55,11 @@ import {
  *  - EXT-02 / D-06 `stay-dup`: los slugs de `trip.stays` son únicos; un slug repetido es una
  *    violación en trip.yml («stay "<slug>" duplicado en stays»).
  *
+ * Fase 12.1 (títulos de Reservas por viaje; WR-01 de la revisión):
+ *  - `reservas-headings`: un viaje que no es Roma y tiene reference/reservas.yml declara
+ *    `headings.table` y el `headings.<grupo>` de cada grupo de `confirmed` con entradas, con texto
+ *    visible; si falta, ese bloque heredaría el texto de Roma. La violación nombra el reservas.yml.
+ *
  * El bloque «la puerta tiene dientes» prueba cada regla con un fixture (en memoria con
  * `loadTripFromFiles` o en disco en tests/data/fixtures/trips/, NUNCA bajo content/).
  */
@@ -343,7 +348,11 @@ describe('la puerta tiene dientes (fixtures)', () => {
   })
 
   // ── D-08 (Fase 10): `anchor` solo resuelve a las secciones presentes (WR-01) ──
-  const validReservas = { slug: 'reservas', trip: 'prueba', order: 1, title: 'Reservas', eyebrow: 'e', intro: 'i', confirmed: [], table: [] }
+  // `headings.table`: fuera de Roma la cabecera de la tabla necesita título propio (reservas-headings).
+  const validReservas = {
+    slug: 'reservas', trip: 'prueba', order: 1, title: 'Reservas', eyebrow: 'e', intro: 'i',
+    headings: { table: 'Qué reservar' }, confirmed: [], table: [],
+  }
   const validGlossary = {
     kind: 'glossary', slug: 'arq-glosario', trip: 'prueba', avatar: '?', name: 'Glosario', dates: '', epithet: '',
     terms: [{ term: 'Frontón', def: 'remate triangular' }],
@@ -542,6 +551,64 @@ describe('la puerta tiene dientes (fixtures)', () => {
   it('stay-ref / stay-dup: día y base coincidentes → sin violaciones', () => {
     const vs = checkTrip(memTrip('prueba', { 'days/viernes.yml': dayStaying('salerno') }, { stays: twoStays }))
     expect(vs, formatViolations(vs)).toEqual([])
+  })
+
+  // ── Fase 12.1 (WR-01): fuera de Roma, cada bloque de Reservas que se pinta lleva título propio ──
+  const reservasFile = (dir: string, over: Record<string, unknown> = {}) => y({
+    slug: 'reservas', trip: dir, order: 1, title: 'Reservas', eyebrow: 'e', intro: 'i', confirmed: [], table: [], ...over,
+  })
+  const entry = (group: 'mesas' | 'visitas') => ({ group, when: 'Vie 1', text: 'Algo reservado' })
+  const headingViolations = (vs: Violation[]) => vs.filter(v => v.rule === 'reservas-headings')
+
+  it('reservas-headings: sin headings y con los dos grupos llenos → tres violaciones en reservas.yml', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'reference/reservas.yml': reservasFile('prueba', { confirmed: [entry('mesas'), entry('visitas')] }),
+    }))
+    const file = 'content/trips/prueba/reference/reservas.yml'
+    expect(headingViolations(vs), formatViolations(vs)).toEqual([
+      { file, rule: 'reservas-headings', message: 'falta headings.mesas: heredaría el texto de Roma («✅ Ya reservado · 3 comensales»)' },
+      { file, rule: 'reservas-headings', message: 'falta headings.visitas: heredaría el texto de Roma («🎟️ Visitas y entradas reservadas»)' },
+      { file, rule: 'reservas-headings', message: 'falta headings.table: heredaría el texto de Roma («Restaurantes · cuándo reservar y con cuánta antelación»)' },
+    ])
+  })
+
+  it('reservas-headings: olvidar solo table (el caso Campania de la revisión) → una violación', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'reference/reservas.yml': reservasFile('prueba', {
+        headings: { mesas: '✈️ Vuelos, barcos y coche', visitas: '🎟️ Conciertos' },
+        confirmed: [entry('mesas'), entry('visitas')],
+      }),
+    }))
+    expect(headingViolations(vs).map(v => v.message), formatViolations(vs)).toEqual([
+      'falta headings.table: heredaría el texto de Roma («Restaurantes · cuándo reservar y con cuánta antelación»)',
+    ])
+  })
+
+  it('reservas-headings: un título null o solo espacios cuenta como ausente', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'reference/reservas.yml': reservasFile('prueba', { headings: { mesas: null, table: '   ' }, confirmed: [entry('mesas')] }),
+    }))
+    expect(headingViolations(vs).map(v => v.message.split(':')[0]), formatViolations(vs)).toEqual([
+      'falta headings.mesas',
+      'falta headings.table',
+    ])
+  })
+
+  it('reservas-headings: un grupo sin entradas no necesita título (solo visitas → mesas no se exige)', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'reference/reservas.yml': reservasFile('prueba', {
+        headings: { visitas: '🎟️ Conciertos', table: 'Qué reservar' },
+        confirmed: [entry('visitas')],
+      }),
+    }))
+    expect(vs, formatViolations(vs)).toEqual([])
+  })
+
+  it('reservas-headings: Roma queda exenta (sus textos son los defaults)', () => {
+    const vs = checkTrip(memTrip('roma', {
+      'reference/reservas.yml': reservasFile('roma', { confirmed: [entry('mesas'), entry('visitas')] }),
+    }))
+    expect(headingViolations(vs), formatViolations(vs)).toEqual([])
   })
 })
 

@@ -37,11 +37,20 @@
 //  - EXT-02 / D-06: `stay-ref` — el `stay` de cada día es el slug de una base de `trip.stays`
 //    (comparación exacta); si no existe, también cuando el viaje no tiene `stays`, la violación
 //    nombra el fichero del día. `stay-dup` — los slugs de `stays` son únicos (violación en trip.yml).
+//
+// Fase 12.1 (títulos de Reservas por viaje, habilitador de CAMP-04; WR-01 de la revisión):
+//  - `reservas-headings` — un viaje que NO es Roma y tiene reference/reservas.yml declara en
+//    `headings` un texto visible (no vacío ni solo espacios) para `table` (la cabecera de la tabla
+//    siempre se pinta) y para cada grupo de `confirmed` que tenga entradas (`mesas`, `visitas`).
+//    Cada clave que falte caería al texto de Roma (`RESERVAS_HEADINGS_DEFAULT`: «3 comensales»,
+//    «Restaurantes · …»), que en otro viaje es información falsa. El esquema no puede exigirlo
+//    (D-06: todo `.optional()`, y Roma no declara `headings`); la violación nombra el reservas.yml.
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { basename, join, relative, sep } from 'node:path'
 import { parse as parseYaml } from 'yaml'
 // Import RELATIVO (Vitest plano, sin alias): la puerta usa la MISMA función que la UI (Pitfall 5).
 import { STRUCTURAL_SECTION_IDS, buildTripLayout, dayPillLabel } from '../../app/utils/tripLayout'
+import { RESERVAS_HEADINGS_DEFAULT } from '../../app/utils/reservasHeadings'
 import {
   ArtistRowSchema,
   ArtistSchema,
@@ -92,6 +101,7 @@ export const RULES = [
   'yaml-parse', 'yaml-object', 'trip-yml', 'trip-slug', 'trip-field', 'stray-file', 'reserved-key',
   'unknown-key', 'basename-slug', 'dup-id', 'fixed-anchor', 'ref', 'anchor', 'cross-trip-link',
   'day-order', 'day-pill', 'trip-dates', 'trip-summary-link', 'stay-ref', 'stay-dup',
+  'reservas-headings',
 ] as const
 export type Rule = typeof RULES[number]
 
@@ -241,7 +251,7 @@ const rowKeys = new Map<CollectionName, ReadonlySet<string>>(
   COLLECTIONS.map(c => [c.name, new Set(Object.keys(c.row.shape))]),
 )
 
-/** Aplica las 20 reglas de la puerta (`RULES`) a un viaje cargado. Lista vacía = viaje sano. */
+/** Aplica las 21 reglas de la puerta (`RULES`) a un viaje cargado. Lista vacía = viaje sano. */
 export function checkTrip(t: LoadedTrip): Violation[] {
   const vs: Violation[] = [...t.loadViolations]
   const push = (file: string, rule: Rule, message: string) => vs.push({ file, rule, message })
@@ -407,6 +417,25 @@ export function checkTrip(t: LoadedTrip): Violation[] {
     const stay = d.data.stay
     if (typeof stay === 'string' && !staySlugs.has(stay)) {
       push(d.file, 'stay-ref', `stay "${stay}" no existe en trip.yml stays`)
+    }
+  }
+
+  // reservas-headings (Fase 12.1, WR-01): fuera de Roma, cada bloque que se pinta lleva su
+  // título propio. `table` siempre (la cabecera de la tabla no tiene `v-if`); `mesas`/`visitas`
+  // solo si ese grupo tiene entradas (D-03: un grupo vacío no pinta su `h4`). Un valor ausente,
+  // `null`, no string o solo espacios cuenta como ausente (el resolver caería al texto de Roma).
+  // Roma es el viaje cuyos textos SON los defaults: no declara `headings` y queda exento.
+  if (t.dir !== 'roma') {
+    for (const d of reference.filter(x => x.slug === 'reservas')) {
+      const headings = isPlainObject(d.data.headings) ? d.data.headings : {}
+      const groups = new Set(asArray(d.data.confirmed).map(c => c.group))
+      for (const key of ['mesas', 'visitas', 'table'] as const) {
+        if (key !== 'table' && !groups.has(key)) continue
+        const value = headings[key]
+        if (typeof value !== 'string' || value.trim() === '') {
+          push(d.file, 'reservas-headings', `falta headings.${key}: heredaría el texto de Roma («${RESERVAS_HEADINGS_DEFAULT[key]}»)`)
+        }
+      }
     }
   }
 

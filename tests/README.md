@@ -302,7 +302,8 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
 - `checkTrip()` devuelve violaciones con regla de la lista `RULES`: `yaml-parse`,
   `yaml-object`, `trip-yml`, `trip-slug`, `trip-field`, `stray-file`, `reserved-key`,
   `unknown-key`, `basename-slug`, `dup-id`, `fixed-anchor`, `ref`, `anchor`,
-  `cross-trip-link`.
+  `cross-trip-link`, `day-order`, `day-pill`, `trip-dates`, `trip-summary-link`, `stay-ref`,
+  `stay-dup` y `reservas-headings` (Fase 12.1, ver §5.9).
 - Los mensajes (`formatViolations`) llevan **el fichero culpable** y la regla:
   `content/trips/<viaje>/…/<fichero>.yml: [<regla>] <detalle>`. Un YAML roto en
   cualquier viaje rompe `verify` nombrando su fichero.
@@ -572,12 +573,19 @@ encabezados fijos de Roma heredaría «3 comensales» y la cabecera de restauran
   - `tests/unit/reservasHeadings.spec.ts` (`test:unit`): helpers (defaults, personalizados,
     parcial, `null`/`''`, grupos vacíos, Roma real) y el cableado estático de
     ReservasSection.vue (`wiringProblems`) con dientes en memoria.
+  - `tests/data/invariants.spec.ts` (`test:data`): regla `reservas-headings` de la puerta de
+    datos (`tests/data/trips.ts`). Un viaje que no es Roma y tiene `reservas.yml` debe declarar
+    `headings.table` y el `headings.<grupo>` de cada grupo de `confirmed` con entradas, con texto
+    visible; si no, el fallo nombra su `reservas.yml` («falta headings.table: heredaría el texto
+    de Roma …»). Dientes en memoria: los dos grupos sin títulos, solo `table` olvidado, `null` o
+    solo espacios, grupo vacío no exigido, Roma exenta.
   - `tests/data/romaReservas.spec.ts` (`test:data`): siempre, los textos por defecto contra
     `index.html` sin normalizar; con build, la `<section id="reservas">` de Roma BYTE A BYTE
     contra `tests/data/fixtures/roma-reservas.html`. El fixture se capturó de la build anterior
     al cambio (en un commit que no toca plantilla ni esquema); nunca se regenera para que el
     spec pase y solo se recaptura ante un cambio de Roma aprobado por el usuario.
 
-> **Nota para la Fase 13.** Campania debe declarar `headings` en su `reservas.yml` o heredará
-> los textos de Roma (D-02). La comprobación en navegador del caso «grupo vacío» llega con ese
+> **Nota para la Fase 13.** Campania debe declarar `headings` en su `reservas.yml`: si falta un
+> título de un bloque que se pinta, la regla `reservas-headings` de la puerta de datos pone
+> `test:data` en rojo (antes solo lo avisaba esta nota; la UI caería a los textos de Roma, D-02). La comprobación en navegador del caso «grupo vacío» llega con ese
 > fichero en `test:trips`: hoy ningún viaje que no sea Roma tiene `reservas.yml`.
