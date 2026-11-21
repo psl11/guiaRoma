@@ -2,18 +2,18 @@
 gsd_state_version: "1.0"
 milestone: v1.1
 milestone_name: Multi-viaje + Campania
-current_phase: 12
-current_phase_name: Formas nuevas de viaje
-status: verifying
+current_phase: "12.1"
+current_phase_name: Títulos de Reservas por viaje
+status: executing
 stopped_at: Phase 13 context gathered
-last_updated: "2026-11-21T22:51:28.461Z"
+last_updated: "2026-11-21T23:09:17.545Z"
 last_activity: 2026-11-21
 last_activity_desc: Phase 12 execution started
-state_head: 7145c7156d50639e51bf929d81604c6a63e62ef5
+state_head: 18fc18f2bc456f8a76b4cd04990e7e8bf4678864
 progress:
   total_phases: 7
   completed_phases: 0
-  total_plans: 24
+  total_plans: 25
   completed_plans: 24
   percent: 0
 ---
@@ -29,9 +29,9 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 
 ## Current Position
 
-Phase: 12 (Formas nuevas de viaje) — EXECUTING
+Phase: 12.1 (Títulos de Reservas por viaje) — READY TO EXECUTE
 Plan: 7 of 7
-Status: Phase complete — ready for verification
+Status: Ready to execute
 Last activity: 2026-11-21 — Phase 12 execution started
 
 Progress: [░░░░░░░░░░] 0%

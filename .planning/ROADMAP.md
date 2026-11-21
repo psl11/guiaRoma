@@ -188,7 +188,6 @@ Plans:
   4. La puerta de paridad sigue 110/110 con los 56 goldens sin re-baseline; `base.css` y el resto del CSS congelado sin cambios
 **Plans**: 1 plan
 Plans:
-**Wave 1**
 - [ ] 12.1-01-PLAN.md — Encabezados de Reservas por viaje: fixture de bytes de Roma capturado de HEAD, `ReservasHeadings` estricto en `ReservasSchema` + `ReferenceRowSchema`, defaults de Roma en `app/utils/reservasHeadings.ts`, `ReservasSection.vue` con grupos vacíos ocultos; dientes del esquema y de los helpers; puerta 110/110 + `test:trips` + congelados + §5.9 de tests/README.md (habilitador de CAMP-04)
 
 **Research**: no (RESEARCH de la Fase 13 §A.4/A.5 G-1 ya localiza `ReservasSection.vue:73,81,91` y `shared/schemas.ts:401-429`)
