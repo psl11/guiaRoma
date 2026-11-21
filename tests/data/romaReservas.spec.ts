@@ -59,11 +59,13 @@ describe('Reservas de Roma: defaults verbatim contra index.html (D-02)', () => {
 
   it('RESERVAS_HEADINGS_DEFAULT.mesas === primer h4 (sin U+FE0F tras ✅)', () => {
     expect(RESERVAS_HEADINGS_DEFAULT.mesas).toBe(h4.eq(0).text())
+    expect(RESERVAS_HEADINGS_DEFAULT.mesas).toContain('\u{2705}')
+    expect(RESERVAS_HEADINGS_DEFAULT.mesas).not.toContain('\u{FE0F}')
   })
 
   it('RESERVAS_HEADINGS_DEFAULT.visitas === segundo h4 (con U+FE0F tras 🎟)', () => {
     expect(RESERVAS_HEADINGS_DEFAULT.visitas).toBe(h4.eq(1).text())
-    expect(RESERVAS_HEADINGS_DEFAULT.visitas).toContain('\u{1F39F}️')
+    expect(RESERVAS_HEADINGS_DEFAULT.visitas).toContain('\u{1F39F}\u{FE0F}')
   })
 
   it('RESERVAS_HEADINGS_DEFAULT.table === .reservas-box-header', () => {
