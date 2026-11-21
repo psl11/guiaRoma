@@ -144,7 +144,7 @@ Plans:
   3. Una playa, poza termal, río o sendero tiene ficha, marcador propio en el mapa y un dibujo de reserva cuando su imagen no carga; una ficha puede mostrar una nota para familias con niños
   4. El mapa de un viaje de varias ciudades encuadra todos sus marcadores (Nápoles, Procida, Ischia y Salerno a la vista a la vez), mientras Roma conserva exactamente su vista actual
   5. «Ver ruta del día» abre Google Maps en el modo adecuado al día (a pie, coche o transporte público) y no aparece en los días de ferry; en Roma sigue siendo a pie con las mismas paradas, y la puerta de paridad de Roma sigue verde
-**Plans**: 2/7 plans executed
+**Plans**: 3/7 plans executed
 Plans:
 **Wave 1**
 - [x] 12-01-PLAN.md — «Elige una» de punta a punta: `ChoiceRow` estricto en el timeline (D-18 Roma primero), `TimelineChoice.vue` + `tripshapes.css` (última en `css[]`), borrador `campania` (trip.yml + jueves 24 A/B) y dientes del esquema (EXT-01)
@@ -153,7 +153,7 @@ Plans:
 - [x] 12-02-PLAN.md — Regla `ref` dentro de opciones + primer `ref` en una opción (D-05), alternativas visibles con cualquier ritmo/«Caminar menos»/resumen, dos `choice` contiguos y 3 opciones; los cinco días del esqueleto; guardián de `tripshapes.css`, clases nuevas fuera del HTML de Roma y centinela de Campania (EXT-01)
 
 **Wave 3** *(blocked on Wave 2 completion)*
-- [ ] 12-03-PLAN.md — «Dormís en…»: `trip.stays` + `day.stay`, `stayFor`, línea en la cabecera del día (jueves 24; los demás días reciben su base en 12-04/12-05) y reglas `stay-ref`/`stay-dup` (EXT-02)
+- [x] 12-03-PLAN.md — «Dormís en…»: `trip.stays` + `day.stay`, `stayFor`, línea en la cabecera del día (jueves 24; los demás días reciben su base en 12-04/12-05) y reglas `stay-ref`/`stay-dup` (EXT-02)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 - [ ] 12-04-PLAN.md — Naturaleza: `nature` + 4 motivos SVG (sea/thermal/river/trail), `MARKER_STYLE`/`markerPopupHtml` con Roma byte a byte, Sorgeto/Epomeo/Valle del Calore (EXT-04)
@@ -233,7 +233,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 9. Plataforma por viaje | v1.1 | 5/5 | In Progress | - |
 | 10. Forma y chrome desde datos | v1.1 | 5/5 | In Progress | - |
 | 11. Portada y rutas multi-viaje | v1.1 | 7/7 | In Progress | - |
-| 12. Formas nuevas de viaje | v1.1 | 2/7 | In Progress | - |
+| 12. Formas nuevas de viaje | v1.1 | 3/7 | In Progress | - |
 | 13. Contenido Campania 2027 | v1.1 | 0/TBD | Not started | - |
 | 14. Verificación del milestone | v1.1 | 0/TBD | Not started | - |
 

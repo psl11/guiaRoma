@@ -36,7 +36,7 @@
 ### Formas nuevas de viaje (EXT)
 
 - [x] **EXT-01**: Un día puede ofrecer opciones alternativas («Elige una»: A o B), mostradas ambas apiladas con «— o bien —», con filas comunes antes y después
-- [ ] **EXT-02**: Cada día indica dónde se duerme («Dormís en…») a partir de las bases del viaje
+- [x] **EXT-02**: Cada día indica dónde se duerme («Dormís en…») a partir de las bases del viaje
 - [ ] **EXT-03**: El timeline distingue con estilo propio los tramos en ferry, coche, autobús, bici y avión
 - [ ] **EXT-04**: Los lugares de naturaleza (playas, pozas termales, ríos, senderos) tienen ficha, marcador propio en el mapa y dibujo de reserva cuando falla la imagen
 - [ ] **EXT-05**: El mapa de un viaje de varias ciudades encuadra todos sus marcadores (Roma conserva su vista actual)
@@ -116,7 +116,7 @@
 | ROUTE-05 | Phase 11 | Complete |
 | ROUTE-06 | Phase 11 | Complete |
 | EXT-01 | Phase 12 | Complete |
-| EXT-02 | Phase 12 | Pending |
+| EXT-02 | Phase 12 | Complete |
 | EXT-03 | Phase 12 | Pending |
 | EXT-04 | Phase 12 | Pending |
 | EXT-05 | Phase 12 | Pending |

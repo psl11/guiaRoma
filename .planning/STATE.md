@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 12
 current_phase_name: Formas nuevas de viaje
 status: executing
-stopped_at: Completed 12-02-PLAN.md
-last_updated: "2026-11-21T10:25:28.618Z"
+stopped_at: Completed 12-03-PLAN.md
+last_updated: "2026-11-21T10:37:17.128Z"
 last_activity: 2026-11-21
 last_activity_desc: Phase 12 execution started
-state_head: dae76cc6eb88bb415486d41a87aad9fd890dc5c5
+state_head: 089de0f2885935cf06ded44fd83e174ecf82d443
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 24
-  completed_plans: 19
+  completed_plans: 20
   percent: 0
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 12 (Formas nuevas de viaje) — EXECUTING
-Plan: 3 of 7
+Plan: 4 of 7
 Status: Ready to execute
 Last activity: 2026-11-21 — Phase 12 execution started
 
@@ -122,6 +122,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 11 P07 | ~7min | 3 tasks | 2 files |
 | Phase 12 P01 | 10 min | 2 tasks | 14 files |
 | Phase 12 P02 | 9min | 3 tasks | 12 files |
+| Phase 12 P03 | 8min | 2 tasks | 14 files |
 
 ## Accumulated Context
 
@@ -294,6 +295,8 @@ Recent decisions affecting current work:
 - [Phase 12]: 12-02: la regla ref de la puerta recorre las filas de las opciones de un choice (timelineRowsOf); anchor ya era recursiva
 - [Phase 12]: 12-02: el escaneo D-17 de clases nuevas en el HTML publicado excluye trips/<slug>/ de otros viajes (publicar Campania en la Fase 13 no lo rompe)
 - [Phase 12]: 12-02: tripshapes.css prohíbe también selectores de atributo ([class*=car] casaría con card de Roma)
+- [Phase 12]: Fase 12-03: bases del viaje como trip.stays (StaySchema estricto, slug exacto ^[a-z0-9-]+$) + day.stay; stay-dup da una violación por slug repetido en trip.yml y stay-ref la da en el fichero del día, también sin stays
+- [Phase 12]: Fase 12-03: evidencia RED con el reporter JUnit de Vitest (el TAP de Vitest parte el expected de arrays y el clasificador lo rechaza como Malformed TAP)
 
 ### Pending Todos
 
@@ -330,8 +333,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-21T10:25:28.457Z
-Stopped at: Completed 12-02-PLAN.md
+Last session: 2026-11-21T10:37:16.973Z
+Stopped at: Completed 12-03-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
