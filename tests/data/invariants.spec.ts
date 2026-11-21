@@ -44,6 +44,12 @@ import {
  *  - D-07 `trip-summary-link`: el `summary` no lleva enlaces (Markdown `[t](x)`, autoenlace
  *    `<scheme:…>` ni URL suelta `http(s)://`/`www.`): la tarjeta de la portada ya es un `<a>`.
  *
+ * Fase 12 (formas nuevas de viaje):
+ *  - EXT-01 / Pitfall 3: la regla `ref` mira también DENTRO de las opciones de un `choice`
+ *    (`timelineRowsOf` de trips.ts): un `stop` o una entrada de `food` con `ref` roto dentro de una
+ *    opción es una violación `ref` del día; un `[x](#…)` roto en el `title`/`heading` de una opción
+ *    lo atrapa `anchor`, que ya recorre todo el dato.
+ *
  * El bloque «la puerta tiene dientes» prueba cada regla con un fixture (en memoria con
  * `loadTripFromFiles` o en disco en tests/data/fixtures/trips/, NUNCA bajo content/).
  */

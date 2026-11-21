@@ -23,6 +23,7 @@ timeline:
             pace: all
             time: '11:30'
             title: Raito y Albori
+            ref: raito
             note: Dos pueblos colgados sobre la costa, con cerámica y calas pequeñas.
           - kind: meta
             items:
@@ -44,6 +45,33 @@ timeline:
               - icon: 🚶
                 recommended: true
                 desc: '**A pie** por el sendero señalizado, unas dos horas ida y vuelta'
+  - kind: choice
+    heading: Para cenar, elige una
+    options:
+      - label: Opción 1
+        title: Trattoria de monte
+        rows:
+          - kind: food
+            pace: all
+            header: Cena en las colinas
+            entries:
+              - name: Trattoria del bosque
+                desc: Cocina de montaña, con pasta fresca y queso de la zona.
+      - label: Opción 2
+        title: Pizzería de barrio en el centro storico
+        rows:
+          - kind: stop
+            pace: all
+            time: '20:00'
+            title: Pizzería del centro storico
+      - label: Opción 3
+        title: Cena tranquila en la marina, mirando cómo vuelven las barcas de los pescadores
+        rows:
+          - kind: stop
+            pace: all
+            time: '20:00'
+            title: Marina de Salerno
+            note: Una mesa junto al agua mientras las barcas entran en el puerto al caer la tarde.
   - kind: stop
     pace: all
     time: '21:00'

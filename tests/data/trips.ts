@@ -30,6 +30,10 @@
 //  - D-07: `trip-summary-link` — el `summary` de trip.yml no lleva enlaces (Markdown `[t](x)`,
 //    autoenlace `<scheme:…>` ni URL suelta `http(s)://`/`www.`): la tarjeta entera de la portada ya
 //    es un `<a>`, y un enlace dentro daría `<a>` anidado (HTML inválido, hidratación rota).
+//
+// Fase 12 (formas nuevas de viaje):
+//  - EXT-01 / Pitfall 3: la regla `ref` recorre también las filas de las opciones de un `choice`
+//    (`timelineRowsOf`); un `ref` roto dentro de una opción nombra el fichero del día.
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { basename, join, relative, sep } from 'node:path'
 import { parse as parseYaml } from 'yaml'
@@ -106,6 +110,26 @@ const isPlainObject = (v: unknown): v is Record<string, unknown> =>
   typeof v === 'object' && v !== null && !Array.isArray(v)
 const asArray = (v: unknown): Array<Record<string, unknown>> =>
   Array.isArray(v) ? v.filter(isPlainObject) : []
+
+/**
+ * Filas de un `day.timeline` vistas por la puerta (Fase 12, EXT-01, Pitfall 3): las de nivel
+ * superior que no son `choice` más las `rows` de cada opción de cada `choice`, en orden. Así la
+ * regla `ref` ve también una parada o una comida citada DENTRO de una opción; sin esto, un `ref`
+ * roto en una opción pasaría la puerta y el enlace de la guía no llevaría a ninguna ficha. (La
+ * regla `anchor` no lo necesita: `collectStrings` ya recorre todo el dato, `heading`/`title` de
+ * las opciones incluidos.) Robusta ante YAML mal formado: todo pasa por `asArray`.
+ */
+export function timelineRowsOf(timeline: unknown): Array<Record<string, unknown>> {
+  const rows: Array<Record<string, unknown>> = []
+  for (const row of asArray(timeline)) {
+    if (row.kind !== 'choice') {
+      rows.push(row)
+      continue
+    }
+    for (const opt of asArray(row.options)) rows.push(...asArray(opt.rows))
+  }
+  return rows
+}
 
 /** Carpetas de viaje (solo directorios, sin ocultos), ordenadas. */
 export function listTripDirs(root: string = TRIPS_ROOT): string[] {
@@ -295,7 +319,8 @@ export function checkTrip(t: LoadedTrip): Violation[] {
     for (const ref of Array.isArray(d.data.cards) ? d.data.cards : []) {
       if (!monumentSlugs.has(String(ref))) push(d.file, 'ref', `cards "${String(ref)}" no existe en monuments`)
     }
-    for (const row of asArray(d.data.timeline)) {
+    // Filas de las opciones de un `choice` incluidas (Pitfall 3, Fase 12).
+    for (const row of timelineRowsOf(d.data.timeline)) {
       if (row.kind === 'stop' && typeof row.ref === 'string' && !stopOrFood.has(row.ref)) {
         push(d.file, 'ref', `timeline stop ref "${row.ref}" no resuelve`)
       }
