@@ -35,7 +35,7 @@ Re-plataforma el `index.html` único (6.665 líneas) a Nuxt 4 SSG con paridad vi
 - [ ] **Phase 10: Forma y chrome desde datos** - Días, secciones, pastillas, cabecera, pie, leyenda y título salen de los datos de cada viaje (Roma verbatim)
 - [ ] **Phase 11: Portada y rutas multi-viaje** - Portada índice en `/`, Roma en `/trips/roma/`, redirección de enlaces antiguos y prerender de todos los viajes, con goldens sin cambios
 - [ ] **Phase 12: Formas nuevas de viaje** - Opciones A/B, «Dormís en…», transportes nuevos, naturaleza, mapa multi-ciudad, ruta del día por modo y nota familiar, probados con un esqueleto de Campania
-- [ ] **Phase 12.1: Títulos de Reservas por viaje** *(INSERTED)* - Encabezados de la sección Reservas configurables por viaje, con los textos de Roma por defecto, para que Campania no herede «3 comensales»
+- [x] **Phase 12.1: Títulos de Reservas por viaje** *(INSERTED)* - Encabezados de la sección Reservas configurables por viaje, con los textos de Roma por defecto, para que Campania no herede «3 comensales» (completed 2026-11-22)
 - [ ] **Phase 13: Contenido Campania 2027** - Los 10 días, fichas, gastronomía, reservas y práctica de Campania redactados en tono slow y publicados
 - [ ] **Phase 14: Verificación del milestone** - Puerta completa desde build limpia, test de upgrade desde la guía viva y sign-off humano de Roma y Campania en móvil real
 
@@ -186,7 +186,7 @@ Plans:
   2. Un grupo de confirmados sin entradas no pinta su encabezado ni una lista vacía en un viaje que no sea Roma, y Roma conserva su DOM byte a byte
   3. Los campos nuevos pasan por el superconjunto `ReferenceRowSchema` (Content no devuelve `null`) y el esquema estricto rechaza claves mal escritas
   4. La puerta de paridad sigue 110/110 con los 56 goldens sin re-baseline; `base.css` y el resto del CSS congelado sin cambios
-**Plans**: 1/1 plans executed
+**Plans**: 1/1 plans complete
 Plans:
 - [x] 12.1-01-PLAN.md — Encabezados de Reservas por viaje: fixture de bytes de Roma capturado de HEAD, `ReservasHeadings` estricto en `ReservasSchema` + `ReferenceRowSchema`, defaults de Roma en `app/utils/reservasHeadings.ts`, `ReservasSection.vue` con grupos vacíos ocultos; dientes del esquema y de los helpers; puerta 110/110 + `test:trips` + congelados + §5.9 de tests/README.md (habilitador de CAMP-04)
 
