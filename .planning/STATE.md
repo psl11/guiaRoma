@@ -5,11 +5,11 @@ milestone_name: Multi-viaje + Campania
 current_phase: 11
 current_phase_name: Portada y rutas multi-viaje
 status: verifying
-stopped_at: Phase 12 context gathered
-last_updated: "2026-11-21T08:52:40.701Z"
+stopped_at: Phase 12 UI-SPEC approved
+last_updated: "2026-11-21T09:14:38.592Z"
 last_activity: 2026-11-20
 last_activity_desc: Phase 11 execution started
-state_head: 1da12dc5debd8c9d53b491021a8680d979d8c28a
+state_head: 6ae2bc01dd46f6b02161e7e0f3b6a5f2ed109634
 progress:
   total_phases: 6
   completed_phases: 0
@@ -322,9 +322,9 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-21T08:52:40.360Z
-Stopped at: Phase 12 context gathered
-Resume file: .planning/phases/12-formas-nuevas-de-viaje/12-CONTEXT.md
+Last session: 2026-11-21T09:14:38.275Z
+Stopped at: Phase 12 UI-SPEC approved
+Resume file: .planning/phases/12-formas-nuevas-de-viaje/12-UI-SPEC.md
 
 ## Operator Next Steps
 
