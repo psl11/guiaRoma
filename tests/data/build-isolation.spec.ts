@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
-import { join, relative } from 'node:path'
+import { join, relative, sep } from 'node:path'
 import { gunzipSync } from 'node:zlib'
+import { NEW_CLASSES, htmlClassTokens } from '../unit/cssSelectors'
 
 /**
  * Centinela de build: la página estática de Roma no lleva nada de los viajes de desarrollo
@@ -30,6 +31,17 @@ import { gunzipSync } from 'node:zlib'
  *    `"$ssearch:query:roma"`). Una clave sin sufijo (`"$space"`) indicaría estado global
  *    compartido entre viajes.
  *
+ * Fase 12 (formas nuevas de viaje):
+ *  - D-16: `campania` es el tercer borrador (`draft: true`). Su centinela `CAMPANIA-CENTINELA-12A`
+ *    (howTo de content/trips/campania/trip.yml) se busca con los de prueba y forma en todos los
+ *    ficheros publicados (dumps decodificados incluidos), `trips/campania` no puede existir, y un
+ *    `it` FUERA del `skipIf` comprueba que el centinela y `draft: true` siguen en su trip.yml.
+ *  - D-17 (mitad de build del guardián de tripshapes.css; la mitad estática es
+ *    tests/unit/tripShapesCss.spec.ts): ningún token de `NEW_CLASSES` aparece como clase en el
+ *    HTML publicado de Roma ni de la portada. Se recorre todo el `*.html` de .output/public salvo
+ *    el que cuelga de `trips/<slug>/` de otro viaje (cuando la Fase 13 publique Campania, su HTML
+ *    no cuenta). Control positivo: Roma sí lleva `tl-transport` y `day-stats-item`.
+ *
  * Corre dentro de `pnpm verify` porque `generate` va antes de `test:data`, así que lee la build
  * recién generada desde cachés limpias. Node puro (`node:fs`), sin runtime Nuxt.
  *
@@ -47,6 +59,8 @@ const SENTINEL = 'PRUEBA-CENTINELA-9F3'
 const FORMA_SENTINEL = 'FORMA-CENTINELA-10A'
 const FORMA_TRIP = join(process.cwd(), 'content', 'trips', 'forma', 'trip.yml')
 const PRUEBA_TRIP = join(process.cwd(), 'content', 'trips', 'prueba', 'trip.yml')
+const CAMPANIA_SENTINEL = 'CAMPANIA-CENTINELA-12A'
+const CAMPANIA_TRIP = join(process.cwd(), 'content', 'trips', 'campania', 'trip.yml')
 const BUILD_INDEX = join(OUT, 'index.html')
 const COLLECTIONS = ['trip', 'day', 'monument', 'food', 'artist', 'reference'] as const
 const dumpPath = (col: string) => join(OUT, '__nuxt_content', col, 'sql_dump.txt')
@@ -88,6 +102,16 @@ describe('centinela del viaje prueba (D-16)', () => {
   })
 })
 
+// Igual para campania (Fase 12, D-16): centinela y `draft: true` siguen en su trip.yml, así que la
+// ausencia del centinela en la build y la de `trips/campania` nunca se afirman en vacío.
+describe('centinela del borrador campania (D-16, Fase 12)', () => {
+  it(`content/trips/campania/trip.yml contiene ${CAMPANIA_SENTINEL} y draft: true`, () => {
+    const yml = readFileSync(CAMPANIA_TRIP, 'utf8')
+    expect(yml).toContain(CAMPANIA_SENTINEL)
+    expect(yml).toMatch(/^draft: true$/m)
+  })
+})
+
 describe.skipIf(!existsSync(BUILD_INDEX))('build estática: Roma sin datos de prueba ni de forma (D-02, D-08, D-13, D-15)', () => {
   const html = () => readFileSync(INDEX, 'utf8')
 
@@ -118,6 +142,10 @@ describe.skipIf(!existsSync(BUILD_INDEX))('build estática: Roma sin datos de pr
     expect(existsSync(join(OUT, 'trips', 'forma')), '.output/public/trips/forma NO debe existir').toBe(false)
   })
 
+  it('no existe trips/campania: el borrador no se prerenderiza (D-16, Fase 12)', () => {
+    expect(existsSync(join(OUT, 'trips', 'campania')), '.output/public/trips/campania NO debe existir').toBe(false)
+  })
+
   it('el payload usa claves de estado sufijadas por viaje y ninguna "$space" global', () => {
     const page = html()
     for (const key of ['"$space:roma"', '"$scardNav:stack:roma"', '"$ssearch:query:roma"']) {
@@ -139,11 +167,49 @@ describe.skipIf(!existsSync(BUILD_INDEX))('build estática: ningún fichero publ
     expect(decodeDump(readFileSync(dumpPath('trip'), 'utf8'))).toContain('trips/roma/')
   })
 
-  it(`ningún fichero de .output/public contiene ${SENTINEL} ni ${FORMA_SENTINEL} (dumps decodificados)`, () => {
+  it(`ningún fichero de .output/public contiene ${SENTINEL}, ${FORMA_SENTINEL} ni ${CAMPANIA_SENTINEL} (dumps decodificados)`, () => {
     // Lista de culpables (fichero + centinela) en vez de un expect por fichero: el diff de un
     // dump decodificado entero sería ilegible; así el fallo nombra directamente cada fichero.
     const offenders = publishedTexts().flatMap(({ file, text }) =>
-      [SENTINEL, FORMA_SENTINEL].filter(s => text.includes(s)).map(s => `${file} lleva ${s}`))
+      [SENTINEL, FORMA_SENTINEL, CAMPANIA_SENTINEL].filter(s => text.includes(s)).map(s => `${file} lleva ${s}`))
     expect(offenders, 'ficheros publicados con datos de un borrador').toEqual([])
+  })
+})
+
+/** Ficheros `*.html` de .output/public (rutas POSIX relativas), salvo los de `trips/<slug>/` de otros viajes. */
+function publishedHtmlOutsideOtherTrips(dir: string = OUT): string[] {
+  const out: string[] = []
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name)
+    if (entry.isDirectory()) out.push(...publishedHtmlOutsideOtherTrips(full))
+    else if (entry.isFile() && entry.name.endsWith('.html')) out.push(relative(OUT, full).split(sep).join('/'))
+  }
+  return out.filter((f) => {
+    const m = /^trips\/([^/]+)\//.exec(f)
+    return m === null || m[1] === 'roma'
+  })
+}
+
+describe.skipIf(!existsSync(BUILD_INDEX))('D-17: ninguna clase de tripshapes.css en el HTML publicado de Roma ni de la portada (Fase 12)', () => {
+  const files = () => publishedHtmlOutsideOtherTrips()
+
+  it('el escaneo incluye la portada (index.html) y Roma (trips/roma/index.html)', () => {
+    expect(files()).toEqual(expect.arrayContaining(['index.html', 'trips/roma/index.html']))
+  })
+
+  it('control positivo: Roma lleva las clases tl-transport y day-stats-item (el escaneo no es vacuo)', () => {
+    const tokens = new Set(htmlClassTokens(readFileSync(INDEX, 'utf8')))
+    expect(tokens.has('tl-transport'), 'Roma sin tl-transport').toBe(true)
+    expect(tokens.has('day-stats-item'), 'Roma sin day-stats-item').toBe(true)
+  })
+
+  it('ningún token de NEW_CLASSES aparece como clase en ese HTML', () => {
+    const banned = new Set<string>(NEW_CLASSES)
+    // Lista de culpables `fichero: clase` (una por pareja), esperada vacía.
+    const offenders = files().flatMap((file) => {
+      const found = new Set(htmlClassTokens(readFileSync(join(OUT, file), 'utf8')).filter(c => banned.has(c)))
+      return [...found].map(c => `${file}: ${c}`)
+    })
+    expect(offenders, 'clases nuevas (Fase 12) en el HTML publicado de Roma o de la portada').toEqual([])
   })
 })

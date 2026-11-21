@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
+import { cssSelectors } from './cssSelectors'
 
 /**
  * GUARDIÁN DE ALCANCE DE multitrip.css (Fase 11, D-21; amenaza T-11-13).
@@ -29,35 +30,7 @@ import { describe, expect, it } from 'vitest'
 const ROOT = process.cwd()
 const MULTITRIP = join(ROOT, 'app', 'assets', 'css', 'multitrip.css')
 const NUXT_CONFIG = join(ROOT, 'nuxt.config.ts')
-
-/**
- * Selectores de una hoja CSS, en orden. Quita los comentarios y recorre el texto: el preludio
- * antes de cada `{` es una at-rule (empieza por `@`, no cuenta como selector) o una lista de
- * selectores separados por comas. Los espacios internos se normalizan a uno.
- */
-export function cssSelectors(css: string): string[] {
-  const src = css.replace(/\/\*[\s\S]*?\*\//g, '')
-  const out: string[] = []
-  let buf = ''
-  for (const ch of src) {
-    if (ch === '{') {
-      const prelude = buf.trim()
-      buf = ''
-      if (prelude === '' || prelude.startsWith('@')) continue
-      for (const sel of prelude.split(',')) {
-        const s = sel.replace(/\s+/g, ' ').trim()
-        if (s) out.push(s)
-      }
-    }
-    else if (ch === '}' || ch === ';') {
-      buf = ''
-    }
-    else {
-      buf += ch
-    }
-  }
-  return out
-}
+// `cssSelectors` vive en ./cssSelectors.ts (helper compartido con tripShapesCss.spec.ts, Fase 12).
 
 /** Selectores que se salen de `.trip-index` o tocan algo prohibido en multitrip.css. */
 export function unscopedSelectors(css: string): string[] {
