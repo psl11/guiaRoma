@@ -2,8 +2,8 @@ import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { parse as parseYaml } from 'yaml'
-import { deriveMarkers, type MapMarker } from '../../app/utils/mapMarkers'
-import type { Monument } from '../../shared/schemas'
+import { deriveMarkers, MARKER_STYLE, markerPopupHtml, type MapMarker } from '../../app/utils/mapMarkers'
+import { PlaceType, type Monument } from '../../shared/schemas'
 
 /**
  * Cobertura unitaria de la derivación de marcadores del mapa `deriveMarkers` (FEAT-02) —
@@ -110,5 +110,73 @@ describe('deriveMarkers — mapeo de campos {id:slug, n:roman, name, day, lat, l
     expect(gs!.lat).toBe(src.coords.lat)
     expect(gs!.lng).toBe(src.coords.lng)
     expect(gs!.type).toBe(src.type)
+  })
+})
+
+// ── 4. Color y popup de Roma byte a byte (Fase 12, D-11) ────────────────────────────────────────
+// Las tres plantillas y los tres colores de LeafletMap.client.vue ANTES de la Fase 12 (port verbatim
+// de index.html:6347-6349 y 6361-6369), escritos aquí a mano: si `MARKER_STYLE`/`markerPopupHtml`
+// cambian un solo byte de un marcador de Roma, este describe se pone en rojo.
+const ROMA_BG: Record<string, string> = { card: '#8b3a3a', guided: '#a07c4a', concert: '#5a7a3a' }
+
+function romaPopupTemplate(m: MapMarker): string {
+  if (m.type === 'guided') {
+    return `<strong>${m.name}</strong><br><em style="color:#a07c4a">${m.day}</em><br><span style="color:#5c534a;font-size:.85rem">Visita con guía humano</span>`
+  }
+  if (m.type === 'concert') {
+    return `<strong>${m.name}</strong><br><em style="color:#5a7a3a">${m.day}</em><br><a href="#${m.id}" style="color:#5a7a3a">Abrir ficha →</a>`
+  }
+  return `<strong>${m.name}</strong><br><em style="color:#a07c4a">${m.day}</em><br><a href="#${m.id}" style="color:#8b3a3a">Abrir ficha →</a>`
+}
+
+describe('markerPopupHtml / MARKER_STYLE — Roma byte a byte (D-11)', () => {
+  const markers = deriveMarkers(monById, coliseoExtra)
+
+  it('los 39 marcadores de Roma usan solo los tipos de Roma (card, guided, concert)', () => {
+    expect(markers.length).toBe(39)
+    expect(new Set(markers.map(m => m.type))).toEqual(new Set(['card', 'guided', 'concert']))
+  })
+
+  it.each(markers.map(m => [m.id || `${m.n} ${m.name}`, m] as const))('%s: popup idéntico a la plantilla de Roma', (_label, m) => {
+    expect(markerPopupHtml(m)).toBe(romaPopupTemplate(m))
+  })
+
+  it.each(markers.map(m => [m.id || `${m.n} ${m.name}`, m] as const))('%s: color idéntico al de Roma', (_label, m) => {
+    expect(MARKER_STYLE[m.type].bg).toBe(ROMA_BG[m.type])
+  })
+
+  it('guided es texto plano: el Coliseo (id vacío) no mete ningún href en su popup', () => {
+    const coliseo = markers.find(m => m.id === '' && m.type === 'guided')
+    expect(coliseo).toBeDefined()
+    expect(markerPopupHtml(coliseo!)).not.toContain('href=')
+  })
+
+  it('ningún popup lleva manejadores de evento (aprendizaje CR-01)', () => {
+    for (const m of markers) expect(markerPopupHtml(m)).not.toMatch(/\son[a-z]+=/i)
+  })
+})
+
+// ── 5. Marcador nature y escape del texto de los datos (Fase 12, D-11, T-12-10) ───────────────
+describe('markerPopupHtml / MARKER_STYLE — nature y escape (D-11)', () => {
+  const base: MapMarker = { id: 'x', n: 'V', name: 'N', day: 'D', lat: 0, lng: 0, type: 'nature' }
+
+  it('MARKER_STYLE tiene un estilo por cada valor de PlaceType, y nature es verde agua', () => {
+    expect(new Set(Object.keys(MARKER_STYLE))).toEqual(new Set(PlaceType.options))
+    expect(MARKER_STYLE.nature.bg).toBe('#2f6f73')
+  })
+
+  it('el popup nature lleva a la ficha con un ancla plana del color del marcador', () => {
+    expect(markerPopupHtml(base)).toBe('<strong>N</strong><br><em style="color:#2f6f73">D</em><br><a href="#x" style="color:#2f6f73">Abrir ficha →</a>')
+  })
+
+  it('escapa & < > y " de name, day e id', () => {
+    const html = markerPopupHtml({ ...base, name: 'A & B <i>"x"</i>', day: '<b>D</b>', id: 'a"b' })
+    expect(html).toContain('<strong>A &amp; B &lt;i&gt;&quot;x&quot;&lt;/i&gt;</strong>')
+    expect(html).toContain('<em style="color:#2f6f73">&lt;b&gt;D&lt;/b&gt;</em>')
+    expect(html).toContain('href="#a&quot;b"')
+  })
+
+  it('la comilla simple queda tal cual («Campo de\' Fiori»)', () => {
+    expect(markerPopupHtml({ ...base, name: 'Campo de\' Fiori' })).toContain('<strong>Campo de\' Fiori</strong>')
   })
 })

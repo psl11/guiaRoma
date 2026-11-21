@@ -624,4 +624,26 @@ test.describe('campania: lugares de naturaleza (EXT-04, D-10, D-11)', () => {
 
     await context.close()
   })
+
+  test('campania: cada lugar de naturaleza tiene marcador verde agua y dibujo de reserva (EXT-04, D-05)', async ({ browser }) => {
+    // Derivado del YAML: todas las fichas `type: nature` del viaje (D-15 pide al menos tres).
+    const natures = readdirSync(join(CAMPANIA_ROOT, 'monuments'))
+      .filter(f => f.endsWith('.yml'))
+      .map(f => readYaml<YamlNature>(`monuments/${f}`))
+      .filter(m => m.type === 'nature')
+    expect(natures.length, 'al menos tres fichas nature en Campania (D-15)').toBeGreaterThanOrEqual(3)
+
+    const { context, page } = await newIsolatedPage(browser)
+    await gotoHydrated(page, CAMPANIA_URL)
+
+    for (const n of natures) {
+      expect(await markerBg(await markerByRoman(page, n.roman)), `${n.slug}: marcador verde agua`).toBe(NATURE_BG)
+      await expectHeroFallsBackToMotif(page, n.slug, n.motif)
+    }
+
+    // D-05: Valle del Calore, la parada de la opción B del jueves 24, es una ficha normal del día.
+    await expect(page.locator(`${JUEVES} .cards-list [id="valle-del-calore"]`)).toHaveCount(1)
+
+    await context.close()
+  })
 })
