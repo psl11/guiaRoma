@@ -344,6 +344,48 @@ describe('portada: campos del viaje (D-08, D-23)', () => {
   })
 })
 
+// ── D-18 (Fase 12): Roma valida sin cambios con el esquema ampliado ──────────
+// Primer cambio de la fase, escrito ANTES de tocar el esquema: tiene que estar en verde antes y
+// después. Las formas nuevas (`choice` en el timeline, `stays`/`stay`, `route`, `family`) son
+// estrictamente aditivas: los YAML REALES de Roma validan igual y ninguno las usa. Además, el
+// JSON-Schema del día (del que Nuxt Content saca sus columnas) sigue siendo plano: `timeline` es
+// un array sin `$ref` ni `definitions` (nada de recursión, que dejaría la colección sin columnas).
+describe('D-18: Roma valida sin cambios con el esquema ampliado (Fase 12)', () => {
+  const roma = loadTrip('roma')
+  const NEW_KEYS = ['stays', 'stay', 'route', 'family'] as const
+
+  it('carga los ficheros reales de content/trips/roma', () => {
+    expect(roma.docs.length).toBeGreaterThan(0)
+    expect(roma.docs.filter(d => d.collection === 'day').length).toBe(5)
+  })
+
+  for (const doc of roma.docs) {
+    it(`Roma: ${doc.file} valida con el esquema de su colección`, () => {
+      const r = strictOf.get(doc.collection)!.safeParse(doc.data)
+      expect(r.success, r.success ? '' : `${doc.file}\n${z.prettifyError(r.error)}`).toBe(true)
+    })
+  }
+
+  it('ningún fichero de Roma usa las claves nuevas (stays, stay, route, family) ni filas choice', () => {
+    for (const doc of roma.docs) {
+      for (const key of NEW_KEYS) expect(Object.hasOwn(doc.data, key), `${doc.file}: clave «${key}»`).toBe(false)
+      const timeline = Array.isArray(doc.data.timeline) ? doc.data.timeline as Array<{ kind?: unknown }> : []
+      expect(timeline.filter(r => r?.kind === 'choice').length, `${doc.file}: filas choice`).toBe(0)
+    }
+  })
+
+  it('el JSON-Schema del día deja timeline como array plano, sin $ref ni definitions', () => {
+    const js = z.toJSONSchema(DaySchema, { target: 'draft-7', unrepresentable: 'any' }) as {
+      properties: Record<string, { type?: string }>
+    }
+    expect(js.properties.timeline?.type).toBe('array')
+    const text = JSON.stringify(js)
+    expect(text).not.toContain('$ref')
+    expect(text).not.toContain('definitions')
+    expect(text).not.toContain('$defs')
+  })
+})
+
 // ── Conteo por colección (SC#1) — SOLO roma (D-12) ───────────────────────────
 // Los totales son la huella de la migración del index.html y siguen siendo solo de Roma.
 // Ningún conteo para otros viajes: un borrador incompleto no es error (D-09).
