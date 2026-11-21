@@ -150,6 +150,108 @@ describe('puerta DATA-05 (fixtures, siempre corren)', () => {
     expect(DaySchema.safeParse({ ...minDay, pill }).success).toBe(false)
   })
 
+  // ── choice (Fase 12, EXT-01; D-01, D-03) ──────────────────────────────────
+  // Una fila `choice` ofrece 2 o 3 opciones dentro del timeline del día. ChoiceRow y ChoiceOption
+  // son `z.strictObject`: zod 4 tiraría en silencio una clave desconocida (un `pace` en el choice,
+  // un `cards` en una opción) y aquí debe fallar. Las filas de una opción son las 5 base (sin
+  // `choice`: un solo nivel) y conservan sus defaults. Sobre el `minDay` de arriba.
+  describe('choice (D-01, D-03)', () => {
+    const baseStop = { kind: 'stop', time: '10:00', title: 'Parada' }
+    const opt = (label: string, rows: unknown[] = [baseStop]) => ({ label, title: `Título ${label}`, rows })
+    const choice = (extra: Record<string, unknown> = {}) => ({
+      kind: 'choice', options: [opt('Opción A'), opt('Opción B')], ...extra,
+    })
+    const dayWith = (row: unknown) => ({ ...minDay, timeline: [baseStop, row, baseStop] })
+    const parse = (row: unknown) => DaySchema.safeParse(dayWith(row))
+
+    it('acepta un choice de 2 opciones entre filas comunes', () => {
+      const r = parse(choice())
+      expect(r.success, r.success ? '' : z.prettifyError(r.error)).toBe(true)
+    })
+
+    it('acepta un choice de 3 opciones con heading y filas de los 5 kinds base', () => {
+      const rows = [
+        baseStop,
+        { kind: 'transport', variant: 'walk', header: 'A pie', modes: [{ icon: '🚶', desc: 'Andando' }] },
+        { kind: 'meta', items: [{ text: '⏱ 30 min' }] },
+        { kind: 'food', header: 'Comer', entries: [{ name: 'Trattoria', desc: 'Pasta' }] },
+        { kind: 'reservation', text: '✅ reservado' },
+      ]
+      const r = parse({ kind: 'choice', heading: 'Para cenar, elige una', options: [opt('Opción 1', rows), opt('Opción 2'), opt('Opción 3')] })
+      expect(r.success, r.success ? '' : z.prettifyError(r.error)).toBe(true)
+    })
+
+    it('dentro de una opción se aplican los defaults (una parada sin pace sale con pace: all)', () => {
+      const r = parse(choice())
+      expect(r.success).toBe(true)
+      if (!r.success) return
+      const row = r.data.timeline[1]
+      expect(row?.kind).toBe('choice')
+      if (row?.kind !== 'choice') return
+      const inner = row.options[0]!.rows[0]!
+      expect(inner.kind).toBe('stop')
+      if (inner.kind !== 'stop') return
+      expect(inner.pace).toBe('all')
+      expect(inner.disabled).toBe(false)
+      expect(inner.reservedEvent).toBe(false)
+    })
+
+    it('rechaza un choice con 1 opción', () => {
+      expect(parse(choice({ options: [opt('Opción A')] })).success).toBe(false)
+    })
+
+    it('rechaza un choice con 4 opciones', () => {
+      expect(parse(choice({ options: [opt('A'), opt('B'), opt('C'), opt('D')] })).success).toBe(false)
+    })
+
+    it('rechaza una opción con rows: []', () => {
+      expect(parse(choice({ options: [opt('Opción A', []), opt('Opción B')] })).success).toBe(false)
+    })
+
+    it('rechaza un choice dentro de las rows de una opción (un solo nivel)', () => {
+      expect(parse(choice({ options: [opt('Opción A', [choice()]), opt('Opción B')] })).success).toBe(false)
+    })
+
+    it('rechaza pace en el choice con «Unrecognized key: "pace"» (D-03)', () => {
+      const r = parse(choice({ pace: 'medium' }))
+      expect(r.success).toBe(false)
+      if (r.success) return
+      expect(z.prettifyError(r.error)).toContain('Unrecognized key: "pace"')
+    })
+
+    it('rechaza una clave desconocida en una opción (cards)', () => {
+      const r = parse(choice({ options: [{ ...opt('Opción A'), cards: ['raito'] }, opt('Opción B')] }))
+      expect(r.success).toBe(false)
+      if (r.success) return
+      expect(z.prettifyError(r.error)).toContain('Unrecognized key: "cards"')
+    })
+
+    it('rechaza una opción sin label', () => {
+      const { label: _label, ...noLabel } = opt('Opción A')
+      expect(parse(choice({ options: [noLabel, opt('Opción B')] })).success).toBe(false)
+    })
+
+    it('rechaza una opción con label vacío', () => {
+      expect(parse(choice({ options: [opt(''), opt('Opción B')] })).success).toBe(false)
+    })
+
+    it('rechaza una opción sin title', () => {
+      const { title: _title, ...noTitle } = opt('Opción A')
+      expect(parse(choice({ options: [noTitle, opt('Opción B')] })).success).toBe(false)
+    })
+
+    it('los viajes reales (roma, prueba, forma, campania) siguen validando con el choice en el esquema', () => {
+      const dirs = listTripDirs()
+      for (const slug of ['roma', 'prueba', 'forma', 'campania']) expect(dirs).toContain(slug)
+      for (const dir of dirs) {
+        for (const doc of loadTrip(dir).docs) {
+          const r = strictOf.get(doc.collection)!.safeParse(doc.data)
+          expect(r.success, r.success ? '' : `${doc.file}\n${z.prettifyError(r.error)}`).toBe(true)
+        }
+      }
+    })
+  })
+
   // DATA-06: la prosa es Markdown-inline guardada como string.
   it('los campos de prosa (Md) son strings con Markdown-inline (DATA-06)', () => {
     const parsed = MonumentSchema.safeParse(validMonument)
