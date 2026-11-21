@@ -1,0 +1,24 @@
+slug: monte-epomeo
+trip: campania
+roman: IV
+name: Monte Epomeo
+italian: 'Monte Epomeo · Serrara Fontana'
+day: Martes 22
+coords:
+  lat: 40.7312
+  lng: 13.8996
+type: nature
+motif: trail
+hero:
+  src: https://example.invalid/campania/monte-epomeo.jpg
+  alt: Monte Epomeo
+sections:
+  - heading: Qué es
+    body: >-
+      El techo de Isquia, un antiguo volcán de toba verde de casi 800 metros. Se
+      sube a pie desde Fontana por un sendero entre castaños y viñas, y desde la
+      cima se ve todo el golfo, de Procida al Vesubio.
+facts:
+  - label: Subida
+    value: 'Unas 2 horas · desnivel moderado'
+mapsQuery: Monte Epomeo Ischia

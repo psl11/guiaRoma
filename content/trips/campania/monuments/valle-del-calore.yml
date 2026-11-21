@@ -1,0 +1,24 @@
+slug: valle-del-calore
+trip: campania
+roman: VIII
+name: Valle del Río Calore
+italian: 'Valle del Calore · Felitto · Cilento'
+day: Jueves 24
+coords:
+  lat: 40.4723
+  lng: 15.2465
+type: nature
+motif: river
+hero:
+  src: https://example.invalid/campania/valle-del-calore.jpg
+  alt: Valle del Río Calore
+sections:
+  - heading: Qué es
+    body: >-
+      Un desfiladero del Cilento donde el río Calore corre entre paredes de roca y
+      bosque de ribera, con un viejo puente de piedra y pozas de agua fría y clara
+      para bañarse en verano.
+facts:
+  - label: Acceso
+    value: 'Libre · sendero señalizado desde Felitto'
+mapsQuery: Gole del Calore Felitto

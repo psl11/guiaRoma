@@ -38,6 +38,7 @@ timeline:
             pace: medium
             time: '11:00'
             title: Valle del Río Calore
+            ref: valle-del-calore
             note: Sendero junto al río entre bosques, con pozas para refrescarse.
           - kind: transport
             pace: medium
@@ -80,4 +81,4 @@ timeline:
     title: Castello di Arechi
     ref: castello-arechi
     note: El castillo sobre la ciudad, con el golfo encendido al anochecer.
-cards: [duomo-di-salerno, raito, castello-arechi]
+cards: [duomo-di-salerno, raito, valle-del-calore, castello-arechi]

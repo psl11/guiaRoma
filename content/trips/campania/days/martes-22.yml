@@ -12,8 +12,14 @@ stats: []
 timeline:
   - kind: stop
     pace: all
+    time: '09:30'
+    title: Monte Epomeo
+    ref: monte-epomeo
+    note: Subida a pie desde Fontana, entre castaños, hasta la cima del volcán.
+  - kind: stop
+    pace: all
     time: '21:30'
     title: Baia di Sorgeto
     ref: baia-di-sorgeto
     note: Baño nocturno en las pozas donde el agua termal se mezcla con el mar.
-cards: [baia-di-sorgeto]
+cards: [monte-epomeo, baia-di-sorgeto]
