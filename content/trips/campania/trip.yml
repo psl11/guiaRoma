@@ -34,3 +34,24 @@ mapLegend: '✦  Rojos · paradas con ficha · Verde agua · naturaleza ✦'
 footer:
   - 'Borrador de la guía de _Campania_'
   - 'Nápoles · Procida · Ischia · Salerno · 2027'
+# Bases del viaje (Fase 12, D-06): dónde se duerme. Cada día apunta a una con `stay: <slug>` y
+# la cabecera del día dice «Dormís en <name>». `area`, `coords` y `note` se guardan pero esta
+# fase no los pinta ni crea marcadores (D-08). El orden de la lista no importa.
+stays:
+  - slug: napoles
+    name: Nápoles
+    area: Centro histórico
+    coords: { lat: 40.8518, lng: 14.2681 }
+  - slug: procida
+    name: Procida
+    area: Golfo de Nápoles
+    coords: { lat: 40.7626, lng: 14.0244 }
+  - slug: ischia
+    name: Ischia
+    area: Golfo de Nápoles
+    coords: { lat: 40.7425, lng: 13.9437 }
+  - slug: salerno
+    name: Salerno
+    area: Costa de Amalfi
+    coords: { lat: 40.6824, lng: 14.7681 }
+    note: Base para la costa y el río, a un paso del tren.

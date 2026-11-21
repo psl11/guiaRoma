@@ -50,9 +50,18 @@
 // Las utilidades puras `pointFor`/`capStops`/`buildDirUrl`/`routeLabel` se auto-importan de
 // `app/utils/dayRoute.ts` (Plan 06-01). `.day-route-btn` ya existe verbatim en base.css:393-413
 // (glifo 🗺️, `margin-left:auto`, hover, regla `<600px width:100%`) → CERO CSS nuevo aquí.
-import type { Day, Monument } from '~~/shared/schemas'
+//
+// «DORMÍS EN …» (Fase 12, EXT-02, D-06…D-08): TripView resuelve la base del día con
+// `stayFor(day, trip.stays)` y la pasa en la prop opcional `stay`. Con base, la cabecera pinta
+// `div.day-stay` («Dormís en » + `span.day-stay-name` con el `name` por `<MDC>`) DENTRO del `<div>`
+// interior de `.day-header`, después del `h2` y antes de `.day-subtitle`. Va con clase propia y
+// FUERA de `.day-subtitle` porque el modo resumen oculta `.day-subtitle` (Pitfall 15) y saber dónde
+// se duerme es información de índice: sigue visible. Sin base (`v-if`), no se pinta nada ni texto
+// de relleno; Roma no define `stays`, así que su DOM solo gana el comentario vacío de Vue. El glifo
+// 🛏️ y el estilo los pone tripshapes.css (bloque EXT-02); `area`/`coords`/`note` no se pintan (D-08).
+import type { Day, Monument, Stay } from '~~/shared/schemas'
 
-const props = defineProps<{ day: Day, monById: Map<string, Monument> }>()
+const props = defineProps<{ day: Day, monById: Map<string, Monument>, stay?: Stay | null }>()
 
 // `day.cards[]` (slugs ordenados) → fichas, EN EL ORDEN DEL DATO. `filter` defensivo para slugs
 // sin ficha (no debería ocurrir con los datos F2); el orden NUNCA se altera (DATA-03/Pitfall 6).
@@ -86,6 +95,16 @@ const routeHref = computed(() => buildDirUrl(capStops(points.value)))
       </div>
       <div>
         <h2>{{ day.title }}</h2>
+        <div
+          v-if="stay"
+          class="day-stay"
+        >
+          Dormís en <span class="day-stay-name"><MDC
+            :value="stay.name"
+            :tag="false"
+            unwrap="p"
+          /></span>
+        </div>
         <div class="day-subtitle">
           {{ day.subtitle }}
         </div>

@@ -166,6 +166,30 @@ export const TimelineRow = z.discriminatedUnion('kind', [...BASE_ROWS, ChoiceRow
 // al evaluarse el módulo.
 export const DAY_SLUG_RE = /^[a-z0-9-]+$/
 
+// ── Bases del viaje: dónde se duerme cada noche (Fase 12, EXT-02; D-06…D-08) ──
+// El viaje declara su lista de bases (`TripSchema.stays`) y cada día apunta a una por `slug`
+// (`DaySchema.stay`). El campo se llama `stays` y NUNCA `bases`, para no confundirlo con el
+// `baseURL` de la app ni con las «filas base» del timeline.
+//  · Slug: minúsculas ASCII, dígitos y guiones (STAY_SLUG_RE). La referencia día → base es una
+//    comparación EXACTA de strings: `stay: Salerno` o `stay: 'salerno '` no validan, en vez de
+//    normalizarse en silencio. Se declara aquí, antes de DaySchema, porque DaySchema la usa al
+//    evaluarse el módulo (igual que DAY_SLUG_RE).
+//  · `z.strictObject`: una clave mal escrita en una base (`coord:`, `nombre:`) falla con
+//    `Unrecognized key` en vez de perderse sin avisar (zod 4 tira las claves desconocidas).
+//  · D-08: `area`, `coords` y `note` se guardan, pero esta fase no los pinta ni crea marcadores
+//    de alojamiento en el mapa; solo `name` llega a la línea «Dormís en …».
+//  · Que el `stay` de un día exista en `stays` (y que no haya slugs repetidos) NO es un refine:
+//    zod solo ve un fichero. Lo vigilan las reglas `stay-ref` y `stay-dup` de tests/data.
+export const STAY_SLUG_RE = /^[a-z0-9-]+$/
+
+export const StaySchema = z.strictObject({
+  slug: z.string().regex(STAY_SLUG_RE), // 'salerno' (lo que escribe `day.stay`)
+  name: Md.min(1), // 'Salerno' (Markdown-inline, por <MDC> en span.day-stay-name)
+  area: z.string().min(1).optional(), // 'Costa de Amalfi' (se guarda, no se pinta, D-08)
+  coords: Coords.optional(), // se guarda, sin marcador en el mapa (D-08)
+  note: Md.min(1).optional(), // se guarda, no se pinta (D-08)
+})
+
 export const DaySchema = z.object({
   slug: z.string().regex(DAY_SLUG_RE), // 'viernes' | 'sabado-19' (D-02)
   trip: z.string(),
@@ -194,6 +218,9 @@ export const DaySchema = z.object({
   }).optional(),
   timeline: z.array(TimelineRow), // ORDEN EXPLÍCITO (DATA-02)
   cards: z.array(z.string()), // ORDEN EXPLÍCITO de ids de monumento (DATA-03) — orden del DOM, no de places
+  // Base donde se duerme este día (Fase 12, D-06/D-07): el `slug` de una entrada de
+  // `trip.stays`. Opcional (esquema aditivo: Roma no la define). Sin ella el día no pinta nada.
+  stay: z.string().regex(STAY_SLUG_RE).optional(), // 'salerno'
 })
 
 // ── Food (.gastro-card) — RESEARCH 402-415 ───────────────────────────────────
@@ -452,6 +479,10 @@ export const TripSchema = z.object({
   //  · summary (D-08, D-07): Markdown-inline no vacío, SIN enlaces (la tarjeta entera ya es un
   //    `<a>`): lo vigila la regla `trip-summary-link` de tests/data/trips.ts.
   summary: Md.min(1).optional(),
+  // ── Bases del viaje (Fase 12, D-06) ─────────────────────────────────────────
+  // Lista no vacía de StaySchema (un `stays: []` no aporta nada y suele ser un error de autoría).
+  // Opcional: un viaje sin bases (Roma) valida igual y ningún día pinta «Dormís en …».
+  stays: z.array(StaySchema).min(1).optional(),
 })
 
 // ── Tipos TS derivados (gratis, una sola fuente de verdad) ────────────────────
@@ -464,3 +495,4 @@ export type Reference = z.infer<typeof ReferenceSchema>
 export type Trip = z.infer<typeof TripSchema>
 export type BaseTimelineRow = z.infer<typeof BaseTimelineRow> // fila de dentro de una opción
 export type ChoiceRow = z.infer<typeof ChoiceRow> // bloque de alternativas (Fase 12)
+export type Stay = z.infer<typeof StaySchema> // base donde se duerme (Fase 12, D-06)

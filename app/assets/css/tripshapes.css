@@ -1,6 +1,18 @@
 /* Formas nuevas de viaje (Fase 12, D-17). Cada selector exige una clase de NEW_CLASSES, que
    nunca aparece en el DOM de Roma. Tema oscuro solo vía tokens: sin [data-theme], :root, html, body. */
 
+/* EXT-02 — «Dormís en …» (fuera de .day-subtitle: visible en modo resumen) */
+.day-stay {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.day-stay::before { content: "🛏️"; font-style: normal; margin-right: 8px; }
+.day-stay .day-stay-name { color: var(--ink); font-weight: 600; }
+
 /* EXT-01 — bloque de alternativas */
 .tl-choice {
   position: relative;

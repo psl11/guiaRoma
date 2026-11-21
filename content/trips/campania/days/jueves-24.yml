@@ -6,6 +6,8 @@ roman: VI
 eyebrow: 'jueves · 24 de junio'
 title: Salerno y el día de elegir
 subtitle: Mañana en la catedral, tarde a elegir entre la costa y el río, y atardecer en el castillo.
+# Base de la noche (D-06): slug de una entrada de `stays` en trip.yml → «Dormís en Salerno».
+stay: salerno
 stats: []
 timeline:
   - kind: stop

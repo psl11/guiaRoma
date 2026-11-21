@@ -168,6 +168,7 @@ const footerLines = computed(() => trip.value?.footer ?? [])
           v-if="e.day"
           :day="e.day"
           :mon-by-id="monById"
+          :stay="stayFor(e.day, trip?.stays)"
         />
       </section>
       <section

@@ -457,3 +457,98 @@ test.describe('campania: los días del esqueleto (D-15)', () => {
     await context.close()
   })
 })
+
+// ── EXT-02: dónde se duerme cada día (12-03) ────────────────────────────────────────────────
+
+interface YamlStay { slug: string, name: string }
+interface YamlTripStays { stays?: YamlStay[] | null }
+interface YamlDayStay { slug: string, order: number, stay?: string | null }
+
+const FORMA_URL = `${ORIGIN}/guiaRoma/trips/forma`
+
+// textContent con los espacios colapsados (el marcado de la línea puede partirse en varias líneas).
+async function normText(locator: import('@playwright/test').Locator): Promise<string> {
+  return ((await locator.textContent()) ?? '').replace(/\s+/g, ' ').trim()
+}
+
+// «Dormís en » + el nombre plano de la base del YAML (el glifo 🛏️ va en ::before, fuera del texto).
+function stayLine(slug: string): string {
+  const stays = readYaml<YamlTripStays>('trip.yml').stays ?? []
+  const stay = stays.find(s => s.slug === slug)
+  expect(stay, `la base "${slug}" existe en trip.yml stays`).toBeDefined()
+  return `Dormís en ${inlineMdToPlain(stay!.name)}`
+}
+
+test.describe('campania: dónde se duerme (EXT-02, D-06…D-08)', () => {
+  test('campania: el jueves 24 dice «Dormís en Salerno» entre el título y el subtítulo, también en resumen (EXT-02, D-07)', async ({ browser }) => {
+    const day = readYaml<YamlDayStay>('days/jueves-24.yml')
+    expect(day.stay, 'el jueves 24 tiene base en el YAML').toBe('salerno')
+    const expected = stayLine(day.stay!)
+    expect(expected).toBe('Dormís en Salerno')
+
+    const { context, page } = await newIsolatedPage(browser)
+    await gotoHydrated(page, CAMPANIA_URL)
+
+    const line = page.locator(`${JUEVES} .day-stay`)
+    await expect(line).toHaveCount(1)
+    expect(await normText(line)).toBe(expected)
+    await expect(line.locator('.day-stay-name')).toHaveCount(1)
+    expect(await normText(line.locator('.day-stay-name'))).toBe('Salerno')
+
+    // Posición: dentro del <div> interior de .day-header, entre el h2 y .day-subtitle.
+    const neighbours = await line.evaluate(el => ({
+      parentInHeader: el.parentElement?.parentElement?.classList.contains('day-header') ?? false,
+      prev: el.previousElementSibling?.tagName.toLowerCase() ?? null,
+      nextIsSubtitle: el.nextElementSibling?.classList.contains('day-subtitle') ?? false,
+    }))
+    expect(neighbours).toEqual({ parentInHeader: true, prev: 'h2', nextIsSubtitle: true })
+    await expect(line).toBeVisible()
+
+    // Modo resumen: la línea sigue visible (clase propia) y el subtítulo no (Pitfall 15).
+    await page.locator('#resumen-toggle').click()
+    await expect(page.locator('body')).toHaveClass(/\bmodo-resumen\b/)
+    await expect(line).toBeVisible()
+    await expect(page.locator(`${JUEVES} .day-subtitle`)).toBeHidden()
+
+    // D-08: las bases no crean marcadores; el mapa sigue con un marcador por ficha. Se cuentan
+    // dentro de `section[id="mapa"]` (en el DOM montado el contenedor ya no conserva #leaflet-map).
+    await expect(page.locator('section[id="mapa"] .custom-marker')).toHaveCount(MONUMENTS.length)
+
+    await context.close()
+  })
+
+  test('campania: cada día dice dónde se duerme (EXT-02, D-07)', async ({ browser }) => {
+    const days = readdirSync(join(CAMPANIA_ROOT, 'days'))
+      .filter(f => f.endsWith('.yml'))
+      .map(f => readYaml<YamlDayStay>(`days/${f}`))
+      .sort((a, b) => a.order - b.order)
+    const withStay = days.filter(d => !!d.stay)
+    expect(withStay.length, 'al menos un día con base (anti-vacuidad)').toBeGreaterThanOrEqual(1)
+
+    const { context, page } = await newIsolatedPage(browser)
+    await gotoHydrated(page, CAMPANIA_URL)
+
+    for (const d of days) {
+      const line = page.locator(`section[id="${d.slug}"] .day-stay`)
+      if (d.stay) {
+        await expect(line, `${d.slug} pinta su base`).toHaveCount(1)
+        expect(await normText(line)).toBe(stayLine(d.stay))
+      }
+      else {
+        await expect(line, `${d.slug} no tiene base: sin línea ni relleno`).toHaveCount(0)
+      }
+    }
+    await expect(page.locator('.day-stay')).toHaveCount(withStay.length)
+
+    await context.close()
+  })
+
+  test('campania: un viaje sin stays no pinta «Dormís en» (EXT-02 empty)', async ({ browser }) => {
+    const { context, page } = await newIsolatedPage(browser)
+    await gotoHydrated(page, FORMA_URL)
+    // Anti-vacuidad: la página de forma tiene días renderizados.
+    expect(await page.locator('main > section[id] .day-header').count()).toBeGreaterThan(0)
+    await expect(page.locator('.day-stay')).toHaveCount(0)
+    await context.close()
+  })
+})
