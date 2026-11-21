@@ -170,6 +170,8 @@ Historia del conteo: **80 / 11** hasta la Fase 10; la Fase 11 suma **30** — 2 
 La Fase 12 no añade specs de paridad; portada.spec.ts comprueba el 404 del borrador campania
 dentro de su test de borradores (recorre todos los `draft: true` del manifiesto), así que el
 conteo sigue en **110 / 13**.
+La Fase 12.1 no añade specs de paridad y el conteo sigue en **110 / 13** (re-medido con
+`--list` al cierre del plan 12.1-01).
 `golden.spec.ts` aporta **0** a ambos conteos (excluido a nivel de fichero).
 
 Desglose por fichero de los **110** seleccionados (suma = 110):
@@ -543,3 +545,39 @@ se defiende con estas piezas:
   Roma, sin `family`, no cambia). En `test:data`: `schema.spec.ts` (D-18: Roma valida igual
   con el esquema ampliado y no usa las claves nuevas; dientes de `choice`, `stays`, `route` y
   `family`) e `invariants.spec.ts` (reglas `stay-ref`, `stay-dup` y `ref` dentro de opciones).
+
+### 5.9 Títulos de Reservas por viaje (Fase 12.1)
+
+Habilitador de CAMP-04: Campania reserva vuelos, barcos, coche, camas y conciertos, y con los
+encabezados fijos de Roma heredaría «3 comensales» y la cabecera de restaurantes.
+
+- **Esquema (D-01).** `reservas.yml` acepta un `headings { mesas, visitas, table }` opcional y
+  ESTRICTO (`z.strictObject`: una clave mal escrita falla con `Unrecognized key` en vez de
+  descartarse en silencio). Vive en `ReservasSchema` y, con la MISMA constante, en el superconjunto
+  `ReferenceRowSchema`: sin él, Content materializa la columna como null y la regla `unknown-key`
+  de la puerta de datos la rechaza. Los valores son texto plano interpolado con `{{ }}`.
+- **Defaults (D-02).** Cada clave ausente cae al texto de Roma, definido UNA sola vez en
+  `app/utils/reservasHeadings.ts` (`RESERVAS_HEADINGS_DEFAULT`, `resolveReservasHeadings`,
+  `confirmedGroup`). Roma no declara `headings`.
+- **Grupos vacíos (D-03).** Un grupo de confirmados sin entradas no pinta su encabezado ni su
+  lista, y con los dos vacíos no aparece el bloque `.reservas-confirmadas`. Cada `v-if` va en su
+  propio elemento (un `<template>` envoltorio añadiría comentarios de fragmento en SSR).
+- **`group` (D-04).** `mesas` / `visitas` siguen siendo los dos valores: son el primer y el
+  segundo bloque de confirmados, y cada viaje los titula con `headings`.
+- **Tests nuevos:**
+  - `tests/data/schema.spec.ts` (`test:data`): dientes de `headings` (completo, parcial y `{}`
+    aceptados; clave mal escrita, vacía o de otro tipo rechazada; misma rigidez en
+    `ReferenceRowSchema`; `group: vuelos` no valida; el reservas.yml de Roma valida sin
+    `headings`). La mutación `z.strictObject` → `z.object` pone el spec en rojo.
+  - `tests/unit/reservasHeadings.spec.ts` (`test:unit`): helpers (defaults, personalizados,
+    parcial, `null`/`''`, grupos vacíos, Roma real) y el cableado estático de
+    ReservasSection.vue (`wiringProblems`) con dientes en memoria.
+  - `tests/data/romaReservas.spec.ts` (`test:data`): siempre, los textos por defecto contra
+    `index.html` sin normalizar; con build, la `<section id="reservas">` de Roma BYTE A BYTE
+    contra `tests/data/fixtures/roma-reservas.html`. El fixture se capturó de la build anterior
+    al cambio (en un commit que no toca plantilla ni esquema); nunca se regenera para que el
+    spec pase y solo se recaptura ante un cambio de Roma aprobado por el usuario.
+
+> **Nota para la Fase 13.** Campania debe declarar `headings` en su `reservas.yml` o heredará
+> los textos de Roma (D-02). La comprobación en navegador del caso «grupo vacío» llega con ese
+> fichero en `test:trips`: hoy ningún viaje que no sea Roma tiene `reservas.yml`.
