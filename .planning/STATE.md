@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 12
 current_phase_name: Formas nuevas de viaje
 status: executing
-stopped_at: Phase 12 UI-SPEC approved
-last_updated: "2026-11-21T09:58:38.600Z"
-last_activity: 2026-11-20
-last_activity_desc: Phase 11 execution started
-state_head: d0c0ed239cfd8430c5f9f1b1021acd9111d9ba04
+stopped_at: Completed 12-01-PLAN.md
+last_updated: "2026-11-21T10:11:53.697Z"
+last_activity: 2026-11-21
+last_activity_desc: Phase 12 execution started
+state_head: ad030d95b9462ec4903ebb878711d5315aaf2930
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 24
-  completed_plans: 17
+  completed_plans: 18
   percent: 0
 ---
 
@@ -25,14 +25,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-11-20)
 
 **Core value:** La guía se consulta paseando por el destino y debe ser fiel, editorial y fiable (también offline). Lo ya publicado no se rompe: Roma sigue exactamente igual (paridad verificada) mientras la plataforma crece a varios viajes.
-**Current focus:** Phase 11 — Portada y rutas multi-viaje
+**Current focus:** Phase 12 — Formas nuevas de viaje
 
 ## Current Position
 
-Phase: 12 (Formas nuevas de viaje) — READY TO EXECUTE
-Plan: 7 of 7
+Phase: 12 (Formas nuevas de viaje) — EXECUTING
+Plan: 2 of 7
 Status: Ready to execute
-Last activity: 2026-11-20 — Phase 11 execution started
+Last activity: 2026-11-21 — Phase 12 execution started
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -120,6 +120,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 11 P05 | 8 min | 3 tasks | 10 files |
 | Phase 11 P06 | 45min | 2 tasks | 3 files |
 | Phase 11 P07 | ~7min | 3 tasks | 2 files |
+| Phase 12 P01 | 10 min | 2 tasks | 14 files |
 
 ## Accumulated Context
 
@@ -286,6 +287,9 @@ Recent decisions affecting current work:
 - [Phase 11]: 11-06: legacy-hash-redirect = critical head script on the portada only; location.replace to JSON.stringify(base+'trips/'+LEGACY_TRIP+'/') + hash matching ^#[a-z0-9-]+$; no whitelist, no hashchange
 - [Phase 11]: 11-06: tests/parity/_pagesServer.ts (startPagesServer) is the Pages-like server for new specs (127.0.0.1, 301 trailing slash, 404.html, contained in outDir)
 - [Phase 11]: 11-07: portada.spec.ts derives expected cards and draft 404s from readTripManifest(); ROUTE-04 matcher proven non-vacuous against the draft 404 page (WASM + 6 sql_dump); gate re-registered at 110 tests / 13 files
+- [Phase 12]: Fila choice estricta dentro de day.timeline (BaseTimelineRow/ChoiceOption/ChoiceRow, z.strictObject, 2..3 opciones, un nivel, sin z.lazy)
+- [Phase 12]: Importación circular Timeline ⇄ TimelineChoice (resolveComponent + auto-import <Timeline>) rinde en SSR; no hace falta defineAsyncComponent (A1 resuelto)
+- [Phase 12]: E2E: los marcadores del mapa se cuentan con section[id="mapa"] .custom-marker; #leaflet-map no se conserva en el DOM montado
 
 ### Pending Todos
 
@@ -322,9 +326,9 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-21T09:14:38.275Z
-Stopped at: Phase 12 UI-SPEC approved
-Resume file: .planning/phases/12-formas-nuevas-de-viaje/12-UI-SPEC.md
+Last session: 2026-11-21T10:11:53.546Z
+Stopped at: Completed 12-01-PLAN.md
+Resume file: None
 
 ## Operator Next Steps
 
