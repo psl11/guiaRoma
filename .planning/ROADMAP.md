@@ -144,7 +144,7 @@ Plans:
   3. Una playa, poza termal, río o sendero tiene ficha, marcador propio en el mapa y un dibujo de reserva cuando su imagen no carga; una ficha puede mostrar una nota para familias con niños
   4. El mapa de un viaje de varias ciudades encuadra todos sus marcadores (Nápoles, Procida, Ischia y Salerno a la vista a la vez), mientras Roma conserva exactamente su vista actual
   5. «Ver ruta del día» abre Google Maps en el modo adecuado al día (a pie, coche o transporte público) y no aparece en los días de ferry; en Roma sigue siendo a pie con las mismas paradas, y la puerta de paridad de Roma sigue verde
-**Plans**: 5/7 plans executed
+**Plans**: 6/7 plans executed
 Plans:
 **Wave 1**
 - [x] 12-01-PLAN.md — «Elige una» de punta a punta: `ChoiceRow` estricto en el timeline (D-18 Roma primero), `TimelineChoice.vue` + `tripshapes.css` (última en `css[]`), borrador `campania` (trip.yml + jueves 24 A/B) y dientes del esquema (EXT-01)
@@ -162,7 +162,7 @@ Plans:
 - [x] 12-05-PLAN.md — Transportes ferry/coche/autobús/bici/avión: `TransportVariant`/`StatVariant`, bandas y glifos, `enumStyles.spec.ts` con `train` exento (EXT-03)
 
 **Wave 6** *(blocked on Wave 5 completion)*
-- [ ] 12-06-PLAN.md — Ruta del día por modo: `day.route`, `timelineRows.ts`, `routeCards`/`routeVisible`/`routeTitle`, oculta en días de ferry y sin mezclar opciones; Roma byte a byte (EXT-06)
+- [x] 12-06-PLAN.md — Ruta del día por modo: `day.route`, `timelineRows.ts`, `routeCards`/`routeVisible`/`routeTitle`, oculta en días de ferry y sin mezclar opciones; Roma byte a byte (EXT-06)
 
 **Wave 7** *(blocked on Wave 6 completion)*
 - [ ] 12-07-PLAN.md — «Con niños» (`family`), mapa multi-ciudad (Nápoles, Procida, Ischia y Salerno a la vez), `tripshapes.css` = UI-SPEC y cierre: conteos re-registrados y puerta completa (EXT-07, EXT-05)
@@ -233,7 +233,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 9. Plataforma por viaje | v1.1 | 5/5 | In Progress | - |
 | 10. Forma y chrome desde datos | v1.1 | 5/5 | In Progress | - |
 | 11. Portada y rutas multi-viaje | v1.1 | 7/7 | In Progress | - |
-| 12. Formas nuevas de viaje | v1.1 | 5/7 | In Progress | - |
+| 12. Formas nuevas de viaje | v1.1 | 6/7 | In Progress | - |
 | 13. Contenido Campania 2027 | v1.1 | 0/TBD | Not started | - |
 | 14. Verificación del milestone | v1.1 | 0/TBD | Not started | - |
 

@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 12
 current_phase_name: Formas nuevas de viaje
 status: executing
-stopped_at: Completed 12-05-PLAN.md
-last_updated: "2026-11-21T11:09:45.978Z"
+stopped_at: Completed 12-06-PLAN.md
+last_updated: "2026-11-21T11:23:44.878Z"
 last_activity: 2026-11-21
 last_activity_desc: Phase 12 execution started
-state_head: a249d75a52a12a0dbe9990adf6d4b2252e691b8b
+state_head: 19f9bf0a7f2d9a63d7ec5bc5236fcc6a3586c48b
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 24
-  completed_plans: 22
+  completed_plans: 23
   percent: 0
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 12 (Formas nuevas de viaje) — EXECUTING
-Plan: 6 of 7
+Plan: 7 of 7
 Status: Ready to execute
 Last activity: 2026-11-21 — Phase 12 execution started
 
@@ -125,6 +125,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 12 P03 | 8min | 2 tasks | 14 files |
 | Phase 12 P04 | 12min | 3 tasks | 16 files |
 | Phase 12 P05 | 11min | 2 tasks | 12 files |
+| Phase 12 P06 | 8min | 2 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -305,6 +306,8 @@ Recent decisions affecting current work:
 - [Phase 12]: 12-05: TransportVariant y StatVariant como enums con nombre; tests/unit/enumStyles.spec.ts recorre sus .options contra los CSS reales; única exención PARITY_EXEMPT_TRANSPORT = ['train'] (Pitfall 1)
 - [Phase 12]: 12-05: bloque EXT-03 de UI-SPEC verbatim en tripshapes.css (bandas color-mix + glifos de cabecera y stats), sin componentes tocados ni regla de tren
 - [Phase 12]: 12-05: los cinco días de Campania tienen stay (ROADMAP SC#2 completo); sábado 19 con un tramo sin variante a propósito (edge EXT-03)
+- [Phase 12]: 12-06 (D-14): el modo de la ruta va por día en DaySchema.route (estricto); sin route o con null el modo es walking y la URL de Roma es byte a byte la de hoy
+- [Phase 12]: 12-06 (D-04/D-14): routeVisible — menos de 2 paradas nunca; enabled false oculta; enabled true fuerza; si no, un ferry (también dentro de una opción) oculta; routeCards excluye fichas de solo-opción
 
 ### Pending Todos
 
@@ -341,8 +344,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-21T11:09:45.809Z
-Stopped at: Completed 12-05-PLAN.md
+Last session: 2026-11-21T11:23:44.712Z
+Stopped at: Completed 12-06-PLAN.md
 Resume file: None
 
 ## Operator Next Steps

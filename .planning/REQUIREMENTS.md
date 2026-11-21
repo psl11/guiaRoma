@@ -40,7 +40,7 @@
 - [x] **EXT-03**: El timeline distingue con estilo propio los tramos en ferry, coche, autobús, bici y avión
 - [x] **EXT-04**: Los lugares de naturaleza (playas, pozas termales, ríos, senderos) tienen ficha, marcador propio en el mapa y dibujo de reserva cuando falla la imagen
 - [ ] **EXT-05**: El mapa de un viaje de varias ciudades encuadra todos sus marcadores (Roma conserva su vista actual)
-- [ ] **EXT-06**: La «ruta del día» usa el modo adecuado al día (a pie, coche, transporte público) o se oculta cuando no tiene sentido (días de ferry)
+- [x] **EXT-06**: La «ruta del día» usa el modo adecuado al día (a pie, coche, transporte público) o se oculta cuando no tiene sentido (días de ferry)
 - [ ] **EXT-07**: Una ficha puede incluir una nota para familias con niños
 
 ### Contenido Campania 2027 (CAMP)
@@ -120,7 +120,7 @@
 | EXT-03 | Phase 12 | Complete |
 | EXT-04 | Phase 12 | Complete |
 | EXT-05 | Phase 12 | Pending |
-| EXT-06 | Phase 12 | Pending |
+| EXT-06 | Phase 12 | Complete |
 | EXT-07 | Phase 12 | Pending |
 | CAMP-01 | Phase 13 | Pending |
 | CAMP-02 | Phase 13 | Pending |
