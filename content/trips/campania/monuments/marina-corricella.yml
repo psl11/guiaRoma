@@ -1,0 +1,23 @@
+slug: marina-corricella
+trip: campania
+roman: II
+name: Marina Corricella
+italian: 'Marina Corricella · Procida'
+day: Domingo 20
+coords:
+  lat: 40.7605
+  lng: 14.0290
+type: card
+motif: rooftops
+hero:
+  src: https://example.invalid/campania/marina-corricella.jpg
+  alt: Marina Corricella
+sections:
+  - heading: Qué es
+    body: >-
+      El puerto de pescadores más antiguo de Procida, con casas pastel apiñadas
+      sobre el agua y barcas varadas junto a las terrazas.
+facts:
+  - label: Acceso
+    value: 'Libre · escalinata desde Terra Murata'
+mapsQuery: Marina Corricella Procida

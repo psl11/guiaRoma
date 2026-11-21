@@ -647,3 +647,71 @@ test.describe('campania: lugares de naturaleza (EXT-04, D-10, D-11)', () => {
     await context.close()
   })
 })
+
+// ── EXT-03: tramos en ferry, coche, autobús, bici y avión (12-05) ───────────────────────────
+
+// Glifo de cada variante nueva (12-UI-SPEC §«Transportes nuevos»): va en `::before` de la cabecera
+// del tramo y del item de stats, nunca en el texto del dato (un tramo no se distingue solo por color).
+const NEW_TRANSPORT_GLYPH: Record<string, string> = {
+  ferry: '⛴️', car: '🚗', bus: '🚌', bike: '🚲', plane: '✈️',
+}
+
+// Tramo con el borde dorado base (`.tl-transport.walk` = `--gold-soft`, el mismo que `.tl-transport`):
+// la opción B del jueves 24 (12-01/12-02).
+const BASE_TRANSPORT = `${JUEVES} .tl-choice .tl-transport.walk`
+
+type Rgb = [number, number, number]
+
+// getComputedStyle da los `color-mix()` como `color(srgb r g b)` (canales 0-1) y los colores simples
+// como `rgb(r, g, b)`: los dos se llevan a 0-255 antes de comparar.
+function toRgb(css: string): Rgb {
+  const rgb = /^rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)/.exec(css)
+  if (rgb) return [Number(rgb[1]), Number(rgb[2]), Number(rgb[3])]
+  const srgb = /^color\(srgb\s+([-\d.e]+)\s+([-\d.e]+)\s+([-\d.e]+)/.exec(css)
+  if (srgb) return [srgb[1], srgb[2], srgb[3]].map(v => Math.round(Number(v) * 255)) as Rgb
+  throw new Error(`color no reconocido: ${css}`)
+}
+
+// Mismo color a ±tol por canal (el redondeo de `color-mix` puede mover una unidad).
+function sameRgb(a: Rgb, b: Rgb, tol = 2): boolean {
+  return a.every((v, i) => Math.abs(v - b[i]!) <= tol)
+}
+
+async function borderLeftRgb(locator: import('@playwright/test').Locator): Promise<Rgb> {
+  return toRgb(await locator.evaluate(el => getComputedStyle(el).borderLeftColor))
+}
+
+// `content` de `::before` sin las comillas con que lo serializa getComputedStyle.
+async function beforeContent(locator: import('@playwright/test').Locator): Promise<string> {
+  const raw = await locator.evaluate(el => getComputedStyle(el, '::before').content)
+  return raw.replace(/^"(.*)"$/s, '$1')
+}
+
+test.describe('campania: tramos con estilo propio (EXT-03, D-09)', () => {
+  test('campania: el ferry y la bici del domingo 20 tienen banda y glifo propios (EXT-03, D-09)', async ({ browser }) => {
+    const DOMINGO = 'section[id="domingo-20"]'
+    const { context, page } = await newIsolatedPage(browser)
+    await gotoHydrated(page, CAMPANIA_URL)
+
+    const base = page.locator(BASE_TRANSPORT)
+    await expect(base, 'tramo de referencia con el borde base').toHaveCount(1)
+    const baseRgb = await borderLeftRgb(base)
+
+    const seen: Rgb[] = []
+    for (const v of ['ferry', 'bike']) {
+      const row = page.locator(`${DOMINGO} .tl-transport.${v}`)
+      await expect(row, `un tramo ${v} el domingo 20`).toHaveCount(1)
+      const rgb = await borderLeftRgb(row)
+      expect(sameRgb(rgb, baseRgb), `${v}: borde distinto del dorado base`).toBe(false)
+      for (const other of seen) expect(sameRgb(rgb, other), `${v}: borde distinto de los demás`).toBe(false)
+      seen.push(rgb)
+      expect(await beforeContent(row.locator('.tl-transport-header')), `${v}: glifo de cabecera`).toBe(NEW_TRANSPORT_GLYPH[v])
+
+      const stat = page.locator(`${DOMINGO} .day-stats-item.${v}`)
+      await expect(stat, `una stat ${v} el domingo 20`).toHaveCount(1)
+      expect(await beforeContent(stat), `${v}: glifo de stats`).toBe(NEW_TRANSPORT_GLYPH[v])
+    }
+
+    await context.close()
+  })
+})

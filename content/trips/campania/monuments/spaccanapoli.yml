@@ -1,0 +1,23 @@
+slug: spaccanapoli
+trip: campania
+roman: I
+name: Spaccanapoli
+italian: 'Spaccanapoli · Centro storico · Napoli'
+day: Domingo 20
+coords:
+  lat: 40.8484
+  lng: 14.2550
+type: card
+motif: church
+hero:
+  src: https://example.invalid/campania/spaccanapoli.jpg
+  alt: Spaccanapoli
+sections:
+  - heading: Qué es
+    body: >-
+      La calle larga y recta que corta en dos el centro histórico de Nápoles,
+      trazada sobre una vía griega, entre iglesias, palacios y talleres de belenes.
+facts:
+  - label: Acceso
+    value: 'Libre · a pie desde Piazza del Gesù'
+mapsQuery: Spaccanapoli Napoli

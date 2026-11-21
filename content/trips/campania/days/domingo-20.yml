@@ -6,6 +6,44 @@ roman: II
 eyebrow: 'domingo · 20 de junio'
 title: La Spaccanapoli y rumbo a Procida
 subtitle: Carrera matutina por el corazón de Nápoles, ferry con los vecinos y atardecer en Marina Corricella.
-stats: []
-timeline: []
-cards: []
+# Base de la noche (D-06): slug de una entrada de `stays` en trip.yml → «Dormís en Procida».
+stay: procida
+# Variantes de stats y de tramo nuevas (EXT-03, D-09): el glifo lo antepone el CSS (tripshapes.css),
+# así que ni el texto de la stat ni el `header` del tramo empiezan por el emoji.
+stats:
+  - variant: ferry
+    text: '**Ferry** a Procida, ≈1 h'
+  - variant: bike
+    text: '**Bici** por la isla · ~8 km llanos'
+timeline:
+  - kind: stop
+    pace: all
+    time: '08:30'
+    title: Spaccanapoli
+    ref: spaccanapoli
+    note: La calle recta que parte en dos el centro histórico, antes de que abran las tiendas.
+  - kind: transport
+    pace: all
+    variant: ferry
+    header: De Porta di Massa a Procida
+    modes:
+      - icon: ⛴️
+        recommended: true
+        desc: '**Ferry Caremar** desde Porta di Massa · salidas a las 12:15 o a las 13:30'
+        tag: recomendado
+        meta: '⏱ **≈1 h**'
+  - kind: transport
+    pace: all
+    variant: bike
+    header: Por la isla en bici
+    modes:
+      - icon: 🚲
+        recommended: true
+        desc: '**Bici de alquiler** junto al puerto de Marina Grande, por calles tranquilas'
+  - kind: stop
+    pace: all
+    time: '19:30'
+    title: Marina Corricella
+    ref: marina-corricella
+    note: Casas de colores sobre el puerto de pescadores, con la luz baja del atardecer.
+cards: [spaccanapoli, marina-corricella]

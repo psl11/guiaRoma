@@ -44,6 +44,18 @@ export const Pace = z.enum(['all', 'medium', 'slow-only']) // data-pace por fila
 // card/guided/concert salen de places[] del index.html (romano/★/♪); `nature` (Fase 12, D-11) es una
 // playa, poza, río o sendero: ficha normal con marcador verde agua propio.
 export const PlaceType = z.enum(['card', 'guided', 'concert', 'nature'])
+// Variante de un tramo de transporte (fila `transport` → clase de `div.tl-transport`) y de un item
+// de la banda de stats del día (`day.stats[]` → clase de `div.day-stats-item`). Se elevan a enums con
+// nombre porque tests/unit/enumStyles.spec.ts recorre sus `.options` contra los selectores reales de
+// base.css + leaflet.css + tripshapes.css: un valor sin estilo (un tramo sin banda ni glifo) es rojo.
+//  · Los valores de Roma (taxi/walk/train y walk/train/taxi/metro/ticket) no cambian: Roma valida
+//    igual y su DOM es el mismo.
+//  · Fase 12 (D-09): ferry, car, bus, bike y plane, con banda y glifo propios en tripshapes.css.
+//  · `train` NO tiene regla `.tl-transport.train` a propósito (Pitfall 1): el martes de Roma pinta
+//    su tren con el estilo base del tramo, y una regla nueva cambiaría su golden de paridad. Es la
+//    única exención (`PARITY_EXEMPT_TRANSPORT` en enumStyles.spec.ts).
+export const TransportVariant = z.enum(['taxi', 'walk', 'train', 'ferry', 'car', 'bus', 'bike', 'plane'])
+export const StatVariant = z.enum(['walk', 'train', 'taxi', 'metro', 'ticket', 'ferry', 'car', 'bus', 'bike', 'plane'])
 
 // Sección de prosa (D-01): array ORDENADO {heading libre, body Markdown}. NUNCA campos
 // fijos por sección — los encabezados varían por ficha ("Qué es"/"Historia"/"Anécdotas"…).
@@ -110,10 +122,10 @@ const StopRow = z.object({ // .tl-item
   tag: z.string().optional(), // .tl-tag 'Sorrentino'|'reservado'|'opcional'|…
   note: Md.optional(), // .tl-note
 })
-const TransportRow = z.object({ // .tl-transport [taxi|walk|train]
+const TransportRow = z.object({ // .tl-transport [taxi|walk|train|ferry|car|bus|bike|plane]
   kind: z.literal('transport'),
   pace: Pace.default('all'),
-  variant: z.enum(['taxi', 'walk', 'train']).optional(),
+  variant: TransportVariant.optional(), // sin variante: solo `tl-transport`, estilo base
   header: z.string(),
   modes: z.array(TransportMode),
   footnote: Md.optional(),
@@ -214,8 +226,8 @@ export const DaySchema = z.object({
   eyebrow: z.string(), // 'venerdì · 19 giugno' (section-eyebrow del día)
   title: z.string(), // 'Centro Storico nocturno'
   subtitle: z.string(), // .day-subtitle
-  stats: z.array(z.object({ // .day-stats-item walk|train|taxi|metro|ticket (CSS 1285-1289)
-    variant: z.enum(['walk', 'train', 'taxi', 'metro', 'ticket']),
+  stats: z.array(z.object({ // .day-stats-item walk|train|taxi|metro|ticket (CSS 1285-1289) + Fase 12
+    variant: StatVariant,
     text: Md,
   })),
   light: z.object({ // .dia-ligera (Versión ligera)

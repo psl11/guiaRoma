@@ -1,6 +1,32 @@
 /* Formas nuevas de viaje (Fase 12, D-17). Cada selector exige una clase de NEW_CLASSES, que
    nunca aparece en el DOM de Roma. Tema oscuro solo vía tokens: sin [data-theme], :root, html, body. */
 
+/* EXT-03 — tramos nuevos: banda (fondo + borde izquierdo) */
+.tl-transport.ferry { background: color-mix(in srgb, #2c5aa0 10%, transparent); border-left-color: color-mix(in srgb, #2c5aa0 75%, var(--ink)); }
+.tl-transport.car   { background: color-mix(in srgb, #8b6c43 10%, transparent); border-left-color: color-mix(in srgb, #8b6c43 75%, var(--ink)); }
+.tl-transport.bus   { background: color-mix(in srgb, #d4801a 10%, transparent); border-left-color: color-mix(in srgb, #d4801a 75%, var(--ink)); }
+.tl-transport.bike  { background: color-mix(in srgb, #2e7d4f 10%, transparent); border-left-color: color-mix(in srgb, #2e7d4f 75%, var(--ink)); }
+.tl-transport.plane { background: color-mix(in srgb, var(--ink-faint) 8%, transparent); border-left-color: color-mix(in srgb, var(--ink-faint) 75%, var(--ink)); }
+
+/* EXT-03 — glifo en la cabecera del tramo */
+.tl-transport.ferry .tl-transport-header::before { content: "⛴️"; }
+.tl-transport.car .tl-transport-header::before   { content: "🚗"; }
+.tl-transport.bus .tl-transport-header::before   { content: "🚌"; }
+.tl-transport.bike .tl-transport-header::before  { content: "🚲"; }
+.tl-transport.plane .tl-transport-header::before { content: "✈️"; }
+.tl-transport.ferry .tl-transport-header::before,
+.tl-transport.car .tl-transport-header::before,
+.tl-transport.bus .tl-transport-header::before,
+.tl-transport.bike .tl-transport-header::before,
+.tl-transport.plane .tl-transport-header::before { font-style: normal; margin-right: 8px; }
+
+/* EXT-03 — glifo de la banda de stats (tamaño heredado de .day-stats-item::before) */
+.day-stats-item.ferry::before { content: "⛴️"; }
+.day-stats-item.car::before   { content: "🚗"; }
+.day-stats-item.bus::before   { content: "🚌"; }
+.day-stats-item.bike::before  { content: "🚲"; }
+.day-stats-item.plane::before { content: "✈️"; }
+
 /* EXT-02 — «Dormís en …» (fuera de .day-subtitle: visible en modo resumen) */
 .day-stay {
   font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
