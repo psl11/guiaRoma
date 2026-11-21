@@ -567,11 +567,11 @@ encabezados fijos de Roma heredaría «3 comensales» y la cabecera de restauran
   segundo bloque de confirmados, y cada viaje los titula con `headings`.
 - **Tests nuevos:**
   - `tests/data/schema.spec.ts` (`test:data`): dientes de `headings` (completo, parcial y `{}`
-    aceptados; clave mal escrita, vacía o de otro tipo rechazada; misma rigidez en
+    aceptados; clave mal escrita, vacía, solo de espacios o de otro tipo rechazada; misma rigidez en
     `ReferenceRowSchema`; `group: vuelos` no valida; el reservas.yml de Roma valida sin
     `headings`). La mutación `z.strictObject` → `z.object` pone el spec en rojo.
   - `tests/unit/reservasHeadings.spec.ts` (`test:unit`): helpers (defaults, personalizados,
-    parcial, `null`/`''`, grupos vacíos, Roma real) y el cableado estático de
+    parcial, `null`/`''`/solo espacios, grupos vacíos, Roma real) y el cableado estático de
     ReservasSection.vue (`wiringProblems`) con dientes en memoria.
   - `tests/data/invariants.spec.ts` (`test:data`): regla `reservas-headings` de la puerta de
     datos (`tests/data/trips.ts`). Un viaje que no es Roma y tiene `reservas.yml` debe declarar

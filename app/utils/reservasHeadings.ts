@@ -38,14 +38,19 @@ export type ReservasHeadingKey = keyof typeof RESERVAS_HEADINGS_DEFAULT
 export type ReservasHeadingsResolved = Record<ReservasHeadingKey, string>
 
 /**
- * Resuelve los tres encabezados: el valor del viaje si es un texto no vacío; si es `null`,
- * `undefined` o `''`, el texto de Roma. Devuelve siempre un objeto NUEVO (mutarlo no cambia
+ * Resuelve los tres encabezados: el valor del viaje si tiene algún carácter visible; si es
+ * `null`, `undefined`, `''` o solo espacios, el texto de Roma (un encabezado en blanco se
+ * pintaría como un `h4` vacío). El valor elegido sale tal cual, sin recortar: así un texto propio
+ * conserva sus bytes. Devuelve siempre un objeto NUEVO (mutarlo no cambia
  * `RESERVAS_HEADINGS_DEFAULT`).
  */
 export function resolveReservasHeadings(
   headings: Partial<Record<ReservasHeadingKey, string | null>> | null | undefined,
 ): ReservasHeadingsResolved {
-  const pick = (key: ReservasHeadingKey): string => headings?.[key] || RESERVAS_HEADINGS_DEFAULT[key]
+  const pick = (key: ReservasHeadingKey): string => {
+    const value = headings?.[key]
+    return value && value.trim() !== '' ? value : RESERVAS_HEADINGS_DEFAULT[key]
+  }
   return { mesas: pick('mesas'), visitas: pick('visitas'), table: pick('table') }
 }
 

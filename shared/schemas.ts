@@ -366,10 +366,13 @@ export const ArtistRowSchema = z.object({
 //    y cada viaje los titula con `headings` (Campania en la Fase 13, p. ej. vuelos, barcos y
 //    coche en el primero y conciertos en el segundo). El enum no se renombra: sería migrar el
 //    contenido de Roma.
+//  · Cada texto necesita al menos un carácter visible: `min(1)` solo no basta, porque `'   '`
+//    pasaría y se pintaría como un encabezado vacío (WR-02 de la revisión).
+const HeadingText = z.string().min(1).regex(/\S/, 'encabezado vacío (solo espacios)')
 const ReservasHeadings = z.strictObject({
-  mesas: z.string().min(1).optional(), // 1.er h4 de .reservas-confirmadas
-  visitas: z.string().min(1).optional(), // 2.º h4 de .reservas-confirmadas
-  table: z.string().min(1).optional(), // .reservas-box-header
+  mesas: HeadingText.optional(), // 1.er h4 de .reservas-confirmadas
+  visitas: HeadingText.optional(), // 2.º h4 de .reservas-confirmadas
+  table: HeadingText.optional(), // .reservas-box-header
 })
 export const ReservasSchema = z.object({
   slug: z.literal('reservas'),

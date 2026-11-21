@@ -391,6 +391,17 @@ describe('headings de reservas (Fase 12.1, D-01, D-02, D-04)', () => {
     expect(parse({ headings: 'texto' }).success).toBe(false)
   })
 
+  it('WR-02: rechaza un texto solo de espacios o saltos de línea (se pintaría un h4 vacío)', () => {
+    const r = parse({ headings: { mesas: '  ' } })
+    expect(r.success).toBe(false)
+    if (r.success) return
+    expect(z.prettifyError(r.error)).toContain('encabezado vacío')
+    expect(parse({ headings: { visitas: '\n' } }).success).toBe(false)
+    expect(parse({ headings: { table: ' \t ' } }).success).toBe(false)
+    expect(ReferenceRowSchema.shape.headings.safeParse({ table: '   ' }).success).toBe(false)
+    expect(parse({ headings: { table: ' Qué reservar ' } }).success).toBe(true)
+  })
+
   it('headings está en ReferenceRowSchema con la misma rigidez (columna + unknown-key)', () => {
     expect(Object.keys(ReferenceRowSchema.shape)).toContain('headings')
     expect(ReferenceRowSchema.shape.headings.safeParse({ mesa: 'x' }).success).toBe(false)

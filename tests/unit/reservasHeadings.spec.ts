@@ -13,8 +13,8 @@ import {
  *
  * Cubre las dos funciones puras de app/utils/reservasHeadings.ts y el cableado de
  * ReservasSection.vue:
- *  - `resolveReservasHeadings`: cada clave de `headings` ausente, `null` o `''` cae al texto de
- *    Roma (`RESERVAS_HEADINGS_DEFAULT`, congelado); devuelve un objeto nuevo.
+ *  - `resolveReservasHeadings`: cada clave de `headings` ausente, `null`, `''` o solo espacios
+ *    cae al texto de Roma (`RESERVAS_HEADINGS_DEFAULT`, congelado); devuelve un objeto nuevo.
  *  - `confirmedGroup`: las entradas de un grupo, en el orden del dato; `[]` con `confirmed` nulo,
  *    ausente o sin entradas de ese grupo (D-03: ese grupo no pinta ni `h4` ni `ul`, y con los dos
  *    vacíos no hay bloque).
@@ -66,6 +66,15 @@ describe('resolveReservasHeadings (D-01, D-02)', () => {
 
   it('null y \'\' en una clave caen al defecto', () => {
     expect(resolveReservasHeadings({ mesas: null, table: '' })).toEqual(RESERVAS_HEADINGS_DEFAULT)
+  })
+
+  it('WR-02: un texto solo de espacios o saltos de línea cae al defecto (nunca un h4 vacío)', () => {
+    expect(resolveReservasHeadings({ table: '  ' })).toEqual(RESERVAS_HEADINGS_DEFAULT)
+    expect(resolveReservasHeadings({ mesas: '\n', visitas: ' \t ' })).toEqual(RESERVAS_HEADINGS_DEFAULT)
+  })
+
+  it('un texto propio con espacios alrededor sale tal cual (no se recorta)', () => {
+    expect(resolveReservasHeadings({ table: ' Qué reservar ' }).table).toBe(' Qué reservar ')
   })
 })
 
