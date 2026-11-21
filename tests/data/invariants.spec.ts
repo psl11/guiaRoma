@@ -443,6 +443,53 @@ describe('la puerta tiene dientes (fixtures)', () => {
     const vs = checkTrip(memTrip('prueba', {}, { summary: 'Cinco días a pie por Roma.' }))
     expect(vs, formatViolations(vs)).toEqual([])
   })
+
+  // ── Fase 12 (EXT-01, Pitfall 3): la puerta mira DENTRO de las opciones de un `choice` ─────
+  /** Un día `viernes` con un `choice` de dos opciones; la primera lleva las filas dadas. */
+  const dayWithChoice = (rows: unknown[], title = 'Opción con filas') => y({
+    ...validDay,
+    timeline: [{
+      kind: 'choice',
+      options: [
+        { label: 'Opción A', title, rows },
+        { label: 'Opción B', title: 'La otra', rows: [{ kind: 'stop', pace: 'all', time: '10:00', title: 'Paseo' }] },
+      ],
+    }],
+  })
+
+  it('ref: un stop con ref roto dentro de una opción de un choice nombra el fichero del día', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'days/viernes.yml': dayWithChoice([{ kind: 'stop', pace: 'all', time: '11:00', title: 'Parada', ref: 'nope' }]),
+    }))
+    expectRule(vs, 'ref', 'prueba/days/viernes.yml')
+    expect(vs.find(v => v.rule === 'ref')!.message).toContain('"nope"')
+  })
+
+  it('ref: una entrada de food con ref roto dentro de una opción de un choice es una violación', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'days/viernes.yml': dayWithChoice([{
+        kind: 'food', pace: 'all', header: 'Comer', entries: [{ name: 'Trattoria', ref: 'nope', desc: 'Cocina.' }],
+      }]),
+    }))
+    expectRule(vs, 'ref', 'prueba/days/viernes.yml')
+    expect(vs.find(v => v.rule === 'ref')!.message).toContain('"nope"')
+  })
+
+  it('ref: un stop dentro de una opción con ref a un monumento existente → sin violaciones', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'monuments/galeria.yml': monument('prueba', 'galeria'),
+      'days/viernes.yml': dayWithChoice([{ kind: 'stop', pace: 'all', time: '11:00', title: 'Galería', ref: 'galeria' }]),
+    }))
+    expect(vs, formatViolations(vs)).toEqual([])
+  })
+
+  it('anchor: [x](#nope) en el title de una opción de un choice es una violación anchor', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'days/viernes.yml': dayWithChoice([{ kind: 'stop', pace: 'all', time: '11:00', title: 'Parada' }], 'Ver [x](#nope)'),
+    }))
+    expectRule(vs, 'anchor', 'prueba/days/viernes.yml')
+    expect(vs.find(v => v.rule === 'anchor')!.message).toContain('#nope')
+  })
 })
 
 // ── extractAnchors (helper puro) ──────────────────────────────────────────────
