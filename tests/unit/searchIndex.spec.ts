@@ -1,6 +1,9 @@
 import { describe, it, expect } from 'vitest'
+import { readdirSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import { parse as parseYaml } from 'yaml'
 import { buildHaystack, createSearchIndex } from '../../app/utils/searchIndex'
-import type { Monument } from '../../shared/schemas'
+import { MonumentSchema, type Monument } from '../../shared/schemas'
 
 /**
  * Cobertura unitaria de la lógica PURA de búsqueda (FEAT-03) — el reemplazo del
@@ -171,5 +174,50 @@ describe('createSearchIndex — storeFields + prefijo (FEAT-03 D-01)', () => {
   it('un prefijo del nombre propio ("Gall" → "Galleria") encuentra el monumento', () => {
     const slugs = index.search('Gall').map(r => r.id)
     expect(slugs).toContain('galleria-sciarra')
+  })
+})
+
+// ── Nota familiar (Fase 12, EXT-07, D-12) ─────────────────────────────────────────────────────
+// La caja «Con niños» es texto visible de la ficha, así que el haystack (superconjunto del texto de
+// la ficha, Pitfall 1 de la Fase 6) tiene que incluirla. Las fichas sin `family` (todas las de Roma)
+// dan el mismo haystack que antes. YAML reales pasados por `MonumentSchema.parse`.
+const TRIPS = join(process.cwd(), 'content', 'trips')
+
+function loadMonuments(trip: string): Monument[] {
+  const dir = join(TRIPS, trip, 'monuments')
+  return readdirSync(dir)
+    .filter(f => f.endsWith('.yml'))
+    .map(f => MonumentSchema.parse(parseYaml(readFileSync(join(dir, f), 'utf8'))))
+}
+
+describe('nota familiar en el haystack (D-12)', () => {
+  const FAMILY = 'Bajada de unos doscientos peldaños, mejor con mochila portabebés.'
+
+  it('buildHaystack de una ficha con family contiene su texto', () => {
+    expect(buildHaystack({ ...sciarra, family: FAMILY })).toContain(FAMILY)
+  })
+
+  it('la misma ficha sin family no lo contiene y su haystack no cambia', () => {
+    expect(buildHaystack(sciarra)).not.toContain('portabebés')
+    expect(buildHaystack({ ...sciarra, family: undefined })).toBe(buildHaystack(sciarra))
+  })
+
+  it('ninguna ficha real de Roma tiene family', () => {
+    const roma = loadMonuments('roma')
+    expect(roma.length).toBeGreaterThan(30)
+    expect(roma.filter(m => m.family !== undefined).map(m => m.slug)).toEqual([])
+  })
+
+  it('en Campania, «escalones» encuentra Baia di Sorgeto por su nota familiar', () => {
+    const campania = loadMonuments('campania')
+    const sorgeto = campania.find(m => m.slug === 'baia-di-sorgeto')
+    expect(sorgeto?.family, 'baia-di-sorgeto.yml trae family').toContain('escalones')
+    const index = createSearchIndex(campania)
+    expect(index.search('escalones').map(r => r.id)).toContain('baia-di-sorgeto')
+    // Dientes: «linterna» solo está en la nota familiar (no en la prosa ni en los facts).
+    const { family: _omit, ...sinFamily } = sorgeto!
+    void _omit
+    expect(buildHaystack(sinFamily)).not.toMatch(/linterna/i)
+    expect(index.search('linterna').map(r => r.id)).toContain('baia-di-sorgeto')
   })
 })

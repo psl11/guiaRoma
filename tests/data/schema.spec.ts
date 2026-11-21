@@ -282,6 +282,24 @@ describe('puerta DATA-05 (fixtures, siempre corren)', () => {
     })
   })
 
+  // ── family (Fase 12, EXT-07; D-12) ─────────────────────────────────────────
+  // Nota «Con niños» de la ficha: Markdown-inline opcional; una cadena vacía no valida (no se
+  // pintaría una caja sin texto).
+  describe('family (D-12)', () => {
+    it('MonumentSchema acepta family con texto', () => {
+      const r = MonumentSchema.safeParse({ ...validMonument, family: 'Texto.' })
+      expect(r.success, r.success ? '' : z.prettifyError(r.error)).toBe(true)
+    })
+
+    it('MonumentSchema acepta una ficha sin family (Roma)', () => {
+      expect(MonumentSchema.safeParse(validMonument).success).toBe(true)
+    })
+
+    it('MonumentSchema rechaza family vacío', () => {
+      expect(MonumentSchema.safeParse({ ...validMonument, family: '' }).success).toBe(false)
+    })
+  })
+
   // DATA-06: la prosa es Markdown-inline guardada como string.
   it('los campos de prosa (Md) son strings con Markdown-inline (DATA-06)', () => {
     const parsed = MonumentSchema.safeParse(validMonument)
