@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 12
 current_phase_name: Formas nuevas de viaje
 status: executing
-stopped_at: Completed 12-01-PLAN.md
-last_updated: "2026-11-21T10:11:53.697Z"
+stopped_at: Completed 12-02-PLAN.md
+last_updated: "2026-11-21T10:25:28.618Z"
 last_activity: 2026-11-21
 last_activity_desc: Phase 12 execution started
-state_head: ad030d95b9462ec4903ebb878711d5315aaf2930
+state_head: dae76cc6eb88bb415486d41a87aad9fd890dc5c5
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 24
-  completed_plans: 18
+  completed_plans: 19
   percent: 0
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 12 (Formas nuevas de viaje) — EXECUTING
-Plan: 2 of 7
+Plan: 3 of 7
 Status: Ready to execute
 Last activity: 2026-11-21 — Phase 12 execution started
 
@@ -121,6 +121,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 11 P06 | 45min | 2 tasks | 3 files |
 | Phase 11 P07 | ~7min | 3 tasks | 2 files |
 | Phase 12 P01 | 10 min | 2 tasks | 14 files |
+| Phase 12 P02 | 9min | 3 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -290,6 +291,9 @@ Recent decisions affecting current work:
 - [Phase 12]: Fila choice estricta dentro de day.timeline (BaseTimelineRow/ChoiceOption/ChoiceRow, z.strictObject, 2..3 opciones, un nivel, sin z.lazy)
 - [Phase 12]: Importación circular Timeline ⇄ TimelineChoice (resolveComponent + auto-import <Timeline>) rinde en SSR; no hace falta defineAsyncComponent (A1 resuelto)
 - [Phase 12]: E2E: los marcadores del mapa se cuentan con section[id="mapa"] .custom-marker; #leaflet-map no se conserva en el DOM montado
+- [Phase 12]: 12-02: la regla ref de la puerta recorre las filas de las opciones de un choice (timelineRowsOf); anchor ya era recursiva
+- [Phase 12]: 12-02: el escaneo D-17 de clases nuevas en el HTML publicado excluye trips/<slug>/ de otros viajes (publicar Campania en la Fase 13 no lo rompe)
+- [Phase 12]: 12-02: tripshapes.css prohíbe también selectores de atributo ([class*=car] casaría con card de Roma)
 
 ### Pending Todos
 
@@ -326,8 +330,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-21T10:11:53.546Z
-Stopped at: Completed 12-01-PLAN.md
+Last session: 2026-11-21T10:25:28.457Z
+Stopped at: Completed 12-02-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
