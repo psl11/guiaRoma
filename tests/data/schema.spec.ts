@@ -252,6 +252,36 @@ describe('puerta DATA-05 (fixtures, siempre corren)', () => {
     })
   })
 
+  // ── route (Fase 12, EXT-06; D-14) ─────────────────────────────────────────
+  // `day.route` = modo de la ruta del día (`walking` | `driving` | `transit`) y forzado
+  // (`enabled`). Estricto: una clave mal escrita (`modo:`) falla en vez de perderse y dejar el
+  // día a pie. Sobre el `minDay` de arriba.
+  describe('route (D-14)', () => {
+    const withRoute = (route: unknown) => DaySchema.safeParse({ ...minDay, route })
+
+    it.each([{ mode: 'driving' }, { mode: 'transit' }, { mode: 'walking', enabled: true }, { enabled: false }, {}])(
+      'DaySchema acepta route %j', (route) => {
+        const r = withRoute(route)
+        expect(r.success, r.success ? '' : z.prettifyError(r.error)).toBe(true)
+      },
+    )
+
+    it('DaySchema acepta un día sin route (Roma)', () => {
+      expect(DaySchema.safeParse(minDay).success).toBe(true)
+    })
+
+    it.each([{ modo: 'driving' }, { mode: 'bicycling' }, { enabled: 'no' }])('DaySchema rechaza route %j', (route) => {
+      expect(withRoute(route).success).toBe(false)
+    })
+
+    it('una clave desconocida en route falla con Unrecognized key (estricto)', () => {
+      const r = withRoute({ modo: 'driving' })
+      expect(r.success).toBe(false)
+      if (r.success) return
+      expect(z.prettifyError(r.error)).toContain('Unrecognized key: "modo"')
+    })
+  })
+
   // DATA-06: la prosa es Markdown-inline guardada como string.
   it('los campos de prosa (Md) son strings con Markdown-inline (DATA-06)', () => {
     const parsed = MonumentSchema.safeParse(validMonument)
