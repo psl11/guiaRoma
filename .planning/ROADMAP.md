@@ -35,6 +35,7 @@ Re-plataforma el `index.html` único (6.665 líneas) a Nuxt 4 SSG con paridad vi
 - [ ] **Phase 10: Forma y chrome desde datos** - Días, secciones, pastillas, cabecera, pie, leyenda y título salen de los datos de cada viaje (Roma verbatim)
 - [ ] **Phase 11: Portada y rutas multi-viaje** - Portada índice en `/`, Roma en `/trips/roma/`, redirección de enlaces antiguos y prerender de todos los viajes, con goldens sin cambios
 - [ ] **Phase 12: Formas nuevas de viaje** - Opciones A/B, «Dormís en…», transportes nuevos, naturaleza, mapa multi-ciudad, ruta del día por modo y nota familiar, probados con un esqueleto de Campania
+- [ ] **Phase 12.1: Títulos de Reservas por viaje** *(INSERTED)* - Encabezados de la sección Reservas configurables por viaje, con los textos de Roma por defecto, para que Campania no herede «3 comensales»
 - [ ] **Phase 13: Contenido Campania 2027** - Los 10 días, fichas, gastronomía, reservas y práctica de Campania redactados en tono slow y publicados
 - [ ] **Phase 14: Verificación del milestone** - Puerta completa desde build limpia, test de upgrade desde la guía viva y sign-off humano de Roma y Campania en móvil real
 
@@ -175,9 +176,23 @@ Plans:
 **Decisiones previas (⚠)**: EXT-01 (opciones A/B apiladas y siempre visibles vs selector) y EXT-04 (motifs SVG nuevos de naturaleza vs reutilizar provisionalmente los existentes) deben resolverse **antes de planificar esta fase**
 **Notas**: el esqueleto de Campania (`trip.yml` + 2-3 días, uno con A/B, varias bases, una ficha `nature`) nace como `draft: true` (ROUTE-05), así que los tests necesitan poder generar borradores. Todo valor nuevo de enum lleva su CSS/SVG y un test «cada valor tiene estilo o SVG»; CSS nuevo solo en `multitrip.css` (`base.css` intacto). `DayOptions` con raíz `<div>`, nunca `<section>` (el scrollspy toma todas las `<section>`).
 
+### Phase 12.1: Títulos de Reservas por viaje (INSERTED)
+
+**Goal**: Cada viaje puede poner sus propios encabezados en la sección Reservas (bloque de confirmados, sus dos grupos y la cabecera de la tabla) sin que Roma cambie lo más mínimo
+**Depends on**: Phase 12
+**Requirements**: CAMP-04 (habilitador; el contenido se escribe en la Fase 13)
+**Success Criteria** (what must be TRUE):
+  1. `reservas.yml` acepta encabezados opcionales para el bloque de confirmados, sus grupos y la cabecera de la tabla; si faltan, se usan exactamente los textos actuales de Roma («✅ Ya reservado · 3 comensales», «🎟️ Visitas y entradas reservadas», «Restaurantes · cuándo reservar y con cuánta antelación»)
+  2. Un grupo de confirmados sin entradas no pinta su encabezado ni una lista vacía en un viaje que no sea Roma, y Roma conserva su DOM byte a byte
+  3. Los campos nuevos pasan por el superconjunto `ReferenceRowSchema` (Content no devuelve `null`) y el esquema estricto rechaza claves mal escritas
+  4. La puerta de paridad sigue 110/110 con los 56 goldens sin re-baseline; `base.css` y el resto del CSS congelado sin cambios
+**Plans**: TBD
+**Research**: no (RESEARCH de la Fase 13 §A.4/A.5 G-1 ya localiza `ReservasSection.vue:73,81,91` y `shared/schemas.ts:401-429`)
+**Notas**: inserción decimal pedida por la Fase 13 (D-23, decisión del usuario 2026-11-21: «Pequeño arreglo»). Solo campos `.optional()`; ningún contenido de Roma se edita; sin `<style scoped>` ni `v-html` nuevos.
+
 ### Phase 13: Contenido Campania 2027
 **Goal**: La familia puede usar la guía de Campania 2027 sobre el terreno: diez días con su logística, una ficha por lugar, dónde comer, qué reservar y cómo moverse, con los datos dudosos señalados
-**Depends on**: Phase 12
+**Depends on**: Phase 12.1
 **Requirements**: CAMP-01, CAMP-02, CAMP-03, CAMP-04, CAMP-05, CAMP-06
 **Success Criteria** (what must be TRUE):
   1. La guía de Campania muestra los 10 días (sábado 19 – lunes 28 de junio de 2027) con su timeline, horarios y logística (vuelos, Alibus, ferris, coche de alquiler, conciertos de Ultimo y Pinguini Tattici Nucleari), incluidas las dos jornadas con alternativas (jueves 24 y sábado 26), en el tono slow y auténtico del planning

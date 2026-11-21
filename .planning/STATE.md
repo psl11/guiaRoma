@@ -6,12 +6,12 @@ current_phase: 12
 current_phase_name: Formas nuevas de viaje
 status: verifying
 stopped_at: Phase 13 context gathered
-last_updated: "2026-11-21T17:18:21.067Z"
+last_updated: "2026-11-21T22:51:28.461Z"
 last_activity: 2026-11-21
 last_activity_desc: Phase 12 execution started
-state_head: d3f03e858274a11069e2d245adc5db03184548b9
+state_head: 7145c7156d50639e51bf929d81604c6a63e62ef5
 progress:
-  total_phases: 6
+  total_phases: 7
   completed_phases: 0
   total_plans: 24
   completed_plans: 24
@@ -333,6 +333,10 @@ None yet.
 - [RESUELTO en Fase 5 P03]: ~~[Phase 4/5]: cableado de interceptación de `a[href^="#"]` en `<MDC>`~~ → listener delegado nativo en CAPTURA + stopPropagation, registrado síncronamente.
 - [RESUELTO en v1.0]: ~~[Phase 4/6/7]: BLOQUEANTE D1 (uniones discriminadas `artist`/`reference` con filas SQL todo-null)~~ → `#arte`/`#arquitectura`/`#reservas`/`#practica` renderizan con datos reales desde F4 P05.
 - [RESUELTO en Fase 8]: ~~[Phase 8 P06]: visual-diff no verde por el corte de Lora self-hosted y el orden notas/culture por ficha~~ → golden re-baselinado desde el build Nuxt por decisión del usuario; `pnpm verify` VERDE y auditoría v1.0 sin bloqueantes.
+
+### Roadmap Evolution
+
+- Phase 12.1 inserted after Phase 12: Títulos de Reservas por viaje: campos opcionales con los textos de Roma por defecto; lo necesita Campania (Fase 13, D-23) (URGENT)
 
 ## Deferred Items
 
