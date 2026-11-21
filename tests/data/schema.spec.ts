@@ -5,6 +5,7 @@ import {
   DaySchema,
   ArtistSchema,
   ReferenceSchema,
+  ReferenceRowSchema,
   TripSchema,
 } from '../../shared/schemas'
 import { COLLECTIONS, listTripDirs, loadTrip, type CollectionName } from './trips'
@@ -29,6 +30,8 @@ import { COLLECTIONS, listTripDirs, loadTrip, type CollectionName } from './trip
  *  - DATA-02: un día con timeline discriminado por `kind` + `pace` por fila valida.
  *  - DATA-06: los campos de prosa (`Md`) son strings (Markdown-inline, render en Fase 4).
  *  - D-12: el `describe` de conteo (1/5/38/26/13/2) sigue siendo SOLO de Roma.
+ *  - Fase 12.1 (D-01, D-02, D-04): `headings` de reservas es opcional y ESTRICTO en ReservasSchema
+ *    y en el superconjunto ReferenceRowSchema (una clave mal escrita falla); Roma no lo declara.
  *
  * Los casos fixture corren siempre: garantizan que la PUERTA existe (evita un test vacuo verde).
  */
@@ -346,6 +349,65 @@ describe('puerta DATA-05 (fixtures, siempre corren)', () => {
 
   it('TripSchema rechaza un slug con mayúsculas ("Roma", D-05)', () => {
     expect(TripSchema.safeParse({ ...validTrip, slug: 'Roma' }).success).toBe(false)
+  })
+})
+
+// ── Encabezados de Reservas por viaje (Fase 12.1, D-01, D-02, D-04) ───────────
+// `headings` titula los dos bloques de confirmados y la cabecera de la tabla. Es opcional (Roma
+// no lo declara y recibe sus textos de siempre, D-02) y ESTRICTO: zod 4 tira en silencio una clave
+// desconocida, así que un `mesa:` mal escrito dejaría «3 comensales» en otro viaje. La misma
+// rigidez vale en el superconjunto ReferenceRowSchema (columna de Content + regla `unknown-key`).
+// Si un caso falla, se corrige el esquema o la util, nunca el test.
+describe('headings de reservas (Fase 12.1, D-01, D-02, D-04)', () => {
+  const reservas = (extra: Record<string, unknown> = {}) => ({
+    slug: 'reservas', trip: 'campania', order: 1, title: 'Reservas', eyebrow: 'e', intro: 'i', confirmed: [], table: [], ...extra,
+  })
+  const parse = (extra: Record<string, unknown>) => ReferenceSchema.safeParse(reservas(extra))
+
+  it('acepta headings con las tres claves y conserva los tres valores', () => {
+    const headings = { mesas: '✈️ Vuelos, barcos y coche', visitas: '🎟️ Conciertos y entradas', table: 'Qué reservar' }
+    const r = parse({ headings })
+    expect(r.success).toBe(true)
+    if (!r.success || r.data.slug !== 'reservas') return
+    expect(r.data.headings).toEqual(headings)
+  })
+
+  it('acepta headings parcial ({ visitas }) y vacío ({})', () => {
+    expect(parse({ headings: { visitas: 'X' } }).success).toBe(true)
+    expect(parse({ headings: {} }).success).toBe(true)
+  })
+
+  it('rechaza una clave mal escrita con «Unrecognized key: "mesa"» (estricto)', () => {
+    const r = parse({ headings: { mesa: 'x' } })
+    expect(r.success).toBe(false)
+    if (r.success) return
+    expect(z.prettifyError(r.error)).toContain('Unrecognized key: "mesa"')
+    expect(parse({ headings: { tabla: 'x' } }).success).toBe(false)
+  })
+
+  it('rechaza un texto vacío, un número y un headings que no es objeto', () => {
+    expect(parse({ headings: { mesas: '' } }).success).toBe(false)
+    expect(parse({ headings: { mesas: 3 } }).success).toBe(false)
+    expect(parse({ headings: 'texto' }).success).toBe(false)
+  })
+
+  it('headings está en ReferenceRowSchema con la misma rigidez (columna + unknown-key)', () => {
+    expect(Object.keys(ReferenceRowSchema.shape)).toContain('headings')
+    expect(ReferenceRowSchema.shape.headings.safeParse({ mesa: 'x' }).success).toBe(false)
+    expect(ReferenceRowSchema.shape.headings.safeParse({ table: 'X' }).success).toBe(true)
+  })
+
+  it('D-04: group sigue siendo mesas | visitas (una entrada con group: vuelos no valida)', () => {
+    expect(parse({ confirmed: [{ group: 'mesas', when: 'Vie', text: 't' }] }).success).toBe(true)
+    expect(parse({ confirmed: [{ group: 'vuelos', when: 'Vie', text: 't' }] }).success).toBe(false)
+  })
+
+  it('D-02: el reservas.yml real de Roma valida y no declara headings', () => {
+    const doc = loadTrip('roma').docs.find(d => d.collection === 'reference' && d.data.slug === 'reservas')
+    expect(doc, 'content/trips/roma/reference/reservas.yml no se cargó').toBeDefined()
+    const r = ReferenceSchema.safeParse(doc!.data)
+    expect(r.success, r.success ? '' : z.prettifyError(r.error)).toBe(true)
+    expect(Object.hasOwn(doc!.data, 'headings')).toBe(false)
   })
 })
 
