@@ -167,6 +167,21 @@ Write the real Campania 2027 guide (19–28 June 2027) as **YAML content and ima
   - Commits end with the Co-Authored-By trailer.
   - `.planning/state.json` and `.planning/ui-reviews/` stay untracked.
 
+### User decisions after research (asked 2026-11-21)
+- **D-22 — Ultimo is on Friday 25 June 2027 (the user's tickets say so).** The official tour calendar lists Naples on the 24th. The user confirmed the 25th from their tickets, so the date is **not** marked «por confirmar», and the planning for the 24th (Cilento) and 25th (Salerno → Vesuvius → Naples, concert at night) stays as it is.
+  - Only the start time and the stadium gates are marked «⚠ por confirmar».
+  - Reservas can mention, as a note, that the official calendar listed the 24th, so nobody is confused on the ground.
+- **D-23 — Reservas headings: insert a small Phase 12.1 (RESEARCH A.5, G-1).** The user chose «Pequeño arreglo (Recomendado)».
+  - Phase 12.1 adds optional per-trip heading fields to `ReservasSchema` and `ReferenceRowSchema`, with Roma's current strings as defaults, so Roma's DOM stays byte-identical. It also stops rendering an empty confirmed group.
+  - Phase 12.1 is planned and executed **before** Phase 13. Phase 13's Reservas plan uses the field names that 12.1 actually ships (read its SUMMARY), and still writes no code.
+- **D-24 — Photo credits (Claude's default).** Roma credits no photos. Campania adds one line in its footer or `howTo`: «Fotografías: Wikimedia Commons · licencias y autores en cada archivo». Individual credits are deferred.
+- **D-25 — The Naples base on the 25th–27th** may differ from the one on the 19th. Its `area` stays «Nápoles» and the day text marks the exact zone «⚠ por confirmar».
+- **D-26 — Facts the research corrected in the raw plan:**
+  - Raito and Albori are in Vietri sul Mare, on the Amalfi coast, not in the Cilento.
+  - Alibus does not reach the Vomero: add a metro or funicular leg.
+  - Porta di Massa serves ferries and Molo Beverello serves hydrofoils.
+  - The Spaccanapoli race exists. The 2026 edition was on 21 June; the 2027 date is «⚠ por confirmar».
+
 ### Claude's Discretion
 - The exact text of each day and card, within the tone of D-09.
 - Which places beyond D-10 deserve their own card, and how cards and food are grouped.
