@@ -26,15 +26,23 @@ export const Fact = z.object({ label: z.string(), value: z.string() }) // .facts
 export const Md = z.string() // Markdown-inline (render con <MDC> en Fase 4)
 export const Link = z.object({ ref: z.string(), label: Md, note: Md.optional() }) // #id + texto (+nota)
 
-// 19 motifs (CARD_TO_MOTIF, index.html línea 2213, verbatim). Un motif fuera del enum =
-// test rojo (DATA-05). Orden = primera aparición en el mapa.
+// Motivos del dibujo de reserva (clave de SVG_MOTIFS en app/utils/svgMotifs.ts). Un motif fuera
+// del enum = test rojo (DATA-05).
+//  - Los 19 primeros son los de Roma (CARD_TO_MOTIF, index.html línea 2213, verbatim), en orden de
+//    primera aparición en el mapa.
+//  - Fase 12 (D-10): los lugares de naturaleza añaden motivos propios que NO vienen del index.html
+//    (dibujos nuevos en el mismo lenguaje visual). Se añaden al final para no tocar los de Roma.
 export const Motif = z.enum([
   'dome', 'pantheon', 'arch', 'fountain', 'obelisk', 'statue', 'painting', 'church',
   'fortress', 'temple', 'garden', 'keyhole', 'mask', 'monument', 'rooftops', 'library',
   'tower', 'stairs', 'coffee',
+  'thermal', // Fase 12 (D-10): poza termal
 ])
 export const Pace = z.enum(['all', 'medium', 'slow-only']) // data-pace por fila (DATA-02)
-export const PlaceType = z.enum(['card', 'guided', 'concert']) // de places[] (★/♪/romano)
+// Tipo de lugar = color y popup del marcador (MARKER_STYLE / markerPopupHtml en app/utils/mapMarkers.ts).
+// card/guided/concert salen de places[] del index.html (romano/★/♪); `nature` (Fase 12, D-11) es una
+// playa, poza, río o sendero: ficha normal con marcador verde agua propio.
+export const PlaceType = z.enum(['card', 'guided', 'concert', 'nature'])
 
 // Sección de prosa (D-01): array ORDENADO {heading libre, body Markdown}. NUNCA campos
 // fijos por sección — los encabezados varían por ficha ("Qué es"/"Historia"/"Anécdotas"…).
@@ -486,7 +494,8 @@ export const TripSchema = z.object({
 })
 
 // ── Tipos TS derivados (gratis, una sola fuente de verdad) ────────────────────
-export type Motif = z.infer<typeof Motif> // los 19 motivos (clave de svgMotifs.ts)
+export type Motif = z.infer<typeof Motif> // los motivos del dibujo de reserva (clave de svgMotifs.ts)
+export type PlaceType = z.infer<typeof PlaceType> // tipo de lugar (clave de MARKER_STYLE, D-11)
 export type Monument = z.infer<typeof MonumentSchema>
 export type Day = z.infer<typeof DaySchema>
 export type Food = z.infer<typeof FoodSchema>

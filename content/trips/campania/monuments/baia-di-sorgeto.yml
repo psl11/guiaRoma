@@ -1,0 +1,24 @@
+slug: baia-di-sorgeto
+trip: campania
+roman: V
+name: Baia di Sorgeto
+italian: 'Baia di Sorgeto · Panza · Forio'
+day: Martes 22
+coords:
+  lat: 40.7083
+  lng: 13.8650
+type: nature
+motif: thermal
+hero:
+  src: https://example.invalid/campania/baia-di-sorgeto.jpg
+  alt: Baia di Sorgeto
+sections:
+  - heading: Qué es
+    body: >-
+      Una cala de cantos rodados al pie de un acantilado del sur de Isquia, donde
+      el agua caliente del volcán brota entre las rocas y se mezcla con el mar en
+      pozas naturales. De noche, bañarse aquí mirando las estrellas es un rito.
+facts:
+  - label: Acceso
+    value: 'Libre · unos 230 escalones desde Panza'
+mapsQuery: Baia di Sorgeto Ischia

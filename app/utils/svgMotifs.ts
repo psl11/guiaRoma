@@ -1,16 +1,28 @@
 /**
- * Tabla de los 19 SVG de fallback de imagen (UI-05) + lookup tipado `motifSvg`.
+ * Tabla de los SVG de fallback de imagen (UI-05) + lookup tipado `motifSvg`.
  *
- * `SVG_MOTIFS` es el objeto `SVG_MOTIFS` de index.html:2212 portado VERBATIM (los 19 SVG
+ * Dos orígenes, en este orden dentro de la tabla:
+ *   1. Los 19 SVG de Roma (dome…coffee), VERBATIM de index.html:2212 — NO se tocan nunca: un
+ *      byte distinto cambia el fallback de la guía publicada (paridad).
+ *   2. Motivos de la Fase 12 (D-10) para los lugares de naturaleza (sea, thermal, river, trail).
+ *      Son dibujos NUEVOS en el mismo lenguaje que los 19: formas planas rellenas en
+ *      `viewBox="0 0 800 280"` con `xMidYMid slice`, cielo `#f5edd9 → #e8d8b5`, dibujo dentro de
+ *      `<g opacity=".9">`, paleta tierra existente más agua `#8fa9a3`/`#5f8582`/`#2f6f73` (el
+ *      color del marcador `nature`), trazos solo en detalles, sujeto entre x 200 y 600 y ≤ 1.600
+ *      caracteres. Sin `<style>`, `<text>`, `<image>` ni `xlink`. Sus ids de gradiente son únicos
+ *      en toda la tabla (`sk_th`/`wa_th`…): un id repetido haría que un SVG pintara con el
+ *      gradiente de otro cuando dos fichas comparten página (Pitfall 8).
+ *
+ * Los 19 de Roma son el objeto `SVG_MOTIFS` de index.html:2212 portado VERBATIM (los SVG
  * inline que sustituyen a la imagen `hero`/`detail` cuando la URL de Wikimedia falla). El
  * consumidor (Plan 03: hero de `MonumentCard` + `DetailPhoto.global.vue`) pinta
  * `motifSvg(monument.motif)` con `v-html` (constante estática de CONFIANZA, nunca dato de
  * usuario; T-V5).
  *
- * Las claves son EXACTAMENTE los 19 valores del enum `Motif` de `shared/schemas.ts`
- * (dome…coffee) — una clave de más/de menos rompería la paridad del fallback. NO se porta
- * `CARD_TO_MOTIF` (index.html:2213): lo reemplaza el campo tipado `monument.motif` (Fase 2),
- * así que el mapeo lugar→motivo ya no vive aquí.
+ * Las claves son EXACTAMENTE los valores del enum `Motif` de `shared/schemas.ts` — una clave
+ * de más/de menos dejaría un motivo de los datos sin dibujo (lo fija svgMotifs.spec.ts).
+ * NO se porta `CARD_TO_MOTIF` (index.html:2213): lo reemplaza el campo tipado
+ * `monument.motif` (Fase 2), así que el mapeo lugar→motivo ya no vive aquí.
  *
  * Los SVG del original eran un string JS con comillas escapadas (`\"`); aquí se guardan en
  * literales de cadena con comilla simple, de modo que el marcado SVG queda SIN escapar y
@@ -23,7 +35,8 @@
 import type { Motif } from '~~/shared/schemas'
 
 /**
- * Los 19 SVG de fallback, keyed por motivo (= enum `Motif`). VERBATIM de index.html:2212.
+ * Los SVG de fallback, keyed por motivo (= enum `Motif`). Los 19 de Roma VERBATIM de
+ * index.html:2212; después, los de la Fase 12.
  * `Record<string, string>` (no `Record<Motif, string>`) para que el lookup con una clave
  * arbitraria devuelva `undefined` sin pelearse con el tipo.
  */
@@ -47,6 +60,8 @@ export const SVG_MOTIFS: Record<string, string> = {
   tower: '<svg viewBox="0 0 800 280" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sk_tw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f5edd9"/><stop offset="1" stop-color="#e8d8b5"/></linearGradient></defs><rect width="800" height="280" fill="url(#sk_tw)"/><g opacity=".9"><rect x="200" y="180" width="400" height="100" fill="#c4a373"/><rect x="400" y="40" width="80" height="200" fill="#a07c4a"/><g fill="#8b6c43"><rect x="400" y="30" width="14" height="14"/><rect x="420" y="30" width="14" height="14"/><rect x="446" y="30" width="14" height="14"/><rect x="466" y="30" width="14" height="14"/></g><g fill="#3a2a1a" opacity=".7"><rect x="430" y="80" width="20" height="30"/><rect x="430" y="130" width="20" height="30"/><rect x="430" y="180" width="20" height="30"/></g><g fill="#3a2a1a" opacity=".5"><rect x="230" y="210" width="20" height="30"/><rect x="270" y="210" width="20" height="30"/><rect x="310" y="210" width="20" height="30"/><rect x="510" y="210" width="20" height="30"/><rect x="550" y="210" width="20" height="30"/></g><circle cx="440" cy="60" r="6" fill="#ffd66e"/><circle cx="440" cy="60" r="14" fill="#ffd66e" opacity=".4"/><circle cx="440" cy="60" r="22" fill="#ffd66e" opacity=".15"/></g></svg>',
   stairs: '<svg viewBox="0 0 800 280" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sk_st" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f5edd9"/><stop offset="1" stop-color="#e8d8b5"/></linearGradient></defs><rect width="800" height="280" fill="url(#sk_st)"/><g opacity=".95"><rect x="340" y="40" width="120" height="80" fill="#c4a373"/><polygon points="340,40 460,40 400,10" fill="#8b6c43"/><rect x="370" y="80" width="20" height="40" fill="#5a4226"/><rect x="410" y="80" width="20" height="40" fill="#5a4226"/><rect x="320" y="20" width="20" height="40" fill="#a07c4a"/><rect x="460" y="20" width="20" height="40" fill="#a07c4a"/><g fill="#e8d8b5" stroke="#a07c4a" stroke-width=".5"><polygon points="200,280 600,280 540,260 260,260"/><polygon points="220,260 580,260 530,240 270,240"/><polygon points="240,240 560,240 520,220 280,220"/><polygon points="260,220 540,220 510,200 290,200"/><polygon points="280,200 520,200 500,180 300,180"/><polygon points="300,180 500,180 490,160 310,160"/><polygon points="310,160 490,160 480,140 320,140"/><polygon points="320,140 480,140 470,125 330,125"/></g></g></svg>',
   coffee: '<svg viewBox="0 0 800 280" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sk_co" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f5edd9"/><stop offset="1" stop-color="#e8d8b5"/></linearGradient></defs><rect width="800" height="280" fill="url(#sk_co)"/><g opacity=".95"><rect x="0" y="200" width="800" height="80" fill="#8b6c43" opacity=".5"/><ellipse cx="400" cy="210" rx="140" ry="20" fill="#fbf7f0"/><ellipse cx="400" cy="208" rx="140" ry="20" fill="none" stroke="#a07c4a" stroke-width="2"/><path d="M320 160L330 200L470 200L480 160Z" fill="#fbf7f0"/><ellipse cx="400" cy="160" rx="80" ry="14" fill="#3a2a1a"/><ellipse cx="400" cy="160" rx="80" ry="14" fill="none" stroke="#a07c4a" stroke-width="2"/><ellipse cx="400" cy="158" rx="76" ry="12" fill="#c4a373" opacity=".7"/><path d="M480 170Q520 170 520 185Q520 200 480 198" fill="none" stroke="#fbf7f0" stroke-width="4"/><path d="M480 170Q520 170 520 185Q520 200 480 198" fill="none" stroke="#a07c4a" stroke-width="2"/><g fill="none" stroke="#e8d8b5" stroke-width="2" opacity=".6"><path d="M360 140Q360 110 370 100Q380 90 370 70"/><path d="M400 130Q400 100 410 90Q420 80 410 60"/><path d="M440 140Q440 110 450 100Q460 90 450 70"/></g><ellipse cx="280" cy="215" rx="14" ry="3" fill="#a07c4a"/><rect x="260" y="213" width="22" height="2" fill="#a07c4a"/></g></svg>',
+  // ── Fase 12 (D-10): motivos de los lugares de naturaleza. NO vienen del index.html. ──
+  thermal: '<svg viewBox="0 0 800 280" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="sk_th" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f5edd9"/><stop offset="1" stop-color="#e8d8b5"/></linearGradient><linearGradient id="wa_th" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fa9a3"/><stop offset="1" stop-color="#2f6f73"/></linearGradient></defs><rect width="800" height="280" fill="url(#sk_th)"/><g opacity=".9"><path d="M0 175Q200 130 400 160Q600 130 800 170L800 280L0 280Z" fill="#c4a373"/><path d="M0 205Q120 180 220 190L580 190Q690 180 800 205L800 280L0 280Z" fill="#8b6c43"/><ellipse cx="400" cy="218" rx="205" ry="44" fill="#5a4226"/><ellipse cx="400" cy="218" rx="178" ry="33" fill="#2f6f73"/><ellipse cx="400" cy="213" rx="160" ry="24" fill="url(#wa_th)"/><g fill="#5a4226"><ellipse cx="212" cy="200" rx="42" ry="22"/><ellipse cx="592" cy="198" rx="44" ry="24"/><ellipse cx="262" cy="254" rx="38" ry="16"/><ellipse cx="545" cy="256" rx="42" ry="16"/></g><g fill="#8b6c43"><ellipse cx="222" cy="192" rx="20" ry="9"/><ellipse cx="584" cy="189" rx="22" ry="10"/></g><g stroke="#fbf7f0" stroke-width="3" fill="none" opacity=".6"><path d="M350 198Q338 172 354 150Q370 128 356 104"/><path d="M400 194Q388 166 404 140Q420 114 404 84"/><path d="M450 198Q438 172 454 150Q470 128 456 104"/></g></g></svg>',
 }
 
 /**

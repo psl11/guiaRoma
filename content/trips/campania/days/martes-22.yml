@@ -6,6 +6,14 @@ roman: IV
 eyebrow: 'martes · 22 de junio'
 title: Monte Epomeo y Sorgeto
 subtitle: Sendero entre castaños por las laderas del volcán de Isquia y, de noche, pozas termales en el mar.
+# Base de la noche (D-06): slug de una entrada de `stays` en trip.yml → «Dormís en Ischia».
+stay: ischia
 stats: []
-timeline: []
-cards: []
+timeline:
+  - kind: stop
+    pace: all
+    time: '21:30'
+    title: Baia di Sorgeto
+    ref: baia-di-sorgeto
+    note: Baño nocturno en las pozas donde el agua termal se mezcla con el mar.
+cards: [baia-di-sorgeto]

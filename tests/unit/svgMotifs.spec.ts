@@ -1,15 +1,18 @@
 import { describe, it, expect } from 'vitest'
 import { SVG_MOTIFS, motifSvg } from '../../app/utils/svgMotifs'
+import { Motif } from '../../shared/schemas'
 
 /**
  * Cobertura unitaria de la tabla de motivos SVG `SVG_MOTIFS` + el lookup `motifSvg`
- * (UI-05) — los 19 SVG de fallback portados VERBATIM de index.html:2212.
+ * (UI-05) — los 19 SVG de fallback portados VERBATIM de index.html:2212 más los motivos de
+ * naturaleza de la Fase 12 (D-10).
  *
  * El fallback de imagen (Plan 03) pinta `motifSvg(monument.motif)` cuando la hero/detalle
- * de Wikimedia falla. Las claves de `SVG_MOTIFS` DEBEN ser EXACTAMENTE los 19 valores del
- * enum `Motif` de `shared/schemas.ts` (dome…coffee): una clave de más/de menos, o un motif
- * en los datos sin SVG, sería un hueco de paridad. Esta spec ancla ambos lados:
- *   - el recuento (exactamente 19) y el conjunto de claves (= los 19 motivos),
+ * de Wikimedia falla. Las claves de `SVG_MOTIFS` DEBEN ser EXACTAMENTE los valores del
+ * enum `Motif` de `shared/schemas.ts`: una clave de más/de menos, o un motif en los datos sin
+ * SVG, sería un hueco. La lista esperada sale de `Motif.options` (no de un recuento fijo):
+ * añadir un motivo al enum sin su dibujo pone esta spec en rojo. Esta spec ancla ambos lados:
+ *   - el conjunto de claves (= `Motif.options`, sin claves de más),
  *   - que cada valor es una cadena no vacía que empieza por `<svg`,
  *   - que `motifSvg` devuelve la cadena para un motif conocido y `undefined` para
  *     `undefined` o una clave desconocida (la rama muerta del fallback fiel al original).
@@ -19,19 +22,15 @@ import { SVG_MOTIFS, motifSvg } from '../../app/utils/svgMotifs'
  * relativo `../../app/utils/svgMotifs`, sin `@nuxt/test-utils`.
  */
 
-// Los 19 motivos del enum `Motif` (shared/schemas.ts:31-35), en orden de primera aparición.
-const MOTIF_KEYS = [
-  'dome', 'pantheon', 'arch', 'fountain', 'obelisk', 'statue', 'painting', 'church',
-  'fortress', 'temple', 'garden', 'keyhole', 'mask', 'monument', 'rooftops', 'library',
-  'tower', 'stairs', 'coffee',
-] as const
+// Los valores del enum `Motif` (shared/schemas.ts): los 19 de Roma + los de la Fase 12 (D-10).
+const MOTIF_KEYS = Motif.options
 
-describe('SVG_MOTIFS — tabla de los 19 motivos (UI-05, index.html:2212)', () => {
-  it('tiene exactamente 19 claves', () => {
-    expect(Object.keys(SVG_MOTIFS).length).toBe(19)
+describe('SVG_MOTIFS — tabla de motivos (UI-05, index.html:2212 + Fase 12)', () => {
+  it('tiene una clave por cada valor del enum Motif, sin claves de más', () => {
+    expect(Object.keys(SVG_MOTIFS).length).toBe(MOTIF_KEYS.length)
   })
 
-  it('el conjunto de claves IGUALA los 19 valores del enum Motif', () => {
+  it('el conjunto de claves IGUALA los valores del enum Motif', () => {
     expect(new Set(Object.keys(SVG_MOTIFS))).toEqual(new Set(MOTIF_KEYS))
   })
 

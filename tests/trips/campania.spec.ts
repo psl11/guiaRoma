@@ -6,6 +6,7 @@ import { parse } from 'yaml'
 // del Markdown-inline que usa la guía.
 import { isVisible, type ItemPace, type Pace } from '../../app/utils/pace'
 import { inlineMdToPlain } from '../../app/utils/tripLayout'
+import { SVG_MOTIFS } from '../../app/utils/svgMotifs'
 
 /**
  * FORMAS NUEVAS DE VIAJE sobre el borrador de Campania (Fase 12, EXT-01…EXT-07; D-01…D-17).
@@ -549,6 +550,78 @@ test.describe('campania: dónde se duerme (EXT-02, D-06…D-08)', () => {
     // Anti-vacuidad: la página de forma tiene días renderizados.
     expect(await page.locator('main > section[id] .day-header').count()).toBeGreaterThan(0)
     await expect(page.locator('.day-stay')).toHaveCount(0)
+    await context.close()
+  })
+})
+
+// ── EXT-04: lugares de naturaleza (12-04) ───────────────────────────────────────────────────
+
+interface YamlNature { slug: string, roman: string, type: string, motif: string, day: string }
+
+// Verde agua del marcador `nature` (MARKER_STYLE.nature.bg = #2f6f73, D-11) tal como lo da getComputedStyle.
+const NATURE_BG = 'rgb(47, 111, 115)'
+
+// Primer `id="…"` del SVG de un motivo (el del cielo, `sk_*`): basta para reconocer el dibujo pintado.
+function firstSvgId(motif: string): string {
+  const svg = SVG_MOTIFS[motif]
+  expect(svg, `SVG_MOTIFS tiene el motivo "${motif}"`).toBeDefined()
+  const id = /id="([^"]+)"/.exec(svg!)?.[1]
+  expect(id, `el SVG de "${motif}" tiene al menos un id`).toBeDefined()
+  return id!
+}
+
+// El marcador cuyo numeral es `roman`. Se buscan bajo `section[id="mapa"]`: en el DOM montado el
+// contenedor ya no conserva `#leaflet-map` (ver los tests de EXT-01).
+async function markerByRoman(page: Page, roman: string) {
+  const markers = page.locator('section[id="mapa"] .custom-marker')
+  await expect(markers.first()).toBeAttached()
+  const romans = await markers.evaluateAll(els => els.map(e => e.textContent?.trim() ?? ''))
+  const idx = romans.indexOf(roman)
+  expect(idx, `hay un marcador con el numeral ${roman}`).toBeGreaterThanOrEqual(0)
+  expect(romans.filter(r => r === roman), `un solo marcador con el numeral ${roman}`).toHaveLength(1)
+  return markers.nth(idx)
+}
+
+// Fondo del círculo del divIcon (el div interior lleva el `background` en línea).
+async function markerBg(marker: import('@playwright/test').Locator): Promise<string> {
+  return marker.locator(':scope > div').evaluate(el => getComputedStyle(el).backgroundColor)
+}
+
+// La ficha cae al dibujo de su motivo: las heros `https://example.invalid/…` se abortan (blockExternal)
+// y el `@error` pinta `motifSvg(motif)`. El img es lazy: hay que traer la cabecera a la vista.
+async function expectHeroFallsBackToMotif(page: Page, slug: string, motif: string): Promise<void> {
+  const hero = page.locator(`[id="${slug}"] .card-hero`)
+  await hero.scrollIntoViewIfNeeded()
+  const svg = hero.locator('svg')
+  await expect(svg, `${slug}: el hero cae al SVG de su motivo`).toHaveCount(1)
+  expect(await svg.evaluate(el => el.outerHTML)).toContain(`id="${firstSvgId(motif)}"`)
+  await expect(hero.locator('img'), `${slug}: no queda <img> tras el fallback`).toHaveCount(0)
+}
+
+test.describe('campania: lugares de naturaleza (EXT-04, D-10, D-11)', () => {
+  test('campania: Baia di Sorgeto pinta su dibujo de reserva y su marcador de naturaleza (EXT-04, D-10, D-11)', async ({ browser }) => {
+    const sorgeto = readYaml<YamlNature>('monuments/baia-di-sorgeto.yml')
+    expect(sorgeto.type).toBe('nature')
+    expect(sorgeto.motif).toBe('thermal')
+
+    const { context, page } = await newIsolatedPage(browser)
+    await gotoHydrated(page, CAMPANIA_URL)
+
+    // Ficha: una MonumentCard normal, con su enlace a Google Maps y el dibujo de la poza termal.
+    await expectHeroFallsBackToMotif(page, sorgeto.slug, sorgeto.motif)
+    await expect(page.locator(`[id="${sorgeto.slug}"] a.maps-link`)).toHaveCount(1)
+
+    // Marcador verde agua; su popup lleva a la ficha con un ancla plana del color del marcador.
+    const marker = await markerByRoman(page, sorgeto.roman)
+    expect(await markerBg(marker)).toBe(NATURE_BG)
+    await marker.dispatchEvent('click')
+    const popup = page.locator('.leaflet-popup-content')
+    await expect(popup).toHaveCount(1)
+    await expect(popup).toContainText('Abrir ficha →')
+    const html = await popup.evaluate(el => el.innerHTML)
+    expect(html).toContain(`href="#${sorgeto.slug}"`)
+    expect(html).toContain('color:#2f6f73')
+
     await context.close()
   })
 })

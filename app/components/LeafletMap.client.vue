@@ -25,7 +25,11 @@
 // (Plan 01): 38 monumentos de `monById` + el Coliseo (★) de `trip.mapExtras` (D-01). El predicado
 // del banner offline es `isOffline` (Plan 01). Ambos auto-importados de `app/utils/`.
 //
-// LANDMINE (popups): los anclas `<a href="#slug">` de los popups card/concert NO llevan ningún
+// COLOR Y POPUP (Fase 12, D-11): salen de `MARKER_STYLE[m.type].bg` y de `markerPopupHtml`
+// (app/utils/mapMarkers.ts, auto-importados), una tabla por `PlaceType`. Aquí solo quedan el
+// `divIcon`, el `setView` y el `fitBounds`.
+//
+// LANDMINE (popups): los anclas `<a href="#slug">` de los popups card/concert/nature NO llevan ningún
 // manejador de evento de clic. El listener de F5 (useCardNavigation, fase de CAPTURA, montado UNA
 // vez por TripView) intercepta `a[href^="#"]`, gatea en `monById.has(id)` y hace
 // preventDefault+stopPropagation+navigateToCard. Añadir cualquier handler en burbuja reproduce
@@ -102,10 +106,9 @@ onMounted(async () => {
     })))
 
     markers.forEach((m) => {
-      // Color del divIcon por tipo (port verbatim index.html:6347-6349).
-      let bgColor = '#8b3a3a' // card (default)
-      if (m.type === 'guided') bgColor = '#a07c4a'
-      if (m.type === 'concert') bgColor = '#5a7a3a'
+      // Color del divIcon por tipo: tabla MARKER_STYLE de app/utils/mapMarkers.ts (los tres de
+      // Roma son el port verbatim de index.html:6347-6349; `nature` llega en la Fase 12, D-11).
+      const bgColor = MARKER_STYLE[m.type].bg
       // divIcon: círculo 32×32, Cormorant Garamond, borde blanco, el numeral romano (index.html:6350-6358).
       const icon = L.divIcon({
         className: 'custom-marker',
@@ -118,20 +121,11 @@ onMounted(async () => {
         iconAnchor: [16, 16],
       })
       const marker = L.marker([m.lat, m.lng], { icon }).addTo(map!)
-      // Popup por tipo (port verbatim index.html:6361-6369, el manejador inline DROPPEADO).
-      // guided → TEXTO PLANO sin ancla; card/concert → `<a href="#slug">` SIN handler (lo
-      // intercepta el listener en captura de F5).
-      let popupHtml: string
-      if (m.type === 'guided') {
-        popupHtml = `<strong>${m.name}</strong><br><em style="color:#a07c4a">${m.day}</em><br><span style="color:#5c534a;font-size:.85rem">Visita con guía humano</span>`
-      }
-      else if (m.type === 'concert') {
-        popupHtml = `<strong>${m.name}</strong><br><em style="color:#5a7a3a">${m.day}</em><br><a href="#${m.id}" style="color:#5a7a3a">Abrir ficha →</a>`
-      }
-      else {
-        popupHtml = `<strong>${m.name}</strong><br><em style="color:#a07c4a">${m.day}</em><br><a href="#${m.id}" style="color:#8b3a3a">Abrir ficha →</a>`
-      }
-      marker.bindPopup(popupHtml)
+      // Popup por tipo: markerPopupHtml de app/utils/mapMarkers.ts (port verbatim de
+      // index.html:6361-6369, el manejador inline DROPPEADO). guided → TEXTO PLANO sin ancla;
+      // card/concert/nature → `<a href="#slug">` SIN handler (lo intercepta el listener en
+      // captura de F5).
+      marker.bindPopup(markerPopupHtml(m))
     })
 
     // Encuadre a todos los puntos (index.html:6373-6374).
