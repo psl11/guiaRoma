@@ -155,8 +155,8 @@ fresco es la **señal de alarma**.
 
 | Magnitud | Valor | Cómo se obtiene |
 |----------|-------|-----------------|
-| Tests que la puerta **ejecuta** (`test:parity`, con el cinturón grep-invert) | **110** en **13 ficheros** | `pnpm exec playwright test -c playwright.gate.config.ts --grep-invert "reutiliza el MISMO TripView" --list` → línea `Total:` |
-| Config de puerta **en crudo** (solo `testIgnore` golden, antes del grep-invert) | **112** en **13 ficheros** | `pnpm exec playwright test -c playwright.gate.config.ts --list` → línea `Total:` |
+| Tests que la puerta **ejecuta** (`test:parity`, con el cinturón grep-invert) | **110** en **13 ficheros** (`Total: 110 tests in 13 files`, re-medido al cierre de la Fase 12) | `pnpm exec playwright test -c playwright.gate.config.ts --grep-invert "reutiliza el MISMO TripView" --list` → línea `Total:` |
+| Config de puerta **en crudo** (solo `testIgnore` golden, antes del grep-invert) | **112** en **13 ficheros** (`Total: 112 tests in 13 files`, re-medido al cierre de la Fase 12) | `pnpm exec playwright test -c playwright.gate.config.ts --list` → línea `Total:` |
 
 La diferencia **112 → 110** son exactamente los **2** del test de dev-routing
 (mobile + desktop) que retira el grep-invert. (Con `RUN_DEV_ROUTING` sin definir,
@@ -167,6 +167,9 @@ Historia del conteo: **80 / 11** hasta la Fase 10; la Fase 11 suma **30** — 2 
 «la portada vive en / y ROMA_URL sirve Roma» de `shell.spec.ts` (11-05), 14 de
 `legacy-redirect.spec.ts` (7 × mobile + desktop, 11-06) y 14 de `portada.spec.ts`
 (7 × mobile + desktop, 11-07) — y dos ficheros nuevos.
+La Fase 12 no añade specs de paridad; portada.spec.ts comprueba el 404 del borrador campania
+dentro de su test de borradores (recorre todos los `draft: true` del manifiesto), así que el
+conteo sigue en **110 / 13**.
 `golden.spec.ts` aporta **0** a ambos conteos (excluido a nivel de fichero).
 
 Desglose por fichero de los **110** seleccionados (suma = 110):
@@ -196,10 +199,12 @@ pnpm exec playwright test -c playwright.gate.config.ts \
 # Esperado: «Total: 110 tests in 13 files»
 ```
 
-> Conteos medidos empíricamente el 2026-11-20 (cierre de la Fase 11, plan 11-07) contra
-> `playwright.gate.config.ts` + `package.json` de esta rama con `--list` (no estimados;
-> la medida anterior, 80 / 11 y 82 / 11, es del 2026-06-23). Re-medir si se añade/retira un
-> spec de paridad o cambia cualquiera de las dos exclusiones.
+> Conteos medidos empíricamente el 2026-11-21 (cierre de la Fase 12, plan 12-07) contra
+> `playwright.gate.config.ts` + `package.json` de esta rama con `--list` (no estimados):
+> `Total: 110 tests in 13 files` con el grep-invert y `Total: 112 tests in 13 files` en crudo,
+> los mismos que al cierre de la Fase 11 (2026-11-20; la medida anterior, 80 / 11 y 82 / 11, es
+> del 2026-06-23). Re-medir si se añade/retira un spec de paridad o cambia cualquiera de las dos
+> exclusiones.
 
 ---
 
@@ -216,8 +221,9 @@ de `pnpm verify` y una fuera.
 pnpm test:trips   # = playwright test -c playwright.trips.config.ts
 ```
 
-- **Qué cubre:** **19 tests en 3 ficheros** (`tests/trips/isolation.spec.ts`, 5,
-  `tests/trips/shape.spec.ts`, 12, y `tests/trips/portada.spec.ts`, 2). En dev, la portada
+- **Qué cubre:** **44 tests en 4 ficheros** (`tests/trips/isolation.spec.ts`, 5,
+  `tests/trips/shape.spec.ts`, 13, `tests/trips/portada.spec.ts`, 2, y
+  `tests/trips/campania.spec.ts`, 24, de la Fase 12, §5.8). En dev, la portada
   está en `/guiaRoma/` y Roma en **`/guiaRoma/trips/roma/`** (Fase 11), como en la build. Los
   de `isolation.spec.ts`, en `/trips/prueba` frente a Roma:
   - *navegación en /trips/prueba (PLAT-02)* (2): un enlace a ficha (timeline y prosa)
@@ -235,21 +241,24 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
     layout (10 días en orden y Gastronomía al final); cada día muestra su nombre y su
     fecha; 10 pastillas de día distintas que llevan cada una a su día.
   - `prueba:` (1): solo Inicio, Mapa y sus dos días.
-  - `trampa:` (4): la lista de viajes no-Roma incluye prueba y forma; un test por viaje
-    no-Roma (hoy forma y prueba) que no muestra ningún texto de Roma; control positivo en
-    Roma.
+  - `trampa:` (5): la lista de viajes no-Roma incluye prueba y forma; un test por viaje
+    no-Roma (hoy campania, forma y prueba) que no muestra ningún texto de Roma; control
+    positivo en Roma. La trampa de campania llega sola en la Fase 12: la lista sale de
+    `content/trips`, así que el borrador nuevo entra sin tocar el spec.
   - `chrome:` (2): forma muestra su marca, su leyenda y su pie; prueba, sin campos de
     chrome, usa el respaldo neutro.
   - `título:` (1): la pestaña de cada viaje es EXACTAMENTE su `pageTitle` o su título plano.
 - Los de `portada.spec.ts` (Fase 11, §5.7): `portada (dev):` (2): la portada en dev lista
   solo los viajes publicados aunque prueba y forma se cargan (ningún enlace a ellos), y el
   control positivo: los borradores siguen abriéndose por URL en dev con su título plano.
+- Los de `campania.spec.ts` (Fase 12, detalle por requisito en §5.8): prefijo `campania:`
+  (24), sobre el borrador `/guiaRoma/trips/campania`.
 - **Config:** `playwright.trips.config.ts` (autocontenida, no importa las de paridad):
   `nuxi dev` en el **puerto 5300** con `NUXT_APP_BASE_URL=/guiaRoma/`, que Playwright
   arranca y para (`reuseExistingServer: false`); **un worker**, `retries: 0`, un solo
   proyecto **desktop** (1280×800, chromium); las peticiones externas se abortan.
-- **Por qué está FUERA de `verify`:** necesita un **dev server**, porque `/trips/prueba`
-  y `/trips/forma` son **borradores** (`draft: true`, Fase 11): **no se prerenderizan** ni
+- **Por qué está FUERA de `verify`:** necesita un **dev server**, porque `/trips/prueba`,
+  `/trips/forma` y `/trips/campania` son **borradores** (`draft: true`, Fase 11): **no se prerenderizan** ni
   entran en la build, solo existen en dev; y el dev
   server es frágil (primera compilación lenta, lock rancio de `nuxi dev`, recargas de
   Vite). Meterlo en la puerta la volvería no determinista, como la exclusión #2 de §2.
@@ -325,6 +334,16 @@ Corre en `test:data` sobre la build que `pnpm generate` acaba de producir:
 - `PRUEBA-CENTINELA-9F3` y `FORMA-CENTINELA-10A` no aparecen ni en el HTML de Roma ni en
   `_payload.json`;
 - **no existen `trips/prueba` ni `trips/forma`**: los borradores no se prerenderizan (D-17);
+- **Fase 12 (D-16): el borrador `campania`** tiene su centinela `CAMPANIA-CENTINELA-12A` (en
+  el howTo de `content/trips/campania/trip.yml`). Se busca junto a los de prueba y forma en
+  todos los ficheros publicados (dumps decodificados incluidos), **`trips/campania` no puede
+  existir**, y un `it` fuera del `skipIf` comprueba siempre que el centinela y `draft: true`
+  siguen en su trip.yml (así la ausencia nunca se afirma en vacío);
+- **Fase 12 (D-17), escaneo de clases del HTML publicado** (mitad de build del guardián de
+  `tripshapes.css`, §5.8): ningún token de `NEW_CLASSES` aparece como clase en el HTML
+  publicado de Roma ni de la portada (se recorre todo `*.html` de `.output/public` salvo el
+  de `trips/<slug>/` de otro viaje), con control positivo (Roma sí lleva `tl-transport` y
+  `day-stats-item`);
 - el payload `__NUXT_DATA__` usa claves de estado sufijadas (`"$space:roma"`,
   `"$scardNav:stack:roma"`, `"$ssearch:query:roma"`) y ninguna `"$space"` global;
 - **escaneo de `.output/public` entero con los dumps DECODIFICADOS** (Fase 11, D-16): los
@@ -338,8 +357,10 @@ Sin build (`.output/public/index.html` ausente) los bloques post-build **se
 saltan**, no fallan en falso; los centinelas de los propios `trip.yml` se comprueban siempre.
 Ninguno de estos specs vive en `tests/parity/`: no cuentan en §4.
 
-> Medido el 2026-11-20 en esta rama (cierre de la Fase 11): `pnpm test:trips` → 19 tests
-> en 3 ficheros.
+> Medido el 2026-11-21 en esta rama (cierre de la Fase 12, `pnpm exec playwright test -c
+> playwright.trips.config.ts --list`): `Total: 44 tests in 4 files`. Al cierre de la Fase 11
+> eran 19 en 3; la Fase 12 suma `campania.spec.ts` (24) y la trampa de campania en
+> `shape.spec.ts` (1).
 
 ### 5.6 Forma y chrome desde datos (Fase 10)
 
@@ -449,3 +470,76 @@ Roma en `ROMA_URL`); lo nuevo se defiende con estas piezas:
   portada vive en / y ROMA_URL sirve Roma».
 - **`tests/trips/portada.spec.ts`** (dev, §5.1): la portada en dev no lista borradores
   aunque estén cargados.
+
+### 5.8 Formas nuevas de viaje (Fase 12)
+
+La Fase 12 añade las formas que necesita un viaje como Campania y que Roma nunca tuvo:
+alternativas dentro de un día (`choice`), «Dormís en …», cinco transportes nuevos, lugares de
+naturaleza, mapa de varias ciudades, ruta del día por modo y la caja «Con niños». Roma no
+cambia (la puerta de §4 sigue en 110 / 13 y los 56 goldens sin `--update-snapshots`); lo nuevo
+se defiende con estas piezas:
+
+- **`app/assets/css/tripshapes.css`**: todos los estilos nuevos, **exactamente** el bloque de
+  12-UI-SPEC §«tripshapes.css — reglas exactas» (orden y valores). Va **la última** en
+  `css[]` de `nuxt.config.ts`, detrás de los cuatro CSS congelados y de `multitrip.css`, que
+  no cambian. **Cada selector exige una clase de `NEW_CLASSES`** (`tests/unit/cssSelectors.ts`:
+  `tl-choice*`, `day-stay`, `day-stay-name`, `family-box`, `ferry`, `car`, `bus`, `bike`,
+  `plane`), que nunca aparece en el DOM de Roma: ninguna regla puede alcanzar a Roma.
+  - Guardián estático **`tests/unit/tripShapesCss.spec.ts`** (`test:unit`): cada selector
+    (también dentro de `@media`) lleva un token de `NEW_CLASSES` comparado por token completo
+    (`car` no casa con `card`); prohíbe `:not(`/`:is(`/`:where(`/`:has(`, selectores de
+    atributo, `:root`, `html` y `body`; comprueba que tripshapes.css es la última en `css[]`.
+    Tiene sus propios dientes en memoria.
+  - Mitad de build: el escaneo de clases del HTML publicado de §5.5.
+- **`tests/unit/enumStyles.spec.ts`** (`test:unit`): cada valor de los enums nuevos tiene su
+  regla. `TransportVariant` → banda y glifo `.tl-transport.<v>` en tripshapes.css, con **una
+  única exención, `train`** (`PARITY_EXEMPT_TRANSPORT = ['train']`: el martes de Roma usa el
+  estilo base, y ningún CSS puede tener `.tl-transport.train`); `StatVariant` → glifo de
+  `.day-stats-item.<v>::before`; `Motif` → `SVG_MOTIFS`; `PlaceType` → `MARKER_STYLE`.
+- **El borrador `content/trips/campania/`** (`draft: true`, D-16): el esqueleto del primer
+  viaje real después de Roma, **solo en dev** (`/guiaRoma/trips/campania`), como prueba y
+  forma (§5.2): nunca se prerenderiza, la portada no lo lista y en la build responde 404
+  (`tests/parity/portada.spec.ts`, dentro de su test de borradores). Tiene los cinco días del
+  esqueleto (`sabado-19`, `domingo-20`, `martes-22`, `jueves-24`, `viernes-25`), cuatro bases
+  (`stays`: Nápoles, Procida, Ischia, Salerno) y fichas de esqueleto en las cuatro ciudades,
+  con textos provisionales y heros en `example.invalid` (D-15). **La Fase 13 lo reescribe**
+  con el contenido real. Su centinela `CAMPANIA-CENTINELA-12A` y la ausencia de
+  `trips/campania` en la build los comprueba §5.5.
+- **`tests/trips/campania.spec.ts`** (`test:trips`, FUERA de `verify`, §5.1; 24 tests con
+  prefijo `campania:`). Lo esperado sale de los YAML del viaje, no de listas escritas a mano:
+  - **EXT-01** (alternativas, D-02, D-03, D-05): el jueves 24 apila las opciones con
+    «— o bien —» entre filas comunes; opciones en orden y opciones−1 separadores, sin fundir
+    dos `choice` seguidos; «Elige una» por defecto o el `heading` del dato; las opciones
+    siguen visibles con cualquier ritmo, «Caminar menos» y resumen; una ficha citada solo
+    dentro de una opción es una ficha normal del día; a 375 px parten línea sin desbordar.
+  - **EXT-02** («Dormís en», D-06…D-08): el jueves 24 dice «Dormís en Salerno» entre título y
+    subtítulo, también en resumen; cada día dice dónde se duerme; un viaje sin `stays` (forma)
+    no pinta la línea.
+  - **EXT-03** (transportes, D-09): ferry y bici del domingo 20 con banda y glifo propios;
+    los cinco tramos nuevos con banda y glifo distintos entre sí y del dorado base; un tramo
+    sin variante conserva el estilo base y dos tramos seguidos no mezclan bandas; ferry y
+    autobús legibles en claro y en oscuro.
+  - **EXT-04** (naturaleza, D-10, D-11): Baia di Sorgeto cae a su dibujo de reserva y tiene
+    marcador verde agua; lo mismo cada ficha `nature`.
+  - **EXT-05** (mapa multi-ciudad, D-13): los marcadores de Nápoles, Procida, Ischia y
+    Salerno quedan a la vez dentro de la caja del mapa, repartidos (sin amontonarse), con un
+    marcador por ficha y sin clustering. En `nuxi dev` el contenedor montado pierde
+    `id="leaflet-map"` (y con él su altura de base.css; la build lo conserva), así que el
+    test le devuelve en la página los 520 px de base.css antes de que monte el mapa.
+  - **EXT-06** (ruta del día por modo, D-04, D-14): el viernes 25 abre la ruta en coche; el
+    domingo 20, día de ferry, no ofrece ruta; la ruta del jueves 24 cuenta solo las paradas
+    comunes.
+  - **EXT-07** («Con niños», D-12): Baia di Sorgeto tiene una única caja `.family-box` entre
+    `.maps-link` y `.notes-area`, tantas cajas en la página como fichas con `family`, y la
+    etiqueta se lee en claro y en oscuro; a 375 px la caja y una «Dormís en» con nombre largo
+    parten línea sin desbordar.
+  - D-15 / D-16: los cinco días aparecen en orden con su pastilla; la portada de dev no lista
+    el borrador.
+- **Unitarios de la Fase 12** (`test:unit`, dentro de `verify`): `tripStays.spec.ts`
+  (`stayFor`), `timelineRows.spec.ts` (`flattenRows`, `optionOnlyRefs`,
+  `hasTransportVariant` sobre Roma y Campania reales), `dayRoute.spec.ts` (Roma byte a byte,
+  modos y precedencia de visibilidad), `mapMarkers.spec.ts` y `svgMotifs.spec.ts` (marcador
+  `nature`, motivos nuevos), `searchIndex.spec.ts` (la nota familiar entra en el haystack;
+  Roma, sin `family`, no cambia). En `test:data`: `schema.spec.ts` (D-18: Roma valida igual
+  con el esquema ampliado y no usa las claves nuevas; dientes de `choice`, `stays`, `route` y
+  `family`) e `invariants.spec.ts` (reglas `stay-ref`, `stay-dup` y `ref` dentro de opciones).
