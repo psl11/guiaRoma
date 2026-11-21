@@ -6,6 +6,45 @@ roman: I
 eyebrow: 'sábado · 19 de junio'
 title: Llegada a Nápoles y pulso de barrio
 subtitle: Aterrizaje por la tarde, autobús hasta el Vomero y paseo sin prisas por el Lungomare Caracciolo al atardecer.
-stats: []
-timeline: []
+# Base de la noche (D-06): slug de una entrada de `stays` en trip.yml → «Dormís en Nápoles».
+stay: napoles
+# Variantes de stats y de tramo nuevas (EXT-03, D-09): el glifo lo antepone el CSS, así que ni el
+# texto de la stat ni el `header` del tramo empiezan por el emoji. El tercer tramo va SIN `variant`
+# a propósito: conserva el estilo base del tramo (edge EXT-03 «sin variante»).
+stats:
+  - variant: plane
+    text: '**Vuelo** directo a Capodichino · llegada a media tarde'
+  - variant: bus
+    text: '**Alibus** aeropuerto → centro, ≈20 min'
+timeline:
+  - kind: transport
+    pace: all
+    variant: plane
+    header: Vuelo a Nápoles-Capodichino
+    modes:
+      - icon: ✈️
+        recommended: true
+        desc: '**Vuelo directo** con llegada hacia las 16:00'
+  - kind: transport
+    pace: all
+    variant: bus
+    header: Alibus hasta el centro
+    modes:
+      - icon: 🚌
+        recommended: true
+        desc: '**Alibus** desde la salida de llegadas hasta Piazza Garibaldi o el puerto'
+        tag: recomendado
+        meta: '⏱ **≈20 min**'
+  - kind: transport
+    pace: all
+    header: Del autobús al alojamiento
+    modes:
+      - icon: 🚶
+        recommended: true
+        desc: '**A pie** con las maletas, unos diez minutos por calles llanas'
+  - kind: stop
+    pace: all
+    time: '19:00'
+    title: Primer paseo por el centro
+    note: Sin plan fijo, para tomar el pulso al barrio antes de cenar.
 cards: []

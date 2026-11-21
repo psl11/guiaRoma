@@ -1,0 +1,23 @@
+slug: pozzo-vecchio
+trip: campania
+roman: III
+name: Pozzo Vecchio
+italian: 'Spiaggia del Pozzo Vecchio · Procida'
+day: Domingo 20
+coords:
+  lat: 40.7672
+  lng: 14.0108
+type: nature
+motif: sea
+hero:
+  src: https://example.invalid/campania/pozzo-vecchio.jpg
+  alt: Pozzo Vecchio
+sections:
+  - heading: Qué es
+    body: >-
+      Una playa de arena volcánica oscura al pie de un acantilado de toba, en la
+      costa oeste de Procida, abierta a la puesta de sol sobre Isquia.
+facts:
+  - label: Acceso
+    value: 'Libre · bajada a pie desde el cementerio de la isla'
+mapsQuery: Spiaggia del Pozzo Vecchio Procida

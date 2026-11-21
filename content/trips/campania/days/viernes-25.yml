@@ -6,6 +6,20 @@ roman: VII
 eyebrow: 'viernes · 25 de junio'
 title: De Salerno a Nápoles
 subtitle: Autopista interior con parada en las laderas del Vesubio y noche de concierto en Nápoles.
-stats: []
-timeline: []
+# Base de la noche (D-06): slug de una entrada de `stays` en trip.yml → «Dormís en Nápoles».
+stay: napoles
+# Variante de stat y de tramo nueva (EXT-03, D-09): el glifo 🚗 lo antepone el CSS.
+stats:
+  - variant: car
+    text: '**Coche** de alquiler · ≈1 h por la A3'
+timeline:
+  - kind: transport
+    pace: all
+    variant: car
+    header: De Salerno a Nápoles por la autopista interior
+    modes:
+      - icon: 🚗
+        recommended: true
+        desc: '**Coche de alquiler** por la A3, con parada en las laderas del Vesubio'
+        meta: '⏱ **≈1 h** sin tráfico'
 cards: []

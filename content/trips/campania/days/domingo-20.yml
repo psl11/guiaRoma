@@ -42,8 +42,14 @@ timeline:
         desc: '**Bici de alquiler** junto al puerto de Marina Grande, por calles tranquilas'
   - kind: stop
     pace: all
+    time: '17:30'
+    title: Pozzo Vecchio
+    ref: pozzo-vecchio
+    note: Baño en la playa de arena oscura del oeste de la isla, entre acantilados de toba.
+  - kind: stop
+    pace: all
     time: '19:30'
     title: Marina Corricella
     ref: marina-corricella
     note: Casas de colores sobre el puerto de pescadores, con la luz baja del atardecer.
-cards: [spaccanapoli, marina-corricella]
+cards: [spaccanapoli, pozzo-vecchio, marina-corricella]
