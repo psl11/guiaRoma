@@ -715,3 +715,120 @@ test.describe('campania: tramos con estilo propio (EXT-03, D-09)', () => {
     await context.close()
   })
 })
+
+interface YamlDayRows { slug: string, order: number, stats: { variant: string }[], timeline: YamlRow[] }
+
+const NEW_TRANSPORTS = Object.keys(NEW_TRANSPORT_GLYPH)
+
+function campaniaDays(): YamlDayRows[] {
+  return readdirSync(join(CAMPANIA_ROOT, 'days'))
+    .filter(f => f.endsWith('.yml'))
+    .map(f => readYaml<YamlDayRows>(`days/${f}`))
+    .sort((a, b) => a.order - b.order)
+}
+
+// Filas de un día con las de dentro de cada opción de un `choice` (un solo nivel, D-01).
+function flatRows(day: YamlDayRows): YamlRow[] {
+  return day.timeline.flatMap(r => r.kind === 'choice' ? (r as YamlChoice).options.flatMap(o => o.rows) : [r])
+}
+
+// Para cada variante nueva, el primer día del YAML que la usa en un tramo / en una stat.
+function firstDayWith(pick: (d: YamlDayRows) => string[]): Map<string, string> {
+  const out = new Map<string, string>()
+  for (const d of campaniaDays()) {
+    for (const v of pick(d)) if (NEW_TRANSPORTS.includes(v) && !out.has(v)) out.set(v, d.slug)
+  }
+  return out
+}
+
+// Contexto con el tema fijado antes del primer paint (la misma clave que usa @nuxtjs/color-mode).
+async function newThemedPage(browser: import('@playwright/test').Browser, theme: 'light' | 'dark') {
+  const { context, page } = await newIsolatedPage(browser)
+  await page.addInitScript((t) => {
+    localStorage.setItem('roma-theme', t)
+  }, theme)
+  return { context, page }
+}
+
+test.describe('campania: los cinco tramos nuevos (EXT-03, D-09)', () => {
+  test('campania: los cinco tramos nuevos tienen banda y glifo propios (EXT-03, D-09)', async ({ browser }) => {
+    // Lo esperado sale del YAML: cada variante nueva tiene que usarse en algún tramo y en alguna stat.
+    const transportDay = firstDayWith(d => flatRows(d)
+      .filter(r => r.kind === 'transport' && typeof r.variant === 'string')
+      .map(r => r.variant as string))
+    const statDay = firstDayWith(d => (d.stats ?? []).map(s => s.variant))
+    expect([...transportDay.keys()].sort(), 'las 5 variantes nuevas en tramos de Campania').toEqual([...NEW_TRANSPORTS].sort())
+    expect([...statDay.keys()].sort(), 'las 5 variantes nuevas en stats de Campania').toEqual([...NEW_TRANSPORTS].sort())
+
+    const { context, page } = await newIsolatedPage(browser)
+    await gotoHydrated(page, CAMPANIA_URL)
+    const baseRgb = await borderLeftRgb(page.locator(BASE_TRANSPORT))
+
+    const seen = new Map<string, Rgb>()
+    for (const [v, slug] of transportDay) {
+      const row = page.locator(`section[id="${slug}"] .tl-transport.${v}`).first()
+      await expect(row, `${slug}: tramo ${v}`).toBeAttached()
+      const rgb = await borderLeftRgb(row)
+      expect(sameRgb(rgb, baseRgb), `${v}: borde distinto del dorado base`).toBe(false)
+      for (const [w, other] of seen) expect(sameRgb(rgb, other), `${v}: borde distinto del de ${w}`).toBe(false)
+      seen.set(v, rgb)
+      expect(await beforeContent(row.locator('.tl-transport-header')), `${v}: glifo de cabecera`).toBe(NEW_TRANSPORT_GLYPH[v])
+    }
+    for (const [v, slug] of statDay) {
+      const stat = page.locator(`section[id="${slug}"] .day-stats-item.${v}`).first()
+      await expect(stat, `${slug}: stat ${v}`).toBeAttached()
+      expect(await beforeContent(stat), `${v}: glifo de stats`).toBe(NEW_TRANSPORT_GLYPH[v])
+    }
+
+    await context.close()
+  })
+
+  test('campania: un tramo sin variante conserva el estilo base y dos tramos seguidos no mezclan sus bandas (EXT-03)', async ({ browser }) => {
+    const SABADO = 'section[id="sabado-19"]'
+    const sabado = readYaml<YamlDayRows>('days/sabado-19.yml')
+    const top = sabado.timeline
+    expect(top.some(r => r.kind === 'transport' && r.variant == null), 'el sábado 19 tiene un tramo sin variante').toBe(true)
+    const planeIdx = top.findIndex(r => r.kind === 'transport' && r.variant === 'plane')
+    expect(planeIdx, 'el sábado 19 tiene un tramo plane').toBeGreaterThanOrEqual(0)
+    expect(top[planeIdx + 1], 'el tramo siguiente al avión es el autobús').toMatchObject({ kind: 'transport', variant: 'bus' })
+
+    const { context, page } = await newIsolatedPage(browser)
+    await gotoHydrated(page, CAMPANIA_URL)
+    const baseRgb = await borderLeftRgb(page.locator(BASE_TRANSPORT))
+
+    // Sin variante: solo la clase `tl-transport` y el borde base.
+    const transports = page.locator(`${SABADO} .tl-transport`)
+    const classLists = await transports.evaluateAll(els => els.map(e => [...e.classList]))
+    const plainIdx = classLists.findIndex(c => c.length === 1 && c[0] === 'tl-transport')
+    expect(plainIdx, `un tramo con solo «tl-transport» (clases: ${JSON.stringify(classLists)})`).toBeGreaterThanOrEqual(0)
+    expect(sameRgb(await borderLeftRgb(transports.nth(plainIdx)), baseRgb), 'sin variante: borde base').toBe(true)
+
+    // Avión y autobús: hermanos contiguos, cada uno con su banda.
+    const plane = page.locator(`${SABADO} .tl-transport.plane`)
+    await expect(plane).toHaveCount(1)
+    const nextIsBus = await plane.evaluate(el => el.nextElementSibling?.classList.contains('bus') ?? false)
+    expect(nextIsBus, 'el autobús es el hermano siguiente del avión').toBe(true)
+    const bus = page.locator(`${SABADO} .tl-transport.bus`)
+    expect(sameRgb(await borderLeftRgb(plane), await borderLeftRgb(bus)), 'avión y autobús con bordes distintos').toBe(false)
+
+    await context.close()
+  })
+
+  test('campania: las bandas de ferry y autobús se leen en claro y en oscuro (backstop theme)', async ({ browser }) => {
+    // 12-UI-SPEC §«Transportes nuevos»: color-mix(TONO 75%, var(--ink)) con el --ink de cada tema.
+    const expected: Record<'light' | 'dark', { ferry: Rgb, bus: Rgb }> = {
+      light: { ferry: [44, 77, 128], bus: [170, 105, 28] },
+      dark: { ferry: [91, 123, 172], bus: [217, 152, 72] },
+    }
+    for (const theme of ['light', 'dark'] as const) {
+      const { context, page } = await newThemedPage(browser, theme)
+      await gotoHydrated(page, CAMPANIA_URL)
+      await expect(page.locator('html')).toHaveAttribute('data-theme', theme)
+      for (const v of ['ferry', 'bus'] as const) {
+        const rgb = await borderLeftRgb(page.locator(`.tl-transport.${v}`).first())
+        expect(sameRgb(rgb, expected[theme][v]), `${theme}/${v}: ${JSON.stringify(rgb)} ≈ ${JSON.stringify(expected[theme][v])}`).toBe(true)
+      }
+      await context.close()
+    }
+  })
+})
