@@ -353,6 +353,24 @@ export const ArtistRowSchema = z.object({
 })
 
 // ── Reference — solo reservas + practica (D-03/D-04) — RESEARCH 450-479 ───────
+// ── Encabezados de Reservas por viaje (Fase 12.1, habilitador de CAMP-04; D-01, D-02, D-04) ──
+// `headings` titula el primer bloque de confirmados (`mesas`), el segundo (`visitas`) y la
+// cabecera de la tabla (`table`). Cada clave ausente cae al texto de Roma (D-02,
+// `RESERVAS_HEADINGS_DEFAULT` en app/utils/reservasHeadings.ts), así que Roma no lo declara.
+//  · `z.strictObject` (y no `z.object`): zod 4 tira en silencio una clave desconocida, y un
+//    `mesa:` mal escrito dejaría el texto de Roma («3 comensales») en otro viaje en vez de
+//    fallar. Estricto, falla con `Unrecognized key` (mismo motivo que ChoiceRow).
+//  · Los valores son texto plano, interpolado con `{{ }}`: no son Markdown ni HTML.
+//  · `headings` evita los nombres reservados de Content (`meta`, `id`, `title`).
+//  · D-04: `group` conserva `mesas | visitas`: son el primer y el segundo bloque de confirmados,
+//    y cada viaje los titula con `headings` (Campania en la Fase 13, p. ej. vuelos, barcos y
+//    coche en el primero y conciertos en el segundo). El enum no se renombra: sería migrar el
+//    contenido de Roma.
+const ReservasHeadings = z.strictObject({
+  mesas: z.string().min(1).optional(), // 1.er h4 de .reservas-confirmadas
+  visitas: z.string().min(1).optional(), // 2.º h4 de .reservas-confirmadas
+  table: z.string().min(1).optional(), // .reservas-box-header
+})
 export const ReservasSchema = z.object({
   slug: z.literal('reservas'),
   trip: z.string(),
@@ -360,7 +378,8 @@ export const ReservasSchema = z.object({
   title: z.string(),
   eyebrow: z.string(), // section-eyebrow
   intro: Md, // gastro-intro
-  confirmed: z.array(z.object({ // reservas-confirmadas (mesas + visitas)
+  headings: ReservasHeadings.optional(), // títulos de los dos bloques y de la tabla (D-01)
+  confirmed: z.array(z.object({ // reservas-confirmadas (mesas = 1.er bloque, visitas = 2.º; D-04)
     group: z.enum(['mesas', 'visitas']),
     when: z.string(), // rc-when 'Vie 19 · 22:30'
     text: Md, // resto del <li> con <a>/<em>/<strong>
@@ -407,6 +426,9 @@ export const ReferenceRowSchema = z.object({
   eyebrow: z.string(),
   intro: Md,
   // Específicos de reservas → opcionales (shapes verbatim de ReservasSchema)
+  // `headings`: la MISMA constante; sin ella aquí, Content materializa la columna como null y la
+  // regla `unknown-key` de tests/data la rechaza (Fase 12.1, D-01).
+  headings: ReservasHeadings.optional(),
   confirmed: z.array(z.object({
     group: z.enum(['mesas', 'visitas']),
     when: z.string(),

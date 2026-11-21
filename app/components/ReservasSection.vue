@@ -12,16 +12,27 @@
 // clase `.gastro-intro` para su párrafo introductorio en el original, index.html:5264).
 //
 // RESERVAS-BOX (index.html:5265-5331):
-//   · `div.reservas-confirmadas`:
-//       - `h4` con TEXTO ESTÁTICO "✅ Ya reservado · 3 comensales" (index.html:5267 — chrome, no
-//         está en el dato) + `<ul>` con los `confirmed` del grupo 'mesas'.
-//       - `h4 style="margin-top:.7rem;"` con TEXTO ESTÁTICO "🎟️ Visitas y entradas reservadas"
-//         (index.html:5277, con su estilo inline verbatim) + `<ul>` con los del grupo 'visitas'.
+//   · `div.reservas-confirmadas` (solo si algún grupo tiene entradas; D-03):
+//       - `h4` con `headings.mesas` + `<ul>` con los `confirmed` del grupo 'mesas'.
+//       - `h4 style="margin-top:.7rem;"` con `headings.visitas` (estilo inline verbatim de
+//         index.html:5277, también cuando el primer grupo está vacío) + `<ul>` con los del grupo
+//         'visitas'.
+//       ENCABEZADOS (Fase 12.1, D-01/D-02): salen de `headings` del `reservas.yml` del viaje vía
+//       `resolveReservasHeadings` (app/utils/reservasHeadings.ts); cada clave ausente cae al
+//       texto de Roma (`RESERVAS_HEADINGS_DEFAULT`, copiado de index.html:5267/5277/5284), que
+//       se define allí UNA sola vez. Interpolación `{{ }}` (texto plano, auto-escapado), nunca
+//       `<MDC>`. El segundo h4 y la cabecera llevan un espacio delante y detrás DENTRO de la
+//       expresión: el texto estático multilínea de antes salía así (condensación de Vue), y Vue
+//       quita los nodos solo-espacio alrededor de una interpolación. Lo vigila
+//       tests/data/romaReservas.spec.ts (sección de Roma byte a byte).
+//       GRUPOS VACÍOS (D-03): `confirmedGroup` da las entradas de cada grupo; el `h4` y el `<ul>`
+//       de un grupo sin entradas no se pintan, y sin entradas en ninguno no hay bloque. Cada
+//       `v-if` va en su propio elemento, nunca en un `<template>` envoltorio (en SSR añadiría
+//       comentarios de fragmento y cambiaría los bytes de Roma).
 //       Cada `<li>`: `span.rc-when {{ when }}` + " — " + el resto del texto con `<MDC unwrap="p"
 //       :tag="false">` (lleva `[enlaces](#…)`, `_cursiva_`, `**negrita**`). El " — " va entre el
 //       rc-when y el texto, verbatim index.html:5269.
-//   · `div.reservas-box-header` con TEXTO ESTÁTICO "Restaurantes · cuándo reservar y con cuánta
-//     antelación" (index.html:5284 — chrome).
+//   · `div.reservas-box-header` con `headings.table` (index.html:5284).
 //   · `table.reservas-table` con un `<tr :class="{ 'is-done': r.isDone }">` por fila de `table`:
 //       - `<td>`: si `r.ref` → `<a :href="'#'+r.ref">{{ r.name }}</a>` (enlace plano, intercepción
 //         SPA es F5); si no → `<strong>{{ r.name }}</strong>` para la fila "Sin reserva (hacer
@@ -46,7 +57,11 @@
 // `.badge-rec`/`tr.is-done`) — CERO CSS, sin bloque de estilos con scope.
 import type { Reference } from '~~/shared/schemas'
 
-defineProps<{ reservas: Reference }>()
+const props = defineProps<{ reservas: Reference }>()
+
+const headings = computed(() => resolveReservasHeadings(props.reservas.slug === 'reservas' ? props.reservas.headings : undefined))
+const mesas = computed(() => props.reservas.slug === 'reservas' ? confirmedGroup(props.reservas.confirmed, 'mesas') : [])
+const visitas = computed(() => props.reservas.slug === 'reservas' ? confirmedGroup(props.reservas.confirmed, 'visitas') : [])
 </script>
 
 <template>
@@ -69,26 +84,32 @@ defineProps<{ reservas: Reference }>()
     </p>
 
     <div class="reservas-box">
-      <div class="reservas-confirmadas">
-        <h4>✅ Ya reservado · 3 comensales</h4>
-        <ul>
+      <div
+        v-if="mesas.length || visitas.length"
+        class="reservas-confirmadas"
+      >
+        <h4 v-if="mesas.length">{{ headings.mesas }}</h4>
+        <ul v-if="mesas.length">
           <li
-            v-for="(c, i) in reservas.confirmed.filter(x => x.group === 'mesas')"
+            v-for="(c, i) in mesas"
             :key="`mesas-${i}`"
           ><span class="rc-when">{{ c.when }}</span> — <MDC :value="c.text" unwrap="p" :tag="false" /></li>
         </ul>
-        <h4 style="margin-top:.7rem;">
-          🎟️ Visitas y entradas reservadas
+        <h4
+          v-if="visitas.length"
+          style="margin-top:.7rem;"
+        >
+          {{ ` ${headings.visitas} ` }}
         </h4>
-        <ul>
+        <ul v-if="visitas.length">
           <li
-            v-for="(c, i) in reservas.confirmed.filter(x => x.group === 'visitas')"
+            v-for="(c, i) in visitas"
             :key="`visitas-${i}`"
           ><span class="rc-when">{{ c.when }}</span> — <MDC :value="c.text" unwrap="p" :tag="false" /></li>
         </ul>
       </div>
       <div class="reservas-box-header">
-        Restaurantes · cuándo reservar y con cuánta antelación
+        {{ ` ${headings.table} ` }}
       </div>
       <table class="reservas-table">
         <tr
