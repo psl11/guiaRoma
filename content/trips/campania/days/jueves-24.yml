@@ -1,0 +1,53 @@
+slug: jueves-24
+trip: campania
+order: 1
+pill: 'Jue 24'
+roman: VI
+eyebrow: 'jueves · 24 de junio'
+title: Salerno y el día de elegir
+subtitle: Mañana en la catedral, tarde a elegir entre la costa y el río, y atardecer en el castillo.
+stats: []
+timeline:
+  - kind: stop
+    pace: all
+    time: '09:30'
+    title: Duomo di Salerno
+    ref: duomo-di-salerno
+    note: La catedral normanda y su cripta dorada, antes de que llegue el calor.
+  - kind: choice
+    options:
+      - label: Opción A
+        title: Pueblos de artistas y mar virgen
+        rows:
+          - kind: stop
+            pace: all
+            time: '11:30'
+            title: Raito y Albori
+            note: Dos pueblos colgados sobre la costa, con cerámica y calas pequeñas.
+          - kind: meta
+            items:
+              - level: plain
+                text: '🚌 bus local desde Salerno · unos **30 min**'
+      - label: Opción B
+        title: Ríos, bosques y pozas de agua dulce
+        rows:
+          - kind: stop
+            pace: medium
+            time: '11:00'
+            title: Valle del Río Calore
+            note: Sendero junto al río entre bosques, con pozas para refrescarse.
+          - kind: transport
+            pace: medium
+            variant: walk
+            header: Sendero del río
+            modes:
+              - icon: 🚶
+                recommended: true
+                desc: '**A pie** por el sendero señalizado, unas dos horas ida y vuelta'
+  - kind: stop
+    pace: all
+    time: '21:00'
+    title: Castello di Arechi
+    ref: castello-arechi
+    note: El castillo sobre la ciudad, con el golfo encendido al anochecer.
+cards: [duomo-di-salerno, raito, castello-arechi]

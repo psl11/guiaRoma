@@ -1,0 +1,23 @@
+slug: castello-arechi
+trip: campania
+roman: IX
+name: Castello di Arechi
+italian: 'Castello di Arechi · Salerno'
+day: Jueves 24
+coords:
+  lat: 40.6869
+  lng: 14.7614
+type: card
+motif: fortress
+hero:
+  src: https://example.invalid/campania/castello-arechi.jpg
+  alt: Castello di Arechi
+sections:
+  - heading: Qué es
+    body: >-
+      La fortaleza lombarda que vigila Salerno desde la colina, con murallas
+      sobre el golfo y las mejores vistas de la ciudad al atardecer.
+facts:
+  - label: Acceso
+    value: 'De pago · hasta el anochecer'
+mapsQuery: Castello di Arechi Salerno

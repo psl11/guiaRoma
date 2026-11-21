@@ -23,12 +23,17 @@ export default defineNuxtConfig({
   // tests/unit/multitripCss.spec.ts). Va el ÚLTIMO para que sus anulaciones de las reglas globales
   // no dependan del orden de carga; como la raíz `.trip-index` solo existe en «/», nunca alcanza el
   // DOM de Roma (los cuatro ficheros anteriores siguen congelados).
+  // tripshapes.css (Fase 12, D-17): el CSS de las formas nuevas de viaje (bloque de alternativas,
+  // «Dormís en», transportes nuevos, caja «Con niños»). Cierra la lista: cada selector exige una
+  // clase nueva que Roma no emite (guardián de lista blanca en 12-02), así que tampoco alcanza el
+  // DOM de Roma; base/tokens/fonts/leaflet/multitrip.css no cambian.
   css: [
     '~/assets/css/fonts.css',
     '~/assets/css/tokens.css',
     '~/assets/css/base.css',
     '~/assets/css/leaflet.css',
     '~/assets/css/multitrip.css',
+    '~/assets/css/tripshapes.css',
   ],
 
   // Tema: registrar el módulo en Fase 1 (el ThemeToggle/uso es Fase 3).

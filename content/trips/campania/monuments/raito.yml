@@ -1,0 +1,23 @@
+slug: raito
+trip: campania
+roman: VII
+name: Raito y Albori
+italian: 'Raito · Albori · Vietri sul Mare'
+day: Jueves 24
+coords:
+  lat: 40.6633
+  lng: 14.7083
+type: card
+motif: rooftops
+hero:
+  src: https://example.invalid/campania/raito.jpg
+  alt: Raito y Albori
+sections:
+  - heading: Qué es
+    body: >-
+      Dos aldeas de Vietri sul Mare sobre la costa, de casas blancas y cúpulas de
+      cerámica, donde han vivido y pintado artistas durante un siglo.
+facts:
+  - label: Acceso
+    value: 'Libre · bus local desde Salerno'
+mapsQuery: Raito Vietri sul Mare

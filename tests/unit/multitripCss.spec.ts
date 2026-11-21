@@ -21,9 +21,9 @@ import { describe, expect, it } from 'vitest'
  * pinte nada distinto; este guardián lo impide por construcción. Sus «dientes» se prueban con
  * cadenas sintéticas en memoria; nunca se mutan ficheros reales. Vitest plano, Node puro.
  *
- * También fija el orden de `css[]` en nuxt.config.ts: multitrip.css va el ÚLTIMO, detrás de los
- * cuatro ficheros congelados (fonts, tokens, base, leaflet), para que sus anulaciones no dependan
- * del orden de carga.
+ * También fija el orden de `css[]` en nuxt.config.ts: multitrip.css va detrás de los cuatro
+ * ficheros congelados (fonts, tokens, base, leaflet), para que sus anulaciones no dependan del
+ * orden de carga, y tripshapes.css (Fase 12, D-17: formas nuevas de viaje) cierra la lista.
  */
 
 const ROOT = process.cwd()
@@ -109,9 +109,9 @@ describe('multitrip.css real (D-21)', () => {
     expect(unscopedSelectors(css)).toEqual([])
   })
 
-  it('nuxt.config.ts carga multitrip.css el último, detrás de los cuatro CSS congelados', () => {
+  it('nuxt.config.ts carga multitrip.css detrás de los cuatro CSS congelados y tripshapes.css cierra la lista', () => {
     const config = readFileSync(NUXT_CONFIG, 'utf8')
     const entries = [...config.matchAll(/'~\/assets\/css\/([a-z]+\.css)'/g)].map(m => m[1])
-    expect(entries).toEqual(['fonts.css', 'tokens.css', 'base.css', 'leaflet.css', 'multitrip.css'])
+    expect(entries).toEqual(['fonts.css', 'tokens.css', 'base.css', 'leaflet.css', 'multitrip.css', 'tripshapes.css'])
   })
 })

@@ -4,7 +4,7 @@
 // (DATA-02; NUNCA reordena: ese orden es la "ruta del día" que F6 deriva).
 //
 // PATRÓN núcleo (análogo NavPills.vue: v-for sobre un array tipado de ~~/shared/schemas):
-// mapea 1:1 el `discriminatedUnion('kind')` del esquema (5 kinds) a sus 5 componentes hoja
+// mapea 1:1 el `discriminatedUnion('kind')` del esquema (6 kinds) a sus 6 componentes hoja
 // vía `<component :is="COMPONENT_BY_KIND[row.kind]">` (D-09), de modo que cada hoja recibe su
 // rama estrechada como `row`.
 //
@@ -30,7 +30,9 @@ import type { Day } from '~~/shared/schemas'
 
 defineProps<{ rows: Day['timeline'] }>()
 
-// 1:1 con las 5 ramas del discriminatedUnion (shared/schemas.ts:85-123). Cada nombre se resuelve a
+// 1:1 con las 6 ramas del discriminatedUnion `TimelineRow` de shared/schemas.ts (5 base + `choice`,
+// Fase 12). `TimelineChoice` vuelve a pintar `<Timeline>` con las filas de cada opción (solo filas
+// base: un nivel, sin recursión infinita). Cada nombre se resuelve a
 // la DEFINICIÓN del componente auto-importado (resolveComponent es referencia estática → Nuxt
 // inyecta el import). Resolver en el setup (una vez) evita repetir la búsqueda por fila.
 const COMPONENT_BY_KIND = {
@@ -39,6 +41,7 @@ const COMPONENT_BY_KIND = {
   meta: resolveComponent('TimelineMeta'),
   food: resolveComponent('TimelineFood'),
   reservation: resolveComponent('TimelineReservation'),
+  choice: resolveComponent('TimelineChoice'),
 } as const
 </script>
 

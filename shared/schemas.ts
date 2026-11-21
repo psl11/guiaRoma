@@ -88,46 +88,76 @@ export const FoodEntry = z.object({ // .tl-food-item
   time: z.string().optional(), // .tl-food-time '🚶 3 min'
   desc: Md,
 })
-// 5 kinds de fila del timeline (DATA-02). `pace` por fila donde aplica.
-export const TimelineRow = z.discriminatedUnion('kind', [
-  z.object({ // .tl-item
-    kind: z.literal('stop'),
-    pace: Pace.default('all'),
-    time: z.string(),
-    title: z.string(),
-    ref: z.string().optional(), // a.tl-title href="#id"
-    disabled: z.boolean().default(false), // .tl-title.disabled (llegada/check-in)
-    reservedEvent: z.boolean().default(false), // .tl-item.reserved-event (cena)
-    tag: z.string().optional(), // .tl-tag 'Sorrentino'|'reservado'|'opcional'|…
-    note: Md.optional(), // .tl-note
-  }),
-  z.object({ // .tl-transport [taxi|walk|train]
-    kind: z.literal('transport'),
-    pace: Pace.default('all'),
-    variant: z.enum(['taxi', 'walk', 'train']).optional(),
-    header: z.string(),
-    modes: z.array(TransportMode),
-    footnote: Md.optional(),
-  }),
-  z.object({ // .tl-meta (sin data-pace → visible salvo en resumen)
-    kind: z.literal('meta'),
-    items: z.array(z.object({
-      level: z.enum(['ok', 'warn', 'plain']).default('plain'), // .tl-meta-item.ok/.warn
-      text: Md,
-    })),
-  }),
-  z.object({ // .tl-food
-    kind: z.literal('food'),
-    pace: Pace.default('all'),
-    header: z.string(),
-    entries: z.array(FoodEntry),
-    footnote: Md.optional(),
-  }),
-  z.object({ // .tl-resv-meta (banda verde)
-    kind: z.literal('reservation'),
+// 5 kinds base de fila del timeline (DATA-02). `pace` por fila donde aplica. Cada fila es una
+// constante con nombre para poder reutilizarla dentro de las opciones de un `choice` (Fase 12).
+const StopRow = z.object({ // .tl-item
+  kind: z.literal('stop'),
+  pace: Pace.default('all'),
+  time: z.string(),
+  title: z.string(),
+  ref: z.string().optional(), // a.tl-title href="#id"
+  disabled: z.boolean().default(false), // .tl-title.disabled (llegada/check-in)
+  reservedEvent: z.boolean().default(false), // .tl-item.reserved-event (cena)
+  tag: z.string().optional(), // .tl-tag 'Sorrentino'|'reservado'|'opcional'|…
+  note: Md.optional(), // .tl-note
+})
+const TransportRow = z.object({ // .tl-transport [taxi|walk|train]
+  kind: z.literal('transport'),
+  pace: Pace.default('all'),
+  variant: z.enum(['taxi', 'walk', 'train']).optional(),
+  header: z.string(),
+  modes: z.array(TransportMode),
+  footnote: Md.optional(),
+})
+const MetaRow = z.object({ // .tl-meta (sin data-pace → visible salvo en resumen)
+  kind: z.literal('meta'),
+  items: z.array(z.object({
+    level: z.enum(['ok', 'warn', 'plain']).default('plain'), // .tl-meta-item.ok/.warn
     text: Md,
-  }),
-])
+  })),
+})
+const FoodRow = z.object({ // .tl-food
+  kind: z.literal('food'),
+  pace: Pace.default('all'),
+  header: z.string(),
+  entries: z.array(FoodEntry),
+  footnote: Md.optional(),
+})
+const ReservationRow = z.object({ // .tl-resv-meta (banda verde)
+  kind: z.literal('reservation'),
+  text: Md,
+})
+const BASE_ROWS = [StopRow, TransportRow, MetaRow, FoodRow, ReservationRow] as const
+
+// Filas permitidas DENTRO de una opción de un `choice`: las 5 base, sin `choice`. Así un `choice`
+// no puede anidarse en otro: un solo nivel por construcción, sin `z.lazy` ni recursión.
+export const BaseTimelineRow = z.discriminatedUnion('kind', [...BASE_ROWS])
+
+// ── Alternativas de un día (Fase 12, EXT-01; D-01…D-03) ──────────────────────
+// Una fila `choice` ofrece 2 o 3 opciones que se pintan apiladas («Elige una», «— o bien —»).
+// Vive DENTRO de `day.timeline`, en su posición del recorrido, no en un campo aparte del día.
+//  · `z.strictObject` (y no `z.object`): zod 4 tira en silencio las claves desconocidas, así que
+//    un `pace` escrito en el choice (D-03: el choice no tiene ritmo, lo tienen sus filas) o un
+//    `cards` dentro de una opción se perderían sin avisar. Estricto, fallan con
+//    `Unrecognized key` y la puerta tests/data lo señala con su fichero.
+//  · Dos uniones (`BaseTimelineRow` para las opciones y `TimelineRow` para el día) y no un esquema
+//    recursivo: un nivel basta y Nuxt Content solo crea columnas de las propiedades de primer
+//    nivel (`timeline` es una columna JSON). Un `z.lazy` metería `$ref`/`definitions` en el
+//    JSON-Schema de la colección (lo vigila el test D-18 de tests/data/schema.spec.ts).
+//  · Ningún campo nuevo se llama `meta` ni `id` (nombres reservados de Content).
+export const ChoiceOption = z.strictObject({
+  label: z.string().min(1), // .tl-choice-label 'Opción A' (texto plano)
+  title: Md.min(1), // .tl-choice-title (Markdown-inline)
+  rows: z.array(BaseTimelineRow).min(1), // filas normales, con su `pace` y sus defaults
+})
+export const ChoiceRow = z.strictObject({ // div.tl-choice (TimelineChoice.vue)
+  kind: z.literal('choice'),
+  heading: Md.min(1).optional(), // sin él, la guía pinta «Elige una»
+  options: z.array(ChoiceOption).min(2).max(3),
+})
+
+// 6 kinds de fila del día: las 5 base + `choice` (solo en el nivel superior del timeline).
+export const TimelineRow = z.discriminatedUnion('kind', [...BASE_ROWS, ChoiceRow])
 // Slug de día (D-02, Fase 10): minúsculas ASCII, dígitos y guiones. El slug es el id de la
 // `<section>` del día y su ancla `#slug`, así que no admite mayúsculas, acentos, espacios ni
 // `_`. Convención (documentada, NO impuesta) para viajes nuevos: slug con fecha que empieza por
@@ -432,3 +462,5 @@ export type Food = z.infer<typeof FoodSchema>
 export type Artist = z.infer<typeof ArtistSchema>
 export type Reference = z.infer<typeof ReferenceSchema>
 export type Trip = z.infer<typeof TripSchema>
+export type BaseTimelineRow = z.infer<typeof BaseTimelineRow> // fila de dentro de una opción
+export type ChoiceRow = z.infer<typeof ChoiceRow> // bloque de alternativas (Fase 12)

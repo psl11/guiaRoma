@@ -48,8 +48,9 @@ afterAll(() => {
 })
 
 describe('manifiesto real (content/trips)', () => {
-  it('forma y prueba son borradores y roma no, en orden de slug (D-16)', () => {
+  it('campania, forma y prueba son borradores y roma no, en orden de slug (D-16)', () => {
     expect(readTripManifest()).toEqual([
+      { slug: 'campania', draft: true },
       { slug: 'forma', draft: true },
       { slug: 'prueba', draft: true },
       { slug: 'roma', draft: false },
@@ -60,8 +61,8 @@ describe('manifiesto real (content/trips)', () => {
     expect(prerenderRoutes(readTripManifest())).toEqual(['/', '/trips/roma/'])
   })
 
-  it('draftExcludes del manifiesto real: los dos borradores fuera de producción, nada en dev', () => {
-    expect(draftExcludes(readTripManifest(), false)).toEqual(['trips/forma/**', 'trips/prueba/**'])
+  it('draftExcludes del manifiesto real: campania, forma y prueba fuera de producción, nada en dev', () => {
+    expect(draftExcludes(readTripManifest(), false)).toEqual(['trips/campania/**', 'trips/forma/**', 'trips/prueba/**'])
     expect(draftExcludes(readTripManifest(), true)).toEqual([])
   })
 })

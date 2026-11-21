@@ -1,0 +1,36 @@
+# Esqueleto de CAMPANIA (Fase 12, D-15). Es el segundo viaje real de la guía, pero en esta
+# fase solo existe para probar las formas nuevas de viaje de punta a punta: alternativas dentro
+# de un día (`choice`), alojamiento por noche, transportes y fichas de naturaleza, rutas en coche
+# y notas familiares. Los textos son provisionales, en español y con nombres reales; la Fase 13
+# reescribe el contenido completo.
+#
+# Borrador (D-16): `draft: true` lo deja fuera de la build de producción (content.config.ts lo
+# excluye de las 6 colecciones: ni ruta prerenderizada ni filas en los `sql_dump` públicos). En
+# `pnpm dev` se carga y se ve en /trips/campania, pero nunca se lista en la portada. La marca de
+# control de howTo (centinela de la Fase 12) permite comprobar que nada de este viaje llega al
+# sitio publicado.
+draft: true
+slug: campania
+title: Diez días en _Campania_
+decoration: '·  CAMPANIA FELIX  ·'
+heroMeta: 19 — 28 de junio de 2027 · Nápoles, las islas y Salerno
+quote: Ver Nápoles y después morir.
+quoteAttr: — DICHO POPULAR
+infoCards: []
+howTo:
+  - >-
+    Borrador de la guía de Campania para probar las formas nuevas de viaje: días
+    con alternativas, noches en ciudades distintas, barcos y coches, y paradas en
+    plena naturaleza. Marca de control CAMPANIA-CENTINELA-12A. El texto definitivo
+    llegará con el contenido completo del viaje.
+map:
+  center: { lat: 40.7, lng: 14.45 }
+  zoom: 9
+pageTitle: 'Campania · diez días de junio'
+brand:
+  before: 'Campania'
+  after: 'junio de 2027'
+mapLegend: '✦  Rojos · paradas con ficha · Verde agua · naturaleza ✦'
+footer:
+  - 'Borrador de la guía de _Campania_'
+  - 'Nápoles · Procida · Ischia · Salerno · 2027'

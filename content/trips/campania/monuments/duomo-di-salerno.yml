@@ -1,0 +1,23 @@
+slug: duomo-di-salerno
+trip: campania
+roman: VI
+name: Duomo di Salerno
+italian: 'Cattedrale di San Matteo · Salerno'
+day: Jueves 24
+coords:
+  lat: 40.6806
+  lng: 14.7597
+type: card
+motif: church
+hero:
+  src: https://example.invalid/campania/duomo-di-salerno.jpg
+  alt: Duomo di Salerno
+sections:
+  - heading: Qué es
+    body: >-
+      La catedral de Salerno, consagrada en el siglo XI por los normandos, con un
+      atrio de columnas antiguas y una cripta cubierta de mármoles y oro.
+facts:
+  - label: Acceso
+    value: 'Gratuito · cripta incluida'
+mapsQuery: Duomo di Salerno
