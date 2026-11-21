@@ -34,6 +34,9 @@
 // Fase 12 (formas nuevas de viaje):
 //  - EXT-01 / Pitfall 3: la regla `ref` recorre también las filas de las opciones de un `choice`
 //    (`timelineRowsOf`); un `ref` roto dentro de una opción nombra el fichero del día.
+//  - EXT-02 / D-06: `stay-ref` — el `stay` de cada día es el slug de una base de `trip.stays`
+//    (comparación exacta); si no existe, también cuando el viaje no tiene `stays`, la violación
+//    nombra el fichero del día. `stay-dup` — los slugs de `stays` son únicos (violación en trip.yml).
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { basename, join, relative, sep } from 'node:path'
 import { parse as parseYaml } from 'yaml'
@@ -88,7 +91,7 @@ const NOTE_PREFIX = 'note-'
 export const RULES = [
   'yaml-parse', 'yaml-object', 'trip-yml', 'trip-slug', 'trip-field', 'stray-file', 'reserved-key',
   'unknown-key', 'basename-slug', 'dup-id', 'fixed-anchor', 'ref', 'anchor', 'cross-trip-link',
-  'day-order', 'day-pill', 'trip-dates', 'trip-summary-link',
+  'day-order', 'day-pill', 'trip-dates', 'trip-summary-link', 'stay-ref', 'stay-dup',
 ] as const
 export type Rule = typeof RULES[number]
 
@@ -238,7 +241,7 @@ const rowKeys = new Map<CollectionName, ReadonlySet<string>>(
   COLLECTIONS.map(c => [c.name, new Set(Object.keys(c.row.shape))]),
 )
 
-/** Aplica las 18 reglas de la puerta (`RULES`) a un viaje cargado. Lista vacía = viaje sano. */
+/** Aplica las 20 reglas de la puerta (`RULES`) a un viaje cargado. Lista vacía = viaje sano. */
 export function checkTrip(t: LoadedTrip): Violation[] {
   const vs: Violation[] = [...t.loadViolations]
   const push = (file: string, rule: Rule, message: string) => vs.push({ file, rule, message })
@@ -382,6 +385,29 @@ export function checkTrip(t: LoadedTrip): Violation[] {
     if (docs.length < 2) continue
     const list = docs.map(x => x.file).join(', ')
     for (const d of docs) push(d.file, 'day-pill', `pastilla «${label}» repetida (D-03) en ${list}`)
+  }
+
+  // stay-dup / stay-ref (D-06, Fase 12): bases del viaje. Los slugs de `trip.stays` se cuentan
+  // (un slug repetido es UNA violación en trip.yml, por slug) y el `stay` de cada día debe estar
+  // en ese conjunto, vacío si el viaje no declara `stays`. Comparación EXACTA de strings: la
+  // puerta no normaliza mayúsculas ni espacios (`stay: Salerno` no resuelve a `salerno`).
+  const staySlugs = new Set<string>()
+  for (const d of tripDocs) {
+    const counts = new Map<string, number>()
+    for (const s of asArray(d.data.stays)) {
+      const slug = String(s.slug ?? '')
+      counts.set(slug, (counts.get(slug) ?? 0) + 1)
+      staySlugs.add(slug)
+    }
+    for (const [slug, n] of counts) {
+      if (n > 1) push(d.file, 'stay-dup', `stay "${slug}" duplicado en stays`)
+    }
+  }
+  for (const d of days) {
+    const stay = d.data.stay
+    if (typeof stay === 'string' && !staySlugs.has(stay)) {
+      push(d.file, 'stay-ref', `stay "${stay}" no existe en trip.yml stays`)
+    }
   }
 
   // anchor / cross-trip-link — en cualquier string de cualquier fichero (incl. trip.yml).
