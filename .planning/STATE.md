@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 12
 current_phase_name: Formas nuevas de viaje
 status: executing
-stopped_at: Completed 12-03-PLAN.md
-last_updated: "2026-11-21T10:37:17.128Z"
+stopped_at: Completed 12-04-PLAN.md
+last_updated: "2026-11-21T10:53:43.747Z"
 last_activity: 2026-11-21
 last_activity_desc: Phase 12 execution started
-state_head: 089de0f2885935cf06ded44fd83e174ecf82d443
+state_head: 20717820c2696d15d9a61bea043d6c9c7049106f
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 24
-  completed_plans: 20
+  completed_plans: 21
   percent: 0
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 12 (Formas nuevas de viaje) — EXECUTING
-Plan: 4 of 7
+Plan: 5 of 7
 Status: Ready to execute
 Last activity: 2026-11-21 — Phase 12 execution started
 
@@ -123,6 +123,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 12 P01 | 10 min | 2 tasks | 14 files |
 | Phase 12 P02 | 9min | 3 tasks | 12 files |
 | Phase 12 P03 | 8min | 2 tasks | 14 files |
+| Phase 12 P04 | 12min | 3 tasks | 16 files |
 
 ## Accumulated Context
 
@@ -297,6 +298,9 @@ Recent decisions affecting current work:
 - [Phase 12]: 12-02: tripshapes.css prohíbe también selectores de atributo ([class*=car] casaría con card de Roma)
 - [Phase 12]: Fase 12-03: bases del viaje como trip.stays (StaySchema estricto, slug exacto ^[a-z0-9-]+$) + day.stay; stay-dup da una violación por slug repetido en trip.yml y stay-ref la da en el fichero del día, también sin stays
 - [Phase 12]: Fase 12-03: evidencia RED con el reporter JUnit de Vitest (el TAP de Vitest parte el expected de arrays y el clasificador lo rechaza como Malformed TAP)
+- [Phase 12]: 12-04: color y popup del marcador salen de MARKER_STYLE (Record<PlaceType, { bg }>) y markerPopupHtml en app/utils/mapMarkers.ts; nature = #2f6f73 con ancla plana sin manejador; Roma fijada byte a byte en mapMarkers.spec
+- [Phase 12]: 12-04: markerPopupHtml escapa & < > " de name/day/id y deja la comilla simple intacta (siete nombres de Roma la llevan)
+- [Phase 12]: 12-04: los motivos de naturaleza (sea, thermal, river, trail) van al final de Motif y de SVG_MOTIFS; los 19 de Roma quedan byte a byte; los tests derivan la lista de Motif.options
 
 ### Pending Todos
 
@@ -333,8 +337,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-21T10:37:16.973Z
-Stopped at: Completed 12-03-PLAN.md
+Last session: 2026-11-21T10:53:43.587Z
+Stopped at: Completed 12-04-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
