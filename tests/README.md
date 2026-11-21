@@ -572,7 +572,12 @@ encabezados fijos de Roma heredaría «3 comensales» y la cabecera de restauran
     `headings`). La mutación `z.strictObject` → `z.object` pone el spec en rojo.
   - `tests/unit/reservasHeadings.spec.ts` (`test:unit`): helpers (defaults, personalizados,
     parcial, `null`/`''`/solo espacios, grupos vacíos, Roma real) y el cableado estático de
-    ReservasSection.vue (`wiringProblems`) con dientes en memoria.
+    ReservasSection.vue (`wiringProblems`) con dientes en memoria. Además, cada `h4`/`ul` de
+    `.reservas-confirmadas` se lee como elemento (`bindingProblems`): su `v-if` es el de SU grupo,
+    el mismo que su `headings.<grupo>` o su `v-for`. `renderConfirmed` evalúa los `v-if` de la
+    plantilla real con `confirmedGroup` (D-03): solo visitas → un `h4` y un `ul` de visitas;
+    `confirmed: []` → sin bloque. Dientes: la plantilla real mutada en memoria (`v-if` de los
+    `h4` cruzados, `v-for` del otro grupo, bloque con la condición de un solo grupo).
   - `tests/data/invariants.spec.ts` (`test:data`): regla `reservas-headings` de la puerta de
     datos (`tests/data/trips.ts`). Un viaje que no es Roma y tiene `reservas.yml` debe declarar
     `headings.table` y el `headings.<grupo>` de cada grupo de `confirmed` con entradas, con texto
