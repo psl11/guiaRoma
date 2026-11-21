@@ -4,17 +4,17 @@ milestone: v1.1
 milestone_name: Multi-viaje + Campania
 current_phase: 12
 current_phase_name: Formas nuevas de viaje
-status: executing
-stopped_at: Completed 12-06-PLAN.md
-last_updated: "2026-11-21T11:23:44.878Z"
+status: verifying
+stopped_at: Completed 12-07-PLAN.md
+last_updated: "2026-11-21T11:39:54.533Z"
 last_activity: 2026-11-21
 last_activity_desc: Phase 12 execution started
-state_head: 19f9bf0a7f2d9a63d7ec5bc5236fcc6a3586c48b
+state_head: 0f1382824265b07af88d6318f5dd11ecd6711395
 progress:
   total_phases: 6
   completed_phases: 0
   total_plans: 24
-  completed_plans: 23
+  completed_plans: 24
   percent: 0
 ---
 
@@ -31,7 +31,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 
 Phase: 12 (Formas nuevas de viaje) — EXECUTING
 Plan: 7 of 7
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-11-21 — Phase 12 execution started
 
 Progress: [░░░░░░░░░░] 0%
@@ -126,6 +126,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 12 P04 | 12min | 3 tasks | 16 files |
 | Phase 12 P05 | 11min | 2 tasks | 12 files |
 | Phase 12 P06 | 8min | 2 tasks | 11 files |
+| Phase 12 P07 | 12min | 3 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -308,6 +309,8 @@ Recent decisions affecting current work:
 - [Phase 12]: 12-05: los cinco días de Campania tienen stay (ROADMAP SC#2 completo); sábado 19 con un tramo sin variante a propósito (edge EXT-03)
 - [Phase 12]: 12-06 (D-14): el modo de la ruta va por día en DaySchema.route (estricto); sin route o con null el modo es walking y la URL de Roma es byte a byte la de hoy
 - [Phase 12]: 12-06 (D-04/D-14): routeVisible — menos de 2 paradas nunca; enabled false oculta; enabled true fuerza; si no, un ferry (también dentro de una opción) oculta; routeCards excluye fichas de solo-opción
+- [Phase 12]: D-12: MonumentSchema.family (Md.min(1).optional()) se pinta como caja culture-box.family-box «Con niños» tras maps-link/sorrentino-box y antes de culture/notes, fuera de las ramas de boxOrder; también entra en el haystack de búsqueda
+- [Phase 12]: D-13: EXT-05 sin cambio de código del mapa (setView + fitBounds pad 0.1); en nuxi dev el contenedor pierde id=leaflet-map (diferido), el E2E le devuelve los 520 px de base.css
 
 ### Pending Todos
 
@@ -344,8 +347,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-21T11:23:44.712Z
-Stopped at: Completed 12-06-PLAN.md
+Last session: 2026-11-21T11:39:54.365Z
+Stopped at: Completed 12-07-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
