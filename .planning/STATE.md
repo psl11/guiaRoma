@@ -2,18 +2,18 @@
 gsd_state_version: "1.0"
 milestone: v1.1
 milestone_name: Multi-viaje + Campania
-current_phase: 11
-current_phase_name: Portada y rutas multi-viaje
-status: verifying
+current_phase: 12
+current_phase_name: Formas nuevas de viaje
+status: executing
 stopped_at: Phase 12 UI-SPEC approved
-last_updated: "2026-11-21T09:14:38.592Z"
+last_updated: "2026-11-21T09:58:38.600Z"
 last_activity: 2026-11-20
 last_activity_desc: Phase 11 execution started
-state_head: 6ae2bc01dd46f6b02161e7e0f3b6a5f2ed109634
+state_head: d0c0ed239cfd8430c5f9f1b1021acd9111d9ba04
 progress:
   total_phases: 6
   completed_phases: 0
-  total_plans: 17
+  total_plans: 24
   completed_plans: 17
   percent: 0
 ---
@@ -29,9 +29,9 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 
 ## Current Position
 
-Phase: 11 (Portada y rutas multi-viaje) — EXECUTING
+Phase: 12 (Formas nuevas de viaje) — READY TO EXECUTE
 Plan: 7 of 7
-Status: Phase complete — ready for verification
+Status: Ready to execute
 Last activity: 2026-11-20 — Phase 11 execution started
 
 Progress: [░░░░░░░░░░] 0%

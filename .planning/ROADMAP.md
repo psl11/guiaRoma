@@ -144,7 +144,32 @@ Plans:
   3. Una playa, poza termal, río o sendero tiene ficha, marcador propio en el mapa y un dibujo de reserva cuando su imagen no carga; una ficha puede mostrar una nota para familias con niños
   4. El mapa de un viaje de varias ciudades encuadra todos sus marcadores (Nápoles, Procida, Ischia y Salerno a la vista a la vez), mientras Roma conserva exactamente su vista actual
   5. «Ver ruta del día» abre Google Maps en el modo adecuado al día (a pie, coche o transporte público) y no aparece en los días de ferry; en Roma sigue siendo a pie con las mismas paradas, y la puerta de paridad de Roma sigue verde
-**Plans**: TBD
+**Plans**: 7 plans
+Plans:
+**Wave 1**
+- [ ] 12-01-PLAN.md — «Elige una» de punta a punta: `ChoiceRow` estricto en el timeline (D-18 Roma primero), `TimelineChoice.vue` + `tripshapes.css` (última en `css[]`), borrador `campania` (trip.yml + jueves 24 A/B) y dientes del esquema (EXT-01)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+- [ ] 12-02-PLAN.md — Regla `ref` dentro de opciones + primer `ref` en una opción (D-05), alternativas visibles con cualquier ritmo/«Caminar menos»/resumen, dos `choice` contiguos y 3 opciones; los cinco días del esqueleto; guardián de `tripshapes.css`, clases nuevas fuera del HTML de Roma y centinela de Campania (EXT-01)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+- [ ] 12-03-PLAN.md — «Dormís en…»: `trip.stays` + `day.stay`, `stayFor`, línea en la cabecera del día (jueves 24; los demás días reciben su base en 12-04/12-05) y reglas `stay-ref`/`stay-dup` (EXT-02)
+
+**Wave 4** *(blocked on Wave 3 completion)*
+- [ ] 12-04-PLAN.md — Naturaleza: `nature` + 4 motivos SVG (sea/thermal/river/trail), `MARKER_STYLE`/`markerPopupHtml` con Roma byte a byte, Sorgeto/Epomeo/Valle del Calore (EXT-04)
+
+**Wave 5** *(blocked on Wave 4 completion)*
+- [ ] 12-05-PLAN.md — Transportes ferry/coche/autobús/bici/avión: `TransportVariant`/`StatVariant`, bandas y glifos, `enumStyles.spec.ts` con `train` exento (EXT-03)
+
+**Wave 6** *(blocked on Wave 5 completion)*
+- [ ] 12-06-PLAN.md — Ruta del día por modo: `day.route`, `timelineRows.ts`, `routeCards`/`routeVisible`/`routeTitle`, oculta en días de ferry y sin mezclar opciones; Roma byte a byte (EXT-06)
+
+**Wave 7** *(blocked on Wave 6 completion)*
+- [ ] 12-07-PLAN.md — «Con niños» (`family`), mapa multi-ciudad (Nápoles, Procida, Ischia y Salerno a la vez), `tripshapes.css` = UI-SPEC y cierre: conteos re-registrados y puerta completa (EXT-07, EXT-05)
+
+**Cross-cutting constraints:** <!-- gsd:generated -->
+- D-19: Node 22, cachés limpias antes de generate/test:trips, nunca a la vez; release/nuxt-4
+
 **UI hint**: yes
 **Research**: sí — modelado de la fila `choice` en `timeline` y su interacción con modos de ritmo, modo resumen, ruta del día y numeración de marcadores; coste real de motifs SVG nuevos frente a mapeo provisional
 **Decisiones previas (⚠)**: EXT-01 (opciones A/B apiladas y siempre visibles vs selector) y EXT-04 (motifs SVG nuevos de naturaleza vs reutilizar provisionalmente los existentes) deben resolverse **antes de planificar esta fase**
