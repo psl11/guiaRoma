@@ -83,6 +83,14 @@
 // bloque es idéntico en ambas ramas (mismo `.culture-box`, mismo `.notes-area`); SÓLO cambia el orden,
 // que es exactamente lo que el original varía por ficha. Verificado contra el DOM del index.html por id.
 //
+// «CON NIÑOS» (Fase 12, EXT-07, D-12). Si la ficha trae `family`, se pinta una caja
+// `div.culture-box.family-box` con `span.label` «Con niños» y el texto por `<MDC unwrap="p">`
+// (Markdown-inline, sin HTML crudo). Va SIEMPRE en el mismo sitio: tras `.maps-link`/`.sorrentino-box`
+// y antes de la pareja culture-box/notes-area, FUERA de las dos ramas de `boxOrder` (no se duplica).
+// El tono verde oliva vive en tripshapes.css (bloque EXT-07); aquí no hay estilos. Las fichas sin
+// `family` (todas las de Roma) no ganan ningún `div`: su DOM es idéntico salvo el comentario vacío
+// que Vue deja en el sitio del `v-if`.
+//
 // CSS verbatim global (base.css) — CERO CSS nuevo y SIN bloque de estilos con scope: un `data-v-*`
 // rompería en silencio selectores que cruzan componentes y elementos generados por MDC, como
 // `.card-section p:first-of-type::first-letter`, `.detail-list li::before` y `.facts-row .label`.
@@ -304,6 +312,18 @@ const ArtLink: DefineComponent<any, any, any> = defineComponent({
       <span class="label">{{ monument.sorrentino.label }}</span>
       <MDC
         :value="monument.sorrentino.text"
+        :tag="false"
+        unwrap="p"
+      />
+    </div>
+
+    <!-- «CON NIÑOS» (Fase 12, EXT-07, D-12). Posición única, fuera de las dos ramas de boxOrder. -->
+    <div
+      v-if="monument.family"
+      class="culture-box family-box"
+    >
+      <span class="label">Con niños</span> <MDC
+        :value="monument.family"
         :tag="false"
         unwrap="p"
       />

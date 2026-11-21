@@ -93,6 +93,10 @@ export const MonumentSchema = z.object({
   // Default ausente = 'culture-first' (orden por defecto del componente). Verificado contra el DOM
   // del index.html por id de ficha (notes-area antes/después de culture-box dentro del mismo <article>).
   boxOrder: z.enum(['culture-first', 'notes-first']).optional(),
+  // Nota para familias con niños (Fase 12, EXT-07, D-12): MonumentCard la pinta en una caja
+  // `.culture-box.family-box` con la etiqueta «Con niños», siempre en el mismo sitio de la ficha.
+  // Markdown-inline (se renderiza con <MDC>, nunca como HTML crudo). Vacío rechazado; Roma no lo usa.
+  family: Md.min(1).optional(),
 })
 
 // ── Day (.section del día) — timeline discriminado + cards ordenado (RESEARCH 330-396) ──

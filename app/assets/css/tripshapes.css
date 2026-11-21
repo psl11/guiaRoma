@@ -91,3 +91,10 @@
 @media (min-width: 640px) {
   .tl-choice { padding: 16px 16px 4px; }
 }
+
+/* EXT-07 — «Con niños», derivada de .culture-box (especificidad 0,2,0 / 0,3,0 > base) */
+.culture-box.family-box {
+  background: color-mix(in srgb, #5a7a3a 7%, transparent);
+  border-left-color: color-mix(in srgb, #5a7a3a 75%, var(--ink));
+}
+.culture-box.family-box .label { color: color-mix(in srgb, #5a7a3a 75%, var(--ink)); }

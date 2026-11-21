@@ -925,3 +925,68 @@ test.describe('campania: ruta del día por modo (EXT-06, D-04, D-14)', () => {
     await context.close()
   })
 })
+
+// ── EXT-07: la nota «Con niños» en la ficha (12-07) ─────────────────────────────────────────
+
+interface YamlFamily { slug: string, roman: string, family?: string }
+
+const FAMILY_MONUMENTS: YamlFamily[] = readdirSync(join(CAMPANIA_ROOT, 'monuments'))
+  .filter(f => f.endsWith('.yml'))
+  .map(f => readYaml<YamlFamily>(`monuments/${f}`))
+
+test.describe('campania: la nota «Con niños» (EXT-07, D-12)', () => {
+  test('campania: Baia di Sorgeto muestra la caja «Con niños» en su sitio (EXT-07, D-12)', async ({ browser }) => {
+    const sorgeto = FAMILY_MONUMENTS.find(m => m.slug === 'baia-di-sorgeto')
+    expect(sorgeto?.family, 'baia-di-sorgeto.yml trae `family`').toBeTruthy()
+    const withFamily = FAMILY_MONUMENTS.filter(m => typeof m.family === 'string' && m.family.length > 0)
+
+    const { context, page } = await newIsolatedPage(browser)
+    await gotoHydrated(page, CAMPANIA_URL)
+
+    const card = page.locator(`article[id="${sorgeto!.slug}"]`)
+    await expect(card).toHaveCount(1)
+    const box = card.locator('.culture-box.family-box')
+    await expect(box, 'una única caja «Con niños» en la ficha').toHaveCount(1)
+    expect(await box.evaluate(el => el.tagName)).toBe('DIV')
+    await expect(box.locator(':scope > span.label')).toHaveText('Con niños')
+    expect(await normText(box)).toContain(inlineMdToPlain(sorgeto!.family!).replace(/\s+/g, ' ').trim())
+
+    // Posición (D-12): entre los hijos del article, después de `.maps-link` y antes de `.notes-area`.
+    const order = await card.evaluate((el) => {
+      const kids = Array.from(el.children)
+      const at = (pred: (c: Element) => boolean) => kids.findIndex(pred)
+      return {
+        maps: at(c => c.classList.contains('maps-link')),
+        family: at(c => c.classList.contains('family-box')),
+        notes: at(c => c.classList.contains('notes-area')),
+      }
+    })
+    expect(order.maps, 'la ficha tiene .maps-link').toBeGreaterThanOrEqual(0)
+    expect(order.notes, 'la ficha tiene .notes-area').toBeGreaterThanOrEqual(0)
+    expect(order.family, 'la caja va después de .maps-link').toBeGreaterThan(order.maps)
+    expect(order.family, 'la caja va antes de .notes-area').toBeLessThan(order.notes)
+
+    // En toda la página, tantas cajas como fichas con `family` en el YAML (las demás no ganan nada).
+    await expect(page.locator('.family-box')).toHaveCount(withFamily.length)
+
+    await context.close()
+  })
+
+  test('campania: la etiqueta «Con niños» se lee en claro y en oscuro (backstop theme E6)', async ({ browser }) => {
+    // 12-UI-SPEC §«Caja «Con niños»»: color-mix(#5a7a3a 75%, var(--ink)) con el --ink de cada tema.
+    const expected: Record<'light' | 'dark', Rgb> = {
+      light: [78, 101, 52],
+      dark: [126, 147, 96],
+    }
+    for (const theme of ['light', 'dark'] as const) {
+      const { context, page } = await newThemedPage(browser, theme)
+      await gotoHydrated(page, CAMPANIA_URL)
+      await expect(page.locator('html')).toHaveAttribute('data-theme', theme)
+      const label = page.locator('article[id="baia-di-sorgeto"] .family-box > span.label')
+      await expect(label).toHaveCount(1)
+      const rgb = toRgb(await label.evaluate(el => getComputedStyle(el).color))
+      expect(sameRgb(rgb, expected[theme]), `${theme}: ${JSON.stringify(rgb)} ≈ ${JSON.stringify(expected[theme])}`).toBe(true)
+      await context.close()
+    }
+  })
+})
