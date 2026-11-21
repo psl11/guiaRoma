@@ -180,7 +180,7 @@ Plans:
 
 **Goal**: Cada viaje puede poner sus propios encabezados en la sección Reservas (bloque de confirmados, sus dos grupos y la cabecera de la tabla) sin que Roma cambie lo más mínimo
 **Depends on**: Phase 12
-**Requirements**: CAMP-04 (habilitador; el contenido se escribe en la Fase 13)
+**Requirements**: CAMP-04
 **Success Criteria** (what must be TRUE):
   1. `reservas.yml` acepta encabezados opcionales para el bloque de confirmados, sus grupos y la cabecera de la tabla; si faltan, se usan exactamente los textos actuales de Roma («✅ Ya reservado · 3 comensales», «🎟️ Visitas y entradas reservadas», «Restaurantes · cuándo reservar y con cuánta antelación»)
   2. Un grupo de confirmados sin entradas no pinta su encabezado ni una lista vacía en un viaje que no sea Roma, y Roma conserva su DOM byte a byte
@@ -188,7 +188,7 @@ Plans:
   4. La puerta de paridad sigue 110/110 con los 56 goldens sin re-baseline; `base.css` y el resto del CSS congelado sin cambios
 **Plans**: TBD
 **Research**: no (RESEARCH de la Fase 13 §A.4/A.5 G-1 ya localiza `ReservasSection.vue:73,81,91` y `shared/schemas.ts:401-429`)
-**Notas**: inserción decimal pedida por la Fase 13 (D-23, decisión del usuario 2026-11-21: «Pequeño arreglo»). Solo campos `.optional()`; ningún contenido de Roma se edita; sin `<style scoped>` ni `v-html` nuevos.
+**Notas**: habilitador de CAMP-04 (el contenido de Reservas se escribe en la Fase 13). Inserción decimal pedida por la Fase 13 (D-23, decisión del usuario 2026-11-21: «Pequeño arreglo»). Solo campos `.optional()`; ningún contenido de Roma se edita; sin `<style scoped>` ni `v-html` nuevos.
 
 ### Phase 13: Contenido Campania 2027
 **Goal**: La familia puede usar la guía de Campania 2027 sobre el terreno: diez días con su logística, una ficha por lugar, dónde comer, qué reservar y cómo moverse, con los datos dudosos señalados
