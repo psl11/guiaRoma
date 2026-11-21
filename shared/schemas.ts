@@ -36,7 +36,8 @@ export const Motif = z.enum([
   'dome', 'pantheon', 'arch', 'fountain', 'obelisk', 'statue', 'painting', 'church',
   'fortress', 'temple', 'garden', 'keyhole', 'mask', 'monument', 'rooftops', 'library',
   'tower', 'stairs', 'coffee',
-  'thermal', // Fase 12 (D-10): poza termal
+  // Fase 12 (D-10): lugares de naturaleza (playa o cala, poza termal, río, sendero).
+  'sea', 'thermal', 'river', 'trail',
 ])
 export const Pace = z.enum(['all', 'medium', 'slow-only']) // data-pace por fila (DATA-02)
 // Tipo de lugar = color y popup del marcador (MARKER_STYLE / markerPopupHtml en app/utils/mapMarkers.ts).
