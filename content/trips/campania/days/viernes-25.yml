@@ -8,6 +8,10 @@ title: De Salerno a Nápoles
 subtitle: Autopista interior con parada en las laderas del Vesubio y noche de concierto en Nápoles.
 # Base de la noche (D-06): slug de una entrada de `stays` en trip.yml → «Dormís en Nápoles».
 stay: napoles
+# Ruta del día en coche (EXT-06, D-14): «Ver ruta del día» abre Google Maps con
+# `travelmode=driving` y el título «… en coche». Sin `enabled`, el botón sale con ≥ 2 paradas.
+route:
+  mode: driving
 # Variante de stat y de tramo nueva (EXT-03, D-09): el glifo 🚗 lo antepone el CSS.
 stats:
   - variant: car
@@ -22,4 +26,16 @@ timeline:
         recommended: true
         desc: '**Coche de alquiler** por la A3, con parada en las laderas del Vesubio'
         meta: '⏱ **≈1 h** sin tráfico'
-cards: []
+  - kind: stop
+    pace: all
+    time: '11:00'
+    title: Viñedos del Vesubio
+    ref: vesubio
+    note: Cata de Lacryma Christi entre viñas de tierra volcánica, con el golfo al fondo.
+  - kind: stop
+    pace: all
+    time: '17:30'
+    title: Rione Sanità
+    ref: rione-sanita
+    note: Paseo por el barrio de las escaleras barrocas antes de bajar a las catacumbas.
+cards: [vesubio, rione-sanita]

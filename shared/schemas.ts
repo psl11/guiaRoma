@@ -56,6 +56,9 @@ export const PlaceType = z.enum(['card', 'guided', 'concert', 'nature'])
 //    única exención (`PARITY_EXEMPT_TRANSPORT` en enumStyles.spec.ts).
 export const TransportVariant = z.enum(['taxi', 'walk', 'train', 'ferry', 'car', 'bus', 'bike', 'plane'])
 export const StatVariant = z.enum(['walk', 'train', 'taxi', 'metro', 'ticket', 'ferry', 'car', 'bus', 'bike', 'plane'])
+// Modo de la «ruta del día» (Fase 12, EXT-06, D-14) = el `travelmode` del enlace de Google Maps.
+// Va por día (`DaySchema.route.mode`), nunca en trip.yml. Sin él, `walking`: la ruta de Roma.
+export const RouteMode = z.enum(['walking', 'driving', 'transit'])
 
 // Sección de prosa (D-01): array ORDENADO {heading libre, body Markdown}. NUNCA campos
 // fijos por sección — los encabezados varían por ficha ("Qué es"/"Historia"/"Anécdotas"…).
@@ -242,6 +245,18 @@ export const DaySchema = z.object({
   // Base donde se duerme este día (Fase 12, D-06/D-07): el `slug` de una entrada de
   // `trip.stays`. Opcional (esquema aditivo: Roma no la define). Sin ella el día no pinta nada.
   stay: z.string().regex(STAY_SLUG_RE).optional(), // 'salerno'
+  // «Ruta del día» de este día (Fase 12, EXT-06, D-14). Opcional y aditivo: sin `route` (Roma) el
+  // modo es `walking` y el botón sale si hay ≥ 2 paradas y ningún ferry, como hoy.
+  //  · `mode`: el `travelmode` del enlace (a pie, en coche, en transporte público). Va por día,
+  //    porque un mismo viaje mezcla días a pie y días de coche.
+  //  · `enabled`: `false` oculta el botón en cualquier día; `true` lo fuerza aunque haya un ferry
+  //    (nunca con menos de 2 paradas). Sin él, decide la ocultación automática de los ferries.
+  //  · `z.strictObject`: un `modo:` o un `enable:` mal escritos fallan con `Unrecognized key` en vez
+  //    de perderse sin avisar (zod 4 tira las claves desconocidas) y dejar el día a pie.
+  route: z.strictObject({
+    mode: RouteMode.optional(),
+    enabled: z.boolean().optional(),
+  }).optional(),
 })
 
 // ── Food (.gastro-card) — RESEARCH 402-415 ───────────────────────────────────
@@ -518,3 +533,4 @@ export type Trip = z.infer<typeof TripSchema>
 export type BaseTimelineRow = z.infer<typeof BaseTimelineRow> // fila de dentro de una opción
 export type ChoiceRow = z.infer<typeof ChoiceRow> // bloque de alternativas (Fase 12)
 export type Stay = z.infer<typeof StaySchema> // base donde se duerme (Fase 12, D-06)
+export type RouteMode = z.infer<typeof RouteMode> // travelmode de la ruta del día (Fase 12, D-14)

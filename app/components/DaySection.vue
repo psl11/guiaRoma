@@ -51,6 +51,16 @@
 // `app/utils/dayRoute.ts` (Plan 06-01). `.day-route-btn` ya existe verbatim en base.css:393-413
 // (glifo 🗺️, `margin-left:auto`, hover, regla `<600px width:100%`) → CERO CSS nuevo aquí.
 //
+// RUTA DEL DÍA POR MODO (Fase 12, EXT-06, D-04, D-14): las paradas salen de `routeCards(day)`
+// (`day.cards` en orden menos las fichas citadas SOLO dentro de opciones de un `choice`: la ruta
+// nunca mezcla A y B) y siguen la misma cadena `monById → filter defensivo → pointFor`, sin filtro
+// por `type`. El botón se monta con `routeVisible` (día + número de paradas): nunca con < 2 paradas;
+// `day.route.enabled` lo oculta (`false`) o lo fuerza (`true`); sin él, un tramo `ferry` en el día
+// (también dentro de una opción) lo oculta. `day.route?.mode` (walking por defecto) cambia SOLO el
+// `travelmode` del `href` y el `title` (`routeTitle`); texto (`routeLabel`), glifo, `target` y
+// `rel` noopener no cambian. Roma no define `route`, ni `choice`, ni ferry: su `href`, su `title`
+// y su texto son byte a byte los de antes.
+//
 // «DORMÍS EN …» (Fase 12, EXT-02, D-06…D-08): TripView resuelve la base del día con
 // `stayFor(day, trip.stays)` y la pasa en la prop opcional `stay`. Con base, la cabecera pinta
 // `div.day-stay` («Dormís en » + `span.day-stay-name` con el `name` por `<MDC>`) DENTRO del `<div>`
@@ -69,16 +79,17 @@ const dayCards = computed(() =>
   props.day.cards.map(slug => props.monById.get(slug)).filter((m): m is Monument => !!m),
 )
 
-// Paradas de la "ruta del día": MISMA cadena que `dayCards` (mismo filtro defensivo, SIN filtro por
-// type — Pitfall 2) y luego `.map(pointFor)` → strings `"lat,lng"` en orden. `routeHref` arma el
-// enlace de Google Maps a pie (capando a 10 paradas). El botón solo se monta con ≥2 paradas.
+// Paradas de la "ruta del día": `routeCards(day)` (sin las fichas de solo-opción, D-04) y luego la
+// MISMA cadena que `dayCards` (mismo filtro defensivo, SIN filtro por type — Pitfall 2) y
+// `.map(pointFor)` → strings `"lat,lng"` en orden. `routeHref` arma el enlace de Google Maps en el
+// modo del día (a pie por defecto, D-14), capando a 10 paradas. El botón lo decide `routeVisible`.
 const points = computed(() =>
-  props.day.cards
+  routeCards(props.day)
     .map(slug => props.monById.get(slug))
     .filter((m): m is Monument => !!m)
     .map(pointFor),
 )
-const routeHref = computed(() => buildDirUrl(capStops(points.value)))
+const routeHref = computed(() => buildDirUrl(capStops(points.value), props.day.route?.mode))
 </script>
 
 <template>
@@ -125,12 +136,12 @@ const routeHref = computed(() => buildDirUrl(capStops(points.value)))
         />
       </div>
       <a
-        v-if="points.length >= 2"
+        v-if="routeVisible(day, points.length)"
         class="day-route-btn"
         :href="routeHref"
         target="_blank"
         rel="noopener"
-        title="Abre Google Maps con el recorrido del día a pie"
+        :title="routeTitle(day.route?.mode)"
       >{{ routeLabel(points.length) }}</a>
     </div>
 

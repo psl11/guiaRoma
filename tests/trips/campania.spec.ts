@@ -7,6 +7,7 @@ import { parse } from 'yaml'
 import { isVisible, type ItemPace, type Pace } from '../../app/utils/pace'
 import { inlineMdToPlain } from '../../app/utils/tripLayout'
 import { SVG_MOTIFS } from '../../app/utils/svgMotifs'
+import { routeLabel } from '../../app/utils/dayRoute'
 
 /**
  * FORMAS NUEVAS DE VIAJE sobre el borrador de Campania (Fase 12, EXT-01…EXT-07; D-01…D-17).
@@ -830,5 +831,97 @@ test.describe('campania: los cinco tramos nuevos (EXT-03, D-09)', () => {
       }
       await context.close()
     }
+  })
+})
+
+// ── EXT-06: la ruta del día por modo, sin ferry y sin mezclar opciones (12-06) ──────────────
+
+const ROUTE_BTN = 'a.day-route-btn'
+const DIR_PREFIX = 'https://www.google.com/maps/dir/?api=1&travelmode='
+
+// Puntos de un enlace de direcciones: origen + destino + cada waypoint (separados por `|`).
+function hrefPointCount(href: string): number {
+  const params = new URL(href).searchParams
+  const waypoints = params.get('waypoints')
+  return (params.get('origin') ? 1 : 0) + (params.get('destination') ? 1 : 0)
+    + (waypoints ? waypoints.split('|').length : 0)
+}
+
+// Fichas de las paradas comunes de un día (D-04), calculadas aquí desde el YAML y no con el util
+// de la guía: las de `cards` menos las `ref` que solo aparecen dentro de opciones de un `choice`.
+function sharedCards(day: YamlDay): string[] {
+  const top = new Set<string>()
+  const inOptions = new Set<string>()
+  for (const r of day.timeline) {
+    if (r.kind === 'stop' && typeof r.ref === 'string') top.add(r.ref)
+    if (r.kind !== 'choice') continue
+    for (const o of (r as YamlChoice).options) {
+      for (const x of o.rows) if (x.kind === 'stop' && typeof x.ref === 'string') inOptions.add(x.ref)
+    }
+  }
+  return day.cards.filter(slug => !(inOptions.has(slug) && !top.has(slug)))
+}
+
+test.describe('campania: ruta del día por modo (EXT-06, D-04, D-14)', () => {
+  test('campania: el viernes 25 abre la ruta del día en coche (EXT-06, D-14)', async ({ browser }) => {
+    const viernes = readYaml<YamlDay & { route?: { mode?: string } }>('days/viernes-25.yml')
+    expect(viernes.route?.mode, 'el viernes 25 es un día de coche').toBe('driving')
+    const stops = viernes.cards.filter(slug => MONUMENTS.some(m => m.slug === slug)).length
+    expect(stops, 'el viernes 25 tiene ≥ 2 fichas').toBeGreaterThanOrEqual(2)
+
+    const { context, page } = await newIsolatedPage(browser)
+    await gotoHydrated(page, CAMPANIA_URL)
+
+    const btn = page.locator(`section[id="viernes-25"] ${ROUTE_BTN}`)
+    await expect(btn).toHaveCount(1)
+    const href = await btn.getAttribute('href')
+    expect(href?.startsWith(`${DIR_PREFIX}driving`), `href en coche: ${href}`).toBe(true)
+    expect(hrefPointCount(href!), 'un punto por ficha del día').toBe(stops)
+    await expect(btn).toHaveAttribute('title', 'Abre Google Maps con el recorrido del día en coche')
+    await expect(btn).toHaveAttribute('target', '_blank')
+    await expect(btn).toHaveAttribute('rel', 'noopener')
+    await expect(btn).toHaveText(routeLabel(stops))
+
+    await context.close()
+  })
+
+  test('campania: el domingo 20, día de ferry, no ofrece ruta (EXT-06, D-14)', async ({ browser }) => {
+    // Anti-vacuidad: sin el ferry, el domingo 20 SÍ tendría botón (≥ 2 fichas que resuelven).
+    const domingo = readYaml<YamlDay & { route?: unknown }>('days/domingo-20.yml')
+    const resolved = domingo.cards.filter(slug => MONUMENTS.some(m => m.slug === slug))
+    expect(resolved.length, 'el domingo 20 resuelve ≥ 2 fichas').toBeGreaterThanOrEqual(2)
+    expect(domingo.timeline.some(r => r.kind === 'transport' && r.variant === 'ferry'), 'el domingo 20 tiene un ferry').toBe(true)
+    expect(domingo.route, 'el domingo 20 no fuerza la ruta').toBeUndefined()
+
+    const { context, page } = await newIsolatedPage(browser)
+    await gotoHydrated(page, CAMPANIA_URL)
+
+    const section = page.locator('section[id="domingo-20"]')
+    await expect(section.locator('.day-stats')).toHaveCount(1)
+    await expect(section.locator(ROUTE_BTN)).toHaveCount(0)
+
+    await context.close()
+  })
+
+  test('campania: la ruta del jueves 24 cuenta solo las paradas comunes (EXT-06, D-04)', async ({ browser }) => {
+    const jueves = readYaml<YamlDay>('days/jueves-24.yml')
+    const shared = sharedCards(jueves)
+    // Anti-vacuidad: el jueves 24 tiene fichas de solo-opción que la ruta deja fuera.
+    expect(shared.length, 'el jueves 24 excluye fichas de solo-opción').toBeLessThan(jueves.cards.length)
+    expect(shared.length, 'quedan ≥ 2 paradas comunes').toBeGreaterThanOrEqual(2)
+    const n = shared.length
+
+    const { context, page } = await newIsolatedPage(browser)
+    await gotoHydrated(page, CAMPANIA_URL)
+
+    const btn = page.locator(`${JUEVES} ${ROUTE_BTN}`)
+    await expect(btn).toHaveCount(1)
+    await expect(btn).toHaveText(`Ver ruta del día (${n} paradas)`)
+    const href = await btn.getAttribute('href')
+    expect(href?.startsWith(`${DIR_PREFIX}walking`), `href a pie: ${href}`).toBe(true)
+    expect(hrefPointCount(href!), 'puntos del href = paradas comunes').toBe(n)
+    await expect(btn).toHaveAttribute('title', 'Abre Google Maps con el recorrido del día a pie')
+
+    await context.close()
   })
 })

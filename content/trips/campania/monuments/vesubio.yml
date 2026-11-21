@@ -1,0 +1,24 @@
+slug: vesubio
+trip: campania
+roman: X
+name: Viñedos del Vesubio
+italian: 'Vigneti del Vesuvio · Lacryma Christi · Boscotrecase'
+day: Viernes 25
+coords:
+  lat: 40.8211
+  lng: 14.4260
+type: card
+motif: garden
+hero:
+  src: https://example.invalid/campania/vesubio.jpg
+  alt: Viñedos del Vesubio
+sections:
+  - heading: Qué es
+    body: >-
+      Las laderas del volcán, cubiertas de viñas sobre tierra de lava, donde se hace
+      el Lacryma Christi. Una bodega familiar enseña las cepas y sirve el vino con
+      vistas al golfo.
+facts:
+  - label: Acceso
+    value: 'Visita con cata · reservar con antelación'
+mapsQuery: Vigneti Vesuvio Boscotrecase

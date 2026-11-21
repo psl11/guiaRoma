@@ -1,0 +1,24 @@
+slug: rione-sanita
+trip: campania
+roman: XI
+name: Rione Sanità
+italian: 'Rione Sanità · Napoli'
+day: Viernes 25
+coords:
+  lat: 40.8590
+  lng: 14.2497
+type: card
+motif: church
+hero:
+  src: https://example.invalid/campania/rione-sanita.jpg
+  alt: Rione Sanità
+sections:
+  - heading: Qué es
+    body: >-
+      El barrio popular al pie de Capodimonte, con palacios barrocos de escaleras
+      abiertas, la basílica de Santa Maria della Sanità y las catacumbas de San
+      Gennaro bajo las calles.
+facts:
+  - label: Acceso
+    value: 'Libre · catacumbas con visita guiada'
+mapsQuery: Rione Sanità Napoli
