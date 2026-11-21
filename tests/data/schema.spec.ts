@@ -446,6 +446,55 @@ describe('portada: campos del viaje (D-08, D-23)', () => {
   })
 })
 
+// ── Bases del viaje y base del día (Fase 12, EXT-02, D-06) ────────────────────
+// `trip.stays` es una lista no vacía de bases estrictas ({ slug, name, area?, coords?, note? }) y
+// `day.stay` el slug de una de ellas. Los slugs cumplen ^[a-z0-9-]+$ y la referencia es exacta:
+// zod rechaza mayúsculas y espacios en vez de normalizarlos. Que la base exista es la regla
+// `stay-ref` de la puerta (invariants.spec.ts), no un refine.
+describe('stays / stay (D-06)', () => {
+  const dayBase = {
+    slug: 'jueves-24', trip: 'campania', order: 1, roman: 'I', eyebrow: 'jueves · 24 de junio',
+    title: 't', subtitle: 's', stats: [], timeline: [], cards: [],
+  }
+  const tripWith = (stays: unknown) => TripSchema.safeParse({ ...baseTrip, stays })
+
+  it('TripSchema acepta stays con una base mínima { slug, name }', () => {
+    expect(tripWith([{ slug: 'napoles', name: 'Nápoles' }]).success).toBe(true)
+  })
+
+  it('TripSchema acepta una base completa (area, coords, note) y un viaje sin stays', () => {
+    expect(tripWith([{
+      slug: 'salerno', name: 'Salerno', area: 'Costa de Amalfi', coords: { lat: 40.68, lng: 14.77 }, note: 'Cerca del _tren_.',
+    }]).success).toBe(true)
+    expect(TripSchema.safeParse(baseTrip).success).toBe(true)
+  })
+
+  it('TripSchema rechaza stays: [] (lista vacía)', () => {
+    expect(tripWith([]).success).toBe(false)
+  })
+
+  it('TripSchema rechaza una base con name vacío', () => {
+    expect(tripWith([{ slug: 'napoles', name: '' }]).success).toBe(false)
+  })
+
+  it.each(['Napoles', 'napoles_1', 'napoles '])('TripSchema rechaza una base con slug %j', (slug) => {
+    expect(tripWith([{ slug, name: 'Nápoles' }]).success).toBe(false)
+  })
+
+  it('TripSchema rechaza una base con una clave desconocida (nombre) — estricta', () => {
+    expect(tripWith([{ slug: 'napoles', name: 'Nápoles', nombre: 'Nápoles' }]).success).toBe(false)
+  })
+
+  it('DaySchema acepta stay: "salerno" y un día sin stay', () => {
+    expect(DaySchema.safeParse({ ...dayBase, stay: 'salerno' }).success).toBe(true)
+    expect(DaySchema.safeParse(dayBase).success).toBe(true)
+  })
+
+  it.each(['Salerno', 'salerno '])('DaySchema rechaza stay %j (sin normalizar)', (stay) => {
+    expect(DaySchema.safeParse({ ...dayBase, stay }).success).toBe(false)
+  })
+})
+
 // ── D-18 (Fase 12): Roma valida sin cambios con el esquema ampliado ──────────
 // Primer cambio de la fase, escrito ANTES de tocar el esquema: tiene que estar en verde antes y
 // después. Las formas nuevas (`choice` en el timeline, `stays`/`stay`, `route`, `family`) son

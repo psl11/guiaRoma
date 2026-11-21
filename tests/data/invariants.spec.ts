@@ -49,6 +49,11 @@ import {
  *    (`timelineRowsOf` de trips.ts): un `stop` o una entrada de `food` con `ref` roto dentro de una
  *    opción es una violación `ref` del día; un `[x](#…)` roto en el `title`/`heading` de una opción
  *    lo atrapa `anchor`, que ya recorre todo el dato.
+ *  - EXT-02 / D-06 `stay-ref`: el `stay` de cada día es el slug de una base de `trip.stays`
+ *    (comparación exacta); un slug inexistente, también en un viaje sin `stays`, es una violación
+ *    en el fichero del día («stay "<slug>" no existe en trip.yml stays»).
+ *  - EXT-02 / D-06 `stay-dup`: los slugs de `trip.stays` son únicos; un slug repetido es una
+ *    violación en trip.yml («stay "<slug>" duplicado en stays»).
  *
  * El bloque «la puerta tiene dientes» prueba cada regla con un fixture (en memoria con
  * `loadTripFromFiles` o en disco en tests/data/fixtures/trips/, NUNCA bajo content/).
@@ -495,6 +500,48 @@ describe('la puerta tiene dientes (fixtures)', () => {
     }))
     expectRule(vs, 'anchor', 'prueba/days/viernes.yml')
     expect(vs.find(v => v.rule === 'anchor')!.message).toContain('#nope')
+  })
+
+  // ── Fase 12 (EXT-02, D-06): cada `day.stay` es una base declarada en `trip.stays` ─────────
+  const twoStays = [{ slug: 'napoles', name: 'Nápoles' }, { slug: 'salerno', name: 'Salerno' }]
+  const dayStaying = (stay: string) => y({ ...validDay, stay })
+
+  it('stay-ref: un día con stay "nope" en un viaje con stays → una violación en el fichero del día', () => {
+    const vs = checkTrip(memTrip('prueba', { 'days/viernes.yml': dayStaying('nope') }, { stays: twoStays }))
+    expect(vs.filter(v => v.rule === 'stay-ref'), formatViolations(vs)).toEqual([{
+      file: 'content/trips/prueba/days/viernes.yml',
+      rule: 'stay-ref',
+      message: 'stay "nope" no existe en trip.yml stays',
+    }])
+  })
+
+  it('stay-ref: un día con stay en un viaje SIN stays también es una violación', () => {
+    const vs = checkTrip(memTrip('prueba', { 'days/viernes.yml': dayStaying('x') }))
+    expect(vs.filter(v => v.rule === 'stay-ref'), formatViolations(vs)).toEqual([{
+      file: 'content/trips/prueba/days/viernes.yml',
+      rule: 'stay-ref',
+      message: 'stay "x" no existe en trip.yml stays',
+    }])
+  })
+
+  it('stay-ref: la referencia es exacta (stay "Salerno" no resuelve a la base "salerno")', () => {
+    const vs = checkTrip(memTrip('prueba', { 'days/viernes.yml': dayStaying('Salerno') }, { stays: twoStays }))
+    expectRule(vs, 'stay-ref', 'prueba/days/viernes.yml')
+  })
+
+  it('stay-dup: dos bases con slug "procida" → violación en trip.yml', () => {
+    const stays = [{ slug: 'procida', name: 'Procida' }, { slug: 'ischia', name: 'Ischia' }, { slug: 'procida', name: 'Procida bis' }]
+    const vs = checkTrip(memTrip('prueba', {}, { stays }))
+    expect(vs.filter(v => v.rule === 'stay-dup'), formatViolations(vs)).toEqual([{
+      file: 'content/trips/prueba/trip.yml',
+      rule: 'stay-dup',
+      message: 'stay "procida" duplicado en stays',
+    }])
+  })
+
+  it('stay-ref / stay-dup: día y base coincidentes → sin violaciones', () => {
+    const vs = checkTrip(memTrip('prueba', { 'days/viernes.yml': dayStaying('salerno') }, { stays: twoStays }))
+    expect(vs, formatViolations(vs)).toEqual([])
   })
 })
 
