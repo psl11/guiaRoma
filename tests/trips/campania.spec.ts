@@ -990,3 +990,110 @@ test.describe('campania: la nota «Con niños» (EXT-07, D-12)', () => {
     }
   })
 })
+
+// ── EXT-05: el mapa de un viaje de varias ciudades (12-07) ──────────────────────────────────
+
+// Una ficha por ciudad del esqueleto (12-UI-SPEC §«Mapa multi-ciudad»): Nápoles, Procida, Ischia, Salerno.
+const CITY_CARDS = ['spaccanapoli', 'marina-corricella', 'baia-di-sorgeto', 'duomo-di-salerno']
+
+test.describe('campania: un mapa con varias ciudades (EXT-05, D-13)', () => {
+  test('campania: el mapa encuadra Nápoles, Procida, Ischia y Salerno a la vez (EXT-05, D-13)', async ({ browser }) => {
+    // Los numerales salen del YAML de cada ficha.
+    const romans = CITY_CARDS.map((slug) => {
+      const m = MONUMENTS.find(x => x.slug === slug)
+      expect(m, `monuments/${slug}.yml existe`).toBeDefined()
+      return m!.roman
+    })
+
+    const { context, page } = await newIsolatedPage(browser)
+    // En `nuxi dev` (solo ahí: la build publicada lo conserva, ver map-fallback-notes.spec) el
+    // contenedor montado pierde `id="leaflet-map"` y con él el `height: 520px` de base.css, así que
+    // Leaflet encuadraría en una caja de 0 px de alto. Se le devuelve esa altura en la página, antes
+    // de que monte el mapa, para medir el encuadre con el tamaño real. No toca el código del mapa.
+    await page.addInitScript(() => {
+      document.addEventListener('DOMContentLoaded', () => {
+        const style = document.createElement('style')
+        style.textContent = 'section[id="mapa"] .map-wrapper > .leaflet-container { height: 520px; }'
+        document.head.append(style)
+      })
+    })
+    await gotoHydrated(page, CAMPANIA_URL)
+
+    // Un marcador por ficha (sin clustering). Bajo `section[id="mapa"]`: en el DOM montado el
+    // contenedor ya no conserva `#leaflet-map`; la caja del mapa es su `.leaflet-container`.
+    const markers = page.locator('section[id="mapa"] .custom-marker')
+    await expect(markers).toHaveCount(MONUMENTS.length)
+    const map = page.locator('section[id="mapa"] .leaflet-container')
+    await expect(map).toHaveCount(1)
+    await expect.poll(async () => (await map.boundingBox())?.height ?? 0, { message: 'el mapa tiene alto' }).toBeGreaterThan(400)
+    await map.scrollIntoViewIfNeeded()
+
+    // Leaflet deja en el DOM los marcadores fuera de vista, colocados fuera de la caja del contenedor
+    // (`overflow: hidden`): «a la vista» = caja del marcador dentro de la del mapa. Se espera con
+    // poll porque hay un `invalidateSize` a los 300 ms del montaje.
+    const outside = async (): Promise<string[]> => {
+      const box = await map.boundingBox()
+      if (!box) return ['(sin caja del mapa)']
+      const out: string[] = []
+      for (const roman of romans) {
+        const mb = await (await markerByRoman(page, roman)).boundingBox()
+        const inside = !!mb && mb.width > 0
+          && mb.x >= box.x && mb.y >= box.y
+          && mb.x + mb.width <= box.x + box.width && mb.y + mb.height <= box.y + box.height
+        if (!inside) out.push(roman)
+      }
+      return out
+    }
+    await expect.poll(outside, { message: 'marcadores de las cuatro ciudades fuera de la vista', timeout: 10_000 }).toEqual([])
+
+    // Encuadrados, no amontonados: `fitBounds(…).pad(0.1)` reparte los marcadores por la mayor parte
+    // del mapa (un zoom demasiado bajo los juntaría en un punto, que también «cabe» en la caja).
+    const box = (await map.boundingBox())!
+    const centers = await Promise.all(MONUMENTS.map(async (m) => {
+      const b = (await (await markerByRoman(page, m.roman)).boundingBox())!
+      return { x: b.x + b.width / 2, y: b.y + b.height / 2 }
+    }))
+    const spanX = Math.max(...centers.map(c => c.x)) - Math.min(...centers.map(c => c.x))
+    const spanY = Math.max(...centers.map(c => c.y)) - Math.min(...centers.map(c => c.y))
+    expect(Math.max(spanX / box.width, spanY / box.height), `reparto ${Math.round(spanX)}×${Math.round(spanY)} px en ${Math.round(box.width)}×${Math.round(box.height)}`).toBeGreaterThan(0.6)
+
+    await context.close()
+  })
+
+  test('campania: a 375 px las formas nuevas parten línea sin desbordar (backstop overflow E1/E2/E6)', async ({ browser }) => {
+    const context = await browser.newContext({ viewport: { width: 375, height: 800 } })
+    await blockExternal(context)
+    const page = await context.newPage()
+    await gotoHydrated(page, CAMPANIA_URL)
+
+    // E2: una base con nombre largo (~60 caracteres), alargada en la página (las del esqueleto son cortas).
+    const stay = page.locator('.day-stay .day-stay-name').first()
+    await expect(stay).toHaveCount(1)
+    await stay.evaluate((el) => {
+      el.textContent = 'Palazzo Belvedere della Costiera sopra il porto di Marina Grande'
+    })
+
+    // E6: la caja «Con niños» de tres frases.
+    const box = page.locator('article[id="baia-di-sorgeto"] .family-box')
+    await expect(box).toHaveCount(1)
+    await box.scrollIntoViewIfNeeded()
+
+    const measure = (el: Element) => {
+      const cs = getComputedStyle(el)
+      const lh = Number.parseFloat(cs.lineHeight)
+      return {
+        height: el.getBoundingClientRect().height,
+        lineHeight: Number.isNaN(lh) ? Number.parseFloat(cs.fontSize) * 1.2 : lh,
+      }
+    }
+    const stayLine = await page.locator('.day-stay').first().evaluate(measure)
+    const family = await box.evaluate(measure)
+    const doc = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, inner: window.innerWidth }))
+
+    expect(doc.scroll, 'la página no desborda en horizontal').toBeLessThanOrEqual(doc.inner)
+    expect(stayLine.height, '«Dormís en …» con nombre largo parte línea').toBeGreaterThan(1.5 * stayLine.lineHeight)
+    expect(family.height, 'la caja «Con niños» ocupa más de una línea').toBeGreaterThan(1.5 * family.lineHeight)
+
+    await context.close()
+  })
+})

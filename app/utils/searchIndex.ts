@@ -20,6 +20,10 @@
  *   "Tardobarroco" que el `card.textContent` SÍ indexaba). Un superconjunto es seguro; un
  *   subconjunto sería una regresión de SC#1.
  *
+ * Fase 12 (EXT-07, D-12): `family`, el texto de la caja «Con niños», va tras `sorrentino`. La caja
+ * es texto visible de la ficha, así que el superconjunto la incluye. Las fichas sin `family` (todas
+ * las de Roma) dan exactamente el mismo haystack que antes.
+ *
  * NO se toca el Markdown a mano: los campos Md (`*.body`, `*.text`, `Link.label`/`note`) son
  * Markdown-inline (p. ej. `Arquitectura: **Tardobarroco**`, `[Bernini](#art-bernini)`). El
  * tokenizador por defecto de MiniSearch (`SPACE_OR_PUNCTUATION`) ya separa por `*`/`[`/`]`/
@@ -57,6 +61,7 @@ export function buildHaystack(m: Monument): string {
   for (const s of m.sections) parts.push(s.heading, s.body)
   for (const f of m.facts) parts.push(f.label, f.value)
   if (m.sorrentino) parts.push(m.sorrentino.label, m.sorrentino.text)
+  if (m.family) parts.push(m.family)
   for (const c of m.culture ?? []) parts.push(c.title, c.text)
   for (const a of m.artists ?? []) parts.push(a.label, a.note ?? '')
   for (const a of m.arch ?? []) parts.push(a.label, a.note ?? '')
