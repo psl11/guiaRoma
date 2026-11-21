@@ -5,11 +5,11 @@ milestone_name: Multi-viaje + Campania
 current_phase: 12
 current_phase_name: Formas nuevas de viaje
 status: verifying
-stopped_at: Completed 12-07-PLAN.md
-last_updated: "2026-11-21T11:39:54.533Z"
+stopped_at: Phase 13 context gathered
+last_updated: "2026-11-21T17:18:21.067Z"
 last_activity: 2026-11-21
 last_activity_desc: Phase 12 execution started
-state_head: 0f1382824265b07af88d6318f5dd11ecd6711395
+state_head: d3f03e858274a11069e2d245adc5db03184548b9
 progress:
   total_phases: 6
   completed_phases: 0
@@ -347,9 +347,9 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-21T11:39:54.365Z
-Stopped at: Completed 12-07-PLAN.md
-Resume file: None
+Last session: 2026-11-21T17:18:20.643Z
+Stopped at: Phase 13 context gathered
+Resume file: .planning/phases/13-contenido-campania-2027/13-CONTEXT.md
 
 ## Operator Next Steps
 
