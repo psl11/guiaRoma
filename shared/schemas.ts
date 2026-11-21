@@ -352,7 +352,6 @@ export const ArtistRowSchema = z.object({
   terms: z.array(z.object({ term: z.string(), def: Md })).optional(), // solo glossary
 })
 
-// ── Reference — solo reservas + practica (D-03/D-04) — RESEARCH 450-479 ───────
 // ── Encabezados de Reservas por viaje (Fase 12.1, habilitador de CAMP-04; D-01, D-02, D-04) ──
 // `headings` titula el primer bloque de confirmados (`mesas`), el segundo (`visitas`) y la
 // cabecera de la tabla (`table`). Cada clave ausente cae al texto de Roma (D-02,
@@ -374,6 +373,8 @@ const ReservasHeadings = z.strictObject({
   visitas: HeadingText.optional(), // 2.º h4 de .reservas-confirmadas
   table: HeadingText.optional(), // .reservas-box-header
 })
+
+// ── Reference — solo reservas + practica (D-03/D-04) — RESEARCH 450-479 ───────
 export const ReservasSchema = z.object({
   slug: z.literal('reservas'),
   trip: z.string(),
