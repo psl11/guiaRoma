@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { SVG_MOTIFS, motifSvg } from '../../app/utils/svgMotifs'
 import { Motif } from '../../shared/schemas'
+import type { Motif as MotifValue } from '../../shared/schemas'
 
 /**
  * Cobertura unitaria de la tabla de motivos SVG `SVG_MOTIFS` + el lookup `motifSvg`
@@ -57,5 +58,63 @@ describe('motifSvg — lookup tipado (UI-05)', () => {
 
   it('motifSvg de una clave desconocida devuelve undefined', () => {
     expect(motifSvg('not-a-motif' as never)).toBeUndefined()
+  })
+})
+
+// ── Fase 12 (D-10): los cuatro motivos de los lugares de naturaleza ──────────────────────────
+// Ids de UI-SPEC §«Motifs nuevos» por motivo: [cielo, agua o piedra]. Únicos en toda la tabla.
+const NATURE_IDS: Record<string, readonly [string, string]> = {
+  sea: ['sk_se', 'wa_se'],
+  thermal: ['sk_th', 'wa_th'],
+  river: ['sk_rv', 'wa_rv'],
+  trail: ['sk_tr', 'st_tr'],
+}
+const NATURE_MOTIFS = Object.keys(NATURE_IDS)
+const SVG_HEAD = '<svg viewBox="0 0 800 280" preserveAspectRatio="xMidYMid slice">'
+
+describe('motivos de naturaleza (D-10)', () => {
+  it('el enum Motif incluye sea, thermal, river y trail', () => {
+    for (const m of NATURE_MOTIFS) expect(Motif.options as readonly string[]).toContain(m)
+  })
+
+  it.each(NATURE_MOTIFS)('%s: mismo lienzo, cielo y grupo que los 19 de Roma', (m) => {
+    const svg = SVG_MOTIFS[m]
+    expect(svg, `SVG_MOTIFS.${m}`).toBeDefined()
+    expect(svg!.startsWith(SVG_HEAD)).toBe(true)
+    expect(svg).toContain('<g opacity=".9">')
+    expect(svg).toContain('stop-color="#f5edd9"')
+    expect(svg).toContain('stop-color="#e8d8b5"')
+  })
+
+  it.each(NATURE_MOTIFS)('%s: sus dos ids de UI-SPEC y ≤ 1.600 caracteres', (m) => {
+    const svg = SVG_MOTIFS[m]
+    expect(svg, `SVG_MOTIFS.${m}`).toBeDefined()
+    for (const id of NATURE_IDS[m]!) expect(svg).toContain(`id="${id}"`)
+    expect(svg!.length).toBeLessThanOrEqual(1600)
+  })
+
+  it.each(NATURE_MOTIFS)('%s: sin <style>, <text>, <image> ni xlink', (m) => {
+    const svg = SVG_MOTIFS[m]
+    expect(svg, `SVG_MOTIFS.${m}`).toBeDefined()
+    for (const banned of ['<style', '<text', '<image', 'xlink:']) expect(svg).not.toContain(banned)
+  })
+
+  it.each(['sea', 'river', 'trail'])('motifSvg(%s) devuelve una cadena que empieza por <svg', (m) => {
+    const svg = motifSvg(m as MotifValue)
+    expect(typeof svg).toBe('string')
+    expect(svg!.startsWith('<svg')).toBe(true)
+  })
+})
+
+describe('SVG_MOTIFS — ids únicos en toda la tabla (Pitfall 8)', () => {
+  it('cada motivo del enum empieza por el lienzo de 800×280', () => {
+    for (const key of MOTIF_KEYS) expect(SVG_MOTIFS[key]!.startsWith(SVG_HEAD), key).toBe(true)
+  })
+
+  it('ningún id="…" se repite entre los SVG de la tabla', () => {
+    const ids = Object.values(SVG_MOTIFS).flatMap(svg => [...svg.matchAll(/id="([^"]+)"/g)].map(m => m[1]))
+    const dups = ids.filter((id, i) => ids.indexOf(id) !== i)
+    expect(dups).toEqual([])
+    expect(ids.length).toBeGreaterThanOrEqual(36)
   })
 })
