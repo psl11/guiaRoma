@@ -186,9 +186,9 @@ Plans:
   2. Un grupo de confirmados sin entradas no pinta su encabezado ni una lista vacía en un viaje que no sea Roma, y Roma conserva su DOM byte a byte
   3. Los campos nuevos pasan por el superconjunto `ReferenceRowSchema` (Content no devuelve `null`) y el esquema estricto rechaza claves mal escritas
   4. La puerta de paridad sigue 110/110 con los 56 goldens sin re-baseline; `base.css` y el resto del CSS congelado sin cambios
-**Plans**: 1 plan
+**Plans**: 1/1 plans executed
 Plans:
-- [ ] 12.1-01-PLAN.md — Encabezados de Reservas por viaje: fixture de bytes de Roma capturado de HEAD, `ReservasHeadings` estricto en `ReservasSchema` + `ReferenceRowSchema`, defaults de Roma en `app/utils/reservasHeadings.ts`, `ReservasSection.vue` con grupos vacíos ocultos; dientes del esquema y de los helpers; puerta 110/110 + `test:trips` + congelados + §5.9 de tests/README.md (habilitador de CAMP-04)
+- [x] 12.1-01-PLAN.md — Encabezados de Reservas por viaje: fixture de bytes de Roma capturado de HEAD, `ReservasHeadings` estricto en `ReservasSchema` + `ReferenceRowSchema`, defaults de Roma en `app/utils/reservasHeadings.ts`, `ReservasSection.vue` con grupos vacíos ocultos; dientes del esquema y de los helpers; puerta 110/110 + `test:trips` + congelados + §5.9 de tests/README.md (habilitador de CAMP-04)
 
 **Research**: no (RESEARCH de la Fase 13 §A.4/A.5 G-1 ya localiza `ReservasSection.vue:73,81,91` y `shared/schemas.ts:401-429`)
 **Notas**: habilitador de CAMP-04 (el contenido de Reservas se escribe en la Fase 13). Inserción decimal pedida por la Fase 13 (D-23, decisión del usuario 2026-11-21: «Pequeño arreglo»). Solo campos `.optional()`; ningún contenido de Roma se edita; sin `<style scoped>` ni `v-html` nuevos.

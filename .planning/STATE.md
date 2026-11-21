@@ -4,17 +4,17 @@ milestone: v1.1
 milestone_name: Multi-viaje + Campania
 current_phase: "12.1"
 current_phase_name: Títulos de Reservas por viaje
-status: executing
-stopped_at: Phase 13 context gathered
-last_updated: "2026-11-21T23:09:17.545Z"
+status: verifying
+stopped_at: Completed 12.1-01-PLAN.md
+last_updated: "2026-11-21T23:19:12.876Z"
 last_activity: 2026-11-21
 last_activity_desc: Phase 12 execution started
-state_head: 18fc18f2bc456f8a76b4cd04990e7e8bf4678864
+state_head: 82b1217ff1416da53499a1448b1acd69d4dfaef4
 progress:
   total_phases: 7
   completed_phases: 0
   total_plans: 25
-  completed_plans: 24
+  completed_plans: 25
   percent: 0
 ---
 
@@ -31,7 +31,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 
 Phase: 12.1 (Títulos de Reservas por viaje) — READY TO EXECUTE
 Plan: 7 of 7
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-11-21 — Phase 12 execution started
 
 Progress: [░░░░░░░░░░] 0%
@@ -127,6 +127,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 12 P05 | 11min | 2 tasks | 12 files |
 | Phase 12 P06 | 8min | 2 tasks | 11 files |
 | Phase 12 P07 | 12min | 3 tasks | 10 files |
+| Phase 12.1 P01 | 8 min | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -311,6 +312,8 @@ Recent decisions affecting current work:
 - [Phase 12]: 12-06 (D-04/D-14): routeVisible — menos de 2 paradas nunca; enabled false oculta; enabled true fuerza; si no, un ferry (también dentro de una opción) oculta; routeCards excluye fichas de solo-opción
 - [Phase 12]: D-12: MonumentSchema.family (Md.min(1).optional()) se pinta como caja culture-box.family-box «Con niños» tras maps-link/sorrentino-box y antes de culture/notes, fuera de las ramas de boxOrder; también entra en el haystack de búsqueda
 - [Phase 12]: D-13: EXT-05 sin cambio de código del mapa (setView + fitBounds pad 0.1); en nuxi dev el contenedor pierde id=leaflet-map (diferido), el E2E le devuelve los 520 px de base.css
+- [Phase 12.1]: Roma's Reservas headings live once as RESERVAS_HEADINGS_DEFAULT in app/utils/reservasHeadings.ts (add-alongside; content/trips/roma frozen): a future trip with reservas.yml and no headings inherits them, so Campania must declare headings
+- [Phase 12.1]: Second h4 and .reservas-box-header keep Roma's one-space padding via a template literal inside the interpolation; Roma #reservas guarded byte-for-byte by tests/data/fixtures/roma-reservas.html (never regenerated to pass)
 
 ### Pending Todos
 
@@ -351,9 +354,9 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-21T17:18:20.643Z
-Stopped at: Phase 13 context gathered
-Resume file: .planning/phases/13-contenido-campania-2027/13-CONTEXT.md
+Last session: 2026-11-21T23:19:12.663Z
+Stopped at: Completed 12.1-01-PLAN.md
+Resume file: None
 
 ## Operator Next Steps
 
