@@ -3,22 +3,34 @@ phase: 10
 review: 10-REVIEW.md
 titles: json
 findings:
+  - id: CR-01
+    severity: critical
+    disposition: open
+    title: "The reference-definition rejection only catches unindented definitions with simple labels, so `[x][r]` still renders cross-trip links"
+  - id: CR-02
+    severity: critical
+    disposition: open
+    title: "The frontmatter-props rejection matches only one way of writing the YAML key, so `::a` + `---` + `href` still renders `<a href>`"
+  - id: CR-03
+    severity: critical
+    disposition: open
+    title: "`FoodEntry.href` renders as `<a :href>` with no checks; the gate accepts `/trips/roma`, `#nope` and `javascript:`"
   - id: WR-01
     severity: warning
-    disposition: fixed
-    title: "The link allowlist and anchor check (D-05b / D-08) can be bypassed with valid Markdown that MDC renders as links"
+    disposition: open
+    title: "Prose can create DOM ids and heading `<a>`s that the gate never sees, which undermines `card-placement` and `trip-summary-link`"
   - id: WR-02
     severity: warning
-    disposition: deferred
-    title: "`inlineMdToPlain` (the D-14 neutral fallback) garbles ordinary titles"
+    disposition: open
+    title: "The raw-HTML rejection matches only `<a`; other raw elements that navigate (`<area href>`, `<form action>`) still pass"
+  - id: IN-01
+    severity: info
+    disposition: open
+    title: "`card-placement` reports duplicate violations when two monument files share a slug"
   - id: WR-03
     severity: warning
     disposition: fixed
     title: "The `anchor` rule still accepts monuments that are never rendered (D-08 does not hold for them)"
-  - id: IN-01
-    severity: info
-    disposition: deferred
-    title: "Impossible-state guard — `v-if=\"e.day\"` and `v-if=\"refById.get(...)\"` in the layout loop"
   - id: IN-02
     severity: info
     disposition: deferred
@@ -39,24 +51,27 @@ findings:
     severity: info
     disposition: deferred
     title: "`dayLabel.ts`'s doc comment contradicts the new `pill` field"
-open: 0
-total: 9
-recorded: 2026-11-20T14:49:31.100Z
+open: 6
+total: 12
+recorded: 2026-11-22T20:20:39.781Z
 ---
 
 # Phase 10: Code Review Disposition
 
 | Finding | Severity | Disposition | Source |
 |---------|----------|-------------|--------|
-| WR-01 | warning | fixed | 10-06 (G-10-2) |
-| WR-02 | warning | deferred | 10-UAT.md · Deferred Follow-Ups |
-| WR-03 | warning | fixed | 10-06 (G-10-2) |
-| IN-01 | info | deferred | 10-UAT.md · Deferred Follow-Ups |
-| IN-02 | info | deferred | 10-UAT.md · Deferred Follow-Ups |
-| IN-03 | info | deferred | 10-UAT.md · Deferred Follow-Ups |
-| IN-04 | info | deferred | 10-UAT.md · Deferred Follow-Ups |
-| IN-05 | info | deferred | 10-UAT.md · Deferred Follow-Ups |
-| IN-06 | info | deferred | 10-UAT.md · Deferred Follow-Ups |
+| CR-01 | critical | open | - |
+| CR-02 | critical | open | - |
+| CR-03 | critical | open | - |
+| WR-01 | warning | open | - |
+| WR-02 | warning | open | - |
+| IN-01 | info | open | - |
+| WR-03 | warning | fixed | 10-06 (G-10-2) (not in the current review) |
+| IN-02 | info | deferred | 10-UAT.md · Deferred Follow-Ups (not in the current review) |
+| IN-03 | info | deferred | 10-UAT.md · Deferred Follow-Ups (not in the current review) |
+| IN-04 | info | deferred | 10-UAT.md · Deferred Follow-Ups (not in the current review) |
+| IN-05 | info | deferred | 10-UAT.md · Deferred Follow-Ups (not in the current review) |
+| IN-06 | info | deferred | 10-UAT.md · Deferred Follow-Ups (not in the current review) |
 
 Dispositions: `open` (recorded, not yet triaged), `fixed`, `skipped`, `deferred`.
 Set `deferred` by hand and put the reason in the Source cell; both are preserved. A `|` in the reason is kept as prose and escaped on the next run.
