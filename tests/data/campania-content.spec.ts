@@ -646,26 +646,27 @@ describe('publicación (D-02)', () => {
 })
 
 /**
- * Numeral de marcador de las 24 fichas finales, por orden de visita (D-10). El estadio lleva ♪
- * como el concierto de Roma. Las fichas que aún no existen (13-03…13-06) ya tienen su numeral
- * reservado, así que ningún commit intermedio repite uno (`markerByRoman` exige unicidad).
+ * Numeral de marcador de las 24 fichas, por orden de visita (D-10): dentro de cada día siguen el
+ * orden del timeline y, entre días, el orden de los días, como promete el `howTo` («El mapa marca
+ * los puntos por orden de visita»). El estadio lleva ♪ como el concierto de Roma y queda fuera de
+ * la secuencia. Los numerales son únicos (`markerByRoman` del e2e exige uno por marcador).
  */
 const ROMANS: Record<string, string> = {
-  'lungomare-caracciolo': 'I',
-  'vomero': 'II',
+  'vomero': 'I',
+  'lungomare-caracciolo': 'II',
   'spaccanapoli': 'III',
-  'marina-corricella': 'IV',
-  'pozzo-vecchio': 'V',
+  'pozzo-vecchio': 'IV',
+  'marina-corricella': 'V',
   'terra-murata': 'VI',
   'forio': 'VII',
   'monte-epomeo': 'VIII',
   'baia-di-sorgeto': 'IX',
   'salerno-centro-storico': 'X',
   'duomo-di-salerno': 'XI',
-  'raito': 'XII',
-  'baia-di-trentova': 'XIII',
-  'valle-del-calore': 'XIV',
-  'castello-arechi': 'XV',
+  'castello-arechi': 'XII',
+  'raito': 'XIII',
+  'baia-di-trentova': 'XIV',
+  'valle-del-calore': 'XV',
   'vesubio': 'XVI',
   'rione-sanita': 'XVII',
   'stadio-maradona': '♪',
@@ -689,6 +690,36 @@ describe('numerales del mapa (D-10)', () => {
     const romans = docsOf('monument').map(d => String(d.data.roman))
     expect(romans.length).toBeGreaterThanOrEqual(1)
     expect(new Set(romans).size).toBe(romans.length)
+  })
+
+  /** Secuencia de numerales en orden; ♪ queda fuera, así que su posición es −1 y se ignora. */
+  const SEQUENCE: readonly string[] = Object.values(ROMANS).filter(r => r !== '♪')
+  const rankOf = (slug: string): number => SEQUENCE.indexOf(String(monumentOf(slug)?.roman))
+  const daysInOrder = (): Doc[] => [...docsOf('day')].sort((a, b) => Number(a.data.order) - Number(b.data.order))
+
+  it('dentro de cada día, las fichas siguen el orden del timeline (paradas con ref, por aparición)', () => {
+    for (const d of daysInOrder()) {
+      const cards = (d.data.cards as string[] | undefined) ?? []
+      const firstSeen: string[] = []
+      for (const row of timelineRowsOf(d.data.timeline)) {
+        const ref = row.kind === 'stop' && typeof row.ref === 'string' ? row.ref : undefined
+        if (ref && cards.includes(ref) && !firstSeen.includes(ref)) firstSeen.push(ref)
+      }
+      expect(firstSeen, `${d.file}: cada ficha tiene su parada`).toHaveLength(cards.length)
+      expect(cards, `${d.file}: cards en orden de visita`).toEqual(firstSeen)
+    }
+  })
+
+  it('los numerales crecen en orden de visita, dentro de cada día y de un día al siguiente', () => {
+    const ranks: { slug: string, rank: number }[] = []
+    for (const d of daysInOrder()) {
+      for (const slug of (d.data.cards as string[] | undefined) ?? []) {
+        const rank = rankOf(slug)
+        if (rank >= 0) ranks.push({ slug, rank })
+      }
+    }
+    expect(ranks.length, 'todas las fichas numeradas salen en algún día').toBe(SEQUENCE.length)
+    expect(ranks.map(r => r.rank), ranks.map(r => r.slug).join(' → ')).toEqual(SEQUENCE.map((_, i) => i))
   })
 })
 
