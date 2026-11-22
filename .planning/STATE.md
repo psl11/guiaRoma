@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 13
 current_phase_name: Contenido Campania 2027
 status: executing
-stopped_at: Completed 13-05-PLAN.md
-last_updated: "2026-11-22T00:55:35.337Z"
+stopped_at: Completed 13-06-PLAN.md
+last_updated: "2026-11-22T01:02:22.709Z"
 last_activity: 2026-11-22
 last_activity_desc: Phase 12.1 complete, transitioned to Phase 9
-state_head: 47d031ec6f2a690c0135144e060de4456d3d1f3b
+state_head: 6137f31e93edb898f69dd4c1ba2be44a93e2beb5
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 33
-  completed_plans: 30
+  completed_plans: 31
   percent: 14
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 13 (Contenido Campania 2027) — READY TO EXECUTE
-Plan: 6 of 8
+Plan: 7 of 8
 Status: Ready to execute
 Last activity: 2026-11-22 — Phase 12.1 complete, transitioned to Phase 9
 
@@ -134,6 +134,7 @@ Progress: [█░░░░░░░░░] 14%
 | Phase 13 P03 | 12min | 3 tasks | 15 files |
 | Phase 13 P04 | 6min | 3 tasks | 12 files |
 | Phase 13 P05 | 7min | 2 tasks | 9 files |
+| Phase 13 P06 | 10min | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -332,6 +333,8 @@ Recent decisions affecting current work:
 - [Phase 13]: 13-04: option-only cards are cited only through stop.ref, never linked from light items or prose (WR-02 route leak)
 - [Phase 13]: 13-05: Friday 25 parks the car near the Naples base (marked, ZTL warning) and never hands it back; Ultimo stop at 19:30 is arrival with margin, start time and gates marked, date from the tickets (D-01, D-22)
 - [Phase 13]: 13-05: domingo-27 and lunes-28 take orders 8 and 9 until 13-06 inserts sabado-26; the stadium card is listed only in viernes-25 and cited on Sunday by stop.ref
+- [Phase 13]: Saturday 26: shared car departure, one choice (Opción 1 Casertavecchia / Opción 2 Averno, Cuma, Miseno), car return at Capodichino outside the choice with place and time marked; no route button because no card is shared
+- [Phase 13]: Cuma: closed Tuesdays, compulsory booking with turns, Antro 25 at a time and bradisismo refund stated plainly; 2027 hours and Circuito Flegreo price marked
 
 ### Pending Todos
 
@@ -372,8 +375,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-22T00:55:35.110Z
-Stopped at: Completed 13-05-PLAN.md
+Last session: 2026-11-22T01:02:22.477Z
+Stopped at: Completed 13-06-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
