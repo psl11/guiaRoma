@@ -155,13 +155,13 @@ fresco es la **señal de alarma**.
 
 | Magnitud | Valor | Cómo se obtiene |
 |----------|-------|-----------------|
-| Tests que la puerta **ejecuta** (`test:parity`, con el cinturón grep-invert) | **110** en **13 ficheros** (`Total: 110 tests in 13 files`, re-medido al cierre de la Fase 13) | `pnpm exec playwright test -c playwright.gate.config.ts --grep-invert "reutiliza el MISMO TripView" --list` → línea `Total:` |
-| Config de puerta **en crudo** (solo `testIgnore` golden, antes del grep-invert) | **112** en **13 ficheros** (`Total: 112 tests in 13 files`, re-medido al cierre de la Fase 13) | `pnpm exec playwright test -c playwright.gate.config.ts --list` → línea `Total:` |
+| Tests que la puerta **ejecuta** (`test:parity`, con el cinturón grep-invert) | **126** en **15 ficheros** (`Total: 126 tests in 15 files`, re-medido al cierre de la Fase 14) | `pnpm exec playwright test -c playwright.gate.config.ts --grep-invert "reutiliza el MISMO TripView" --list` → línea `Total:` |
+| Config de puerta **en crudo** (solo `testIgnore` golden, antes del grep-invert) | **128** en **15 ficheros** (`Total: 128 tests in 15 files`, re-medido al cierre de la Fase 14) | `pnpm exec playwright test -c playwright.gate.config.ts --list` → línea `Total:` |
 
-La diferencia **112 → 110** son exactamente los **2** del test de dev-routing
+La diferencia **128 → 126** son exactamente los **2** del test de dev-routing
 (mobile + desktop) que retira el grep-invert. (Con `RUN_DEV_ROUTING` sin definir,
 la skip de describe de Plan 04 deja esos 2 como `skipped` en una corrida real;
-en `--list` el grep-invert los retira de la cuenta, dejando 110 seleccionados.)
+en `--list` el grep-invert los retira de la cuenta, dejando 126 seleccionados.)
 
 Historia del conteo: **80 / 11** hasta la Fase 10; la Fase 11 suma **30** — 2 del test
 «la portada vive en / y ROMA_URL sirve Roma» de `shell.spec.ts` (11-05), 14 de
@@ -176,9 +176,13 @@ La Fase 13 publica Campania sin tocar ningún spec de paridad: portada.spec.ts (
 saca del manifiesto los viajes publicados (ahora Campania y Roma) y los borradores que quedan
 (prueba y forma, que siguen dando 404), así que el conteo sigue en **110 / 13** (re-medido con
 `--list` al cierre de la Fase 13, plan 13-08) y los 56 goldens no cambian.
+La Fase 14 suma **16**: 4 de `upgrade-from-main.spec.ts` (2 × mobile + desktop, 14-01) y 12 de
+`cross-trip.spec.ts` (6 × mobile + desktop, 14-02), y dos ficheros nuevos: **126 / 15**
+(re-medido con `--list` al cierre de la Fase 14, plan 14-03; detalle en §6). Los 56 goldens
+siguen sin cambios desde la etiqueta `v1.0`.
 `golden.spec.ts` aporta **0** a ambos conteos (excluido a nivel de fichero).
 
-Desglose por fichero de los **110** seleccionados (suma = 110):
+Desglose por fichero de los **126** seleccionados (suma = 126):
 
 | Fichero | Tests |
 |---------|------:|
@@ -186,6 +190,7 @@ Desglose por fichero de los **110** seleccionados (suma = 110):
 | `modes.spec.ts` | 14 |
 | `legacy-redirect.spec.ts` | 14 |
 | `map-fallback-notes.spec.ts` | 12 |
+| `cross-trip.spec.ts` | 12 |
 | `search-route.spec.ts` | 10 |
 | `shell.spec.ts` | 8 |
 | `render-reference.spec.ts` | 8 |
@@ -194,15 +199,16 @@ Desglose por fichero de los **110** seleccionados (suma = 110):
 | `render-cards.spec.ts` | 6 |
 | `navigation.spec.ts` | 6 |
 | `visual-diff.spec.ts` | 4 |
+| `upgrade-from-main.spec.ts` | 4 |
 | `subpath.spec.ts` | 2 |
 
-**Recalcular y comparar** (si el `Total:` ya no es 110 / 13 ficheros, una
+**Recalcular y comparar** (si el `Total:` ya no es 126 / 15 ficheros, una
 exclusión cambió — investigar ANTES de tocar este README):
 
 ```bash
 pnpm exec playwright test -c playwright.gate.config.ts \
   --grep-invert "reutiliza el MISMO TripView" --list | tail -1
-# Esperado: «Total: 110 tests in 13 files»
+# Esperado: «Total: 126 tests in 15 files»
 ```
 
 > Conteos medidos empíricamente el 2026-11-21 (cierre de la Fase 12, plan 12-07) contra
@@ -211,6 +217,9 @@ pnpm exec playwright test -c playwright.gate.config.ts \
 > los mismos que al cierre de la Fase 11 (2026-11-20; la medida anterior, 80 / 11 y 82 / 11, es
 > del 2026-06-23). Re-medido el 2026-11-22 al cierre de la Fase 13 (plan 13-08, con Campania ya
 > publicada): los mismos `Total: 110 tests in 13 files` y `Total: 112 tests in 13 files`.
+> Re-medido el 2026-11-22 al cierre de la Fase 14 (plan 14-03, tras una corrida de
+> `pnpm verify` en verde desde cachés limpias): `Total: 126 tests in 15 files` con el
+> grep-invert y `Total: 128 tests in 15 files` en crudo (+16 = los dos specs de §6).
 > Re-medir si se añade/retira un spec de paridad o cambia cualquiera de las dos exclusiones.
 
 ---
