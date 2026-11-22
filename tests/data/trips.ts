@@ -307,10 +307,13 @@ const REJECTED_LINK_FORMS: ReadonlyArray<readonly [RegExp, string]> = [
   // `:a[x]{href=…}` y `::a{href=…}` pintan `<a href>`; `to` es fail-closed por si un componente
   // global tipo NuxtLink se resolviera por nombre. También el binding `{:href=…}`.
   [/\{[^{}]*\b(?:href|to)\s*=/i, 'atributo MDC «{href=…}» / «{to=…}»'],
-  // Advisory del plan-checker (10-06): un bloque MDC con props en frontmatter YAML
-  // (`::a` / `---` / `href: /trips/roma` / `---`) también pinta `<a href>` (comprobado con
-  // parseMarkdown de @nuxtjs/mdc 0.22.0); lo mismo con `to:`.
-  [/^[ \t]*:{2,}[A-Za-z][\w-]*[^\n]*\n[ \t]*---[ \t]*\n(?:[^\n]*\n)*?[ \t]*["']?(?:href|to)["']?[ \t]*:/m, 'props MDC «href:» / «to:» en frontmatter'],
+  // Advisory del plan-checker (10-06) + CR-02 (10-REVIEW): un bloque MDC con props en frontmatter
+  // YAML (`::a` / `---` / `href: /trips/roma` / `---`) pinta `<a href>` (comprobado con
+  // parseMarkdown de @nuxtjs/mdc 0.22.0). remark-mdc lee ese frontmatter como YAML completo
+  // (`{href: …}`, `? href`, `"\x68ref"`, alias, `<<:`), así que no se buscan claves: se rechaza el
+  // CONSTRUCTO, una línea `::x` seguida de una línea `---` (o más guiones), también dentro de `>`,
+  // `-` o `1.`. La guía no usa ningún bloque `::x` con frontmatter.
+  [/^(?:[ \t>]|[*+-][ \t]|\d{1,9}[.)][ \t])*:{2,}[A-Za-z][\w-]*[^\n]*\n(?:[ \t>]|[*+-][ \t]|\d{1,9}[.)][ \t])*-{3,}[ \t]*$/m, 'bloque MDC con frontmatter «::x / ---»'],
 ]
 
 /**

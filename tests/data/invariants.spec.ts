@@ -593,6 +593,11 @@ describe('la puerta tiene dientes (fixtures)', () => {
   it.each([
     '::a\n---\nhref: /trips/roma\n---\nesto\n::',
     '::a\n---\nto: /trips/roma\n---\nesto\n::',
+    // CR-02 (10-REVIEW): otras grafías YAML de la misma clave, y el bloque dentro de un contenedor.
+    '::a\n---\n{href: /trips/roma}\n---\nesto\n::',
+    '::a\n---\n? href\n: /trips/roma\n---\nesto\n::',
+    '::a\n---\n"\\x68ref": /trips/roma\n---\nesto\n::',
+    '- ::a\n  ----\n  href: /trips/roma\n  ----\n  esto\n  ::',
   ])('G-10-2 (advisory) cross-trip-link: bloque MDC con props en frontmatter %j se rechaza (D-05b)', (body) => {
     const vs = checkTrip(galeriaWith(body))
     expect(vs.filter(v => v.rule === 'cross-trip-link'), formatViolations(vs)).toEqual([

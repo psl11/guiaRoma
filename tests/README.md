@@ -351,7 +351,10 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
   etiqueta multilínea o con `\]` escapado, y cubren la nota `[^1]: …`; CR-01 de 10-REVIEW), el HTML crudo `<a …>` y los atributos MDC `{href=…}`/`{to=…}`
   (`:a[x]{href=…}`, `::a{href=…}`). También se comprobó (con `parseMarkdown` de `@nuxtjs/mdc`
   0.22.0) que un bloque MDC con props en frontmatter YAML (`::a` / `---` / `href: /trips/roma` /
-  `---`) **sí** pinta `<a href>` (y `to:` igual), así que esa forma también se rechaza. El
+  `---`) **sí** pinta `<a href>` (y `to:` igual), así que esa forma también se rechaza. Como
+  remark-mdc lee ese frontmatter como YAML completo (`{href: …}`, `? href`, `"\x68ref"`…), no se
+  buscan claves: se rechaza el constructo, una línea `::x` seguida de una línea `---` (o más
+  guiones), también dentro de `>`, `-` o `1.` (CR-02 de 10-REVIEW). El
   escaneo es léxico y fail-closed (puede dar un falso rojo, nunca un falso verde); la ruta del
   parser se descartó porque no se resuelve con pnpm y la v1.1 no admite dependencias nuevas.
   `card-placement` exige que cada ficha aparezca **exactamente una vez** en la unión de los
