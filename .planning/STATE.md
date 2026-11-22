@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 14
 current_phase_name: Verificación del milestone
 status: executing
-stopped_at: Completed 14-01-PLAN.md
-last_updated: "2026-11-22T01:54:05.485Z"
+stopped_at: Completed 14-02-PLAN.md
+last_updated: "2026-11-22T01:59:45.527Z"
 last_activity: 2026-11-22
 last_activity_desc: Phase 12.1 complete, transitioned to Phase 9
-state_head: ed4ff985279a12ab17e3c98077305ce0ea70744d
+state_head: 449fe4c6bdfa44df9af1c79824e4e74a4de670bb
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 36
-  completed_plans: 34
+  completed_plans: 35
   percent: 14
 ---
 
@@ -138,6 +138,7 @@ Progress: [█░░░░░░░░░] 14%
 | Phase 13 P07 | 5min | 2 tasks | 4 files |
 | Phase 13 P08 | 6min | 2 tasks | 7 files |
 | Phase 14 P01 | 15min | 2 tasks | 1 files |
+| Phase 14 P02 | 10min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -343,6 +344,7 @@ Recent decisions affecting current work:
 - [Phase 13]: Campania published at the Phase 13 close (D-02): draft key and Phase 12 control mark removed in one commit with every draft-dependent test; reversible, deploy is a separate act
 - [Phase 13]: CAMPANIA_SENTINEL kept in the build-isolation offenders scan as a regression guard
 - [Phase 14]: 14-01: PAR-03 upgrade spec uses a live-guide oracle (main:index.html seeded with the user's storage) returning UI state and post-restore storage; the only allowed rewrite (roma-pace->slow under light mode) is asserted against main's own restore
+- [Phase 14]: 14-02: cross-trip isolation and zero sql_dump/WASM proven on the published build (closes 13-REVIEW WR-06); CSS-vs-main data spec with only the 08-06 orphaned-rule allowlist
 
 ### Pending Todos
 
@@ -383,8 +385,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-22T01:54:05.202Z
-Stopped at: Completed 14-01-PLAN.md
+Last session: 2026-11-22T01:59:45.236Z
+Stopped at: Completed 14-02-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
