@@ -2,23 +2,41 @@ slug: valle-del-calore
 trip: campania
 roman: XIV
 name: Valle del Río Calore
-italian: 'Valle del Calore · Felitto · Cilento'
+italian: 'Gole del Calore · Felitto · Cilento'
 day: Jueves 24
 coords:
-  lat: 40.4723
-  lng: 15.2465
+  lat: 40.3668
+  lng: 15.2525
 type: nature
 motif: river
 hero:
-  src: https://example.invalid/campania/valle-del-calore.jpg
-  alt: Valle del Río Calore
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Le_gole_del_Calore.jpg/960px-Le_gole_del_Calore.jpg
+  alt: El río Calore entre las paredes de roca de sus gargantas, junto a Felitto
 sections:
   - heading: Qué es
     body: >-
-      Un desfiladero del Cilento donde el río Calore corre entre paredes de roca y
-      bosque de ribera, con un viejo puente de piedra y pozas de agua fría y clara
-      para bañarse en verano.
+      Las gargantas del río Calore junto a Felitto, en el interior del Cilento: el
+      agua corre entre paredes de roca y bosque de ribera. Junto al río hay una zona
+      de picnic, un restaurante y una poza natural que forma una antigua presa,
+      donde la gente del lugar viene a bañarse en verano.
+  - heading: Qué mirar
+    body: >-
+      El color verde del agua en la poza, las paredes de roca de la garganta y, al
+      final del sendero que sale de Felitto, el puente medieval de un solo arco
+      sobre el río.
+  - heading: En vuestro día
+    body: >-
+      El día de la Opción B: agua dulce, sombra de árboles y un sendero junto al
+      río. La ruta completa del CAI, de Felitto a las gargantas y el puente, ronda
+      las 4 h con 350 m de desnivel; con niños, basta un tramo corto y la poza.
 facts:
   - label: Acceso
-    value: 'Libre · sendero señalizado desde Felitto'
+    value: 'Libre · sendero en circuito desde Felitto, con tramos más empinados'
+  - label: Baño
+    value: 'Normas de baño y calidad del agua **⚠ por confirmar**'
 mapsQuery: Gole del Calore Felitto
+family: >-
+  Las rocas del río resbalan y el agua baja fría incluso en junio: calzado de agua
+  para los niños y nadie en el río sin un adulto al lado. El sendero tiene tramos
+  más empinados, así que con los pequeños mejor quedarse en la zona de la poza.
+  Las normas de baño y la calidad del agua están **⚠ por confirmar**.

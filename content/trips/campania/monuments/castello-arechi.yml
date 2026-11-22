@@ -5,19 +5,29 @@ name: Castello di Arechi
 italian: 'Castello di Arechi · Salerno'
 day: Jueves 24
 coords:
-  lat: 40.6869
-  lng: 14.7614
+  lat: 40.6845
+  lng: 14.7547
 type: card
 motif: fortress
 hero:
-  src: https://example.invalid/campania/castello-arechi.jpg
-  alt: Castello di Arechi
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Arechi_Castle_%28Salerno%29.jpg/960px-Arechi_Castle_%28Salerno%29.jpg
+  alt: El castillo de Arechi sobre la colina de Salerno
 sections:
   - heading: Qué es
     body: >-
-      La fortaleza lombarda que vigila Salerno desde la colina, con murallas
-      sobre el golfo y las mejores vistas de la ciudad al atardecer.
+      La fortaleza que vigila Salerno desde lo alto de la colina, con el nombre de
+      Arechi, el príncipe lombardo que hizo de la ciudad su capital. Murallas y
+      torres de piedra sobre el casco antiguo, con todo el golfo a los pies.
+  - heading: Qué mirar
+    body: >-
+      La vista desde las murallas: los tejados del centro storico, el puerto, el
+      paseo marítimo y la costa que se pierde hacia Amalfi por un lado y hacia el
+      sur por el otro.
+  - heading: En vuestro día
+    body: >-
+      La subida de media mañana, en coche, después de la catedral: desde arriba se
+      entiende la ciudad entera antes de salir hacia la costa o hacia el río.
 facts:
   - label: Acceso
-    value: 'De pago · hasta el anochecer'
+    value: 'En coche por la carretera de la colina · horario y entrada **⚠ por confirmar**'
 mapsQuery: Castello di Arechi Salerno

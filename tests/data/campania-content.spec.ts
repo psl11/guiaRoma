@@ -58,10 +58,14 @@ const WRITTEN_MONUMENTS: string[] = [
   'terra-murata',
   'forio',
   'salerno-centro-storico',
+  'duomo-di-salerno',
+  'raito',
+  'valle-del-calore',
+  'castello-arechi',
 ]
 
 /** Fichas que deben llevar nota familiar (D-09). Los planes siguientes añaden las suyas. */
-const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto', 'pozzo-vecchio']
+const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto', 'pozzo-vecchio', 'valle-del-calore']
 
 /**
  * Ficheros (ruta relativa al viaje) que deben llevar el marcador porque tienen datos dudosos.
@@ -78,6 +82,10 @@ const MARKER_FILES: string[] = [
   'monuments/forio.yml',
   'days/miercoles-23.yml',
   'monuments/salerno-centro-storico.yml',
+  'monuments/duomo-di-salerno.yml',
+  'monuments/raito.yml',
+  'monuments/valle-del-calore.yml',
+  'monuments/castello-arechi.yml',
   'food/g-1-concettina.yml',
   'food/g-1-pizzeria-vomero.yml',
   'food/g-2-vannulo.yml',
@@ -342,6 +350,17 @@ describe('fichas escritas (CAMP-02, D-10, D-11)', () => {
     expect(family).toContain('escalones')
     expect(family).toContain('linterna')
     expect(family).toContain(BOLD_MARKER)
+  })
+
+  it('Raito y Albori están en Vietri sul Mare, no en el Cilento (D-26)', () => {
+    const doc = docsOf('monument').find(d => d.slug === 'raito')
+    expect(doc, 'raito existe').toBeDefined()
+    expect(String(doc!.data.italian)).toContain('Vietri sul Mare')
+    expect(stringsOf(doc!).filter(t => t.includes('Cilento'))).toEqual([])
+    // Las coordenadas del esqueleto caían a unos 11 km de las gargantas (RESEARCH, XIV).
+    const { lat, lng } = monumentOf('valle-del-calore')!.coords as { lat: number, lng: number }
+    expect(Math.abs(lat - 40.3668)).toBeLessThanOrEqual(0.02)
+    expect(Math.abs(lng - 15.2525)).toBeLessThanOrEqual(0.02)
   })
 })
 
