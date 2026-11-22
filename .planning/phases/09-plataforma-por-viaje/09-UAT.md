@@ -3,7 +3,7 @@ status: diagnosed
 phase: 09-plataforma-por-viaje
 source: [09-VERIFICATION.md]
 started: 2026-11-20T12:45:00Z
-updated: 2026-11-22T11:16:46.624Z
+updated: 2026-11-22T12:25:53Z
 ---
 
 ## Current Test
@@ -38,12 +38,20 @@ expected: Decisión: cerrar ahora con un plan `--gaps` (reservar los ids de secc
 result: pass
 note: "Superada por la ejecución posterior: WR-02 cerrado (`cross-trip-link` es lista blanca: solo `#id` o `http(s)://`, `tests/data/invariants.spec.ts:37`); WR-01 cerrado (D-05: slug de día = ancla reservada, cubierto por `dup-id`/`fixed-anchor`, `invariants.spec.ts:36-39`). 208/208 tests verdes."
 
+### 6. Prohibicion 09-06 (juicio, sin tier asignado): la puerta de datos nunca omite en silencio una carpeta de viaje, una entrada de content/trips/ ni un YAML que no sabe clasificar o parsear (sin fail-open)
+expected: Confirmar el veredicto NO AUTORITATIVO del verificador: respetada. Evidencia directa: con un zzmayus.YML real en content/trips/prueba/monuments/, con un content/trips/zzsuelto.yml real y con una carpeta oculta content/trips/.zz/, vitest run tests/data sale con codigo 1 y nombra cada fichero ([stray-file], [stray-file], [trip-slug]). unverified-prohibition - human review recommended
+result: [pending]
+
+### 7. Prohibicion 09-06 (juicio, sin tier asignado): ningun fichero bajo content/ (incluido content/trips/roma/), tests/parity/ (56 goldens), app/assets/css/ ni content.config.ts se modifica; las mutaciones de prueba dejan git status limpio
+expected: Confirmar el veredicto NO AUTORITATIVO del verificador: respetada. Evidencia determinista: git diff 68be7a5 HEAD --stat -- content tests/parity app/assets/css content.config.ts vacio; git status solo muestra .planning/state.json y .planning/ui-reviews/ sin seguimiento tras mis mutaciones. unverified-prohibition - human review recommended
+result: [pending]
+
 ## Summary
 
-total: 5
+total: 7
 passed: 4
 issues: 1
-pending: 0
+pending: 2
 skipped: 0
 blocked: 0
 
