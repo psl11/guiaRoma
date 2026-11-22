@@ -291,3 +291,50 @@ describe('trip.yml (D-18, D-04, D-24)', () => {
     expect(sections?.gastronomia?.eyebrow).toBe('Campania · gastronomía')
   })
 })
+
+/**
+ * Numeral de marcador de las 24 fichas finales, por orden de visita (D-10). El estadio lleva ♪
+ * como el concierto de Roma. Las fichas que aún no existen (13-03…13-06) ya tienen su numeral
+ * reservado, así que ningún commit intermedio repite uno (`markerByRoman` exige unicidad).
+ */
+const ROMANS: Record<string, string> = {
+  'lungomare-caracciolo': 'I',
+  'vomero': 'II',
+  'spaccanapoli': 'III',
+  'marina-corricella': 'IV',
+  'pozzo-vecchio': 'V',
+  'terra-murata': 'VI',
+  'forio': 'VII',
+  'monte-epomeo': 'VIII',
+  'baia-di-sorgeto': 'IX',
+  'salerno-centro-storico': 'X',
+  'duomo-di-salerno': 'XI',
+  'raito': 'XII',
+  'baia-di-trentova': 'XIII',
+  'valle-del-calore': 'XIV',
+  'castello-arechi': 'XV',
+  'vesubio': 'XVI',
+  'rione-sanita': 'XVII',
+  'stadio-maradona': '♪',
+  'casertavecchia': 'XVIII',
+  'lago-d-averno': 'XIX',
+  'antro-della-sibilla': 'XX',
+  'spiaggia-di-miseno': 'XXI',
+  'napoli-sotterranea': 'XXII',
+  'capodimonte': 'XXIII',
+}
+
+describe('numerales del mapa (D-10)', () => {
+  it('cada ficha de Campania tiene su numeral final por orden de visita', () => {
+    for (const doc of docsOf('monument')) {
+      expect(Object.keys(ROMANS), `${doc.file}: slug con numeral asignado`).toContain(doc.slug)
+      expect(doc.data.roman, doc.file).toBe(ROMANS[doc.slug])
+    }
+  })
+
+  it('los numerales presentes son únicos', () => {
+    const romans = docsOf('monument').map(d => String(d.data.roman))
+    expect(romans.length).toBeGreaterThanOrEqual(1)
+    expect(new Set(romans).size).toBe(romans.length)
+  })
+})
