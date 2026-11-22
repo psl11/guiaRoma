@@ -5,23 +5,23 @@ titles: json
 findings:
   - id: CR-01
     severity: critical
-    disposition: open
+    disposition: fixed
     title: "The reference-definition rejection only catches unindented definitions with simple labels, so `[x][r]` still renders cross-trip links"
   - id: CR-02
     severity: critical
-    disposition: open
+    disposition: fixed
     title: "The frontmatter-props rejection matches only one way of writing the YAML key, so `::a` + `---` + `href` still renders `<a href>`"
   - id: CR-03
     severity: critical
-    disposition: open
+    disposition: fixed
     title: "`FoodEntry.href` renders as `<a :href>` with no checks; the gate accepts `/trips/roma`, `#nope` and `javascript:`"
   - id: WR-01
     severity: warning
-    disposition: open
+    disposition: fixed
     title: "Prose can create DOM ids and heading `<a>`s that the gate never sees, which undermines `card-placement` and `trip-summary-link`"
   - id: WR-02
     severity: warning
-    disposition: open
+    disposition: fixed
     title: "The raw-HTML rejection matches only `<a`; other raw elements that navigate (`<area href>`, `<form action>`) still pass"
   - id: IN-01
     severity: info
@@ -51,20 +51,20 @@ findings:
     severity: info
     disposition: deferred
     title: "`dayLabel.ts`'s doc comment contradicts the new `pill` field"
-open: 6
+open: 1
 total: 12
-recorded: 2026-11-22T20:20:39.781Z
+recorded: 2026-11-22T22:20:40.367Z
 ---
 
 # Phase 10: Code Review Disposition
 
 | Finding | Severity | Disposition | Source |
 |---------|----------|-------------|--------|
-| CR-01 | critical | open | - |
-| CR-02 | critical | open | - |
-| CR-03 | critical | open | - |
-| WR-01 | warning | open | - |
-| WR-02 | warning | open | - |
+| CR-01 | critical | fixed | 10-REVIEW-FIX.md |
+| CR-02 | critical | fixed | 10-REVIEW-FIX.md |
+| CR-03 | critical | fixed | 10-REVIEW-FIX.md |
+| WR-01 | warning | fixed | 10-REVIEW-FIX.md |
+| WR-02 | warning | fixed | 10-REVIEW-FIX.md |
 | IN-01 | info | open | - |
 | WR-03 | warning | fixed | 10-06 (G-10-2) (not in the current review) |
 | IN-02 | info | deferred | 10-UAT.md · Deferred Follow-Ups (not in the current review) |
