@@ -1,5 +1,5 @@
 ---
-status: complete
+status: diagnosed
 phase: 10-forma-y-chrome-desde-datos
 source: [10-VERIFICATION.md]
 started: 2026-11-20T15:10:00Z
