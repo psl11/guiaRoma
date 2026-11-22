@@ -665,3 +665,80 @@ describe('numerales del mapa (D-10)', () => {
     expect(new Set(romans).size).toBe(romans.length)
   })
 })
+
+/** Los diez días del viaje en su orden (D-03), con su pastilla. */
+const DAY_SLUGS = [
+  'sabado-19', 'domingo-20', 'lunes-21', 'martes-22', 'miercoles-23',
+  'jueves-24', 'viernes-25', 'sabado-26', 'domingo-27', 'lunes-28',
+] as const
+
+const DAY_PILLS = ['Sáb 19', 'Dom 20', 'Lun 21', 'Mar 22', 'Mié 23', 'Jue 24', 'Vie 25', 'Sáb 26', 'Dom 27', 'Lun 28']
+
+describe('los diez días y las 24 fichas (CAMP-01, CAMP-02, D-03, D-04, D-07, D-08)', () => {
+  const days = [...docsOf('day')].sort((a, b) => Number(a.data.order) - Number(b.data.order))
+  const transportsOf = (slug: string): unknown[] =>
+    timelineRowsOf(dayOf(slug)!.timeline).filter(r => r.kind === 'transport').map(r => r.variant)
+  const hasChoice = (day: Rec): boolean => asRecs(day.timeline).some(r => r.kind === 'choice')
+
+  it('diez días con sus slugs, orden 1..10 y pastillas (D-03)', () => {
+    expect(days.map(d => d.slug)).toEqual([...DAY_SLUGS])
+    expect(days.map(d => d.data.order)).toEqual(DAY_SLUGS.map((_, i) => i + 1))
+    expect(days.map(d => d.data.pill)).toEqual(DAY_PILLS)
+    for (const d of days) expect(String(d.data.eyebrow), d.file).toMatch(EYEBROW_RE)
+  })
+
+  it('el registro de días escritos cubre los diez (D-04)', () => {
+    expect(new Set(Object.keys(WRITTEN_DAYS))).toEqual(new Set(DAY_SLUGS))
+  })
+
+  it('cada tipo de tramo aparece en sus días (D-07)', () => {
+    for (const slug of ['sabado-19', 'lunes-28']) expect(transportsOf(slug), `${slug}: plane`).toContain('plane')
+    for (const slug of ['domingo-20', 'lunes-21', 'miercoles-23']) expect(transportsOf(slug), `${slug}: ferry`).toContain('ferry')
+    expect(transportsOf('domingo-20'), 'domingo-20: bike').toContain('bike')
+    for (const slug of ['miercoles-23', 'jueves-24', 'viernes-25', 'sabado-26']) expect(transportsOf(slug), `${slug}: car`).toContain('car')
+    expect(DAY_SLUGS.some(slug => transportsOf(slug).includes('bus')), 'algún día en autobús').toBe(true)
+  })
+
+  it('el botón de ruta solo sale el martes 22, el jueves 24 y el viernes 25 (D-08)', () => {
+    const visible = days.filter((d) => {
+      const routeDay = asRouteDay(d.data)
+      return routeVisible(routeDay, routeCards(routeDay).length)
+    }).map(d => d.slug)
+    expect(visible).toEqual(['martes-22', 'jueves-24', 'viernes-25'])
+    for (const slug of ['sabado-19', 'domingo-27', 'lunes-28']) {
+      expect((dayOf(slug)!.route as Rec | undefined)?.enabled, `${slug}: route.enabled`).toBe(false)
+    }
+  })
+
+  it('solo el jueves 24 y el sábado 26 tienen alternativas (D-05)', () => {
+    expect(days.filter(d => hasChoice(d.data)).map(d => d.slug)).toEqual(['jueves-24', 'sabado-26'])
+  })
+
+  it('las fichas son exactamente las 24 de ROMANS, con foto de Wikimedia', () => {
+    const monuments = docsOf('monument')
+    expect(Object.keys(ROMANS)).toHaveLength(24)
+    expect(new Set(monuments.map(d => d.slug))).toEqual(new Set(Object.keys(ROMANS)))
+    expect(monuments).toHaveLength(24)
+    for (const m of monuments) {
+      expect(String((m.data.hero as Rec).src), m.file).toMatch(/^https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\//)
+    }
+    expect(monuments.filter(m => m.data.type === 'nature').length, 'al menos 3 de naturaleza').toBeGreaterThanOrEqual(3)
+  })
+
+  it('cada ficha está en las fichas de un solo día (Edge: ficha en dos días)', () => {
+    const owners = new Map<string, string[]>()
+    for (const d of days) {
+      for (const slug of (d.data.cards as string[] | undefined) ?? []) owners.set(slug, [...(owners.get(slug) ?? []), d.slug])
+    }
+    for (const slug of Object.keys(ROMANS)) {
+      expect(owners.get(slug) ?? [], `${slug}: días que lo listan`).toHaveLength(1)
+    }
+    expect([...owners.keys()].filter(slug => !(slug in ROMANS)), 'fichas listadas que no existen').toEqual([])
+  })
+
+  it('el estadio sale el domingo 27 solo como stop.ref (Pitfall 7)', () => {
+    const sunday = dayOf('domingo-27')!
+    expect(timelineRowsOf(sunday.timeline).some(r => r.kind === 'stop' && r.ref === 'stadio-maradona')).toBe(true)
+    expect(sunday.cards as string[]).not.toContain('stadio-maradona')
+  })
+})

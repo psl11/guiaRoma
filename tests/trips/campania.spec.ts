@@ -432,13 +432,14 @@ test.describe('campania: formas de las alternativas (EXT-01, D-02, D-03, D-05)',
 interface YamlDayHead { slug: string, order: number, pill: string }
 
 test.describe('campania: los días del viaje (D-03)', () => {
-  test('campania: los días aparecen en orden con su pastilla (D-03)', async ({ browser }) => {
+  test('campania: los diez días aparecen en orden con su pastilla (D-03)', async ({ browser }) => {
     const days = readdirSync(join(CAMPANIA_ROOT, 'days'))
       .filter(f => f.endsWith('.yml'))
       .map(f => readYaml<YamlDayHead>(`days/${f}`))
       .sort((a, b) => a.order - b.order)
     // Derivado de los YAML (D-20): la Fase 13 añade días plan a plan, siempre con `order` 1..N.
     expect(days.map(d => d.order), 'order contiguo 1..N').toEqual(days.map((_, i) => i + 1))
+    expect(days, 'los diez días (D-03)').toHaveLength(10)
     const slugs = days.map(d => d.slug)
     const slugSet = new Set(slugs)
 
