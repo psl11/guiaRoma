@@ -4,10 +4,10 @@ slug: "forma-y-chrome-desde-datos"
 # status lifecycle: draft (seeded by plan-phase) → validated (set by validate-phase §6)
 # audit-milestone §5.5 distinguishes NOT-VALIDATED (draft) from PARTIAL (validated + nyquist_compliant: true) (#2117)
 status: validated
-nyquist_compliant: false
+nyquist_compliant: true
 wave_0_complete: true
 created: "2026-11-20"
-validated: "2026-11-20"
+validated: "2026-11-22"
 ---
 
 # Phase 10 — Validation Strategy
@@ -57,6 +57,7 @@ validated: "2026-11-20"
 | SHAPE-05 | Trampa: ninguna marca de Roma en título/body de `prueba` y `forma`; control positivo en Roma | e2e dev | `pnpm test:trips -g "trampa"` | ✅ | ✅ green |
 | SHAPE-05 | Dientes del matcher (aroma/Romaña no; Roma/ROYAL COURT sí) | unit | `pnpm vitest run tests/unit/romaLeaks.spec.ts` | ✅ | ✅ green |
 | SHAPE-05 / D-17 | Literales de chrome de Roma ausentes de `app/**` (plantillas incluidas) | unit | `pnpm vitest run tests/unit/romaChromeGuard.spec.ts` | ✅ | ✅ green |
+| G-10-2 (SHAPE-01/02, D-05b/D-08) | La puerta ve toda forma de enlace que MDC pinta como `<a>` (espacio/salto tras `(`, `<…>`, autoenlaces, emails, referencia, `<a>` crudo, `{href}`, props en frontmatter `::a`) y `card-placement` exige cada ficha pintada exactamente una vez; anclas solo a fichas pintadas | data | `pnpm vitest run tests/data/invariants.spec.ts -t "G-10-2"` | ✅ ampliado (10-06) | ✅ green |
 | SC5 / D-18 | 80 tests de la puerta + 56 goldens sin re-baseline; `tests/parity/` sin cambios | paridad + git | `pnpm verify` + `git diff --quiet <base> HEAD -- tests/parity/` | ✅ | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
@@ -91,7 +92,7 @@ validated: "2026-11-20"
 - [x] Feedback latency < 10s
 - [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** approved 2026-11-20 (validate-phase --auto, retroactive audit)
+**Approval:** approved 2026-11-20 (validate-phase --auto, retroactive audit); re-audited 2026-11-22 after gap closure 10-06 (G-10-2): `pnpm test:unit` 568/568, `pnpm test:data` 829/829 (Node 22).
 
 **Evidence (orchestrator-run at HEAD after 10-05, Node 22, caches cleared):**
 - `pnpm verify`: unit **247/247**, data **345/345**, parity **80/80** (56 goldens, sin `--update-snapshots`); EXIT=0.
