@@ -904,12 +904,24 @@ describe('práctica y marcador final (CAMP-05, CAMP-06, D-17)', () => {
     expect(bodies().some(b => /garaje|aparcamiento/.test(b) && b.includes(BOLD_MARKER))).toBe(true)
   })
 
+  /** Cuerpo de la sección cuyo encabezado casa con `re` (vacío si no existe). */
+  const bodyOf = (re: RegExp): string => String(sections().find(s => re.test(String(s.heading)))?.body ?? '')
+
   it('explica por qué el coche no cruza a Procida ni a Ischia', () => {
-    expect(bodies().some(b => b.includes('Procida') && b.includes('Ischia'))).toBe(true)
+    // En la sección de conducir, no en «Ferris y puertos», que también nombra las dos islas.
+    const driving = bodyOf(/coche en las islas/i)
+    expect(driving, 'hay una sección de conducir que habla del coche en las islas').not.toBe('')
+    expect(driving).toContain('Procida')
+    expect(driving).toContain('Ischia')
+    expect(driving).toMatch(/prohibi/)
+    expect(driving).toContain('no residentes')
   })
 
   it('da las medias de junio: 28 °C de máxima y 18 °C de mínima', () => {
-    expect(bodies().some(b => b.includes('28') && b.includes('18'))).toBe(true)
+    const heat = bodyOf(/calor/i)
+    expect(heat, 'hay una sección de calor').not.toBe('')
+    expect(heat).toContain('**28 °C**')
+    expect(heat).toContain('**18 °C**')
   })
 
   it('la guía lleva al menos 15 marcadores en total (CAMP-06)', () => {
