@@ -91,13 +91,17 @@ function normalizeCss(css: string): string {
 
 /**
  * Las dos reglas que en main quedan detrás de un `}` sobrante (el navegador las descarta) y que
- * base.css deja fuera (08-06, commit cc74f79). Sobre texto normalizado: el `}` sobrante seguido
- * de la regla completa.
+ * base.css deja fuera (08-06, commit cc74f79). Sobre texto normalizado la forma es `}}.regla{…}`:
+ * el `}` que cierra la regla anterior, el `}` SOBRANTE y la regla completa. El patrón exige los
+ * dos `}` (IN-02 de 14-REVIEW.md) y al quitarlo se repone el primero (`ORPHAN_REPLACEMENT`).
  */
 const ORPHANED_RULES: RegExp[] = [
-  /\}\.tl-meta-item\{[^{}]*\}/g,
-  /\}\.tl-transport-mode\.recommended\{[^{}]*\}/g,
+  /\}\}\.tl-meta-item\{[^{}]*\}/g,
+  /\}\}\.tl-transport-mode\.recommended\{[^{}]*\}/g,
 ]
+
+/** Lo que queda al quitar una regla orfanada: el `}` legítimo que cerraba la regla anterior. */
+const ORPHAN_REPLACEMENT = '}'
 
 interface FirstDiff {
   offset: number
@@ -128,7 +132,7 @@ interface EditorialResult {
 function editorialMatches(mainEditorial: string, tokens: string, base: string, removeOrphans = true): EditorialResult {
   let main = normalizeCss(mainEditorial)
   const orphanCounts = ORPHANED_RULES.map(re => (main.match(re) ?? []).length)
-  if (removeOrphans) for (const re of ORPHANED_RULES) main = main.replace(re, '')
+  if (removeOrphans) for (const re of ORPHANED_RULES) main = main.replace(re, ORPHAN_REPLACEMENT)
   const build = normalizeCss(`${tokens}\n${base}`)
   return { equal: main === build, orphanCounts, firstDiff: firstDiff(main, build) }
 }
