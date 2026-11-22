@@ -549,7 +549,21 @@ const VERIFIED_NAMES: readonly string[] = [
   'Hostaria Il Brigante',
 ]
 
-const GENERIC_NAME_RE = /^Una? /
+/**
+ * Nombre genérico (D-14): «Un/Una» seguido de un nombre común en minúscula («Una pizzería de
+ * barrio en el Vomero»). «Una Pizzeria Inventada 1920» no pasa: tras el artículo va mayúscula.
+ */
+const GENERIC_NAME_RE = /^Una? [a-zà-ÿ]/
+
+/**
+ * Nombre propio de un establecimiento en la prosa: el tipo de local en mayúscula seguido de un
+ * nombre en mayúscula (con artículo o preposición italiana opcional): «Trattoria Il Focolare»,
+ * «Pizzeria Gorizia 1916». Cada uno debe ser el principio de un nombre permitido.
+ */
+const ESTABLISHMENT_RE = /\b(?:Trattoria|Pizzeria|Pizzería|Hostaria|Osteria|Ristorante|Caseificio|Tenuta|Taverna|Friggitoria|Gelateria|Pasticceria)\s+(?:(?:Il|La|Lo|Le|I|Gli|Da|Di|Del|Della|ai|al)\s+)?[A-ZÀ-Ý0-9][\p{L}\p{N}'’]*/gu
+
+/** Nombrado en la prosa sin ficha propia, solo con su dato dudoso marcado (RESEARCH, D-12). */
+const MARKED_NAMES: readonly string[] = ['Pizzeria Gorizia 1916']
 
 describe('gastronomía (CAMP-03, D-14, D-15)', () => {
   const food = docsOf('food')
@@ -571,11 +585,35 @@ describe('gastronomía (CAMP-03, D-14, D-15)', () => {
     }
   })
 
-  it('solo se nombran establecimientos verificados; el resto es genérico (D-14)', () => {
+  it('solo se nombran establecimientos verificados; el resto es genérico y se elige sobre el terreno (D-14)', () => {
     for (const doc of food) {
       const name = String(doc.data.name)
-      expect(VERIFIED_NAMES.includes(name) || GENERIC_NAME_RE.test(name), `${doc.file}: «${name}»`).toBe(true)
+      if (VERIFIED_NAMES.includes(name)) continue
+      expect(name, `${doc.file}: nombre genérico`).toMatch(GENERIC_NAME_RE)
+      expect(name.match(ESTABLISHMENT_RE) ?? [], `${doc.file}: un nombre genérico no lleva nombre propio`).toEqual([])
+      expect(String(doc.data.address), `${doc.file}: dirección`).toContain('a elegir sobre el terreno')
     }
+  })
+
+  it('la prosa de todo el viaje solo nombra establecimientos verificados o marcados (D-14)', () => {
+    const allowed = [...VERIFIED_NAMES, ...MARKED_NAMES]
+    const bad: string[] = []
+    for (const doc of campania.docs) {
+      for (const text of stringsExcept(doc, new Set(['src']))) {
+        for (const hit of text.match(ESTABLISHMENT_RE) ?? []) {
+          if (!allowed.some(name => name.startsWith(hit))) bad.push(`${doc.file}: «${hit}»`)
+          if (MARKED_NAMES.some(name => name.startsWith(hit)) && !text.includes(BOLD_MARKER)) bad.push(`${doc.file}: «${hit}» sin marcador`)
+        }
+      }
+    }
+    expect(bad).toEqual([])
+  })
+
+  it('la guarda de nombres reconoce un establecimiento inventado (anti-vacuidad)', () => {
+    expect('Una Pizzeria Inventada 1920').not.toMatch(GENERIC_NAME_RE)
+    // `match` y no `toMatch`: la expresión es global y `test` arrastraría su `lastIndex`.
+    expect('cenad en la Trattoria Da Nessuno'.match(ESTABLISHMENT_RE)).toEqual(['Trattoria Da Nessuno'])
+    expect('una trattoria de monte junto al Calore'.match(ESTABLISHMENT_RE)).toBeNull()
   })
 
   it('una ficha genérica se elige sobre el terreno (D-14)', () => {
