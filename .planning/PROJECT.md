@@ -45,6 +45,9 @@ La guía se consulta paseando por el destino y debe ser **fiel, editorial y fiab
 - ✓ Salida estática bajo `/guiaRoma/` con offline conservado (fuentes y Leaflet self-host) — v1.0
 - ✓ Estandarización: TS estricto, ESLint stylistic, design tokens CSS verbatim, validación zod — v1.0
 - ✓ Backend Nitro preparado pero dormido — v1.0
+- ✓ Búsqueda y navegación entre fichas acotadas al viaje que se está viendo (contexto de viaje provide/inject, sin `useTrip('roma')` fijo) — Fase 9
+- ✓ Persistencia en navegador separada por viaje; las claves `roma-*` siguen intactas (sin migración destructiva, `tripStorageKey`) — Fase 9
+- ✓ Puerta de datos por viaje: cualquier YAML inválido o fichero sin clasificar en `content/trips/` hace fallar `pnpm verify` nombrando el fichero (sin fail-open) — Fase 9
 
 ### Active
 
@@ -52,8 +55,6 @@ La guía se consulta paseando por el destino y debe ser **fiel, editorial y fiab
 
 - [ ] La UI se adapta a la forma de cada viaje desde sus datos: nº y nombres de días variables, secciones opcionales, chrome (marca, `<title>`, pie, leyenda del mapa) desde `trip.yml`
 - [ ] El mapa soporta viajes de varias ciudades (encuadre sobre todos los marcadores del viaje)
-- [ ] Búsqueda y navegación entre fichas acotadas al viaje que se está viendo (sin `useTrip('roma')` fijo)
-- [ ] Persistencia en navegador separada por viaje, migrando las claves `roma-*` existentes sin pérdida
 - [ ] Portada `/` = índice de viajes; Roma vive en `/trips/roma`; enlaces antiguos (`/#viernes`…) redirigen; todos los viajes se prerenderizan para GitHub Pages
 - [ ] Viaje **Campania 2027** (19–28 junio, en familia) publicado con su contenido: días, fichas, gastronomía y práctica, en el tono slow/auténtico del planning del usuario
 - [ ] Roma sin regresiones: la suite de paridad (goldens + comportamiento) sigue verde en su nueva URL
@@ -104,6 +105,8 @@ La guía se consulta paseando por el destino y debe ser **fiel, editorial y fiab
 | v1.1: `/` = índice de viajes; Roma se mueve a `/trips/roma` con redirección de enlaces antiguos | Escala a N viajes; ningún viaje es «el principal» | — Pending |
 | v1.1: UI en español fijo; lo específico del viaje (marca, título, pie, leyenda) en `trip.yml` | Evita i18n; mantiene un único sistema de textos | — Pending |
 | v1.1: Campania 2027 entra en el hito con contenido real redactado a partir del planning del usuario | El usuario quiere usarla en el viaje de junio 2027 | — Pending |
+| Fase 9: claves de localStorage de Roma intactas; otros viajes con clave prefijada por slug | Quien ya usa Roma no pierde notas ni preferencias; cero migración destructiva | ✓ Fase 9: `tripStorageKey(slug, …)` + guardián `tripCoupling.spec.ts` |
+| Fase 9: la puerta de datos es fail-closed sobre `content/trips/` | Content ingiere carpetas ocultas (`dot: true`) y omite `.YML`/ficheros sueltos sin avisar; el autor debe recibir señal | ✓ Fase 9 (09-06 + CR-01): `stray-file`/`trip-slug` nombran el fichero culpable |
 
 ## Evolution
 
@@ -123,4 +126,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-11-20 — inicio del milestone v1.1 Multi-viaje + Campania (portada índice, UI data-driven por viaje, contenido Campania 2027, Roma intacta).*
+*Last updated: 2026-11-22 after Phase 9 — plataforma por viaje (búsqueda, navegación, persistencia y puerta de datos acotadas al viaje; Roma intacta).*

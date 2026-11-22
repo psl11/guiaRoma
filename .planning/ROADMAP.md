@@ -31,7 +31,7 @@ Re-plataforma el `index.html` único (6.665 líneas) a Nuxt 4 SSG con paridad vi
 
 **Principio de orden:** primero se desacopla el código con Roma todavía en `/` y la puerta de paridad intacta (9, 10); después se mueve la URL sin tocar componentes (11); después se amplía el esquema con un esqueleto (12) y solo entonces se redacta contenido (13). Cada fallo de paridad tiene un único sospechoso: código → datos → URL → extensiones → contenido. Los 56 goldens de Roma **no se re-baselinan** en todo el hito salvo excepción aprobada explícitamente por el usuario.
 
-- [ ] **Phase 9: Plataforma por viaje** - Búsqueda, navegación, persistencia y validación de datos acotadas al viaje, con Roma intacta en `/`
+- [x] **Phase 9: Plataforma por viaje** - Búsqueda, navegación, persistencia y validación de datos acotadas al viaje, con Roma intacta en `/` (completed 2026-11-22)
 - [ ] **Phase 10: Forma y chrome desde datos** - Días, secciones, pastillas, cabecera, pie, leyenda y título salen de los datos de cada viaje (Roma verbatim)
 - [ ] **Phase 11: Portada y rutas multi-viaje** - Portada índice en `/`, Roma en `/trips/roma/`, redirección de enlaces antiguos y prerender de todos los viajes, con goldens sin cambios
 - [ ] **Phase 12: Formas nuevas de viaje** - Opciones A/B, «Dormís en…», transportes nuevos, naturaleza, mapa multi-ciudad, ruta del día por modo y nota familiar, probados con un esqueleto de Campania
@@ -51,7 +51,7 @@ Re-plataforma el `index.html` único (6.665 líneas) a Nuxt 4 SSG con paridad vi
   3. Quien ya usa Roma abre la guía y encuentra sus notas, su ritmo, «caminar menos» y el modo resumen tal como los dejó (claves `roma-*` intactas, sin migración destructiva); las notas y preferencias de otro viaje no se mezclan con las de Roma
   4. Un YAML inválido en cualquier viaje (slug de viaje no válido, carpeta distinta del slug, id duplicado, id que choca con un ancla de sección, enlace `#ficha` que apunta fuera del viaje, nombre reservado de Content) hace fallar `pnpm verify` señalando el fichero culpable
   5. La puerta de paridad de Roma sigue verde en `/` sin ningún cambio en `tests/parity/` ni re-baseline de goldens
-**Plans**: 6/6 plans executed
+**Plans**: 6/6 plans complete
 Plans:
 **Wave 1**
 - [x] 09-01-PLAN.md — Tracer: contexto de viaje (provide/inject) + navegación y preferencias/notas por viaje, probado en Roma (`/`) con la paridad intacta (PLAT-02, PLAT-03)
@@ -288,7 +288,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 6. Derivados de datos — búsqueda y ruta del día | v1.0 | 5/5 | Complete | 2026-06-21 |
 | 7. Isla client-only — mapa, fallback, notas | v1.0 | 4/4 | Complete | 2026-06-23 |
 | 8. Verificación de paridad | v1.0 | 7/7 | Complete | 2026-06-24 |
-| 9. Plataforma por viaje | v1.1 | 6/6 | In Progress | - |
+| 9. Plataforma por viaje | v1.1 | 6/6 | Complete    | 2026-11-22 |
 | 10. Forma y chrome desde datos | v1.1 | 5/5 | In Progress | - |
 | 11. Portada y rutas multi-viaje | v1.1 | 7/7 | In Progress | - |
 | 12. Formas nuevas de viaje | v1.1 | 7/7 | In Progress | - |
