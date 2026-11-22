@@ -25,7 +25,7 @@ import { RESERVAS_HEADINGS_DEFAULT } from '../../app/utils/reservasHeadings'
  *  - D-07 / D-08: el glifo de cada tramo lo pone el CSS, así que ni una stat ni la cabecera de un
  *    tramo empiezan por emoji, y una fila meta no empieza por el glifo de un transporte. Un día con
  *    `route.mode: transit` no pasa de 2 paradas (WR-01: Google Maps no dibuja más).
- *  - T-13-02: ni teléfonos ni números largos en el contenido publicado.
+ *  - T-13-02: ni teléfonos, ni números largos, ni correos, ni localizadores de reserva.
  */
 
 /** Marcador D-12. Escapado para que ningún editor lo convierta en emoji con U+FE0F. */
@@ -597,14 +597,47 @@ describe('gastronomía (CAMP-03, D-14, D-15)', () => {
   })
 })
 
+/** Teléfono internacional: `+39 081…`. */
+const INTL_PHONE_RE = /\+\d{2}\s?\d/
+/**
+ * Tira de 9 o más cifras con separadores de teléfono entre ellas (espacio, punto, guion, barra,
+ * paréntesis): `081 549 4808`, `(081) 549 4808`, `081 / 5494808`. Años, precios y horas no
+ * llegan: los corta un `:`, una coma, una letra o un `€`, y una fecha ISO tiene 8 cifras.
+ */
+const DIGIT_RUN_RE = /(?:\d[\s.\-/()]*){9,}/
+/** Correo electrónico. */
+const EMAIL_RE = /[\w.+-]+@[\w-]+\.[\w.]+/
+/**
+ * Localizador de reserva (PNR): 6 mayúsculas o cifras con al menos una de cada (`K7XQ2P`). Las
+ * palabras en mayúsculas sin cifras (`decoration`, `quoteAttr`) no casan por la anticipación.
+ */
+const BOOKING_CODE_RE = /\b(?=[A-Z0-9]*\d)(?=[A-Z0-9]*[A-Z])[A-Z0-9]{6}\b/
+
 describe('datos personales (T-13-02)', () => {
-  it('ningún teléfono internacional ni tira de 9 o más cifras', () => {
-    const SKIP: ReadonlySet<string> = new Set(['src'])
+  const SKIP: ReadonlySet<string> = new Set(['src'])
+
+  it('ningún teléfono, correo ni localizador de reserva en el contenido', () => {
     for (const doc of campania.docs) {
       for (const text of stringsExcept(doc, SKIP)) {
-        expect(text, `${doc.file}: teléfono`).not.toMatch(/\+\d{2}\s?\d/)
-        expect(text, `${doc.file}: cifras`).not.toMatch(/(?:\d[ .-]?){9,}/)
+        expect(text, `${doc.file}: teléfono`).not.toMatch(INTL_PHONE_RE)
+        expect(text, `${doc.file}: cifras`).not.toMatch(DIGIT_RUN_RE)
+        expect(text, `${doc.file}: email`).not.toMatch(EMAIL_RE)
+        expect(text, `${doc.file}: localizador`).not.toMatch(BOOKING_CODE_RE)
       }
+    }
+  })
+
+  it('las guardas reconocen los formatos que dicen vigilar (anti-vacuidad)', () => {
+    for (const phone of ['081 549 4808', '(081) 549 4808', '081 / 5494808', '081-549-4808', '0815494808']) {
+      expect(phone, phone).toMatch(DIGIT_RUN_RE)
+    }
+    expect('+39 081 549 4808').toMatch(INTL_PHONE_RE)
+    expect('escribid a familia@example.com').toMatch(EMAIL_RE)
+    expect('localizador K7XQ2P').toMatch(BOOKING_CODE_RE)
+    // Sin falsos positivos con años, fechas, precios y horas del propio contenido.
+    for (const ok of ['(medias de 1991-2020)', '2027-06-19', 'del 1 de abril al 30 de octubre', '15:45 o las 17:15', '80 € hasta más de 330 €', 'VIAJE A CAMPANIA', 'Piazza San Gaetano 68']) {
+      expect(ok, ok).not.toMatch(DIGIT_RUN_RE)
+      expect(ok, ok).not.toMatch(BOOKING_CODE_RE)
     }
   })
 })
