@@ -49,7 +49,9 @@ created: "2026-11-20"
 | T-09-09 | Tampering | Regression reintroducing a fixed trip or global state in controllers | medium | mitigate | `tests/unit/tripCoupling.spec.ts` in `test:unit` (part of `pnpm verify`), with synthetic "teeth" (`:183-228`) proving each pattern (fixed trip, literal `roma-` key, un-suffixed `useState`, single MiniSearch index, localStorage enumeration) is detected | closed |
 | T-09-10 | Information disclosure | Test-trip data in Roma's prerendered page | medium | mitigate | `tests/data/build-isolation.spec.ts` in `test:data` (inside verify): sentinel `PRUEBA-CENTINELA-9F3` absent from `index.html` and `_payload.json`; no `.output/public/trips`; state keys suffixed `:roma` | closed |
 | T-09-11 | Tampering | Gate validating against stale Content caches | low | mitigate | `package.json` `verify`: `rm -rf .data .nuxt .output && pnpm generate && ...` | closed |
-| T-09-SC | Tampering | npm/pip/cargo installs (all 5 plans) | low | mitigate | `git diff 79e57e0 HEAD -- package.json` changes only `scripts` (`test:trips`, `verify`); `dependencies`/`devDependencies` unchanged | closed |
+| T-09-12 | Tampering | `tests/data/trips.ts` case-sensitive `isYaml` / unchecked `content/trips/` root (IN-05, 09-06) | low | mitigate | `tests/data/trips.ts:128` `isYaml = /\.ya?ml$/i` (upper-case extensions reach `stray-file`; `COLLECTIONS[].match` stays case-sensitive like the `*.yml` globs); `trips.ts:184` `checkTripsRoot()` + private `rootEntries()` (`:159`) report every visible non-folder root entry as `stray-file`; teeth `invariants.spec.ts:172` (fixtures `raiz.yml`/`.oculto.yml`), in-memory `.YML/.Yml/.YAML/.Yaml` cases, real-tree assertion `invariants.spec.ts:80` | closed |
+| T-09-13 | Tampering | `<verify>` mutations under `content/trips/` (09-06) | low | mitigate | Temp files `zzmayus.YML` / `zzsuelto.yml` created and removed in the same command, gate asserts `git status --porcelain -- content/trips` empty; re-checked 2026-11-22: `content/trips` clean, never touches `content/trips/roma/` | closed |
+| T-09-SC | Tampering | npm/pip/cargo installs (all 6 plans) | low | mitigate | `git diff 79e57e0 HEAD -- package.json` changes only `scripts` (`test:trips`, `verify`); `dependencies`/`devDependencies` unchanged; 09-06: `git diff --quiet f8241db -- package.json` clean | closed |
 
 *Status: open · closed · open — below high threshold (non-blocking)*
 *Severity: critical > high > medium > low — only open threats at or above workflow.security_block_on count toward threats_open*
@@ -72,6 +74,7 @@ created: "2026-11-20"
 | Audit Date | Threats Total | Closed | Open | Run By |
 |------------|---------------|--------|------|--------|
 | 2026-11-20 | 12 | 12 | 0 | gsd-secure-phase (orchestrator, ASVS L1 grep verification; auditor short-circuited) |
+| 2026-11-22 | 14 | 14 | 0 | gsd-secure-phase (gap closure 09-06: T-09-12/T-09-13 added; ASVS L1 grep verification; auditor short-circuited) |
 
 ---
 
@@ -83,3 +86,11 @@ created: "2026-11-20"
 - [x] `status: verified` set in frontmatter
 
 **Approval:** verified 2026-11-20
+
+## Security Audit 2026-11-22
+
+| Metric | Count |
+|---|---|
+| Threats found | 14 |
+| Closed | 14 |
+| Open | 0 |
