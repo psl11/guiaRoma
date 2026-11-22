@@ -450,6 +450,7 @@ describe('la puerta tiene dientes (fixtures)', () => {
 
   it('anchor: [x](#reservas) con reference/reservas.yml válido → sin violaciones', () => {
     const vs = checkTrip(memTrip('prueba', {
+      ...onDay('galeria'),
       'monuments/galeria.yml': linkTo('reservas'),
       'reference/reservas.yml': y(validReservas),
     }))
@@ -466,6 +467,7 @@ describe('la puerta tiene dientes (fixtures)', () => {
 
   it('anchor: [x](#arquitectura) en un viaje cuyo único artista es el glosario → resuelve', () => {
     const vs = checkTrip(memTrip('prueba', {
+      ...onDay('galeria'),
       'monuments/galeria.yml': linkTo('arquitectura'),
       'artists/arq-glosario.yml': y(validGlossary),
     }))
@@ -505,6 +507,7 @@ describe('la puerta tiene dientes (fixtures)', () => {
 
   it('cross-trip-link: https://example.org/x se admite (sin violaciones)', () => {
     const vs = checkTrip(memTrip('prueba', {
+      ...onDay('galeria'),
       'monuments/galeria.yml': monument('prueba', 'galeria', withProse('Ver [la web](https://example.org/x).')),
     }))
     expect(vs, formatViolations(vs)).toEqual([])
@@ -588,6 +591,99 @@ describe('la puerta tiene dientes (fixtures)', () => {
     ])
   })
 
+  // ── G-10-2 / WR-03 (10-REVIEW): cada ficha se pinta exactamente una vez ───────────────────────
+  // MonumentCard (el único elemento con id=<slug> de una ficha) solo se pinta desde day.cards
+  // (DaySection: day.cards → monById → MonumentCard). Una ficha sin día no existe en el DOM y una
+  // ficha en dos días duplica su id.
+  /** El artista art-x con un seenIn a `ref`. */
+  const artistSeeing = (ref: string) => y({
+    kind: 'artist', slug: 'art-x', trip: 'prueba', avatar: 'X', name: 'Artista', dates: 'd', epithet: 'e',
+    sections: [], seenIn: [{ ref, label: 'La galería' }],
+  })
+
+  it('G-10-2/WR-03 card-placement: una ficha que no está en el cards de ningún día → violación en su fichero', () => {
+    const vs = checkTrip(memTrip('prueba', { 'monuments/galeria.yml': monument('prueba', 'galeria') }))
+    expect(vs, formatViolations(vs)).toEqual([{
+      file: 'content/trips/prueba/monuments/galeria.yml',
+      rule: 'card-placement',
+      message: 'ficha "galeria" no está en el cards de ningún día: MonumentCard no la pinta y #galeria no existe en la guía (D-08)',
+    }])
+  })
+
+  it('G-10-2/WR-03 anchor: [x](#galeria) a una ficha sin día no resuelve (no existe en el DOM)', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      ...onDay('otra'),
+      'monuments/galeria.yml': monument('prueba', 'galeria'),
+      'monuments/otra.yml': monument('prueba', 'otra', withProse('Ver [la galería](#galeria).')),
+    }))
+    expect(vs.filter(v => v.rule === 'anchor'), formatViolations(vs)).toEqual([
+      expect.objectContaining({ file: 'content/trips/prueba/monuments/otra.yml', message: expect.stringContaining('#galeria') }),
+    ])
+  })
+
+  it('G-10-2/WR-03 card-placement: la misma ficha en el cards de dos días → violación en los dos ficheros de día', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      ...onDay('galeria'),
+      'days/sabado.yml': y({ ...validDay, slug: 'sabado', order: 2, eyebrow: 'sabato', cards: ['galeria'] }),
+      'monuments/galeria.yml': monument('prueba', 'galeria'),
+    }))
+    const message = 'ficha "galeria" aparece 2 veces en cards (content/trips/prueba/days/sabado.yml, content/trips/prueba/days/viernes.yml): id #galeria duplicado en el DOM (D-08)'
+    expect(vs, formatViolations(vs)).toEqual([
+      { file: 'content/trips/prueba/days/sabado.yml', rule: 'card-placement', message },
+      { file: 'content/trips/prueba/days/viernes.yml', rule: 'card-placement', message },
+    ])
+  })
+
+  it('G-10-2/WR-03 card-placement: la misma ficha dos veces en el cards de un día → violación en ese día', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      ...onDay('galeria', 'galeria'),
+      'monuments/galeria.yml': monument('prueba', 'galeria'),
+    }))
+    expect(vs, formatViolations(vs)).toEqual([{
+      file: 'content/trips/prueba/days/viernes.yml',
+      rule: 'card-placement',
+      message: 'ficha "galeria" aparece 2 veces en cards (content/trips/prueba/days/viernes.yml): id #galeria duplicado en el DOM (D-08)',
+    }])
+  })
+
+  it('G-10-2/WR-03 ref: seenIn a una ficha sin día → violación en el fichero del artista', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'monuments/galeria.yml': monument('prueba', 'galeria'),
+      'artists/art-x.yml': artistSeeing('galeria'),
+    }))
+    expect(vs.filter(v => v.rule === 'ref'), formatViolations(vs)).toEqual([{
+      file: 'content/trips/prueba/artists/art-x.yml',
+      rule: 'ref',
+      message: 'seenIn ref "galeria" es una ficha que no se pinta en ningún día (cards)',
+    }])
+  })
+
+  it('G-10-2/WR-03 ref: un stop del timeline con ref a una ficha sin día no resuelve', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'days/viernes.yml': y({ ...validDay, timeline: [{ kind: 'stop', pace: 'all', time: '10:00', title: 'Galería', ref: 'galeria' }] }),
+      'monuments/galeria.yml': monument('prueba', 'galeria'),
+    }))
+    expect(vs.filter(v => v.rule === 'ref'), formatViolations(vs)).toEqual([{
+      file: 'content/trips/prueba/days/viernes.yml',
+      rule: 'ref',
+      message: 'timeline stop ref "galeria" no resuelve',
+    }])
+  })
+
+  it('G-10-2/WR-03 control: ficha en un solo día, enlazada desde otra ficha, desde seenIn y desde un stop → sin violaciones', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      'days/viernes.yml': y({
+        ...validDay,
+        cards: ['galeria', 'otra'],
+        timeline: [{ kind: 'stop', pace: 'all', time: '10:00', title: 'Galería', ref: 'galeria' }],
+      }),
+      'monuments/galeria.yml': monument('prueba', 'galeria'),
+      'monuments/otra.yml': monument('prueba', 'otra', withProse('Ver [la galería](#galeria).')),
+      'artists/art-x.yml': artistSeeing('galeria'),
+    }))
+    expect(vs, formatViolations(vs)).toEqual([])
+  })
+
   // ── Fase 11 (portada, D-08/D-07): fechas del viaje y resumen sin enlaces ─────
   /** Violaciones de una sola regla en un viaje en memoria con solo trip.yml (+ los campos dados). */
   const tripRule = (rule: Rule, over: Record<string, unknown>) =>
@@ -627,8 +723,9 @@ describe('la puerta tiene dientes (fixtures)', () => {
 
   // ── Fase 12 (EXT-01, Pitfall 3): la puerta mira DENTRO de las opciones de un `choice` ─────
   /** Un día `viernes` con un `choice` de dos opciones; la primera lleva las filas dadas. */
-  const dayWithChoice = (rows: unknown[], title = 'Opción con filas') => y({
+  const dayWithChoice = (rows: unknown[], title = 'Opción con filas', cards: string[] = []) => y({
     ...validDay,
+    cards,
     timeline: [{
       kind: 'choice',
       options: [
@@ -659,7 +756,7 @@ describe('la puerta tiene dientes (fixtures)', () => {
   it('ref: un stop dentro de una opción con ref a un monumento existente → sin violaciones', () => {
     const vs = checkTrip(memTrip('prueba', {
       'monuments/galeria.yml': monument('prueba', 'galeria'),
-      'days/viernes.yml': dayWithChoice([{ kind: 'stop', pace: 'all', time: '11:00', title: 'Galería', ref: 'galeria' }]),
+      'days/viernes.yml': dayWithChoice([{ kind: 'stop', pace: 'all', time: '11:00', title: 'Galería', ref: 'galeria' }], 'Opción con filas', ['galeria']),
     }))
     expect(vs, formatViolations(vs)).toEqual([])
   })
