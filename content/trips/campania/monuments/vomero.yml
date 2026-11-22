@@ -1,0 +1,40 @@
+slug: vomero
+trip: campania
+roman: II
+name: El Vomero
+italian: 'Vomero · Napoli'
+day: Sábado 19
+coords:
+  lat: 40.8438
+  lng: 14.2316
+type: card
+motif: fortress
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Napoli_-_Panorama_dal_Vomero.JPG/960px-Napoli_-_Panorama_dal_Vomero.JPG
+  alt: Panorama de Nápoles y el golfo desde la colina del Vomero
+sections:
+  - heading: Qué es
+    body: >-
+      La colina residencial que se asoma al centro de Nápoles desde arriba: calles
+      anchas, comercios de barrio, familias paseando y mucho menos ruido que abajo.
+      Por eso es vuestra primera base: llegar al Vomero es llegar a una Nápoles
+      tranquila, de vecinos, donde descansar del viaje antes de lanzarse a la ciudad.
+  - heading: Qué mirar
+    body: >-
+      El corazón del barrio es **Piazza Vanvitelli**, con sus cafés y su ir y venir
+      de tarde. Desde el lado de **Castel Sant'Elmo**, la fortaleza en estrella que
+      corona la colina, se ve la ciudad entera a vuestros pies, el golfo y el
+      Vesubio: la mejor manera de entender Nápoles de un vistazo.
+  - heading: En vuestro día
+    body: >-
+      Llegáis con las maletas a media tarde, dejáis las cosas y bajáis al mar sin
+      prisa. A la vuelta, cena en una [pizzería de barrio](#gastronomia) del Vomero,
+      a la vuelta de la esquina del alojamiento.
+facts:
+  - label: Cómo llegar
+    value: >-
+      Metro Línea 1 desde Piazza Garibaldi hasta Vanvitelli, o uno de los funiculares
+      que suben a la colina · líneas, paradas y horarios **⚠ por confirmar**
+  - label: Alojamiento
+    value: 'Apartamento o pequeño hotel en el barrio · **⚠ por confirmar**'
+mapsQuery: Piazza Vanvitelli Vomero Napoli

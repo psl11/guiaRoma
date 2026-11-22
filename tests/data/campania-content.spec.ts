@@ -40,10 +40,16 @@ const roma = loadTrip('roma')
  */
 const WRITTEN_DAYS: Record<string, { stay: string | null }> = {
   'martes-22': { stay: 'ischia' },
+  'sabado-19': { stay: 'napoles' },
 }
 
 /** Fichas ya escritas con contenido real. Los planes siguientes añaden las suyas. */
-const WRITTEN_MONUMENTS: string[] = ['monte-epomeo', 'baia-di-sorgeto']
+const WRITTEN_MONUMENTS: string[] = [
+  'monte-epomeo',
+  'baia-di-sorgeto',
+  'lungomare-caracciolo',
+  'vomero',
+]
 
 /** Fichas que deben llevar nota familiar (D-09). Los planes siguientes añaden las suyas. */
 const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto']
@@ -54,6 +60,8 @@ const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto']
  */
 const MARKER_FILES: string[] = [
   'monuments/baia-di-sorgeto.yml',
+  'monuments/vomero.yml',
+  'days/sabado-19.yml',
   'food/g-1-concettina.yml',
   'food/g-1-pizzeria-vomero.yml',
   'food/g-2-vannulo.yml',
@@ -203,6 +211,26 @@ describe('días escritos (CAMP-01, D-04)', () => {
     const light = day!.light as Rec | undefined
     expect(light, `${slug} tiene bloque light`).toBeDefined()
     expect(asRecs(light!.items).length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('sábado 19: avión, Alibus y un tramo sin variante hasta el Vomero (D-07, D-08, D-26)', () => {
+    const day = dayOf('sabado-19')!
+    const top = asRecs(day.timeline)
+    const planeIdx = top.findIndex(r => r.kind === 'transport' && r.variant === 'plane')
+    expect(planeIdx, 'hay un tramo plane').toBeGreaterThanOrEqual(0)
+    expect(top[planeIdx + 1], 'el tramo siguiente al avión es el autobús').toMatchObject({ kind: 'transport', variant: 'bus' })
+    const plain = top.filter(r => r.kind === 'transport' && r.variant === undefined)
+    expect(plain.length, 'hay un tramo sin variante').toBeGreaterThanOrEqual(1)
+    expect(plain.some(r => /Metro|funicular/.test(collectStrings(r).join('\n'))), 'el tramo sin variante sube en metro o funicular').toBe(true)
+    // D-26: el Alibus para en Garibaldi y el puerto y NO llega al Vomero.
+    const bus = top[planeIdx + 1]!
+    expect(collectStrings(bus).join('\n')).toContain('Piazza Garibaldi')
+    expect(collectStrings(bus).join('\n')).toContain('no sube al Vomero')
+    expect((day.route as Rec).enabled).toBe(false)
+    const variants = asRecs(day.stats).map(s => s.variant)
+    expect(variants).toEqual(expect.arrayContaining(['plane', 'bus']))
+    expect(collectStrings(day).some(t => t.includes('16:35'))).toBe(true)
+    expect(day.cards).toEqual(['vomero', 'lungomare-caracciolo'])
   })
 
   it('martes-22: Epomeo y Sorgeto, en transporte público, con su botón de ruta', () => {
