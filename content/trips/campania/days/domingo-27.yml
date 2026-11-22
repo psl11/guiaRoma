@@ -101,7 +101,7 @@ timeline:
   - kind: stop
     pace: all
     time: '19:30'
-    title: Concierto de Pinguini Tattici Nucleari
+    title: Llegada al estadio · concierto de Pinguini Tattici Nucleari
     ref: stadio-maradona
     tag: concierto
     note: >-

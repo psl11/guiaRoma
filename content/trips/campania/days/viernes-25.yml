@@ -116,7 +116,7 @@ timeline:
   - kind: stop
     pace: all
     time: '19:30'
-    title: Concierto de Ultimo
+    title: Llegada al estadio · concierto de Ultimo
     ref: stadio-maradona
     tag: concierto
     reservedEvent: true
