@@ -14,6 +14,9 @@
 //  - Un viaje incompleto (solo trip.yml) no es error (D-09); uno roto sí.
 //  - Igualdad de slugs/anclas = comparación EXACTA de strings (sin minúsculas ni
 //    normalización Unicode): `[x](#Galeria)` no resuelve a `galeria`.
+//  - Cierre G-09-3 (IN-05): la extensión YAML se detecta sin distinguir mayúsculas; un
+//    `.YML`/`.Yaml` no casa con ningún glob de colección (que solo casan con `.yml` en minúsculas)
+//    y es `stray-file` con su fichero, nunca se omite en silencio.
 //
 // Fase 10 (forma desde datos):
 //  - D-03: etiquetas de pastilla de día únicas por viaje (`day-pill`), calculadas con la MISMA
@@ -118,7 +121,9 @@ export interface LoadedTrip { dir: string, base: string, docs: Doc[], hasTripYml
 export interface Violation { file: string, rule: Rule, message: string }
 
 const toPosix = (p: string) => p.split(sep).join('/')
-const isYaml = (rel: string) => /\.ya?ml$/.test(rel)
+// Sin distinguir mayúsculas (G-09-3): un .YML/.Yaml también es YAML y llega a la clasificación;
+// los `COLLECTIONS[].match` SÍ distinguen (espejo de los globs `*.yml`), así que acaba en stray-file.
+const isYaml = (rel: string) => /\.ya?ml$/i.test(rel)
 const isPlainObject = (v: unknown): v is Record<string, unknown> =>
   typeof v === 'object' && v !== null && !Array.isArray(v)
 const asArray = (v: unknown): Array<Record<string, unknown>> =>
@@ -154,7 +159,10 @@ export function listTripDirs(root: string = TRIPS_ROOT): string[] {
 
 /**
  * Carga PURA de un viaje a partir de sus ficheros (`rel` POSIX → contenido). Los ficheros que
- * no son YAML se ignoran; todo YAML se clasifica, se parsea o produce una violación.
+ * no son YAML se ignoran; todo YAML se clasifica, se parsea o produce una violación. La extensión
+ * YAML se detecta SIN distinguir mayúsculas (`isYaml`), pero los `COLLECTIONS[].match` sí
+ * distinguen (espejo de los globs `*.yml` de content.config.ts): un `.YML`/`.Yaml` no casa con
+ * ninguna colección y es `stray-file`, nunca se omite ni se carga como documento (G-09-3).
  */
 export function loadTripFromFiles(dir: string, files: Record<string, string>, base = `content/trips/${dir}`): LoadedTrip {
   const docs: Doc[] = []

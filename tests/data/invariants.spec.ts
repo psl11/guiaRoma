@@ -60,6 +60,9 @@ import {
  *    `headings.table` y el `headings.<grupo>` de cada grupo de `confirmed` con entradas, con texto
  *    visible; si falta, ese bloque heredaría el texto de Roma. La violación nombra el reservas.yml.
  *
+ * Cierre G-09-3 (IN-05): la puerta no omite un `.YML`/`.Yaml` (extensión YAML sin distinguir
+ * mayúsculas → `stray-file`) ni un fichero suelto en la raíz de content/trips/.
+ *
  * El bloque «la puerta tiene dientes» prueba cada regla con un fixture (en memoria con
  * `loadTripFromFiles` o en disco en tests/data/fixtures/trips/, NUNCA bajo content/).
  */
