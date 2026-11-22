@@ -80,8 +80,15 @@ const WRITTEN_MONUMENTS: string[] = [
   'spiaggia-di-miseno',
 ]
 
-/** Fichas que deben llevar nota familiar (D-09). Los planes siguientes añaden las suyas. */
-const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto', 'pozzo-vecchio', 'valle-del-calore', 'baia-di-trentova', 'stadio-maradona', 'napoli-sotterranea', 'spiaggia-di-miseno']
+/**
+ * Fichas que deben llevar nota familiar (D-09): las que se visitan con los niños. Napoli
+ * Sotterranea no está: se visita el domingo 27, después de que los niños vuelen a casa
+ * (desviación de D-09, 13-REVIEW WR-02), así que no lleva caja «Con niños».
+ */
+const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto', 'pozzo-vecchio', 'valle-del-calore', 'baia-di-trentova', 'stadio-maradona', 'spiaggia-di-miseno']
+
+/** Fichas que se visitan cuando los niños ya se han ido: ni caja «Con niños» ni consejo infantil. */
+const ADULTS_ONLY: string[] = ['napoli-sotterranea']
 
 /**
  * Ficheros (ruta relativa al viaje) que deben llevar el marcador porque tienen datos dudosos.
@@ -466,6 +473,15 @@ describe('fichas escritas (CAMP-02, D-10, D-11)', () => {
     const m = monumentOf(slug)
     expect(m, `${slug} existe`).toBeDefined()
     expect(typeof m!.family === 'string' && m!.family.trim() !== '').toBe(true)
+  })
+
+  it.each(ADULTS_ONLY)('%s: sin caja «Con niños» ni consejo en «Con niños» de Práctica (WR-02)', (slug) => {
+    expect(monumentOf(slug), `${slug} existe`).toBeDefined()
+    expect(monumentOf(slug)!.family, `${slug}: family`).toBeUndefined()
+    const kids = asRecs(docByRel('reference/practica.yml')?.data.sections).find(s => /niños/i.test(String(s.heading)))
+    expect(kids, 'Práctica tiene «Con niños»').toBeDefined()
+    expect(String(kids!.body), `«Con niños» no cita ${slug}`).not.toContain(`#${slug}`)
+    expect(String(kids!.body), `«Con niños» no nombra ${String(monumentOf(slug)!.name)}`).not.toContain(String(monumentOf(slug)!.name))
   })
 
   it('baia-di-sorgeto: naturaleza termal, con escalones, linterna y el marcador en la nota familiar', () => {

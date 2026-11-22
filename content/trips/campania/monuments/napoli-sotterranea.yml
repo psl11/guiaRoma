@@ -39,9 +39,6 @@ facts:
     value: 'Solo guiada y con reserva · entre hora y media y dos horas'
   - label: Horario y precio
     value: '**⚠ por confirmar**'
+  - label: Acceso
+    value: 'Una escalera larga de bajada y pasadizos muy estrechos · no apta para quien lo pase mal en sitios cerrados'
 mapsQuery: Napoli Sotterranea Piazza San Gaetano 68
-family: >-
-  Se baja por una escalera larga, así que no se puede entrar con carrito, y algunos
-  pasadizos son muy estrechos. Para los niños es una aventura, pero conviene que vayan
-  de la mano de un adulto y que no les agobien los sitios cerrados. Las tarifas para
-  niños no coinciden entre fuentes y están **⚠ por confirmar**.
