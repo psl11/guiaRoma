@@ -262,6 +262,25 @@ describe('la puerta tiene dientes (fixtures)', () => {
     expectRule(vs, 'stray-file', 'prueba/monuments/sub/x.yml')
   })
 
+  // G-09-3 (IN-05): la extensión YAML se detecta sin distinguir mayúsculas; como los globs de
+  // content.config.ts solo casan con `.yml` en minúsculas, un .YML/.Yaml es stray-file (y no se
+  // carga como documento: toEqual estricto, sin basename-slug ni ninguna otra violación).
+  it.each([
+    'monuments/galeria.YML',
+    'days/viernes.Yml',
+    'food/g-trattoria.YAML',
+    'reference/reservas.Yaml',
+    'trip.YML',
+    'monuments/galeria.yaml',
+  ])('stray-file: %s es un YAML que Content no ingiere (sin distinguir mayúsculas)', (rel) => {
+    const vs = checkTrip(memTrip('prueba', { [rel]: monument('prueba', 'galeria') }))
+    expect(vs, formatViolations(vs)).toEqual([{
+      file: `content/trips/prueba/${rel}`,
+      rule: 'stray-file',
+      message: 'fichero fuera de las colecciones (Content lo ignoraría)',
+    }])
+  })
+
   it('basename-slug: monuments/a.yml con slug "b"', () => {
     const vs = checkTrip(memTrip('prueba', { 'monuments/a.yml': monument('prueba', 'b') }))
     expectRule(vs, 'basename-slug', 'prueba/monuments/a.yml')
