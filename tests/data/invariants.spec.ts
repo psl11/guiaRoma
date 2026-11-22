@@ -4,6 +4,7 @@ import { stringify } from 'yaml'
 import {
   RULES,
   checkTrip,
+  checkTripsRoot,
   extractAnchors,
   formatViolations,
   listTripDirs,
@@ -74,6 +75,11 @@ const trips = listTripDirs()
 
 it('la puerta no está vacía (incluye el viaje roma)', () => {
   expect(trips).toContain('roma')
+})
+
+it('content/trips solo contiene carpetas de viaje: checkTripsRoot() sin violaciones', () => {
+  const vs = checkTripsRoot()
+  expect(vs, formatViolations(vs)).toEqual([])
 })
 
 describe.each(trips)('viaje %s', (dir) => {
@@ -161,6 +167,15 @@ function expectRule(vs: Violation[], rule: Rule, file: string) {
 describe('la puerta tiene dientes (fixtures)', () => {
   it('listTripDirs lista solo carpetas, ordenadas (fixtures en disco)', () => {
     expect(listTripDirs(FIXTURES)).toEqual(['campania-2027', 'suelto'])
+  })
+
+  it('checkTripsRoot: fichero suelto en la raíz → stray-file; carpetas y ocultos no (fixtures en disco)', () => {
+    const vs = checkTripsRoot(FIXTURES)
+    expect(vs, formatViolations(vs)).toEqual([{
+      file: 'tests/data/fixtures/trips/raiz.yml',
+      rule: 'stray-file',
+      message: 'fichero suelto fuera de una carpeta de viaje (Content lo ignoraría)',
+    }])
   })
 
   it('trip-slug: slug con guion en disco (campania-2027, D-05)', () => {
