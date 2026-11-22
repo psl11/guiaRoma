@@ -155,8 +155,8 @@ fresco es la **señal de alarma**.
 
 | Magnitud | Valor | Cómo se obtiene |
 |----------|-------|-----------------|
-| Tests que la puerta **ejecuta** (`test:parity`, con el cinturón grep-invert) | **110** en **13 ficheros** (`Total: 110 tests in 13 files`, re-medido al cierre de la Fase 12) | `pnpm exec playwright test -c playwright.gate.config.ts --grep-invert "reutiliza el MISMO TripView" --list` → línea `Total:` |
-| Config de puerta **en crudo** (solo `testIgnore` golden, antes del grep-invert) | **112** en **13 ficheros** (`Total: 112 tests in 13 files`, re-medido al cierre de la Fase 12) | `pnpm exec playwright test -c playwright.gate.config.ts --list` → línea `Total:` |
+| Tests que la puerta **ejecuta** (`test:parity`, con el cinturón grep-invert) | **110** en **13 ficheros** (`Total: 110 tests in 13 files`, re-medido al cierre de la Fase 13) | `pnpm exec playwright test -c playwright.gate.config.ts --grep-invert "reutiliza el MISMO TripView" --list` → línea `Total:` |
+| Config de puerta **en crudo** (solo `testIgnore` golden, antes del grep-invert) | **112** en **13 ficheros** (`Total: 112 tests in 13 files`, re-medido al cierre de la Fase 13) | `pnpm exec playwright test -c playwright.gate.config.ts --list` → línea `Total:` |
 
 La diferencia **112 → 110** son exactamente los **2** del test de dev-routing
 (mobile + desktop) que retira el grep-invert. (Con `RUN_DEV_ROUTING` sin definir,
@@ -172,6 +172,10 @@ dentro de su test de borradores (recorre todos los `draft: true` del manifiesto)
 conteo sigue en **110 / 13**.
 La Fase 12.1 no añade specs de paridad y el conteo sigue en **110 / 13** (re-medido con
 `--list` al cierre del plan 12.1-01).
+La Fase 13 publica Campania sin tocar ningún spec de paridad: portada.spec.ts (de solo lectura)
+saca del manifiesto los viajes publicados (ahora Campania y Roma) y los borradores que quedan
+(prueba y forma, que siguen dando 404), así que el conteo sigue en **110 / 13** (re-medido con
+`--list` al cierre de la Fase 13, plan 13-08) y los 56 goldens no cambian.
 `golden.spec.ts` aporta **0** a ambos conteos (excluido a nivel de fichero).
 
 Desglose por fichero de los **110** seleccionados (suma = 110):
@@ -205,8 +209,9 @@ pnpm exec playwright test -c playwright.gate.config.ts \
 > `playwright.gate.config.ts` + `package.json` de esta rama con `--list` (no estimados):
 > `Total: 110 tests in 13 files` con el grep-invert y `Total: 112 tests in 13 files` en crudo,
 > los mismos que al cierre de la Fase 11 (2026-11-20; la medida anterior, 80 / 11 y 82 / 11, es
-> del 2026-06-23). Re-medir si se añade/retira un spec de paridad o cambia cualquiera de las dos
-> exclusiones.
+> del 2026-06-23). Re-medido el 2026-11-22 al cierre de la Fase 13 (plan 13-08, con Campania ya
+> publicada): los mismos `Total: 110 tests in 13 files` y `Total: 112 tests in 13 files`.
+> Re-medir si se añade/retira un spec de paridad o cambia cualquiera de las dos exclusiones.
 
 ---
 
@@ -223,9 +228,9 @@ de `pnpm verify` y una fuera.
 pnpm test:trips   # = playwright test -c playwright.trips.config.ts
 ```
 
-- **Qué cubre:** **44 tests en 4 ficheros** (`tests/trips/isolation.spec.ts`, 5,
+- **Qué cubre:** **46 tests en 4 ficheros** (`tests/trips/isolation.spec.ts`, 5,
   `tests/trips/shape.spec.ts`, 13, `tests/trips/portada.spec.ts`, 2, y
-  `tests/trips/campania.spec.ts`, 24, de la Fase 12, §5.8). En dev, la portada
+  `tests/trips/campania.spec.ts`, 26, de las Fases 12 y 13, §5.8). En dev, la portada
   está en `/guiaRoma/` y Roma en **`/guiaRoma/trips/roma/`** (Fase 11), como en la build. Los
   de `isolation.spec.ts`, en `/trips/prueba` frente a Roma:
   - *navegación en /trips/prueba (PLAT-02)* (2): un enlace a ficha (timeline y prosa)
@@ -245,23 +250,27 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
   - `prueba:` (1): solo Inicio, Mapa y sus dos días.
   - `trampa:` (5): la lista de viajes no-Roma incluye prueba y forma; un test por viaje
     no-Roma (hoy campania, forma y prueba) que no muestra ningún texto de Roma; control
-    positivo en Roma. La trampa de campania llega sola en la Fase 12: la lista sale de
-    `content/trips`, así que el borrador nuevo entra sin tocar el spec.
+    positivo en Roma. La trampa de campania llegó sola en la Fase 12: la lista sale de
+    `content/trips`, así que un viaje nuevo entra sin tocar el spec (publicado o no).
   - `chrome:` (2): forma muestra su marca, su leyenda y su pie; prueba, sin campos de
     chrome, usa el respaldo neutro.
   - `título:` (1): la pestaña de cada viaje es EXACTAMENTE su `pageTitle` o su título plano.
 - Los de `portada.spec.ts` (Fase 11, §5.7): `portada (dev):` (2): la portada en dev lista
-  solo los viajes publicados aunque prueba y forma se cargan (ningún enlace a ellos), y el
-  control positivo: los borradores siguen abriéndose por URL en dev con su título plano.
-- Los de `campania.spec.ts` (Fase 12, detalle por requisito en §5.8): prefijo `campania:`
-  (24), sobre el borrador `/guiaRoma/trips/campania`.
+  solo los viajes publicados, dos tarjetas por `startDate` descendente (Campania primero,
+  publicada en la Fase 13; Roma después), aunque prueba y forma se cargan (ningún enlace a
+  ellos), y el control positivo: los borradores siguen abriéndose por URL en dev con su título
+  plano.
+- Los de `campania.spec.ts` (Fases 12 y 13, detalle por requisito en §5.8): prefijo `campania:`
+  (26), sobre la guía real de Campania 2027 en `/guiaRoma/trips/campania` (publicada desde la
+  Fase 13; el e2e corre en dev como el resto).
 - **Config:** `playwright.trips.config.ts` (autocontenida, no importa las de paridad):
   `nuxi dev` en el **puerto 5300** con `NUXT_APP_BASE_URL=/guiaRoma/`, que Playwright
   arranca y para (`reuseExistingServer: false`); **un worker**, `retries: 0`, un solo
   proyecto **desktop** (1280×800, chromium); las peticiones externas se abortan.
-- **Por qué está FUERA de `verify`:** necesita un **dev server**, porque `/trips/prueba`,
-  `/trips/forma` y `/trips/campania` son **borradores** (`draft: true`, Fase 11): **no se prerenderizan** ni
-  entran en la build, solo existen en dev; y el dev
+- **Por qué está FUERA de `verify`:** necesita un **dev server**, porque `/trips/prueba` y
+  `/trips/forma` son **borradores** (`draft: true`, Fase 11): **no se prerenderizan** ni
+  entran en la build, solo existen en dev (Campania está publicada desde la Fase 13: se
+  prerenderiza y también se sirve en dev); y el dev
   server es frágil (primera compilación lenta, lock rancio de `nuxi dev`, recargas de
   Vite). Meterlo en la puerta la volvería no determinista, como la exclusión #2 de §2.
 - **Cómo ejecutarlo:**
@@ -312,6 +321,15 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
   evita una puerta vacua en verde.
 - Siguen siendo **solo de Roma**: el conteo de ficheros por colección
   (`schema.spec.ts`, D-12) y `migration-diff.spec.ts` (fidelidad contra el `index.html`).
+- **`tests/data/campania-content.spec.ts`** (Fase 13, CAMP-01…CAMP-06): el contrato de
+  CONTENIDO de Campania sobre el mismo loader (`loadTrip('campania')`). El marcador
+  `**⚠ por confirmar**` va siempre en negrita, sin U+FE0F y nunca en un campo de texto plano
+  (y nunca en Roma); ningún texto lleva palabras de Roma (`tests/trips/romaLeaks.ts`); solo se
+  nombran los establecimientos de la lista verificada D-14; los diez días (slugs, orden 1..10,
+  pastillas, bases, tramos y rutas) y las 24 fichas (numerales, imagen, nota familiar); Reservas
+  con sus propios títulos y Práctica con sus temas; al menos 15 marcadores en la guía; y el
+  describe «publicación (D-02)»: sin `draft: true`, sin la marca de control de la Fase 12 en
+  `howTo` y con la tarjeta de la portada completa.
 
 ### 5.4 Guardián de acoplamiento (`tests/unit/tripCoupling.spec.ts`, dentro de `verify`)
 
@@ -337,11 +355,14 @@ Corre en `test:data` sobre la build que `pnpm generate` acaba de producir:
 - `PRUEBA-CENTINELA-9F3` y `FORMA-CENTINELA-10A` no aparecen ni en el HTML de Roma ni en
   `_payload.json`;
 - **no existen `trips/prueba` ni `trips/forma`**: los borradores no se prerenderizan (D-17);
-- **Fase 12 (D-16): el borrador `campania`** tiene su centinela `CAMPANIA-CENTINELA-12A` (en
-  el howTo de `content/trips/campania/trip.yml`). Se busca junto a los de prueba y forma en
-  todos los ficheros publicados (dumps decodificados incluidos), **`trips/campania` no puede
-  existir**, y un `it` fuera del `skipIf` comprueba siempre que el centinela y `draft: true`
-  siguen en su trip.yml (así la ausencia nunca se afirma en vacío);
+- **Campania publicada (Fase 13, D-02).** En la Fase 12 fue el tercer borrador, con su marca de
+  control `CAMPANIA-CENTINELA-12A`. Desde la Fase 13 las comprobaciones son POSITIVAS: existen
+  `trips/campania/index.html` y `trips/campania/_payload.json` y los dos contienen «Baia di
+  Sorgeto» (los datos viajan prerenderizados en el payload, como los de Roma), y los dumps
+  decodificados `trip` y `monument` llevan `trips/campania/` y «Baia di Sorgeto». Un `it` fuera
+  del `skipIf` comprueba siempre que su trip.yml ya no lleva la marca de control ni
+  `draft: true`. La constante de la marca sigue en el escaneo de ficheros publicados como guarda
+  de regresión. El aislamiento de borradores sigue sin ser vacuo gracias a prueba y forma;
 - **Fase 12 (D-17), escaneo de clases del HTML publicado** (mitad de build del guardián de
   `tripshapes.css`, §5.8): ningún token de `NEW_CLASSES` aparece como clase en el HTML
   publicado de Roma ni de la portada (se recorre todo `*.html` de `.output/public` salvo el
@@ -353,17 +374,18 @@ Corre en `test:data` sobre la build que `pnpm generate` acaba de producir:
   `__nuxt_content/<colección>/sql_dump.txt` de las 6 colecciones son base64 + gzip, así que
   un `grep` sobre el fichero no vería nada; `decodeDump` los descomprime y el spec comprueba
   que ningún fichero publicado contiene un centinela de borrador, con un control positivo
-  (los dumps decodificados llevan Roma). Cierra **CR-01** (filas de borradores en los dumps
+  (los dumps decodificados llevan Roma y, desde la Fase 13, Campania). Cierra **CR-01** (filas de borradores en los dumps
   públicos).
 
 Sin build (`.output/public/index.html` ausente) los bloques post-build **se
 saltan**, no fallan en falso; los centinelas de los propios `trip.yml` se comprueban siempre.
 Ninguno de estos specs vive en `tests/parity/`: no cuentan en §4.
 
-> Medido el 2026-11-21 en esta rama (cierre de la Fase 12, `pnpm exec playwright test -c
-> playwright.trips.config.ts --list`): `Total: 44 tests in 4 files`. Al cierre de la Fase 11
-> eran 19 en 3; la Fase 12 suma `campania.spec.ts` (24) y la trampa de campania en
-> `shape.spec.ts` (1).
+> Medido el 2026-11-22 en esta rama (cierre de la Fase 13, plan 13-08, `pnpm exec playwright
+> test -c playwright.trips.config.ts --list`): `Total: 46 tests in 4 files`. Al cierre de la
+> Fase 11 eran 19 en 3; la Fase 12 suma `campania.spec.ts` (24) y la trampa de campania en
+> `shape.spec.ts` (1), 44 en 4; la Fase 13 suma dos tests a `campania.spec.ts` (Gastronomía en
+> 13-02 y Reservas/Práctica en 13-07), 46 en 4.
 
 ### 5.6 Forma y chrome desde datos (Fase 10)
 
@@ -499,17 +521,17 @@ se defiende con estas piezas:
   única exención, `train`** (`PARITY_EXEMPT_TRANSPORT = ['train']`: el martes de Roma usa el
   estilo base, y ningún CSS puede tener `.tl-transport.train`); `StatVariant` → glifo de
   `.day-stats-item.<v>::before`; `Motif` → `SVG_MOTIFS`; `PlaceType` → `MARKER_STYLE`.
-- **El borrador `content/trips/campania/`** (`draft: true`, D-16): el esqueleto del primer
-  viaje real después de Roma, **solo en dev** (`/guiaRoma/trips/campania`), como prueba y
-  forma (§5.2): nunca se prerenderiza, la portada no lo lista y en la build responde 404
-  (`tests/parity/portada.spec.ts`, dentro de su test de borradores). Tiene los cinco días del
-  esqueleto (`sabado-19`, `domingo-20`, `martes-22`, `jueves-24`, `viernes-25`), cuatro bases
-  (`stays`: Nápoles, Procida, Ischia, Salerno) y fichas de esqueleto en las cuatro ciudades,
-  con textos provisionales y heros en `example.invalid` (D-15). **La Fase 13 lo reescribe**
-  con el contenido real. Su centinela `CAMPANIA-CENTINELA-12A` y la ausencia de
-  `trips/campania` en la build los comprueba §5.5.
-- **`tests/trips/campania.spec.ts`** (`test:trips`, FUERA de `verify`, §5.1; 24 tests con
-  prefijo `campania:`). Lo esperado sale de los YAML del viaje, no de listas escritas a mano:
+- **`content/trips/campania/`**: en la Fase 12 fue un borrador (`draft: true`, D-16), el
+  esqueleto del primer viaje real después de Roma, solo en dev, con cinco días, cuatro bases
+  (`stays`: Nápoles, Procida, Ischia, Salerno), fichas de esqueleto y heros en
+  `example.invalid` (D-15). **En la Fase 13 se convirtió en la guía real de Campania 2027**:
+  diez días (19-28 de junio), 24 fichas con heros de Wikimedia Commons, Gastronomía, Reservas y
+  Práctica, con los datos aún no publicados marcados `**⚠ por confirmar**`. Al cierre de la
+  Fase 13 (13-08, D-02) se publicó: sin `draft`, se prerenderiza en `/guiaRoma/trips/campania/`
+  y la portada la lista primero (`startDate` descendente). Las comprobaciones de build están en
+  §5.5 y las de contenido en `tests/data/campania-content.spec.ts` (§5.3).
+- **`tests/trips/campania.spec.ts`** (`test:trips`, FUERA de `verify`, §5.1; 26 tests con
+  prefijo `campania:` desde la Fase 13). Lo esperado sale de los YAML del viaje, no de listas escritas a mano:
   - **EXT-01** (alternativas, D-02, D-03, D-05): el jueves 24 apila las opciones con
     «— o bien —» entre filas comunes; opciones en orden y opciones−1 separadores, sin fundir
     dos `choice` seguidos; «Elige una» por defecto o el `heading` del dato; las opciones
@@ -536,8 +558,10 @@ se defiende con estas piezas:
     `.maps-link` y `.notes-area`, tantas cajas en la página como fichas con `family`, y la
     etiqueta se lee en claro y en oscuro; a 375 px la caja y una «Dormís en» con nombre largo
     parten línea sin desbordar.
-  - D-15 / D-16: los cinco días aparecen en orden con su pastilla; la portada de dev no lista
-    el borrador.
+  - D-15 / D-16: los días aparecen en orden con su pastilla (diez desde la Fase 13); la
+    portada de dev lista Campania una vez y primero (publicada en la Fase 13, D-02).
+  - Fase 13: Gastronomía en sus grupos (13-02) y Reservas/Práctica con sus propios títulos,
+    nunca los de Roma (13-07).
 - **Unitarios de la Fase 12** (`test:unit`, dentro de `verify`): `tripStays.spec.ts`
   (`stayFor`), `timelineRows.spec.ts` (`flattenRows`, `optionOnlyRefs`,
   `hasTransportVariant` sobre Roma y Campania reales), `dayRoute.spec.ts` (Roma byte a byte,
@@ -590,7 +614,9 @@ encabezados fijos de Roma heredaría «3 comensales» y la cabecera de restauran
     al cambio (en un commit que no toca plantilla ni esquema); nunca se regenera para que el
     spec pase y solo se recaptura ante un cambio de Roma aprobado por el usuario.
 
-> **Nota para la Fase 13.** Campania debe declarar `headings` en su `reservas.yml`: si falta un
-> título de un bloque que se pinta, la regla `reservas-headings` de la puerta de datos pone
-> `test:data` en rojo (antes solo lo avisaba esta nota; la UI caería a los textos de Roma, D-02). La comprobación en navegador del caso «grupo vacío» llega con ese
-> fichero en `test:trips`: hoy ningún viaje que no sea Roma tiene `reservas.yml`.
+> **Nota para la Fase 13 (cerrada).** Campania declara sus tres `headings` en su
+> `reservas.yml` (13-07): «✈️ Vuelos», «🎟️ Entradas confirmadas» y su propia cabecera de tabla.
+> La regla `reservas-headings` de la puerta de datos los exige (si faltara un título de un
+> bloque que se pinta, `test:data` se pondría en rojo y la UI caería a los textos de Roma,
+> D-02), y `tests/trips/campania.spec.ts` comprueba en el navegador que Reservas y Práctica
+> llevan sus propios títulos.
