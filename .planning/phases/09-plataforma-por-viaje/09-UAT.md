@@ -1,5 +1,5 @@
 ---
-status: complete
+status: diagnosed
 phase: 09-plataforma-por-viaje
 source: [09-VERIFICATION.md]
 started: 2026-11-20T12:45:00Z
