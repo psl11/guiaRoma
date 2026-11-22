@@ -149,10 +149,45 @@ async function storageSnapshot(page: Page): Promise<Record<string, string>> {
   })
 }
 
+/** Identidad de dispositivo que ve la página (para comprobar que el oráculo es el mismo móvil). */
+interface DeviceEnv {
+  userAgent: string
+  maxTouchPoints: number
+  devicePixelRatio: number
+}
+
+/** Se pasa a `page.evaluate`: corre en el navegador. */
+function captureDeviceEnv(): DeviceEnv {
+  return { userAgent: navigator.userAgent, maxTouchPoints: navigator.maxTouchPoints, devicePixelRatio: window.devicePixelRatio }
+}
+
+/** Fixtures de dispositivo del proyecto (iPhone 12 en `mobile`, viewport en `desktop`). */
+interface DeviceFixtures {
+  viewport: { width: number, height: number } | null
+  isMobile: boolean | undefined
+  hasTouch: boolean | undefined
+  deviceScaleFactor: number | undefined
+  userAgent: string | undefined
+}
+
+/**
+ * Opciones de contexto con el dispositivo COMPLETO del proyecto, no solo el viewport (IN-07 de
+ * 14-REVIEW.md): `isMobile`, `hasTouch`, `deviceScaleFactor` y `userAgent`. Así el oráculo y el
+ * contexto sin JS ven lo mismo que el usuario (p. ej. `matchMedia('(hover: none)')`).
+ */
+const deviceOptions = (f: DeviceFixtures): BrowserContextOptions => ({
+  viewport: f.viewport,
+  isMobile: f.isMobile,
+  hasTouch: f.hasTouch,
+  deviceScaleFactor: f.deviceScaleFactor,
+  userAgent: f.userAgent,
+})
+
 /** El estado que la guía viva restaura por sí misma y lo que deja escrito al restaurar. */
 interface Oracle {
   state: UiState
   storage: Record<string, string>
+  device: DeviceEnv
 }
 
 /**
@@ -163,11 +198,11 @@ interface Oracle {
  */
 async function oracleFromLiveGuide(
   browser: Browser,
-  viewport: { width: number, height: number } | null,
+  contextOptions: BrowserContextOptions,
   origin: string,
   snapshot: Record<string, string>,
 ): Promise<Oracle> {
-  const context = await browser.newContext({ viewport })
+  const context = await browser.newContext(contextOptions)
   try {
     const p = await context.newPage()
     await blockOffOrigin(p, origin)
@@ -179,7 +214,7 @@ async function oracleFromLiveGuide(
     }, snapshot)
     await p.reload()
     await expect(p.locator('.notes-textarea')).toHaveCount(ROMA_MONUMENTS.length)
-    return { state: await p.evaluate(captureState), storage: await storageSnapshot(p) }
+    return { state: await p.evaluate(captureState), storage: await storageSnapshot(p), device: await p.evaluate(captureDeviceEnv) }
   }
   finally {
     await context.close()
@@ -309,7 +344,8 @@ test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)',
     if (oldDir) rmSync(oldDir, { recursive: true, force: true })
   })
 
-  test('upgrade: las notas de las 38 fichas, el ritmo, el modo resumen y el tema oscuro llegan intactos a /trips/roma/ en la primera carga', async ({ browser, page }) => {
+  test('upgrade: las notas de las 38 fichas, el ritmo, el modo resumen y el tema oscuro llegan intactos a /trips/roma/ en la primera carga', async ({ browser, page, viewport, isMobile, hasTouch, deviceScaleFactor, userAgent }) => {
+    const device = deviceOptions({ viewport, isMobile, hasTouch, deviceScaleFactor, userAgent })
     const orphanKey = 'roma-note-ficha-retirada'
     const orphanNote = 'Nota de una ficha que ya no existe: «no se pierde».\nNunca.'
     await blockOffOrigin(page, ORIGIN)
@@ -333,8 +369,9 @@ test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)',
     await page.evaluate(([k, v]) => localStorage.setItem(k, v), [orphanKey, orphanNote] as const)
 
     const s0 = await storageSnapshot(page)
-    const oracle = await oracleFromLiveGuide(browser, page.viewportSize(), ORIGIN, s0)
+    const oracle = await oracleFromLiveGuide(browser, device, ORIGIN, s0)
     const e = oracle.state
+    expect(oracle.device, 'el oráculo corre en el mismo dispositivo que el usuario (UA, táctil, DPR)').toEqual(await page.evaluate(captureDeviceEnv))
     // Sin migración a claves nuevas (WR-02): solo pueden existir las claves del usuario y las que
     // la propia guía viva deja al restaurar.
     const allowed = new Set([...Object.keys(s0), ...Object.keys(oracle.storage)])
@@ -356,13 +393,13 @@ test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)',
     //     la app, el HTML publicado de la portada y de Roma ya pinta oscuro. Control: con el
     //     almacenamiento vacío (y el esquema claro por defecto del navegador) pinta claro, así que
     //     el oscuro sale de `roma-theme` y no de un valor fijo.
-    const noJs = await paintWithoutAppJs(browser, { viewport: page.viewportSize() }, ORIGIN, s0, [SITE_BASE, ROMA_URL])
+    const noJs = await paintWithoutAppJs(browser, device, ORIGIN, s0, [SITE_BASE, ROMA_URL])
     expect(noJs.abortedAppRequests, 'no vacuidad: se abortaron peticiones /_nuxt/ (la app no cargó)').toBeGreaterThan(0)
     expect(noJs.paints, 'sin JS de la app, portada y Roma ya pintan oscuro (script inline de <head>)').toEqual([
       { path: SITE_BASE, theme: 'dark', appRan: false },
       { path: ROMA_URL, theme: 'dark', appRan: false },
     ])
-    const noJsControl = await paintWithoutAppJs(browser, { viewport: page.viewportSize() }, ORIGIN, {}, [ROMA_URL])
+    const noJsControl = await paintWithoutAppJs(browser, device, ORIGIN, {}, [ROMA_URL])
     expect(noJsControl.paints, 'control: sin roma-theme, el mismo HTML pinta claro').toEqual([{ path: ROMA_URL, theme: 'light', appRan: false }])
 
     // 3) Un marcador viejo a la raíz: la portada ya pinta oscuro antes de hidratar y no escribe nada.
@@ -433,7 +470,8 @@ test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)',
     expect(newKeys(final, allowed), 'sin claves nuevas tras Campania').toEqual([])
   })
 
-  test('upgrade: «caminar menos» guardado con otro ritmo se restaura como en la guía viva (ritmo pesimista forzado)', async ({ browser, page }) => {
+  test('upgrade: «caminar menos» guardado con otro ritmo se restaura como en la guía viva (ritmo pesimista forzado)', async ({ browser, page, viewport, isMobile, hasTouch, deviceScaleFactor, userAgent }) => {
+    const device = deviceOptions({ viewport, isMobile, hasTouch, deviceScaleFactor, userAgent })
     await blockOffOrigin(page, ORIGIN)
 
     // 1) La guía viva: una nota, «Caminar menos» (fuerza Pesimista), y DESPUÉS ritmo «Neutra»:
@@ -451,8 +489,9 @@ test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)',
     await page.locator('#resumen-toggle').click()
 
     const s0 = await storageSnapshot(page)
-    const oracle = await oracleFromLiveGuide(browser, page.viewportSize(), ORIGIN, s0)
+    const oracle = await oracleFromLiveGuide(browser, device, ORIGIN, s0)
     const e = oracle.state
+    expect(oracle.device, 'el oráculo corre en el mismo dispositivo que el usuario (UA, táctil, DPR)').toEqual(await page.evaluate(captureDeviceEnv))
     const allowed = new Set([...Object.keys(s0), ...Object.keys(oracle.storage)])
     expect(e.pace, 'oráculo: la guía viva fuerza Pesimista al restaurar «Caminar menos»').toBe('slow')
     expect(e.light, 'oráculo: «Caminar menos»').toBe(true)

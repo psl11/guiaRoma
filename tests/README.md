@@ -689,7 +689,10 @@ git fetch origin main && git branch main origin/main
   `/guiaRoma/`) se levanta en el **mismo** `127.0.0.1:PUERTO`, con el mismo contexto de
   navegador de principio a fin. Puerto base **6600** + `TEST_PARALLEL_INDEX`.
 - **Oráculo, no valores escritos a mano:** el estado esperado es lo que **la propia guía viva**
-  restaura sobre el mismo almacenamiento, capturado en un contexto de navegador aparte.
+  restaura sobre el mismo almacenamiento, capturado en un contexto de navegador aparte con el
+  **dispositivo completo** del proyecto (en `mobile`, el iPhone 12: `isMobile`, `hasTouch`,
+  `deviceScaleFactor` y `userAgent`, no solo el viewport); el spec comprueba que el oráculo ve el
+  mismo UA, táctil y DPR que el usuario.
 - **Qué comprueba** (2 tests × mobile + desktop = 4): las notas de las **38** fichas (con
   comillas, acentos, euro y saltos de línea), el ritmo, «Caminar menos» (el borde «Neutra» +
   «Caminar menos» se restaura como Pesimista, igual que en la guía viva), el modo resumen y el
