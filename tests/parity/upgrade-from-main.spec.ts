@@ -171,14 +171,13 @@ async function oracleFromLiveGuide(
   try {
     const p = await context.newPage()
     await blockOffOrigin(p, origin)
+    // goto/reload ya esperan a `load` por defecto (sin waitForLoadState('load') redundante, IN-05).
     await p.goto(`${origin}${SITE_BASE}index.html`)
-    await p.waitForLoadState('load')
     await p.evaluate((snap) => {
       localStorage.clear()
       for (const [k, v] of Object.entries(snap)) localStorage.setItem(k, v)
     }, snapshot)
     await p.reload()
-    await p.waitForLoadState('load')
     await expect(p.locator('.notes-textarea')).toHaveCount(ROMA_MONUMENTS.length)
     return { state: await p.evaluate(captureState), storage: await storageSnapshot(p) }
   }
@@ -319,7 +318,6 @@ test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)',
     //    resumen, que oculta las fichas), ritmo «Neutra» y modo resumen.
     server = await startPagesServer(oldDir, PORT)
     await page.goto(LIVE_URL)
-    await page.waitForLoadState('load')
     const textareas = page.locator('.notes-textarea')
     await expect(textareas).toHaveCount(ROMA_MONUMENTS.length)
     await page.locator('.theme-btn').click()
@@ -442,7 +440,6 @@ test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)',
     //    el almacenamiento queda con roma-pace=neutral y roma-light=1 (el borde), y modo resumen.
     server = await startPagesServer(oldDir, PORT)
     await page.goto(LIVE_URL)
-    await page.waitForLoadState('load')
     const first = page.locator('.notes-textarea').first()
     await expect(page.locator('.notes-textarea')).toHaveCount(ROMA_MONUMENTS.length)
     const firstKey = await first.getAttribute('data-note-key')

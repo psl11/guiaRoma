@@ -118,13 +118,15 @@ function track(page: Page): Tracker {
   return t
 }
 
-/** Espera a estar de verdad en `url` (URL, red en calma, hidratación y marcador único). */
+/**
+ * Espera a estar de verdad en `url` (URL, red en calma, hidratación y marcador único).
+ * `waitForURL` con una cadena ya garantiza `page.url() === url`: no se vuelve a comprobar (IN-05).
+ */
 async function landOn(page: Page, url: string, marker: string): Promise<void> {
   await page.waitForURL(url)
   await page.waitForLoadState('networkidle')
   await hydrated(page)
   await expect(page.locator(marker)).toHaveCount(1)
-  expect(page.url()).toBe(url)
 }
 
 /**
