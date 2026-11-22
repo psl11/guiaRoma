@@ -354,7 +354,14 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
   `---`) **sí** pinta `<a href>` (y `to:` igual), así que esa forma también se rechaza. Como
   remark-mdc lee ese frontmatter como YAML completo (`{href: …}`, `? href`, `"\x68ref"`…), no se
   buscan claves: se rechaza el constructo, una línea `::x` seguida de una línea `---` (o más
-  guiones), también dentro de `>`, `-` o `1.` (CR-02 de 10-REVIEW). El
+  guiones), también dentro de `>`, `-` o `1.` (CR-02 de 10-REVIEW). Se rechazan además, con la
+  misma regla, los ids que la prosa crea sin sintaxis de enlace (WR-01 de 10-REVIEW): los
+  encabezados Markdown `## …` (MDC les pone id y `ProseH2` los envuelve en `<a href="#…">`),
+  también dentro de `>`, `-` o `1.`, los setext `Texto / ---` y `Texto / ===`, y los atributos MDC
+  `{#id}` / `{id=…}` (el `#` de un valor entrecomillado, como el `caption` de `::detail-photo`, no
+  cuenta). Un id así duplicaría el de una ficha o sección (lo que `card-placement` garantiza
+  único) y, en el `summary`, metería un `<a>` dentro de la tarjeta de la portada, así que también
+  es `trip-summary-link`. El
   escaneo es léxico y fail-closed (puede dar un falso rojo, nunca un falso verde); la ruta del
   parser se descartó porque no se resuelve con pnpm y la v1.1 no admite dependencias nuevas.
   El `href` de una entrada de `food` del timeline (`FoodEntry.href`, también dentro de las

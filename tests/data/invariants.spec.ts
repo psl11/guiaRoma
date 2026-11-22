@@ -547,6 +547,16 @@ describe('la puerta tiene dientes (fixtures)', () => {
     'Ver [x][r s].\n\n[r\ns]: /trips/roma',
     'Ver [x][a\\]b].\n\n[a\\]b]: /trips/roma',
     '> [^1]: nota',
+    // WR-01 (10-REVIEW): ids creados desde la prosa (encabezados con su <a href="#…">, {#id}, {id=…}).
+    '## Mapa',
+    '- ## Mapa',
+    '> ## Mapa',
+    'Texto\n---',
+    '> Texto\n> ---',
+    'Texto\n===',
+    'Texto **aquí**{#galeria}.',
+    'Texto [aquí]{ .c #galeria}.',
+    'Texto **aquí**{id=galeria}.',
   ])('G-10-2/WR-01 cross-trip-link: la forma %j pasa por la lista blanca (D-05b)', (body) => {
     const vs = checkTrip(galeriaWith(body))
     expect(vs.filter(v => v.rule === 'cross-trip-link'), formatViolations(vs)).toEqual([
@@ -571,12 +581,15 @@ describe('la puerta tiene dientes (fixtures)', () => {
     'Ver <https://example.org/x>.',
     'Ver [la web](https://example.org/x "título").',
     '::detail-photo{src="https://example.org/x.jpg" alt="Galería" caption="Ver [la galería](#galeria)"}',
+    // WR-01: ni una lista, ni un salto <br>, ni una llave suelta antes de un ancla son un id.
+    'Lista:\n- uno\n- dos\n\nVer [la galería](#galeria).',
+    'Línea<br>otra con { llave suelta y [la galería](#galeria).',
   ])('G-10-2/WR-01 control: la forma admitida %j no da violaciones', (body) => {
     const vs = checkTrip(galeriaWith(body))
     expect(vs, formatViolations(vs)).toEqual([])
   })
 
-  it.each(['Ver [el inicio]( #inicio).', 'Escribe a info@example.org'])(
+  it.each(['Ver [el inicio]( #inicio).', 'Escribe a info@example.org', '## Cinco días', 'Cinco días\n---'])(
     'G-10-2/WR-01 trip-summary-link: summary %j → violación en trip.yml',
     (summary) => {
       const vs = checkTrip(memTrip('prueba', {}, { summary }))

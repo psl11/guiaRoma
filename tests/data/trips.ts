@@ -297,6 +297,8 @@ const BARE_URL_RE = /\bhttps?:\/\/|\bwww\./i
  * Formas de enlace que la guía no usa y la puerta rechaza SEA CUAL SEA su destino (D-05b), con la
  * etiqueta que sale en el mensaje de `cross-trip-link`.
  */
+const MDC_FRONTMATTER = 'bloque MDC con frontmatter «::x / ---»'
+const SETEXT_DASH = 'encabezado setext «Texto / ---»'
 const REJECTED_LINK_FORMS: ReadonlyArray<readonly [RegExp, string]> = [
   // MDC parsea cada campo por separado: sin una definición en el MISMO string, `[x][r]`, `[x][]` y
   // `[r]` son texto plano. Rechazar la definición cierra las tres formas. CR-01 (10-REVIEW): sin
@@ -313,7 +315,18 @@ const REJECTED_LINK_FORMS: ReadonlyArray<readonly [RegExp, string]> = [
   // (`{href: …}`, `? href`, `"\x68ref"`, alias, `<<:`), así que no se buscan claves: se rechaza el
   // CONSTRUCTO, una línea `::x` seguida de una línea `---` (o más guiones), también dentro de `>`,
   // `-` o `1.`. La guía no usa ningún bloque `::x` con frontmatter.
-  [/^(?:[ \t>]|[*+-][ \t]|\d{1,9}[.)][ \t])*:{2,}[A-Za-z][\w-]*[^\n]*\n(?:[ \t>]|[*+-][ \t]|\d{1,9}[.)][ \t])*-{3,}[ \t]*$/m, 'bloque MDC con frontmatter «::x / ---»'],
+  [/^(?:[ \t>]|[*+-][ \t]|\d{1,9}[.)][ \t])*:{2,}[A-Za-z][\w-]*[^\n]*\n(?:[ \t>]|[*+-][ \t]|\d{1,9}[.)][ \t])*-{3,}[ \t]*$/m, MDC_FRONTMATTER],
+  // WR-01 (10-REVIEW): ids creados desde la prosa, que duplicarían un id de ficha o de sección
+  // (lo que `card-placement` garantiza único) y desviarían `[x](#id)`. Comprobado con parseMarkdown:
+  // `## Mapa` → `h2 id="mapa"` (y `ProseH2` lo envuelve en `<a href="#mapa">`, un `<a>` que no es
+  // `[texto](destino)`), también dentro de `>`, `-` o `1.`; el setext `Texto / ---` o `/ ===`
+  // igual; y los atributos MDC `{#id}` / `{id=…}`. La guía no usa ninguno. Los `---` de un
+  // frontmatter `::x` ya rechazado no se cuentan además como setext (ver scanProseLinks).
+  [/^(?:[ \t>]|[*+-][ \t]|\d{1,9}[.)][ \t])*#{1,6}(?:[ \t]|$)/m, 'encabezado Markdown «# …» (MDC le pone id y <a href="#…">)'],
+  [/^[^\n]*\S[ \t]*\n(?:[ \t>]|[*+-][ \t]|\d{1,9}[.)][ \t])*=+[ \t]*$/m, 'encabezado setext «Texto / ===»'],
+  [/^[^\n]*\S[ \t]*\n(?:[ \t>]|[*+-][ \t]|\d{1,9}[.)][ \t])*-+[ \t]*$/m, SETEXT_DASH],
+  // Las comillas se saltan: el `#id` de un valor entrecomillado (`caption="Ver [x](#id)"`) no es un id.
+  [/\{(?:[^{}"'#]|"[^"]*"|'[^']*')*(?:#|(?<![\w-])id\s*=)(?=[^{}]*\})/i, 'atributo MDC «{#id}» / «{id=…}»'],
 ]
 
 /**
@@ -352,7 +365,9 @@ function scanProseLinks(md: string): { targets: string[], rejected: string[] } {
   // Los autoenlaces ya contados se tapan para no volver a ver su email como email suelto.
   const bare = md.replace(AUTOLINK_RE, ' ').replace(EMAIL_AUTOLINK_RE, ' ')
   for (const m of bare.matchAll(BARE_EMAIL_RE)) targets.push(`mailto:${m[0]}`)
-  const rejected = REJECTED_LINK_FORMS.filter(([re]) => re.test(md)).map(([, label]) => label)
+  const labels = REJECTED_LINK_FORMS.filter(([re]) => re.test(md)).map(([, label]) => label)
+  // Los `---` de un frontmatter `::x` no son un setext: ese string ya está rechazado y no se duplica.
+  const rejected = labels.includes(MDC_FRONTMATTER) ? labels.filter(l => l !== SETEXT_DASH) : labels
   return { targets, rejected }
 }
 
