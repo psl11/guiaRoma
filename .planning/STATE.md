@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 14
 current_phase_name: Verificación del milestone
 status: executing
-stopped_at: Completed 13-08-PLAN.md
-last_updated: "2026-11-22T01:48:57.187Z"
+stopped_at: Completed 14-01-PLAN.md
+last_updated: "2026-11-22T01:54:05.485Z"
 last_activity: 2026-11-22
 last_activity_desc: Phase 12.1 complete, transitioned to Phase 9
-state_head: cfb7e6d4acbaa8bea2c14169486d190b82a093fc
+state_head: ed4ff985279a12ab17e3c98077305ce0ea70744d
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 36
-  completed_plans: 33
+  completed_plans: 34
   percent: 14
 ---
 
@@ -137,6 +137,7 @@ Progress: [█░░░░░░░░░] 14%
 | Phase 13 P06 | 10min | 2 tasks | 9 files |
 | Phase 13 P07 | 5min | 2 tasks | 4 files |
 | Phase 13 P08 | 6min | 2 tasks | 7 files |
+| Phase 14 P01 | 15min | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -341,6 +342,7 @@ Recent decisions affecting current work:
 - [Phase 13]: 13-07: Práctica ends with a «Lecturas y visionados antes del viaje» section before media (Roma's pattern), with Morante, Ferrante and El cartero
 - [Phase 13]: Campania published at the Phase 13 close (D-02): draft key and Phase 12 control mark removed in one commit with every draft-dependent test; reversible, deploy is a separate act
 - [Phase 13]: CAMPANIA_SENTINEL kept in the build-isolation offenders scan as a regression guard
+- [Phase 14]: 14-01: PAR-03 upgrade spec uses a live-guide oracle (main:index.html seeded with the user's storage) returning UI state and post-restore storage; the only allowed rewrite (roma-pace->slow under light mode) is asserted against main's own restore
 
 ### Pending Todos
 
@@ -381,8 +383,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-22T01:17:18.287Z
-Stopped at: Completed 13-08-PLAN.md
+Last session: 2026-11-22T01:54:05.202Z
+Stopped at: Completed 14-01-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
