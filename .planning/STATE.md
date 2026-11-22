@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 13
 current_phase_name: Contenido Campania 2027
 status: executing
-stopped_at: Phase 12.1 complete, ready to verify Phase 9
-last_updated: "2026-11-22T00:08:27.145Z"
+stopped_at: Completed 13-01-PLAN.md
+last_updated: "2026-11-22T00:18:17.602Z"
 last_activity: 2026-11-22
 last_activity_desc: Phase 12.1 complete, transitioned to Phase 9
-state_head: b27bb69f02a0ed4f76945db5f7dae5c37ca0b770
+state_head: 1e0d92508da3d861c605939d64d9016d34fe87f2
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 33
-  completed_plans: 25
+  completed_plans: 26
   percent: 14
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 13 (Contenido Campania 2027) — READY TO EXECUTE
-Plan: 5
+Plan: 2 of 8
 Status: Ready to execute
 Last activity: 2026-11-22 — Phase 12.1 complete, transitioned to Phase 9
 
@@ -129,6 +129,7 @@ Progress: [█░░░░░░░░░] 14%
 | Phase 12 P06 | 8min | 2 tasks | 11 files |
 | Phase 12 P07 | 12min | 3 tasks | 10 files |
 | Phase 12.1 P01 | 8 min | 3 tasks | 8 files |
+| Phase 13 P01 | 8min | 3 tasks | 14 files |
 
 ## Accumulated Context
 
@@ -315,6 +316,9 @@ Recent decisions affecting current work:
 - [Phase 12]: D-13: EXT-05 sin cambio de código del mapa (setView + fitBounds pad 0.1); en nuxi dev el contenedor pierde id=leaflet-map (diferido), el E2E le devuelve los 520 px de base.css
 - [Phase 12.1]: Roma's Reservas headings live once as RESERVAS_HEADINGS_DEFAULT in app/utils/reservasHeadings.ts (add-alongside; content/trips/roma frozen): a future trip with reservas.yml and no headings inherits them, so Campania must declare headings
 - [Phase 12.1]: Second h4 and .reservas-box-header keep Roma's one-space padding via a template literal inside the interpolation; Roma #reservas guarded byte-for-byte by tests/data/fixtures/roma-reservas.html (never regenerated to pass)
+- [Phase 13]: 13-01: Wave-0 content contract tests/data/campania-content.spec.ts with registries (WRITTEN_DAYS, WRITTEN_MONUMENTS, FAMILY_REQUIRED, MARKER_FILES, ROMANS) that 13-02..13-06 extend
+- [Phase 13]: 13-01: martes-22 uses route transit with exactly 2 stops (WR-01 mitigated by content); all EAV timetables, taxi prices and Sorgeto night conditions marked **⚠ por confirmar**
+- [Phase 13]: 13-01: trip.yml stays draft with CAMPANIA-CENTINELA-12A until 13-08; Ultimo Friday 25 unmarked (D-22), PTN date/start times, accommodation and car return point marked
 
 ### Pending Todos
 
@@ -355,8 +359,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-21T23:19:12.663Z
-Stopped at: Phase 12.1 complete, ready to verify Phase 9
+Last session: 2026-11-22T00:18:17.369Z
+Stopped at: Completed 13-01-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
