@@ -69,7 +69,9 @@ import {
  * (`galeria.json`, `galeria.yml~`…) es `stray-file`; los ocultos (.DS_Store, .gitkeep) se ignoran.
  * Cierre G-10-2 (WR-01/WR-03 de 10-REVIEW): toda forma de enlace que MDC pinta como `<a>` pasa por
  * la lista blanca o el ancla, y las formas no admitidas (`[r]: …`, `<a>` crudo, `{href=…}`) son
- * `cross-trip-link` con su fichero (WR-01).
+ * `cross-trip-link` con su fichero (WR-01). `card-placement`: cada ficha aparece exactamente una vez
+ * en la unión de los `cards` de days/*.yml, y `anchor`, `seenIn` y los `ref` de timeline y reservas
+ * solo resuelven a fichas pintadas (WR-03).
  *
  * El bloque «la puerta tiene dientes» prueba cada regla con un fixture (en memoria con
  * `loadTripFromFiles` o en disco en tests/data/fixtures/trips/, NUNCA bajo content/).

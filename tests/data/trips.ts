@@ -40,6 +40,10 @@
 //    (`scanProseLinks`: espacio o salto tras `(`, destino `<…>`, autoenlaces y emails) y la somete a
 //    la lista blanca o al ancla; rechaza con `cross-trip-link` las definiciones `[r]: …`, el `<a>`
 //    crudo y los atributos/props MDC `href`/`to`, sea cual sea su destino.
+//    WR-03: `card-placement` exige cada ficha exactamente una vez en la unión de los `cards` de
+//    days/*.yml (sin día no se pinta; en dos días duplica su id), y `anchor`, `seenIn` y los `ref`
+//    de timeline y reservas solo resuelven a fichas pintadas (`renderedMonuments`, espejo de
+//    DaySection → MonumentCard).
 //
 // Fase 11 (portada, datos de la tarjeta del viaje):
 //  - D-08: `trip-dates` — en trip.yml, `endDate` no puede ser anterior a `startDate` (strings ISO
@@ -118,7 +122,7 @@ export const RULES = [
   'yaml-parse', 'yaml-object', 'trip-yml', 'trip-slug', 'trip-field', 'stray-file', 'reserved-key',
   'unknown-key', 'basename-slug', 'dup-id', 'fixed-anchor', 'ref', 'anchor', 'cross-trip-link',
   'day-order', 'day-pill', 'trip-dates', 'trip-summary-link', 'stay-ref', 'stay-dup',
-  'reservas-headings',
+  'reservas-headings', 'card-placement',
 ] as const
 export type Rule = typeof RULES[number]
 
@@ -385,7 +389,7 @@ const rowKeys = new Map<CollectionName, ReadonlySet<string>>(
   COLLECTIONS.map(c => [c.name, new Set(Object.keys(c.row.shape))]),
 )
 
-/** Aplica las 21 reglas de la puerta (`RULES`) a un viaje cargado. Lista vacía = viaje sano. */
+/** Aplica las 22 reglas de la puerta (`RULES`) a un viaje cargado. Lista vacía = viaje sano. */
 export function checkTrip(t: LoadedTrip): Violation[] {
   const vs: Violation[] = [...t.loadViolations]
   const push = (file: string, rule: Rule, message: string) => vs.push({ file, rule, message })
@@ -458,7 +462,37 @@ export function checkTrip(t: LoadedTrip): Violation[] {
   // ref: las 6 referencias estructuradas, resueltas DENTRO del viaje.
   const monumentSlugs = new Set(monuments.map(d => d.slug))
   const foodSlugs = new Set(food.map(d => d.slug))
-  const stopOrFood = new Set([...monumentSlugs, ...foodSlugs])
+
+  // card-placement (G-10-2 / WR-03): apariciones de cada ficha en los `cards` de los días, en el
+  // orden de `days` (por ruta) y de cada `cards`; una entrada por aparición (dos veces en el mismo
+  // día cuenta 2). Los slugs que no son fichas ya son violaciones `ref` y aquí se ignoran.
+  const placements = new Map<string, Doc[]>()
+  for (const d of days) {
+    for (const ref of Array.isArray(d.data.cards) ? d.data.cards : []) {
+      const slug = String(ref)
+      if (!monumentSlugs.has(slug)) continue
+      placements.set(slug, [...(placements.get(slug) ?? []), d])
+    }
+  }
+  // Espejo de DaySection (day.cards → monById → MonumentCard :id="monument.slug"): el ÚNICO sitio
+  // que pinta id=<slug> de una ficha. Una ficha fuera de esta unión no existe en el DOM.
+  const renderedMonuments = new Set(placements.keys())
+  for (const d of monuments) {
+    if (d.slug === '') continue
+    const where = placements.get(d.slug) ?? []
+    if (where.length === 0) {
+      push(d.file, 'card-placement', `ficha "${d.slug}" no está en el cards de ningún día: MonumentCard no la pinta y #${d.slug} no existe en la guía (D-08)`)
+    }
+    else if (where.length > 1) {
+      const files = [...new Set(where.map(x => x.file))]
+      for (const file of files) {
+        push(file, 'card-placement', `ficha "${d.slug}" aparece ${where.length} veces en cards (${files.join(', ')}): id #${d.slug} duplicado en el DOM (D-08)`)
+      }
+    }
+  }
+
+  // Los ref de timeline (stop y food) y de reservas.table solo resuelven a fichas PINTADAS.
+  const stopOrFood = new Set([...renderedMonuments, ...foodSlugs])
   const artistArt = new Set(artists.filter(d => d.kind === 'artist').map(d => d.slug))
   const artistArch = new Set(artists.filter(d => d.kind === 'arquitectura').map(d => d.slug))
 
@@ -488,7 +522,11 @@ export function checkTrip(t: LoadedTrip): Violation[] {
   }
   for (const d of artists) {
     for (const link of asArray(d.data.seenIn)) {
-      if (!monumentSlugs.has(String(link.ref))) push(d.file, 'ref', `seenIn ref "${String(link.ref)}" no es un monument`)
+      const ref = String(link.ref)
+      if (renderedMonuments.has(ref)) continue
+      push(d.file, 'ref', monumentSlugs.has(ref)
+        ? `seenIn ref "${ref}" es una ficha que no se pinta en ningún día (cards)`
+        : `seenIn ref "${ref}" no es un monument`)
     }
   }
   for (const d of reference.filter(x => x.slug === 'reservas')) {
@@ -590,7 +628,12 @@ export function checkTrip(t: LoadedTrip): Violation[] {
     foodCount: food.length,
     artistKinds: new Set(artists.map(d => d.kind).filter((k): k is string => k !== undefined)),
   })
-  const anchorable = new Set<string>([...entities.map(d => d.slug), ...layout.map(e => e.id)])
+  // WR-03: una ficha solo es ancla si se pinta (renderedMonuments); el resto de entidades, siempre.
+  const anchorable = new Set<string>([
+    ...entities.filter(d => d.collection !== 'monument').map(d => d.slug),
+    ...renderedMonuments,
+    ...layout.map(e => e.id),
+  ])
   for (const d of t.docs) {
     for (const str of collectStrings(d.data)) {
       // G-10-2 / WR-01: toda forma que MDC pinta como <a>; las formas rechazadas, sea cual sea su destino.
