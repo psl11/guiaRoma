@@ -5,11 +5,11 @@ milestone_name: Multi-viaje + Campania
 current_phase: 14
 current_phase_name: Verificación del milestone
 status: verifying
-stopped_at: Completed 14-03-PLAN.md
-last_updated: "2026-11-22T02:12:40.185Z"
+stopped_at: "Phases 12.1-14 executed; 13 and 14 human_needed (UAT pending: 9,10,11,12,13,14)"
+last_updated: "2026-11-22T02:42:02.534Z"
 last_activity: 2026-11-22
 last_activity_desc: Phase 12.1 complete, transitioned to Phase 9
-state_head: 540ad9132e92e5c9f40835be072667d21c8515c6
+state_head: a0f294a78fefb530d630631479bc36d8a7f6fb7e
 progress:
   total_phases: 7
   completed_phases: 1
@@ -389,9 +389,9 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-22T02:12:39.899Z
-Stopped at: Completed 14-03-PLAN.md
-Resume file: None
+Last session: 2026-11-22T02:42:02.204Z
+Stopped at: Phases 12.1-14 executed; 13 and 14 human_needed (UAT pending: 9,10,11,12,13,14)
+Resume file: .planning/phases/14-verificacion-del-milestone/14-UAT.md
 
 ## Operator Next Steps
 
