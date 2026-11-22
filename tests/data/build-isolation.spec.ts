@@ -32,10 +32,13 @@ import { NEW_CLASSES, htmlClassTokens } from '../unit/cssSelectors'
  *    compartido entre viajes.
  *
  * Fase 12 (formas nuevas de viaje):
- *  - D-16: `campania` es el tercer borrador (`draft: true`). Su centinela `CAMPANIA-CENTINELA-12A`
- *    (howTo de content/trips/campania/trip.yml) se busca con los de prueba y forma en todos los
- *    ficheros publicados (dumps decodificados incluidos), `trips/campania` no puede existir, y un
- *    `it` FUERA del `skipIf` comprueba que el centinela y `draft: true` siguen en su trip.yml.
+ *  - D-16: `campania` fue el tercer borrador de la Fase 12. Desde la Fase 13 (D-02) está
+ *    PUBLICADO: su trip.yml ya no lleva `draft` ni la marca de control `CAMPANIA-CENTINELA-12A`
+ *    (un `it` FUERA del `skipIf` lo comprueba), `trips/campania/index.html` y su `_payload.json`
+ *    existen con contenido real («Baia di Sorgeto») y los dumps `trip` y `monument` lo llevan. La
+ *    marca de control sigue en el escaneo de ficheros publicados como guarda de regresión. El
+ *    aislamiento de borradores sigue sin ser vacuo gracias a prueba y forma (sus centinelas fuera
+ *    del `skipIf` y «no existen trips/prueba ni trips/forma»).
  *  - D-17 (mitad de build del guardián de tripshapes.css; la mitad estática es
  *    tests/unit/tripShapesCss.spec.ts): ningún token de `NEW_CLASSES` aparece como clase en el
  *    HTML publicado de Roma ni de la portada. Se recorre todo el `*.html` de .output/public salvo
@@ -61,6 +64,8 @@ const FORMA_TRIP = join(process.cwd(), 'content', 'trips', 'forma', 'trip.yml')
 const PRUEBA_TRIP = join(process.cwd(), 'content', 'trips', 'prueba', 'trip.yml')
 const CAMPANIA_SENTINEL = 'CAMPANIA-CENTINELA-12A'
 const CAMPANIA_TRIP = join(process.cwd(), 'content', 'trips', 'campania', 'trip.yml')
+const CAMPANIA_INDEX = join(OUT, 'trips', 'campania', 'index.html')
+const CAMPANIA_PAYLOAD = join(OUT, 'trips', 'campania', '_payload.json')
 const BUILD_INDEX = join(OUT, 'index.html')
 const COLLECTIONS = ['trip', 'day', 'monument', 'food', 'artist', 'reference'] as const
 const dumpPath = (col: string) => join(OUT, '__nuxt_content', col, 'sql_dump.txt')
@@ -102,13 +107,13 @@ describe('centinela del viaje prueba (D-16)', () => {
   })
 })
 
-// Igual para campania (Fase 12, D-16): centinela y `draft: true` siguen en su trip.yml, así que la
-// ausencia del centinela en la build y la de `trips/campania` nunca se afirman en vacío.
-describe('centinela del borrador campania (D-16, Fase 12)', () => {
-  it(`content/trips/campania/trip.yml contiene ${CAMPANIA_SENTINEL} y draft: true`, () => {
+// Campania publicada (Fase 13, D-02), también FUERA del skipIf: su trip.yml ya no lleva la marca
+// de control de la Fase 12 ni `draft: true`, así que se prerenderiza y la portada la lista.
+describe('campania publicada (D-02, Fase 13)', () => {
+  it(`content/trips/campania/trip.yml no contiene ${CAMPANIA_SENTINEL} ni draft: true`, () => {
     const yml = readFileSync(CAMPANIA_TRIP, 'utf8')
-    expect(yml).toContain(CAMPANIA_SENTINEL)
-    expect(yml).toMatch(/^draft: true$/m)
+    expect(yml).not.toContain(CAMPANIA_SENTINEL)
+    expect(yml).not.toMatch(/^draft: true$/m)
   })
 })
 
@@ -142,8 +147,14 @@ describe.skipIf(!existsSync(BUILD_INDEX))('build estática: Roma sin datos de pr
     expect(existsSync(join(OUT, 'trips', 'forma')), '.output/public/trips/forma NO debe existir').toBe(false)
   })
 
-  it('no existe trips/campania: el borrador no se prerenderiza (D-16, Fase 12)', () => {
-    expect(existsSync(join(OUT, 'trips', 'campania')), '.output/public/trips/campania NO debe existir').toBe(false)
+  it('existe trips/campania/index.html y es la guía de Campania (contiene «Baia di Sorgeto»; D-02, Fase 13)', () => {
+    expect(existsSync(CAMPANIA_INDEX), '.output/public/trips/campania/index.html debe existir').toBe(true)
+    expect(readFileSync(CAMPANIA_INDEX, 'utf8')).toContain('Baia di Sorgeto')
+  })
+
+  it('existe trips/campania/_payload.json con contenido real: los datos viajan prerenderizados (D-02, D-18)', () => {
+    expect(existsSync(CAMPANIA_PAYLOAD), '.output/public/trips/campania/_payload.json debe existir').toBe(true)
+    expect(readFileSync(CAMPANIA_PAYLOAD, 'utf8')).toContain('Baia di Sorgeto')
   })
 
   it('el payload usa claves de estado sufijadas por viaje y ninguna "$space" global', () => {
@@ -162,9 +173,13 @@ describe.skipIf(!existsSync(BUILD_INDEX))('build estática: ningún fichero publ
     }
   })
 
-  it('control positivo: los dumps decodificados llevan Roma (el escaneo no es vacuo)', () => {
-    expect(decodeDump(readFileSync(dumpPath('monument'), 'utf8'))).toContain('Galleria Sciarra')
-    expect(decodeDump(readFileSync(dumpPath('trip'), 'utf8'))).toContain('trips/roma/')
+  it('control positivo: los dumps decodificados llevan Roma y Campania, ya publicada (el escaneo no es vacuo)', () => {
+    const monument = decodeDump(readFileSync(dumpPath('monument'), 'utf8'))
+    const trip = decodeDump(readFileSync(dumpPath('trip'), 'utf8'))
+    expect(monument).toContain('Galleria Sciarra')
+    expect(trip).toContain('trips/roma/')
+    expect(trip, 'el dump trip lleva Campania (D-02, Fase 13)').toContain('trips/campania/')
+    expect(monument, 'el dump monument lleva las fichas de Campania (D-02, Fase 13)').toContain('Baia di Sorgeto')
   })
 
   it(`ningún fichero de .output/public contiene ${SENTINEL}, ${FORMA_SENTINEL} ni ${CAMPANIA_SENTINEL} (dumps decodificados)`, () => {

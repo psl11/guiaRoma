@@ -13,8 +13,9 @@ import { inlineMdToPlain } from '../../app/utils/tripLayout'
  * `listedTrips`. Por eso este spec corre contra dev (playwright.trips.config.ts, puerto 5300, base
  * /guiaRoma/): es el único entorno en el que un borrador está en la colección `trip`.
  *
- *   · «portada (dev): lista solo los viajes publicados…» — la portada muestra solo la tarjeta de
- *     Roma aunque prueba y forma se cargan; ningún enlace a ellos.
+ *   · «portada (dev): lista solo los viajes publicados…» — la portada muestra solo las tarjetas de
+ *     Campania (publicada en la Fase 13, D-02) y Roma, por `startDate` descendente, aunque prueba y
+ *     forma se cargan; ningún enlace a ellos.
  *   · «portada (dev): los borradores siguen abriéndose por URL…» — el control positivo: prueba y
  *     forma SÍ están cargados en dev (si no lo estuvieran, el primer test pasaría por vacuidad) y su
  *     guía se abre por URL con el título plano de su trip.yml.
@@ -72,15 +73,17 @@ test.beforeAll(async ({ browser }) => {
   await context.close()
 })
 
-test('portada (dev): lista solo los viajes publicados aunque prueba y forma se cargan (D-16)', async ({ browser }) => {
+test('portada (dev): lista solo los viajes publicados, Campania y Roma, aunque prueba y forma se cargan (D-16; Fase 13 D-02)', async ({ browser }) => {
   const { context, page } = await newIsolatedPage(browser)
   await page.goto(HOME_URL)
   await page.waitForLoadState('networkidle')
 
   await expect(page.locator('.trip-index h1')).toHaveText('Guías de viaje')
   const cards = page.locator('a.trip-index-card')
-  await expect(cards).toHaveCount(1)
-  await expect(cards).toHaveAttribute('href', '/guiaRoma/trips/roma/')
+  // `sortTrips` ordena por startDate descendente: Campania (2027) primero, Roma después.
+  await expect(cards).toHaveCount(2)
+  await expect(cards.nth(0)).toHaveAttribute('href', '/guiaRoma/trips/campania/')
+  await expect(cards.nth(1)).toHaveAttribute('href', '/guiaRoma/trips/roma/')
   await expect(page.locator('a[href*="/trips/prueba"]')).toHaveCount(0)
   await expect(page.locator('a[href*="/trips/forma"]')).toHaveCount(0)
 

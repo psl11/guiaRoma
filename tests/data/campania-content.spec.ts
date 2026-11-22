@@ -13,8 +13,8 @@ import { RESERVAS_HEADINGS_DEFAULT } from '../../app/utils/reservasHeadings'
  * (`WRITTEN_DAYS`, `WRITTEN_MONUMENTS`, `FAMILY_REQUIRED`, `MARKER_FILES`) y, si hace falta, un
  * `describe` propio.
  *
- * Es seguro antes de publicar: solo lee los YAML con el loader puro de la puerta (Node, sin runtime
- * Nuxt ni SQLite), así que no depende de `draft` ni de la build.
+ * Solo lee los YAML con el loader puro de la puerta (Node, sin runtime Nuxt ni SQLite), así que no
+ * depende de la build. Campania está publicada desde 13-08 (D-02): el describe «publicación» lo fija.
  *
  *  - D-12 / CAMP-06: el marcador de dato sin confirmar es EXACTAMENTE `**⚠ por confirmar**`
  *    (U+26A0 + espacio, sin el selector U+FE0F), siempre en negrita, nunca en un campo de texto
@@ -619,6 +619,29 @@ describe('trip.yml (D-18, D-04, D-24)', () => {
   it('la sección de gastronomía tiene su eyebrow', () => {
     const sections = trip.sections as { gastronomia?: { eyebrow: string } } | undefined
     expect(sections?.gastronomia?.eyebrow).toBe('Campania · gastronomía')
+  })
+})
+
+describe('publicación (D-02)', () => {
+  const trip = tripData()
+  const howTo = (): string[] => (trip.howTo as unknown[]).map(String)
+
+  it('el trip.yml ya no es borrador: sin draft: true', () => {
+    expect(trip.draft).not.toBe(true)
+  })
+
+  it('howTo lleva solo los párrafos reales: ninguno habla de la Fase 12 ni de un borrador', () => {
+    expect(howTo().length).toBeGreaterThanOrEqual(2)
+    for (const paragraph of howTo()) {
+      expect(paragraph, 'párrafo de howTo con la marca de control').not.toMatch(/Fase 12|borrador|CENTINELA/i)
+    }
+  })
+
+  it('la tarjeta de la portada está completa: startDate, endDate, destinations y summary', () => {
+    expect(String(trip.startDate ?? '')).not.toBe('')
+    expect(String(trip.endDate ?? '')).not.toBe('')
+    expect(Array.isArray(trip.destinations) && (trip.destinations as unknown[]).length > 0).toBe(true)
+    expect(String(trip.summary ?? '').trim()).not.toBe('')
   })
 })
 

@@ -10,7 +10,7 @@ import { SVG_MOTIFS } from '../../app/utils/svgMotifs'
 import { routeLabel } from '../../app/utils/dayRoute'
 
 /**
- * FORMAS NUEVAS DE VIAJE sobre el borrador de Campania (Fase 12, EXT-01…EXT-07; D-01…D-17).
+ * FORMAS NUEVAS DE VIAJE sobre la guía de Campania 2027 (Fase 12, EXT-01…EXT-07; D-01…D-17).
  *
  * `content/trips/campania/**` es el primer viaje después del original (forma de la Fase 12,
  * contenido real de la Fase 13): días con alternativas (`choice`), noches en ciudades distintas,
@@ -18,10 +18,11 @@ import { routeLabel } from '../../app/utils/dayRoute'
  * la guía pinta esas formas como dice su contrato (12-UI-SPEC §«Contrato de DOM»), derivando lo
  * esperado de los YAML del viaje y no de una lista escrita a mano.
  *
- * Corre contra `nuxi dev` (playwright.trips.config.ts, puerto 5300, base /guiaRoma/): campania es
- * un borrador (`draft: true`, D-16), así que nunca se prerenderiza ni se publica y solo existe en
- * dev. Antes: `rm -rf .data .nuxt` (el esquema nuevo cambia las columnas de Content y con caché
- * vieja los campos nuevos saldrían null).
+ * Campania es la guía real de Campania 2027, publicada desde la Fase 13 (D-02) y prerenderizada en
+ * /trips/campania/. El e2e sigue corriendo contra `nuxi dev` (playwright.trips.config.ts, puerto
+ * 5300, base /guiaRoma/). Antes: `rm -rf .data .nuxt` (el esquema nuevo cambia las columnas de
+ * Content y con caché vieja los campos nuevos saldrían null). Las peticiones externas (tiles de
+ * OSM, heros de Wikimedia) se abortan, así que cada hero cae a su dibujo (motivo SVG).
  *
  * Los ids se seleccionan con `[id="…"]`, nunca con `#…`. Los textos se comprueban con
  * `toHaveText`/`textContent` y no con `innerText`: el encabezado del bloque va en mayúsculas por
@@ -185,14 +186,16 @@ test.describe('campania: alternativas dentro de un día (EXT-01)', () => {
     await context.close()
   })
 
-  test('campania: la portada de dev no lista el borrador (D-16)', async ({ browser }) => {
+  test('campania: la portada de dev lista Campania, ya publicada (D-02)', async ({ browser }) => {
     const { context, page } = await newIsolatedPage(browser)
     await page.goto(INDEX_URL)
     await page.waitForLoadState('networkidle')
     // Control: la portada está renderizada (lista al menos un viaje publicado).
     await expect.poll(() => page.locator('a.trip-index-card').count()).toBeGreaterThan(0)
     const hrefs = await page.locator('a.trip-index-card').evaluateAll(els => els.map(e => e.getAttribute('href') ?? ''))
-    expect(hrefs.filter(h => h.includes('trips/campania'))).toEqual([])
+    expect(hrefs.filter(h => h === '/guiaRoma/trips/campania/')).toHaveLength(1)
+    // startDate descendente: la tarjeta de Campania (2027) es la primera.
+    expect(hrefs[0]).toBe('/guiaRoma/trips/campania/')
     await context.close()
   })
 })
@@ -590,7 +593,7 @@ async function markerBg(marker: import('@playwright/test').Locator): Promise<str
   return marker.locator(':scope > div').evaluate(el => getComputedStyle(el).backgroundColor)
 }
 
-// La ficha cae al dibujo de su motivo: las heros `https://example.invalid/…` se abortan (blockExternal)
+// La ficha cae al dibujo de su motivo: las heros externas (Wikimedia) se abortan (blockExternal)
 // y el `@error` pinta `motifSvg(motif)`. El img es lazy: hay que traer la cabecera a la vista.
 async function expectHeroFallsBackToMotif(page: Page, slug: string, motif: string): Promise<void> {
   const hero = page.locator(`[id="${slug}"] .card-hero`)

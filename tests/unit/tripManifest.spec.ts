@@ -48,21 +48,21 @@ afterAll(() => {
 })
 
 describe('manifiesto real (content/trips)', () => {
-  it('campania, forma y prueba son borradores y roma no, en orden de slug (D-16)', () => {
+  it('forma y prueba son borradores; campania (publicada en la Fase 13, D-02) y roma no, en orden de slug (D-16)', () => {
     expect(readTripManifest()).toEqual([
-      { slug: 'campania', draft: true },
+      { slug: 'campania', draft: false },
       { slug: 'forma', draft: true },
       { slug: 'prueba', draft: true },
       { slug: 'roma', draft: false },
     ])
   })
 
-  it('prerenderRoutes del manifiesto real = [\'/\', \'/trips/roma/\'] (D-13)', () => {
-    expect(prerenderRoutes(readTripManifest())).toEqual(['/', '/trips/roma/'])
+  it('prerenderRoutes del manifiesto real = [\'/\', \'/trips/campania/\', \'/trips/roma/\'] (D-13; Fase 13 D-02)', () => {
+    expect(prerenderRoutes(readTripManifest())).toEqual(['/', '/trips/campania/', '/trips/roma/'])
   })
 
-  it('draftExcludes del manifiesto real: campania, forma y prueba fuera de producción, nada en dev', () => {
-    expect(draftExcludes(readTripManifest(), false)).toEqual(['trips/campania/**', 'trips/forma/**', 'trips/prueba/**'])
+  it('draftExcludes del manifiesto real: solo forma y prueba fuera de producción, nada en dev (Fase 13 D-02)', () => {
+    expect(draftExcludes(readTripManifest(), false)).toEqual(['trips/forma/**', 'trips/prueba/**'])
     expect(draftExcludes(readTripManifest(), true)).toEqual([])
   })
 })

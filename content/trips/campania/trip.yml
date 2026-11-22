@@ -2,13 +2,8 @@
 # Cilento. El contenido es real; los datos que aún no están publicados llevan la marca
 # **⚠ por confirmar** en los campos Markdown (D-12), nunca en los de texto plano.
 #
-# Borrador hasta 13-08 (D-02): `draft: true` lo deja fuera de la build de producción
-# (content.config.ts lo excluye de las 6 colecciones: ni ruta prerenderizada ni filas en los
-# `sql_dump` públicos). En `pnpm dev` se carga y se ve en /trips/campania, pero nunca se lista en
-# la portada. El ÚLTIMO párrafo de howTo es la marca de control de la Fase 12 (centinela) que
-# tests/data/build-isolation.spec.ts exige mientras el viaje es borrador: se quita, junto con
-# `draft`, en el commit de publicación (13-08).
-draft: true
+# Publicado desde la Fase 13 (D-02): sin clave `draft`, el manifiesto (scripts/tripManifest.mjs)
+# lo prerenderiza en /trips/campania/ y la portada lo lista junto a Roma.
 slug: campania
 title: Diez días en _Campania_
 decoration: '·  CAMPANIA FELIX  ·'
@@ -55,11 +50,6 @@ howTo:
   - >-
     El jueves 24 y el sábado 26 muestran sus opciones apiladas, una debajo de otra:
     elegid una según las ganas, el calor y el cansancio de los niños.
-  - >-
-    Borrador de la guía de Campania para probar las formas nuevas de viaje: días
-    con alternativas, noches en ciudades distintas, barcos y coches, y paradas en
-    plena naturaleza. Marca de control CAMPANIA-CENTINELA-12A. El texto definitivo
-    llegará con el contenido completo del viaje.
 map:
   center: { lat: 40.72, lng: 14.55 }
   zoom: 9
