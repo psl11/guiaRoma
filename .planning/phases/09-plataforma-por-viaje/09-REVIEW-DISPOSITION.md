@@ -5,11 +5,11 @@ titles: json
 findings:
   - id: CR-01
     severity: critical
-    disposition: open
+    disposition: fixed
     title: "Hidden trip folders are loaded by Nuxt Content but skipped by the data gate (fail-open remains)"
   - id: WR-01
     severity: warning
-    disposition: open
+    disposition: fixed
     title: "Non-YAML files inside a trip folder are still skipped with no violation"
   - id: IN-01
     severity: info
@@ -47,17 +47,17 @@ findings:
     severity: info
     disposition: open
     title: "The gate ignores stray files outside trip folders and `.YML` with upper-case extensions"
-open: 11
+open: 9
 total: 11
-recorded: 2026-11-22T12:11:27.645Z
+recorded: 2026-11-22T12:20:25.790Z
 ---
 
 # Phase 09: Code Review Disposition
 
 | Finding | Severity | Disposition | Source |
 |---------|----------|-------------|--------|
-| CR-01 | critical | open | - |
-| WR-01 | warning | open | - |
+| CR-01 | critical | fixed | 09-REVIEW-FIX.md |
+| WR-01 | warning | fixed | 09-REVIEW-FIX.md |
 | IN-01 | info | open | - |
 | IN-02 | info | open | - |
 | WR-02 | warning | open | - (not in the current review) |
