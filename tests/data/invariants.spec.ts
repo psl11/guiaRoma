@@ -161,6 +161,9 @@ const monument = (dir: string, slug: string, over: Record<string, unknown> = {})
 
 const withProse = (body: string) => ({ sections: [{ heading: 'Qué es', body }] })
 
+/** Un día viernes que pinta las fichas dadas (cards). */
+const onDay = (...cards: string[]) => ({ 'days/viernes.yml': y({ ...validDay, cards }) })
+
 /** Afirma que hay al menos una violación `rule` cuyo fichero contiene `file`. */
 function expectRule(vs: Violation[], rule: Rule, file: string) {
   expect(vs, formatViolations(vs)).toEqual(
@@ -502,6 +505,84 @@ describe('la puerta tiene dientes (fixtures)', () => {
       'monuments/galeria.yml': monument('prueba', 'galeria', withProse('Ver [la web](https://example.org/x).')),
     }))
     expect(vs, formatViolations(vs)).toEqual([])
+  })
+
+  // ── G-10-2 / WR-01 (10-REVIEW): toda forma de enlace que MDC pinta como <a> pasa por la puerta ──
+  // MDC (@nuxtjs/mdc 0.22.0, el parser de <MDC>) pinta <a> para TODAS las formas de (a) y (b),
+  // comprobado con parseMarkdown el 2026-11-22: espacio o salto de línea tras el `(`, destino
+  // `<…>`, referencias con su definición, <a> crudo, atributos MDC href, autoenlaces y emails
+  // (GFM los convierte en mailto:). `<javascript:…>` pinta un <a> al que MDC quita el href.
+  /** Un viaje con la ficha `galeria` en el día viernes y `body` como prosa de la ficha. */
+  const galeriaWith = (body: string) => memTrip('prueba', {
+    ...onDay('galeria'),
+    'monuments/galeria.yml': monument('prueba', 'galeria', withProse(body)),
+  })
+  const GALERIA_FILE = 'content/trips/prueba/monuments/galeria.yml'
+
+  it.each([
+    'Ver [esto]( /trips/roma).',
+    'Ver [esto](\n../roma#x).',
+    'Ver [esto](</guiaRoma/#pantheon>).',
+    'Ver [esto][r].\n\n[r]: /guiaRoma/#pantheon',
+    'Ver [esto][r].\n\n[r]: #galeria',
+    'Ver <a href="/trips/roma">esto</a>.',
+    'Ver <A HREF="#galeria">esto</A>.',
+    'Ver :a[esto]{href="/trips/roma"}.',
+    '::a{href="/trips/roma"}\nesto\n::',
+    'Escribe a <mailto:info@example.org>.',
+    'Escribe a info@example.org.',
+    'Ver <javascript:alert(1)>.',
+  ])('G-10-2/WR-01 cross-trip-link: la forma %j pasa por la lista blanca (D-05b)', (body) => {
+    const vs = checkTrip(galeriaWith(body))
+    expect(vs.filter(v => v.rule === 'cross-trip-link'), formatViolations(vs)).toEqual([
+      expect.objectContaining({ file: GALERIA_FILE }),
+    ])
+  })
+
+  it.each([
+    'Ver [esto]( #nope).',
+    'Ver [esto](\n#nope).',
+    'Ver [esto](<#nope>).',
+  ])('G-10-2/WR-01 anchor: la forma %j se valida como ancla (D-08)', (body) => {
+    const vs = checkTrip(galeriaWith(body))
+    expect(vs.filter(v => v.rule === 'anchor' || v.rule === 'cross-trip-link'), formatViolations(vs)).toEqual([
+      expect.objectContaining({ rule: 'anchor', file: GALERIA_FILE, message: expect.stringContaining('#nope') }),
+    ])
+  })
+
+  it.each([
+    'Ver [la galería]( #galeria ).',
+    'Ver [la galería](<#galeria> "título").',
+    'Ver <https://example.org/x>.',
+    'Ver [la web](https://example.org/x "título").',
+    '::detail-photo{src="https://example.org/x.jpg" alt="Galería" caption="Ver [la galería](#galeria)"}',
+  ])('G-10-2/WR-01 control: la forma admitida %j no da violaciones', (body) => {
+    const vs = checkTrip(galeriaWith(body))
+    expect(vs, formatViolations(vs)).toEqual([])
+  })
+
+  it.each(['Ver [el inicio]( #inicio).', 'Escribe a info@example.org'])(
+    'G-10-2/WR-01 trip-summary-link: summary %j → violación en trip.yml',
+    (summary) => {
+      const vs = checkTrip(memTrip('prueba', {}, { summary }))
+      expect(vs.filter(v => v.rule === 'trip-summary-link'), formatViolations(vs)).toEqual([{
+        file: 'content/trips/prueba/trip.yml',
+        rule: 'trip-summary-link',
+        message: 'summary con enlace: la tarjeta de la portada ya es un enlace; quita [texto](destino)',
+      }])
+    },
+  )
+
+  // Advisory del plan-checker (10-06): un bloque MDC con props en frontmatter YAML también pinta
+  // <a href> — parseMarkdown da `a {href: "/trips/roma"}` (y `a {to: …}`) —, así que se rechaza.
+  it.each([
+    '::a\n---\nhref: /trips/roma\n---\nesto\n::',
+    '::a\n---\nto: /trips/roma\n---\nesto\n::',
+  ])('G-10-2 (advisory) cross-trip-link: bloque MDC con props en frontmatter %j se rechaza (D-05b)', (body) => {
+    const vs = checkTrip(galeriaWith(body))
+    expect(vs.filter(v => v.rule === 'cross-trip-link'), formatViolations(vs)).toEqual([
+      expect.objectContaining({ file: GALERIA_FILE }),
+    ])
   })
 
   // ── Fase 11 (portada, D-08/D-07): fechas del viaje y resumen sin enlaces ─────
