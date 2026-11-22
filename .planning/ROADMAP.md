@@ -245,7 +245,16 @@ Plans:
   2. Un usuario de la guía viva (`index.html` de `main`) que escribió notas y eligió ritmo y modos abre la nueva versión en el mismo origen y, en `/trips/roma/`, ve sus notas y preferencias desde la primera carga
   3. Ir de la portada a Roma, de Roma a Campania y volver con «Atrás» no mezcla búsqueda, notas ni modos entre viajes, y ninguna guía descarga `sql_dump` ni WASM
   4. Una persona firma Roma y Campania en un móvil real, en claro y oscuro, incluido el uso sin conexión (fallback de imágenes y banner de mapa offline)
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+**Wave 1**
+- [ ] 14-01-PLAN.md — Tracer + spec de upgrade en el mismo origen: la guía viva (`git show main:index.html`) y la build nueva en el mismo puerto y contexto; notas de las 38 fichas, ritmo, modos y tema intactos en `/trips/roma/` desde la primera carga, con oráculo de la propia guía viva (PAR-03)
+
+**Wave 2** *(blocked on Wave 1 completion: comparten `.output/` y servidores Playwright)*
+- [ ] 14-02-PLAN.md — Spec de aislamiento entre viajes sobre la build publicada (portada → Roma → Campania → Atrás → Atrás: búsqueda, notas y modos por viaje; cero `sql_dump`/WASM con control positivo) + test de datos «CSS = `<style>` de `main`» (PAR-03)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+- [ ] 14-03-PLAN.md — Puerta completa desde build limpia, goldens y CSS sin cambios desde v1.0, re-registro de conteos en `tests/README.md` y checklist de firma en móvil en español (`14-UAT.md`, la fase termina human_needed) (PAR-03, PAR-04)
 **Research**: no (puerta y checklist ya definidos)
 **Notas**: el merge a `main` y el deploy a GitHub Pages siguen siendo un acto de ship aparte (fuera del hito); el primer deploy público será v1.0 + v1.1 a la vez.
 
@@ -281,7 +290,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 11. Portada y rutas multi-viaje | v1.1 | 7/7 | In Progress | - |
 | 12. Formas nuevas de viaje | v1.1 | 7/7 | In Progress | - |
 | 13. Contenido Campania 2027 | v1.1 | 8/8 | In Progress | - |
-| 14. Verificación del milestone | v1.1 | 0/TBD | Not started | - |
+| 14. Verificación del milestone | v1.1 | 0/3 | Not started | - |
 
 ---
 
