@@ -1,9 +1,9 @@
 ---
-status: diagnosed
+status: complete
 phase: 10-forma-y-chrome-desde-datos
 source: [10-VERIFICATION.md]
 started: 2026-11-20T15:10:00Z
-updated: 2026-11-22T18:47:49.209Z
+updated: 2026-11-22T22:24:49.405Z
 ---
 
 ## Current Test
@@ -41,7 +41,9 @@ blocked: 0
 
 - gap_id: G-10-2
   truth: "La puerta de datos (`pnpm verify` → `test:data`) ve todo enlace que MDC convierte en `<a>` y solo acepta anclas `#id` que existen en el DOM del viaje: un enlace prohibido o roto falla nombrando el fichero, sea cual sea la forma Markdown con que se escriba (D-05b / D-08, sin fail-open)"
-  status: failed
+  status: resolved
+  resolved_by: 10-06-PLAN.md
+  resolved_at: 2026-11-22
   reason: "User reported: a — arreglar ahora WR-01 y WR-03 de 10-REVIEW.md; WR-02 y los 6 info se difieren"
   severity: minor
   test: 2
