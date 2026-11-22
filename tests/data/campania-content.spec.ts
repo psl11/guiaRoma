@@ -571,8 +571,12 @@ describe('gastronomía (CAMP-03, D-14, D-15)', () => {
     for (const doc of food) expect(FOOD_GROUPS, doc.file).toContain(doc.data.group)
   })
 
-  it('ordenadas por slug, los grupos salen en el orden planificado (D-15)', () => {
-    const indexes = [...food].sort((a, b) => a.slug.localeCompare(b.slug)).map(groupIndex)
+  it('ordenadas por fichero, los grupos salen en el orden planificado (D-15)', () => {
+    // Mismo criterio que el e2e (tests/trips/campania.spec.ts): nombre de fichero comparado por
+    // unidades de código UTF-16, sin `localeCompare` (ICU ignora los guiones y `g-1-x` / `g-10-y`
+    // podrían ordenarse distinto que en la página).
+    const byFile = (a: Doc, b: Doc): number => (a.rel < b.rel ? -1 : a.rel > b.rel ? 1 : 0)
+    const indexes = [...food].sort(byFile).map(groupIndex)
     expect(indexes).toEqual([...indexes].sort((a, b) => a - b))
   })
 

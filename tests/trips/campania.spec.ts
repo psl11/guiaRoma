@@ -1111,9 +1111,10 @@ test.describe('campania: gastronomía (CAMP-03, D-15)', () => {
   test('campania: Gastronomía agrupa sus fichas en el orden de los slugs (CAMP-03, D-15)', async ({ browser }) => {
     // Lo esperado sale de los YAML en orden de fichero: `groupFood` pone los grupos que no son
     // del canon de Roma por orden de primera aparición, y Content devuelve la comida por fichero.
+    // Comparación por unidades de código, la misma que usa tests/data/campania-content.spec.ts.
     const food = readdirSync(join(CAMPANIA_ROOT, 'food'))
       .filter(f => f.endsWith('.yml'))
-      .sort()
+      .sort((a, b) => (a < b ? -1 : a > b ? 1 : 0))
       .map(f => readYaml<YamlFood>(`food/${f}`))
     expect(food.length, 'hay fichas de comida').toBeGreaterThanOrEqual(1)
     const groups = [...new Set(food.map(f => f.group))]
