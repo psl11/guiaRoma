@@ -251,3 +251,43 @@ describe('datos personales (T-13-02)', () => {
     }
   })
 })
+
+describe('trip.yml (D-18, D-04, D-24)', () => {
+  const trip = tripData()
+
+  it('fechas, destinos y resumen de la portada', () => {
+    expect(trip.startDate).toBe('2027-06-19')
+    expect(trip.endDate).toBe('2027-06-28')
+    expect(trip.destinations).toEqual(expect.arrayContaining(['Nápoles', 'Procida', 'Ischia', 'Salerno', 'Cilento']))
+    expect(String(trip.summary ?? '').trim()).not.toBe('')
+  })
+
+  it('infoCards, howTo y el crédito de las fotos en el pie (D-24)', () => {
+    expect(asRecs(trip.infoCards).length).toBeGreaterThanOrEqual(4)
+    expect((trip.howTo as unknown[]).length).toBeGreaterThanOrEqual(2)
+    expect((trip.footer as string[]).some(line => line.includes('Wikimedia Commons'))).toBe(true)
+  })
+
+  it('las cuatro bases, con Salerno llamada «Salerno» (D-04)', () => {
+    const stays = asRecs(trip.stays)
+    expect(new Set(stays.map(s => s.slug))).toEqual(new Set(['napoles', 'procida', 'ischia', 'salerno']))
+    expect(stays.find(s => s.slug === 'salerno')?.name).toBe('Salerno')
+  })
+
+  it('mapa dentro de la caja del viaje, leyenda completa y sin marcadores extra', () => {
+    const map = trip.map as { center: { lat: number, lng: number }, zoom: number }
+    expect(map.center.lat).toBeGreaterThanOrEqual(BBOX.minLat)
+    expect(map.center.lat).toBeLessThanOrEqual(BBOX.maxLat)
+    expect(map.center.lng).toBeGreaterThanOrEqual(BBOX.minLng)
+    expect(map.center.lng).toBeLessThanOrEqual(BBOX.maxLng)
+    expect(map.zoom).toBe(9)
+    expect(String(trip.mapLegend)).toContain('naturaleza')
+    expect(String(trip.mapLegend)).toContain('conciertos')
+    expect(trip.mapExtras).toBeUndefined()
+  })
+
+  it('la sección de gastronomía tiene su eyebrow', () => {
+    const sections = trip.sections as { gastronomia?: { eyebrow: string } } | undefined
+    expect(sections?.gastronomia?.eyebrow).toBe('Campania · gastronomía')
+  })
+})

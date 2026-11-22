@@ -1,57 +1,111 @@
-# Esqueleto de CAMPANIA (Fase 12, D-15). Es el segundo viaje real de la guía, pero en esta
-# fase solo existe para probar las formas nuevas de viaje de punta a punta: alternativas dentro
-# de un día (`choice`), alojamiento por noche, transportes y fichas de naturaleza, rutas en coche
-# y notas familiares. Los textos son provisionales, en español y con nombres reales; la Fase 13
-# reescribe el contenido completo.
+# CAMPANIA (Fase 13): diez días de junio de 2027 entre Nápoles, Procida, Ischia, Salerno y el
+# Cilento. El contenido es real; los datos que aún no están publicados llevan la marca
+# **⚠ por confirmar** en los campos Markdown (D-12), nunca en los de texto plano.
 #
-# Borrador (D-16): `draft: true` lo deja fuera de la build de producción (content.config.ts lo
-# excluye de las 6 colecciones: ni ruta prerenderizada ni filas en los `sql_dump` públicos). En
-# `pnpm dev` se carga y se ve en /trips/campania, pero nunca se lista en la portada. La marca de
-# control de howTo (centinela de la Fase 12) permite comprobar que nada de este viaje llega al
-# sitio publicado.
+# Borrador hasta 13-08 (D-02): `draft: true` lo deja fuera de la build de producción
+# (content.config.ts lo excluye de las 6 colecciones: ni ruta prerenderizada ni filas en los
+# `sql_dump` públicos). En `pnpm dev` se carga y se ve en /trips/campania, pero nunca se lista en
+# la portada. El ÚLTIMO párrafo de howTo es la marca de control de la Fase 12 (centinela) que
+# tests/data/build-isolation.spec.ts exige mientras el viaje es borrador: se quita, junto con
+# `draft`, en el commit de publicación (13-08).
 draft: true
 slug: campania
 title: Diez días en _Campania_
 decoration: '·  CAMPANIA FELIX  ·'
-heroMeta: 19 — 28 de junio de 2027 · Nápoles, las islas y Salerno
+heroMeta: 19 — 28 de junio de 2027 · Nápoles, Procida, Ischia, Salerno y el Cilento
 quote: Ver Nápoles y después morir.
-quoteAttr: — DICHO POPULAR
-infoCards: []
+quoteAttr: — DICHO POPULAR NAPOLITANO
+infoCards:
+  - label: Bases
+    value: |
+      **Nápoles · Procida · Ischia · Salerno**
+      El Vomero la primera noche · Forio en Ischia
+      Alojamientos **⚠ por confirmar**
+  - label: Llegada
+    value: |
+      **Sábado 19 · 16:35**
+      Aeropuerto de Capodichino
+      Alibus a Piazza Garibaldi y metro o funicular al Vomero
+  - label: Coche de alquiler
+    value: |
+      **Miércoles 23 · 16:00**
+      Recogida en Capodichino, con Arantxa
+      Devolución el sábado 26 · lugar **⚠ por confirmar**
+  - label: Conciertos
+    value: |
+      **Ultimo · viernes 25**
+      Pinguini Tattici Nucleari · domingo 27 **⚠ por confirmar**
+      Stadio Diego Armando Maradona · horas de inicio **⚠ por confirmar**
+  - label: Salida
+    value: |
+      **Lunes 28 · 09:55**
+      Vuelo a Palma desde Capodichino
 howTo:
+  - >-
+    Cada parada tiene su ficha con su historia, lo que merece la pena mirar y, donde
+    importa, una nota «Con niños». El buscador encuentra cualquier sitio en segundos.
+    El mapa marca los puntos por orden de visita; pulsad un marcador para saltar a su
+    ficha. Las notas que escribáis en cada ficha se guardan en este dispositivo.
+  - >-
+    La guía funciona _offline_ una vez cargada: abridla con conexión antes de salir.
+    Sin red, las fotos se sustituyen por un dibujo del lugar. Lo que aún no está
+    publicado en noviembre de 2026 (los horarios de los ferris del verano de 2027, las
+    horas de los conciertos, las normas de las islas para ese año) lleva la marca
+    **⚠ por confirmar**: revisadlo antes del viaje.
+  - >-
+    El jueves 24 y el sábado 26 muestran sus opciones apiladas, una debajo de otra:
+    elegid una según las ganas, el calor y el cansancio de los niños.
   - >-
     Borrador de la guía de Campania para probar las formas nuevas de viaje: días
     con alternativas, noches en ciudades distintas, barcos y coches, y paradas en
     plena naturaleza. Marca de control CAMPANIA-CENTINELA-12A. El texto definitivo
     llegará con el contenido completo del viaje.
 map:
-  center: { lat: 40.7, lng: 14.45 }
+  center: { lat: 40.72, lng: 14.55 }
   zoom: 9
 pageTitle: 'Campania · diez días de junio'
 brand:
   before: 'Campania'
   after: 'junio de 2027'
-mapLegend: '✦  Rojos · paradas con ficha · Verde agua · naturaleza ✦'
+mapLegend: '✦  Rojos · paradas con ficha · Verde agua · naturaleza · Verde · conciertos ✦'
 footer:
-  - 'Borrador de la guía de _Campania_'
-  - 'Nápoles · Procida · Ischia · Salerno · 2027'
+  - 'Diez días en _Campania_ · junio de 2027'
+  - 'Nápoles · Procida · Ischia · Salerno · Cilento'
+  - 'Fotografías: Wikimedia Commons · licencias y autores en cada archivo'
+# Portada (Fase 11): datos de la tarjeta del viaje. El `summary` no lleva enlaces
+# (regla `trip-summary-link`: la tarjeta entera ya es un enlace).
+startDate: '2027-06-19'
+endDate: '2027-06-28'
+destinations: [Nápoles, Procida, Ischia, Salerno, Cilento]
+summary: >-
+  Diez días de junio entre Nápoles, Procida, Ischia, Salerno y el Cilento, a ritmo
+  lento y en familia: islas, volcanes, pozas termales y dos conciertos en el Maradona.
+sections:
+  gastronomia:
+    eyebrow: Campania · gastronomía
+    intro: >-
+      En Campania se come en la calle y en familia. La pizza de barrio de Nápoles, la
+      mozzarella di bufala recién hecha, las cocinas de las islas con su pescado y sus
+      limones, las tabernas de Salerno y las trattorias de monte del Cilento: los
+      sitios de abajo cuadran con las zonas que vais a recorrer.
 # Bases del viaje (Fase 12, D-06): dónde se duerme. Cada día apunta a una con `stay: <slug>` y
-# la cabecera del día dice «Dormís en <name>». `area`, `coords` y `note` se guardan pero esta
-# fase no los pinta ni crea marcadores (D-08). El orden de la lista no importa.
+# la cabecera del día dice «Dormís en <name>». `area`, `coords` y `note` se guardan pero no se
+# pintan (D-08): una duda sobre el alojamiento se repite en la prosa del día. El orden no importa.
 stays:
   - slug: napoles
     name: Nápoles
-    area: Centro histórico
-    coords: { lat: 40.8518, lng: 14.2681 }
+    area: Nápoles
+    coords: { lat: 40.8438, lng: 14.2316 }
+    note: El Vomero es la base de la primera noche; la de las noches del 25 al 27 puede estar en otra zona de la ciudad.
   - slug: procida
     name: Procida
-    area: Golfo de Nápoles
+    area: Procida
     coords: { lat: 40.7626, lng: 14.0244 }
   - slug: ischia
     name: Ischia
-    area: Golfo de Nápoles
-    coords: { lat: 40.7425, lng: 13.9437 }
+    area: Forio
+    coords: { lat: 40.7371, lng: 13.8545 }
   - slug: salerno
     name: Salerno
-    area: Costa de Amalfi
+    area: Salerno
     coords: { lat: 40.6824, lng: 14.7681 }
-    note: Base para la costa y el río, a un paso del tren.
