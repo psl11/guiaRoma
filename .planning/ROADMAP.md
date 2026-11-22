@@ -203,7 +203,7 @@ Plans:
   3. Las secciones de Gastronomía (pizzerías de barrio, mozzarella di bufala, tabernas, trattorias de monte), Reservas (alojamiento por base, ferris, coche, conciertos, vuelos) y Práctica (ferris, conducción/ZTL y coche en islas, calor, calzado, consejos con niños) están completas para Campania
   4. Los datos de campo críticos (horarios de ferry, fechas de conciertos, acceso nocturno a Sorgeto con niños, coche en Procida/Ischia) aparecen verificados o marcados visiblemente como «por confirmar»
   5. Campania aparece en la portada y se abre en `/guiaRoma/trips/campania/` según la decisión de publicación de ROUTE-05; todo su contenido valida en `pnpm verify` y la puerta de Roma sigue verde
-**Plans**: 7 plans
+**Plans**: 8 plans
 Plans:
 **Wave 1**
 - [ ] 13-01-PLAN.md — Tracer: martes 22 en Ischia con Epomeo y Sorgeto reales + spec de contenido Wave 0 (`tests/data/campania-content.spec.ts`) + trip.yml publicable (aún borrador, D-02) + numerales finales de las fichas (CAMP-01, CAMP-02, CAMP-06)
@@ -212,19 +212,22 @@ Plans:
 - [ ] 13-02-PLAN.md — Gastronomía: 9 fichas en 5 grupos ordenados por slug, solo establecimientos verificados (D-14) + e2e del orden (CAMP-03)
 
 **Wave 3** *(blocked on Wave 2 completion)*
-- [ ] 13-03-PLAN.md — Días 19, 20 y 21 (llegada, Spaccanapoli y ferry a Procida, Procida → Ischia) con sus 7 fichas; órdenes contiguos y test de orden derivado (CAMP-01, CAMP-02, CAMP-06)
+- [ ] 13-03-PLAN.md — Días 19, 20 y 21 (llegada, Spaccanapoli y ferry a Procida con la nota del coche en las islas, Procida → Ischia) con sus 7 fichas; órdenes contiguos y test de orden derivado (CAMP-01, CAMP-02, CAMP-06)
 
 **Wave 4** *(blocked on Wave 3 completion)*
 - [ ] 13-04-PLAN.md — Días 23 y 24 (ferry, recogida del coche, Salerno; jueves con A/B y cena) con sus 6 fichas; ruta del jueves en coche y tests ligados al esqueleto (CAMP-01, CAMP-02, CAMP-06)
 
 **Wave 5** *(blocked on Wave 4 completion)*
-- [ ] 13-05-PLAN.md — Días 25-28 (Vesubio y Ultimo, excursión en coche y devolución, Napoli Sotterranea y PTN, vuelo) con sus 9 fichas; contrato completo de 10 días y 24 fichas (CAMP-01, CAMP-02, CAMP-06)
+- [ ] 13-05-PLAN.md — Días 25, 27 y 28 (Vesubio y Ultimo, Napoli Sotterranea y PTN, vuelo) con sus 5 fichas; 27 y 28 entran con órdenes 8 y 9 (CAMP-01, CAMP-02, CAMP-06)
 
 **Wave 6** *(blocked on Wave 5 completion)*
-- [ ] 13-06-PLAN.md — Reservas con títulos propios (12.1) y Práctica; umbral final de «⚠ por confirmar» + e2e de ambas secciones (CAMP-04, CAMP-05, CAMP-06)
+- [ ] 13-06-PLAN.md — Sábado 26 (excursión en coche con dos opciones y devolución, D-01) con sus 4 fichas; 27 y 28 pasan a 9 y 10; contrato completo de 10 días y 24 fichas con mutación «ficha en dos días» (CAMP-01, CAMP-02, CAMP-06)
 
 **Wave 7** *(blocked on Wave 6 completion)*
-- [ ] 13-07-PLAN.md — Publicación (D-02): fuera de borrador sin centinela, tests invertidos en el mismo commit, `pnpm verify` 110/110, test:trips, recuentos en tests/README.md (CAMP-01…06)
+- [ ] 13-07-PLAN.md — Reservas con títulos propios (12.1) y Práctica; umbral final de «⚠ por confirmar» + e2e de ambas secciones (CAMP-04, CAMP-05, CAMP-06)
+
+**Wave 8** *(blocked on Wave 7 completion)*
+- [ ] 13-08-PLAN.md — Publicación (D-02): fuera de borrador sin centinela, tests invertidos en el mismo commit, `pnpm verify` 110/110, test:trips, recuentos en tests/README.md (CAMP-01…06)
 **Research**: sí — verificación de datos de campo: restricción de vehículos en Procida/Ischia en 2027, horarios y muelles de ferry (Caremar/Porta di Massa), seguridad de Sorgeto de noche con niños, fechas de los conciertos, la «carrera popular» Spaccanapoli del domingo 20
 **Decisiones previas (⚠)**: **fecha de devolución del coche (25 vs 26)** — decide si el sábado 26 (día VIII) es en coche o en transporte público y cómo se cuenta en Reservas; **pendiente del usuario**, necesaria antes de redactar ese día. ROUTE-05: publicar Campania solo cuando esté completa (`draft` hasta entonces) o con días provisionales — necesaria antes de cerrar esta fase
 **Notas**: fuente `.planning/inputs/campania-2027-itinerario-raw.md` (año 2027; el «2026» del texto es errata). Solo YAML e imágenes: si aparece una forma de contenido que el esquema no cubre, se vuelve a la Fase 12 (inserción decimal), no se fuerza el esquema aquí. Tras editar YAML, `rm -rf .data .nuxt .output` antes de generar.
@@ -273,7 +276,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 10. Forma y chrome desde datos | v1.1 | 5/5 | In Progress | - |
 | 11. Portada y rutas multi-viaje | v1.1 | 7/7 | In Progress | - |
 | 12. Formas nuevas de viaje | v1.1 | 7/7 | In Progress | - |
-| 13. Contenido Campania 2027 | v1.1 | 0/7 | Planned | - |
+| 13. Contenido Campania 2027 | v1.1 | 0/8 | Planned | - |
 | 14. Verificación del milestone | v1.1 | 0/TBD | Not started | - |
 
 ---
