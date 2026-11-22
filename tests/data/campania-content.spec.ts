@@ -125,6 +125,7 @@ const MARKER_FILES: string[] = [
   'food/g-4-il-brigante.yml',
   'food/g-5-trattoria-calore.yml',
   'reference/reservas.yml',
+  'reference/practica.yml',
 ]
 
 /** Caja de coordenadas del viaje: de Trentova (sur) a Casertavecchia (norte), de Forio al Calore. */
@@ -799,5 +800,39 @@ describe('reservas (CAMP-04, D-16, D-22, D-23)', () => {
     expect(names().some(n => n.includes('Ultimo')), 'Ultimo').toBe(true)
     expect(names().some(n => n.includes('Pinguini Tattici Nucleari')), 'Pinguini Tattici Nucleari').toBe(true)
     expect(rows().some(r => r.ref === 'napoli-sotterranea'), 'ref napoli-sotterranea').toBe(true)
+  })
+})
+
+describe('práctica y marcador final (CAMP-05, CAMP-06, D-17)', () => {
+  const doc = docByRel('reference/practica.yml')
+  const sections = (): Rec[] => asRecs(doc?.data.sections)
+  const bodies = (): string[] => sections().map(s => String(s.body))
+
+  it('existe reference/practica.yml', () => {
+    expect(doc).toBeDefined()
+  })
+
+  it('las secciones cubren ferris, ZTL, islas, calor, calzado, niños y conciertos (D-17)', () => {
+    const headings = sections().map(s => String(s.heading)).join('\n')
+    for (const re of [/ferri/i, /ZTL/, /islas/i, /calor/i, /calzado/i, /niños/i, /concierto/i]) {
+      expect(headings, String(re)).toMatch(re)
+    }
+  })
+
+  it('la noche del 25 el coche duerme en un garaje o aparcamiento, marcado (D-01)', () => {
+    expect(bodies().some(b => /garaje|aparcamiento/.test(b) && b.includes(BOLD_MARKER))).toBe(true)
+  })
+
+  it('explica por qué el coche no cruza a Procida ni a Ischia', () => {
+    expect(bodies().some(b => b.includes('Procida') && b.includes('Ischia'))).toBe(true)
+  })
+
+  it('da las medias de junio: 28 °C de máxima y 18 °C de mínima', () => {
+    expect(bodies().some(b => b.includes('28') && b.includes('18'))).toBe(true)
+  })
+
+  it('la guía lleva al menos 15 marcadores en total (CAMP-06)', () => {
+    const text = campania.docs.flatMap(stringsOf).join('\n')
+    expect(countOf(text, MARKER)).toBeGreaterThanOrEqual(15)
   })
 })

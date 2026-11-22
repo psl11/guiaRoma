@@ -1132,3 +1132,47 @@ test.describe('campania: gastronomía (CAMP-03, D-15)', () => {
     await context.close()
   })
 })
+
+// ── CAMP-04 / CAMP-05: Reservas y Práctica con títulos propios ─────────────────────────────
+
+interface YamlReservas {
+  headings: { mesas?: string, visitas?: string, table?: string }
+  confirmed: Array<{ group: 'mesas' | 'visitas' }>
+  table: unknown[]
+}
+interface YamlPractica { sections: Array<{ heading: string }> }
+
+test.describe('campania: reservas y práctica (CAMP-04, CAMP-05, D-23)', () => {
+  test('campania: Reservas y Práctica llevan sus propios títulos, nunca los de Roma (CAMP-04, CAMP-05, D-23)', async ({ browser }) => {
+    const reservas = readYaml<YamlReservas>('reference/reservas.yml')
+    const practica = readYaml<YamlPractica>('reference/practica.yml')
+    // Un h4 por grupo con entradas, en orden mesas → visitas (D-03: un grupo vacío no pinta el suyo).
+    const groupHeadings = (['mesas', 'visitas'] as const)
+      .filter(g => reservas.confirmed.some(c => c.group === g))
+      .map(g => String(reservas.headings[g]).trim())
+
+    const { context, page } = await newIsolatedPage(browser)
+    await gotoHydrated(page, CAMPANIA_URL)
+
+    const resv = page.locator('section[id="reservas"]')
+    const prac = page.locator('section[id="practica"]')
+    await expect(resv).toHaveCount(1)
+    await expect(prac).toHaveCount(1)
+    await expect(page.locator('#nav-pills .nav-pill[href="#reservas"]')).toHaveCount(1)
+    await expect(page.locator('#nav-pills .nav-pill[href="#practica"]')).toHaveCount(1)
+
+    const h4s = await resv.locator('.reservas-confirmadas h4').evaluateAll(els => els.map(e => (e.textContent ?? '').trim()))
+    expect(h4s).toEqual(groupHeadings)
+    const header = await resv.locator('.reservas-box-header').evaluate(e => (e.textContent ?? '').trim())
+    expect(header).toBe(String(reservas.headings.table).trim())
+    const resvText = await resv.evaluate(e => e.textContent ?? '')
+    expect(resvText).not.toContain('3 comensales')
+    expect(resvText).not.toContain('Restaurantes · cuándo reservar')
+    await expect(resv.locator('.reservas-table tr')).toHaveCount(reservas.table.length)
+
+    const pracH4 = await prac.locator('h4').evaluateAll(els => els.map(e => (e.textContent ?? '').trim()))
+    expect(pracH4.slice(0, practica.sections.length)).toEqual(practica.sections.map(s => s.heading))
+
+    await context.close()
+  })
+})
