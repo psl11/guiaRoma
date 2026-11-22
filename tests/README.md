@@ -348,7 +348,8 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
   `mailto:`). Todos pasan por la lista blanca (`#id` como ancla, o `http(s)://`). Se rechazan con
   `cross-trip-link`, sea cual sea su destino, las definiciones de referencia `[r]: …` (sin ellas
   `[x][r]` no enlaza; se buscan en cualquier posición —también dentro de `>`, `-` y `1.`—, con
-  etiqueta multilínea o con `\]` escapado, y cubren la nota `[^1]: …`; CR-01 de 10-REVIEW), el HTML crudo `<a …>` y los atributos MDC `{href=…}`/`{to=…}`
+  etiqueta multilínea o con `\]` escapado, y cubren la nota `[^1]: …`; CR-01 de 10-REVIEW), todo HTML crudo salvo `<br>` (rehype-raw pinta también `<area href>`, `<form action>` o
+  `<span id>`, así que es lista blanca y no una lista de etiquetas; WR-02 de 10-REVIEW) y los atributos MDC `{href=…}`/`{to=…}`
   (`:a[x]{href=…}`, `::a{href=…}`). También se comprobó (con `parseMarkdown` de `@nuxtjs/mdc`
   0.22.0) que un bloque MDC con props en frontmatter YAML (`::a` / `---` / `href: /trips/roma` /
   `---`) **sí** pinta `<a href>` (y `to:` igual), así que esa forma también se rechaza. Como

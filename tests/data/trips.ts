@@ -38,8 +38,10 @@
 //    leída del YAML del viaje (cierra WR-01/WR-02 de la revisión de la Fase 9).
 //  - Cierre G-10-2 / WR-01 (10-REVIEW): la puerta ve toda forma de enlace que MDC pinta como `<a>`
 //    (`scanProseLinks`: espacio o salto tras `(`, destino `<…>`, autoenlaces y emails) y la somete a
-//    la lista blanca o al ancla; rechaza con `cross-trip-link` las definiciones `[r]: …`, el `<a>`
-//    crudo y los atributos/props MDC `href`/`to`, sea cual sea su destino.
+//    la lista blanca o al ancla; rechaza con `cross-trip-link` las definiciones `[r]: …`, todo HTML
+//    crudo salvo `<br>`, los atributos MDC `href`/`to`, los bloques `::x` con frontmatter y los ids
+//    creados desde la prosa (encabezados, `{#id}`), sea cual sea su destino (CR-01/CR-02/WR-01/WR-02
+//    de 10-REVIEW). El `href` de las entradas `food` del timeline va aparte: solo http(s) (CR-03).
 //    WR-03: `card-placement` exige cada ficha exactamente una vez en la unión de los `cards` de
 //    days/*.yml (sin día no se pinta; en dos días duplica su id), y `anchor`, `seenIn` y los `ref`
 //    de timeline y reservas solo resuelven a fichas pintadas (`renderedMonuments`, espejo de
@@ -305,7 +307,10 @@ const REJECTED_LINK_FORMS: ReadonlyArray<readonly [RegExp, string]> = [
   // anclar al inicio de línea, porque la definición también vale dentro de `>`, `-` y `1.`, con
   // etiqueta multilínea (`[r\ns]`) o con `\]` escapado (`[a\]b]`); cubre también la nota `[^1]: …`.
   [/\[(?:[^[\]\\]|\\[\s\S])+\]:/, 'definición de referencia «[r]: …»'],
-  [/<a(?=[\s>/])/i, 'HTML crudo «<a …>»'],
+  // WR-02 (10-REVIEW): rehype-raw pinta TODO el HTML crudo (`<a href>`, `<area href>`,
+  // `<form action>`, `<span id>`…), así que no se listan etiquetas: lista blanca. La guía solo usa
+  // `<br>`; los autoenlaces `<scheme:…>` y `<a@b>` no son HTML (pasan por la lista blanca de destinos).
+  [/<(?!br\s*\/?>|[a-z][a-z0-9+.-]{1,31}:[^\s<>]*>|[^\s<>@:]+@[^\s<>@]+>)[a-z]/i, 'HTML crudo (solo se admite <br>)'],
   // `:a[x]{href=…}` y `::a{href=…}` pintan `<a href>`; `to` es fail-closed por si un componente
   // global tipo NuxtLink se resolviera por nombre. También el binding `{:href=…}`.
   [/\{[^{}]*\b(?:href|to)\s*=/i, 'atributo MDC «{href=…}» / «{to=…}»'],
@@ -348,8 +353,9 @@ const REJECTED_LINK_FORMS: ReadonlyArray<readonly [RegExp, string]> = [
  *    `![alt](src)`; autoenlace `<scheme:…>`; email `<a@b>` o suelto como `mailto:…`), que el
  *    llamador somete a la lista blanca (`#id` → ancla; `http(s)://` → admitido; resto →
  *    `cross-trip-link`). Las URL sueltas no son targets: su destino siempre es http(s).
- *  - `rejected`: una etiqueta por cada forma rechazada presente (definición de referencia, `<a>`
- *    crudo, atributo o prop MDC `href`/`to`), sea cual sea su destino.
+ *  - `rejected`: una etiqueta por cada forma rechazada presente (definición de referencia, HTML
+ *    crudo que no es `<br>`, atributo MDC `href`/`to`, bloque `::x` con frontmatter, encabezado o
+ *    atributo `{#id}` / `{id=…}`), sea cual sea su destino.
  *
  * El escaneo es LÉXICO y fail-closed: un código entre comillas invertidas o un `\[` escapado
  * pueden dar un falso rojo, nunca un falso verde. No se usa un parser porque

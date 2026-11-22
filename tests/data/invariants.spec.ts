@@ -68,7 +68,7 @@ import {
  * Cierre WR-01 (revisión de 09-06): un fichero no YAML y no oculto dentro de un viaje
  * (`galeria.json`, `galeria.yml~`…) es `stray-file`; los ocultos (.DS_Store, .gitkeep) se ignoran.
  * Cierre G-10-2 (WR-01/WR-03 de 10-REVIEW): toda forma de enlace que MDC pinta como `<a>` pasa por
- * la lista blanca o el ancla, y las formas no admitidas (`[r]: …`, `<a>` crudo, `{href=…}`) son
+ * la lista blanca o el ancla, y las formas no admitidas (`[r]: …`, HTML crudo salvo `<br>`, `{href=…}`) son
  * `cross-trip-link` con su fichero (WR-01). `card-placement`: cada ficha aparece exactamente una vez
  * en la unión de los `cards` de days/*.yml, y `anchor`, `seenIn` y los `ref` de timeline y reservas
  * solo resuelven a fichas pintadas (WR-03).
@@ -557,6 +557,11 @@ describe('la puerta tiene dientes (fixtures)', () => {
     'Texto **aquí**{#galeria}.',
     'Texto [aquí]{ .c #galeria}.',
     'Texto **aquí**{id=galeria}.',
+    // WR-02 (10-REVIEW): todo HTML crudo salvo <br> (rehype-raw lo pinta, navegue o cree ids).
+    'Ver <map name="m"><area href="/trips/roma" shape="default"></map>.',
+    'Ver <form action="/trips/roma"><button>esto</button></form>.',
+    'Texto <span id="galeria">aquí</span>.',
+    'Texto <b id=galeria>aquí</b>.',
   ])('G-10-2/WR-01 cross-trip-link: la forma %j pasa por la lista blanca (D-05b)', (body) => {
     const vs = checkTrip(galeriaWith(body))
     expect(vs.filter(v => v.rule === 'cross-trip-link'), formatViolations(vs)).toEqual([
@@ -584,6 +589,8 @@ describe('la puerta tiene dientes (fixtures)', () => {
     // WR-01: ni una lista, ni un salto <br>, ni una llave suelta antes de un ancla son un id.
     'Lista:\n- uno\n- dos\n\nVer [la galería](#galeria).',
     'Línea<br>otra con { llave suelta y [la galería](#galeria).',
+    // WR-02: <br> en sus grafías y los autoenlaces/comentarios no son HTML rechazado.
+    'Uno<br/>dos<BR />tres <!-- nota --> y <https://example.org/x>.',
   ])('G-10-2/WR-01 control: la forma admitida %j no da violaciones', (body) => {
     const vs = checkTrip(galeriaWith(body))
     expect(vs, formatViolations(vs)).toEqual([])
