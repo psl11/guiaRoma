@@ -203,13 +203,13 @@ Plans:
   3. Las secciones de Gastronomía (pizzerías de barrio, mozzarella di bufala, tabernas, trattorias de monte), Reservas (alojamiento por base, ferris, coche, conciertos, vuelos) y Práctica (ferris, conducción/ZTL y coche en islas, calor, calzado, consejos con niños) están completas para Campania
   4. Los datos de campo críticos (horarios de ferry, fechas de conciertos, acceso nocturno a Sorgeto con niños, coche en Procida/Ischia) aparecen verificados o marcados visiblemente como «por confirmar»
   5. Campania aparece en la portada y se abre en `/guiaRoma/trips/campania/` según la decisión de publicación de ROUTE-05; todo su contenido valida en `pnpm verify` y la puerta de Roma sigue verde
-**Plans**: 1/8 plans executed
+**Plans**: 2/8 plans executed
 Plans:
 **Wave 1**
 - [x] 13-01-PLAN.md — Tracer: martes 22 en Ischia con Epomeo y Sorgeto reales + spec de contenido Wave 0 (`tests/data/campania-content.spec.ts`) + trip.yml publicable (aún borrador, D-02) + numerales finales de las fichas (CAMP-01, CAMP-02, CAMP-06)
 
 **Wave 2** *(blocked on Wave 1 completion)*
-- [ ] 13-02-PLAN.md — Gastronomía: 9 fichas en 5 grupos ordenados por slug, solo establecimientos verificados (D-14) + e2e del orden (CAMP-03)
+- [x] 13-02-PLAN.md — Gastronomía: 9 fichas en 5 grupos ordenados por slug, solo establecimientos verificados (D-14) + e2e del orden (CAMP-03)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 - [ ] 13-03-PLAN.md — Días 19, 20 y 21 (llegada, Spaccanapoli y ferry a Procida con la nota del coche en las islas, Procida → Ischia) con sus 7 fichas; órdenes contiguos y test de orden derivado (CAMP-01, CAMP-02, CAMP-06)
@@ -280,7 +280,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 10. Forma y chrome desde datos | v1.1 | 5/5 | In Progress | - |
 | 11. Portada y rutas multi-viaje | v1.1 | 7/7 | In Progress | - |
 | 12. Formas nuevas de viaje | v1.1 | 7/7 | In Progress | - |
-| 13. Contenido Campania 2027 | v1.1 | 1/8 | In Progress | - |
+| 13. Contenido Campania 2027 | v1.1 | 2/8 | In Progress | - |
 | 14. Verificación del milestone | v1.1 | 0/TBD | Not started | - |
 
 ---
