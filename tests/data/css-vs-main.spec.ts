@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { execFileSync } from 'node:child_process'
+import { execFileSync, spawnSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
@@ -46,15 +46,27 @@ import { join } from 'node:path'
 const CSS_DIR = join(process.cwd(), 'app', 'assets', 'css')
 const readCss = (name: string): string => readFileSync(join(CSS_DIR, name), 'utf8')
 
+/**
+ * Mensaje accionable cuando `git show main:index.html` falla (WR-08 de 14-REVIEW.md, diferido el
+ * respaldo a `origin/main` al acto de publicación). Distingue «no hay rama local `main`» (lo
+ * normal tras `actions/checkout`, que solo crea `origin/main`) de cualquier otro fallo de git.
+ */
+function liveGuideError(err: unknown): Error {
+  const hasLocalMain = spawnSync('git', ['rev-parse', '--verify', '-q', 'refs/heads/main']).status === 0
+  const hint = hasLocalMain
+    ? 'La rama local `main` existe pero git no pudo leer `index.html` de ella: revisa `git show main:index.html`.'
+    : 'No existe la rama local `main` (la guía viva). Créala desde el remoto: '
+      + '`git fetch origin main && git branch main origin/main` (en CI: `actions/checkout` con '
+      + '`fetch-depth: 0` y después ese `git branch`). Ver tests/README.md §6.'
+  return new Error(`«git show main:index.html» falló. ${hint}\n${String(err)}`, { cause: err })
+}
+
 function readMainHtml(): string {
   try {
     return execFileSync('git', ['show', 'main:index.html'], { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 })
   }
   catch (err) {
-    throw new Error(
-      `«git show main:index.html» falló: este spec necesita la rama local \`main\` (la guía viva). ${String(err)}`,
-      { cause: err },
-    )
+    throw liveGuideError(err)
   }
 }
 

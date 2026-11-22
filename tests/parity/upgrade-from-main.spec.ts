@@ -1,4 +1,4 @@
-import { execFileSync } from 'node:child_process'
+import { execFileSync, spawnSync } from 'node:child_process'
 import { existsSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import type { Server } from 'node:http'
 import { tmpdir } from 'node:os'
@@ -74,6 +74,21 @@ async function hydrated(page: Page): Promise<void> {
   })
 }
 
+/**
+ * Mensaje accionable cuando `git show main:index.html` falla (WR-08 de 14-REVIEW.md, diferido el
+ * respaldo a `origin/main` al acto de publicación). Distingue «no hay rama local `main`» (lo
+ * normal tras `actions/checkout`, que solo crea `origin/main`) de cualquier otro fallo de git.
+ */
+function liveGuideError(err: unknown): Error {
+  const hasLocalMain = spawnSync('git', ['rev-parse', '--verify', '-q', 'refs/heads/main']).status === 0
+  const hint = hasLocalMain
+    ? 'La rama local `main` existe pero git no pudo leer `index.html` de ella: revisa `git show main:index.html`.'
+    : 'No existe la rama local `main` (la guía viva). Créala desde el remoto: '
+      + '`git fetch origin main && git branch main origin/main` (en CI: `actions/checkout` con '
+      + '`fetch-depth: 0` y después ese `git branch`). Ver tests/README.md §6.'
+  return new Error(`«git show main:index.html» falló. ${hint}\n${String(err)}`, { cause: err })
+}
+
 /** La guía viva: el `index.html` de la rama `main`, leído con git en tiempo de test (D-03). */
 function readLiveGuide(): string {
   let html: string
@@ -81,10 +96,7 @@ function readLiveGuide(): string {
     html = execFileSync('git', ['show', 'main:index.html'], { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 })
   }
   catch (err) {
-    throw new Error(
-      `«git show main:index.html» falló: este spec necesita la rama local \`main\` (la guía viva). ${String(err)}`,
-      { cause: err },
-    )
+    throw liveGuideError(err)
   }
   expect(html, 'main:index.html es la guía viva (tiene áreas de notas)').toContain('data-note-key=')
   expect(html, 'main:index.html es la guía viva (tiene «Caminar menos»)').toContain('id="light-toggle"')

@@ -655,6 +655,25 @@ del timeout corto de un hook). Si falta `.output/public` (Roma, y también Campa
 generate` (o `pnpm verify`, que ya genera primero). La comprobación es solo de existencia: tras
 editar contenido, regenerar desde cachés limpias antes de correrlos sueltos.
 
+**Requisito de git: la rama local `main`.** `upgrade-from-main.spec.ts` y
+`tests/data/css-vs-main.spec.ts` leen la guía viva con `git show main:index.html`, que solo
+resuelve una rama **local** llamada `main`. Sin ella fallan en voz alta (nunca se saltan) con un
+mensaje que da la orden para crearla:
+
+```bash
+git fetch origin main && git branch main origin/main
+```
+
+- **En CI** (`actions/checkout`), solo existe `refs/remotes/origin/main`, nunca `refs/heads/main`,
+  ni siquiera con `fetch-depth: 0`: el workflow necesita `fetch-depth: 0` **y** ese
+  `git branch main origin/main` antes de `pnpm verify`. Como `css-vs-main.spec.ts` lee git al
+  cargar el módulo, sin la rama falla toda la colección de `test:data`.
+- **En local**, si `main` va por detrás de `origin/main` (la guía desplegada), los specs comparan
+  contra una guía antigua sin avisar: antes del cierre, `git fetch origin` y comprobar que
+  `git rev-parse main origin/main` da el mismo commit.
+- El respaldo automático a `origin/main` y el aviso de desfase (WR-08 de `14-REVIEW.md`) quedan
+  **diferidos al acto de publicación** (deploy y merge a `main`), que es cuando entra el CI.
+
 ### 6.1 `tests/parity/upgrade-from-main.spec.ts` — upgrade desde la guía viva (PAR-03, D-03/D-04)
 
 - **Qué prueba:** quien usa hoy la guía publicada (el `index.html` único de `main`) abre la build
