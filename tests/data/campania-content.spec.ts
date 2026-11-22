@@ -8,10 +8,10 @@ import { RESERVAS_HEADINGS_DEFAULT } from '../../app/utils/reservasHeadings'
  * CONTRATO DE CONTENIDO de Campania (Fase 13, CAMP-01…CAMP-06).
  *
  * La puerta de tests/data/trips.ts valida la FORMA de cada viaje (zod + 21 reglas entre ficheros);
- * este spec valida el CONTENIDO real que escribe la Fase 13 sobre el esqueleto de la Fase 12. Crece
- * plan a plan: cada plan que escribe días o fichas añade sus slugs a los registros de abajo
- * (`WRITTEN_DAYS`, `WRITTEN_MONUMENTS`, `FAMILY_REQUIRED`, `MARKER_FILES`) y, si hace falta, un
- * `describe` propio.
+ * este spec valida el CONTENIDO real que escribió la Fase 13 sobre el esqueleto de la Fase 12. Los
+ * registros de abajo (`WRITTEN_DAYS`, `WRITTEN_MONUMENTS`, `FAMILY_REQUIRED`, `MARKER_FILES`,
+ * `ROMANS`) son el contrato final de la guía publicada: un día, una ficha o un dato dudoso nuevo
+ * se añade al registro que le toca.
  *
  * Solo lee los YAML con el loader puro de la puerta (Node, sin runtime Nuxt ni SQLite), así que no
  * depende de la build. Campania está publicada desde 13-08 (D-02): el describe «publicación» lo fija.
@@ -36,8 +36,8 @@ const campania = loadTrip('campania')
 const roma = loadTrip('roma')
 
 /**
- * Días ya escritos con contenido real → su base (`stay`). `null` = el día no tiene base (salida).
- * Los planes siguientes de la Fase 13 añaden aquí cada día que escriben; 13-06 cubre los diez.
+ * Los diez días → su base (`stay`). `null` = el día no tiene base (salida). Un test de abajo
+ * exige que el registro cubra exactamente los diez días de `DAY_SLUGS`.
  */
 const WRITTEN_DAYS: Record<string, { stay: string | null }> = {
   'martes-22': { stay: 'ischia' },
@@ -52,7 +52,7 @@ const WRITTEN_DAYS: Record<string, { stay: string | null }> = {
   'lunes-28': { stay: null },
 }
 
-/** Fichas ya escritas con contenido real. Los planes siguientes añaden las suyas. */
+/** Las 24 fichas de la guía, cada una con foto, nombre italiano, prosa, datos y coordenadas. */
 const WRITTEN_MONUMENTS: string[] = [
   'monte-epomeo',
   'baia-di-sorgeto',
@@ -91,8 +91,9 @@ const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto', 'pozzo-vec
 const ADULTS_ONLY: string[] = ['napoli-sotterranea']
 
 /**
- * Ficheros (ruta relativa al viaje) que deben llevar el marcador porque tienen datos dudosos.
- * Los planes siguientes añaden los suyos.
+ * Ficheros (ruta relativa al viaje) que deben llevar el marcador porque tienen datos dudosos
+ * (horarios de 2027 aún sin publicar, precios, alojamientos). Quitar un fichero de aquí es
+ * afirmar que todos sus datos están ya confirmados.
  */
 const MARKER_FILES: string[] = [
   'monuments/baia-di-sorgeto.yml',
@@ -252,7 +253,6 @@ describe('sin textos de Roma (D-03, D-09)', () => {
 })
 
 describe('tramos y ruta (D-07, D-08)', () => {
-  // Solo los días escritos: 13-06 hace que el registro cubra los diez días.
   it.each(Object.keys(WRITTEN_DAYS))('%s: stats, cabeceras y metas sin glifo de transporte', (slug) => {
     const day = dayOf(slug)
     expect(day, `${slug} existe`).toBeDefined()
@@ -536,9 +536,6 @@ const FOOD_GROUPS = [
   'Cilento · trattorias de monte',
 ] as const
 
-/** Grupos ya escritos: los cinco de D-15. */
-const FOOD_GROUPS_WRITTEN: readonly string[] = FOOD_GROUPS
-
 /** Únicos establecimientos que la investigación verificó (RESEARCH «Verified establishments», D-14). */
 const VERIFIED_NAMES: readonly string[] = [
   'Da Concettina ai Tre Santi',
@@ -580,7 +577,7 @@ describe('gastronomía (CAMP-03, D-14, D-15)', () => {
   })
 
   it('cada grupo planificado tiene al menos una ficha', () => {
-    for (const group of FOOD_GROUPS_WRITTEN) {
+    for (const group of FOOD_GROUPS) {
       expect(food.some(d => d.data.group === group), group).toBe(true)
     }
   })
