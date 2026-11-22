@@ -52,7 +52,7 @@ blocked: 0
     - path: "app/components/TripIndex.vue"
       issue: "ignora `error` de `useAsyncData`; un fallo de consulta publica una portada vacía con 200"
   missing:
-    - "Regla de la puerta (p. ej. `trip-summary-inline`) que rechace en `summary` cualquier construcción de bloque que MDC/CommonMark abra (lista ordenada `\d{1,9}[.)] `, lista `-`/`*`/`+`, cita `>`, tabla, bloque de código, encabezado, línea en blanco que parta párrafos), nombrando `trip.yml`; dientes en `invariants.spec.ts`; Roma y Campania siguen verdes sin tocar su contenido"
+    - "Regla de la puerta (p. ej. `trip-summary-inline`) que rechace en `summary` cualquier construcción de bloque que MDC/CommonMark abra (lista ordenada `[0-9]{1,9}[.)] `, lista `-`/`*`/`+`, cita `>`, tabla, bloque de código, encabezado, línea en blanco que parta párrafos), nombrando `trip.yml`; dientes en `invariants.spec.ts`; Roma y Campania siguen verdes sin tocar su contenido"
     - "En `TripIndex.vue`, convertir el error de `useAsyncData` en error fatal (p. ej. `if (error.value) throw createError({ statusCode: 500, fatal: true, … })`) para que el prerender falle; salida de Roma/portada byte-idéntica en el caso normal (goldens y `portada.spec.ts` sin cambios)"
     - "Sin tocar `content/`, `tests/parity/` (goldens), `app/assets/css/`, `content.config.ts`, `package.json` ni `pnpm-lock.yaml`"
   debug_session: ""
