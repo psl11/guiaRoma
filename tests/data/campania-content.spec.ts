@@ -52,7 +52,12 @@ const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto']
  * Ficheros (ruta relativa al viaje) que deben llevar el marcador porque tienen datos dudosos.
  * Los planes siguientes añaden los suyos.
  */
-const MARKER_FILES: string[] = ['monuments/baia-di-sorgeto.yml']
+const MARKER_FILES: string[] = [
+  'monuments/baia-di-sorgeto.yml',
+  'food/g-1-concettina.yml',
+  'food/g-1-pizzeria-vomero.yml',
+  'food/g-2-vannulo.yml',
+]
 
 /** Caja de coordenadas del viaje: de Trentova (sur) a Casertavecchia (norte), de Forio al Calore. */
 const BBOX = { minLat: 40.3, maxLat: 41.15, minLng: 13.8, maxLng: 15.3 }
@@ -237,6 +242,86 @@ describe('fichas escritas (CAMP-02, D-10, D-11)', () => {
     expect(family).toContain('escalones')
     expect(family).toContain('linterna')
     expect(family).toContain(BOLD_MARKER)
+  })
+})
+
+/**
+ * Grupos de Gastronomía (D-15) en el orden en que se pintan. Ninguno está en el canon de Roma
+ * (`FOOD_GROUP_ORDER`), así que `groupFood` los ordena por primera aparición, que sigue el orden
+ * alfabético de los ficheros: los prefijos `g-1-`…`g-5-` de los slugs deciden el orden.
+ */
+const FOOD_GROUPS = [
+  'Pizzerías de barrio · Nápoles',
+  'Mozzarella di bufala · caseifici',
+  'Las islas · cocina de Procida e Ischia',
+  'Salerno · tabernas del centro storico',
+  'Cilento · trattorias de monte',
+] as const
+
+/** Grupos ya escritos. 13-02 Task 2 lo amplía a los cinco. */
+const FOOD_GROUPS_WRITTEN: readonly string[] = FOOD_GROUPS.slice(0, 2)
+
+/** Únicos establecimientos que la investigación verificó (RESEARCH «Verified establishments», D-14). */
+const VERIFIED_NAMES: readonly string[] = [
+  'Da Concettina ai Tre Santi',
+  'Tenuta Vannulo',
+  'Caracalè',
+  'La Lampara',
+  'Trattoria Il Focolare',
+  'Hostaria Il Brigante',
+]
+
+const GENERIC_NAME_RE = /^Una? /
+
+describe('gastronomía (CAMP-03, D-14, D-15)', () => {
+  const food = docsOf('food')
+  const groupIndex = (doc: Doc): number => (FOOD_GROUPS as readonly string[]).indexOf(String(doc.data.group))
+
+  it('cada ficha pertenece a un grupo planificado', () => {
+    expect(food.length).toBeGreaterThanOrEqual(1)
+    for (const doc of food) expect(FOOD_GROUPS, doc.file).toContain(doc.data.group)
+  })
+
+  it('ordenadas por slug, los grupos salen en el orden planificado (D-15)', () => {
+    const indexes = [...food].sort((a, b) => a.slug.localeCompare(b.slug)).map(groupIndex)
+    expect(indexes).toEqual([...indexes].sort((a, b) => a - b))
+  })
+
+  it('cada grupo planificado tiene al menos una ficha', () => {
+    for (const group of FOOD_GROUPS_WRITTEN) {
+      expect(food.some(d => d.data.group === group), group).toBe(true)
+    }
+  })
+
+  it('solo se nombran establecimientos verificados; el resto es genérico (D-14)', () => {
+    for (const doc of food) {
+      const name = String(doc.data.name)
+      expect(VERIFIED_NAMES.includes(name) || GENERIC_NAME_RE.test(name), `${doc.file}: «${name}»`).toBe(true)
+    }
+  })
+
+  it('una ficha genérica se elige sobre el terreno (D-14)', () => {
+    for (const doc of food.filter(d => !VERIFIED_NAMES.includes(String(d.data.name)))) {
+      expect(String(doc.data.address), doc.file).toContain('a elegir sobre el terreno')
+    }
+  })
+
+  it('un establecimiento con nombre marca su horario en la descripción (D-12)', () => {
+    for (const doc of food.filter(d => VERIFIED_NAMES.includes(String(d.data.name)))) {
+      expect(String(doc.data.desc), doc.file).toContain(BOLD_MARKER)
+    }
+  })
+
+  it('badgeKind nunca es de Roma (quinto, ghetto)', () => {
+    for (const doc of food) expect(['quinto', 'ghetto'], doc.file).not.toContain(doc.data.badgeKind)
+  })
+
+  it('dirección, descripción y búsqueda de mapa no están vacías', () => {
+    for (const doc of food) {
+      for (const key of ['address', 'desc', 'mapsQuery']) {
+        expect(String(doc.data[key] ?? '').trim(), `${doc.file}: ${key}`).not.toBe('')
+      }
+    }
   })
 })
 
