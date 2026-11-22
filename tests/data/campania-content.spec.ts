@@ -46,6 +46,8 @@ const WRITTEN_DAYS: Record<string, { stay: string | null }> = {
   'miercoles-23': { stay: 'salerno' },
   'jueves-24': { stay: 'salerno' },
   'viernes-25': { stay: 'napoles' },
+  'domingo-27': { stay: 'napoles' },
+  'lunes-28': { stay: null },
 }
 
 /** Fichas ya escritas con contenido real. Los planes siguientes añaden las suyas. */
@@ -68,10 +70,12 @@ const WRITTEN_MONUMENTS: string[] = [
   'vesubio',
   'rione-sanita',
   'stadio-maradona',
+  'napoli-sotterranea',
+  'capodimonte',
 ]
 
 /** Fichas que deben llevar nota familiar (D-09). Los planes siguientes añaden las suyas. */
-const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto', 'pozzo-vecchio', 'valle-del-calore', 'baia-di-trentova', 'stadio-maradona']
+const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto', 'pozzo-vecchio', 'valle-del-calore', 'baia-di-trentova', 'stadio-maradona', 'napoli-sotterranea']
 
 /**
  * Ficheros (ruta relativa al viaje) que deben llevar el marcador porque tienen datos dudosos.
@@ -97,6 +101,10 @@ const MARKER_FILES: string[] = [
   'days/viernes-25.yml',
   'monuments/vesubio.yml',
   'monuments/stadio-maradona.yml',
+  'days/domingo-27.yml',
+  'days/lunes-28.yml',
+  'monuments/napoli-sotterranea.yml',
+  'monuments/capodimonte.yml',
   'food/g-1-concettina.yml',
   'food/g-1-pizzeria-vomero.yml',
   'food/g-2-vannulo.yml',
@@ -374,6 +382,28 @@ describe('días escritos (CAMP-01, D-04)', () => {
     expect(stadium.roman).toBe('♪')
     expect(stadium.badge).toBe('concierto')
     expect(day.cards).toEqual(['vesubio', 'rione-sanita', 'stadio-maradona'])
+  })
+
+  it('domingo 27: despedida, Napoli Sotterranea y PTN (D-06, D-08)', () => {
+    const day = dayOf('domingo-27')!
+    const rows = timelineRowsOf(day.timeline)
+    expect(rows.some(r => r.kind === 'stop' && r.disabled === true && r.time === '10:00'), 'parada sin ficha a las 10:00').toBe(true)
+    const concert = rows.find(r => r.kind === 'stop' && r.ref === 'stadio-maradona')
+    expect(concert, 'hay una parada con ref stadio-maradona').toBeDefined()
+    expect(String(concert!.title)).toContain('Pinguini Tattici Nucleari')
+    // Pitfall 7: el estadio está en las fichas del viernes 25; listarlo aquí duplicaría su id.
+    expect(day.cards as string[]).not.toContain('stadio-maradona')
+    expect((day.route as Rec).enabled).toBe(false)
+    expect(day.cards).toEqual(['napoli-sotterranea', 'capodimonte'])
+  })
+
+  it('lunes 28: vuelo a Palma y sin base (D-04, D-08)', () => {
+    const day = dayOf('lunes-28')!
+    const planes = asRecs(day.timeline).filter(r => r.kind === 'transport' && r.variant === 'plane')
+    expect(planes.some(r => collectStrings(r).some(t => t.includes('09:55'))), 'un tramo plane con las 09:55').toBe(true)
+    expect('stay' in day, 'el lunes 28 no lleva base').toBe(false)
+    expect((day.route as Rec).enabled).toBe(false)
+    expect(day.cards).toEqual([])
   })
 })
 

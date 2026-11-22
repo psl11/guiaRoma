@@ -1,0 +1,37 @@
+slug: capodimonte
+trip: campania
+roman: XXIII
+name: Capodimonte
+italian: 'Real Bosco di Capodimonte · Napoli'
+day: Domingo 27
+coords:
+  lat: 40.8743
+  lng: 14.2551
+type: card
+motif: garden
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Viale_Bosco_di_Capodimonte_di_Napoli.jpg/960px-Viale_Bosco_di_Capodimonte_di_Napoli.jpg
+  alt: Una avenida arbolada del Real Bosco di Capodimonte
+sections:
+  - heading: Qué es
+    body: >-
+      El gran bosque real en lo alto de la colina de Capodimonte, por encima del Rione
+      Sanità: avenidas largas bajo los árboles, praderas y rincones de sombra alrededor
+      del palacio de los Borbones, que hoy es museo. Un parque donde los napolitanos
+      vienen a pasear, a correr o a no hacer nada.
+  - heading: Qué mirar
+    body: >-
+      Las avenidas rectas que se abren desde la entrada, los árboles altos que dan
+      sombra hasta en las horas de más calor y, desde los bordes de la colina, la ciudad
+      y el golfo a vuestros pies.
+  - heading: En vuestro día
+    body: >-
+      Una tarde de domingo a la sombra, sin plan: un banco, el libro comprado por la
+      mañana en una librería del centro y un paseo lento antes del último concierto. El
+      horario de apertura del parque está **⚠ por confirmar**.
+facts:
+  - label: Acceso
+    value: 'Parque público · horario de apertura **⚠ por confirmar**'
+  - label: Para qué
+    value: 'Sombra, paseo y descanso · el museo del palacio es otra visita'
+mapsQuery: Real Bosco di Capodimonte Napoli
