@@ -6,11 +6,19 @@ findings:
   - id: CR-01
     severity: critical
     disposition: open
-    title: "The fictional `prueba` trip ships in the public static build and can be rendered on GitHub Pages; the build sentinel cannot detect it"
+    title: "Hidden trip folders are loaded by Nuxt Content but skipped by the data gate (fail-open remains)"
   - id: WR-01
     severity: warning
     disposition: open
-    title: "`fixed-anchor` does not reserve the five day section ids that TripView always renders"
+    title: "Non-YAML files inside a trip folder are still skipped with no violation"
+  - id: IN-01
+    severity: info
+    disposition: open
+    title: "A symlinked trip folder gets reported as \"fichero suelto\""
+  - id: IN-02
+    severity: info
+    disposition: open
+    title: "The `listTripDirs` docstring says \"No lanza\", but `readdirSync` can throw"
   - id: WR-02
     severity: warning
     disposition: open
@@ -27,14 +35,6 @@ findings:
     severity: warning
     disposition: open
     title: "The coupling guard only scans three directories, without recursion, so new coupling can slip past it"
-  - id: IN-01
-    severity: info
-    disposition: open
-    title: "The link-target regexes break on Markdown link titles and on URLs containing parentheses"
-  - id: IN-02
-    severity: info
-    disposition: open
-    title: "The build sentinel's global-key check is narrow, and it can run against a stale build"
   - id: IN-03
     severity: info
     disposition: open
@@ -49,7 +49,7 @@ findings:
     title: "The gate ignores stray files outside trip folders and `.YML` with upper-case extensions"
 open: 11
 total: 11
-recorded: 2026-11-20T11:13:40.534Z
+recorded: 2026-11-22T12:11:27.645Z
 ---
 
 # Phase 09: Code Review Disposition
@@ -58,15 +58,15 @@ recorded: 2026-11-20T11:13:40.534Z
 |---------|----------|-------------|--------|
 | CR-01 | critical | open | - |
 | WR-01 | warning | open | - |
-| WR-02 | warning | open | - |
-| WR-03 | warning | open | - |
-| WR-04 | warning | open | - |
-| WR-05 | warning | open | - |
 | IN-01 | info | open | - |
 | IN-02 | info | open | - |
-| IN-03 | info | open | - |
-| IN-04 | info | open | - |
-| IN-05 | info | open | - |
+| WR-02 | warning | open | - (not in the current review) |
+| WR-03 | warning | open | - (not in the current review) |
+| WR-04 | warning | open | - (not in the current review) |
+| WR-05 | warning | open | - (not in the current review) |
+| IN-03 | info | open | - (not in the current review) |
+| IN-04 | info | open | - (not in the current review) |
+| IN-05 | info | open | - (not in the current review) |
 
 Dispositions: `open` (recorded, not yet triaged), `fixed`, `skipped`, `deferred`.
 Set `deferred` by hand and put the reason in the Source cell; both are preserved. A `|` in the reason is kept as prose and escaped on the next run.
