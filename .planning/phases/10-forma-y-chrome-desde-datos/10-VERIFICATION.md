@@ -1,7 +1,7 @@
 ---
 phase: 10-forma-y-chrome-desde-datos
-verified: 2026-11-20T15:20:00Z
-status: human_needed
+verified: 2026-11-22T22:30:00Z
+status: passed
 score: 5/5 must-haves verified
 covered_files:
   - .planning/phases/10-forma-y-chrome-desde-datos/10-01-PLAN.md
@@ -14,6 +14,8 @@ covered_files:
   - .planning/phases/10-forma-y-chrome-desde-datos/10-04-SUMMARY.md
   - .planning/phases/10-forma-y-chrome-desde-datos/10-05-PLAN.md
   - .planning/phases/10-forma-y-chrome-desde-datos/10-05-SUMMARY.md
+  - .planning/phases/10-forma-y-chrome-desde-datos/10-06-PLAN.md
+  - .planning/phases/10-forma-y-chrome-desde-datos/10-06-SUMMARY.md
   - app/app.vue
   - app/components/NavPills.vue
   - app/components/Topbar.vue
@@ -22,112 +24,101 @@ covered_files:
   - content/trips/forma/trip.yml
   - content/trips/roma/trip.yml
   - shared/schemas.ts
+  - tests/data/invariants.spec.ts
   - tests/data/trips.ts
   - tests/trips/romaLeaks.ts
   - tests/trips/shape.spec.ts
-covered_digest: "v4:sha256:d4d133fc1ae35b7d17ca9ded4b39db795266fc49ed88b360a32eb58598ae2564"
+covered_digest: "v4:sha256:719b5ec7b2b79a153c53f9d25953f41aac0e0a77bb1e090f42917596ab7989a5"
 behavior_unverified: 0
 overrides_applied: 0
-human_verification:
-  - test: "Confirmar las decisiones D-01…D-19 tomadas en modo --auto (10-CONTEXT.md / 10-DISCUSSION-LOG.md) mientras el usuario viajaba"
-    expected: "El usuario las acepta o las ajusta. Las que más pesan: D-05(b) lista blanca estricta de enlaces en prosa (solo `#id` y `http(s)://`); D-09 etiquetas estructurales («Pratica», «cartografia», «El mapa del viaje») como chrome compartido fijo, no configurable; D-14 respaldo neutro (pestaña y marca = título plano del viaje; sin pie ni leyenda si el viaje no los define); D-07/D-08 orden fijo y presencia por datos sin lista en trip.yml"
-    why_human: "Son decisiones de producto elegidas por Claude sin el usuario; ningún test puede validar que sean las que el usuario quiere"
-  - test: "Decidir el destino de los 3 warnings abiertos de 10-REVIEW.md (WR-01, WR-02, WR-03) y de los 6 info (todos `open` en 10-REVIEW-DISPOSITION.md)"
-    expected: "Cada uno queda en fixed / deferred / skipped. WR-01 y WR-03 debilitan la garantía de la puerta de datos (ver Anti-patrones); WR-02 afecta solo a títulos con énfasis anidado o `_` dentro de palabra cuando el viaje no define pageTitle/brand"
-    why_human: "Triage de la revisión de código: el usuario decide si se cierran ahora o se difieren a la Fase 11/14"
-  - test: "Confirmar que el viaje dev-only `forma` (D-15) puede quedar sin `draft: true` hasta la Fase 11"
-    expected: "El usuario acepta que sus filas sigan pudiendo entrar en el `sql_dump` público (CR-01 de la Fase 9, ya diferido a ROUTE-05) o pide mitigarlo antes"
-    why_human: "Riesgo aceptado y diferido; solo el usuario decide si es tolerable. Las rutas y el HTML publicados sí están limpios (verificado: ningún `FORMA-CENTINELA` en `.output/public`)"
+re_verification:
+  previous_status: human_needed
+  previous_score: 5/5
+  gaps_closed:
+    - "G-10-2 (UAT test 2): la puerta de datos ve toda forma de enlace que MDC pinta como <a> y exige cada ficha pintada exactamente una vez (10-06)"
+    - "Decisiones D-01…D-19 aceptadas por el usuario (UAT test 1)"
+    - "Viaje forma sin draft (UAT test 3): superado por la Fase 11, que le puso draft: true"
+  gaps_remaining: []
+  regressions: []
 ---
 
 # Phase 10: Forma y chrome desde datos — Informe de verificación
 
 **Objetivo de la fase:** La forma de cada guía (cuántos días, qué secciones y pastillas, qué textos de marca) la deciden los datos de su viaje, y Roma —con sus textos movidos verbatim a su `trip.yml`— se ve idéntica.
-**Verificado:** 2026-11-20
-**Estado:** human_needed (objetivo alcanzado en código; quedan decisiones de usuario y triage de la revisión)
-**Re-verificación:** No — verificación inicial
+**Verificado:** 2026-11-22 (regenerado contra el código ACTUAL, tras las Fases 11–14 parciales, el plan de cierre 10-06 y los arreglos de revisión)
+**Estado:** passed
+**Re-verificación:** Sí — el informe anterior (2026-11-20, `human_needed`) estaba obsoleto: sus tres ítems humanos ya están resueltos en `10-UAT.md` y 10-06 cerró G-10-2.
 
-## Evidencia que he ejecutado yo (no la del SUMMARY ni la del orquestador)
+## Evidencia ejecutada en esta verificación
 
 | Comprobación | Resultado |
 |---|---|
-| `git diff --stat f04967a HEAD -- tests/parity/ app/assets/css/ content/trips/prueba/` | vacío: ni un golden, ni un spec de paridad, ni CSS, ni `prueba` tocados |
-| `vitest run tests/unit tests/data` | 21 ficheros, 592/592 |
-| `rm -rf .data .nuxt .output && pnpm generate` (Node 22) | exit 0, 10 rutas prerenderizadas |
-| `pnpm test:parity` sobre esa build, sin `--update-snapshots` | **80/80** (incluye `visual-diff` de los 56 goldens) |
-| `pnpm test:trips` (dev) | **17/17** |
-| Inspección de `.output/public/index.html` | título, 12 pastillas, 12 `<section>` hijas de `<main>`, marca, leyenda y pie, verbatim (detalle abajo) |
-| `verify.artifacts` / `verify.key-links` de los 5 planes | todos pasan (5/5, 6/6, 4/4, 4/4, 4/4 artefactos; 4/4, 4/4, 3/3, 3/3, 3/3 enlaces) |
-| Marcadores de deuda (`TBD`/`FIXME`/`XXX`) en ficheros de la fase | ninguno |
+| `npx vitest run tests/unit tests/data` (Node 22.20) | 32 ficheros, **1429/1429** (unit 568 + data 861) |
+| `vitest run tests/data/invariants.spec.ts -t "G-10-2"` | 59 pasan (dientes de 10-06: WR-01, WR-03 y advisory MDC) |
+| `pnpm verify` del orquestador a HEAD (cachés limpias) | exit 0: unit 568, data 861, paridad **126/126** (56 goldens, sin `--update-snapshots`) |
+| Build `.output/public/trips/roma/index.html` (generada 23:21 de hoy) inspeccionada por mí | `<title>Roma · 19—23 giugno 2026</title>`; 12 pastillas en orden; 12 `<section>` (`inicio, mapa, viernes, sabado, domingo, lunes, martes, reservas, gastronomia, practica, arte, arquitectura`); `.brand` = `Roma <span class="brand-dot">✦</span> giugno MMXXVI`; `p.map-legend` con doble espacio; pie con 2 `<br>` y `<em>Pay</em>` |
+| `grep FORMA-CENTINELA` en `.output/public` | ningún resultado; solo `trips/campania` y `trips/roma` publicados (forma y prueba no se generan) |
+| `git diff f04967a HEAD` sobre `app/assets/css/` | solo 2 ficheros NUEVOS aditivos (`multitrip.css`, `tripshapes.css`, de las Fases 11–12); ningún CSS previo modificado; ningún PNG de golden modificado |
+| `verify.artifacts` / `verify.key-links` de los 6 planes | todos `all_passed: true` / `all_verified: true` (5/5·4/4, 6/6·4/4, 4/4·3/3, 4/4·3/3, 4/4·3/3, 4/4·4/4) |
+| Marcadores de deuda `TBD`/`FIXME`/`XXX` en los ficheros cubiertos | ninguno |
+| `pnpm test:trips` (Playwright sobre dev) | no re-ejecutado (opcional); la evidencia de forma por viaje la cubren el HTML prerenderizado de Roma, `tests/data` y la última pasada completa del informe anterior (17/17) |
 
 ## Cumplimiento de los criterios de éxito del ROADMAP
 
 | # | Criterio | Estado | Evidencia |
 |---|---|---|---|
-| 1 | Viaje de 10 días con dos sábados: 10 secciones con nombre y fecha, 10 pastillas distintas que llevan a su día; Roma con sus 5 días `#viernes…#martes` | ✓ VERIFIED | `content/trips/forma/days/` tiene 10 YAML (`order` 1..10; `sabado-19`/`sabado-26` con `pill` «Sáb 19»/«Sáb 26»; también repiten domingo y lunes). `tests/trips/shape.spec.ts` (ejecutado, verde) comprueba: `main > section` = `inicio, mapa, 10 días en orden, gastronomia`; cada día con su `.section-eyebrow` y `h2`; las 10 pastillas distintas y el clic en cada una deja `location.hash` en su día. En Roma, el HTML prerenderizado trae `viernes, sabado, domingo, lunes, martes` entre `mapa` y `reservas` |
-| 2 | Sin datos para sección opcional → ni sección ni pastilla; Roma con 12 pastillas en el mismo orden | ✓ VERIFIED | `buildTripLayout` (`app/utils/tripLayout.ts:84-93`) decide por presencia; `TripView.vue` recorre esa MISMA lista para `<main>` y `NavPills` (una sola fuente). E2E `forma: sin Arte, Arquitectura, Reservas ni Práctica` verde. Roma prerenderizada: `Inicio, Mapa, Venerdì, Sabato, Domenica, Lunedì, Martedì, Reservas, Gastronomía, Pratica, Arte, Arquitectura` |
-| 3 | Marca, pie y leyenda salen de `trip.yml`; pestaña con título propio; Roma = textos actuales («Roma · 19—23 giugno 2026») | ✓ VERIFIED | `content/trips/roma/trip.yml` (+14 líneas aditivas) con `pageTitle`, `brand`, `mapLegend`, `footer`. `TripView.vue` usa `useHead({ title })`, `trip.mapLegend`, `trip.footer`; `Topbar.vue` usa `brand`. `app.vue` ya no fija `<title>`. Build: un único `<title>Roma · 19—23 giugno 2026</title>`; `.brand` = `Roma <span class="brand-dot">✦</span> giugno MMXXVI`; leyenda con doble espacio; pie con 2 `<br>` y `<em>Pay</em>`. Comparado además contra `index.html` líneas 8, 2259, 2370, 6236-6240 (los textos coinciden; `tests/data/romaChrome.spec.ts` lo asevera con cheerio). E2E por viaje: `forma` muestra su marca/leyenda/pie/pestaña; `prueba` (sin campos) cae al título plano, sin `.brand-dot`, sin `<footer>` ni `p.map-legend` |
-| 4 | En la guía de un viaje de prueba no aparece texto propio de Roma; un test-trampa falla si se cuela | ✓ VERIFIED | `tests/trips/romaLeaks.ts` (matcher por palabra Unicode: Roma, Einaudi, giugno, MMXXVI, Pay, Fellini, Royal Court) con dientes en `tests/unit/romaLeaks.spec.ts`; `tests/trips/shape.spec.ts` escanea título, `innerText` y `textContent` de **todos** los viajes de `content/trips/` salvo `roma` (descubiertos por `readdirSync`, no por lista), con guardas anti-vacío y control positivo en Roma. 17/17 verde. Guardián estático D-17 (`tests/unit/romaChromeGuard.spec.ts`) sobre `app/**`; mi `grep` de `app/` no encuentra literales de Roma en código vivo (solo nombres de campo y comentarios) |
-| 5 | Paridad verde en `/` con los 56 goldens sin re-baseline | ✓ VERIFIED | `pnpm test:parity` ejecutado por mí: 80/80, sin `--update-snapshots`; el diff contra `f04967a` confirma que `tests/parity/` y `app/assets/css/` no cambian |
+| 1 | Viaje de 10 días con dos sábados: 10 secciones con nombre y fecha, 10 pastillas distintas que llevan a su día; Roma con sus 5 días `#viernes…#martes` | ✓ VERIFIED | `buildTripLayout` (`app/utils/tripLayout.ts:84-93`) emite una entrada `kind: 'day'` por día recibido, con `id = slug` y etiqueta `pill` o `dayLabel(eyebrow)` (`dayPillLabel`, l.78). `TripView.vue:81-88` calcula el layout una vez y `v-for="e in layout"` monta las `<section>`; el mismo `layout` va a `Topbar → NavPills`. `content/trips/forma/days/` aporta los 10 días (`sabado-19`/`sabado-26`, etc.); `tests/trips/shape.spec.ts` (l.124-170) asevera 10 secciones en orden y 10 pastillas distintas con navegación. Roma: 5 días `viernes…martes` en el HTML prerenderizado |
+| 2 | Sin datos para sección opcional → ni sección ni pastilla; Roma con 12 pastillas en el mismo orden | ✓ VERIFIED | Presencia por datos en `buildTripLayout` (Reservas/Gastronomía/Práctica/Arte/Arquitectura solo si hay datos); `TripView` pasa `hasReservas`, `hasPractica`, `foodCount`, `artistKinds` desde `useTrip`. `shape.spec.ts:103` (forma sin Arte/Arquitectura/Reservas/Práctica) y `:172` (prueba solo Inicio, Mapa y 2 días). Roma: las 12 pastillas del HTML prerenderizado coinciden con el orden verbatim |
+| 3 | Marca, pie y leyenda salen de `trip.yml`; pestaña con título propio; Roma = textos actuales | ✓ VERIFIED | `content/trips/roma/trip.yml:79-92` (`pageTitle`, `brand`, `mapLegend`, `footer`, comentadas con las líneas de `index.html`); esquema aditivo opcional en `shared/schemas.ts:521-528`. `TripView.vue:94` `useHead({ title })`, `:156` `trip.mapLegend`, `:277-299` pie desde `trip.footer`; `Topbar.vue:35-42` marca desde `brand` con respaldo `fallbackTitle`; `app/app.vue:20,42` ya no fija `<title>`. Build inspeccionada: textos idénticos a los de `index.html`. Superseded-not-regression: el `<footer>` de Roma ahora lleva además `p.trip-back` «← Todos los viajes» (Fase 11, ROUTE-06, aprobado) fuera de `.container`, sin tocar el `p` original |
+| 4 | En la guía de un viaje de prueba no aparece texto propio de Roma; test-trampa | ✓ VERIFIED | `tests/trips/romaLeaks.ts` + `shape.spec.ts:235-284` (todos los viajes no-Roma descubiertos por directorio, con control positivo en Roma); guardián estático D-17 sobre `app/**`. Respaldo neutro D-14: sin `brand` la marca es `plainTitle`, sin `mapLegend`/`footer` no se renderizan (`v-if`). El HTML de `trips/campania` publicado es otro viaje real; el viaje `forma` (draft) ya no sale de la build |
+| 5 | Paridad verde en `/` con los 56 goldens sin re-baseline | ✓ VERIFIED (superseded en URL) | Roma pasó a `/trips/roma/` en la Fase 11 (ROUTE-01, aprobado); los 56 goldens siguen sin tocar (ningún PNG cambia desde `f04967a`) y `pnpm verify` del orquestador da paridad 126/126 sin `--update-snapshots`. El espíritu del criterio —Roma idéntica tras mover los textos a datos— se mantiene en la URL actual |
 
 **Score:** 5/5 verdades verificadas, 0 PRESENT_BEHAVIOR_UNVERIFIED.
 
-### Verdades de los planes (resumen)
+### Verdades de los planes y cierre de G-10-2 (10-06)
 
-Las verdades de PLAN 10-01…10-05 que no son duplicado de un criterio del roadmap están verificadas: orden D-07 y presencia D-08 (`tripLayout.ts` + `tests/unit/tripLayout.spec.ts`); `DAY_SLUG_RE` y `pill` opcional (`shared/schemas.ts`); campos de chrome todos `.optional()` y `pageTitle` con `min(1)` (aditivo; Roma sin campos seguía validando antes de añadir los valores); reglas `day-order`, `day-pill` (NFC + minúsculas), `anchor` por presencia y `cross-trip-link` en lista blanca en `tests/data/trips.ts` (592 tests verdes, incluidos sus dientes); `SECTION_ANCHORS` derivado de `STRUCTURAL_SECTION_IDS`; viaje `forma` ausente de `.output/public` (ninguna aparición de `FORMA-CENTINELA`; `tests/data/build-isolation.spec.ts` verde).
+- `scanProseLinks` (`tests/data/trips.ts:366`) ve las formas de enlace que MDC pinta como `<a>` (espacio/salto tras `(`, destino `<…>`, autoenlaces, emails) y rechaza las formas prohibidas (definiciones de referencia, `<a>` crudo, props/atributos MDC `href`/`to`); `hasLink` y `extractAnchors` pasan por él. Los arreglos de revisión posteriores (CR-01/02/03, WR-01/02: `d208686`, `db113ce`, `6ac4a2d`, `c7e36f2`, `4025613`) solo tocan `tests/data/trips.ts`, `invariants.spec.ts` y `tests/README.md`.
+- Regla `card-placement` (`trips.ts:487-516`): `renderedMonuments` = unión de `days[*].cards`; cada ficha exactamente una vez, y `anchor`/`seenIn`/`ref` solo a fichas pintadas. El 10-06-SUMMARY lo corrobora con mutaciones en disco; yo he re-ejecutado los 59 tests `G-10-2` en verde y los 861 de la puerta de datos.
+- Orden D-07, presencia D-08, `DAY_SLUG_RE`/`pill`, campos de chrome `.optional()` y `pageTitle` con `min(1)`: sin cambios respecto a la verificación previa y siguen cubiertos por `tests/unit` y `tests/data` en verde.
 
-### Prohibiciones (todas de tier `judgment`, `verification: null` en los planes)
+### Prohibiciones (tier `judgment`)
 
 | Prohibición | Estado | Evidencia |
 |---|---|---|
-| No tocar `tests/parity/` ni `app/assets/css/`, no `--update-snapshots`, no CSS nuevo ni `<style scoped>` | ✓ respetada | diff vacío contra `f04967a`; `grep "<style"` en TripView/NavPills/Topbar sin resultados |
-| La app no enlaza `/trips/*` | ✓ respetada | solo aparecen en comentarios de `app/pages/index.vue`; navegación por `#id` |
-| Ningún viaje muestra texto de Roma por defecto | ✓ respetada | respaldo = `inlineMdToPlain(trip.title)` o no renderizar; guardián D-17 + trampa en verde |
-| La puerta de datos no se relaja ni se edita el YAML de Roma/prueba para acomodarla | ✓ respetada | `content/trips/roma/` solo cambia `trip.yml` (+14, aditivo); `prueba` sin diff; no se borraron fixtures «dientes» |
-
-Veredictos objetivos (diff, grep, tests deterministas), no un juicio LLM; aun así la etiqueta formal de los planes es `judgment`.
+| No tocar `tests/parity/` ni `app/assets/css/` existentes, no `--update-snapshots`, no CSS/`<style scoped>` nuevo en la fase | ✓ respetada | Los cambios posteriores en `tests/parity/` y los dos CSS aditivos son de las Fases 11–12 (aprobadas); ningún golden ni CSS previo se modifica; sin `<style` en TripView/NavPills/Topbar |
+| La app no enlaza `/trips/*` desde la prosa de datos | ✓ respetada | lista blanca D-05b ahora sin fail-open (10-06 + fixes); el enlace a la portada del pie lo añade la UI, no los datos |
+| Ningún viaje muestra texto de Roma por defecto | ✓ respetada | respaldo = `inlineMdToPlain(trip.title)` o no renderizar |
+| La puerta de datos no se relaja ni se edita el YAML para acomodarla | ✓ respetada | 10-06 endurece la puerta sin tocar `content/` |
 
 ### Cobertura de requisitos
 
 | Requisito | Planes | Estado | Evidencia |
 |---|---|---|---|
-| SHAPE-01 | 10-01, 10-03, 10-04 | ✓ SATISFIED | criterio 1 |
-| SHAPE-02 | 10-01, 10-03, 10-04 | ✓ SATISFIED | criterio 2 |
+| SHAPE-01 | 10-01, 10-03, 10-04, 10-06 | ✓ SATISFIED | criterio 1 |
+| SHAPE-02 | 10-01, 10-03, 10-04, 10-06 | ✓ SATISFIED | criterio 2 |
 | SHAPE-03 | 10-02, 10-05 | ✓ SATISFIED | criterio 3 |
-| SHAPE-04 | 10-02, 10-05 | ✓ SATISFIED | criterio 3 (pestaña por viaje, E2E `título: cada viaje pone su propia pestaña`) |
+| SHAPE-04 | 10-02, 10-05 | ✓ SATISFIED | criterio 3 (título por viaje vía `useHead`) |
 | SHAPE-05 | 10-02, 10-04, 10-05 | ✓ SATISFIED | criterio 4 |
 
-Los 5 IDs de REQUIREMENTS.md (marcados `[x]` / Complete) aparecen en el frontmatter de algún PLAN. Sin requisitos huérfanos.
+Los 5 IDs de REQUIREMENTS.md (`[x]` / Complete) aparecen en el frontmatter de algún PLAN. Sin requisitos huérfanos.
 
 ### Flujo de datos (nivel 4)
 
-`useTrip(slug)` → `days/food/artists/refById/trip` (consultas de Content) → `buildTripLayout` → `<main>` y `NavPills`; `trip.brand/footer/mapLegend/pageTitle` → `Topbar`/`TripView`/`useHead`. El HTML prerenderizado ya contiene los valores reales de Roma (no son estáticos ni de hidratación), y el E2E de dev muestra los de `forma`/`prueba`. FLOWING.
+`useTrip(slug)` → `days/food/artists/refById/trip` → `buildTripLayout` → `<main>` y `NavPills`; `trip.brand/footer/mapLegend/pageTitle` → `Topbar`/`TripView`/`useHead`. El HTML prerenderizado de Roma ya contiene los valores reales. FLOWING.
 
-### Anti-patrones y hallazgos de la revisión de código (10-REVIEW.md, 0 críticos, todos `open`)
+### Anti-patrones y revisión de código
 
-Los he comprobado contra el código; no cambian el estado de ningún criterio de éxito, pero son debilidades reales de las garantías de la puerta:
+`10-REVIEW-DISPOSITION.md`: CR-01..03, WR-01..03 `fixed`; IN-02..IN-06 `deferred` por decisión del usuario en `10-UAT.md · Deferred Follow-Ups`; **IN-01** (`card-placement` duplica violaciones cuando dos ficheros comparten slug) sigue `open`: es informativo, solo afecta al número de líneas de un mensaje de error de la puerta, no incumple ninguna verdad y no es bloqueante. WR-02 original (`inlineMdToPlain` con énfasis anidado) está diferido y es latente (todos los viajes reales definen `pageTitle`/`brand`). Sin `TBD/FIXME/XXX`, sin stubs.
 
-| Id | Severidad | Verificación mía | Impacto |
-|---|---|---|---|
-| WR-01 | ⚠️ Warning | Confirmado: `extractLinkTargets` en `tests/data/trips.ts:167` usa `/\]\(([^)\s]+)/g`, que no captura `[x]( /trips/roma)`, destino en nueva línea, enlaces por referencia ni `<a href>` en línea. La lista blanca D-05(b) se puede esquivar con esas formas; las formas listadas en el plan (`/#x`, `/guiaRoma/#x`, `../roma#x`, `/trips/…`, `javascript:`) sí se rechazan | La garantía «solo `#id` o http(s)» no es total; un `/trips/…` colado haría que `crawlLinks` prerenderice un viaje de desarrollo |
-| WR-02 | ⚠️ Warning | Confirmado por lectura: `inlineMdToPlain` es una sola pasada de regex (`tripLayout.ts:100-105`); `***Roma***` o `a_b_c` salen mal | Solo afecta a viajes sin `pageTitle`/`brand`. Roma y los viajes actuales no se ven afectados |
-| WR-03 | ⚠️ Warning | Confirmado por lectura (`anchorable` incluye todos los slugs de monumentos, `trips.ts:351`) | Una ficha que no esté en ningún `cards` de día pasa la regla `anchor` aunque no tenga elemento en el DOM |
-| IN-01…IN-06 | ℹ️ Info | Sin verificar uno a uno; no tocan criterios | Triage pendiente |
+### Verificación humana
 
-Nota de alcance: ninguno de WR-01..03 incumple literalmente una verdad del plan (las formas nombradas se cubren), por eso no los clasifico como BLOCKER; sí quedan sin triar en `10-REVIEW-DISPOSITION.md`.
-
-Otros: ningún `TBD/FIXME/XXX`; `app/` sin literales de Roma en código vivo; sin stubs.
-
-### Observaciones sobre el entorno de verificación
-
-- El único test intermitente conocido (`navigation.spec.ts` «SC#2 scrollspy» [mobile]) tardó 29,7 s contra un límite de 30 s en mi ejecución: pasó, pero con margen casi nulo. Es anterior a la Fase 10 (no la causa).
-- No he comprobado de forma dirigida la ausencia de avisos de hidratación en consola durante la ventana `.data = null`; la evidencia indirecta es que el HTML prerenderizado ya trae las 12 secciones y la paridad (80/80) pasa con la página hidratada.
+Ninguna pendiente. Los tres ítems del informe anterior están resueltos en `10-UAT.md` (tests 1 y 3 `pass`; test 2 convertido en G-10-2 y cerrado por 10-06). La validación visual final de Roma/Campania en móvil real pertenece a la Fase 14.
 
 ## Resumen
 
-El objetivo se cumple en el código: la forma (días, secciones, pastillas) y el chrome (marca, leyenda, pie, pestaña) salen de los datos de cada viaje a través de una función pura compartida; Roma queda idéntica (build propia, 80/80 de paridad, 56 goldens intactos, CSS y `tests/parity/` sin tocar) y los textos movidos coinciden con `index.html`. El estado es `human_needed` y no `passed` porque (1) las 19 decisiones de CONTEXT se tomaron en modo `--auto` y esperan confirmación del usuario, (2) los 9 hallazgos de la revisión siguen `open` y (3) hay un riesgo aceptado (viaje `forma` aún no `draft`, CR-01 diferido a la Fase 11). No hay gaps que requieran `/gsd-plan-phase --gaps`.
+El objetivo se cumple en el código actual: la forma (días, secciones, pastillas) y el chrome (marca, leyenda, pie, pestaña) salen de los datos de cada viaje por una función pura compartida; Roma se renderiza con sus textos verbatim (comprobado en la build de hoy), los 56 goldens siguen intactos y la puerta de datos (1429 tests unit+data, paridad 126/126 según `pnpm verify`) está verde, ya sin los huecos fail-open de enlaces y colocación de fichas (G-10-2). Las diferencias respecto al plan original (Roma en `/trips/roma/`, `p.trip-back` en el pie, `forma` con `draft: true`) son evolución legítima de la Fase 11 y no regresiones. No hay gaps ni ítems humanos.
 
 ---
 
-_Verificado: 2026-11-20_
+_Verificado: 2026-11-22_
 _Verificador: Claude (gsd-verifier)_

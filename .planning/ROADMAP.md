@@ -32,7 +32,7 @@ Re-plataforma el `index.html` único (6.665 líneas) a Nuxt 4 SSG con paridad vi
 **Principio de orden:** primero se desacopla el código con Roma todavía en `/` y la puerta de paridad intacta (9, 10); después se mueve la URL sin tocar componentes (11); después se amplía el esquema con un esqueleto (12) y solo entonces se redacta contenido (13). Cada fallo de paridad tiene un único sospechoso: código → datos → URL → extensiones → contenido. Los 56 goldens de Roma **no se re-baselinan** en todo el hito salvo excepción aprobada explícitamente por el usuario.
 
 - [x] **Phase 9: Plataforma por viaje** - Búsqueda, navegación, persistencia y validación de datos acotadas al viaje, con Roma intacta en `/` (completed 2026-11-22)
-- [ ] **Phase 10: Forma y chrome desde datos** - Días, secciones, pastillas, cabecera, pie, leyenda y título salen de los datos de cada viaje (Roma verbatim)
+- [x] **Phase 10: Forma y chrome desde datos** - Días, secciones, pastillas, cabecera, pie, leyenda y título salen de los datos de cada viaje (Roma verbatim) (completed 2026-11-22)
 - [ ] **Phase 11: Portada y rutas multi-viaje** - Portada índice en `/`, Roma en `/trips/roma/`, redirección de enlaces antiguos y prerender de todos los viajes, con goldens sin cambios
 - [ ] **Phase 12: Formas nuevas de viaje** - Opciones A/B, «Dormís en…», transportes nuevos, naturaleza, mapa multi-ciudad, ruta del día por modo y nota familiar, probados con un esqueleto de Campania
 - [x] **Phase 12.1: Títulos de Reservas por viaje** *(INSERTED)* - Encabezados de la sección Reservas configurables por viaje, con los textos de Roma por defecto, para que Campania no herede «3 comensales» (completed 2026-11-22)
@@ -81,7 +81,7 @@ Plans:
   3. La marca de la cabecera, el pie y la leyenda del mapa de cada guía salen de su `trip.yml`, y la pestaña del navegador muestra el título propio del viaje; en Roma son exactamente los textos actuales (pestaña «Roma · 19—23 giugno 2026»)
   4. En la guía de un viaje de prueba no aparece ningún texto propio de Roma («Roma», «Einaudi», «giugno 2026»…): un test-trampa falla si alguno se cuela
   5. Tras mover los textos de Roma a datos, la puerta de paridad sigue verde en `/` con los 56 goldens sin re-baseline
-**Plans**: 6/6 plans executed
+**Plans**: 6/6 plans complete
 Plans:
 **Wave 1**
 - [x] 10-01-PLAN.md — Tracer: `buildTripLayout` puro → pastillas y `<main>` de TripView desde el layout (una sección por día, solo secciones con datos), Roma idéntica (SHAPE-01, SHAPE-02)
@@ -292,7 +292,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 7. Isla client-only — mapa, fallback, notas | v1.0 | 4/4 | Complete | 2026-06-23 |
 | 8. Verificación de paridad | v1.0 | 7/7 | Complete | 2026-06-24 |
 | 9. Plataforma por viaje | v1.1 | 6/6 | Complete    | 2026-11-22 |
-| 10. Forma y chrome desde datos | v1.1 | 6/6 | In Progress | - |
+| 10. Forma y chrome desde datos | v1.1 | 6/6 | Complete    | 2026-11-22 |
 | 11. Portada y rutas multi-viaje | v1.1 | 7/7 | In Progress | - |
 | 12. Formas nuevas de viaje | v1.1 | 7/7 | In Progress | - |
 | 13. Contenido Campania 2027 | v1.1 | 8/8 | In Progress | - |
