@@ -540,6 +540,13 @@ describe('la puerta tiene dientes (fixtures)', () => {
     'Escribe a <mailto:info@example.org>.',
     'Escribe a info@example.org.',
     'Ver <javascript:alert(1)>.',
+    // CR-01 (10-REVIEW): definiciones de referencia que MDC acepta fuera del inicio de línea.
+    '> [r]: /trips/roma\n\nVer [x][r].',
+    '- [r]: /trips/roma\n\nVer [x][r].',
+    '1. [r]: /trips/roma\n\nVer [x][r].',
+    'Ver [x][r s].\n\n[r\ns]: /trips/roma',
+    'Ver [x][a\\]b].\n\n[a\\]b]: /trips/roma',
+    '> [^1]: nota',
   ])('G-10-2/WR-01 cross-trip-link: la forma %j pasa por la lista blanca (D-05b)', (body) => {
     const vs = checkTrip(galeriaWith(body))
     expect(vs.filter(v => v.rule === 'cross-trip-link'), formatViolations(vs)).toEqual([

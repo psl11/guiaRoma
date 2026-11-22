@@ -299,8 +299,10 @@ const BARE_URL_RE = /\bhttps?:\/\/|\bwww\./i
  */
 const REJECTED_LINK_FORMS: ReadonlyArray<readonly [RegExp, string]> = [
   // MDC parsea cada campo por separado: sin una definición en el MISMO string, `[x][r]`, `[x][]` y
-  // `[r]` son texto plano. Rechazar la definición cierra las tres formas.
-  [/^[ \t]*\[[^\]\n]+\]:/m, 'definición de referencia «[r]: …»'],
+  // `[r]` son texto plano. Rechazar la definición cierra las tres formas. CR-01 (10-REVIEW): sin
+  // anclar al inicio de línea, porque la definición también vale dentro de `>`, `-` y `1.`, con
+  // etiqueta multilínea (`[r\ns]`) o con `\]` escapado (`[a\]b]`); cubre también la nota `[^1]: …`.
+  [/\[(?:[^[\]\\]|\\[\s\S])+\]:/, 'definición de referencia «[r]: …»'],
   [/<a(?=[\s>/])/i, 'HTML crudo «<a …>»'],
   // `:a[x]{href=…}` y `::a{href=…}` pintan `<a href>`; `to` es fail-closed por si un componente
   // global tipo NuxtLink se resolviera por nombre. También el binding `{:href=…}`.
