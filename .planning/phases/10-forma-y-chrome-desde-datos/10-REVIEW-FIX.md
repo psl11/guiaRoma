@@ -31,25 +31,25 @@ All fixes are in the data gate: `tests/data/trips.ts`, new tests in `tests/data/
 
 ## Fixed Issues
 
-### CR-01: The reference-definition rejection only catches unindented definitions with simple labels
+### CR-01: The reference-definition rejection only catches unindented definitions with simple labels, so `[x][r]` still renders cross-trip links
 
 **Files modified:** `tests/data/trips.ts`, `tests/data/invariants.spec.ts`, `tests/README.md`
 **Commit:** d208686
 **Applied fix:** Replaced the line-anchored regex with `/\[(?:[^[\]\\]|\\[\s\S])+\]:/`, which matches anywhere in the string. It catches definitions inside `>`, `-` and `1.`, labels that span a line break, labels with an escaped `\]`, and footnote definitions `[^1]: …`. Added the 5 strings from the review plus `> [^1]: nota` to the cross-trip-link `it.each`.
 
-### CR-02: The frontmatter-props rejection matches only one way of writing the YAML key
+### CR-02: The frontmatter-props rejection matches only one way of writing the YAML key, so `::a` + `---` + `href` still renders `<a href>`
 
 **Files modified:** `tests/data/trips.ts`, `tests/data/invariants.spec.ts`, `tests/README.md`
 **Commit:** db113ce
 **Applied fix:** The gate now rejects the construct itself instead of matching YAML keys: a `::x` line followed by a line of 3 or more dashes. This also covers `::x` lines inside `>`, `-` and `1.` containers. MDC accepts `----` as a delimiter, and it accepts the block inside list items and block quotes. Both were checked with parseMarkdown, so the rule is broader than the review's suggested regex. Added tests for `{href: …}`, `? href`, `"\x68ref"`, and a block inside a list that uses `----`.
 
-### CR-03: `FoodEntry.href` renders as `<a :href>` with no checks
+### CR-03: `FoodEntry.href` renders as `<a :href>` with no checks; the gate accepts `/trips/roma`, `#nope` and `javascript:`
 
 **Files modified:** `tests/data/trips.ts`, `tests/data/invariants.spec.ts`, `tests/README.md`
 **Commit:** 6ac4a2d
 **Applied fix:** In the timeline loop (`timelineRowsOf`, so `choice` options are included), any `entry.href` that does not start with `http(s)://` is now a `cross-trip-link` violation in the day file. Added tests for `/trips/roma`, `#nope` and `javascript:alert(1)`; each one runs both as a plain food row and inside a `choice` option. Added a Google Maps control that must stay green. I chose not to tighten `shared/schemas.ts` (the review marks it optional), so the content build path stays exactly as it is.
 
-### WR-01: Prose can create DOM ids and heading `<a>`s that the gate never sees
+### WR-01: Prose can create DOM ids and heading `<a>`s that the gate never sees, which undermines `card-placement` and `trip-summary-link`
 
 **Files modified:** `tests/data/trips.ts`, `tests/data/invariants.spec.ts`, `tests/README.md`
 **Commit:** c7e36f2
@@ -62,7 +62,7 @@ All fixes are in the data gate: `tests/data/trips.ts`, new tests in `tests/data/
 
 When the frontmatter rule from CR-02 already fires, the setext `---` label is dropped so the frontmatter's closing `---` is not reported twice. Added 9 cross-trip-link tests, 2 summary tests (`## Cinco días`, `Cinco días\n---`), and 2 controls (a list, and a stray `{` before an anchor link).
 
-### WR-02: The raw-HTML rejection matches only `<a`
+### WR-02: The raw-HTML rejection matches only `<a`; other raw elements that navigate (`<area href>`, `<form action>`) still pass
 
 **Files modified:** `tests/data/trips.ts`, `tests/data/invariants.spec.ts`, `tests/README.md`
 **Commit:** 4025613
