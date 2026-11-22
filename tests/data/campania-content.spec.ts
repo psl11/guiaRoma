@@ -45,6 +45,7 @@ const WRITTEN_DAYS: Record<string, { stay: string | null }> = {
   'lunes-21': { stay: 'ischia' },
   'miercoles-23': { stay: 'salerno' },
   'jueves-24': { stay: 'salerno' },
+  'viernes-25': { stay: 'napoles' },
 }
 
 /** Fichas ya escritas con contenido real. Los planes siguientes añaden las suyas. */
@@ -64,10 +65,13 @@ const WRITTEN_MONUMENTS: string[] = [
   'valle-del-calore',
   'castello-arechi',
   'baia-di-trentova',
+  'vesubio',
+  'rione-sanita',
+  'stadio-maradona',
 ]
 
 /** Fichas que deben llevar nota familiar (D-09). Los planes siguientes añaden las suyas. */
-const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto', 'pozzo-vecchio', 'valle-del-calore', 'baia-di-trentova']
+const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto', 'pozzo-vecchio', 'valle-del-calore', 'baia-di-trentova', 'stadio-maradona']
 
 /**
  * Ficheros (ruta relativa al viaje) que deben llevar el marcador porque tienen datos dudosos.
@@ -90,6 +94,9 @@ const MARKER_FILES: string[] = [
   'monuments/castello-arechi.yml',
   'monuments/baia-di-trentova.yml',
   'days/jueves-24.yml',
+  'days/viernes-25.yml',
+  'monuments/vesubio.yml',
+  'monuments/stadio-maradona.yml',
   'food/g-1-concettina.yml',
   'food/g-1-pizzeria-vomero.yml',
   'food/g-2-vannulo.yml',
@@ -350,6 +357,23 @@ describe('días escritos (CAMP-01, D-04)', () => {
     // D-22: el concierto es el viernes 25.
     expect(collectStrings(day).filter(t => t.includes('Ultimo'))).toEqual([])
     expect(day.cards).toEqual(['duomo-di-salerno', 'castello-arechi', 'raito', 'baia-di-trentova', 'valle-del-calore'])
+  })
+
+  it('viernes 25: Ultimo el viernes, sin devolución del coche (D-01, D-22)', () => {
+    const day = dayOf('viernes-25')!
+    expect((day.route as Rec).mode).toBe('driving')
+    // El e2e cuenta un punto de ruta por ficha: el viernes no tiene alternativas.
+    expect(asRecs(day.timeline).some(r => r.kind === 'choice'), 'el viernes 25 no tiene choice').toBe(false)
+    const concert = timelineRowsOf(day.timeline).find(r => r.kind === 'stop' && r.ref === 'stadio-maradona')
+    expect(concert, 'hay una parada con ref stadio-maradona').toBeDefined()
+    expect(String(concert!.title)).toContain('Ultimo')
+    // D-01: el coche se devuelve el sábado 26, nunca el viernes.
+    expect(collectStrings(day).filter(t => /devoluci/i.test(t))).toEqual([])
+    const stadium = monumentOf('stadio-maradona')!
+    expect(stadium.type).toBe('concert')
+    expect(stadium.roman).toBe('♪')
+    expect(stadium.badge).toBe('concierto')
+    expect(day.cards).toEqual(['vesubio', 'rione-sanita', 'stadio-maradona'])
   })
 })
 

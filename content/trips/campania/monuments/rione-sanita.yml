@@ -8,17 +8,31 @@ coords:
   lat: 40.8590
   lng: 14.2497
 type: card
-motif: church
+motif: stairs
 hero:
-  src: https://example.invalid/campania/rione-sanita.jpg
-  alt: Rione Sanità
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Palazzo_dello_Spagnuolo._%286748%29.jpg/960px-Palazzo_dello_Spagnuolo._%286748%29.jpg
+  alt: La escalera abierta del Palazzo dello Spagnuolo, en el Rione Sanità de Nápoles
 sections:
   - heading: Qué es
     body: >-
-      El barrio popular al pie de Capodimonte, con palacios barrocos de escaleras
-      abiertas, la basílica de Santa Maria della Sanità y las catacumbas de San
-      Gennaro bajo las calles.
+      El barrio popular que se extiende al pie de la colina de Capodimonte, fuera de las
+      viejas murallas. Un Nápoles de barrio de verdad, con ropa tendida entre balcones,
+      altares en las esquinas y vecinos que charlan a la puerta de casa, y a la vez el
+      barrio de los palacios barrocos de escaleras abiertas.
+  - heading: Qué mirar
+    body: >-
+      Las escaleras de doble rampa del Palazzo dello Spagnuolo y del Palazzo Sanfelice,
+      abiertas al patio como el decorado de un teatro; las calles estrechas y su ruido
+      de motos y de voces; la cúpula de Santa Maria della Sanità. Bajo las calles hay
+      catacumbas, pero esta tarde es de barrio, no de visitas.
+  - heading: En vuestro día
+    body: >-
+      La tarde «de barrio» del viernes, con el coche ya aparcado: paseo sin rumbo por la
+      Sanità, una mirada a los patios de los palacios y una cena temprana en
+      [Da Concettina ai Tre Santi](#gastronomia) antes de ir al concierto.
 facts:
   - label: Acceso
-    value: 'Libre · catacumbas con visita guiada'
+    value: 'Libre · calles de barrio, a pie'
+  - label: Metro
+    value: 'Línea 1 en Museo o Línea 2 en Piazza Cavour, y un paseo por la Via dei Vergini'
 mapsQuery: Rione Sanità Napoli
