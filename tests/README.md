@@ -359,10 +359,11 @@ Corre en `test:data` sobre la build que `pnpm generate` acaba de producir:
   control `CAMPANIA-CENTINELA-12A`. Desde la Fase 13 las comprobaciones son POSITIVAS: existen
   `trips/campania/index.html` y `trips/campania/_payload.json` y los dos contienen «Baia di
   Sorgeto» (los datos viajan prerenderizados en el payload, como los de Roma), y los dumps
-  decodificados `trip` y `monument` llevan `trips/campania/` y «Baia di Sorgeto». Un `it` fuera
-  del `skipIf` comprueba siempre que su trip.yml ya no lleva la marca de control ni
-  `draft: true`. La constante de la marca sigue en el escaneo de ficheros publicados como guarda
-  de regresión. El aislamiento de borradores sigue sin ser vacuo gracias a prueba y forma;
+  decodificados `trip` y `monument` llevan `trips/campania/` y «Baia di Sorgeto». Dos `it` fuera
+  del `skipIf` comprueban siempre que su trip.yml ya no lleva `draft: true` y que ningún YAML de
+  `content/trips/campania/` lleva la marca de control. La marca ya no está en el escaneo de
+  ficheros publicados (13-REVIEW IN-06): la fuente es lo único que podría devolverla a la build.
+  El aislamiento de borradores sigue sin ser vacuo gracias a prueba y forma;
 - **Fase 12 (D-17), escaneo de clases del HTML publicado** (mitad de build del guardián de
   `tripshapes.css`, §5.8): ningún token de `NEW_CLASSES` aparece como clase en el HTML
   publicado de Roma ni de la portada (se recorre todo `*.html` de `.output/public` salvo el

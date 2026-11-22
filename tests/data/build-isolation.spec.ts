@@ -33,12 +33,13 @@ import { NEW_CLASSES, htmlClassTokens } from '../unit/cssSelectors'
  *
  * Fase 12 (formas nuevas de viaje):
  *  - D-16: `campania` fue el tercer borrador de la Fase 12. Desde la Fase 13 (D-02) está
- *    PUBLICADO: su trip.yml ya no lleva `draft` ni la marca de control `CAMPANIA-CENTINELA-12A`
- *    (un `it` FUERA del `skipIf` lo comprueba), `trips/campania/index.html` y su `_payload.json`
- *    existen con contenido real («Baia di Sorgeto») y los dumps `trip` y `monument` lo llevan. La
- *    marca de control sigue en el escaneo de ficheros publicados como guarda de regresión. El
- *    aislamiento de borradores sigue sin ser vacuo gracias a prueba y forma (sus centinelas fuera
- *    del `skipIf` y «no existen trips/prueba ni trips/forma»).
+ *    PUBLICADO: su trip.yml ya no lleva `draft` y ningún YAML de `content/trips/campania/` lleva
+ *    la marca de control `CAMPANIA-CENTINELA-12A` (un `it` FUERA del `skipIf` lo comprueba sobre
+ *    la fuente, que es lo único que podría volver a meterla en la build; por eso ya no está en el
+ *    escaneo de ficheros publicados, 13-REVIEW IN-06). `trips/campania/index.html` y su
+ *    `_payload.json` existen con contenido real («Baia di Sorgeto») y los dumps `trip` y
+ *    `monument` lo llevan. El aislamiento de borradores sigue sin ser vacuo gracias a prueba y
+ *    forma (sus centinelas fuera del `skipIf` y «no existen trips/prueba ni trips/forma»).
  *  - D-17 (mitad de build del guardián de tripshapes.css; la mitad estática es
  *    tests/unit/tripShapesCss.spec.ts): ningún token de `NEW_CLASSES` aparece como clase en el
  *    HTML publicado de Roma ni de la portada. Se recorre todo el `*.html` de .output/public salvo
@@ -63,7 +64,8 @@ const FORMA_SENTINEL = 'FORMA-CENTINELA-10A'
 const FORMA_TRIP = join(process.cwd(), 'content', 'trips', 'forma', 'trip.yml')
 const PRUEBA_TRIP = join(process.cwd(), 'content', 'trips', 'prueba', 'trip.yml')
 const CAMPANIA_SENTINEL = 'CAMPANIA-CENTINELA-12A'
-const CAMPANIA_TRIP = join(process.cwd(), 'content', 'trips', 'campania', 'trip.yml')
+const CAMPANIA_DIR = join(process.cwd(), 'content', 'trips', 'campania')
+const CAMPANIA_TRIP = join(CAMPANIA_DIR, 'trip.yml')
 const CAMPANIA_INDEX = join(OUT, 'trips', 'campania', 'index.html')
 const CAMPANIA_PAYLOAD = join(OUT, 'trips', 'campania', '_payload.json')
 const BUILD_INDEX = join(OUT, 'index.html')
@@ -107,13 +109,28 @@ describe('centinela del viaje prueba (D-16)', () => {
   })
 })
 
-// Campania publicada (Fase 13, D-02), también FUERA del skipIf: su trip.yml ya no lleva la marca
-// de control de la Fase 12 ni `draft: true`, así que se prerenderiza y la portada la lista.
+/** Rutas de todos los `*.yml` bajo `dir`, recursivo. */
+function ymlFiles(dir: string): string[] {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const full = join(dir, entry.name)
+    if (entry.isDirectory()) return ymlFiles(full)
+    return entry.isFile() && entry.name.endsWith('.yml') ? [full] : []
+  })
+}
+
+// Campania publicada (Fase 13, D-02), también FUERA del skipIf: su trip.yml ya no lleva
+// `draft: true`, así que se prerenderiza y la portada la lista, y ningún YAML suyo lleva la marca
+// de control de la Fase 12. Mirar la fuente basta: la build solo publica lo que hay en ella.
 describe('campania publicada (D-02, Fase 13)', () => {
-  it(`content/trips/campania/trip.yml no contiene ${CAMPANIA_SENTINEL} ni draft: true`, () => {
-    const yml = readFileSync(CAMPANIA_TRIP, 'utf8')
-    expect(yml).not.toContain(CAMPANIA_SENTINEL)
-    expect(yml).not.toMatch(/^draft: true$/m)
+  it('content/trips/campania/trip.yml no lleva draft: true', () => {
+    expect(readFileSync(CAMPANIA_TRIP, 'utf8')).not.toMatch(/^draft: true$/m)
+  })
+
+  it(`ningún YAML de content/trips/campania contiene ${CAMPANIA_SENTINEL}`, () => {
+    const files = ymlFiles(CAMPANIA_DIR)
+    expect(files, 'trip.yml está en el recorrido (no es vacuo)').toContain(CAMPANIA_TRIP)
+    const offenders = files.filter(f => readFileSync(f, 'utf8').includes(CAMPANIA_SENTINEL)).map(f => relative(process.cwd(), f))
+    expect(offenders).toEqual([])
   })
 })
 
@@ -182,11 +199,13 @@ describe.skipIf(!existsSync(BUILD_INDEX))('build estática: ningún fichero publ
     expect(monument, 'el dump monument lleva las fichas de Campania (D-02, Fase 13)').toContain('Baia di Sorgeto')
   })
 
-  it(`ningún fichero de .output/public contiene ${SENTINEL}, ${FORMA_SENTINEL} ni ${CAMPANIA_SENTINEL} (dumps decodificados)`, () => {
+  it(`ningún fichero de .output/public contiene ${SENTINEL} ni ${FORMA_SENTINEL} (dumps decodificados)`, () => {
     // Lista de culpables (fichero + centinela) en vez de un expect por fichero: el diff de un
     // dump decodificado entero sería ilegible; así el fallo nombra directamente cada fichero.
+    // Solo los borradores vivos: la marca de Campania ya no existe en la fuente (lo vigila el
+    // `it` de arriba, fuera del skipIf), así que buscarla en la build no guardaba nada.
     const offenders = publishedTexts().flatMap(({ file, text }) =>
-      [SENTINEL, FORMA_SENTINEL, CAMPANIA_SENTINEL].filter(s => text.includes(s)).map(s => `${file} lleva ${s}`))
+      [SENTINEL, FORMA_SENTINEL].filter(s => text.includes(s)).map(s => `${file} lleva ${s}`))
     expect(offenders, 'ficheros publicados con datos de un borrador').toEqual([])
   })
 })
