@@ -677,7 +677,10 @@ queda probado que la v1.1 se puede publicar sobre la guía viva sin que nadie pi
   restaurar (única excepción, exacta: `roma-theme=system`, que @nuxtjs/color-mode persiste al
   arrancar si el usuario nunca tocó el tema; no copia ni transforma nada del usuario); recargar no cambia nada; la portada no escribe
   nada; y **Campania** arranca con sus valores por defecto y las notas vacías, sin tocar las
-  claves de Roma.
+  claves de Roma (detrás de un **ancla positiva**: una nota sembrada solo para Campania debe
+  aparecer antes de comprobar las ausencias, y `<body>` se mira tras dejar que unhead vuelque
+  sus clases, así que las aserciones negativas no pasan sobre el HTML prerenderizado por
+  defecto).
 
 ### 6.2 `tests/parity/cross-trip.spec.ts` — aislamiento entre viajes en la build publicada (D-05)
 

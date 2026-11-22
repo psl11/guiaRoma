@@ -257,6 +257,17 @@ const newKeys = (after: Record<string, string>, allowed: Set<string>): string[] 
     .map(k => `${k}=${after[k]}`)
     .sort()
 
+/** Ficha de Campania usada como ancla positiva de restauración (WR-03). */
+const CAMPANIA_ANCHOR = 'baia-di-sorgeto'
+
+/**
+ * Deja que unhead vuelque `useHead({ bodyAttrs })` al DOM: lo hace con un `setTimeout(0)`
+ * diferido, así que tras el ancla se esperan dos frames y un margen antes de mirar `<body>`.
+ */
+async function settleHead(page: Page): Promise<void> {
+  await page.evaluate(() => new Promise<void>(ok => requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(ok, 50)))))
+}
+
 /** Nota distinta por ficha: comillas latinas y dobles, acento, euro y salto de línea. */
 const noteFor = (key: string): string => `Nota de ${key}: «volver» al café, 3 € el "ristretto".\nSegunda línea — ${key}.`
 
@@ -380,14 +391,30 @@ test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)',
     expect(newKeys(await storageSnapshot(page), allowed), 'sin claves nuevas tras recargar').toEqual([])
 
     // 6) Campania: el tema es global (oscuro), pero ritmo, modos y notas son por viaje (por defecto).
+    //    Ancla positiva (WR-03): una nota SOLO de Campania, sembrada antes de entrar. Que aparezca
+    //    prueba que la restauración de Campania (onMounted) ya corrió; solo entonces las aserciones
+    //    negativas (ritmo por defecto, sin clases de modo, resto de notas vacías) significan algo y
+    //    no pasan sobre los valores prerenderizados por defecto.
+    const campaniaSeedKey = `campania-note-${CAMPANIA_ANCHOR}`
+    const campaniaSeedNote = 'Nota sembrada solo para Campania: «ancla de restauración».'
+    await page.evaluate(([k, v]) => localStorage.setItem(k, v), [campaniaSeedKey, campaniaSeedNote] as const)
+    allowed.add(campaniaSeedKey)
     await page.goto(`${ORIGIN}${SITE_BASE}trips/campania/`)
     await hydrated(page)
+    await expect(page.locator(`.notes-textarea[data-note-key="${CAMPANIA_ANCHOR}"]`), 'ancla: Campania restauró su propia nota').toHaveValue(campaniaSeedNote)
+    await settleHead(page)
     await expect(page.locator('html'), 'Campania también oscura (tema global)').toHaveAttribute('data-theme', 'dark')
     await expect(page.locator('.pace-btn.active'), 'Campania: ritmo por defecto').toHaveAttribute('data-pace', 'optimistic')
-    await expect(page.locator('body')).not.toHaveClass(/(^|\s)(light-mode|modo-resumen)(\s|$)/)
-    const campaniaNotes = await page.locator('.notes-textarea').evaluateAll(els => els.map(el => (el as HTMLTextAreaElement).value))
-    expect(campaniaNotes.length, 'Campania tiene áreas de notas (no vacuidad)').toBeGreaterThan(0)
-    expect(campaniaNotes.every(v => v === ''), 'las notas de Campania están vacías').toBe(true)
+    await expect(page.locator('#light-toggle'), 'Campania: sin «Caminar menos»').toHaveAttribute('aria-pressed', 'false')
+    await expect(page.locator('#resumen-toggle'), 'Campania: sin modo resumen').toHaveAttribute('aria-pressed', 'false')
+    await expect(page.locator('body'), 'Campania: sin clases de modo de Roma en <body>').not.toHaveClass(/(^|\s)(light-mode|modo-resumen)(\s|$)/)
+    const campaniaNotes = await page.locator('.notes-textarea').evaluateAll(els =>
+      els.map(el => [el.getAttribute('data-note-key') ?? '', (el as HTMLTextAreaElement).value] as [string, string]))
+    expect(campaniaNotes.length, 'Campania tiene áreas de notas (no vacuidad)').toBeGreaterThan(1)
+    expect(
+      campaniaNotes.filter(([k, v]) => (k === CAMPANIA_ANCHOR ? v !== campaniaSeedNote : v !== '')),
+      'en Campania solo la nota sembrada tiene texto (ninguna nota de Roma)',
+    ).toEqual([])
     const final = await storageSnapshot(page)
     for (const [k, v] of Object.entries(s0)) expect(final[k], `clave ${k} intacta tras Campania`).toBe(v)
     expect(newKeys(final, allowed), 'sin claves nuevas tras Campania').toEqual([])
