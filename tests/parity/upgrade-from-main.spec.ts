@@ -3,7 +3,7 @@ import { existsSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from 'nod
 import type { Server } from 'node:http'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { expect, test, type Browser, type Page } from '@playwright/test'
+import { expect, test, type Browser, type BrowserContextOptions, type Page } from '@playwright/test'
 import { OUTPUT_DIR, ROMA_HTML, ROMA_URL, SITE_BASE } from './_harness'
 import { startPagesServer } from './_pagesServer'
 
@@ -171,6 +171,62 @@ async function oracleFromLiveGuide(
   }
 }
 
+/** Lo que pinta el HTML publicado por sí solo en una ruta, sin JS de la app. */
+interface NoAppJsPaint {
+  path: string
+  theme: string | null
+  /** `true` si algún JS de la app llegó a ejecutarse (no debe: invalidaría la prueba). */
+  appRan: boolean
+}
+
+/**
+ * «Sin primer pintado claro» (WR-01 de 14-REVIEW.md). El módulo de Nuxt se ejecuta ANTES de
+ * `DOMContentLoaded`, así que leer `data-theme` en `domcontentloaded` con la app viva no distingue
+ * el script inline de color-mode en `<head>` (antes del primer pintado) de un tema puesto por la
+ * app tras pintar claro. Aquí se aíslan los dos: un contexto NUEVO con el almacenamiento del
+ * usuario (`storageState`) abre cada ruta con TODO `/_nuxt/` abortado, así que solo corre el HTML
+ * publicado y su script inline. El HTML prerenderizado no trae `data-theme`: lo que se lee es lo
+ * que pone ese script antes de pintar.
+ */
+async function paintWithoutAppJs(
+  browser: Browser,
+  contextOptions: BrowserContextOptions,
+  origin: string,
+  storage: Record<string, string>,
+  paths: string[],
+): Promise<{ paints: NoAppJsPaint[], abortedAppRequests: number }> {
+  const context = await browser.newContext({
+    ...contextOptions,
+    storageState: { cookies: [], origins: [{ origin, localStorage: Object.entries(storage).map(([name, value]) => ({ name, value })) }] },
+  })
+  try {
+    let abortedAppRequests = 0
+    await context.route('**/*', (route) => {
+      const url = route.request().url()
+      const sameOrigin = url.startsWith(`${origin}/`)
+      if (sameOrigin && url.includes('/_nuxt/')) abortedAppRequests++
+      if (sameOrigin && !url.includes('/_nuxt/')) return route.continue()
+      return route.abort()
+    })
+    const p = await context.newPage()
+    const paints: NoAppJsPaint[] = []
+    for (const path of paths) {
+      await p.goto(`${origin}${path}`, { waitUntil: 'domcontentloaded' })
+      paints.push({
+        path,
+        ...await p.evaluate(() => ({
+          theme: document.documentElement.getAttribute('data-theme'),
+          appRan: typeof (window as unknown as { useNuxtApp?: unknown }).useNuxtApp === 'function',
+        })),
+      })
+    }
+    return { paints, abortedAppRequests }
+  }
+  finally {
+    await context.close()
+  }
+}
+
 /** Nota distinta por ficha: comillas latinas y dobles, acento, euro y salto de línea. */
 const noteFor = (key: string): string => `Nota de ${key}: «volver» al café, 3 € el "ristretto".\nSegunda línea — ${key}.`
 
@@ -239,6 +295,19 @@ test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)',
     await stopServer(server)
     server = await startPagesServer(OUTPUT_DIR, PORT)
 
+    // 2b) Sin primer pintado claro (WR-01): con el almacenamiento del usuario y SIN ningún JS de
+    //     la app, el HTML publicado de la portada y de Roma ya pinta oscuro. Control: con el
+    //     almacenamiento vacío (y el esquema claro por defecto del navegador) pinta claro, así que
+    //     el oscuro sale de `roma-theme` y no de un valor fijo.
+    const noJs = await paintWithoutAppJs(browser, { viewport: page.viewportSize() }, ORIGIN, s0, [SITE_BASE, ROMA_URL])
+    expect(noJs.abortedAppRequests, 'no vacuidad: se abortaron peticiones /_nuxt/ (la app no cargó)').toBeGreaterThan(0)
+    expect(noJs.paints, 'sin JS de la app, portada y Roma ya pintan oscuro (script inline de <head>)').toEqual([
+      { path: SITE_BASE, theme: 'dark', appRan: false },
+      { path: ROMA_URL, theme: 'dark', appRan: false },
+    ])
+    const noJsControl = await paintWithoutAppJs(browser, { viewport: page.viewportSize() }, ORIGIN, {}, [ROMA_URL])
+    expect(noJsControl.paints, 'control: sin roma-theme, el mismo HTML pinta claro').toEqual([{ path: ROMA_URL, theme: 'light', appRan: false }])
+
     // 3) Un marcador viejo a la raíz: la portada ya pinta oscuro antes de hidratar y no escribe nada.
     await page.goto(`${ORIGIN}${SITE_BASE}`, { waitUntil: 'domcontentloaded' })
     expect(await page.evaluate(() => document.documentElement.getAttribute('data-theme')), 'portada oscura ya en domcontentloaded').toBe('dark')
@@ -248,7 +317,7 @@ test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)',
     // 4) Primera carga de Roma desde la tarjeta: sin recarga, sin clic extra, sin migración.
     await page.locator(`a.trip-index-card[href="${ROMA_URL}"]`).click()
     await page.waitForURL(`${ORIGIN}${ROMA_URL}`, { waitUntil: 'domcontentloaded' })
-    expect(await page.evaluate(() => document.documentElement.getAttribute('data-theme')), 'Roma oscura ya en domcontentloaded (sin primer pintado claro)').toBe('dark')
+    expect(await page.evaluate(() => document.documentElement.getAttribute('data-theme')), 'Roma oscura ya en domcontentloaded (el primer pintado sin app lo prueba el paso 2b)').toBe('dark')
     await hydrated(page)
     await expect.poll(() => page.evaluate(captureState), { timeout: 15_000, message: 'primera carga = restauración de la guía viva' }).toEqual(e)
 

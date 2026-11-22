@@ -666,7 +666,10 @@ queda probado que la v1.1 se puede publicar sobre la guía viva sin que nadie pi
 - **Qué comprueba** (2 tests × mobile + desktop = 4): las notas de las **38** fichas (con
   comillas, acentos, euro y saltos de línea), el ritmo, «Caminar menos» (el borde «Neutra» +
   «Caminar menos» se restaura como Pesimista, igual que en la guía viva), el modo resumen y el
-  tema oscuro sin primer pintado claro; una **clave de nota huérfana** (de una ficha que ya no
+  tema oscuro sin primer pintado claro (probado en un contexto aparte con el almacenamiento del
+  usuario y **todo `/_nuxt/` abortado**: sin JS de la app, el HTML publicado de la portada y de
+  Roma ya pinta oscuro por el script inline de color-mode; control: sin `roma-theme` pinta
+  claro); una **clave de nota huérfana** (de una ficha que ya no
   existe) sigue en el almacenamiento; **ninguna clave pierde su valor** (la única reescritura es
   la misma que hace la guía viva al restaurar); recargar no cambia nada; la portada no escribe
   nada; y **Campania** arranca con sus valores por defecto y las notas vacías, sin tocar las
