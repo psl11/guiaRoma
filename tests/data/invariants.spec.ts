@@ -67,6 +67,9 @@ import {
  * Content sí ingiere (`dot: true`): es una carpeta de viaje más y falla con `trip-slug`.
  * Cierre WR-01 (revisión de 09-06): un fichero no YAML y no oculto dentro de un viaje
  * (`galeria.json`, `galeria.yml~`…) es `stray-file`; los ocultos (.DS_Store, .gitkeep) se ignoran.
+ * Cierre G-10-2 (WR-01/WR-03 de 10-REVIEW): toda forma de enlace que MDC pinta como `<a>` pasa por
+ * la lista blanca o el ancla, y las formas no admitidas (`[r]: …`, `<a>` crudo, `{href=…}`) son
+ * `cross-trip-link` con su fichero (WR-01).
  *
  * El bloque «la puerta tiene dientes» prueba cada regla con un fixture (en memoria con
  * `loadTripFromFiles` o en disco en tests/data/fixtures/trips/, NUNCA bajo content/).

@@ -36,6 +36,10 @@
 //    los enlaces de la prosa van en lista blanca (`cross-trip-link`: solo `#id` o http(s)://).
 //  - D-08: `anchor` solo resuelve a las secciones que `buildTripLayout` emite para la presencia
 //    leída del YAML del viaje (cierra WR-01/WR-02 de la revisión de la Fase 9).
+//  - Cierre G-10-2 / WR-01 (10-REVIEW): la puerta ve toda forma de enlace que MDC pinta como `<a>`
+//    (`scanProseLinks`: espacio o salto tras `(`, destino `<…>`, autoenlaces y emails) y la somete a
+//    la lista blanca o al ancla; rechaza con `cross-trip-link` las definiciones `[r]: …`, el `<a>`
+//    crudo y los atributos/props MDC `href`/`to`, sea cual sea su destino.
 //
 // Fase 11 (portada, datos de la tarjeta del viaje):
 //  - D-08: `trip-dates` — en trip.yml, `endDate` no puede ser anterior a `startDate` (strings ISO
@@ -274,32 +278,93 @@ export function loadTrip(dir: string, root: string = TRIPS_ROOT): LoadedTrip {
   return loadTripFromFiles(dir, files, toPosix(relative(process.cwd(), abs)))
 }
 
-/** Destinos de los enlaces Markdown-inline `[texto](destino)` de un string. */
-function extractLinkTargets(md: string): string[] {
-  const out: string[] = []
-  const re = /\]\(([^)\s]+)/g
-  let m: RegExpExecArray | null
-  while ((m = re.exec(md)) !== null) out.push(m[1]!)
-  return out
+// ── Escáner de enlaces de la prosa (G-10-2 / WR-01 de 10-REVIEW) ─────────────────────────────
+/** Enlace en línea `[t](destino)` / `![alt](src)`: blancos (también saltos) tras `(`; destino `<…>` o pelado. */
+const INLINE_LINK_RE = /\]\(\s*(?:<([^<>\n]*)>|([^\s)]*))/g
+/** Autoenlace `<scheme:…>` (CommonMark): `<https://…>`, `<mailto:…>`, `<javascript:…>`. */
+const AUTOLINK_RE = /<([a-z][a-z0-9+.-]{1,31}:[^\s<>]*)>/gi
+/** Autoenlace de email `<a@b>` (MDC lo pinta como `mailto:`). */
+const EMAIL_AUTOLINK_RE = /<([^\s<>@:]+@[^\s<>@]+)>/g
+/** Email suelto (autolink de GFM, que MDC pinta como `mailto:`). */
+const BARE_EMAIL_RE = /(?<![\w.+-])[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g
+/** URL suelta `http(s)://` o `www.` (autolink de GFM): su destino siempre está en la lista blanca. */
+const BARE_URL_RE = /\bhttps?:\/\/|\bwww\./i
+/**
+ * Formas de enlace que la guía no usa y la puerta rechaza SEA CUAL SEA su destino (D-05b), con la
+ * etiqueta que sale en el mensaje de `cross-trip-link`.
+ */
+const REJECTED_LINK_FORMS: ReadonlyArray<readonly [RegExp, string]> = [
+  // MDC parsea cada campo por separado: sin una definición en el MISMO string, `[x][r]`, `[x][]` y
+  // `[r]` son texto plano. Rechazar la definición cierra las tres formas.
+  [/^[ \t]*\[[^\]\n]+\]:/m, 'definición de referencia «[r]: …»'],
+  [/<a(?=[\s>/])/i, 'HTML crudo «<a …>»'],
+  // `:a[x]{href=…}` y `::a{href=…}` pintan `<a href>`; `to` es fail-closed por si un componente
+  // global tipo NuxtLink se resolviera por nombre. También el binding `{:href=…}`.
+  [/\{[^{}]*\b(?:href|to)\s*=/i, 'atributo MDC «{href=…}» / «{to=…}»'],
+  // Advisory del plan-checker (10-06): un bloque MDC con props en frontmatter YAML
+  // (`::a` / `---` / `href: /trips/roma` / `---`) también pinta `<a href>` (comprobado con
+  // parseMarkdown de @nuxtjs/mdc 0.22.0); lo mismo con `to:`.
+  [/^[ \t]*:{2,}[A-Za-z][\w-]*[^\n]*\n[ \t]*---[ \t]*\n(?:[^\n]*\n)*?[ \t]*["']?(?:href|to)["']?[ \t]*:/m, 'props MDC «href:» / «to:» en frontmatter'],
+]
+
+/**
+ * Escaneo de los enlaces de un string de prosa (D-05b / D-08, cierre G-10-2 / WR-01).
+ *
+ * MDC (`@nuxtjs/mdc` 0.22.0, el parser de `<MDC>`) pinta `<a>` para muchas más formas que
+ * `[texto](destino)` pegado al paréntesis (comprobado con `parseMarkdown` el 2026-11-22):
+ * `[x]( /trips/roma)` (espacio tras el `(`), `[x](\n../roma#x)` (salto de línea), `[x](<#id>)` y
+ * `[x](</trips/roma> "t")` (destino `<…>`), `[x][r]` / `[x][]` con su definición `[r]: …`, el HTML
+ * crudo `<a href>` (sin distinguir mayúsculas), los autoenlaces `<mailto:…>` / `<javascript:…>`
+ * (a este MDC le quita el href), los emails sueltos (GFM → `mailto:`), las URL sueltas
+ * `www.…` / `http(s)://…`, y los componentes MDC `:a[x]{href=…}`, `::a{href=…}` y `::a` con
+ * `href:` en su frontmatter. NO pintan `<a>`: `[x]\n(/x)`, `[x](#a b)`, una referencia sin
+ * definición, `\[x](/x)` ni el código entre comillas invertidas.
+ *
+ * La puerta solo ACEPTA la forma en línea `[texto](#id)` / `[texto](http(s)://…)` y los
+ * autoenlaces http(s). Devuelve:
+ *  - `targets`: los destinos de toda forma que MDC pinta como `<a>` (enlace en línea, también
+ *    `![alt](src)`; autoenlace `<scheme:…>`; email `<a@b>` o suelto como `mailto:…`), que el
+ *    llamador somete a la lista blanca (`#id` → ancla; `http(s)://` → admitido; resto →
+ *    `cross-trip-link`). Las URL sueltas no son targets: su destino siempre es http(s).
+ *  - `rejected`: una etiqueta por cada forma rechazada presente (definición de referencia, `<a>`
+ *    crudo, atributo o prop MDC `href`/`to`), sea cual sea su destino.
+ *
+ * El escaneo es LÉXICO y fail-closed: un código entre comillas invertidas o un `\[` escapado
+ * pueden dar un falso rojo, nunca un falso verde. No se usa un parser porque
+ * `mdast-util-from-markdown` / `micromark` / `@nuxtjs/mdc` no se resuelven desde la raíz con pnpm
+ * (sin hoisting), el roadmap v1.1 prohíbe dependencias nuevas, y `mdast-util-from-markdown` es
+ * CommonMark puro: no vería los emails de GFM ni la sintaxis de componentes MDC.
+ */
+function scanProseLinks(md: string): { targets: string[], rejected: string[] } {
+  const targets: string[] = []
+  for (const m of md.matchAll(INLINE_LINK_RE)) targets.push(m[1] ?? m[2] ?? '')
+  for (const m of md.matchAll(AUTOLINK_RE)) targets.push(m[1]!)
+  for (const m of md.matchAll(EMAIL_AUTOLINK_RE)) targets.push(`mailto:${m[1]!}`)
+  // Los autoenlaces ya contados se tapan para no volver a ver su email como email suelto.
+  const bare = md.replace(AUTOLINK_RE, ' ').replace(EMAIL_AUTOLINK_RE, ' ')
+  for (const m of bare.matchAll(BARE_EMAIL_RE)) targets.push(`mailto:${m[0]}`)
+  const rejected = REJECTED_LINK_FORMS.filter(([re]) => re.test(md)).map(([, label]) => label)
+  return { targets, rejected }
 }
 
 /**
- * ¿Lleva enlace un texto Markdown-inline? Destino `[t](x)`, autoenlace `<scheme:…>` (lo que MDC
- * convierte en `<a>`) o URL suelta `http(s)://` / `www.` (autolink de GFM). Regla trip-summary-link.
+ * ¿Lleva enlace un texto Markdown-inline? Algún destino de `scanProseLinks` (enlace en línea en
+ * cualquier forma, autoenlace `<scheme:…>`, email), alguna forma rechazada o una URL suelta
+ * `http(s)://` / `www.` (autolink de GFM). Regla trip-summary-link.
  */
 function hasLink(md: string): boolean {
-  return extractLinkTargets(md).length > 0
-    || /<[a-z][a-z0-9+.-]*:[^>\s]*>/i.test(md)
-    || /\bhttps?:\/\/|\bwww\./i.test(md)
+  const { targets, rejected } = scanProseLinks(md)
+  return targets.length > 0 || rejected.length > 0 || BARE_URL_RE.test(md)
 }
 
 /**
- * Anclas `#id` de los enlaces internos `[texto](#id)`. Captura cualquier carácter salvo
- * espacio/paréntesis (no solo [a-z0-9-]) para que un ancla con mayúsculas o Unicode se
- * compare tal cual y falle, en vez de escaparse del escaneo.
+ * Anclas `#id` de los enlaces internos (cualquier forma que MDC pinta como `<a>`: `[texto](#id)`,
+ * `[texto]( #id)`, `[texto](<#id>)`…). Captura cualquier carácter salvo blanco/paréntesis (no solo
+ * [a-z0-9-]) para que un ancla con mayúsculas o Unicode se compare tal cual y falle, en vez de
+ * escaparse del escaneo.
  */
 export function extractAnchors(md: string): string[] {
-  return extractLinkTargets(md).filter(t => t.startsWith('#')).map(t => t.slice(1))
+  return scanProseLinks(md).targets.filter(t => t.startsWith('#')).map(t => t.slice(1))
 }
 
 /** Recorre recursivamente un valor recogiendo todos los strings (para escanear prosa). */
@@ -528,7 +593,12 @@ export function checkTrip(t: LoadedTrip): Violation[] {
   const anchorable = new Set<string>([...entities.map(d => d.slug), ...layout.map(e => e.id)])
   for (const d of t.docs) {
     for (const str of collectStrings(d.data)) {
-      for (const target of extractLinkTargets(str)) {
+      // G-10-2 / WR-01: toda forma que MDC pinta como <a>; las formas rechazadas, sea cual sea su destino.
+      const { targets, rejected } = scanProseLinks(str)
+      for (const label of rejected) {
+        push(d.file, 'cross-trip-link', `forma de enlace no admitida (D-05): ${label} — escribe [texto](#id) o [texto](https://…)`)
+      }
+      for (const target of targets) {
         if (target.startsWith('#')) {
           if (!anchorable.has(target.slice(1))) push(d.file, 'anchor', `ancla ${target} no existe en el viaje "${t.dir}"`)
         }
