@@ -46,6 +46,7 @@ const WRITTEN_DAYS: Record<string, { stay: string | null }> = {
   'miercoles-23': { stay: 'salerno' },
   'jueves-24': { stay: 'salerno' },
   'viernes-25': { stay: 'napoles' },
+  'sabado-26': { stay: 'napoles' },
   'domingo-27': { stay: 'napoles' },
   'lunes-28': { stay: null },
 }
@@ -72,10 +73,14 @@ const WRITTEN_MONUMENTS: string[] = [
   'stadio-maradona',
   'napoli-sotterranea',
   'capodimonte',
+  'casertavecchia',
+  'lago-d-averno',
+  'antro-della-sibilla',
+  'spiaggia-di-miseno',
 ]
 
 /** Fichas que deben llevar nota familiar (D-09). Los planes siguientes añaden las suyas. */
-const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto', 'pozzo-vecchio', 'valle-del-calore', 'baia-di-trentova', 'stadio-maradona', 'napoli-sotterranea']
+const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto', 'pozzo-vecchio', 'valle-del-calore', 'baia-di-trentova', 'stadio-maradona', 'napoli-sotterranea', 'spiaggia-di-miseno']
 
 /**
  * Ficheros (ruta relativa al viaje) que deben llevar el marcador porque tienen datos dudosos.
@@ -105,6 +110,11 @@ const MARKER_FILES: string[] = [
   'days/lunes-28.yml',
   'monuments/napoli-sotterranea.yml',
   'monuments/capodimonte.yml',
+  'days/sabado-26.yml',
+  'monuments/casertavecchia.yml',
+  'monuments/lago-d-averno.yml',
+  'monuments/antro-della-sibilla.yml',
+  'monuments/spiaggia-di-miseno.yml',
   'food/g-1-concettina.yml',
   'food/g-1-pizzeria-vomero.yml',
   'food/g-2-vannulo.yml',
@@ -382,6 +392,29 @@ describe('días escritos (CAMP-01, D-04)', () => {
     expect(stadium.roman).toBe('♪')
     expect(stadium.badge).toBe('concierto')
     expect(day.cards).toEqual(['vesubio', 'rione-sanita', 'stadio-maradona'])
+  })
+
+  it('sábado 26: dos opciones en coche y devolución en Capodichino (D-01, D-05)', () => {
+    const day = dayOf('sabado-26')!
+    const top = asRecs(day.timeline)
+    const choices = top.filter(r => r.kind === 'choice')
+    expect(choices, 'un solo choice').toHaveLength(1)
+    expect(asRecs(choices[0]!.options).map(o => o.label)).toEqual(['Opción 1', 'Opción 2'])
+    expect((day.route as Rec).mode).toBe('driving')
+    // Todas las fichas están dentro de las opciones: ninguna parada común, así que no hay botón.
+    const routeDay = asRouteDay(day)
+    expect(routeCards(routeDay)).toEqual([])
+    expect(routeVisible(routeDay, routeCards(routeDay).length)).toBe(false)
+    // D-01: la devolución del coche es una parada común, fuera del choice, sin ficha.
+    const giveBack = top.find(r => r.kind === 'stop' && r.disabled === true && String(r.title).includes('Devolución del coche'))
+    expect(giveBack, 'parada sin ficha «Devolución del coche» fuera del choice').toBeDefined()
+    const giveBackText = collectStrings(giveBack).join('\n')
+    expect(giveBackText).toContain('Capodichino')
+    expect(giveBackText).toContain(BOLD_MARKER)
+    expect(giveBackText).toContain('justificante')
+    expect(top.indexOf(giveBack!), 'la devolución va después del choice').toBeGreaterThan(top.indexOf(choices[0]!))
+    // D-05: el Partenio es solo prosa, sin ficha.
+    expect(day.cards).toEqual(['casertavecchia', 'lago-d-averno', 'antro-della-sibilla', 'spiaggia-di-miseno'])
   })
 
   it('domingo 27: despedida, Napoli Sotterranea y PTN (D-06, D-08)', () => {

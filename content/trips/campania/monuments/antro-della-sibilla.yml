@@ -1,0 +1,44 @@
+slug: antro-della-sibilla
+trip: campania
+roman: XX
+name: Antro de la Sibila
+italian: 'Antro della Sibilla · Parco Archeologico di Cuma'
+day: Sábado 26
+coords:
+  lat: 40.8491
+  lng: 14.0488
+type: card
+motif: temple
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Cuma_-_Antro_della_Sibilla.JPG/960px-Cuma_-_Antro_della_Sibilla.JPG
+  alt: El largo pasillo de piedra del Antro de la Sibila, en Cuma, con la luz entrando por los huecos laterales
+sections:
+  - heading: Qué es
+    body: >-
+      Un largo pasillo excavado en la toba de la acrópolis de Cuma, una de las
+      colonias griegas más antiguas de Italia. La tradición lo identifica con la cueva donde
+      la Sibila daba sus oráculos, la misma a la que acude Eneas antes de bajar al
+      inframundo.
+  - heading: Qué mirar
+    body: >-
+      El corredor de sección trapezoidal, con la luz que entra a franjas por las
+      aberturas del lado del mar; la sala del fondo, donde se imagina a la Sibila; y,
+      subiendo por la acrópolis, los restos de los templos y la vista sobre la costa.
+  - heading: En vuestro día
+    body: >-
+      La segunda parada de la Opción 2, después del lago. La visita va con reserva y
+      con entrada por turnos, así que llevad la hora apuntada y llegad con margen.
+      Dentro del Antro solo caben 25 personas a la vez: si hay que esperar, la
+      acrópolis, con su sombra de árboles, es buen sitio.
+facts:
+  - label: Días
+    value: 'Cerrado los martes; el sábado está abierto'
+  - label: Horario de verano
+    value: '9:00-19:00, última entrada a las 18:00 · horario de 2027 **⚠ por confirmar**'
+  - label: Reserva
+    value: 'Obligatoria, con entrada por turnos y aforo limitado · en el Antro, 25 personas a la vez'
+  - label: Entrada
+    value: 'Circuito Flegreo: 10 € / 5 €, válida 3 días para 4 lugares · precio de 2027 **⚠ por confirmar**'
+  - label: Bradisismo
+    value: 'Si el parque cierra por bradisismo, se devuelve la entrada'
+mapsQuery: Antro della Sibilla Cuma

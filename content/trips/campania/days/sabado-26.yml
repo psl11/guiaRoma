@@ -1,0 +1,147 @@
+slug: sabado-26
+trip: campania
+order: 8
+pill: 'Sáb 26'
+roman: VIII
+eyebrow: 'sábado · 26 de junio'
+title: Excursión en coche y devolución
+subtitle: Un día fuera de Nápoles a elegir, el burgo medieval de Casertavecchia o los Campos Flégreos, y por la tarde se devuelve el coche.
+# Base de la noche (D-04, D-25): «Dormís en Nápoles», en una zona por confirmar.
+stay: napoles
+# Ruta del día en coche (D-01): solo cuentan las paradas comunes y aquí todas las fichas están
+# dentro de las opciones, así que el botón «Ver ruta del día» se oculta solo (routeVisible).
+route:
+  mode: driving
+stats:
+  - variant: car
+    text: '**Coche de alquiler** de excursión y, por la tarde, devolución en Capodichino'
+  - variant: bus
+    text: '**Alibus** o taxi del aeropuerto de vuelta al centro'
+light:
+  title: 🦶 Versión ligera · sábado
+  items:
+    - kind: see
+      text: >-
+        **Imprescindibles:** una sola parada sin prisa, el burgo de
+        [Casertavecchia](#casertavecchia) o la playa de [Miseno](#spiaggia-di-miseno).
+    - kind: skip
+      text: >-
+        **Saltar hoy:** la vuelta entera al [lago d'Averno](#lago-d-averno). Basta con
+        asomarse a la orilla un rato.
+    - kind: care
+      text: >-
+        **Ojo:** dejad margen para devolver el coche. Con el tráfico de vuelta a
+        Nápoles, mejor salir pronto.
+    - kind: rest
+      text: >-
+        **Descanso:** una cena cerca del alojamiento y a dormir pronto, que el domingo
+        hay despedida en el aeropuerto.
+timeline:
+  - kind: transport
+    pace: all
+    variant: car
+    header: Salida de Nápoles en coche
+    modes:
+      - icon: 🚗
+        recommended: true
+        desc: >-
+          **Coche de alquiler** desde el garaje o el parking donde durmió el viernes,
+          con el destino de la opción que elijáis
+  - kind: choice
+    heading: Excursión de día, elige una
+    options:
+      - label: Opción 1
+        title: Casertavecchia, el burgo medieval de piedra sobre Caserta
+        rows:
+          - kind: transport
+            pace: all
+            variant: car
+            header: De Nápoles a Casertavecchia
+            modes:
+              - icon: 🚗
+                recommended: true
+                desc: >-
+                  **En coche** hacia el norte, dejando atrás el palacio real de
+                  Caserta, hasta el burgo · duración **⚠ por confirmar**
+          - kind: stop
+            pace: all
+            time: '10:30'
+            title: Casertavecchia
+            ref: casertavecchia
+            note: >-
+              Paseo lento por las callejuelas de piedra hasta el Duomo, con los gatos
+              y las vistas sobre la llanura. Si os quedan ganas, una ruta corta por
+              las laderas del Parque Regional del Partenio.
+          - kind: meta
+            items:
+              - level: plain
+                text: '⏱ **comida casera** en el burgo'
+      - label: Opción 2
+        title: Los Campos Flégreos, el lago del inframundo, la Sibila y una playa volcánica
+        rows:
+          - kind: transport
+            pace: all
+            variant: car
+            header: De Nápoles a Pozzuoli
+            modes:
+              - icon: 🚗
+                recommended: true
+                desc: >-
+                  **En coche** hacia el oeste, hasta el lago d'Averno, junto a
+                  Pozzuoli · duración **⚠ por confirmar**
+          - kind: stop
+            pace: all
+            time: '10:00'
+            title: Lago d'Averno
+            ref: lago-d-averno
+            note: >-
+              La vuelta al lago a pie, llana y entre viñedos: unos 2,8 km en unos 45
+              minutos. Las bodegas de la orilla, a elegir sobre el terreno.
+          - kind: stop
+            pace: all
+            time: '12:00'
+            title: Antro de la Sibila, en Cuma
+            ref: antro-della-sibilla
+            note: >-
+              La reserva es obligatoria y la entrada va por turnos: la hora de vuestro
+              turno manda. El sábado está abierto (cierra los martes); horario y
+              precio de 2027 **⚠ por confirmar**.
+          - kind: stop
+            pace: all
+            time: '15:00'
+            title: Playa de Miseno
+            ref: spiaggia-di-miseno
+            note: >-
+              Tarde de toalla en la arena volcánica de Miliscola, con las familias
+              napolitanas. Servicios de la playa **⚠ por confirmar**.
+  - kind: stop
+    pace: all
+    time: '18:30'
+    title: Devolución del coche · Capodichino
+    disabled: true
+    note: >-
+      Devolución del coche de alquiler en el aeropuerto de Capodichino, donde lo
+      recogisteis el miércoles. El punto exacto y la hora de devolución están
+      **⚠ por confirmar** con la empresa de alquiler. Pedid siempre un justificante
+      de devolución firmado.
+  - kind: transport
+    pace: all
+    variant: bus
+    header: Del aeropuerto al centro
+    modes:
+      - icon: 🚌
+        recommended: true
+        desc: '**Alibus** hasta Piazza Garibaldi · pasa cada 10-20 min'
+        tag: recomendado
+        meta: '⏱ **≈20 min** · 💶 5 € **⚠ por confirmar**'
+      - icon: 🚕
+        desc: '**Taxi** directo al alojamiento · precio **⚠ por confirmar**'
+  - kind: stop
+    pace: all
+    time: '20:30'
+    title: 'Noche: regreso y descanso en Nápoles'
+    disabled: true
+    note: >-
+      Cena sencilla cerca del alojamiento, a elegir sobre el terreno, y a dormir
+      pronto: mañana Arantxa y los niños vuelven a casa.
+cards: [casertavecchia, lago-d-averno, antro-della-sibilla, spiaggia-di-miseno]

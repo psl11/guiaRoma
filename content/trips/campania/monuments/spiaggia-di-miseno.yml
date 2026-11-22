@@ -1,0 +1,40 @@
+slug: spiaggia-di-miseno
+trip: campania
+roman: XXI
+name: Playa de Miseno
+italian: 'Spiaggia di Miliscola · Miseno · Bacoli'
+day: Sábado 26
+coords:
+  lat: 40.7868
+  lng: 14.0805
+type: nature
+motif: sea
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Bacoli_%28NA%29._Lago_Miseno%2C_spiaggia_di_Miliscola_e_Capo_Miseno.jpg/960px-Bacoli_%28NA%29._Lago_Miseno%2C_spiaggia_di_Miliscola_e_Capo_Miseno.jpg
+  alt: La playa de Miliscola entre el lago Miseno y el mar, con el cabo Miseno al fondo
+sections:
+  - heading: Qué es
+    body: >-
+      La playa de arena volcánica de Miliscola, en Bacoli: una franja larga entre el
+      lago Miseno y el mar, con el promontorio del cabo Miseno cerrando el horizonte.
+      Es la playa de las familias napolitanas, no la de los folletos.
+  - heading: Qué mirar
+    body: >-
+      La arena oscura, de origen volcánico; el lago a un lado y el mar al otro; y la
+      silueta del cabo Miseno, que se pone dorado a última hora de la tarde.
+  - heading: En vuestro día
+    body: >-
+      El final de la Opción 2: toalla, baño y la tarde compartiendo orilla con las
+      familias del lugar, hasta que toque volver hacia Capodichino a devolver el
+      coche.
+facts:
+  - label: Acceso
+    value: 'En coche hasta Bacoli · aparcamiento cerca de la playa **⚠ por confirmar**'
+  - label: Servicios
+    value: 'Sombrillas, bar y socorrista **⚠ por confirmar**'
+mapsQuery: Spiaggia di Miliscola Bacoli
+family: >-
+  La arena volcánica quema al mediodía: escarpines o chanclas para los niños y algo
+  de sombra propia por si no hay sombrillas. Llevad agua de sobra y bañaos en las
+  horas de menos sol, siempre con un adulto al lado. Qué servicios hay en la playa
+  (sombra, bar, socorrista) está **⚠ por confirmar**.

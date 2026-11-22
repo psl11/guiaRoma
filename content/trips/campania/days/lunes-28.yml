@@ -1,8 +1,6 @@
 slug: lunes-28
 trip: campania
-# Orden provisional: sin sabado-26 todavía, el lunes 28 es el noveno día. 13-06 lo mueve al 10
-# en el mismo commit que añade el sábado 26 (regla day-order, D-04).
-order: 9
+order: 10
 pill: 'Lun 28'
 roman: X
 eyebrow: 'lunes · 28 de junio'

@@ -1,0 +1,40 @@
+slug: casertavecchia
+trip: campania
+roman: XVIII
+name: Casertavecchia
+italian: 'Borgo di Casertavecchia · Duomo di San Michele'
+day: Sábado 26
+coords:
+  lat: 41.0973
+  lng: 14.3670
+type: card
+motif: church
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Casertavecchia_duomo_ext.jpg/960px-Casertavecchia_duomo_ext.jpg
+  alt: La fachada de piedra del Duomo de Casertavecchia, con su campanario, en el burgo medieval
+sections:
+  - heading: Qué es
+    body: >-
+      Un burgo medieval de piedra colgado en el monte, por encima de Caserta. Mientras
+      las multitudes hacen cola en el palacio real de la llanura, aquí arriba el
+      tiempo se detuvo: callejuelas peatonales, casas de toba gris y, en el centro,
+      el Duomo de San Michele.
+  - heading: Qué mirar
+    body: >-
+      El Duomo y su campanario, el corazón del pueblo; las callejuelas de piedra que
+      suben y bajan sin coches, con gatos tomando el sol en los escalones; y, desde
+      los bordes del burgo, las vistas abiertas sobre toda la llanura de Caserta.
+  - heading: En vuestro día
+    body: >-
+      La Opción 1 del sábado: id directos al burgo, sin pasar por el palacio, y
+      paseadlo despacio. Comida casera en el pueblo, en el sitio que os guste sobre
+      el terreno. Si os quedan ganas, una ruta corta por las laderas arboladas del
+      cercano Parque Regional del Partenio, como extra opcional para la tarde.
+facts:
+  - label: Acceso
+    value: 'En coche desde Nápoles · aparcamiento a la entrada del burgo **⚠ por confirmar**'
+  - label: Duomo
+    value: 'Horario de visita **⚠ por confirmar**'
+  - label: Comer
+    value: 'Comida casera en el pueblo, a elegir sobre el terreno'
+mapsQuery: Duomo di Casertavecchia

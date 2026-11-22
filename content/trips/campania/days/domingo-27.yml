@@ -1,8 +1,6 @@
 slug: domingo-27
 trip: campania
-# Orden provisional: sin sabado-26 todavía, el domingo 27 es el octavo día. 13-06 añade el
-# sábado 26 en el 8 y mueve este día al 9 en el mismo commit (regla day-order, D-04).
-order: 8
+order: 9
 pill: 'Dom 27'
 roman: IX
 eyebrow: 'domingo · 27 de junio'
