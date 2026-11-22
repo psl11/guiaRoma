@@ -359,9 +359,7 @@ Recent decisions affecting current work:
 
 ### Pending Todos
 
-[From .planning/todos/pending/ — ideas captured during sessions]
-
-None yet.
+- [2026-11-23] [app/components] Tabla de Reservas sin tbody provoca aviso de hidratación — [todo file](.planning/todos/pending/2026-11-23-reservas-table-tbody-hydration-mismatch.md)
 
 ### Blockers/Concerns
 
