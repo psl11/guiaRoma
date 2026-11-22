@@ -67,7 +67,10 @@ imita a Pages sobre `.output/public` bajo `/guiaRoma/`: `301` de `/guiaRoma` y d
 directorios sin barra final a la forma con barra (conservando la query), `index.html` de cada
 directorio y **`404.html` real** para lo inexistente. `serve` no vale ahí porque su `cleanUrls`
 reescribe y oculta justo esa conducta. Puertos base: 5850 (`legacy-redirect`) y 5800
-(`portada`), más `TEST_WORKER_INDEX`. Las dos exclusiones de §2 no cambian.
+(`portada`), más `TEST_WORKER_INDEX`. Los dos specs de la Fase 14 (§6) también usan
+`startPagesServer`: **`upgrade-from-main.spec.ts`** (puerto base 6600) y
+**`cross-trip.spec.ts`** (puerto base 6700), más `TEST_WORKER_INDEX`. Las dos exclusiones de §2
+no cambian.
 
 ---
 
@@ -635,3 +638,90 @@ encabezados fijos de Roma heredaría «3 comensales» y la cabecera de restauran
 > VACÍO (D-03: sin `h4` ni `ul`, y sin bloque si faltan los dos) no lo cubre ningún e2e. Solo lo
 > cubren `reservasHeadings.spec.ts` (`renderConfirmed` sobre la plantilla real) y la regla
 > `reservas-headings` de la puerta de datos.
+
+---
+
+## 6. Verificación del milestone (Fase 14)
+
+La Fase 14 no toca código de la app ni contenido: añade **dos specs de paridad** (dentro de
+`test:parity`, +16 tests, ver §4) y **un test de datos** (dentro de `test:data`). Con ellos
+queda probado que la v1.1 se puede publicar sobre la guía viva sin que nadie pierda nada.
+
+### 6.1 `tests/parity/upgrade-from-main.spec.ts` — upgrade desde la guía viva (PAR-03, D-03/D-04)
+
+- **Qué prueba:** quien usa hoy la guía publicada (el `index.html` único de `main`) abre la build
+  nueva **en el mismo origen** y encuentra en `/guiaRoma/trips/roma/`, en la **primera carga**,
+  todo lo que tenía guardado: sin importar nada, sin paso de migración y sin recargar.
+- **La guía viva sale de git en tiempo de test:** `git show main:index.html` se escribe en un
+  directorio temporal nuevo de `os.tmpdir()` (`guiaroma-upgrade-*`) y se borra en `afterAll`.
+  **Nunca** se versiona una copia bajo `tests/` (derivaría de `main` sin que nadie lo note).
+  **Necesita la rama local `main`**: sin ella, el spec falla en voz alta (nunca se salta).
+- **Mismo origen, dos servidores, un contexto:** localStorage es por origen (esquema + host +
+  puerto). La guía vieja se sirve en `/guiaRoma/index.html` con su propio `startPagesServer` en
+  `127.0.0.1:PUERTO`; ese servidor se cierra y la build nueva (`.output/public` bajo
+  `/guiaRoma/`) se levanta en el **mismo** `127.0.0.1:PUERTO`, con el mismo contexto de
+  navegador de principio a fin. Puerto base **6600** + `TEST_WORKER_INDEX`.
+- **Oráculo, no valores escritos a mano:** el estado esperado es lo que **la propia guía viva**
+  restaura sobre el mismo almacenamiento, capturado en un contexto de navegador aparte.
+- **Qué comprueba** (2 tests × mobile + desktop = 4): las notas de las **38** fichas (con
+  comillas, acentos, euro y saltos de línea), el ritmo, «Caminar menos» (el borde «Neutra» +
+  «Caminar menos» se restaura como Pesimista, igual que en la guía viva), el modo resumen y el
+  tema oscuro sin primer pintado claro; una **clave de nota huérfana** (de una ficha que ya no
+  existe) sigue en el almacenamiento; **ninguna clave pierde su valor** (la única reescritura es
+  la misma que hace la guía viva al restaurar); recargar no cambia nada; la portada no escribe
+  nada; y **Campania** arranca con sus valores por defecto y las notas vacías, sin tocar las
+  claves de Roma.
+
+### 6.2 `tests/parity/cross-trip.spec.ts` — aislamiento entre viajes en la build publicada (D-05)
+
+- **Ruta D-05:** portada → Roma → Campania → «Atrás» → «Atrás»: ninguna página publicada ni
+  ningún paso de historial descarga la base de contenido de cliente (`__nuxt_content/`,
+  `sql_dump`, WASM). Cada paso espera la URL, `networkidle`, la hidratación y un marcador propio
+  de la página antes de comprobar nada.
+- **Recorrido con clics:** tarjeta de la portada → Roma → pie «← Todos los viajes» → tarjeta de
+  Campania → «Atrás» → «Atrás» → «Adelante» → «Adelante», también con cero descargas pesadas.
+- **Control positivo:** la 404 de un borrador **sí** pide la base de contenido, así que el
+  detector ve esas descargas cuando ocurren y los «cero» no pasan por ceguera.
+- **Búsqueda, notas y modos por viaje:** «Pantheon» no da resultados en Campania ni «Sorgeto» en
+  Roma (también tras «Atrás»); una nota de Roma no aparece en Campania ni al revés (con «Atrás»
+  y «Adelante»); el ritmo, «Caminar menos» y el modo resumen de un viaje no cambian los del otro.
+- Extiende a Campania la aserción D-15 de la Fase 11 (que solo cubría portada y Roma) y cierra
+  el hallazgo **WR-06** de `13-REVIEW.md`. 6 tests × mobile + desktop = 12. Puerto base **6700**
+  + `TEST_WORKER_INDEX`.
+
+### 6.3 `tests/data/css-vs-main.spec.ts` — el CSS de la build es el de `main` (D-02)
+
+- **Qué significa «sin diff respecto a main»:** `main` no tiene `base.css`; es un único
+  `index.html` con dos bloques `<style>`. El criterio es, por tanto, que **el CSS global que
+  publica la build es el CSS de `main:index.html`**, leído con `git show` (necesita la rama
+  local `main`).
+- **Particiones documentadas:** `leaflet.css` = el bloque `<style id="leaflet-inline-css">`;
+  `tokens.css` + `base.css` (en ese orden) = el bloque editorial; `fonts.css` sustituye el
+  `<link>` de Google Fonts por `@font-face` locales con las **mismas tres familias**;
+  `multitrip.css` (Fase 11) y `tripshapes.css` (Fase 12) son hojas **aditivas** de la v1.1 que no
+  existen en `main` (las guardan `tests/unit/multitripCss.spec.ts` y
+  `tests/unit/tripShapesCss.spec.ts`) y no entran en la comparación.
+- **Normalización:** solo comentarios y espacios. Nada más.
+- **Única diferencia permitida:** la neutralización de 08-06 (commit `cc74f79`): en `main`, dos
+  reglas van detrás de un `}` sobrante y el navegador las descarta (`.tl-meta-item{…}` y
+  `.tl-transport-mode.recommended{…}`); `base.css` las deja fuera, y cada una debe casar
+  exactamente una vez. Cualquier otra diferencia es un hallazgo: se informa, nunca se edita el
+  CSS congelado. 7 tests (con dientes en memoria).
+
+### 6.4 Cierre del hito
+
+- **La puerta, en orden** (D-01, Node 22, nunca dos a la vez):
+  1. `rm -rf .data .nuxt .output && pnpm verify` (build + `test:unit` + `test:data` con
+     `css-vs-main.spec.ts` + `test:parity` con los dos specs de §6.1 y §6.2);
+  2. `pnpm typecheck && pnpm lint` (y `eslint --no-ignore` sobre los dos specs nuevos de
+     `tests/parity/`, que `pnpm lint` ignora);
+  3. solo cuando `verify` ha terminado: `rm -rf .data .nuxt && pnpm test:trips`.
+- **Flakes conocidos** (no se arreglan en la Fase 14): `navigation.spec.ts` «SC#2» [mobile],
+  que roza el timeout de 30 s, y `legacy-redirect.spec.ts` «/#pantheon» [desktop]. Si uno es el
+  único fallo, se repite una vez con `--repeat-each 3` y se anota. Nunca se usa
+  `--update-snapshots`.
+- **Goldens:** los 56 PNG de `tests/parity/golden.spec.ts-snapshots` no cambian desde la etiqueta
+  `v1.0` (`git diff --quiet v1.0 HEAD -- tests/parity/golden.spec.ts-snapshots` sale 0). La
+  excepción de ROUTE-06 aprobada en la Fase 11 no llegó a usarse: ningún golden captura el pie.
+- **Firma en un móvil real (PAR-04):** la hace una persona, no la puerta. La lista de
+  comprobación está en `.planning/phases/14-verificacion-del-milestone/14-UAT.md`.
