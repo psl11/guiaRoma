@@ -559,7 +559,7 @@ se defiende con estas piezas:
     `.maps-link` y `.notes-area`, tantas cajas en la página como fichas con `family`, y la
     etiqueta se lee en claro y en oscuro; a 375 px la caja y una «Dormís en» con nombre largo
     parten línea sin desbordar.
-  - D-15 / D-16: los días aparecen en orden con su pastilla (diez desde la Fase 13); la
+  - D-03: los días aparecen en orden con su pastilla (diez desde la Fase 13); la
     portada de dev lista Campania una vez y primero (publicada en la Fase 13, D-02).
   - Fase 13: Gastronomía en sus grupos (13-02) y Reservas/Práctica con sus propios títulos,
     nunca los de Roma (13-07).
@@ -621,3 +621,8 @@ encabezados fijos de Roma heredaría «3 comensales» y la cabecera de restauran
 > bloque que se pinta, `test:data` se pondría en rojo y la UI caería a los textos de Roma,
 > D-02), y `tests/trips/campania.spec.ts` comprueba en el navegador que Reservas y Práctica
 > llevan sus propios títulos.
+>
+> **Hueco conocido:** Campania llena los dos grupos de confirmados, así que el render de un grupo
+> VACÍO (D-03: sin `h4` ni `ul`, y sin bloque si faltan los dos) no lo cubre ningún e2e. Solo lo
+> cubren `reservasHeadings.spec.ts` (`renderConfirmed` sobre la plantilla real) y la regla
+> `reservas-headings` de la puerta de datos.
