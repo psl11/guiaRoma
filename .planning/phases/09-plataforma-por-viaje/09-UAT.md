@@ -1,9 +1,9 @@
 ---
-status: diagnosed
+status: complete
 phase: 09-plataforma-por-viaje
 source: [09-VERIFICATION.md]
 started: 2026-11-20T12:45:00Z
-updated: 2026-11-22T12:25:53Z
+updated: 2026-11-22T15:09:41.325Z
 ---
 
 ## Current Test
@@ -40,18 +40,20 @@ note: "Superada por la ejecución posterior: WR-02 cerrado (`cross-trip-link` es
 
 ### 6. Prohibicion 09-06 (juicio, sin tier asignado): la puerta de datos nunca omite en silencio una carpeta de viaje, una entrada de content/trips/ ni un YAML que no sabe clasificar o parsear (sin fail-open)
 expected: Confirmar el veredicto NO AUTORITATIVO del verificador: respetada. Evidencia directa: con un zzmayus.YML real en content/trips/prueba/monuments/, con un content/trips/zzsuelto.yml real y con una carpeta oculta content/trips/.zz/, vitest run tests/data sale con codigo 1 y nombra cada fichero ([stray-file], [stray-file], [trip-slug]). unverified-prohibition - human review recommended
-result: [pending]
+result: pass
+note: "Confirmado por el usuario 2026-11-22 sobre la evidencia del verificador (3 mutaciones reales → test:data sale con código 1 y nombra cada fichero)."
 
 ### 7. Prohibicion 09-06 (juicio, sin tier asignado): ningun fichero bajo content/ (incluido content/trips/roma/), tests/parity/ (56 goldens), app/assets/css/ ni content.config.ts se modifica; las mutaciones de prueba dejan git status limpio
 expected: Confirmar el veredicto NO AUTORITATIVO del verificador: respetada. Evidencia determinista: git diff 68be7a5 HEAD --stat -- content tests/parity app/assets/css content.config.ts vacio; git status solo muestra .planning/state.json y .planning/ui-reviews/ sin seguimiento tras mis mutaciones. unverified-prohibition - human review recommended
-result: [pending]
+result: pass
+note: "Confirmado por el usuario 2026-11-22: `git diff 68be7a5 HEAD --stat -- content tests/parity app/assets/css content.config.ts` vacío; `git status` sin restos de las mutaciones."
 
 ## Summary
 
 total: 7
-passed: 4
+passed: 6
 issues: 1
-pending: 2
+pending: 0
 skipped: 0
 blocked: 0
 
@@ -59,7 +61,9 @@ blocked: 0
 
 - gap_id: G-09-3
   truth: "La puerta de datos (`pnpm verify` → `test:data`) nunca omite en silencio un fichero YAML ni una entrada de `content/trips/` que no sabe clasificar: todo lo que no clasifica produce una violación que nombra el fichero (prohibición 09-02, sin fail-open)"
-  status: failed
+  status: resolved
+  resolved_by: 09-06-PLAN.md
+  resolved_at: 2026-11-22
   reason: "User reported: cerrar el residual IN-05 — `foo.YML` (extensión en mayúsculas) y un YAML suelto directamente en `content/trips/` se ignoran sin violación"
   severity: minor
   test: 3
