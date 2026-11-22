@@ -24,6 +24,9 @@
 //    CARPETA oculta (`content/trips/.x/`) SÍ se ingiere. Por eso `listTripDirs()` la trata como
 //    carpeta de viaje y la puerta la valida (falla al menos con `trip-slug`/`trip-yml`, porque
 //    `TRIP_SLUG_RE` no admite un `.` inicial); solo los FICHEROS ocultos de la raíz son inertes.
+//  - Cierre WR-01 (revisión de 09-06): dentro de un viaje, todo fichero que no es YAML es
+//    `stray-file` (un `galeria.json`, `galeria.yml~`, `galeria.ym`…: Content lo ignoraría), salvo
+//    los ocultos (algún segmento de la ruta empieza por `.`: .DS_Store, .gitkeep).
 //
 // Fase 10 (forma desde datos):
 //  - D-03: etiquetas de pastilla de día únicas por viaje (`day-pill`), calculadas con la MISMA
@@ -131,6 +134,8 @@ const toPosix = (p: string) => p.split(sep).join('/')
 // Sin distinguir mayúsculas (G-09-3): un .YML/.Yaml también es YAML y llega a la clasificación;
 // los `COLLECTIONS[].match` SÍ distinguen (espejo de los globs `*.yml`), así que acaba en stray-file.
 const isYaml = (rel: string) => /\.ya?ml$/i.test(rel)
+// Oculto = algún segmento de la ruta relativa empieza por `.` (.DS_Store, .gitkeep, .cache/x).
+const isHidden = (rel: string) => rel.split('/').some(seg => seg.startsWith('.'))
 const isPlainObject = (v: unknown): v is Record<string, unknown> =>
   typeof v === 'object' && v !== null && !Array.isArray(v)
 const asArray = (v: unknown): Array<Record<string, unknown>> =>
@@ -207,18 +212,25 @@ export function checkTripsRoot(root: string = TRIPS_ROOT): Violation[] {
 }
 
 /**
- * Carga PURA de un viaje a partir de sus ficheros (`rel` POSIX → contenido). Los ficheros que
- * no son YAML se ignoran; todo YAML se clasifica, se parsea o produce una violación. La extensión
- * YAML se detecta SIN distinguir mayúsculas (`isYaml`), pero los `COLLECTIONS[].match` sí
- * distinguen (espejo de los globs `*.yml` de content.config.ts): un `.YML`/`.Yaml` no casa con
- * ninguna colección y es `stray-file`, nunca se omite ni se carga como documento (G-09-3).
+ * Carga PURA de un viaje a partir de sus ficheros (`rel` POSIX → contenido). Un fichero que no es
+ * YAML es `stray-file` (WR-01: Content lo ignoraría en silencio), salvo si es oculto (`isHidden`:
+ * .DS_Store, .gitkeep), que se ignora; todo YAML se clasifica, se parsea o produce una violación.
+ * Un YAML oculto SÍ se clasifica (Content globa con `dot: true`). La extensión YAML se detecta SIN
+ * distinguir mayúsculas (`isYaml`), pero los `COLLECTIONS[].match` sí distinguen (espejo de los
+ * globs `*.yml` de content.config.ts): un `.YML`/`.Yaml` no casa con ninguna colección y es
+ * `stray-file`, nunca se omite ni se carga como documento (G-09-3).
  */
 export function loadTripFromFiles(dir: string, files: Record<string, string>, base = `content/trips/${dir}`): LoadedTrip {
   const docs: Doc[] = []
   const loadViolations: Violation[] = []
   for (const rel of Object.keys(files).sort()) {
-    if (!isYaml(rel)) continue
     const file = `${base}/${rel}`
+    if (!isYaml(rel)) {
+      if (!isHidden(rel)) {
+        loadViolations.push({ file, rule: 'stray-file', message: 'fichero no YAML en la carpeta del viaje (Content lo ignoraría)' })
+      }
+      continue
+    }
     const col = COLLECTIONS.find(c => c.match.test(rel))
     if (!col) {
       loadViolations.push({ file, rule: 'stray-file', message: 'fichero fuera de las colecciones (Content lo ignoraría)' })

@@ -65,6 +65,8 @@ import {
  * mayúsculas → `stray-file`) ni un fichero suelto en la raíz de content/trips/.
  * Cierre CR-01 (revisión de 09-06): tampoco omite una CARPETA oculta (`content/trips/.x/`), que
  * Content sí ingiere (`dot: true`): es una carpeta de viaje más y falla con `trip-slug`.
+ * Cierre WR-01 (revisión de 09-06): un fichero no YAML y no oculto dentro de un viaje
+ * (`galeria.json`, `galeria.yml~`…) es `stray-file`; los ocultos (.DS_Store, .gitkeep) se ignoran.
  *
  * El bloque «la puerta tiene dientes» prueba cada regla con un fixture (en memoria con
  * `loadTripFromFiles` o en disco en tests/data/fixtures/trips/, NUNCA bajo content/).
@@ -308,6 +310,33 @@ describe('la puerta tiene dientes (fixtures)', () => {
       rule: 'stray-file',
       message: 'fichero fuera de las colecciones (Content lo ignoraría)',
     }])
+  })
+
+  // WR-01 (revisión de 09-06): un fichero que no es YAML dentro de un viaje no se omite en
+  // silencio (Content lo ignoraría): es stray-file con su ruta. toEqual estricto: no se carga.
+  it.each([
+    'monuments/galeria.json',
+    'monuments/galeria.yml~',
+    'monuments/galeria.yml.bak',
+    'monuments/galeria.ym',
+    'monuments/galeria.yml ',
+    'notas.md',
+  ])('stray-file: %s no es YAML y Content no lo ingiere', (rel) => {
+    const vs = checkTrip(memTrip('prueba', { [rel]: '{}' }))
+    expect(vs, formatViolations(vs)).toEqual([{
+      file: `content/trips/prueba/${rel}`,
+      rule: 'stray-file',
+      message: 'fichero no YAML en la carpeta del viaje (Content lo ignoraría)',
+    }])
+  })
+
+  it('los ficheros ocultos no YAML de un viaje (.DS_Store, .gitkeep) se ignoran (WR-01)', () => {
+    const vs = checkTrip(memTrip('prueba', {
+      '.DS_Store': 'x',
+      'monuments/.gitkeep': '',
+      '.cache/notas.txt': 'x',
+    }))
+    expect(vs, formatViolations(vs)).toEqual([])
   })
 
   it('basename-slug: monuments/a.yml con slug "b"', () => {
