@@ -1,6 +1,6 @@
 ---
 phase: 09-plataforma-por-viaje
-verified: 2026-11-20T12:30:00Z
+verified: 2026-11-22T13:35:00Z
 status: human_needed
 score: 5/5 must-haves verified
 covered_files:
@@ -14,6 +14,8 @@ covered_files:
   - ".planning/phases/09-plataforma-por-viaje/09-04-SUMMARY.md"
   - ".planning/phases/09-plataforma-por-viaje/09-05-PLAN.md"
   - ".planning/phases/09-plataforma-por-viaje/09-05-SUMMARY.md"
+  - ".planning/phases/09-plataforma-por-viaje/09-06-PLAN.md"
+  - ".planning/phases/09-plataforma-por-viaje/09-06-SUMMARY.md"
   - "app/components/MonumentCard.vue"
   - "app/components/SearchBox.vue"
   - "app/components/TripView.vue"
@@ -26,184 +28,180 @@ covered_files:
   - "content/trips/prueba/trip.yml"
   - "package.json"
   - "playwright.trips.config.ts"
+  - "scripts/tripManifest.mjs"
   - "shared/schemas.ts"
+  - "tests/README.md"
   - "tests/data/build-isolation.spec.ts"
+  - "tests/data/fixtures/trips/raiz.yml"
   - "tests/data/invariants.spec.ts"
   - "tests/data/schema.spec.ts"
   - "tests/data/trips.ts"
   - "tests/trips/isolation.spec.ts"
   - "tests/unit/searchIsolation.spec.ts"
   - "tests/unit/tripCoupling.spec.ts"
+  - "tests/unit/tripManifest.spec.ts"
   - "tests/unit/tripStorage.spec.ts"
-covered_digest: "v4:sha256:37977fefd2e003547b82fe30db5affd0284859805ab6e51537a4de1757b1bf41"
+covered_digest: "v4:sha256:0a4bf6d1e94fa383b2a1e9b4f2465ebd4b2a236a39c2a0770c26ea5a651d76f1"
 behavior_unverified: 0
 overrides_applied: 0
+re_verification:
+  previous_status: human_needed
+  previous_score: 5/5
+  gaps_closed:
+    - "G-09-3 (IN-05): .YML/.Yaml en mayusculas y ficheros sueltos en content/trips/ ya producen stray-file (plan 09-06)"
+    - "CR-01 (09-REVIEW): carpetas ocultas de viaje validadas por la puerta y rechazadas por scripts/tripManifest.mjs (6473be8)"
+    - "WR-01 (09-REVIEW): ficheros no YAML dentro de un viaje -> stray-file (39d33fd)"
+    - "CR-01 anterior / AR-09-01 (filas de prueba en sql_dump): resuelto por el filtro draft de la Fase 11"
+    - "WR-01/WR-02 anteriores (ids de dia no reservados, enlaces raiz-relativos): cerrados en la Fase 10 (UAT test 5)"
+  gaps_remaining: []
+  regressions: []
 human_verification:
-  - test: "Decidir si la fuga de las filas del viaje `prueba` en `.output/public/__nuxt_content/{trip,monument,day}/sql_dump.txt` (CR-01 / AR-09-01 / T-09-06) es aceptable hasta la Fase 11, o si se excluye `trips/prueba/**` de las fuentes de Content en producción ya en la Fase 9"
-    expected: "Decisión explícita del usuario: (a) aceptar el riesgo (no hay deploy en la rama; el filtro `draft` de ROUTE-05 en la Fase 11 debe cubrir también el dump) y dejar constancia; o (b) abrir un plan de cierre de huecos que aplique `exclude` en `content.config.ts` y haga que el centinela descomprima los dumps"
-    why_human: "D-02 dice «solo dev; en la build estática no se prerenderiza ni se enlaza» (cumplido a la letra) pero el dump público contiene las filas de prueba y, en GitHub Pages, `404.html` (shell SPA) podría renderizar `/trips/prueba` en cliente. Es una decisión de riesgo/alcance que el verificador no puede cerrar solo; el estado actual está documentado como riesgo aceptado, no como defecto de los criterios de éxito"
-  - test: "Prohibición 09-01 (juicio, sin tier asignado): «la fase nunca borra, renombra, migra ni enumera las claves de localStorage de Roma; solo getItem/setItem por clave exacta»"
-    expected: "Revisión humana del veredicto NO AUTORITATIVO del verificador: respetada (todas las lecturas/escrituras pasan por `tripStorageKey(slug, …)`; `tripCoupling.spec.ts` falla ante `localStorage.clear/removeItem/key/length` y `Object.keys(localStorage)`); `unverified-prohibition — human review recommended`"
-    why_human: "La prohibición llega con `status: unresolved` y `verification: null`: no hay tier de verificación declarado, así que por contrato se marca para revisión humana aunque la evidencia grep sea favorable"
-  - test: "Prohibición 09-02 (juicio, sin tier asignado): «la puerta de datos nunca omite en silencio una carpeta de viaje ni un YAML que no sabe clasificar o parsear (sin fail-open)»"
-    expected: "Revisión humana del veredicto NO AUTORITATIVO: respetada para todo lo que Content materializa (stray-file, trip-yml, yaml-parse, yaml-object con dientes); residual conocido IN-05: un YAML suelto directamente en `content/trips/` y los ficheros `.YML` en mayúsculas no se reportan (Content tampoco los ingiere). `unverified-prohibition — human review recommended`; decidir si IN-05 se cierra ahora o se aplaza"
-    why_human: "Sin tier declarado (`verification: null`); además hay un caso límite (IN-05) que el humano debe clasificar como aceptable o como hueco"
-  - test: "Prohibición 09-05 (juicio, sin tier asignado): «ningún fichero bajo `content/trips/roma/`, `tests/parity/` (56 goldens) ni `app/assets/css/` se modifica ni se re-baselina»"
-    expected: "Revisión humana del veredicto NO AUTORITATIVO: respetada con evidencia determinista (`git diff 79e57e0 HEAD --stat -- tests/parity content/trips/roma app/assets nuxt.config.ts` vacío; 56 PNG intactos; `git status` limpio salvo `.planning/state.json`). `unverified-prohibition — human review recommended`"
-    why_human: "Sin tier declarado (`verification: null`); por contrato se marca como pendiente de confirmación humana"
-  - test: "Decidir el destino de los falsos negativos de la puerta de datos WR-01 (los 5 ids `viernes…martes` que TripView renderiza siempre no están reservados: una ficha `lunes` en un viaje sin día `lunes` pasa la puerta pero duplica el id en el DOM) y WR-02 (`[x](/#pantheon)`, `[x](/guiaRoma/#pantheon)`, `[x](../roma#x)` pasan `cross-trip-link`)"
-    expected: "Decisión: cerrar ahora con un plan `--gaps` (reservar `DAY_SECTION_IDS` y pasar `cross-trip-link` a lista blanca) o diferirlos a la Fase 10 (SHAPE-01 hace los días data-driven y rehace las anclas). Verificado por el verificador contra `tests/data/trips.ts:51-55,282-287` y `TripView.vue:123-151`"
-    why_human: "SC4 enumera «id que choca con un ancla de sección» y «enlace fuera del viaje»; los casos listados están cubiertos con dientes, pero estos dos huecos de borde son reales y la decisión de cuándo cerrarlos es de alcance"
+  - test: "Prohibicion 09-06 (juicio, sin tier asignado): la puerta de datos nunca omite en silencio una carpeta de viaje, una entrada de content/trips/ ni un YAML que no sabe clasificar o parsear (sin fail-open)"
+    expected: "Confirmar el veredicto NO AUTORITATIVO del verificador: respetada. Evidencia directa: con un zzmayus.YML real en content/trips/prueba/monuments/, con un content/trips/zzsuelto.yml real y con una carpeta oculta content/trips/.zz/, vitest run tests/data sale con codigo 1 y nombra cada fichero ([stray-file], [stray-file], [trip-slug]). unverified-prohibition - human review recommended"
+    why_human: "Llega con verification: null / status: unresolved; por contrato nunca se absorbe en un passed silencioso aunque la evidencia sea favorable (el usuario ya confirmo la version previa de esta prohibicion en el UAT, test 3, y pidio cerrar IN-05, que 09-06 cierra)"
+  - test: "Prohibicion 09-06 (juicio, sin tier asignado): ningun fichero bajo content/ (incluido content/trips/roma/), tests/parity/ (56 goldens), app/assets/css/ ni content.config.ts se modifica; las mutaciones de prueba dejan git status limpio"
+    expected: "Confirmar el veredicto NO AUTORITATIVO del verificador: respetada. Evidencia determinista: git diff 68be7a5 HEAD --stat -- content tests/parity app/assets/css content.config.ts vacio; git status solo muestra .planning/state.json y .planning/ui-reviews/ sin seguimiento tras mis mutaciones. unverified-prohibition - human review recommended"
+    why_human: "Llega con verification: null / status: unresolved; por contrato queda marcada para confirmacion humana"
 ---
 
-# Phase 9: Plataforma por viaje — Informe de verificación
+# Phase 9: Plataforma por viaje - Informe de verificacion (re-verificacion)
 
-**Objetivo de la fase:** Cualquier guía funciona aislada de las demás — su búsqueda, sus enlaces entre fichas, sus preferencias guardadas y la validación de su contenido pertenecen a su viaje — sin que Roma cambie ni de URL ni de aspecto
-**Verificado:** 2026-11-20T12:30:00Z
+**Objetivo de la fase:** Cualquier guia funciona aislada de las demas - su busqueda, sus enlaces entre fichas, sus preferencias guardadas y la validacion de su contenido pertenecen a su viaje - sin que Roma cambie ni de URL ni de aspecto
+**Verificado:** 2026-11-22T13:35:00Z
 **Estado:** human_needed
-**Re-verificación:** No — verificación inicial
+**Re-verificacion:** Si - el informe anterior (2026-11-20) estaba rancio: las fases 10-14 evolucionaron ficheros de la Fase 9, y despues llegaron el plan de cierre 09-06 y los fixes de revision 6473be8 / 39d33fd. Todo se ha re-contrastado contra el codigo actual (HEAD d09ad0a).
 
 ## Resumen ejecutivo
 
-El objetivo se cumple en el código: los 5 criterios de éxito del ROADMAP están verificados contra el código real, no contra los SUMMARY. No hay huecos bloqueantes (`gaps_found` no aplica). El estado es `human_needed` porque (a) tres prohibiciones de `must_haves.prohibitions` llegan sin tier de verificación (`verification: null`, `status: unresolved`) y por contrato quedan marcadas como `unverified-prohibition — human review recommended` aunque mi veredicto no autoritativo es favorable, y (b) hay dos decisiones de alcance/riesgo que debe tomar una persona (CR-01 y los falsos negativos WR-01/WR-02 de la puerta). La fase se completa «con 3 prohibiciones marcadas».
+El objetivo se cumple en el codigo actual y los 5 criterios de exito del ROADMAP siguen siendo ciertos. No hay huecos (`gaps_found` no aplica) ni verdades presentes-pero-sin-comportamiento. El estado es `human_needed` unicamente porque las dos prohibiciones de `must_haves.prohibitions` del plan 09-06 llegan sin tier de verificacion (`verification: null`, `status: unresolved`): por contrato quedan marcadas como `unverified-prohibition - human review recommended` aunque mi veredicto no autoritativo es favorable en ambas. La fase se completa "con 2 prohibiciones marcadas".
 
-Evidencia independiente recogida en esta verificación (Node 22.20.0):
+Los riesgos abiertos en el informe anterior estan cerrados: CR-01 de la Fase 9 (filas de `prueba` en `sql_dump`) lo resuelve el filtro `draft` de la Fase 11; WR-01/WR-02 de la puerta, la Fase 10 (reflejado en UAT test 5); IN-05 lo cierra 09-06.
 
-- `npx vitest run tests/unit tests/data` → **17 ficheros, 427 tests, todo verde** (164 unit + 263 data, coincide con el dato del orquestador).
-- `pnpm test:trips` (nuxi dev, puerto 5300, caché `.data .nuxt` borrada antes) → **5 passed (28.1s)**: navegación, búsqueda y preferencias/notas aisladas en `/trips/prueba` y en Roma.
-- `git diff 79e57e0 HEAD --stat -- tests/parity content/trips/roma app/assets nuxt.config.ts scripts playwright.gate.config.ts` → **vacío**; 56 PNG de golden intactos; `git status` solo muestra `.planning/state.json` sin seguimiento.
-- Barrido `grep` en `app/`: ya no queda `useTrip('roma')` en ningún composable ni componente salvo `app/pages/index.vue` (`<TripView slug="roma" />`, el hogar de Roma en `/`, deliberado); ninguna clave `roma-` literal ni `useState` sin `tripStateKey`.
-- Build en `.output` (generada desde el código de HEAD): `index.html` y `_payload.json` sin `PRUEBA-CENTINELA-9F3`; no existe `.output/public/trips`.
-- No se ejecutó de nuevo `pnpm verify` completo (borra y regenera `.output` y lanza 80 tests de paridad); me apoyo en la ejecución limpia del orquestador (exit 0, unit 164 / data 263 / parity 80) y en la comprobación de que `tests/parity/` no tiene diff.
+Evidencia independiente de esta verificacion (Node 22.20.0, sin borrar cachés):
+
+- `node_modules/.bin/vitest run tests/unit tests/data` -> 32 ficheros, **1362 tests, todo verde** (568 unit + 794 data; coincide con `pnpm verify` del orquestador: unit 568, data 794, parity 126, exit 0).
+- `playwright test -c playwright.trips.config.ts tests/trips/isolation.spec.ts` (nuxi dev, puerto 5300) -> **5 passed (31.4s)**: navegacion, busqueda y preferencias/notas aisladas en `/trips/prueba` y en Roma.
+- Mutaciones en disco de la puerta (creadas y borradas en el mismo comando, `git status` limpio despues): `zzmayus.YML`, `content/trips/zzsuelto.yml` y `content/trips/.zz/trip.yml` hacen fallar `tests/data` con exit 1 nombrando el fichero.
+- `git diff 79e57e0 HEAD`: los 56 PNG de `tests/parity/` no tienen ninguna modificacion (solo se han AÑADIDO specs en fases posteriores); `content/trips/roma/trip.yml` y `app/assets/css/` solo ganan lineas aditivas (+23, +137) de las fases 10/11. `git diff 68be7a5 HEAD -- content tests/parity app/assets/css content.config.ts` (ventana de 09-06 + revision) vacio.
+- Dumps de la build actual (`.output/public/__nuxt_content/*/sql_dump.txt`, gzip+base64 descomprimidos): `trip` 0 apariciones de `prueba`, `day` 0, `monument` 5 que son solo prosa de Roma ("prueba fisica", "aprueban"...), sin `PRUEBA-CENTINELA` ni `fontana-pruebas`; `.output/public/trips/` contiene solo `campania` y `roma` (`prueba` es `draft: true` y queda fuera).
 
 ## Logro del objetivo
 
-### Verdades observables (criterios de éxito del ROADMAP)
+### Verdades observables (criterios de exito del ROADMAP)
 
 | # | Verdad | Estado | Evidencia |
 |---|--------|--------|-----------|
-| SC1 | Con dos viajes (Roma y `prueba`), buscar en cada guía solo devuelve fichas de su viaje («Pantheon» en Roma sí, en `prueba` no) | ✓ VERIFIED | `app/composables/useSearch.ts`: `const indexes = new Map<string, MiniSearch>()` (una entrada por slug), `useSearchController` lee `useTripSlug()` en su primera sentencia, claves `search:query:<slug>` vía `tripStateKey`. `tests/unit/searchIsolation.spec.ts` (datos reales; verde) y E2E `isolation.spec.ts:163` y `:195` (verdes en esta verificación: «Pantheon» sin resultados en `prueba`, «Fontana»/«Escalinata» solo fichas de prueba, Roma sin fichas de prueba). `tests/parity/search-route.spec.ts` sin diff. |
-| SC2 | En cualquier guía, no solo Roma: enlace a ficha → scroll + resalte; «Volver» restaura la posición; la pastilla activa sigue al scroll | ✓ VERIFIED | `TripView.vue:68` `provideTripSlug(props.slug)` antes del primer `await` y `await useCardNavigationController(props.slug)` por argumento (trampa del self-inject); `useCardNavigation.ts:58` `useCardNavigation(slug = useTripSlug())` con claves `cardNav:stack:<slug>` / `cardNav:activeSection:<slug>`; el controller consulta `useTrip(slug)` (línea 186), ya no un viaje fijo. Comportamiento (state transition) respaldado por tests que pasan: E2E `isolation.spec.ts:101` (resalta + «Volver» restaura scroll, timeline y prosa) y `:132` (pastilla de `#viernes` a `#sabado`) verdes; en Roma, `tests/parity/navigation.spec.ts` sin diff y verde en la puerta del orquestador (ver nota de flakiness abajo). |
-| SC3 | Quien usa Roma conserva notas, ritmo, «caminar menos» y resumen (claves `roma-*` intactas, sin migración); lo de otro viaje no se mezcla | ✓ VERIFIED | `app/utils/tripStorage.ts`: `tripStorageKey(slug, name) = \`${slug}-${name}\`` → para `roma` produce byte a byte `roma-pace/-light/-resumen/-note-<ficha>`; `useTripModes.ts` y `MonumentCard.vue:127` usan solo `getItem/setItem` por clave exacta; ritmo validado contra los 3 literales. `tests/unit/tripStorage.spec.ts` fija la identidad con las claves vivas. E2E `isolation.spec.ts:214` (verde): con `roma-pace=slow`, `roma-light=1`, `roma-resumen=1`, `roma-note-spagna` sembrados, `prueba` arranca con valores por defecto; escribir en `prueba` deja intactas las `roma-*`; al volver a Roma sus valores siguen ahí. `tests/parity/modes.spec.ts` (14) y `map-fallback-notes.spec.ts` (12) sin diff. Tema global: `nuxt.config.ts` sin diff, `storageKey: 'roma-theme'` (D-07). |
-| SC4 | Un YAML inválido de cualquier viaje (slug no válido, carpeta ≠ slug, id duplicado, id que choca con ancla de sección, `#ficha` fuera del viaje, nombre reservado de Content) hace fallar `pnpm verify` señalando el fichero | ✓ VERIFIED (con avisos WR-01/WR-02) | `shared/schemas.ts:331,335` `TRIP_SLUG_RE = /^[a-z0-9]+$/` en `TripSchema.slug`; `tests/data/trips.ts` (`loadTrip` recursivo, `checkTrip`, `Violation {file, rule, message}`); `schema.spec.ts:44` e `invariants.spec.ts:45` con `describe.each(listTripDirs())` (borradores incluidos, D-09); bloque «dientes» (`invariants.spec.ts:127-252`) con una prueba por regla: `trip-slug` (`campania-2027` en disco, `otro` ≠ carpeta), `dup-id`, `fixed-anchor`, `reserved-key`, `anchor`, `cross-trip-link`, `yaml-parse`, `yaml-object`, `trip-yml`, `stray-file`… Todos verdes (427/427). `pnpm verify` encadena `test:data`. Avisos reales confirmados por lectura de `trips.ts:51-55,282-287` y `TripView.vue:123-151` (ver «Avisos»). |
-| SC5 | La puerta de paridad de Roma sigue verde en `/` sin cambios en `tests/parity/` ni re-baseline | ✓ VERIFIED | `git diff 79e57e0 HEAD -- tests/parity/ content/trips/roma app/assets nuxt.config.ts` vacío; 56 PNG de golden sin diff; `package.json` solo cambia `scripts` (`test:trips`, `verify` con limpieza de cachés); dependencias idénticas. `pnpm verify` exit 0 aportado por el orquestador (parity 80 passed). |
+| SC1 | Con dos viajes (Roma y `prueba`), buscar en cada guia solo devuelve fichas de su viaje ("Pantheon" en Roma si, en `prueba` no) | VERIFIED | `useSearch.ts:63` `const indexes = new Map<string, MiniSearch>()` (una entrada por slug), `useSearch(slug = useTripSlug())`, estado `tripStateKey(slug, 'search:*')`, `indexes.get(slug)` en `onInput`. `tests/unit/searchIsolation.spec.ts` (datos reales, en los 568 verdes) y E2E `isolation.spec.ts:163` y `:195` verdes en esta verificacion. |
+| SC2 | En cualquier guia: enlace a ficha -> scroll + resalte, "Volver" restaura la posicion, la pastilla activa sigue al scroll | VERIFIED | `TripView.vue:62` `provideTripSlug(props.slug)` antes del primer `await` y `:75` `await useCardNavigationController(props.slug)` (slug por argumento, trampa del self-inject); `useCardNavigation.ts:58` `useCardNavigation(slug = useTripSlug())` con claves `cardNav:stack:<slug>`/`cardNav:activeSection:<slug>`; el controller usa `useTrip(slug)` (l.186). Truth de transicion de estado respaldada por tests que pasan: E2E `isolation.spec.ts:101` (resalta + Volver restaura scroll) y `:132` (pastilla entre dias de `prueba`) verdes ahora; en Roma, la puerta de paridad (126/126) del orquestador. |
+| SC3 | Quien usa Roma conserva notas, ritmo, "caminar menos" y resumen (claves `roma-*` intactas, sin migracion); lo de otro viaje no se mezcla | VERIFIED | `app/utils/tripStorage.ts` `tripStorageKey(slug, name) = ${slug}-${name}` -> `roma-pace/-light/-resumen/-note-<ficha>` byte a byte; `useTripModes.ts:107-109` y `MonumentCard.vue:135` solo `getItem/setItem` por clave exacta via `tripStorageKey(useTripSlug(), ...)`; sin ninguna clave `roma-` literal en `app/` salvo el comentario del tema global (`ThemeToggle.vue`, `storageKey: 'roma-theme'`, D-07); `tripCoupling.spec.ts` falla ante `localStorage.clear/removeItem/key/length` y `Object.keys(localStorage)`; E2E `isolation.spec.ts:214` (verde): con `roma-*` sembradas `prueba` arranca por defecto, escribir en `prueba` no toca `roma-*`. |
+| SC4 | Un YAML invalido en cualquier viaje (slug no valido, carpeta != slug, id duplicado, id que choca con ancla, `#ficha` fuera del viaje, nombre reservado de Content) hace fallar `pnpm verify` nombrando el fichero | VERIFIED | `shared/schemas.ts:469` `TRIP_SLUG_RE = /^[a-z0-9]+$/`; `tests/data/trips.ts`: reglas `trip-slug` (l.340-341), `dup-id` (l.384), `fixed-anchor` (l.389), `reserved-key` (l.364), `anchor`/`cross-trip-link` en lista blanca (l.511-536), `stray-file`, `yaml-parse`, `yaml-object`, `trip-yml`; `schema.spec.ts` e `invariants.spec.ts` con `describe.each(listTripDirs())` (borradores incluidos, carpetas ocultas incluidas por 6473be8); `pnpm verify` encadena `test:data`. Dientes por regla en `invariants.spec.ts` (794/794 verdes) y mutaciones en disco confirmadas hoy (`file: [regla] mensaje`). |
+| SC5 | La puerta de paridad de Roma sigue verde en `/` sin cambios en `tests/parity/` ni re-baseline | VERIFIED | 56 PNG de golden sin modificar desde `79e57e0` (`git log --diff-filter=M` sobre `tests/parity/**/*.png` vacio); `pnpm verify` del orquestador exit 0, parity 126/126 (80 originales + los añadidos por fases posteriores, sin tocar goldens). Los cambios posteriores sobre `tests/parity/*.spec.ts` y CSS son de fases 10-14, no de la Fase 9. |
 
-**Puntuación:** 5/5 criterios verificados (0 presentes pero sin comportamiento verificado).
+**Puntuacion:** 5/5 criterios verificados (0 presentes pero sin comportamiento verificado).
 
-### Decisiones D-01..D-12 (09-CONTEXT.md)
+### Cierre del hueco G-09-3 (plan 09-06) - truths del plan
 
-| Decisión | Estado | Evidencia |
-|----------|--------|-----------|
-| D-01 viaje ficticio mínimo `prueba` | ✓ | `content/trips/prueba/`: `trip.yml`, 2 días (`viernes`, `sabado`), 3 fichas (`fontana-pruebas`, `torre-ensayo`, `spagna`); sin campos de esquema nuevos |
-| D-02 `prueba` solo dev; Roma no descarga datos de prueba | ⚠️ PARCIAL | A la letra: `nitro.prerender.routes` sigue `['/']`, nada enlaza a `/trips/prueba`, no existe `.output/public/trips`, `index.html`/`_payload.json` sin centinela. Pero los `sql_dump.txt` públicos contienen filas de `prueba` (verificado: `trip` 3 apariciones + centinela; `monument` 23 + centinela; `day` 8). Ver CR-01 y primer ítem de verificación humana |
-| D-03 sin campos de esquema nuevos; hallazgo para Fase 10 | ✓ | Documentado en la cabecera de `content/trips/prueba/trip.yml` (días `viernes…martes` porque TripView solo monta esos 5) |
-| D-04 claves `${slug}-${name}` | ✓ | `tripStorage.ts`, `useTripModes.ts`, `MonumentCard.vue` |
-| D-05 slug `^[a-z0-9]+$` | ✓ | `TRIP_SLUG_RE` en esquema + regla `trip-slug` de la puerta + fixture `campania-2027` |
-| D-06 mismos defaults para todos los viajes | ✓ | `useState(…, () => 'optimistic' / false / false)`; E2E de defaults verde |
-| D-07 tema global `roma-theme` | ✓ | `nuxt.config.ts` sin diff |
-| D-08 `useState` por viaje + índice MiniSearch por slug | ✓ | `tripStateKey` en `useSearch`, `useCardNavigation`, `useTripModes`; `Map<string, MiniSearch>`; guardián `tripCoupling.spec.ts`; centinela de claves `$space:roma` en `build-isolation.spec.ts` |
-| D-09 mismo rigor para todos los viajes (borradores incluidos) | ✓ | `describe.each(listTripDirs())`; viaje con solo `trip.yml` sin violaciones (test) |
-| D-10 invariantes por viaje con fichero culpable | ✓ | `Violation.file` = ruta de repo; `formatViolations` → `file: [regla] mensaje` |
-| D-11 `#ficha` fuera del viaje rompe verify | ✓ (con WR-02 sobre enlaces raíz-relativos) | regla `anchor` + `cross-trip-link` con dientes |
-| D-12 conteos y `migration-diff` solo de Roma | ✓ | `migration-diff.spec.ts` y `scripts/migration-diff.ts` sin diff; esquema/invariantes iteran todos los viajes |
+| Truth del plan 09-06 | Estado | Evidencia |
+|----------------------|--------|-----------|
+| `.YML/.Yml/.YAML/.Yaml` en un viaje -> exactamente una violacion `stray-file` con el fichero | VERIFIED | `trips.ts:136` `isYaml = /\.ya?ml$/i`; `loadTripFromFiles` (l.223-238) manda a `stray-file` lo que no casa con `COLLECTIONS`; mutacion real `zzmayus.YML` -> exit 1 con `content/trips/prueba/monuments/zzmayus.YML: [stray-file]` |
+| Entrada no oculta suelta en `content/trips/` -> `stray-file` con su ruta; ocultas ignoradas | VERIFIED | `checkTripsRoot` (l.202-212) sobre `rootEntries`; mutacion real `content/trips/zzsuelto.yml` -> exit 1 con `[stray-file]`; fixtures `raiz.yml` (reportado) y `.oculto.yml` (ignorado) existen |
+| `listTripDirs` + `checkTripsRoot` reparten todas las entradas de la raiz | VERIFIED | ambas comparten `rootEntries()` (l.173); en CR-01 se ajusto: los directorios ocultos se devuelven como viajes y fallan con `trip-slug`/`trip-yml` (mutacion `.zz` -> `[trip-slug] slug "prueba" != carpeta ".zz"`) |
+| `COLLECTIONS[].match` sigue distinguiendo mayusculas | VERIFIED | el flag `/i` solo esta en `isYaml` (l.136); comentario de contrato en l.133-135 y l.218-221 |
+| Arbol real con puertas verdes; Content no ingiere distinto | VERIFIED | 1362/1362; `git diff 68be7a5 HEAD -- content content.config.ts` vacio |
+| README 5.3 documenta `checkTripsRoot` | VERIFIED | `tests/README.md` modificado en `bf45c6b`/`6473be8`/`39d33fd` (aparece en `covered_files`) |
+
+Fixes de revision verificados contra el codigo: CR-01 (`rootEntries` conserva los directorios ocultos; `scripts/tripManifest.mjs` ya no filtra nombres ocultos y lanza por `TRIP_FOLDER_RE`), WR-01 (`trips.ts:228-232`: ficheros no YAML no ocultos -> `stray-file`).
 
 ### Artefactos requeridos
 
-`gsd-tools verify.artifacts` sobre los 5 PLAN: 7/7, 6/6, 5/5, 4/4 y 3/3 pasan (existen, sustantivos, con el patrón esperado). Lectura directa de los ficheros críticos: no son stubs.
-
 | Artefacto | Estado | Detalle |
 |-----------|--------|---------|
-| `app/utils/tripStorage.ts` | ✓ VERIFIED | funciones puras, auto-importadas; test de contrato |
-| `app/composables/useTripContext.ts` | ✓ VERIFIED | `provideTripSlug` / `useTripSlug` (lanza fuera de TripView, sin default silencioso) |
-| `app/composables/useCardNavigation.ts`, `useSearch.ts`, `useTripModes.ts` | ✓ VERIFIED | WIRED: sin viaje fijo, claves por slug |
-| `app/components/TripView.vue`, `MonumentCard.vue`, `SearchBox.vue` | ✓ VERIFIED | WIRED |
-| `shared/schemas.ts` | ✓ VERIFIED | `TRIP_SLUG_RE` aditivo; `roma` cumple |
-| `tests/data/trips.ts`, `invariants.spec.ts`, `schema.spec.ts` | ✓ VERIFIED | puerta por viaje con dientes |
-| `content/trips/prueba/*` (6 ficheros) | ✓ VERIFIED | pasan la puerta con 0 violaciones |
-| `tests/unit/tripCoupling.spec.ts`, `searchIsolation.spec.ts`, `tripStorage.spec.ts` | ✓ VERIFIED | dentro de `test:unit` (parte de `verify`) |
-| `tests/data/build-isolation.spec.ts` | ✓ VERIFIED (alcance limitado) | detecta Roma sin centinela y claves sufijadas; NO mira los dumps (ver CR-01 e IN-02) |
-| `playwright.trips.config.ts`, `tests/trips/isolation.spec.ts`, script `test:trips` | ✓ VERIFIED | 5/5 verdes; fuera de `verify` y de `tests/parity/` como se planificó |
+| `app/utils/tripStorage.ts`, `app/composables/useTripContext.ts` | VERIFIED | funciones puras / contexto que lanza fuera de TripView (sin default silencioso); WIRED (auto-imports usados en composables y componentes) |
+| `useCardNavigation.ts`, `useSearch.ts`, `useTripModes.ts` | VERIFIED | WIRED: sin viaje fijo, claves por slug; sin `useTrip('roma')` en `app/` |
+| `TripView.vue`, `MonumentCard.vue`, `SearchBox.vue` | VERIFIED | WIRED; `TripView` publica el slug y lo pasa al controller |
+| `shared/schemas.ts` (`TRIP_SLUG_RE`) | VERIFIED | `roma` y los demas viajes lo cumplen |
+| `tests/data/trips.ts`, `invariants.spec.ts`, `schema.spec.ts` | VERIFIED | puerta por viaje con dientes, ahora sin fail-open en extension, raiz, carpetas ocultas ni ficheros no YAML |
+| `content/trips/prueba/*` | VERIFIED | viaje ficticio, ahora `draft: true` (excluido de build y dumps) |
+| `tests/unit/tripCoupling.spec.ts`, `searchIsolation.spec.ts`, `tripStorage.spec.ts`, `tripManifest.spec.ts` | VERIFIED | dentro de `test:unit` (parte de `verify`) |
+| `tests/data/build-isolation.spec.ts`, `playwright.trips.config.ts`, `tests/trips/isolation.spec.ts` | VERIFIED | E2E 5/5 verdes hoy; fuera de `verify` por diseño |
+| `tests/data/fixtures/trips/{raiz.yml,.oculto.yml,.oculto-dir/trip.yml}` | VERIFIED | existen y alimentan los tests de dientes |
 
-### Verificación de enlaces clave
+### Verificacion de enlaces clave
 
-`gsd-tools verify.key-links`: planes 01, 02, 04 y 05 completos; plan 03: 4/5. El enlace «no verificado» (`tests/unit/searchIsolation.spec.ts` → `tests/data/trips.ts` por el patrón `loadTrip\('prueba'\)`) es un falso negativo de patrón: el spec importa `listTripDirs, loadTrip` (línea 2) y lee `prueba` mediante el helper `monumentsOf('prueba')`; el enlace funcional existe y el test pasa.
+| De | A | Via | Estado |
+|----|---|-----|--------|
+| `TripView.vue` | `useCardNavigationController` / `provideTripSlug` | slug por argumento y provide antes del primer await | WIRED |
+| `SearchBox` -> `useSearch` | `indexes: Map<slug, MiniSearch>` | `indexes.set(slug, createSearchIndex(...))` | WIRED |
+| `useTripModes`, `MonumentCard` | `tripStorageKey(slug, ...)` | clave `${slug}-${name}` | WIRED |
+| `invariants.spec.ts` | `checkTripsRoot()` / `checkTrip(loadTrip(...))` | `describe.each(listTripDirs())` + aserciones sobre arbol real y fixtures | WIRED |
+| `package.json` `verify` | `test:data` | `rm -rf ... && pnpm generate && pnpm test:unit && pnpm test:data && pnpm test:parity` | WIRED |
 
 ### Trazado de flujo de datos (Nivel 4)
 
 | Artefacto | Variable | Fuente | Datos reales | Estado |
 |-----------|----------|--------|--------------|--------|
-| `useSearch` (índice por slug) | `monById` | `useTrip(slug)` → `queryCollection('monument').where('trip','=',slug)` | Sí (E2E devuelve fichas reales por viaje) | ✓ FLOWING |
-| `useCardNavigationController` | `monById` | `useTrip(slug)` | Sí | ✓ FLOWING |
-| `useTripModes` / `MonumentCard` | claves `localStorage` | `tripStorageKey(slug, …)` leídas en `onMounted` | Sí (E2E siembra y lee) | ✓ FLOWING |
+| `useSearch` (indice por slug) | `monById` | `useTrip(slug)` -> `queryCollection('monument').where('trip','=',slug)` | Si (E2E devuelve fichas reales por viaje) | FLOWING |
+| `useCardNavigationController` | `monById` | `useTrip(slug)` | Si | FLOWING |
+| `useTripModes` / `MonumentCard` | claves `localStorage` | `tripStorageKey(slug, ...)` leidas en `onMounted` | Si (E2E siembra y lee) | FLOWING |
 
 ### Comprobaciones de comportamiento
 
 | Comportamiento | Comando | Resultado | Estado |
 |----------------|---------|-----------|--------|
-| Unit + data (427) | `npx vitest run tests/unit tests/data` | 17 ficheros, 427 passed | ✓ PASS |
-| Aislamiento E2E por viaje | `pnpm test:trips` | 5 passed (28.1s) | ✓ PASS |
-| Build sin datos de prueba en Roma | `grep PRUEBA-CENTINELA` en `index.html` / `_payload.json`; `ls .output/public/trips` | 0 / 0 / no existe | ✓ PASS |
-| Dumps públicos sin filas de prueba | descompresión gzip+base64 de `__nuxt_content/*/sql_dump.txt` | `trip`, `monument` y `day` contienen `prueba` (centinela en `trip` y `monument`) | ✗ FAIL (riesgo aceptado, ver CR-01) |
+| Unit + data | `vitest run tests/unit tests/data` | 32 ficheros, 1362 passed | PASS |
+| Aislamiento E2E por viaje | `playwright test -c playwright.trips.config.ts tests/trips/isolation.spec.ts` | 5 passed (31.4s) | PASS |
+| `.YML` real en un viaje | `cp spagna.yml zzmayus.YML; vitest run tests/data` | exit 1, `zzmayus.YML: [stray-file]` | PASS (la puerta falla como debe) |
+| YAML suelto en la raiz | `content/trips/zzsuelto.yml` | exit 1, `[stray-file]` | PASS |
+| Carpeta oculta de viaje | `content/trips/.zz/trip.yml` | exit 1, `[trip-slug]` | PASS |
+| Dumps sin viaje borrador | descompresion gzip+base64 de `sql_dump.txt` | `trip`/`day`: 0 `prueba`; `monument`: solo prosa de Roma | PASS |
 
-Nota sobre `tests/parity/navigation.spec.ts` «SC#2 scrollspy» [mobile]: el orquestador informa de un fallo aislado por timeout (~29,3 s frente al límite de 30 s en todas las olas, pasa 6/6 en serie). No hay diff de `app/` entre la puerta verde de la ola 3 y esa ejecución, y `tests/parity/` no cambió, por lo que es una fragilidad de carga preexistente y no un defecto introducido por la fase. Lo registro como observación, no como hueco.
+### Ejecucion de sondas (Paso 7c)
 
-### Ejecución de sondas (Paso 7c)
-
-Ninguna sonda `probe-*.sh` declarada en los PLAN ni convencional (`scripts/*/tests/probe-*.sh`): el paso se omite («SKIPPED, no probes declared»).
+Ninguna sonda `probe-*.sh` declarada ni convencional: SKIPPED.
 
 ### Cobertura de requisitos
 
-Todos los IDs de los PLAN (PLAT-01..04) están en REQUIREMENTS.md y son los únicos mapeados a la Fase 9 (sin requisitos huérfanos).
+Los IDs de los PLAN (PLAT-01..04; 09-06 declara PLAT-04) estan en REQUIREMENTS.md, marcados `[x]`/Complete, y son los unicos mapeados a la Fase 9 (sin huerfanos).
 
-| Requisito | Planes | Descripción | Estado | Evidencia |
+| Requisito | Planes | Descripcion | Estado | Evidencia |
 |-----------|--------|-------------|--------|-----------|
-| PLAT-01 | 09-03, 09-04, 09-05 | La búsqueda de una guía solo devuelve fichas de ese viaje | ✓ SATISFIED | SC1; `searchIsolation.spec.ts` + E2E |
-| PLAT-02 | 09-01, 09-04, 09-05 | Enlaces entre fichas, «Volver» y scrollspy dentro de cualquier viaje | ✓ SATISFIED | SC2; E2E en `/trips/prueba` + paridad en Roma |
-| PLAT-03 | 09-01, 09-04, 09-05 | Notas, ritmo, «caminar menos» y resumen por viaje; claves `roma-*` intactas | ✓ SATISFIED | SC3; `tripStorage.spec.ts` + E2E |
-| PLAT-04 | 09-02, 09-03, 09-05 | Contenido validado por viaje; un YAML inválido rompe `pnpm verify` | ✓ SATISFIED (con avisos WR-01/WR-02/IN-05) | SC4; puerta con dientes |
+| PLAT-01 | 09-03, 09-04, 09-05 | La busqueda de una guia solo devuelve fichas de ese viaje | SATISFIED | SC1 |
+| PLAT-02 | 09-01, 09-04, 09-05 | Enlaces entre fichas, "Volver" y scrollspy dentro de cualquier viaje | SATISFIED | SC2 |
+| PLAT-03 | 09-01, 09-04, 09-05 | Notas/ritmo/caminar menos/resumen por viaje; claves `roma-*` intactas | SATISFIED | SC3 |
+| PLAT-04 | 09-02, 09-03, 09-05, 09-06 | Contenido validado por viaje; un YAML invalido rompe `pnpm verify` | SATISFIED | SC4 + cierre G-09-3 |
 
 ### Anti-patrones
 
-Barrido de marcadores de deuda (`TBD|FIXME|XXX|TODO|HACK`) en los ficheros modificados por la fase: **ninguno** (las coincidencias de «TODOS» son prosa en español). Sin stubs: ningún `return null`/`=> {}` vacío en las rutas de datos de los composables modificados. No hay anti-patrones bloqueantes.
+Barrido de `TBD|FIXME|XXX` en los ficheros de la fase: ninguno sin referencia. Sin stubs ni `return null` en las rutas de datos de los composables. Los avisos WR-03 (watch tras `await` sin scope), WR-04 (`useTripModes` sin try/catch en localStorage) y WR-05 del informe previo son preexistentes/no bloqueantes y no afectan a ningun SC.
 
-| Fichero | Patrón | Severidad | Impacto |
-|---------|--------|-----------|---------|
-| `app/composables/useCardNavigation.ts:190`, `useSearch.ts:161` (WR-03) | `watch` creado tras el `await` interno sin scope propio: no se detiene al desmontar | ⚠️ Warning | fuga de un watcher por montaje y por controller; preexistente, ahora más relevante al poder cambiar de viaje |
-| `app/composables/useTripModes.ts:110-121` (WR-04) | `localStorage` sin try/catch (MonumentCard sí lo protege) | ⚠️ Warning | con almacenamiento bloqueado, los modos dejan de funcionar; preexistente |
-| `tests/unit/tripCoupling.spec.ts` (WR-05) | solo escanea 3 directorios sin recursión | ⚠️ Warning | acoplamiento futuro en `app/pages`, `app/plugins` o subcarpetas pasaría el guardián |
+### Prohibiciones (ADR-550, veredictos NO AUTORITATIVOS)
 
-### Avisos (no bloqueantes) y observaciones
+| Prohibicion | Tier | Veredicto | Marca |
+|-------------|------|-----------|-------|
+| 09-06 (1): puerta sin fail-open | `verification: null` | respetada (mutaciones en disco y 794/794) | unverified-prohibition - human review recommended |
+| 09-06 (2): no tocar `content/`, `tests/parity/`, CSS, `content.config.ts` | `verification: null` | respetada (diff vacio sobre la ventana, `git status` limpio) | unverified-prohibition - human review recommended |
 
-- **CR-01 / D-02 (la pregunta del orquestador).** Mi juicio: **los criterios de éxito (SC1-SC5) y PLAT-01..04 siguen cumpliéndose**; el riesgo no pertenece a ningún SC. D-02 se cumple a la letra («no se prerenderiza ni se enlaza»; el centinela de Roma pasa), pero no en espíritu completo, porque el dump público de Content sí lleva las filas de `prueba` y el `404.html` shell SPA podría renderizar `/trips/prueba` en cliente en Pages (inferido, no probado en navegador por el revisor ni por mí). Atenuantes comprobados: no existe `.github/workflows`, no hay despliegue (v1.0 D-08), el contenido es ficticio y sin datos de usuario, y la Fase 11 (ROUTE-05, hoy Pending en REQUIREMENTS.md) es la dueña del filtro `draft`. Lo clasifico **WARNING con decisión humana**, no BLOCKER: ejecutar `/gsd-ship` o desplegar antes de la Fase 11 sin resolver esto expondría la guía de prueba. Además, `build-isolation.spec.ts` da falsa seguridad respecto a los dumps (gzip+base64, nunca coincidirían con un `grep`); mejorarlo es barato (IN-02 / fix propuesto en 09-REVIEW.md).
-- **Cambio del haystack de búsqueda (commit 737d796, `searchIndex.ts`).** Se indexa el texto de los enlaces Markdown y no su destino (`](#ficha)`). El `index.html` original buscaba sobre `card.textContent` (texto visible, sin hrefs), así que el cambio acerca Roma al original y no la aleja; no altera el aspecto (HTML y píxeles) ni los 56 goldens, y la paridad sigue verde. Cambia el top-8 de «art», «arq» y «Bernini» en Roma, lo cual es un cambio de ranking observable pero hacia la fidelidad. **No entra en conflicto con «Roma no cambia de aspecto»**; solo lo señalo por transparencia (la deuda previa de ranking «Pante» de v1.0 sigue anotada en PROJECT.md).
-- **WR-01 / WR-02 / IN-03 / IN-05 (puerta de datos).** Confirmados por lectura del código: `FIXED_DOM_IDS` no reserva `viernes…martes` aunque TripView renderiza esas cinco `<section>` siempre; y `cross-trip-link` solo reconoce `/trips/`, así que `[x](/#pantheon)` pasa. Son falsos negativos de borde, ninguno afecta a Roma hoy ni a los casos que enumera SC4. Probablemente se resuelven mejor en la Fase 10 (SHAPE-01 hace los días data-driven), pero hay que acordarlo para que la puerta no quede con ese agujero.
-- Los 11 hallazgos de la revisión (09-REVIEW.md) están en `open` en 09-REVIEW-DISPOSITION.md: ninguno triado todavía.
+Las prohibiciones de 09-01/09-02/09-05 las confirmo el usuario en UAT (tests 2, 3 y 4: pass; la de 09-02 reabierta como G-09-3 y cerrada por 09-06).
 
-## Verificación humana requerida
+## Verificacion humana requerida
 
-### 1. Decisión sobre CR-01 / AR-09-01 (filas de `prueba` en `sql_dump.txt`)
+### 1. Prohibicion 09-06 (puerta sin fail-open)
 
-**Test:** Decidir si se acepta el riesgo hasta la Fase 11 o se corrige ya (excluir `trips/prueba/**` de `content.config.ts` en producción y hacer que el centinela descomprima los dumps).
-**Expected:** Decisión registrada (aceptar con nota en la Fase 11 / ROUTE-05, o plan de cierre `--gaps`).
-**Why human:** Es una decisión de riesgo y alcance; D-02 se cumple a la letra pero no del todo en espíritu.
+**Test:** Confirmar el veredicto no autoritativo (respetada).
+**Expected:** `zzmayus.YML`, `content/trips/zzsuelto.yml` y `content/trips/.zz/` hacen fallar `pnpm test:data` nombrando el fichero.
+**Why human:** Sin tier declarado (`verification: null`).
 
-### 2. Tres prohibiciones sin tier de verificación (`unverified-prohibition`)
+### 2. Prohibicion 09-06 (no tocar Roma, goldens, CSS, content.config.ts)
 
-**Test:** Confirmar los veredictos NO AUTORITATIVOS del verificador sobre las prohibiciones de 09-01 (no borrar/migrar/enumerar `roma-*`), 09-02 (sin fail-open en la puerta) y 09-05 (sin tocar `content/trips/roma/`, `tests/parity/`, CSS, ni re-baseline).
-**Expected:** Las tres respetadas: 09-01 por grep + guardián con dientes; 09-05 por `git diff` vacío y 56 goldens intactos; 09-02 respetada salvo el borde IN-05 (fichero suelto en `content/trips/` o extensión `.YML`).
-**Why human:** Llegan con `verification: null` / `status: unresolved`; por contrato nunca se absorben en un `passed` silencioso.
-
-### 3. Destino de WR-01/WR-02 (huecos de borde de la puerta de datos)
-
-**Test:** Elegir entre cerrarlos ahora (reservar `DAY_SECTION_IDS`; `cross-trip-link` como lista blanca) o diferirlos a la Fase 10.
-**Expected:** Decisión explícita; si se difiere, anotarlo como entrada de la Fase 10.
-**Why human:** El alcance de SC4 está cubierto en sus casos listados; estos son huecos de borde cuyo momento de cierre decide el usuario.
+**Test:** Confirmar el veredicto no autoritativo (respetada).
+**Expected:** `git diff 68be7a5 HEAD -- content tests/parity app/assets/css content.config.ts` vacio.
+**Why human:** Sin tier declarado (`verification: null`).
 
 ## Resumen de huecos
 
-No hay huecos que bloqueen el objetivo: los 5 criterios de éxito y los 4 requisitos están respaldados por código, tests que pasan en esta verificación y un diff vacío sobre `tests/parity/`. Lo pendiente es de decisión humana (riesgo CR-01, prohibiciones sin tier y alcance de WR-01/WR-02), no de implementación faltante.
+Ninguno. Verdades 5/5, G-09-3 cerrado, fixes de revision (CR-01, WR-01) verificados en codigo y con mutaciones reales, todas las puertas automaticas en verde. Solo quedan las dos confirmaciones humanas de prohibiciones sin tier.
 
 ---
 
-_Verificado: 2026-11-20T12:30:00Z_
-_Verificador: Claude (gsd-verifier)_
+_Verified: 2026-11-22T13:35:00Z_
+_Verifier: Claude (gsd-verifier)_
