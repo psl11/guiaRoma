@@ -203,7 +203,7 @@ Plans:
   3. Las secciones de Gastronomía (pizzerías de barrio, mozzarella di bufala, tabernas, trattorias de monte), Reservas (alojamiento por base, ferris, coche, conciertos, vuelos) y Práctica (ferris, conducción/ZTL y coche en islas, calor, calzado, consejos con niños) están completas para Campania
   4. Los datos de campo críticos (horarios de ferry, fechas de conciertos, acceso nocturno a Sorgeto con niños, coche en Procida/Ischia) aparecen verificados o marcados visiblemente como «por confirmar»
   5. Campania aparece en la portada y se abre en `/guiaRoma/trips/campania/` según la decisión de publicación de ROUTE-05; todo su contenido valida en `pnpm verify` y la puerta de Roma sigue verde
-**Plans**: 6/8 plans executed
+**Plans**: 7/8 plans executed
 Plans:
 **Wave 1**
 - [x] 13-01-PLAN.md — Tracer: martes 22 en Ischia con Epomeo y Sorgeto reales + spec de contenido Wave 0 (`tests/data/campania-content.spec.ts`) + trip.yml publicable (aún borrador, D-02) + numerales finales de las fichas (CAMP-01, CAMP-02, CAMP-06)
@@ -224,7 +224,7 @@ Plans:
 - [x] 13-06-PLAN.md — Sábado 26 (excursión en coche con dos opciones y devolución, D-01) con sus 4 fichas; 27 y 28 pasan a 9 y 10; contrato completo de 10 días y 24 fichas con mutación «ficha en dos días» (CAMP-01, CAMP-02, CAMP-06)
 
 **Wave 7** *(blocked on Wave 6 completion)*
-- [ ] 13-07-PLAN.md — Reservas con títulos propios (12.1) y Práctica; umbral final de «⚠ por confirmar» + e2e de ambas secciones (CAMP-04, CAMP-05, CAMP-06)
+- [x] 13-07-PLAN.md — Reservas con títulos propios (12.1) y Práctica; umbral final de «⚠ por confirmar» + e2e de ambas secciones (CAMP-04, CAMP-05, CAMP-06)
 
 **Wave 8** *(blocked on Wave 7 completion)*
 - [ ] 13-08-PLAN.md — Publicación (D-02): fuera de borrador sin centinela, tests invertidos en el mismo commit, `pnpm verify` 110/110, test:trips, recuentos en tests/README.md (CAMP-01…06)
@@ -280,7 +280,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 10. Forma y chrome desde datos | v1.1 | 5/5 | In Progress | - |
 | 11. Portada y rutas multi-viaje | v1.1 | 7/7 | In Progress | - |
 | 12. Formas nuevas de viaje | v1.1 | 7/7 | In Progress | - |
-| 13. Contenido Campania 2027 | v1.1 | 6/8 | In Progress | - |
+| 13. Contenido Campania 2027 | v1.1 | 7/8 | In Progress | - |
 | 14. Verificación del milestone | v1.1 | 0/TBD | Not started | - |
 
 ---

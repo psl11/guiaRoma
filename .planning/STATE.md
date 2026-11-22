@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 13
 current_phase_name: Contenido Campania 2027
 status: executing
-stopped_at: Completed 13-06-PLAN.md
-last_updated: "2026-11-22T01:02:22.709Z"
+stopped_at: Completed 13-07-PLAN.md
+last_updated: "2026-11-22T01:09:19.415Z"
 last_activity: 2026-11-22
 last_activity_desc: Phase 12.1 complete, transitioned to Phase 9
-state_head: 6137f31e93edb898f69dd4c1ba2be44a93e2beb5
+state_head: 22171f38f49cefd376778185425a22918c48583b
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 33
-  completed_plans: 31
+  completed_plans: 32
   percent: 14
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 13 (Contenido Campania 2027) — READY TO EXECUTE
-Plan: 7 of 8
+Plan: 8 of 8
 Status: Ready to execute
 Last activity: 2026-11-22 — Phase 12.1 complete, transitioned to Phase 9
 
@@ -135,6 +135,7 @@ Progress: [█░░░░░░░░░] 14%
 | Phase 13 P04 | 6min | 3 tasks | 12 files |
 | Phase 13 P05 | 7min | 2 tasks | 9 files |
 | Phase 13 P06 | 10min | 2 tasks | 9 files |
+| Phase 13 P07 | 5min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -335,6 +336,8 @@ Recent decisions affecting current work:
 - [Phase 13]: 13-05: domingo-27 and lunes-28 take orders 8 and 9 until 13-06 inserts sabado-26; the stadium card is listed only in viernes-25 and cited on Sunday by stop.ref
 - [Phase 13]: Saturday 26: shared car departure, one choice (Opción 1 Casertavecchia / Opción 2 Averno, Cuma, Miseno), car return at Capodichino outside the choice with place and time marked; no route button because no card is shared
 - [Phase 13]: Cuma: closed Tuesdays, compulsory booking with turns, Antro 25 at a time and bradisismo refund stated plainly; 2027 hours and Circuito Flegreo price marked
+- [Phase 13]: 13-07: Campania Reservas headings are «✈️ Vuelos» / «🎟️ Entradas confirmadas» / «Alojamientos, ferris, coche y entradas · qué reservar y cuándo»; only the Ultimo row is done
+- [Phase 13]: 13-07: Práctica ends with a «Lecturas y visionados antes del viaje» section before media (Roma's pattern), with Morante, Ferrante and El cartero
 
 ### Pending Todos
 
@@ -375,8 +378,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-22T01:02:22.477Z
-Stopped at: Completed 13-06-PLAN.md
+Last session: 2026-11-22T01:09:19.180Z
+Stopped at: Completed 13-07-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
