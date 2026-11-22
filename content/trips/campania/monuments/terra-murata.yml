@@ -1,0 +1,37 @@
+slug: terra-murata
+trip: campania
+roman: VI
+name: Terra Murata
+italian: 'Terra Murata · Procida'
+day: Lunes 21
+coords:
+  lat: 40.7608
+  lng: 14.0339
+type: card
+motif: fortress
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Terra_Murata_%28Procida%29%2C_2016.jpg/960px-Terra_Murata_%28Procida%29%2C_2016.jpg
+  alt: Las murallas y las casas de Terra Murata, en lo alto de Procida
+sections:
+  - heading: Qué es
+    body: >-
+      El pueblo amurallado en el punto más alto de Procida: el núcleo antiguo de la
+      isla, donde la gente se refugiaba de los piratas detrás de los muros. Hoy es un
+      laberinto silencioso de callejones, iglesias y casas viejas, con el mar por
+      todas partes.
+  - heading: Qué mirar
+    body: >-
+      Asomaos a los miradores: abajo, las casas pastel de la
+      [Corricella](#marina-corricella) parecen un belén colgado sobre el agua. Al
+      bajar, perdeos por las callejuelas de colores y los huertos de limoneros, con
+      sus muros de piedra y el olor a limón en el aire.
+  - heading: En vuestro día
+    body: >-
+      La mañana lenta antes de cambiar de isla: subir sin prisa, mirar, bajar entre
+      limoneros y comer tranquilos antes del ferry de la tarde a Ischia.
+facts:
+  - label: Acceso
+    value: 'A pie · subida por cuestas y escaleras desde la Corricella o desde el centro de la isla'
+  - label: Horarios
+    value: 'Iglesias y espacios visitables **⚠ por confirmar**'
+mapsQuery: Terra Murata Procida

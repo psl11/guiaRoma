@@ -1,0 +1,38 @@
+slug: forio
+trip: campania
+roman: VII
+name: Forio y el Soccorso
+italian: "Santa Maria del Soccorso · Forio d'Ischia"
+day: Lunes 21 / Miércoles 23
+coords:
+  lat: 40.7371
+  lng: 13.8545
+type: card
+motif: church
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Chiesa_del_soccorso_forio_d%27ischia.JPG/960px-Chiesa_del_soccorso_forio_d%27ischia.JPG
+  alt: La iglesia blanca de Santa Maria del Soccorso sobre el mar, en Forio
+sections:
+  - heading: Qué es
+    body: >-
+      Forio es el pueblo de la costa oeste de Ischia que elegís como base en la
+      isla: calles de casas bajas, plazas con vida de vecinos y el mar abierto hacia
+      poniente. En su promontorio se alza la iglesia blanca de **Santa Maria del
+      Soccorso**, pequeña, encalada y recortada contra el cielo.
+  - heading: Qué mirar
+    body: >-
+      La fachada blanca y la escalinata de la iglesia, el mirador sobre el mar y,
+      sobre todo, la puesta de sol: desde aquí el sol se hunde en el agua sin nada
+      delante. Es el atardecer de los vecinos de Forio, que se acercan a mirarlo como
+      quien sale a la puerta de casa.
+  - heading: En vuestro día
+    body: >-
+      La primera tarde en Ischia, recién llegados del ferry: maletas en el
+      alojamiento, paseo hasta el Soccorso y cena en la isla. Volveréis a pasar por
+      Forio el miércoles 23, antes de dejar la isla.
+facts:
+  - label: Acceso
+    value: 'Libre · a pie desde el centro de Forio'
+  - label: Alojamiento
+    value: 'Apartamento o pequeño hotel rural en la zona de Forio · **⚠ por confirmar**'
+mapsQuery: Santa Maria del Soccorso Forio Ischia

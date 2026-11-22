@@ -1,7 +1,7 @@
 slug: martes-22
 trip: campania
 # Orden 3 hasta 13-03, que escribe el lunes 21 y lo mueve al 4 (regla `day-order`: 1..N contiguo).
-order: 3
+order: 4
 pill: 'Mar 22'
 roman: IV
 eyebrow: 'martes · 22 de junio'

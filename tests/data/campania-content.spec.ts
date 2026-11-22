@@ -42,6 +42,7 @@ const WRITTEN_DAYS: Record<string, { stay: string | null }> = {
   'martes-22': { stay: 'ischia' },
   'sabado-19': { stay: 'napoles' },
   'domingo-20': { stay: 'procida' },
+  'lunes-21': { stay: 'ischia' },
 }
 
 /** Fichas ya escritas con contenido real. Los planes siguientes añaden las suyas. */
@@ -53,6 +54,8 @@ const WRITTEN_MONUMENTS: string[] = [
   'spaccanapoli',
   'marina-corricella',
   'pozzo-vecchio',
+  'terra-murata',
+  'forio',
 ]
 
 /** Fichas que deben llevar nota familiar (D-09). Los planes siguientes añaden las suyas. */
@@ -69,6 +72,8 @@ const MARKER_FILES: string[] = [
   'days/domingo-20.yml',
   'monuments/spaccanapoli.yml',
   'monuments/pozzo-vecchio.yml',
+  'days/lunes-21.yml',
+  'monuments/forio.yml',
   'food/g-1-concettina.yml',
   'food/g-1-pizzeria-vomero.yml',
   'food/g-2-vannulo.yml',
@@ -262,6 +267,17 @@ describe('días escritos (CAMP-01, D-04)', () => {
     expect(all.some(t => t.includes('Molo Beverello'))).toBe(true)
     expect(all.some(t => t.includes('21 de junio de 2026'))).toBe(true)
     expect(day.cards).toEqual(['spaccanapoli', 'pozzo-vecchio', 'marina-corricella'])
+  })
+
+  it('lunes 21: ferry a Ischia y sin ruta (D-06, D-08)', () => {
+    const day = dayOf('lunes-21')!
+    const ferries = asRecs(day.timeline).filter(r => r.kind === 'transport' && r.variant === 'ferry')
+    expect(ferries).toHaveLength(1)
+    expect(collectStrings(ferries[0]).join('\n')).toContain(BOLD_MARKER)
+    expect('route' in day, 'el lunes 21 no lleva clave route').toBe(false)
+    const routeDay = asRouteDay(day)
+    expect(routeVisible(routeDay, routeCards(routeDay).length)).toBe(false)
+    expect(day.cards).toEqual(['terra-murata', 'forio'])
   })
 
   it('martes-22: Epomeo y Sorgeto, en transporte público, con su botón de ruta', () => {
