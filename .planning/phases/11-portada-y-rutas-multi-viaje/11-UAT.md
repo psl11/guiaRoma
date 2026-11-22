@@ -1,5 +1,5 @@
 ---
-status: complete
+status: diagnosed
 phase: 11-portada-y-rutas-multi-viaje
 source: [11-VERIFICATION.md]
 started: 2026-11-20T21:30:00Z
