@@ -5,80 +5,158 @@ pill: 'Jue 24'
 roman: VI
 eyebrow: 'jueves · 24 de junio'
 title: Salerno y el día de elegir
-subtitle: Mañana en la catedral, tarde a elegir entre la costa y el río, y atardecer en el castillo.
+subtitle: Catedral y castillo por la mañana, y después a elegir entre los pueblos de los ceramistas con una cala, o el río y sus pozas de agua dulce.
 # Base de la noche (D-06): slug de una entrada de `stays` en trip.yml → «Dormís en Salerno».
 stay: salerno
-stats: []
+# Ruta del día en coche (D-01): «Ver ruta del día» abre Google Maps con `travelmode=driving`. Solo
+# cuentan las paradas comunes (Duomo y Castello); las fichas de dentro de las opciones quedan fuera.
+route:
+  mode: driving
+stats:
+  - variant: car
+    text: '**Coche** desde Salerno, ida y vuelta en el día'
+light:
+  title: 🦶 Versión ligera · jueves
+  items:
+    - kind: see
+      text: >-
+        **Imprescindibles:** la cripta del [Duomo](#duomo-di-salerno) y, de las dos
+        opciones, la que menos camina: la Opción A, con la tarde en la cala, que es
+        solo toalla y agua.
+    - kind: skip
+      text: >-
+        **Saltar hoy:** el sendero de las gargantas del Calore. Con «Caminar menos»
+        la Opción B se queda sin paradas: mejor la Opción A.
+    - kind: care
+      text: >-
+        **Ojo:** el calor de junio en el coche y en la subida al castillo. Agua de
+        sobra y gorras para todos.
+    - kind: rest
+      text: >-
+        **Descanso:** la tarde en la cala o junto a la poza, sin horarios, antes de
+        volver a Salerno a cenar.
 timeline:
   - kind: stop
     pace: all
-    time: '09:30'
+    time: '09:00'
     title: Duomo di Salerno
     ref: duomo-di-salerno
-    note: La catedral normanda y su cripta dorada, antes de que llegue el calor.
+    note: >-
+      La catedral normanda y su cripta de mármoles y oro, a primera hora, antes de
+      que llegue el calor. Horario de visita **⚠ por confirmar**.
+  - kind: stop
+    pace: all
+    time: '10:30'
+    title: Castello di Arechi
+    ref: castello-arechi
+    note: >-
+      Subida en coche al castillo sobre la ciudad, con todo el golfo a los pies.
+      Horario y entrada **⚠ por confirmar**.
   - kind: choice
     options:
       - label: Opción A
-        title: Pueblos de artistas y mar virgen
+        title: Pueblos de ceramistas en Vietri y una cala de la costa del Cilento
         rows:
           - kind: stop
             pace: all
-            time: '11:30'
+            time: '12:00'
             title: Raito y Albori
             ref: raito
-            note: Dos pueblos colgados sobre la costa, con cerámica y calas pequeñas.
+            note: >-
+              Las dos aldeas de Vietri sul Mare, sobre la costa de Amalfi: talleres
+              de cerámica, callejuelas en escalera y la comida en el pueblo, a
+              elegir sobre el terreno.
+          - kind: transport
+            pace: all
+            variant: car
+            header: De Vietri a la costa norte del Cilento
+            modes:
+              - icon: 🚗
+                recommended: true
+                desc: >-
+                  **En coche** hacia el sur, pasando Salerno, hasta Agropoli ·
+                  duración **⚠ por confirmar**
           - kind: meta
             items:
               - level: plain
-                text: '🚌 bus local desde Salerno · unos **30 min**'
+                text: '⏱ **toda la tarde** de cala, con las familias del lugar'
+          - kind: stop
+            pace: all
+            time: '16:00'
+            title: Baia di Trentova
+            ref: baia-di-trentova
+            note: >-
+              Baño y toalla en la bahía de Trentova, junto a Agropoli, hasta que
+              baje el sol. Servicios de la playa **⚠ por confirmar**.
       - label: Opción B
         title: Ríos, bosques y pozas de agua dulce
         rows:
+          - kind: transport
+            pace: medium
+            variant: car
+            header: De Salerno a Felitto
+            modes:
+              - icon: 🚗
+                recommended: true
+                desc: >-
+                  **En coche** por la llanura de Paestum hacia el interior del
+                  Cilento · duración **⚠ por confirmar**
           - kind: stop
             pace: medium
-            time: '11:00'
-            title: Valle del Río Calore
+            time: '13:00'
+            title: Gargantas del Calore
             ref: valle-del-calore
-            note: Sendero junto al río entre bosques, con pozas para refrescarse.
+            note: >-
+              De camino, en la llanura de Paestum, parada en [Tenuta Vannulo](#g-2-vannulo)
+              a por mozzarella de búfala (horario de venta **⚠ por confirmar**).
+              Comida en [una trattoria de monte](#g-5-trattoria-calore) de Felitto y
+              tarde junto a la poza; normas de baño y calidad del agua
+              **⚠ por confirmar**.
           - kind: transport
             pace: medium
             variant: walk
-            header: Sendero del río
+            header: Sendero de las gargantas
             modes:
               - icon: 🚶
                 recommended: true
-                desc: '**A pie** por el sendero señalizado, unas dos horas ida y vuelta'
+                desc: >-
+                  **A pie** junto al río, desde Felitto, hasta el puente medieval de
+                  un solo arco · con tramos más empinados
   - kind: choice
     heading: Para cenar, elige una
     options:
       - label: Opción 1
-        title: Trattoria de monte
+        title: En la trattoria de monte, si habéis ido al Calore
         rows:
           - kind: food
             pace: all
-            header: Cena en las colinas
+            header: Cena en las colinas de Felitto
             entries:
-              - name: Trattoria del bosque
-                desc: Cocina de montaña, con pasta fresca y queso de la zona.
+              - ref: g-5-trattoria-calore
+                name: Una trattoria de monte junto al Calore
+                desc: >-
+                  Fusilli de Felitto y cocina de casa, a elegir sobre el terreno ·
+                  horario **⚠ por confirmar**
       - label: Opción 2
-        title: Pizzería de barrio en el centro storico
+        title: Una taberna del centro storico de Salerno
         rows:
           - kind: stop
             pace: all
-            time: '20:00'
-            title: Pizzería del centro storico
+            time: '20:30'
+            title: Taberna en el centro storico
+            disabled: true
+            note: >-
+              Una taberna de las callejuelas del casco antiguo, a elegir sobre el
+              terreno, o repetir en [Hostaria Il Brigante](#g-4-il-brigante).
       - label: Opción 3
-        title: Cena tranquila en la marina, mirando cómo vuelven las barcas de los pescadores
+        title: Cena tranquila en el paseo marítimo de Salerno, viendo volver las barcas al puerto
         rows:
           - kind: stop
             pace: all
-            time: '20:00'
-            title: Marina de Salerno
-            note: Una mesa junto al agua mientras las barcas entran en el puerto al caer la tarde.
-  - kind: stop
-    pace: all
-    time: '21:00'
-    title: Castello di Arechi
-    ref: castello-arechi
-    note: El castillo sobre la ciudad, con el golfo encendido al anochecer.
-cards: [duomo-di-salerno, raito, valle-del-calore, castello-arechi]
+            time: '20:30'
+            title: Paseo marítimo de Salerno
+            disabled: true
+            note: >-
+              Un paseo junto al mar y una mesa sencilla mirando el golfo, a elegir
+              sobre el terreno, mientras las barcas entran en el puerto.
+cards: [duomo-di-salerno, castello-arechi, raito, baia-di-trentova, valle-del-calore]

@@ -44,6 +44,7 @@ const WRITTEN_DAYS: Record<string, { stay: string | null }> = {
   'domingo-20': { stay: 'procida' },
   'lunes-21': { stay: 'ischia' },
   'miercoles-23': { stay: 'salerno' },
+  'jueves-24': { stay: 'salerno' },
 }
 
 /** Fichas ya escritas con contenido real. Los planes siguientes añaden las suyas. */
@@ -62,10 +63,11 @@ const WRITTEN_MONUMENTS: string[] = [
   'raito',
   'valle-del-calore',
   'castello-arechi',
+  'baia-di-trentova',
 ]
 
 /** Fichas que deben llevar nota familiar (D-09). Los planes siguientes añaden las suyas. */
-const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto', 'pozzo-vecchio', 'valle-del-calore']
+const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto', 'pozzo-vecchio', 'valle-del-calore', 'baia-di-trentova']
 
 /**
  * Ficheros (ruta relativa al viaje) que deben llevar el marcador porque tienen datos dudosos.
@@ -86,6 +88,8 @@ const MARKER_FILES: string[] = [
   'monuments/raito.yml',
   'monuments/valle-del-calore.yml',
   'monuments/castello-arechi.yml',
+  'monuments/baia-di-trentova.yml',
+  'days/jueves-24.yml',
   'food/g-1-concettina.yml',
   'food/g-1-pizzeria-vomero.yml',
   'food/g-2-vannulo.yml',
@@ -196,8 +200,7 @@ describe('sin textos de Roma (D-03, D-09)', () => {
 })
 
 describe('tramos y ruta (D-07, D-08)', () => {
-  // Solo los días escritos: el jueves del esqueleto aún tiene una meta que empieza por 🚌 hasta
-  // que 13-04 lo reescribe; 13-06 hace que el registro cubra los diez días.
+  // Solo los días escritos: 13-06 hace que el registro cubra los diez días.
   it.each(Object.keys(WRITTEN_DAYS))('%s: stats, cabeceras y metas sin glifo de transporte', (slug) => {
     const day = dayOf(slug)
     expect(day, `${slug} existe`).toBeDefined()
@@ -314,6 +317,39 @@ describe('días escritos (CAMP-01, D-04)', () => {
     const routeDay = asRouteDay(day)
     expect(routeVisible(routeDay, routeCards(routeDay).length)).toBe(false)
     expect(day.cards).toEqual(['salerno-centro-storico'])
+  })
+
+  it('jueves 24: dos alternativas seguidas y ruta en coche con las paradas comunes (D-01, D-05)', () => {
+    const day = dayOf('jueves-24')!
+    expect((day.route as Rec).mode).toBe('driving')
+    const top = asRecs(day.timeline)
+    const firstIdx = top.findIndex(r => r.kind === 'choice')
+    expect(firstIdx, 'hay un primer choice').toBeGreaterThanOrEqual(0)
+    const first = top[firstIdx]!
+    expect(first.heading, 'el primer choice no lleva heading').toBeUndefined()
+    const firstOptions = asRecs(first.options)
+    expect(firstOptions.map(o => o.label)).toEqual(['Opción A', 'Opción B'])
+    // Phase 12 D-04: con slow o «Caminar menos» se oculta toda la Opción B.
+    const optB = firstOptions.find(o => o.label === 'Opción B')!
+    for (const row of asRecs(optB.rows)) {
+      expect(['stop', 'transport'], `Opción B: fila ${String(row.kind)}`).toContain(row.kind)
+      expect(['medium', 'slow-only'], `Opción B: pace de ${String(row.kind)}`).toContain(row.pace)
+    }
+    const second = top[firstIdx + 1]
+    expect(second?.kind, 'el primer choice va seguido de otro choice').toBe('choice')
+    expect(String(second!.heading ?? '').trim(), 'el segundo choice lleva heading').not.toBe('')
+    const secondOptions = asRecs(second!.options)
+    expect(secondOptions).toHaveLength(3)
+    expect(secondOptions.some(o => String(o.title).length >= 70), 'un título de 70 caracteres o más').toBe(true)
+    const routeDay = asRouteDay(day)
+    expect(routeCards(routeDay)).toEqual(['duomo-di-salerno', 'castello-arechi'])
+    expect(routeCards(routeDay).length).toBeLessThan((day.cards as string[]).length)
+    // BASE_TRANSPORT del e2e: exactamente un tramo a pie dentro de las alternativas.
+    const choiceRows = top.filter(r => r.kind === 'choice').flatMap(c => asRecs(c.options).flatMap(o => asRecs(o.rows)))
+    expect(choiceRows.filter(r => r.kind === 'transport' && r.variant === 'walk')).toHaveLength(1)
+    // D-22: el concierto es el viernes 25.
+    expect(collectStrings(day).filter(t => t.includes('Ultimo'))).toEqual([])
+    expect(day.cards).toEqual(['duomo-di-salerno', 'castello-arechi', 'raito', 'baia-di-trentova', 'valle-del-calore'])
   })
 })
 

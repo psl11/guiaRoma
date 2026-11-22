@@ -904,7 +904,7 @@ test.describe('campania: ruta del día por modo (EXT-06, D-04, D-14)', () => {
     await context.close()
   })
 
-  test('campania: la ruta del jueves 24 cuenta solo las paradas comunes (EXT-06, D-04)', async ({ browser }) => {
+  test('campania: la ruta del jueves 24 cuenta solo las paradas comunes (EXT-06, D-04, D-01)', async ({ browser }) => {
     const jueves = readYaml<YamlDay>('days/jueves-24.yml')
     const shared = sharedCards(jueves)
     // Anti-vacuidad: el jueves 24 tiene fichas de solo-opción que la ruta deja fuera.
@@ -919,9 +919,9 @@ test.describe('campania: ruta del día por modo (EXT-06, D-04, D-14)', () => {
     await expect(btn).toHaveCount(1)
     await expect(btn).toHaveText(`Ver ruta del día (${n} paradas)`)
     const href = await btn.getAttribute('href')
-    expect(href?.startsWith(`${DIR_PREFIX}walking`), `href a pie: ${href}`).toBe(true)
+    expect(href?.startsWith(`${DIR_PREFIX}driving`), `href en coche: ${href}`).toBe(true)
     expect(hrefPointCount(href!), 'puntos del href = paradas comunes').toBe(n)
-    await expect(btn).toHaveAttribute('title', 'Abre Google Maps con el recorrido del día a pie')
+    await expect(btn).toHaveAttribute('title', 'Abre Google Maps con el recorrido del día en coche')
 
     await context.close()
   })

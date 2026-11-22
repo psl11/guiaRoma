@@ -65,9 +65,9 @@ describe('timelineRows — Roma, identidad (D-04, D-14)', () => {
 })
 
 describe('timelineRows — Campania real (D-04, D-14)', () => {
-  it('jueves 24: optionOnlyRefs = {raito, valle-del-calore}', () => {
+  it('jueves 24: optionOnlyRefs = {baia-di-trentova, raito, valle-del-calore}', () => {
     const jueves = loadDay('campania', 'jueves-24')
-    expect([...optionOnlyRefs(jueves.timeline)].sort()).toEqual(['raito', 'valle-del-calore'])
+    expect([...optionOnlyRefs(jueves.timeline)].sort()).toEqual(['baia-di-trentova', 'raito', 'valle-del-calore'])
   })
 
   it('jueves 24: flattenRows incluye las filas de las opciones y ninguna fila choice', () => {
@@ -75,7 +75,7 @@ describe('timelineRows — Campania real (D-04, D-14)', () => {
     const flat = flattenRows(jueves.timeline)
     expect(flat.some(r => (r as { kind: string }).kind === 'choice')).toBe(false)
     const refs = flat.flatMap(r => (r.kind === 'stop' && r.ref ? [r.ref] : []))
-    expect(refs).toEqual(['duomo-di-salerno', 'raito', 'valle-del-calore', 'castello-arechi'])
+    expect(refs).toEqual(['duomo-di-salerno', 'castello-arechi', 'raito', 'baia-di-trentova', 'valle-del-calore'])
   })
 
   it('domingo 20: hasTransportVariant encuentra el ferry', () => {
