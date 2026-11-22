@@ -648,6 +648,13 @@ La Fase 14 no toca código de la app ni contenido: añade **dos specs de paridad
 `test:parity`, +16 tests, ver §4) y **un test de datos** (dentro de `test:data`). Con ellos
 queda probado que la v1.1 se puede publicar sobre la guía viva sin que nadie pierda nada.
 
+**La build es una precondición de los dos specs de paridad de §6.1 y §6.2:** no lanzan
+`pnpm generate` (varios workers a la vez competirían por `.nuxt/`, `.data/` y `.output/`, dentro
+del timeout corto de un hook). Si falta `.output/public` (Roma, y también Campania en
+`cross-trip`), fallan en el acto con la orden a ejecutar: `rm -rf .data .nuxt .output && pnpm
+generate` (o `pnpm verify`, que ya genera primero). La comprobación es solo de existencia: tras
+editar contenido, regenerar desde cachés limpias antes de correrlos sueltos.
+
 ### 6.1 `tests/parity/upgrade-from-main.spec.ts` — upgrade desde la guía viva (PAR-03, D-03/D-04)
 
 - **Qué prueba:** quien usa hoy la guía publicada (el `index.html` único de `main`) abre la build

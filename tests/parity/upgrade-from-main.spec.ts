@@ -1,4 +1,4 @@
-import { execFileSync, spawnSync } from 'node:child_process'
+import { execFileSync } from 'node:child_process'
 import { existsSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import type { Server } from 'node:http'
 import { tmpdir } from 'node:os'
@@ -44,13 +44,14 @@ const ROMA_MONUMENTS = readdirSync(join(process.cwd(), 'content', 'trips', 'roma
   .map(f => f.slice(0, -'.yml'.length))
   .sort()
 
-/** Asegura la build estática una sola vez (clon del de portada.spec.ts). */
-function ensureBuild(): void {
-  if (!existsSync(ROMA_HTML)) {
-    const gen = spawnSync('pnpm', ['generate'], { stdio: 'inherit', shell: false })
-    expect(gen.status, 'pnpm generate debe salir 0').toBe(0)
-  }
-  expect(existsSync(ROMA_HTML), 'la página de Roma de la build (ROMA_HTML) debe existir').toBe(true)
+/**
+ * La build estática es una PRECONDICIÓN (WR-07 de 14-REVIEW.md): este spec no lanza
+ * `pnpm generate`. Si falta, falla en el acto con la orden a ejecutar. Generar desde aquí haría
+ * que varios workers (mobile y desktop, y los otros specs) escribieran `.nuxt/`, `.data/` y
+ * `.output/` a la vez, dentro del timeout corto de un hook.
+ */
+function requireBuild(): void {
+  expect(existsSync(ROMA_HTML), `falta la build en ${OUTPUT_DIR}: ejecuta antes \`rm -rf .data .nuxt .output && pnpm generate\` (o \`pnpm verify\`). Este spec no genera la build: varios workers a la vez competirían por .nuxt/ y .data/`).toBe(true)
 }
 
 /** Aborta toda petición fuera del origen del servidor (tiles, Wikimedia, Google Fonts). */
@@ -283,7 +284,7 @@ test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)',
   let server: Server | undefined
 
   test.beforeAll(() => {
-    ensureBuild()
+    requireBuild()
     oldDir = mkdtempSync(join(tmpdir(), 'guiaroma-upgrade-'))
     writeFileSync(join(oldDir, 'index.html'), readLiveGuide())
   })

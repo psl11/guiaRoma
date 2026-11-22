@@ -1,4 +1,3 @@
-import { spawnSync } from 'node:child_process'
 import { existsSync, readdirSync } from 'node:fs'
 import type { Server } from 'node:http'
 import { join } from 'node:path'
@@ -55,14 +54,16 @@ const MARK = {
   campania: '[id="baia-di-sorgeto"]',
 } as const
 
-/** Asegura la build estática (clon del de portada.spec.ts, exigiendo también Campania). */
-function ensureBuild(): void {
-  if (!existsSync(ROMA_HTML) || !existsSync(CAMPANIA_HTML)) {
-    const gen = spawnSync('pnpm', ['generate'], { stdio: 'inherit', shell: false })
-    expect(gen.status, 'pnpm generate debe salir 0').toBe(0)
+/**
+ * La build estática (Roma y Campania) es una PRECONDICIÓN (WR-07 de 14-REVIEW.md): este spec no
+ * lanza `pnpm generate`. Si falta, falla en el acto con la orden a ejecutar. Generar desde aquí
+ * haría que varios workers escribieran `.nuxt/`, `.data/` y `.output/` a la vez, dentro del
+ * timeout corto de un hook.
+ */
+function requireBuild(): void {
+  for (const html of [ROMA_HTML, CAMPANIA_HTML]) {
+    expect(existsSync(html), `falta ${html}: ejecuta antes \`rm -rf .data .nuxt .output && pnpm generate\` (o \`pnpm verify\`). Este spec no genera la build: varios workers a la vez competirían por .nuxt/ y .data/`).toBe(true)
   }
-  expect(existsSync(ROMA_HTML), 'la página de Roma de la build (ROMA_HTML) debe existir').toBe(true)
-  expect(existsSync(CAMPANIA_HTML), 'la página de Campania de la build debe existir').toBe(true)
 }
 
 /** Aborta toda petición fuera del origen del servidor (tiles, Wikimedia); devuelve las abortadas. */
@@ -128,7 +129,7 @@ test.describe('aislamiento entre viajes en la build publicada (D-05)', () => {
   let server: Server | undefined
 
   test.beforeAll(async () => {
-    ensureBuild()
+    requireBuild()
     expect(ROMA_SLUGS.length, 'Roma tiene fichas').toBeGreaterThan(0)
     expect(CAMPANIA_SLUGS.length, 'Campania tiene fichas').toBeGreaterThan(0)
     server = await startPagesServer(OUTPUT_DIR, PORT)
