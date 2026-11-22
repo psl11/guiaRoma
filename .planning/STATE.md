@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 13
 current_phase_name: Contenido Campania 2027
 status: executing
-stopped_at: Completed 13-02-PLAN.md
-last_updated: "2026-11-22T00:24:41.725Z"
+stopped_at: Completed 13-03-PLAN.md
+last_updated: "2026-11-22T00:39:08.897Z"
 last_activity: 2026-11-22
 last_activity_desc: Phase 12.1 complete, transitioned to Phase 9
-state_head: 71ff0c92ae400da8cbd19e29084338959b8f86be
+state_head: e2c41147845ac1ad07474ffff578b1b0cdb58155
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 33
-  completed_plans: 27
+  completed_plans: 28
   percent: 14
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 ## Current Position
 
 Phase: 13 (Contenido Campania 2027) — READY TO EXECUTE
-Plan: 3 of 8
+Plan: 4 of 8
 Status: Ready to execute
 Last activity: 2026-11-22 — Phase 12.1 complete, transitioned to Phase 9
 
@@ -131,6 +131,7 @@ Progress: [█░░░░░░░░░] 14%
 | Phase 12.1 P01 | 8 min | 3 tasks | 8 files |
 | Phase 13 P01 | 8min | 3 tasks | 14 files |
 | Phase 13 P02 | 5min | 2 tasks | 11 files |
+| Phase 13 P03 | 12min | 3 tasks | 15 files |
 
 ## Accumulated Context
 
@@ -322,6 +323,8 @@ Recent decisions affecting current work:
 - [Phase 13]: 13-01: trip.yml stays draft with CAMPANIA-CENTINELA-12A until 13-08; Ultimo Friday 25 unmarked (D-22), PTN date/start times, accommodation and car return point marked
 - [Phase 13]: 13-02: Gastronomía group order comes from slug prefixes g-1-…g-5- (no change to FOOD_GROUP_ORDER); the e2e derives the expected order from the sorted food YAML
 - [Phase 13]: 13-02: only the six RESEARCH-verified establishments are named (VERIFIED_NAMES allowlist in campania-content.spec.ts); every named card marks hours/closing day with **⚠ por confirmar** in desc; generic cards start «Una/Un» and are chosen «a elegir sobre el terreno»
+- [Phase 13]: 13-03: Saturday 19 = plane → Alibus to Garibaldi (no Vomero, D-26) → no-variant Metro L1/funicular leg; Alibus meta kept short because .tl-transport-mode-meta is nowrap
+- [Phase 13]: 13-03: Sunday 20 has one ferry row (Caremar traghetto recommended + Beverello hydrofoil mode) carrying the island car-ban footnote; Monday 21 marks the Ischia arrival port in its ferry footnote
 
 ### Pending Todos
 
@@ -362,8 +365,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-22T00:24:41.506Z
-Stopped at: Completed 13-02-PLAN.md
+Last session: 2026-11-22T00:39:08.666Z
+Stopped at: Completed 13-03-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
