@@ -4,17 +4,17 @@ milestone: v1.1
 milestone_name: Multi-viaje + Campania
 current_phase: 13
 current_phase_name: Contenido Campania 2027
-status: executing
-stopped_at: Completed 13-07-PLAN.md
-last_updated: "2026-11-22T01:09:19.415Z"
+status: verifying
+stopped_at: Completed 13-08-PLAN.md
+last_updated: "2026-11-22T01:17:18.534Z"
 last_activity: 2026-11-22
 last_activity_desc: Phase 12.1 complete, transitioned to Phase 9
-state_head: 22171f38f49cefd376778185425a22918c48583b
+state_head: 04202ddd8d7d8744df8d4974de6344a2da11dc96
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 33
-  completed_plans: 32
+  completed_plans: 33
   percent: 14
 ---
 
@@ -31,7 +31,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 
 Phase: 13 (Contenido Campania 2027) — READY TO EXECUTE
 Plan: 8 of 8
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-11-22 — Phase 12.1 complete, transitioned to Phase 9
 
 Progress: [█░░░░░░░░░] 14%
@@ -136,6 +136,7 @@ Progress: [█░░░░░░░░░] 14%
 | Phase 13 P05 | 7min | 2 tasks | 9 files |
 | Phase 13 P06 | 10min | 2 tasks | 9 files |
 | Phase 13 P07 | 5min | 2 tasks | 4 files |
+| Phase 13 P08 | 6min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -338,6 +339,8 @@ Recent decisions affecting current work:
 - [Phase 13]: Cuma: closed Tuesdays, compulsory booking with turns, Antro 25 at a time and bradisismo refund stated plainly; 2027 hours and Circuito Flegreo price marked
 - [Phase 13]: 13-07: Campania Reservas headings are «✈️ Vuelos» / «🎟️ Entradas confirmadas» / «Alojamientos, ferris, coche y entradas · qué reservar y cuándo»; only the Ultimo row is done
 - [Phase 13]: 13-07: Práctica ends with a «Lecturas y visionados antes del viaje» section before media (Roma's pattern), with Morante, Ferrante and El cartero
+- [Phase 13]: Campania published at the Phase 13 close (D-02): draft key and Phase 12 control mark removed in one commit with every draft-dependent test; reversible, deploy is a separate act
+- [Phase 13]: CAMPANIA_SENTINEL kept in the build-isolation offenders scan as a regression guard
 
 ### Pending Todos
 
@@ -378,8 +381,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-22T01:09:19.180Z
-Stopped at: Completed 13-07-PLAN.md
+Last session: 2026-11-22T01:17:18.287Z
+Stopped at: Completed 13-08-PLAN.md
 Resume file: None
 
 ## Operator Next Steps

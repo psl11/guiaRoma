@@ -45,12 +45,12 @@
 
 ### Contenido Campania 2027 (CAMP)
 
-- [ ] **CAMP-01**: La guía de Campania tiene los 10 días (19–28 junio 2027) con su timeline, horarios y logística (vuelos, ferris, coche, conciertos), en el tono slow/auténtico del planning
-- [ ] **CAMP-02**: Cada lugar relevante del itinerario tiene ficha con imagen, nombre italiano, prosa y enlace a Google Maps (Nápoles, Procida, Ischia, Salerno, Cilento, Vesubio, Casertavecchia, Campos Flégreos)
-- [ ] **CAMP-03**: La guía de Campania incluye su sección de gastronomía (pizzerías de barrio, mozzarella di bufala, tabernas, trattorias de monte…)
-- [ ] **CAMP-04**: La sección de reservas de Campania recoge alojamientos por base, ferris, coche de alquiler, conciertos y vuelos
-- [ ] **CAMP-05**: La sección práctica de Campania cubre ferris, conducción/ZTL y restricciones en islas, calor, calzado y consejos con niños
-- [ ] **CAMP-06**: Los datos de campo críticos (horarios de ferry, fechas de conciertos, acceso a Sorgeto de noche, coche en islas) están verificados o marcados como «por confirmar» en la guía
+- [x] **CAMP-01**: La guía de Campania tiene los 10 días (19–28 junio 2027) con su timeline, horarios y logística (vuelos, ferris, coche, conciertos), en el tono slow/auténtico del planning
+- [x] **CAMP-02**: Cada lugar relevante del itinerario tiene ficha con imagen, nombre italiano, prosa y enlace a Google Maps (Nápoles, Procida, Ischia, Salerno, Cilento, Vesubio, Casertavecchia, Campos Flégreos)
+- [x] **CAMP-03**: La guía de Campania incluye su sección de gastronomía (pizzerías de barrio, mozzarella di bufala, tabernas, trattorias de monte…)
+- [x] **CAMP-04**: La sección de reservas de Campania recoge alojamientos por base, ferris, coche de alquiler, conciertos y vuelos
+- [x] **CAMP-05**: La sección práctica de Campania cubre ferris, conducción/ZTL y restricciones en islas, calor, calzado y consejos con niños
+- [x] **CAMP-06**: Los datos de campo críticos (horarios de ferry, fechas de conciertos, acceso a Sorgeto de noche, coche en islas) están verificados o marcados como «por confirmar» en la guía
 
 ### Paridad de Roma (PAR)
 
@@ -122,12 +122,12 @@
 | EXT-05 | Phase 12 | Complete |
 | EXT-06 | Phase 12 | Complete |
 | EXT-07 | Phase 12 | Complete |
-| CAMP-01 | Phase 13 | Pending |
-| CAMP-02 | Phase 13 | Pending |
-| CAMP-03 | Phase 13 | Pending |
-| CAMP-04 | Phase 13 | Pending |
-| CAMP-05 | Phase 13 | Pending |
-| CAMP-06 | Phase 13 | Pending |
+| CAMP-01 | Phase 13 | Complete |
+| CAMP-02 | Phase 13 | Complete |
+| CAMP-03 | Phase 13 | Complete |
+| CAMP-04 | Phase 13 | Complete |
+| CAMP-05 | Phase 13 | Complete |
+| CAMP-06 | Phase 13 | Complete |
 | PAR-01 | Phase 11 | Complete |
 | PAR-02 | Phase 11 | Complete |
 | PAR-03 | Phase 14 | Pending |
