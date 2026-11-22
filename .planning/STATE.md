@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 10
 current_phase_name: Forma y chrome desde datos
 status: verifying
-stopped_at: Phase 09 complete, ready to verify Phase 10
-last_updated: "2026-11-22T15:10:12.884Z"
+stopped_at: Completed 10-06-PLAN.md
+last_updated: "2026-11-22T20:10:50.461Z"
 last_activity: 2026-11-22
-last_activity_desc: Phase 09 complete, transitioned to Phase 10
-state_head: ac343cf321c9f23174384c562090be341fc16482
+last_activity_desc: Phase 10 execution started
+state_head: fa6104d80ea47d868653e02ba6cf0f821fd6745d
 progress:
   total_phases: 7
   completed_phases: 2
-  total_plans: 37
-  completed_plans: 37
+  total_plans: 38
+  completed_plans: 38
   percent: 29
 ---
 
@@ -29,10 +29,10 @@ See: .planning/PROJECT.md (updated 2026-11-22)
 
 ## Current Position
 
-Phase: 10 — Forma y chrome desde datos
-Plan: 5
+Phase: 10 (Forma y chrome desde datos) — EXECUTING
+Plan: 6 of 6
 Status: Phase complete — ready for verification
-Last activity: 2026-11-22 — Phase 09 complete, transitioned to Phase 10
+Last activity: 2026-11-22 — Phase 10 execution started
 
 Progress: [███░░░░░░░] 29%
 
@@ -142,6 +142,7 @@ Progress: [███░░░░░░░] 29%
 | Phase 14 P02 | 10min | 3 tasks | 2 files |
 | Phase 14 P03 | 10min | 3 tasks | 2 files |
 | Phase 09 P06 | 3min | 3 tasks | 5 files |
+| Phase 10 P06 | 6min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -352,6 +353,8 @@ Recent decisions affecting current work:
 - [Phase 14]: 14-03: navigation.spec.ts SC#2 [mobile] failing alone in verify runs 2-3 is the D-01 known flake (3/3 isolated, ~28.9s of a 30s budget); not a D-06 defect, not fixed (frozen spec)
 - [Phase 14]: 14-03: PAR-03 marked complete; PAR-04 stays Pending until the user signs 14-UAT.md on a real phone (D-07/D-08)
 - [Phase 09]: G-09-3: reuse stray-file for loose content/trips root entries and upper-case YAML extensions (RULES stays 21); only isYaml is case-insensitive, COLLECTIONS[].match stays case-sensitive
+- [Phase 10]: G-10-2: la puerta de datos escanea léxicamente (fail-closed, sin parser ni dependencias) toda forma de enlace que MDC pinta como <a>; rechaza [r]:, <a> crudo, {href=}/{to=} y props href:/to: en frontmatter MDC (comprobado que sí pintan <a href>)
+- [Phase 10]: G-10-2: regla card-placement (RULES=22) — cada ficha exactamente una vez en days[*].cards; anchor/seenIn/ref solo resuelven a fichas pintadas (renderedMonuments)
 
 ### Pending Todos
 
@@ -392,8 +395,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-22T15:10:38Z
-Stopped at: Phase 09 complete, ready to verify Phase 10
+Last session: 2026-11-22T20:10:50.040Z
+Stopped at: Completed 10-06-PLAN.md
 Resume file: None
 
 ## Operator Next Steps

@@ -81,7 +81,7 @@ Plans:
   3. La marca de la cabecera, el pie y la leyenda del mapa de cada guía salen de su `trip.yml`, y la pestaña del navegador muestra el título propio del viaje; en Roma son exactamente los textos actuales (pestaña «Roma · 19—23 giugno 2026»)
   4. En la guía de un viaje de prueba no aparece ningún texto propio de Roma («Roma», «Einaudi», «giugno 2026»…): un test-trampa falla si alguno se cuela
   5. Tras mover los textos de Roma a datos, la puerta de paridad sigue verde en `/` con los 56 goldens sin re-baseline
-**Plans**: 5/6 plans executed
+**Plans**: 6/6 plans executed
 Plans:
 **Wave 1**
 - [x] 10-01-PLAN.md — Tracer: `buildTripLayout` puro → pastillas y `<main>` de TripView desde el layout (una sección por día, solo secciones con datos), Roma idéntica (SHAPE-01, SHAPE-02)
@@ -99,7 +99,7 @@ Plans:
 - [x] 10-05-PLAN.md — Test-trampa (ningún texto de Roma fuera de Roma) + chrome y pestaña por viaje en dev + README + puerta completa de la fase (SHAPE-03, SHAPE-04, SHAPE-05)
 
 **Gap closure** *(UAT G-10-2)*
-- [ ] 10-06-PLAN.md — Cierre de G-10-2 (WR-01/WR-03 de 10-REVIEW): la puerta de datos ve toda forma de enlace que MDC pinta como `<a>` (lista blanca D-05b y anclas D-08, rechaza definiciones, `<a>` crudo y atributos MDC href) y `card-placement` exige cada ficha exactamente una vez en los `cards` de los días; anclas, `seenIn` y `ref` solo a fichas pintadas (SHAPE-01, SHAPE-02)
+- [x] 10-06-PLAN.md — Cierre de G-10-2 (WR-01/WR-03 de 10-REVIEW): la puerta de datos ve toda forma de enlace que MDC pinta como `<a>` (lista blanca D-05b y anclas D-08, rechaza definiciones, `<a>` crudo y atributos MDC href) y `card-placement` exige cada ficha exactamente una vez en los `cards` de los días; anclas, `seenIn` y `ref` solo a fichas pintadas (SHAPE-01, SHAPE-02)
 **UI hint**: yes
 **Research**: no (textos a YAML verbatim + función pura `buildTripLayout` con test)
 **Notas**: esquema estrictamente aditivo (todo campo nuevo `.optional()`); primero se prueba que el YAML de Roma sin cambios sigue validando y después se añaden sus valores verbatim. Vigilar regresiones de píxel en pie (`<br>`, MDC), marca (`brand-dot`) y etiqueta «Pratica». Slugs de día con fecha para viajes nuevos (`sabado-19`); Roma conserva `viernes…martes`.
@@ -292,7 +292,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 7. Isla client-only — mapa, fallback, notas | v1.0 | 4/4 | Complete | 2026-06-23 |
 | 8. Verificación de paridad | v1.0 | 7/7 | Complete | 2026-06-24 |
 | 9. Plataforma por viaje | v1.1 | 6/6 | Complete    | 2026-11-22 |
-| 10. Forma y chrome desde datos | v1.1 | 5/5 | In Progress | - |
+| 10. Forma y chrome desde datos | v1.1 | 6/6 | In Progress | - |
 | 11. Portada y rutas multi-viaje | v1.1 | 7/7 | In Progress | - |
 | 12. Formas nuevas de viaje | v1.1 | 7/7 | In Progress | - |
 | 13. Contenido Campania 2027 | v1.1 | 8/8 | In Progress | - |
