@@ -321,6 +321,14 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
   `yaml.parse`, sin runtime Nuxt). `listTripDirs()` recorre **todas** las carpetas de
   `content/trips`, **borradores incluidos**, y `schema.spec.ts` / `invariants.spec.ts`
   las iteran con `describe.each` («esquema · viaje %s», «viaje %s»).
+- `checkTripsRoot()` reporta como `stray-file` cualquier entrada no oculta directamente bajo
+  `content/trips/` que no sea una carpeta (p. ej. un `content/trips/notas.yml` suelto), con su
+  ruta. `listTripDirs()` y `checkTripsRoot()` reparten entre las dos **todas** las entradas no
+  ocultas (las ocultas, como `.DS_Store` o `.gitkeep`, se ignoran), sin descartar ninguna en
+  silencio. La extensión YAML se detecta **sin distinguir mayúsculas**: `monuments/x.YML` o
+  `x.Yaml` no se omiten, son `stray-file`, porque los globs de `content.config.ts` solo casan
+  con `.yml` en minúsculas. La aserción «content/trips solo contiene carpetas de viaje» de
+  `invariants.spec.ts` lo vigila sobre el árbol real (cierre de G-09-3 / IN-05).
 - `checkTrip()` devuelve violaciones con regla de la lista `RULES`: `yaml-parse`,
   `yaml-object`, `trip-yml`, `trip-slug`, `trip-field`, `stray-file`, `reserved-key`,
   `unknown-key`, `basename-slug`, `dup-id`, `fixed-anchor`, `ref`, `anchor`,
