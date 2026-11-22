@@ -16,6 +16,7 @@ created: "2026-11-20"
 > Register consolidated from the `<threat_model>` blocks of 10-01..10-05-PLAN.md plus SUMMARY threat flags
 > (10-04: none new — covered by T-10-07/T-10-08; others: none). Verified at ASVS L1 (grep depth) against the code on
 > `release/nuxt-4` after 10-05. All threats closed and ASVS = 1, so the auditor subagent was not spawned (workflow short-circuit).
+> Re-audited 2026-11-22 after gap closure 10-06 (G-10-2): T-10-11..T-10-14 added from 10-06-PLAN.md `<threat_model>` (SUMMARY threat flags: none), T-10-SC evidence extended; same L1 short-circuit.
 
 ---
 
@@ -46,7 +47,11 @@ created: "2026-11-20"
 | T-10-08 | Information Disclosure | forma/prueba rows in public `sql_dump` (CR-01) | low | accept | Fictitious data, no personal info; transferred to Phase 11 `draft` filter (ROUTE-05), documented in `content/trips/forma/trip.yml:12-15` (AR-10-02) | closed |
 | T-10-09 | Information Disclosure | Roma text in prueba/forma guides | medium | mitigate | `tests/trips/romaLeaks.ts` (`ROMA_MARKERS`, Unicode `\p{L}`/`\p{N}` boundaries) + 18 teeth in `tests/unit/romaLeaks.spec.ts`; `trampa:` E2E over every non-Roma trip (title + innerText + textContent); teeth proven with injected «Fellini» | closed |
 | T-10-10 | Repudiation | vacuous trap test | low | mitigate | Render precondition (h1 = trip title, ≥ 3 pills, non-empty tab), non-empty trip-list test, positive control on Roma (`shape.spec.ts` `trampa:` block) | closed |
-| T-10-SC | Tampering | npm/pip/cargo installs | low | mitigate | No packages installed: `git diff --quiet f04967a HEAD -- package.json pnpm-lock.yaml` exits 0 | closed |
+| T-10-11 | Tampering | `tests/data/trips.ts` link extractor (only saw `](target)` flush) | medium | mitigate | `scanProseLinks` (`tests/data/trips.ts:342`) routes every MDC `<a>` form (space/newline after `(`, `<…>`, autolinks, emails) to the D-05(b) allow-list and `anchor`; rejects `[r]: …` definitions, raw `<a>`, MDC `{href}`/`{to}` and `::a` frontmatter props as `cross-trip-link`; G-10-2 teeth in `invariants.spec.ts` + on-disk `zzenlace.yml` mutation (10-06) | closed |
+| T-10-12 | Tampering | `anchorable` including never-painted cards | low | mitigate | `renderedMonuments` (`trips.ts:479`) replaces all monument slugs in `anchorable`/`seenIn`/timeline+reservas `ref`; new rule `card-placement` (`trips.ts:484-489`) flags a card in 0 or >1 days; 7 teeth + on-disk `zzhuerfano.yml` mutation (10-06) | closed |
+| T-10-13 | Tampering | on-disk `<verify>` mutations | low | mitigate | Only new untracked files under `content/trips/prueba/`, deleted in the same command; `git status --porcelain -- content` empty; `git diff --quiet 22802e8 HEAD -- content` exits 0 | closed |
+| T-10-14 | Denial of Service | lexical scanner false reds | low | accept | Fail-closed by design (a false red blocks `verify` naming the file, never lets a link through); 0 rejections over the 4 real trips (157 targets, same as before) (AR-10-03) | closed |
+| T-10-SC | Tampering | npm/pip/cargo installs | low | mitigate | No packages installed: `git diff --quiet f04967a HEAD -- package.json pnpm-lock.yaml` exits 0 (10-01..10-05); parser route rejected in 10-06 and `git diff --quiet 22802e8 HEAD -- package.json pnpm-lock.yaml` exits 0 | closed |
 
 *Status: open · closed · open — below high threshold (non-blocking)*
 *Severity: critical > high > medium > low — only open threats at or above workflow.security_block_on count toward threats_open*
@@ -60,6 +65,7 @@ created: "2026-11-20"
 |---------|------------|-----------|-------------|------|
 | AR-10-01 | T-10-02 | Static site; data arrives by reviewed PR; an unbounded day count is a deliberate product choice (D-04), worst case is a long page | plan-time disposition (10-01), confirmed by secure-phase --auto | 2026-11-20 |
 | AR-10-02 | T-10-08 | Same as AR-09-01: dev-only trips' rows appear in compressed public `sql_dump` files; data is fictitious; branch is not deployed; Phase 11 `draft` (ROUTE-05) must also exclude them from the dump. Pending the user's explicit decision in `09-UAT.md` test 1 | plan-time disposition (10-04), confirmed by secure-phase --auto | 2026-11-20 |
+| AR-10-03 | T-10-14 | The 10-06 link scanner is lexical (no Markdown parser, by the v1.1 empty-`package.json`-diff decision); edge cases such as links inside backticks may produce a false red. Fail-closed: it can only block `verify` with the file named, never admit a forbidden link | plan-time disposition (10-06), confirmed by secure-phase | 2026-11-22 |
 
 *Accepted risks do not resurface in future audit runs.*
 
@@ -80,4 +86,12 @@ created: "2026-11-20"
 - [x] `threats_open: 0` confirmed
 - [x] `status: verified` set in frontmatter
 
-**Approval:** verified 2026-11-20
+**Approval:** verified 2026-11-20; re-verified 2026-11-22 (10-06)
+
+## Security Audit 2026-11-22
+
+| Metric | Count |
+|---|---|
+| Threats found | 15 |
+| Closed | 15 |
+| Open | 0 |
