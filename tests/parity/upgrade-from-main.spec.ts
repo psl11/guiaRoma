@@ -13,10 +13,11 @@ import { startPagesServer } from './_pagesServer'
  * Qué significa PAR-03: quien usa hoy la guía publicada (el `index.html` único de `main`) y ha
  * escrito notas en las fichas y elegido ritmo, «Caminar menos», modo resumen y tema, abre la build
  * nueva EN EL MISMO ORIGEN y encuentra todo en `/guiaRoma/trips/roma/` en la PRIMERA carga: sin
- * importar nada, sin paso de migración, sin recargar y sin perder ningún valor guardado. Las claves
- * por viaje `${slug}-${clave}` (Fase 9) se diseñaron para que las de Roma sean EXACTAMENTE las de
- * siempre (`roma-note-<ficha>`, `roma-pace`, `roma-light`, `roma-resumen`; el tema sigue global en
- * `roma-theme`); este spec es el primero que ejecuta la guía vieja REAL contra la build nueva REAL.
+ * importar nada, sin paso de migración (ninguna clave nueva), sin recargar (una sola carga de
+ * documento) y sin perder ningún valor guardado. Las claves por viaje `${slug}-${clave}` (Fase 9)
+ * se diseñaron para que las de Roma sean EXACTAMENTE las de siempre (`roma-note-<ficha>`,
+ * `roma-pace`, `roma-light`, `roma-resumen`; el tema sigue global en `roma-theme`); este spec es
+ * el primero que ejecuta la guía vieja REAL contra la build nueva REAL.
  *
  * Por qué la guía vieja se toma con git en tiempo de test (D-03): `git show main:index.html` se
  * escribe en un directorio temporal nuevo de `os.tmpdir()` y se borra en `afterAll`. NUNCA se
@@ -227,6 +228,35 @@ async function paintWithoutAppJs(
   }
 }
 
+/**
+ * Cuenta las cargas de DOCUMENTO del marco principal (peticiones de navegación), no los cambios
+ * de URL por History API. Un `location.reload()` de «migración» suma una más (WR-02).
+ */
+function countDocumentLoads(page: Page): { n: number } {
+  const c = { n: 0 }
+  page.on('request', (r) => {
+    if (r.isNavigationRequest() && r.frame() === page.mainFrame()) c.n++
+  })
+  return c
+}
+
+/**
+ * La ÚNICA clave nueva legítima: si el usuario nunca tocó el tema (no hay `roma-theme`),
+ * @nuxtjs/color-mode persiste al arrancar su preferencia por defecto `roma-theme=system`. Es la
+ * conducta del módulo desde la v1.0, no una migración: no copia ni transforma ningún valor del
+ * usuario, y `system` (seguir al sistema) es lo mismo que hacía la guía viva sin clave. Se acepta
+ * SOLO con ese valor exacto.
+ */
+const COLOR_MODE_DEFAULT = { key: 'roma-theme', value: 'system' } as const
+
+/** Claves de `after` que no están en `allowed`: una migración que copia a claves nuevas (WR-02). */
+const newKeys = (after: Record<string, string>, allowed: Set<string>): string[] =>
+  Object.keys(after)
+    .filter(k => !allowed.has(k))
+    .filter(k => !(k === COLOR_MODE_DEFAULT.key && after[k] === COLOR_MODE_DEFAULT.value))
+    .map(k => `${k}=${after[k]}`)
+    .sort()
+
 /** Nota distinta por ficha: comillas latinas y dobles, acento, euro y salto de línea. */
 const noteFor = (key: string): string => `Nota de ${key}: «volver» al café, 3 € el "ristretto".\nSegunda línea — ${key}.`
 
@@ -281,6 +311,9 @@ test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)',
     const s0 = await storageSnapshot(page)
     const oracle = await oracleFromLiveGuide(browser, page.viewportSize(), ORIGIN, s0)
     const e = oracle.state
+    // Sin migración a claves nuevas (WR-02): solo pueden existir las claves del usuario y las que
+    // la propia guía viva deja al restaurar.
+    const allowed = new Set([...Object.keys(s0), ...Object.keys(oracle.storage)])
 
     // No vacuidad: el oráculo NO es el estado por defecto, y sus claves son las del contenido.
     expect(e.pace, 'oráculo: ritmo neutra').toBe('neutral')
@@ -315,6 +348,9 @@ test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)',
     expect(await storageSnapshot(page), 'la portada no toca el almacenamiento').toEqual(s0)
 
     // 4) Primera carga de Roma desde la tarjeta: sin recarga, sin clic extra, sin migración.
+    //    La tarjeta es un <a href> normal: UNA carga de documento; una recarga de migración sería
+    //    la segunda (WR-02).
+    const docLoads = countDocumentLoads(page)
     await page.locator(`a.trip-index-card[href="${ROMA_URL}"]`).click()
     await page.waitForURL(`${ORIGIN}${ROMA_URL}`, { waitUntil: 'domcontentloaded' })
     expect(await page.evaluate(() => document.documentElement.getAttribute('data-theme')), 'Roma oscura ya en domcontentloaded (el primer pintado sin app lo prueba el paso 2b)').toBe('dark')
@@ -323,18 +359,25 @@ test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)',
 
     // Sin pérdida: cada clave del usuario conserva su valor byte a byte (huérfana incluida), igual
     // que tras la propia restauración de la guía viva.
+    await page.waitForLoadState('networkidle')
+    expect(docLoads.n, 'una sola carga de documento al abrir Roma (sin recarga de migración)').toBe(1)
     const after = await storageSnapshot(page)
     for (const [k, v] of Object.entries(s0)) {
       expect(after[k], `clave ${k} intacta tras la primera carga`).toBe(v)
       expect(oracle.storage[k], `la guía viva tampoco reescribe ${k}`).toBe(v)
     }
+    expect(newKeys(after, allowed), 'sin claves nuevas tras la primera carga (sin migración)').toEqual([])
     const shown = await page.locator('.notes-textarea').evaluateAll(els => els.map(el => (el as HTMLTextAreaElement).value))
     expect(shown, 'ninguna ficha muestra la nota huérfana').not.toContain(orphanNote)
 
-    // 5) Recargar no cambia nada.
+    // 5) Recargar no cambia nada (y la recarga es la única carga de documento nueva).
+    docLoads.n = 0
     await page.reload()
     await hydrated(page)
     await expect.poll(() => page.evaluate(captureState), { timeout: 15_000, message: 'tras recargar = restauración de la guía viva' }).toEqual(e)
+    await page.waitForLoadState('networkidle')
+    expect(docLoads.n, 'recargar = una sola carga de documento').toBe(1)
+    expect(newKeys(await storageSnapshot(page), allowed), 'sin claves nuevas tras recargar').toEqual([])
 
     // 6) Campania: el tema es global (oscuro), pero ritmo, modos y notas son por viaje (por defecto).
     await page.goto(`${ORIGIN}${SITE_BASE}trips/campania/`)
@@ -347,6 +390,7 @@ test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)',
     expect(campaniaNotes.every(v => v === ''), 'las notas de Campania están vacías').toBe(true)
     const final = await storageSnapshot(page)
     for (const [k, v] of Object.entries(s0)) expect(final[k], `clave ${k} intacta tras Campania`).toBe(v)
+    expect(newKeys(final, allowed), 'sin claves nuevas tras Campania').toEqual([])
   })
 
   test('upgrade: «caminar menos» guardado con otro ritmo se restaura como en la guía viva (ritmo pesimista forzado)', async ({ browser, page }) => {
@@ -370,6 +414,7 @@ test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)',
     const s0 = await storageSnapshot(page)
     const oracle = await oracleFromLiveGuide(browser, page.viewportSize(), ORIGIN, s0)
     const e = oracle.state
+    const allowed = new Set([...Object.keys(s0), ...Object.keys(oracle.storage)])
     expect(e.pace, 'oráculo: la guía viva fuerza Pesimista al restaurar «Caminar menos»').toBe('slow')
     expect(e.light, 'oráculo: «Caminar menos»').toBe(true)
     expect(e.resumen, 'oráculo: modo resumen').toBe(true)
@@ -378,9 +423,12 @@ test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)',
     // 2) Build nueva en el MISMO origen; primera carga directa de Roma.
     await stopServer(server)
     server = await startPagesServer(OUTPUT_DIR, PORT)
+    const docLoads = countDocumentLoads(page)
     await page.goto(`${ORIGIN}${ROMA_URL}`)
     await hydrated(page)
     await expect.poll(() => page.evaluate(captureState), { timeout: 15_000, message: 'primera carga = restauración de la guía viva' }).toEqual(e)
+    await page.waitForLoadState('networkidle')
+    expect(docLoads.n, 'una sola carga de documento (sin recarga de migración)').toBe(1)
 
     // Almacenamiento: todo intacto salvo roma-pace, que pasa a «slow». Es la MISMA reescritura que
     // hace la guía viva al restaurar (setLightMode(true) → setPace('slow')), no una pérdida.
@@ -392,5 +440,6 @@ test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)',
       expect(after[k], `clave ${k} intacta tras la primera carga`).toBe(v)
       expect(oracle.storage[k], `la guía viva tampoco reescribe ${k}`).toBe(v)
     }
+    expect(newKeys(after, allowed), 'sin claves nuevas tras la primera carga (sin migración)').toEqual([])
   })
 })

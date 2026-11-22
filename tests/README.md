@@ -671,7 +671,11 @@ queda probado que la v1.1 se puede publicar sobre la guía viva sin que nadie pi
   Roma ya pinta oscuro por el script inline de color-mode; control: sin `roma-theme` pinta
   claro); una **clave de nota huérfana** (de una ficha que ya no
   existe) sigue en el almacenamiento; **ninguna clave pierde su valor** (la única reescritura es
-  la misma que hace la guía viva al restaurar); recargar no cambia nada; la portada no escribe
+  la misma que hace la guía viva al restaurar); **sin migración**: abrir Roma y recargar son
+  **una sola carga de documento** cada una (una recarga de migración sería la segunda) y no
+  aparece **ninguna clave nueva** fuera de las del usuario y las que deja la propia guía viva al
+  restaurar (única excepción, exacta: `roma-theme=system`, que @nuxtjs/color-mode persiste al
+  arrancar si el usuario nunca tocó el tema; no copia ni transforma nada del usuario); recargar no cambia nada; la portada no escribe
   nada; y **Campania** arranca con sus valores por defecto y las notas vacías, sin tocar las
   claves de Roma.
 
