@@ -182,4 +182,204 @@ test.describe('aislamiento entre viajes en la build publicada (D-05)', () => {
     expect(res?.status(), 'un borrador responde 404').toBe(404)
     await expect.poll(() => t.heavy.length, { timeout: 15_000 }).toBeGreaterThan(0)
   })
+
+  test('descargas: tarjeta de Roma → «← Todos los viajes» → tarjeta de Campania, Atrás y Adelante, sin sql_dump ni WASM', async ({ page }) => {
+    await blockOffOrigin(page, ORIGIN)
+    const t = track(page)
+
+    t.step = 'portada'
+    await page.goto(PORTADA)
+    await landOn(page, PORTADA, MARK.portada)
+
+    t.step = 'tarjeta → roma'
+    await page.locator(`a.trip-index-card[href="${ROMA_URL}"]`).click()
+    await landOn(page, ROMA, MARK.roma)
+
+    t.step = '«← Todos los viajes» → portada'
+    await page.locator('footer .trip-back a').click()
+    await landOn(page, PORTADA, MARK.portada)
+
+    t.step = 'tarjeta → campania'
+    await page.locator(`a.trip-index-card[href="${CAMPANIA_URL}"]`).click()
+    await landOn(page, CAMPANIA, MARK.campania)
+
+    t.step = 'atrás → portada'
+    await page.goBack()
+    await landOn(page, PORTADA, MARK.portada)
+
+    t.step = 'atrás → roma'
+    await page.goBack()
+    await landOn(page, ROMA, MARK.roma)
+
+    t.step = 'adelante → portada'
+    await page.goForward()
+    await landOn(page, PORTADA, MARK.portada)
+
+    t.step = 'adelante → campania'
+    await page.goForward()
+    await landOn(page, CAMPANIA, MARK.campania)
+
+    expect(t.heavy, `descargas de la base de contenido:\n${t.heavy.join('\n')}`).toHaveLength(0)
+    for (const step of ['portada', 'tarjeta → roma', 'tarjeta → campania']) {
+      expect(t.nuxtAssets[step] ?? 0, `control de no vacuidad: el paso «${step}» pidió assets /_nuxt/`).toBeGreaterThan(0)
+    }
+    expect(t.badAssets, `respuestas /_nuxt/ >= 400:\n${t.badAssets.join('\n')}`).toHaveLength(0)
+  })
+
+  test('búsqueda: cada guía busca solo en sus fichas, también al volver con «Atrás»', async ({ page }) => {
+    await blockOffOrigin(page, ORIGIN)
+    const t = track(page)
+    const box = page.locator('#search-results')
+    const results = page.locator('#search-results .search-result')
+    const cardsOf = (): Promise<string[]> => results.evaluateAll(els => els.map(e => e.getAttribute('data-card') ?? ''))
+
+    /** Escribe `q` y comprueba que hay resultados y que todos son fichas de `slugs`. */
+    async function onlyFrom(q: string, slugs: string[], trip: string): Promise<void> {
+      await page.fill('#search', q)
+      await expect(results).not.toHaveCount(0)
+      const cards = await cardsOf()
+      expect(cards.filter(c => !slugs.includes(c)), `«${q}» en ${trip} solo trae fichas de ${trip}`).toEqual([])
+    }
+
+    /** Escribe `q` y comprueba «Sin resultados». */
+    async function none(q: string): Promise<void> {
+      await page.fill('#search', q)
+      await expect(box).toHaveClass(/\bshow\b/)
+      await expect(results).toHaveCount(0)
+      await expect(box).toContainText('Sin resultados')
+    }
+
+    // Escribe hasta que la aserción pase: el índice MiniSearch se construye en onMounted, y una
+    // entrada anterior a ese momento no se reevalúa sola (clon de tests/trips/isolation.spec.ts).
+    async function searchUntil(q: string, slug: string): Promise<void> {
+      await expect(async () => {
+        await page.fill('#search', '')
+        await page.fill('#search', q)
+        await expect(page.locator(`#search-results .search-result[data-card="${slug}"]`)).not.toHaveCount(0, { timeout: 2_000 })
+      }).toPass({ timeout: 30_000 })
+    }
+
+    t.step = 'roma'
+    await page.goto(ROMA)
+    await landOn(page, ROMA, MARK.roma)
+    await searchUntil('Pantheon', 'pantheon')
+    await onlyFrom('iglesia', ROMA_SLUGS, 'Roma')
+
+    t.step = 'campania'
+    await page.goto(CAMPANIA)
+    await landOn(page, CAMPANIA, MARK.campania)
+    await expect(page.locator('#search'), 'Campania abre con el buscador vacío').toHaveValue('')
+    await expect(box, 'Campania abre con el desplegable cerrado').not.toHaveClass(/\bshow\b/)
+    await searchUntil('Sorgeto', 'baia-di-sorgeto')
+    await none('Pantheon')
+    await onlyFrom('iglesia', CAMPANIA_SLUGS, 'Campania')
+
+    t.step = 'atrás → roma'
+    await page.goBack()
+    await landOn(page, ROMA, MARK.roma)
+    await searchUntil('Pantheon', 'pantheon')
+    await none('Sorgeto')
+    await onlyFrom('iglesia', ROMA_SLUGS, 'Roma')
+
+    expect(t.heavy, `descargas de la base de contenido:\n${t.heavy.join('\n')}`).toHaveLength(0)
+  })
+
+  test('notas: una nota de Roma no aparece en Campania ni al revés, también con «Atrás» y «Adelante»', async ({ page }) => {
+    await blockOffOrigin(page, ORIGIN)
+    const t = track(page)
+    const ls = (k: string): Promise<string | null> => page.evaluate(key => localStorage.getItem(key), k)
+    const notes = (): Promise<[string, string][]> =>
+      page.locator('.notes-textarea').evaluateAll(els =>
+        els.map(e => [e.getAttribute('data-note-key') ?? '', (e as HTMLTextAreaElement).value] as [string, string]))
+    const ROMA_NOTE = 'Nota de Roma: volver al Pantheon a las 9'
+    const CAMPANIA_NOTE = 'Nota de Campania: baño en Sorgeto al atardecer'
+
+    t.step = 'roma'
+    await page.goto(ROMA)
+    await landOn(page, ROMA, MARK.roma)
+    await page.locator('.notes-textarea[data-note-key="pantheon"]').fill(ROMA_NOTE)
+    await expect.poll(() => ls('roma-note-pantheon')).toBe(ROMA_NOTE)
+
+    t.step = 'campania'
+    await page.goto(CAMPANIA)
+    await landOn(page, CAMPANIA, MARK.campania)
+    await page.locator('.notes-textarea[data-note-key="baia-di-sorgeto"]').fill(CAMPANIA_NOTE)
+    await expect.poll(() => ls('campania-note-baia-di-sorgeto')).toBe(CAMPANIA_NOTE)
+
+    t.step = 'atrás → roma'
+    await page.goBack()
+    await landOn(page, ROMA, MARK.roma)
+    // La nota propia restaurada demuestra que la restauración ya corrió antes de mirar las demás.
+    await expect(page.locator('.notes-textarea[data-note-key="pantheon"]')).toHaveValue(ROMA_NOTE)
+    const romaNotes = await notes()
+    expect(romaNotes.length, 'Roma tiene un área de notas por ficha').toBe(ROMA_SLUGS.length)
+    expect(romaNotes.filter(([, v]) => v === CAMPANIA_NOTE), 'la nota de Campania no aparece en Roma').toEqual([])
+    expect(romaNotes.filter(([k, v]) => (k === 'pantheon' ? v !== ROMA_NOTE : v !== '')), 'en Roma solo pantheon tiene nota').toEqual([])
+
+    t.step = 'adelante → campania'
+    await page.goForward()
+    await landOn(page, CAMPANIA, MARK.campania)
+    await expect(page.locator('.notes-textarea[data-note-key="baia-di-sorgeto"]')).toHaveValue(CAMPANIA_NOTE)
+    const campaniaNotes = await notes()
+    expect(campaniaNotes.length, 'Campania tiene un área de notas por ficha').toBe(CAMPANIA_SLUGS.length)
+    expect(campaniaNotes.filter(([, v]) => v === ROMA_NOTE), 'la nota de Roma no aparece en Campania').toEqual([])
+    expect(campaniaNotes.filter(([k, v]) => (k === 'baia-di-sorgeto' ? v !== CAMPANIA_NOTE : v !== '')), 'en Campania solo baia-di-sorgeto tiene nota').toEqual([])
+
+    expect(await ls('roma-note-baia-di-sorgeto'), 'ninguna clave roma-* para la ficha de Campania').toBeNull()
+    expect(await ls('campania-note-pantheon'), 'ninguna clave campania-* para la ficha de Roma').toBeNull()
+    expect(await ls('roma-note-pantheon')).toBe(ROMA_NOTE)
+    expect(await ls('campania-note-baia-di-sorgeto')).toBe(CAMPANIA_NOTE)
+    expect(t.heavy, `descargas de la base de contenido:\n${t.heavy.join('\n')}`).toHaveLength(0)
+  })
+
+  test('modos: ritmo, «caminar menos» y resumen de Roma y de Campania no se mezclan', async ({ page }) => {
+    await blockOffOrigin(page, ORIGIN)
+    const t = track(page)
+    const ls = (k: string): Promise<string | null> => page.evaluate(key => localStorage.getItem(key), k)
+    const body = page.locator('body')
+    const activePace = page.locator('.pace-btn.active')
+
+    t.step = 'roma'
+    await page.goto(ROMA)
+    await landOn(page, ROMA, MARK.roma)
+    await page.locator('.pace-btn[data-pace="neutral"]').click()
+    await page.locator('#resumen-toggle').click()
+    await expect.poll(() => ls('roma-pace')).toBe('neutral')
+    await expect.poll(() => ls('roma-resumen')).toBe('1')
+
+    t.step = 'campania'
+    await page.goto(CAMPANIA)
+    await landOn(page, CAMPANIA, MARK.campania)
+    await expect(activePace, 'Campania arranca en su ritmo por defecto').toHaveAttribute('data-pace', 'optimistic')
+    await expect(body).not.toHaveClass(/\blight-mode\b/)
+    await expect(body).not.toHaveClass(/\bmodo-resumen\b/)
+    await page.locator('#light-toggle').click()
+    await expect(activePace, '«Caminar menos» fuerza el ritmo pesimista').toHaveAttribute('data-pace', 'slow')
+    await expect(body).toHaveClass(/\blight-mode\b/)
+    await expect.poll(() => ls('campania-light')).toBe('1')
+    await expect.poll(() => ls('campania-pace')).toBe('slow')
+
+    t.step = 'atrás → roma'
+    await page.goBack()
+    await landOn(page, ROMA, MARK.roma)
+    await expect(activePace).toHaveAttribute('data-pace', 'neutral')
+    await expect(body).toHaveClass(/\bmodo-resumen\b/)
+    await expect(body).not.toHaveClass(/\blight-mode\b/)
+    await expect(page.locator('#light-toggle')).toHaveAttribute('aria-pressed', 'false')
+
+    t.step = 'adelante → campania'
+    await page.goForward()
+    await landOn(page, CAMPANIA, MARK.campania)
+    await expect(activePace).toHaveAttribute('data-pace', 'slow')
+    await expect(body).toHaveClass(/\blight-mode\b/)
+    await expect(body).not.toHaveClass(/\bmodo-resumen\b/)
+
+    expect(await ls('roma-pace')).toBe('neutral')
+    expect(await ls('roma-resumen')).toBe('1')
+    expect(await ls('campania-light')).toBe('1')
+    expect(await ls('campania-pace')).toBe('slow')
+    expect(await ls('roma-light'), '«Caminar menos» de Campania no toca roma-light').not.toBe('1')
+    expect(await ls('campania-resumen'), 'el resumen de Roma no toca campania-resumen').not.toBe('1')
+    expect(t.heavy, `descargas de la base de contenido:\n${t.heavy.join('\n')}`).toHaveLength(0)
+  })
 })
