@@ -340,7 +340,23 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
   `yaml-object`, `trip-yml`, `trip-slug`, `trip-field`, `stray-file`, `reserved-key`,
   `unknown-key`, `basename-slug`, `dup-id`, `fixed-anchor`, `ref`, `anchor`,
   `cross-trip-link`, `day-order`, `day-pill`, `trip-dates`, `trip-summary-link`, `stay-ref`,
-  `stay-dup` y `reservas-headings` (Fase 12.1, ver §5.9).
+  `stay-dup`, `reservas-headings` (Fase 12.1, ver §5.9) y `card-placement` (Fase 10, cierre de
+  G-10-2).
+- Los enlaces de la prosa se buscan en **toda forma que MDC pinta como `<a>`**, no solo
+  `[texto](destino)` pegado al paréntesis: con espacio o salto de línea tras el `(`, con destino
+  `<…>`, los autoenlaces `<scheme:…>` y los emails (`<a@b>` o sueltos, que GFM convierte en
+  `mailto:`). Todos pasan por la lista blanca (`#id` como ancla, o `http(s)://`). Se rechazan con
+  `cross-trip-link`, sea cual sea su destino, las definiciones de referencia `[r]: …` (sin ellas
+  `[x][r]` no enlaza), el HTML crudo `<a …>` y los atributos MDC `{href=…}`/`{to=…}`
+  (`:a[x]{href=…}`, `::a{href=…}`). También se comprobó (con `parseMarkdown` de `@nuxtjs/mdc`
+  0.22.0) que un bloque MDC con props en frontmatter YAML (`::a` / `---` / `href: /trips/roma` /
+  `---`) **sí** pinta `<a href>` (y `to:` igual), así que esa forma también se rechaza. El
+  escaneo es léxico y fail-closed (puede dar un falso rojo, nunca un falso verde); la ruta del
+  parser se descartó porque no se resuelve con pnpm y la v1.1 no admite dependencias nuevas.
+  `card-placement` exige que cada ficha aparezca **exactamente una vez** en la unión de los
+  `cards` de `days/*.yml` (una ficha sin día no se pinta; una en dos días duplica su id), y
+  `anchor`, `seenIn` y los `ref` de timeline y reservas solo resuelven a fichas pintadas (cierre
+  de G-10-2 / WR-01 y WR-03 de 10-REVIEW).
 - Los mensajes (`formatViolations`) llevan **el fichero culpable** y la regla:
   `content/trips/<viaje>/…/<fichero>.yml: [<regla>] <detalle>`. Un YAML roto en
   cualquier viaje rompe `verify` nombrando su fichero.
