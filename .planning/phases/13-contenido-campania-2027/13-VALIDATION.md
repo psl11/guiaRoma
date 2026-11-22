@@ -3,10 +3,11 @@ phase: "13"
 slug: "contenido-campania-2027"
 # status lifecycle: draft (seeded by plan-phase) → validated (set by validate-phase §6)
 # audit-milestone §5.5 distinguishes NOT-VALIDATED (draft) from PARTIAL (validated + nyquist_compliant: false) (#2117)
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: validated
+nyquist_compliant: true
+wave_0_complete: true
 created: "2026-11-22"
+validated: "2026-11-22"
 ---
 
 # Phase 13 — Validation Strategy
@@ -43,21 +44,21 @@ created: "2026-11-22"
 
 | Req / Decision | Behavior | Test Type | Automated Command | File Exists | Status |
 |----------------|----------|-----------|-------------------|-------------|--------|
-| CAMP-01 | Days content | data | `pnpm exec vitest run tests/data/campania-content.spec.ts` | ❌ W0 | ⬜ pending |
-| CAMP-01 | Days render in order, with pills; choices stack; «Dormís en» lines; transport bands; Thursday 24 route is driving | e2e dev | `pnpm test:trips` (`campania.spec.ts`, updated) | ✅ to update | ⬜ pending |
-| CAMP-01 | Data gate green for all 10 days, including refs inside options and `stay-ref` | data | `pnpm test:data` | ✅ | ⬜ pending |
-| CAMP-02 | Monument cards | data | `tests/data/campania-content.spec.ts` | ❌ W0 | ⬜ pending |
-| CAMP-02 | Markers = monuments; nature markers teal; the motif replaces a hero that fails; the map frames all cities | e2e dev | `pnpm test:trips` | ✅ | ⬜ pending |
-| CAMP-03 | At least 1 food card per planned group; `badgeKind` in the enum; the `#gastronomia` section exists | data + e2e | `campania-content.spec.ts`; `pnpm test:trips` | ❌ W0 / ✅ | ⬜ pending |
-| CAMP-04 | Reservas file | data | `campania-content.spec.ts` | ❌ W0 | ⬜ pending |
-| CAMP-04 | Campania's `#reservas` shows its own headings and never «3 comensales»; an empty group is not rendered | e2e dev | `pnpm test:trips` (`campania.spec.ts`) | ✅ to update | ⬜ pending |
-| CAMP-05 | `practica.yml` section headings cover ferries, driving/ZTL/islands, heat, footwear, children and concerts | data | `campania-content.spec.ts` | ❌ W0 | ⬜ pending |
-| CAMP-06 | «Por confirmar» markers | data | `campania-content.spec.ts` | ❌ W0 | ⬜ pending |
-| D-22 | The Ultimo concert is on Friday 25 (`viernes-25`). The day carries no «⚠ por confirmar» on the date; only the time/gates may have one | data | `campania-content.spec.ts` | ❌ W0 | ⬜ pending |
-| ROUTE-05 / D-02 | Manifest has campania `draft:false`; prerender routes include `/trips/campania/` | unit | `pnpm exec vitest run tests/unit/tripManifest.spec.ts` | ✅ to update | ⬜ pending |
-| ROUTE-05 / D-02 | Published build | data (build) | `pnpm verify` (`build-isolation.spec.ts`) | ✅ to update | ⬜ pending |
-| ROUTE-05 / D-02 | The portada lists Campania (dev); the parity portada stays green without edits | e2e dev + parity | `pnpm test:trips` (`portada.spec.ts`); `pnpm test:parity` | ✅ to update / read-only | ⬜ pending |
-| D-19 | Roma, prueba, forma, app, shared, CSS and parity unchanged; the 56 goldens are not re-baselined | git + parity | frozen-files check; `pnpm verify` | ✅ | ⬜ pending |
+| CAMP-01 | Days content | data | `pnpm exec vitest run tests/data/campania-content.spec.ts` | ✅ | ✅ green |
+| CAMP-01 | Days render in order, with pills; choices stack; «Dormís en» lines; transport bands; Thursday 24 route is driving | e2e dev | `pnpm test:trips` (`campania.spec.ts`, updated) | ✅ updated | ✅ green |
+| CAMP-01 | Data gate green for all 10 days, including refs inside options and `stay-ref` | data | `pnpm test:data` | ✅ | ✅ green |
+| CAMP-02 | Monument cards | data | `tests/data/campania-content.spec.ts` | ✅ | ✅ green |
+| CAMP-02 | Markers = monuments; nature markers teal; the motif replaces a hero that fails; the map frames all cities | e2e dev | `pnpm test:trips` | ✅ | ✅ green |
+| CAMP-03 | At least 1 food card per planned group; `badgeKind` in the enum; the `#gastronomia` section exists | data + e2e | `campania-content.spec.ts`; `pnpm test:trips` | ✅ | ✅ green |
+| CAMP-04 | Reservas file | data | `campania-content.spec.ts` | ✅ | ✅ green |
+| CAMP-04 | Campania's `#reservas` shows its own headings and never «3 comensales»; an empty group is not rendered | e2e dev | `pnpm test:trips` (`campania.spec.ts`) | ✅ updated | ✅ green |
+| CAMP-05 | `practica.yml` section headings cover ferries, driving/ZTL/islands, heat, footwear, children and concerts | data | `campania-content.spec.ts` | ✅ | ✅ green |
+| CAMP-06 | «Por confirmar» markers | data | `campania-content.spec.ts` | ✅ | ✅ green |
+| D-22 | The Ultimo concert is on Friday 25 (`viernes-25`). The day carries no «⚠ por confirmar» on the date; only the time/gates may have one | data | `campania-content.spec.ts` | ✅ | ✅ green |
+| ROUTE-05 / D-02 | Manifest has campania `draft:false`; prerender routes include `/trips/campania/` | unit | `pnpm exec vitest run tests/unit/tripManifest.spec.ts` | ✅ updated | ✅ green |
+| ROUTE-05 / D-02 | Published build | data (build) | `pnpm verify` (`build-isolation.spec.ts`) | ✅ updated | ✅ green |
+| ROUTE-05 / D-02 | The portada lists Campania (dev); the parity portada stays green without edits | e2e dev + parity | `pnpm test:trips` (`portada.spec.ts`); `pnpm test:parity` | ✅ updated / read-only | ✅ green |
+| D-19 | Roma, prueba, forma, app, shared, CSS and parity unchanged; the 56 goldens are not re-baselined | git + parity | frozen-files check; `pnpm verify` | ✅ | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -92,10 +93,10 @@ What each row checks in detail:
 
 ## Wave 0 Requirements
 
-- [ ] `tests/data/campania-content.spec.ts` — the CAMP-01..06 data assertions above.
+- [x] `tests/data/campania-content.spec.ts` — the CAMP-01..06 data assertions above.
   - Checks that are safe before publication, such as structure and the marker never appearing in Roma, are active from the first content plan.
   - The slug list, counts and thresholds are tightened plan by plan as content lands.
-- [ ] Update the skeleton-bound tests as the related content lands:
+- [x] Update the skeleton-bound tests as the related content lands:
   - `tests/trips/campania.spec.ts` (orders, the Thursday route mode, the portada);
   - `tests/unit/timelineRows.spec.ts` (Thursday refs);
   - `tests/unit/searchIndex.spec.ts` (keep «escalones»/«linterna» in Sorgeto's family note);
@@ -115,11 +116,34 @@ What each row checks in detail:
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 15s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 15s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-11-22 (orchestrator, from 13-08 gate evidence)
+
+**Evidence.** The 13-08 gate ran with Node 22, from clean caches, at HEAD after publication:
+- `pnpm verify` exit 0:
+  - unit **567/567**;
+  - data **760/760** (0 skipped, so the build-isolation post-build checks ran);
+  - parity **110/110** on the first run (13 files, 56 goldens, no snapshots written).
+- 17 routes prerendered, including `/guiaRoma/trips/campania/`.
+- `pnpm typecheck` and `pnpm lint` both clean.
+- `pnpm test:trips` **46/46** (4 files).
+- `tests/data/campania-content.spec.ts` covers CAMP-01..06 and D-22/D-23. The mutation checks were each proven red once:
+  - the marker in `mapsQuery`;
+  - a non-verified food name;
+  - removing `headings.table`;
+  - a card listed on two days.
+- The frozen-files check from 10a55d8 is empty.
+
+## Validation Audit 2026-11-22
+
+| Metric | Count |
+|---|---|
+| Gaps found | 0 |
+| Resolved | 0 |
+| Escalated | 0 |
