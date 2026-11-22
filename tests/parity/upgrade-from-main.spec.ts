@@ -32,8 +32,10 @@ import { startPagesServer } from './_pagesServer'
  * usuario (y por tanto su localStorage) es el mismo de principio a fin: exactamente lo que vive un
  * usuario real cuando se publica la versión nueva.
  *
- * Puerto base propio 6600 + TEST_WORKER_INDEX (lejos de los demás specs de paridad; 14-02 usa
- * 6700). Este spec no edita ni importa ningún otro spec: los helpers de portada.spec.ts se clonan.
+ * Puerto base propio 6600 + TEST_PARALLEL_INDEX (lejos de los demás specs de paridad; 14-02 usa
+ * 6700). TEST_PARALLEL_INDEX está siempre en 0..workers-1; TEST_WORKER_INDEX no (Playwright
+ * arranca un proceso nuevo con índice mayor tras cada fallo), y con él los puertos de los dos
+ * specs de la Fase 14 acabarían cruzándose (WR-06 de 14-REVIEW.md). Este spec no edita ni importa ningún otro spec: los helpers de portada.spec.ts se clonan.
  */
 
 /** Monumentos de Roma según el contenido: las fichas con área de notas en ambas guías. */
@@ -274,7 +276,7 @@ const noteFor = (key: string): string => `Nota de ${key}: «volver» al café, 3
 test.describe('upgrade desde la guía viva de main en el mismo origen (PAR-03)', () => {
   test.describe.configure({ timeout: 120_000 })
 
-  const PORT = 6600 + Number(process.env.TEST_WORKER_INDEX ?? 0)
+  const PORT = 6600 + Number(process.env.TEST_PARALLEL_INDEX ?? 0)
   const ORIGIN = `http://127.0.0.1:${PORT}`
   const LIVE_URL = `${ORIGIN}${SITE_BASE}index.html`
   let oldDir = ''

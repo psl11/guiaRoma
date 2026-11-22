@@ -23,7 +23,9 @@ import { startPagesServer } from './_pagesServer'
  *
  * Servidor: `startPagesServer` (tests/parity/_pagesServer.ts) imita a GitHub Pages sobre
  * `.output/public` bajo `/guiaRoma/` (301 a barra final, `404.html` real). Puerto base propio
- * 6700 + TEST_WORKER_INDEX (14-01 usa 6600; los demás specs, 4173 y 5000…5850).
+ * 6700 + TEST_PARALLEL_INDEX (14-01 usa 6600; los demás specs, 4173 y 5000…5850). Se usa
+ * TEST_PARALLEL_INDEX (siempre en 0..workers-1) y no TEST_WORKER_INDEX, que crece tras cada fallo
+ * sin límite y acabaría cruzando los puertos de los dos specs de la Fase 14 (WR-06).
  *
  * Historial: tras `goBack`/`goForward`, `page.url()` puede leerse aún con el valor anterior; por eso
  * cada paso espera la URL esperada, `networkidle`, la hidratación y un marcador propio de la página
@@ -118,7 +120,7 @@ async function landOn(page: Page, url: string, marker: string): Promise<void> {
 }
 
 test.describe('aislamiento entre viajes en la build publicada (D-05)', () => {
-  const PORT = 6700 + Number(process.env.TEST_WORKER_INDEX ?? 0)
+  const PORT = 6700 + Number(process.env.TEST_PARALLEL_INDEX ?? 0)
   const ORIGIN = `http://127.0.0.1:${PORT}`
   const PORTADA = `${ORIGIN}${SITE_BASE}`
   const ROMA = `${ORIGIN}${ROMA_URL}`

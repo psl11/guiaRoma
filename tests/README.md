@@ -69,8 +69,9 @@ directorio y **`404.html` real** para lo inexistente. `serve` no vale ahí porqu
 reescribe y oculta justo esa conducta. Puertos base: 5850 (`legacy-redirect`) y 5800
 (`portada`), más `TEST_WORKER_INDEX`. Los dos specs de la Fase 14 (§6) también usan
 `startPagesServer`: **`upgrade-from-main.spec.ts`** (puerto base 6600) y
-**`cross-trip.spec.ts`** (puerto base 6700), más `TEST_WORKER_INDEX`. Las dos exclusiones de §2
-no cambian.
+**`cross-trip.spec.ts`** (puerto base 6700), más `TEST_PARALLEL_INDEX` (siempre en
+`0..workers-1`; `TEST_WORKER_INDEX` crece sin límite tras cada fallo y acabaría cruzando los
+puertos de los dos specs). Las dos exclusiones de §2 no cambian.
 
 ---
 
@@ -660,7 +661,7 @@ queda probado que la v1.1 se puede publicar sobre la guía viva sin que nadie pi
   puerto). La guía vieja se sirve en `/guiaRoma/index.html` con su propio `startPagesServer` en
   `127.0.0.1:PUERTO`; ese servidor se cierra y la build nueva (`.output/public` bajo
   `/guiaRoma/`) se levanta en el **mismo** `127.0.0.1:PUERTO`, con el mismo contexto de
-  navegador de principio a fin. Puerto base **6600** + `TEST_WORKER_INDEX`.
+  navegador de principio a fin. Puerto base **6600** + `TEST_PARALLEL_INDEX`.
 - **Oráculo, no valores escritos a mano:** el estado esperado es lo que **la propia guía viva**
   restaura sobre el mismo almacenamiento, capturado en un contexto de navegador aparte.
 - **Qué comprueba** (2 tests × mobile + desktop = 4): las notas de las **38** fichas (con
@@ -697,7 +698,7 @@ queda probado que la v1.1 se puede publicar sobre la guía viva sin que nadie pi
   y «Adelante»); el ritmo, «Caminar menos» y el modo resumen de un viaje no cambian los del otro.
 - Extiende a Campania la aserción D-15 de la Fase 11 (que solo cubría portada y Roma) y cierra
   el hallazgo **WR-06** de `13-REVIEW.md`. 6 tests × mobile + desktop = 12. Puerto base **6700**
-  + `TEST_WORKER_INDEX`.
+  + `TEST_PARALLEL_INDEX`.
 
 ### 6.3 `tests/data/css-vs-main.spec.ts` — el CSS de la build es el de `main` (D-02)
 
