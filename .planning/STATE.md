@@ -2,19 +2,19 @@
 gsd_state_version: "1.0"
 milestone: v1.1
 milestone_name: Multi-viaje + Campania
-current_phase: 14
-current_phase_name: Verificación del milestone
+current_phase: 09
+current_phase_name: Plataforma por viaje
 status: verifying
-stopped_at: "Phases 12.1-14 executed; 13 and 14 human_needed (UAT pending: 9,10,11,12,13,14)"
-last_updated: "2026-11-22T02:42:02.534Z"
+stopped_at: Completed 09-06-PLAN.md
+last_updated: "2026-11-22T12:03:41.853Z"
 last_activity: 2026-11-22
-last_activity_desc: Phase 12.1 complete, transitioned to Phase 9
-state_head: a0f294a78fefb530d630631479bc36d8a7f6fb7e
+last_activity_desc: Phase 09 execution started
+state_head: bf45c6bfc3c9df4f68b8fad294beb5a418eb2de0
 progress:
   total_phases: 7
   completed_phases: 1
-  total_plans: 36
-  completed_plans: 36
+  total_plans: 37
+  completed_plans: 37
   percent: 14
 ---
 
@@ -25,14 +25,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-11-20)
 
 **Core value:** La guía se consulta paseando por el destino y debe ser fiel, editorial y fiable (también offline). Lo ya publicado no se rompe: Roma sigue exactamente igual (paridad verificada) mientras la plataforma crece a varios viajes.
-**Current focus:** Phase 12 — Formas nuevas de viaje
+**Current focus:** Phase 09 — Plataforma por viaje
 
 ## Current Position
 
-Phase: 14 (Verificación del milestone) — READY TO EXECUTE
-Plan: 8 of 8
+Phase: 09 (Plataforma por viaje) — EXECUTING
+Plan: 6 of 6
 Status: Phase complete — ready for verification
-Last activity: 2026-11-22 — Phase 12.1 complete, transitioned to Phase 9
+Last activity: 2026-11-22 — Phase 09 execution started
 
 Progress: [█░░░░░░░░░] 14%
 
@@ -140,6 +140,7 @@ Progress: [█░░░░░░░░░] 14%
 | Phase 14 P01 | 15min | 2 tasks | 1 files |
 | Phase 14 P02 | 10min | 3 tasks | 2 files |
 | Phase 14 P03 | 10min | 3 tasks | 2 files |
+| Phase 09 P06 | 3min | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -349,6 +350,7 @@ Recent decisions affecting current work:
 - [Phase 14]: 14-03: gate total measured 126/15 (grep-invert) and 128/15 raw = 110 + 16; registered verbatim in tests/README.md §4
 - [Phase 14]: 14-03: navigation.spec.ts SC#2 [mobile] failing alone in verify runs 2-3 is the D-01 known flake (3/3 isolated, ~28.9s of a 30s budget); not a D-06 defect, not fixed (frozen spec)
 - [Phase 14]: 14-03: PAR-03 marked complete; PAR-04 stays Pending until the user signs 14-UAT.md on a real phone (D-07/D-08)
+- [Phase 09]: G-09-3: reuse stray-file for loose content/trips root entries and upper-case YAML extensions (RULES stays 21); only isYaml is case-insensitive, COLLECTIONS[].match stays case-sensitive
 
 ### Pending Todos
 
@@ -389,9 +391,9 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-22T02:42:02.204Z
-Stopped at: Phases 12.1-14 executed; 13 and 14 human_needed (UAT pending: 9,10,11,12,13,14)
-Resume file: .planning/phases/14-verificacion-del-milestone/14-UAT.md
+Last session: 2026-11-22T12:03:41.467Z
+Stopped at: Completed 09-06-PLAN.md
+Resume file: None
 
 ## Operator Next Steps
 
