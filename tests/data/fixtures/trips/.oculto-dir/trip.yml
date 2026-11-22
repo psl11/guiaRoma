@@ -1,0 +1,17 @@
+# Fixture NEGATIVO (CR-01, revisión de 09-06): CARPETA oculta con un trip.yml completo y válido.
+# Content globa con `dot: true` y SÍ ingeriría content/trips/.oculto-dir/, así que la puerta no
+# puede saltársela: listTripDirs la incluye y `trip-slug` falla (slug "oculto" ≠ carpeta).
+slug: oculto
+title: Campania _2027_
+decoration: '·  CAMPANIA  ·'
+heroMeta: 2027
+quote: Vedi Napoli e poi muori.
+quoteAttr: — PROVERBIO
+infoCards:
+  - label: Alojamiento
+    value: '**Hotel** de prueba'
+howTo:
+  - Fixture de la puerta de datos.
+map:
+  center: { lat: 40.8518, lng: 14.2681 }
+  zoom: 13

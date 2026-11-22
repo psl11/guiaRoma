@@ -117,9 +117,14 @@ describe('readTripManifest con fixtures temporales (fail-closed)', () => {
     expect(readTripManifest(fixture({}))).toEqual([])
   })
 
-  it('ignora carpetas sin trip.yml y carpetas ocultas', () => {
-    const root = fixture({ 'roma': 'slug: roma\n', 'vacia': null, '.x': 'slug: x\n' })
+  it('ignora carpetas sin trip.yml (también ocultas)', () => {
+    const root = fixture({ 'roma': 'slug: roma\n', 'vacia': null, '.vacia': null })
     expect(readTripManifest(root)).toEqual([{ slug: 'roma', draft: false }])
+  })
+
+  it('carpeta oculta con trip.yml (.x) → lanza nombrando la carpeta (CR-01: Content la ingiere con dot: true)', () => {
+    const root = fixture({ 'roma': 'slug: roma\n', '.x': 'slug: x\ndraft: true\n' })
+    expect(() => readTripManifest(root)).toThrow(/content\/trips\/\.x:/)
   })
 
   it('draft ausente o null → false; draft: true → true', () => {

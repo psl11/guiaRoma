@@ -63,6 +63,8 @@ import {
  *
  * Cierre G-09-3 (IN-05): la puerta no omite un `.YML`/`.Yaml` (extensión YAML sin distinguir
  * mayúsculas → `stray-file`) ni un fichero suelto en la raíz de content/trips/.
+ * Cierre CR-01 (revisión de 09-06): tampoco omite una CARPETA oculta (`content/trips/.x/`), que
+ * Content sí ingiere (`dot: true`): es una carpeta de viaje más y falla con `trip-slug`.
  *
  * El bloque «la puerta tiene dientes» prueba cada regla con un fixture (en memoria con
  * `loadTripFromFiles` o en disco en tests/data/fixtures/trips/, NUNCA bajo content/).
@@ -165,11 +167,20 @@ function expectRule(vs: Violation[], rule: Rule, file: string) {
 }
 
 describe('la puerta tiene dientes (fixtures)', () => {
-  it('listTripDirs lista solo carpetas, ordenadas (fixtures en disco)', () => {
-    expect(listTripDirs(FIXTURES)).toEqual(['campania-2027', 'suelto'])
+  it('listTripDirs lista solo carpetas, ocultas incluidas, ordenadas (fixtures en disco)', () => {
+    expect(listTripDirs(FIXTURES)).toEqual(['.oculto-dir', 'campania-2027', 'suelto'])
   })
 
-  it('checkTripsRoot: fichero suelto en la raíz → stray-file; carpetas y ocultos no (fixtures en disco)', () => {
+  it('trip-slug: carpeta oculta en disco (.oculto-dir, CR-01) — Content la ingiere, la puerta no la omite', () => {
+    const vs = checkTrip(loadTrip('.oculto-dir', FIXTURES))
+    expect(vs, formatViolations(vs)).toEqual(expect.arrayContaining([expect.objectContaining({
+      rule: 'trip-slug',
+      file: 'tests/data/fixtures/trips/.oculto-dir/trip.yml',
+      message: expect.stringContaining('.oculto-dir'),
+    })]))
+  })
+
+  it('checkTripsRoot: fichero suelto en la raíz → stray-file; carpetas (también ocultas) y ficheros ocultos no (fixtures en disco)', () => {
     const vs = checkTripsRoot(FIXTURES)
     expect(vs, formatViolations(vs)).toEqual([{
       file: 'tests/data/fixtures/trips/raiz.yml',

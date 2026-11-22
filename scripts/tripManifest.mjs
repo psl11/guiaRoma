@@ -26,7 +26,7 @@ export const TRIP_FOLDER_RE = /^[a-z0-9]+$/
 const bySlug = (a, b) => (a.slug < b.slug ? -1 : a.slug > b.slug ? 1 : 0)
 
 /**
- * Viajes de `root` (por defecto content/trips): subdirectorios no ocultos con trip.yml, como
+ * Viajes de `root` (por defecto content/trips): subdirectorios con trip.yml, como
  * `{ slug, draft }` ordenados por slug. `slug` = nombre de carpeta (la puerta tests/data ya
  * exige carpeta == slug).
  *
@@ -34,12 +34,15 @@ const bySlug = (a, b) => (a.slug < b.slug ? -1 : a.slug > b.slug ? 1 : 0)
  * (el slug acaba tal cual en la URL `/trips/<slug>/`: nunca hace falta codificarlo), y un `draft`
  * presente que no sea booleano también (un `draft: "yes"` nunca se publica por defecto).
  * `draft` ausente o `null` = `false`.
+ * Las carpetas OCULTAS (`.x/`) no se saltan (CR-01): Nuxt Content globa con `dot: true` y las
+ * ingeriría, así que saltarlas dejaría un `draft: true` fuera de `draftExcludes` (publicado en
+ * los `sql_dump`). Con trip.yml, `TRIP_FOLDER_RE` no casa con el `.` inicial y lanza.
  * @param {string} [root]
  * @returns {{ slug: string, draft: boolean }[]}
  */
 export function readTripManifest(root = TRIPS_ROOT) {
   return readdirSync(root, { withFileTypes: true })
-    .filter(d => d.isDirectory() && !d.name.startsWith('.') && existsSync(join(root, d.name, 'trip.yml')))
+    .filter(d => d.isDirectory() && existsSync(join(root, d.name, 'trip.yml')))
     .map((d) => {
       if (!TRIP_FOLDER_RE.test(d.name)) {
         throw new Error(`content/trips/${d.name}: nombre de carpeta de viaje inválido; debe cumplir ${TRIP_FOLDER_RE} (minúsculas ASCII y dígitos, sin guiones) porque es el slug y el segmento de la URL /trips/<slug>/`)

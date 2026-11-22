@@ -323,9 +323,13 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
   las iteran con `describe.each` («esquema · viaje %s», «viaje %s»).
 - `checkTripsRoot()` reporta como `stray-file` cualquier entrada no oculta directamente bajo
   `content/trips/` que no sea una carpeta (p. ej. un `content/trips/notas.yml` suelto), con su
-  ruta. `listTripDirs()` y `checkTripsRoot()` reparten entre las dos **todas** las entradas no
-  ocultas (las ocultas, como `.DS_Store` o `.gitkeep`, se ignoran), sin descartar ninguna en
-  silencio. La extensión YAML se detecta **sin distinguir mayúsculas**: `monuments/x.YML` o
+  ruta. `listTripDirs()` y `checkTripsRoot()` reparten entre las dos **todas** las entradas de la
+  raíz salvo los **ficheros** ocultos (`.DS_Store`, `.gitkeep`: ningún glob los carga), sin
+  descartar ninguna en silencio. Una **carpeta** oculta (`content/trips/.x/`) no se ignora:
+  Nuxt Content globa con `dot: true` y la ingeriría, así que `listTripDirs()` la trata como una
+  carpeta de viaje más y la puerta la falla (`trip-slug`, porque el slug no puede empezar por
+  `.`; o `trip-yml` si no tiene `trip.yml`). `readTripManifest()` tampoco la salta: con
+  `trip.yml`, lanza en la build por nombre de carpeta inválido (cierre de CR-01). La extensión YAML se detecta **sin distinguir mayúsculas**: `monuments/x.YML` o
   `x.Yaml` no se omiten, son `stray-file`, porque los globs de `content.config.ts` solo casan
   con `.yml` en minúsculas. La aserción «content/trips solo contiene carpetas de viaje» de
   `invariants.spec.ts` lo vigila sobre el árbol real (cierre de G-09-3 / IN-05).
