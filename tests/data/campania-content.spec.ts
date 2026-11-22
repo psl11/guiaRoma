@@ -41,6 +41,7 @@ const roma = loadTrip('roma')
 const WRITTEN_DAYS: Record<string, { stay: string | null }> = {
   'martes-22': { stay: 'ischia' },
   'sabado-19': { stay: 'napoles' },
+  'domingo-20': { stay: 'procida' },
 }
 
 /** Fichas ya escritas con contenido real. Los planes siguientes añaden las suyas. */
@@ -49,10 +50,13 @@ const WRITTEN_MONUMENTS: string[] = [
   'baia-di-sorgeto',
   'lungomare-caracciolo',
   'vomero',
+  'spaccanapoli',
+  'marina-corricella',
+  'pozzo-vecchio',
 ]
 
 /** Fichas que deben llevar nota familiar (D-09). Los planes siguientes añaden las suyas. */
-const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto']
+const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto', 'pozzo-vecchio']
 
 /**
  * Ficheros (ruta relativa al viaje) que deben llevar el marcador porque tienen datos dudosos.
@@ -62,6 +66,9 @@ const MARKER_FILES: string[] = [
   'monuments/baia-di-sorgeto.yml',
   'monuments/vomero.yml',
   'days/sabado-19.yml',
+  'days/domingo-20.yml',
+  'monuments/spaccanapoli.yml',
+  'monuments/pozzo-vecchio.yml',
   'food/g-1-concettina.yml',
   'food/g-1-pizzeria-vomero.yml',
   'food/g-2-vannulo.yml',
@@ -231,6 +238,30 @@ describe('días escritos (CAMP-01, D-04)', () => {
     expect(variants).toEqual(expect.arrayContaining(['plane', 'bus']))
     expect(collectStrings(day).some(t => t.includes('16:35'))).toBe(true)
     expect(day.cards).toEqual(['vomero', 'lungomare-caracciolo'])
+  })
+
+  it('domingo 20: un ferry, una bici, sin ruta (D-07, D-08, D-26)', () => {
+    const day = dayOf('domingo-20')!
+    const top = asRecs(day.timeline)
+    const transports = (v: string) => top.filter(r => r.kind === 'transport' && r.variant === v)
+    expect(transports('ferry')).toHaveLength(1)
+    expect(transports('bike')).toHaveLength(1)
+    const stats = (v: string) => asRecs(day.stats).filter(s => s.variant === v)
+    expect(stats('ferry')).toHaveLength(1)
+    expect(stats('bike')).toHaveLength(1)
+    expect('route' in day, 'el domingo 20 no lleva clave route').toBe(false)
+    const ferry = transports('ferry')[0]!
+    const ferryText = collectStrings(ferry).join('\n')
+    expect(ferryText).toContain('Porta di Massa')
+    expect(ferryText).toContain(BOLD_MARKER)
+    // SC4: el coche no cruza a las islas; fechas de 2027 marcadas.
+    const footnote = String(ferry.footnote ?? '')
+    expect(footnote).toContain('no residentes')
+    expect(footnote).toContain(BOLD_MARKER)
+    const all = collectStrings(day)
+    expect(all.some(t => t.includes('Molo Beverello'))).toBe(true)
+    expect(all.some(t => t.includes('21 de junio de 2026'))).toBe(true)
+    expect(day.cards).toEqual(['spaccanapoli', 'pozzo-vecchio', 'marina-corricella'])
   })
 
   it('martes-22: Epomeo y Sorgeto, en transporte público, con su botón de ruta', () => {

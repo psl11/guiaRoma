@@ -2,22 +2,41 @@ slug: spaccanapoli
 trip: campania
 roman: III
 name: Spaccanapoli
-italian: 'Spaccanapoli · Centro storico · Napoli'
+italian: 'Via Benedetto Croce · Centro storico'
 day: Domingo 20
 coords:
-  lat: 40.8484
-  lng: 14.2550
+  lat: 40.8480
+  lng: 14.2542
 type: card
 motif: church
 hero:
-  src: https://example.invalid/campania/spaccanapoli.jpg
-  alt: Spaccanapoli
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Spaccanapoli_verso_Castel_Sant%27Elmo.jpg/960px-Spaccanapoli_verso_Castel_Sant%27Elmo.jpg
+  alt: La calle recta de Spaccanapoli con Castel Sant'Elmo al fondo
 sections:
   - heading: Qué es
     body: >-
-      La calle larga y recta que corta en dos el centro histórico de Nápoles,
-      trazada sobre una vía griega, entre iglesias, palacios y talleres de belenes.
+      La calle larga y recta que parte en dos el centro histórico de Nápoles, como
+      un tajo: de ahí su nombre, «la que parte Nápoles». Sigue el trazado de una vía
+      de la ciudad griega y, desde lo alto del Vomero, se ve cortar el casco viejo
+      de punta a punta.
+  - heading: Qué mirar
+    body: >-
+      A primera hora, con las persianas aún bajadas, se oye la ciudad despertar:
+      el olor a café que sale de los bares, las campanas de las iglesias, las
+      fachadas de palacios desconchados y los talleres de belenes esperando a
+      abrir. Levantad la vista: ropa tendida de balcón a balcón y, al fondo, la
+      silueta de Castel Sant'Elmo.
+  - heading: En vuestro día
+    body: >-
+      El domingo empieza aquí, con la carrera popular que lleva su nombre. Podéis
+      correrla o mirarla desde la acera con un café en la mano; las dos maneras
+      valen. Después, ducha y a caminar hacia el puerto, que espera el ferry a Procida.
 facts:
   - label: Acceso
     value: 'Libre · a pie desde Piazza del Gesù'
+  - label: La carrera
+    value: >-
+      La 43.ª edición se corrió el domingo 21 de junio de 2026 desde Piazza
+      Municipio: 10 km y un recorrido de 5 km para familias · fecha de 2027
+      **⚠ por confirmar**
 mapsQuery: Spaccanapoli Napoli
