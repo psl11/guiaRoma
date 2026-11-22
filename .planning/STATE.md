@@ -4,17 +4,17 @@ milestone: v1.1
 milestone_name: Multi-viaje + Campania
 current_phase: 14
 current_phase_name: Verificación del milestone
-status: executing
-stopped_at: Completed 14-02-PLAN.md
-last_updated: "2026-11-22T01:59:45.527Z"
+status: verifying
+stopped_at: Completed 14-03-PLAN.md
+last_updated: "2026-11-22T02:12:40.185Z"
 last_activity: 2026-11-22
 last_activity_desc: Phase 12.1 complete, transitioned to Phase 9
-state_head: 449fe4c6bdfa44df9af1c79824e4e74a4de670bb
+state_head: 540ad9132e92e5c9f40835be072667d21c8515c6
 progress:
   total_phases: 7
   completed_phases: 1
   total_plans: 36
-  completed_plans: 35
+  completed_plans: 36
   percent: 14
 ---
 
@@ -31,7 +31,7 @@ See: .planning/PROJECT.md (updated 2026-11-20)
 
 Phase: 14 (Verificación del milestone) — READY TO EXECUTE
 Plan: 8 of 8
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-11-22 — Phase 12.1 complete, transitioned to Phase 9
 
 Progress: [█░░░░░░░░░] 14%
@@ -139,6 +139,7 @@ Progress: [█░░░░░░░░░] 14%
 | Phase 13 P08 | 6min | 2 tasks | 7 files |
 | Phase 14 P01 | 15min | 2 tasks | 1 files |
 | Phase 14 P02 | 10min | 3 tasks | 2 files |
+| Phase 14 P03 | 10min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -345,6 +346,9 @@ Recent decisions affecting current work:
 - [Phase 13]: CAMPANIA_SENTINEL kept in the build-isolation offenders scan as a regression guard
 - [Phase 14]: 14-01: PAR-03 upgrade spec uses a live-guide oracle (main:index.html seeded with the user's storage) returning UI state and post-restore storage; the only allowed rewrite (roma-pace->slow under light mode) is asserted against main's own restore
 - [Phase 14]: 14-02: cross-trip isolation and zero sql_dump/WASM proven on the published build (closes 13-REVIEW WR-06); CSS-vs-main data spec with only the 08-06 orphaned-rule allowlist
+- [Phase 14]: 14-03: gate total measured 126/15 (grep-invert) and 128/15 raw = 110 + 16; registered verbatim in tests/README.md §4
+- [Phase 14]: 14-03: navigation.spec.ts SC#2 [mobile] failing alone in verify runs 2-3 is the D-01 known flake (3/3 isolated, ~28.9s of a 30s budget); not a D-06 defect, not fixed (frozen spec)
+- [Phase 14]: 14-03: PAR-03 marked complete; PAR-04 stays Pending until the user signs 14-UAT.md on a real phone (D-07/D-08)
 
 ### Pending Todos
 
@@ -385,8 +389,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-22T01:59:45.236Z
-Stopped at: Completed 14-02-PLAN.md
+Last session: 2026-11-22T02:12:39.899Z
+Stopped at: Completed 14-03-PLAN.md
 Resume file: None
 
 ## Operator Next Steps

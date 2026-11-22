@@ -56,7 +56,7 @@
 
 - [x] **PAR-01**: Los 56 goldens de Roma pasan en su nueva URL sin re-baseline (salvo excepción aprobada explícitamente por el usuario, p. ej. ROUTE-06)
 - [x] **PAR-02**: La suite de comportamiento de Roma (navegación, búsqueda, ruta del día, mapa, notas, modos) sigue en verde en `/trips/roma/`
-- [ ] **PAR-03**: Un usuario de la guía viva (`index.html` de `main`) que actualiza a la nueva versión conserva sus notas y preferencias de Roma (test de upgrade en el mismo origen)
+- [x] **PAR-03**: Un usuario de la guía viva (`index.html` de `main`) que actualiza a la nueva versión conserva sus notas y preferencias de Roma (test de upgrade en el mismo origen)
 - [ ] **PAR-04**: Sign-off humano de Roma y Campania en móvil real, incluido el comportamiento sin conexión
 
 ## Future Requirements (v1.2+)
@@ -130,7 +130,7 @@
 | CAMP-06 | Phase 13 | Complete |
 | PAR-01 | Phase 11 | Complete |
 | PAR-02 | Phase 11 | Complete |
-| PAR-03 | Phase 14 | Pending |
+| PAR-03 | Phase 14 | Complete |
 | PAR-04 | Phase 14 | Pending |
 
 **Notas de trazabilidad:**
