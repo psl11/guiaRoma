@@ -43,6 +43,7 @@ const WRITTEN_DAYS: Record<string, { stay: string | null }> = {
   'sabado-19': { stay: 'napoles' },
   'domingo-20': { stay: 'procida' },
   'lunes-21': { stay: 'ischia' },
+  'miercoles-23': { stay: 'salerno' },
 }
 
 /** Fichas ya escritas con contenido real. Los planes siguientes añaden las suyas. */
@@ -56,6 +57,7 @@ const WRITTEN_MONUMENTS: string[] = [
   'pozzo-vecchio',
   'terra-murata',
   'forio',
+  'salerno-centro-storico',
 ]
 
 /** Fichas que deben llevar nota familiar (D-09). Los planes siguientes añaden las suyas. */
@@ -74,6 +76,8 @@ const MARKER_FILES: string[] = [
   'monuments/pozzo-vecchio.yml',
   'days/lunes-21.yml',
   'monuments/forio.yml',
+  'days/miercoles-23.yml',
+  'monuments/salerno-centro-storico.yml',
   'food/g-1-concettina.yml',
   'food/g-1-pizzeria-vomero.yml',
   'food/g-2-vannulo.yml',
@@ -286,6 +290,22 @@ describe('días escritos (CAMP-01, D-04)', () => {
     expect((day.route as Rec).mode).toBe('transit')
     const routeDay = asRouteDay(day)
     expect(routeVisible(routeDay, routeCards(routeDay).length)).toBe(true)
+  })
+
+  it('miércoles 23: ferry, Alibus, recogida del coche y Salerno (D-01, D-06)', () => {
+    const day = dayOf('miercoles-23')!
+    const top = asRecs(day.timeline)
+    const variants = top.filter(r => r.kind === 'transport').map(r => r.variant)
+    expect(variants).toEqual(expect.arrayContaining(['ferry', 'bus', 'car']))
+    const pickup = top.find(r => r.kind === 'stop' && r.disabled === true && r.time === '16:00')
+    expect(pickup, 'hay una parada sin ficha a las 16:00').toBeDefined()
+    const pickupText = collectStrings(pickup).join('\n')
+    expect(pickupText).toContain('Capodichino')
+    expect(pickupText).toContain(BOLD_MARKER)
+    expect('route' in day, 'el miércoles 23 no lleva clave route').toBe(false)
+    const routeDay = asRouteDay(day)
+    expect(routeVisible(routeDay, routeCards(routeDay).length)).toBe(false)
+    expect(day.cards).toEqual(['salerno-centro-storico'])
   })
 })
 

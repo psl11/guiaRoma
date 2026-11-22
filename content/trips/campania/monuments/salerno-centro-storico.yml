@@ -1,0 +1,39 @@
+slug: salerno-centro-storico
+trip: campania
+roman: X
+name: Centro storico de Salerno
+italian: 'Centro storico · Via dei Mercanti'
+day: Miércoles 23
+coords:
+  lat: 40.6789
+  lng: 14.7605
+type: card
+motif: arch
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Salerno_-_Veduta_del_centro_storico.jpg/960px-Salerno_-_Veduta_del_centro_storico.jpg
+  alt: Vista de los tejados del centro storico de Salerno
+sections:
+  - heading: Qué es
+    body: >-
+      El casco medieval de Salerno, un laberinto de callejuelas estrechas, arcos y
+      patios que se ordena alrededor de la Via dei Mercanti, la vieja calle de los
+      comercios. Una ciudad de verdad, con vecinos, tiendas de barrio y tabernas,
+      lejos del lujo y de los precios de la costa.
+  - heading: Qué mirar
+    body: >-
+      Los arcos que cruzan las calles de lado a lado, los portales de piedra de los
+      palacios antiguos, las ropas tendidas entre balcones y las placitas que se
+      llenan de gente al caer la tarde, cuando la ciudad sale a pasear.
+  - heading: En vuestro día
+    body: >-
+      La primera noche en Salerno, ya con Arantxa y con el coche aparcado. Un paseo
+      lento por la Via dei Mercanti, sin plan ni reloj, y después la cena en una
+      taberna del barrio, [Hostaria Il Brigante](#gastronomia).
+facts:
+  - label: Acceso
+    value: 'Libre · a pie, a cualquier hora'
+  - label: Coche
+    value: >-
+      Zona ZTL con cámaras, que se ha publicado activa las 24 h **⚠ por confirmar** ·
+      aparcad fuera del casco y entrad andando
+mapsQuery: Via dei Mercanti Salerno

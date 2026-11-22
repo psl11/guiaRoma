@@ -1,0 +1,120 @@
+slug: miercoles-23
+trip: campania
+order: 5
+pill: 'Mié 23'
+roman: V
+eyebrow: 'miércoles · 23 de junio'
+title: Adiós a las islas, Arantxa y la primera noche en Salerno
+subtitle: Último baño en Forio, ferry de vuelta a Nápoles, el coche en el aeropuerto y paseo de noche por el centro storico de Salerno.
+# Base de la noche (D-06): slug de una entrada de `stays` en trip.yml → «Dormís en Salerno».
+stay: salerno
+# Sin clave `route` (D-08): el ferry oculta solo el botón de ruta del día.
+stats:
+  - variant: ferry
+    text: '**Ferry** de Ischia a Nápoles, cerca de hora y media'
+  - variant: bus
+    text: '**Alibus** del puerto al aeropuerto de Capodichino'
+  - variant: car
+    text: '**Coche de alquiler** de Capodichino a Salerno por la A3'
+light:
+  title: 🦶 Versión ligera · miércoles
+  items:
+    - kind: see
+      text: >-
+        **Imprescindibles:** el último baño en [Forio](#forio) y el paseo de noche
+        por el [centro storico de Salerno](#salerno-centro-storico).
+    - kind: move
+      text: >-
+        **Taxi** del puerto al aeropuerto en lugar del Alibus, con las maletas ·
+        precio **⚠ por confirmar**
+    - kind: skip
+      text: >-
+        **Saltar hoy:** las prisas por la mañana. Si el baño se alarga, coged un
+        ferry más tarde y dejad el paseo de Salerno para mañana.
+    - kind: rest
+      text: >-
+        **Descanso:** la travesía en ferry, sentados mirando el mar, y el rato de
+        espera en el aeropuerto mientras llega Arantxa.
+timeline:
+  - kind: stop
+    pace: all
+    time: '09:00'
+    title: Último baño en las calas de Forio
+    ref: forio
+    note: >-
+      Un baño temprano, antes de cerrar las maletas, en las calas de la zona de
+      Forio. Sin prisa: es la despedida de las islas.
+  - kind: transport
+    pace: all
+    variant: ferry
+    header: De Ischia a Nápoles
+    modes:
+      - icon: ⛴️
+        recommended: true
+        desc: >-
+          **Traghetto Caremar o Medmar** de Ischia Porto a Porta di Massa · hora de
+          salida en el horario de verano 2027 **⚠ por confirmar**
+        tag: recomendado
+        meta: '⏱ **≈1 h 25**'
+      - icon: 🚤
+        desc: >-
+          **Aliscafo** hasta el Molo Beverello, más rápido · horarios y precio
+          **⚠ por confirmar**
+    footnote: >-
+      Calculad el ferry con margen: a las 16:00 tenéis que estar en el aeropuerto
+      de Capodichino para recibir a Arantxa y recoger el coche.
+  - kind: transport
+    pace: all
+    variant: bus
+    header: Alibus del puerto al aeropuerto
+    modes:
+      - icon: 🚌
+        recommended: true
+        desc: >-
+          **Alibus** desde Porta di Massa o el Molo Beverello, donde también para,
+          hasta el aeropuerto de Capodichino · cada 10 a 20 min
+        tag: recomendado
+        meta: '💶 5 € **⚠ por confirmar**'
+      - icon: 🚕
+        desc: '**Taxi**, más cómodo con las maletas · precio **⚠ por confirmar**'
+  - kind: stop
+    pace: all
+    time: '16:00'
+    title: Llega Arantxa · recogida del coche
+    disabled: true
+    note: >-
+      Arantxa aterriza en Capodichino y empieza la parte del viaje en coche. Los
+      mostradores de alquiler están en el Area Noleggio Auto del aeropuerto, en la
+      primera planta, en la zona de llegadas. La compañía y el mostrador están
+      **⚠ por confirmar**: revisad bien el coche antes de salir.
+  - kind: transport
+    pace: all
+    variant: car
+    header: De Capodichino a Salerno
+    modes:
+      - icon: 🚗
+        recommended: true
+        desc: '**Coche de alquiler** por la autopista A3, hacia el sur'
+        meta: '⏱ **⚠ por confirmar**'
+    footnote: >-
+      El centro storico de Salerno es zona ZTL con cámaras, que se ha publicado
+      activa las 24 h **⚠ por confirmar**: no entréis con el coche y aparcad fuera
+      del casco antiguo.
+  - kind: stop
+    pace: all
+    time: '20:00'
+    title: Paseo por el centro storico
+    ref: salerno-centro-storico
+    note: >-
+      Maletas en el alojamiento de Salerno (**⚠ por confirmar**) y paseo sin rumbo
+      por la Via dei Mercanti y sus callejuelas, cuando la ciudad sale a la calle.
+  - kind: food
+    pace: all
+    header: Cena en el centro storico
+    entries:
+      - ref: g-4-il-brigante
+        name: Hostaria Il Brigante
+        desc: >-
+          Taberna pequeña de cocina de casa, en las callejuelas del casco antiguo ·
+          día de cierre y horario **⚠ por confirmar**
+cards: [salerno-centro-storico]
