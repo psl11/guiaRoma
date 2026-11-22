@@ -17,6 +17,14 @@ import { join } from 'node:path'
  *  · `fonts.css` sustituye al `<link>` de Google Fonts de main por @font-face self-hosted
  *    (generado por scripts/vendor-fonts.mjs desde la MISMA URL css2): mismas tres familias y
  *    EXACTAMENTE las mismas caras (familia, estilo, peso) que pide el `<link>`.
+ *  · ORDEN DE CASCADA (diferencia de orden documentada, WR-05 de 14-REVIEW.md): en main el bloque
+ *    de Leaflet va ANTES del editorial; la build carga `fonts → tokens → base → leaflet`
+ *    (nuxt.config.ts, fijado por tests/unit/multitripCss.spec.ts), así que leaflet.css queda
+ *    DETRÁS de base.css. leaflet.css también trae reglas de la app (`.light-banner`,
+ *    `.dia-ligera`, `.tl-hidden`…): un empate de especificidad entre una regla de leaflet.css y
+ *    una de tokens/base se resolvería al revés que en main. Hoy no hay ninguno con el mismo
+ *    selector; el test «orden de cascada» lo exige (selector idéntico + misma propiedad + valor o
+ *    `!important` distinto = conflicto) como cable trampa.
  *  · `multitrip.css` (portada, 11-05) y `tripshapes.css` (Fase 12) son hojas ADITIVAS de la v1.1,
  *    que no existen en main; las guardan tests/unit/multitripCss.spec.ts y
  *    tests/unit/tripShapesCss.spec.ts. No entran en esta comparación.
@@ -165,6 +173,93 @@ const fontFaceFamilies = (css: string): string[] => [...new Set(fontFaceRules(cs
 /** Caras distintas declaradas en fonts.css. */
 const fontFaceFaces = (css: string): string[] => [...new Set(fontFaceRules(css).map(r => r.face))].sort()
 
+/** Una declaración CSS con su selector (uno solo, sin comas) y su contexto de at-rules. */
+interface CssDecl {
+  context: string
+  selector: string
+  prop: string
+  value: string
+}
+
+/** Parte `text` por `sep` fuera de paréntesis, corchetes y comillas. */
+function splitTopLevel(text: string, sep: string): string[] {
+  const out: string[] = []
+  let depth = 0
+  let quote = ''
+  let start = 0
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i]
+    if (quote) {
+      if (ch === quote && text[i - 1] !== '\\') quote = ''
+    }
+    else if (ch === '"' || ch === '\'') quote = ch
+    else if (ch === '(' || ch === '[') depth++
+    else if (ch === ')' || ch === ']') depth--
+    else if (ch === sep && depth === 0) {
+      out.push(text.slice(start, i))
+      start = i + 1
+    }
+  }
+  out.push(text.slice(start))
+  return out
+}
+
+/**
+ * Declaraciones de una hoja (sobre el texto normalizado), una por selector. Entra en @media,
+ * @supports, @layer y @container (el contexto se guarda); salta @font-face y @keyframes, que no
+ * seleccionan elementos.
+ */
+function cssDeclarations(css: string): CssDecl[] {
+  const out: CssDecl[] = []
+  const walk = (text: string, context: string): void => {
+    let i = 0
+    while (i < text.length) {
+      const open = text.indexOf('{', i)
+      if (open < 0) break
+      const prelude = text.slice(i, open).trim()
+      let depth = 1
+      let j = open + 1
+      while (j < text.length && depth > 0) {
+        if (text[j] === '{') depth++
+        else if (text[j] === '}') depth--
+        j++
+      }
+      const body = text.slice(open + 1, j - 1)
+      if (prelude.startsWith('@')) {
+        if (/^@(media|supports|layer|container)\b/.test(prelude)) walk(body, context ? `${context} ${prelude}` : prelude)
+      }
+      else {
+        const decls = splitTopLevel(body, ';')
+        for (const sel of splitTopLevel(prelude, ',')) {
+          const selector = sel.trim().replace(/\s*([>+~])\s*/g, '$1')
+          for (const decl of decls) {
+            const k = decl.indexOf(':')
+            if (k > 0) out.push({ context, selector, prop: decl.slice(0, k).trim().toLowerCase(), value: decl.slice(k + 1).trim() })
+          }
+        }
+      }
+      i = j
+    }
+  }
+  walk(normalizeCss(css), '')
+  return out
+}
+
+/**
+ * Conflictos de cascada entre leaflet.css y tokens.css + base.css cuya resolución cambia con el
+ * orden de carga: mismo selector exacto y misma propiedad con valor (o `!important`) distinto.
+ * Conservador: compara en cualquier contexto de @media, porque dos contextos pueden aplicar a
+ * la vez.
+ */
+function cascadeConflicts(leaflet: string, editorial: string): string[] {
+  const bySelector = new Map<string, CssDecl[]>()
+  for (const d of cssDeclarations(editorial)) bySelector.set(d.selector, [...(bySelector.get(d.selector) ?? []), d])
+  return cssDeclarations(leaflet).flatMap(l =>
+    (bySelector.get(l.selector) ?? [])
+      .filter(b => b.prop === l.prop && b.value !== l.value)
+      .map(b => `${l.selector} { ${l.prop} } leaflet.css[${l.context || 'global'}]: ${l.value} · tokens/base[${b.context || 'global'}]: ${b.value}`))
+}
+
 const MAIN_HTML = readMainHtml()
 const BLOCKS = styleBlocks(MAIN_HTML)
 const LEAFLET_BLOCK = BLOCKS.find(b => b.attrs === 'id="leaflet-inline-css"')
@@ -194,6 +289,16 @@ describe('CSS de la build = CSS de main:index.html (D-02)', () => {
     const r = editorialMatches(EDITORIAL_BLOCK?.css ?? '', TOKENS, BASE)
     expect(r.orphanCounts, 'cada regla orfanada (.tl-meta-item, .tl-transport-mode.recommended) casa una sola vez en main').toEqual([1, 1])
     expect(r.equal, describeDiff(r.firstDiff)).toBe(true)
+  })
+
+  it('orden de cascada: ningún selector de leaflet.css choca con tokens.css/base.css en una propiedad (main los carga en orden inverso)', () => {
+    // No vacuidad: el analizador ve las reglas de ambas hojas (Leaflet incluido su @media print).
+    const leafletDecls = cssDeclarations(LEAFLET)
+    expect(leafletDecls.length, 'declaraciones de leaflet.css').toBeGreaterThan(200)
+    expect(cssDeclarations(`${TOKENS}\n${BASE}`).length, 'declaraciones de tokens.css + base.css').toBeGreaterThan(1000)
+    expect(leafletDecls.some(d => d.context.startsWith('@media print')), 'entra en @media').toBe(true)
+    const conflicts = cascadeConflicts(LEAFLET, `${TOKENS}\n${BASE}`)
+    expect(conflicts, `conflictos cuyo ganador depende del orden leaflet ↔ base:\n${conflicts.join('\n')}`).toEqual([])
   })
 
   it('fonts.css sustituye al <link> de Google Fonts de main con las mismas tres familias', () => {
@@ -236,6 +341,15 @@ describe('CSS de la build = CSS de main:index.html (D-02)', () => {
       expect(dropped).not.toBe(FONTS)
       expect(fontFaceFamilies(dropped).sort(), 'la familia sigue presente (por eso no basta con las familias)').toEqual(fontFaceFamilies(FONTS).sort())
       expect(fontFaceFaces(dropped)).not.toEqual(googleFontFaces(MAIN_HTML).faces)
+    })
+
+    it('una regla de base.css con un selector de leaflet.css y otro valor se detecta como conflicto de cascada', () => {
+      const sample = cssDeclarations(LEAFLET).find(d => d.context === '' && d.selector.startsWith('.leaflet-'))
+      expect(sample, 'leaflet.css tiene reglas globales .leaflet-*').toBeDefined()
+      const injected = `${BASE}\n${sample!.selector}{${sample!.prop}:${sample!.value === 'inherit' ? 'initial' : 'inherit'}}\n`
+      expect(cascadeConflicts(LEAFLET, `${TOKENS}\n${injected}`)).toHaveLength(1)
+      const sameValue = `${BASE}\n${sample!.selector}{${sample!.prop}:${sample!.value}}\n`
+      expect(cascadeConflicts(LEAFLET, `${TOKENS}\n${sameValue}`), 'mismo valor: el orden no cambia el resultado').toEqual([])
     })
 
     it('espacios, saltos de línea y un comentario de más en base siguen pasando', () => {

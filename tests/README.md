@@ -714,12 +714,20 @@ queda probado que la v1.1 se puede publicar sobre la guía viva sin que nadie pi
   `multitrip.css` (Fase 11) y `tripshapes.css` (Fase 12) son hojas **aditivas** de la v1.1 que no
   existen en `main` (las guardan `tests/unit/multitripCss.spec.ts` y
   `tests/unit/tripShapesCss.spec.ts`) y no entran en la comparación.
+- **Orden de cascada (diferencia de orden documentada):** en `main` el bloque de Leaflet va
+  **antes** del editorial; la build carga `fonts → tokens → base → leaflet` (`nuxt.config.ts`,
+  fijado por `tests/unit/multitripCss.spec.ts`), así que `leaflet.css` queda **detrás** de
+  `base.css`. Como `leaflet.css` también trae reglas de la app (`.light-banner`, `.dia-ligera`,
+  `.tl-hidden`…), un empate de especificidad entre las dos hojas se resolvería al revés que en
+  `main`. Hoy no hay ninguno con el mismo selector, y un test lo exige como cable trampa: ningún
+  selector idéntico de `leaflet.css` y `tokens.css`/`base.css` (en cualquier `@media`) declara la
+  misma propiedad con otro valor (o con `!important` distinto). No se toca `nuxt.config.ts`.
 - **Normalización:** solo comentarios y espacios. Nada más.
 - **Única diferencia permitida:** la neutralización de 08-06 (commit `cc74f79`): en `main`, dos
   reglas van detrás de un `}` sobrante y el navegador las descarta (`.tl-meta-item{…}` y
   `.tl-transport-mode.recommended{…}`); `base.css` las deja fuera, y cada una debe casar
   exactamente una vez. Cualquier otra diferencia es un hallazgo: se informa, nunca se edita el
-  CSS congelado. 9 tests (con dientes en memoria).
+  CSS congelado. 11 tests (con dientes en memoria).
 
 ### 6.4 Cierre del hito
 
