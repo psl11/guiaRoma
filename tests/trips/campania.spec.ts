@@ -12,9 +12,9 @@ import { routeLabel } from '../../app/utils/dayRoute'
 /**
  * FORMAS NUEVAS DE VIAJE sobre el borrador de Campania (Fase 12, EXT-01…EXT-07; D-01…D-17).
  *
- * `content/trips/campania/**` es el esqueleto del primer viaje después del original: días con
- * alternativas (`choice`), y en los planes siguientes noches en ciudades distintas, transportes y
- * fichas de naturaleza, rutas en coche y notas familiares. Aquí se comprueba en el navegador que
+ * `content/trips/campania/**` es el primer viaje después del original (forma de la Fase 12,
+ * contenido real de la Fase 13): días con alternativas (`choice`), noches en ciudades distintas,
+ * transportes y fichas de naturaleza, rutas en coche, notas familiares y su Gastronomía. Aquí se comprueba en el navegador que
  * la guía pinta esas formas como dice su contrato (12-UI-SPEC §«Contrato de DOM»), derivando lo
  * esperado de los YAML del viaje y no de una lista escrita a mano.
  *
@@ -38,7 +38,7 @@ const INDEX_URL = `${ORIGIN}/guiaRoma/`
 const CAMPANIA_ROOT = join(process.cwd(), 'content', 'trips', 'campania')
 
 // Determinista y offline: aborta toda petición fuera del dev server (tiles OSM, las heros
-// `https://example.invalid/…` del esqueleto).
+// externas de las fichas).
 async function blockExternal(context: BrowserContext): Promise<void> {
   await context.route('**/*', (route) => {
     if (route.request().url().startsWith(ORIGIN)) return route.continue()
@@ -1093,6 +1093,39 @@ test.describe('campania: un mapa con varias ciudades (EXT-05, D-13)', () => {
     expect(doc.scroll, 'la página no desborda en horizontal').toBeLessThanOrEqual(doc.inner)
     expect(stayLine.height, '«Dormís en …» con nombre largo parte línea').toBeGreaterThan(1.5 * stayLine.lineHeight)
     expect(family.height, 'la caja «Con niños» ocupa más de una línea').toBeGreaterThan(1.5 * family.lineHeight)
+
+    await context.close()
+  })
+})
+
+// ── CAMP-03: Gastronomía (13-02) ────────────────────────────────────────────────────────────
+
+interface YamlFood { slug: string, group: string }
+
+test.describe('campania: gastronomía (CAMP-03, D-15)', () => {
+  test('campania: Gastronomía agrupa sus fichas en el orden de los slugs (CAMP-03, D-15)', async ({ browser }) => {
+    // Lo esperado sale de los YAML en orden de fichero: `groupFood` pone los grupos que no son
+    // del canon de Roma por orden de primera aparición, y Content devuelve la comida por fichero.
+    const food = readdirSync(join(CAMPANIA_ROOT, 'food'))
+      .filter(f => f.endsWith('.yml'))
+      .sort()
+      .map(f => readYaml<YamlFood>(`food/${f}`))
+    expect(food.length, 'hay fichas de comida').toBeGreaterThanOrEqual(1)
+    const groups = [...new Set(food.map(f => f.group))]
+
+    const { context, page } = await newIsolatedPage(browser)
+    await gotoHydrated(page, CAMPANIA_URL)
+
+    const section = page.locator('section[id="gastronomia"]')
+    await expect(section).toHaveCount(1)
+    await expect(page.locator('#nav-pills .nav-pill[href="#gastronomia"]')).toHaveCount(1)
+
+    const titles = await section.locator('.gastro-section-title').evaluateAll(els => els.map(e => (e.textContent ?? '').trim()))
+    expect(titles).toEqual(groups)
+
+    for (const f of food) {
+      await expect(section.locator(`[id="${f.slug}"]`), `una sola ficha ${f.slug}`).toHaveCount(1)
+    }
 
     await context.close()
   })

@@ -57,6 +57,11 @@ const MARKER_FILES: string[] = [
   'food/g-1-concettina.yml',
   'food/g-1-pizzeria-vomero.yml',
   'food/g-2-vannulo.yml',
+  'food/g-3-caracale.yml',
+  'food/g-3-il-focolare.yml',
+  'food/g-3-la-lampara.yml',
+  'food/g-4-il-brigante.yml',
+  'food/g-5-trattoria-calore.yml',
 ]
 
 /** Caja de coordenadas del viaje: de Trentova (sur) a Casertavecchia (norte), de Forio al Calore. */
@@ -258,8 +263,8 @@ const FOOD_GROUPS = [
   'Cilento · trattorias de monte',
 ] as const
 
-/** Grupos ya escritos. 13-02 Task 2 lo amplía a los cinco. */
-const FOOD_GROUPS_WRITTEN: readonly string[] = FOOD_GROUPS.slice(0, 2)
+/** Grupos ya escritos: los cinco de D-15. */
+const FOOD_GROUPS_WRITTEN: readonly string[] = FOOD_GROUPS
 
 /** Únicos establecimientos que la investigación verificó (RESEARCH «Verified establishments», D-14). */
 const VERIFIED_NAMES: readonly string[] = [
