@@ -228,6 +228,10 @@ Plans:
 
 **Wave 8** *(blocked on Wave 7 completion)*
 - [ ] 13-08-PLAN.md — Publicación (D-02): fuera de borrador sin centinela, tests invertidos en el mismo commit, `pnpm verify` 110/110, test:trips, recuentos en tests/README.md (CAMP-01…06)
+
+**Cross-cutting constraints:** <!-- gsd:generated -->
+- D-19 / D-21: no Phase 13 commit touches a frozen path; only this plan's files are staged; commits end with the Co-Authored-By trailer
+
 **Research**: sí — verificación de datos de campo: restricción de vehículos en Procida/Ischia en 2027, horarios y muelles de ferry (Caremar/Porta di Massa), seguridad de Sorgeto de noche con niños, fechas de los conciertos, la «carrera popular» Spaccanapoli del domingo 20
 **Decisiones previas (⚠)**: **fecha de devolución del coche (25 vs 26)** — decide si el sábado 26 (día VIII) es en coche o en transporte público y cómo se cuenta en Reservas; **pendiente del usuario**, necesaria antes de redactar ese día. ROUTE-05: publicar Campania solo cuando esté completa (`draft` hasta entonces) o con días provisionales — necesaria antes de cerrar esta fase
 **Notas**: fuente `.planning/inputs/campania-2027-itinerario-raw.md` (año 2027; el «2026» del texto es errata). Solo YAML e imágenes: si aparece una forma de contenido que el esquema no cubre, se vuelve a la Fase 12 (inserción decimal), no se fuerza el esquema aquí. Tras editar YAML, `rm -rf .data .nuxt .output` antes de generar.
