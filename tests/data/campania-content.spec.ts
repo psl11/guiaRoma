@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { collectStrings, loadTrip, timelineRowsOf, type CollectionName, type Doc } from './trips'
 import { findRomaLeaks } from '../trips/romaLeaks'
 import { routeCards, routeVisible } from '../../app/utils/dayRoute'
+import { RESERVAS_HEADINGS_DEFAULT } from '../../app/utils/reservasHeadings'
 
 /**
  * CONTRATO DE CONTENIDO de Campania (Fase 13, CAMP-01…CAMP-06).
@@ -123,6 +124,7 @@ const MARKER_FILES: string[] = [
   'food/g-3-la-lampara.yml',
   'food/g-4-il-brigante.yml',
   'food/g-5-trattoria-calore.yml',
+  'reference/reservas.yml',
 ]
 
 /** Caja de coordenadas del viaje: de Trentova (sur) a Casertavecchia (norte), de Forio al Calore. */
@@ -740,5 +742,62 @@ describe('los diez días y las 24 fichas (CAMP-01, CAMP-02, D-03, D-04, D-07, D-
     const sunday = dayOf('domingo-27')!
     expect(timelineRowsOf(sunday.timeline).some(r => r.kind === 'stop' && r.ref === 'stadio-maradona')).toBe(true)
     expect(sunday.cards as string[]).not.toContain('stadio-maradona')
+  })
+})
+
+describe('reservas (CAMP-04, D-16, D-22, D-23)', () => {
+  const doc = docByRel('reference/reservas.yml')
+  const data = (): Rec => doc?.data ?? {}
+  const headings = (): Rec => (data().headings as Rec | undefined) ?? {}
+  const confirmed = (group: string): Rec[] => asRecs(data().confirmed).filter(c => c.group === group)
+  const rows = (): Rec[] => asRecs(data().table)
+  const names = (): string[] => rows().map(r => String(r.name))
+
+  it('existe reference/reservas.yml', () => {
+    expect(doc).toBeDefined()
+  })
+
+  it('los tres encabezados son propios: no vacíos y nunca los de Roma (D-23)', () => {
+    for (const key of ['mesas', 'visitas', 'table'] as const) {
+      const value = headings()[key]
+      expect(typeof value, `headings.${key}`).toBe('string')
+      expect(String(value).trim(), `headings.${key}`).not.toBe('')
+      expect(value, `headings.${key} no es el texto de Roma`).not.toBe(RESERVAS_HEADINGS_DEFAULT[key])
+    }
+  })
+
+  it('el primer bloque son los vuelos del sábado 19 y del lunes 28', () => {
+    const flights = confirmed('mesas')
+    const out = flights.find(c => String(c.when).startsWith('Sáb 19'))
+    const back = flights.find(c => String(c.when).startsWith('Lun 28'))
+    expect(out, 'vuelo de ida').toBeDefined()
+    expect(back, 'vuelo de vuelta').toBeDefined()
+    expect(String(out!.text)).toContain('Vuelo')
+    expect(String(back!.text)).toContain('Vuelo')
+  })
+
+  it('las entradas de Ultimo son del viernes 25 y avisan del calendario oficial (D-22)', () => {
+    const ultimo = confirmed('visitas').find(c => String(c.when).startsWith('Vie 25'))
+    expect(ultimo, 'entradas del viernes 25').toBeDefined()
+    expect(String(ultimo!.text)).toContain('Ultimo')
+    expect(String(ultimo!.text)).toContain('calendario oficial')
+  })
+
+  it('la tabla tiene cada base, tres ferris y el coche (D-16, D-25, D-01)', () => {
+    expect(names().filter(n => /^Alojamiento en Nápoles/.test(n)).length, 'Nápoles al menos dos veces').toBeGreaterThanOrEqual(2)
+    for (const place of ['Procida', 'Ischia', 'Salerno']) {
+      expect(names().filter(n => new RegExp(`^Alojamiento en ${place}`).test(n)), place).toHaveLength(1)
+    }
+    expect(names().filter(n => /^Ferry /.test(n)).length, 'tres ferris').toBeGreaterThanOrEqual(3)
+    const car = rows().filter(r => /^Coche de alquiler/.test(String(r.name)))
+    expect(car, 'una fila de coche').toHaveLength(1)
+    expect(String(car[0]!.desc)).toContain('Capodichino')
+    expect(String(car[0]!.desc)).toContain(BOLD_MARKER)
+  })
+
+  it('los dos conciertos y Napoli Sotterranea están en la tabla', () => {
+    expect(names().some(n => n.includes('Ultimo')), 'Ultimo').toBe(true)
+    expect(names().some(n => n.includes('Pinguini Tattici Nucleari')), 'Pinguini Tattici Nucleari').toBe(true)
+    expect(rows().some(r => r.ref === 'napoli-sotterranea'), 'ref napoli-sotterranea').toBe(true)
   })
 })
