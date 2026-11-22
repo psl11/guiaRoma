@@ -17,6 +17,8 @@
 //  - Cierre G-09-3 (IN-05): la extensión YAML se detecta sin distinguir mayúsculas; un
 //    `.YML`/`.Yaml` no casa con ningún glob de colección (que solo casan con `.yml` en minúsculas)
 //    y es `stray-file` con su fichero, nunca se omite en silencio.
+//    `checkTripsRoot()` reporta como `stray-file` (con su ruta) toda entrada no oculta de la raíz
+//    content/trips/ que no es una carpeta; con `listTripDirs()` reparte todas las entradas.
 //
 // Fase 10 (forma desde datos):
 //  - D-03: etiquetas de pastilla de día únicas por viaje (`day-pill`), calculadas con la MISMA
@@ -48,7 +50,7 @@
 //    Cada clave que falte caería al texto de Roma (`RESERVAS_HEADINGS_DEFAULT`: «3 comensales»,
 //    «Restaurantes · …»), que en otro viaje es información falsa. El esquema no puede exigirlo
 //    (D-06: todo `.optional()`, y Roma no declara `headings`); la violación nombra el reservas.yml.
-import { readdirSync, readFileSync, statSync } from 'node:fs'
+import { readdirSync, readFileSync, statSync, type Dirent } from 'node:fs'
 import { basename, join, relative, sep } from 'node:path'
 import { parse as parseYaml } from 'yaml'
 // Import RELATIVO (Vitest plano, sin alias): la puerta usa la MISMA función que la UI (Pitfall 5).
@@ -149,12 +151,46 @@ export function timelineRowsOf(timeline: unknown): Array<Record<string, unknown>
   return rows
 }
 
-/** Carpetas de viaje (solo directorios, sin ocultos), ordenadas. */
+/**
+ * Entradas NO ocultas directamente bajo la raíz de viajes. Único sitio que decide qué es
+ * «oculto» (nombre que empieza por `.`: .DS_Store, .gitkeep…), para que `listTripDirs` y
+ * `checkTripsRoot` repartan exactamente el mismo conjunto.
+ */
+function rootEntries(root: string): Dirent[] {
+  return readdirSync(root, { withFileTypes: true }).filter(e => !e.name.startsWith('.'))
+}
+
+/**
+ * Carpetas de viaje (solo directorios, sin ocultos), ordenadas. Con `checkTripsRoot` reparte
+ * TODAS las entradas no ocultas de la raíz: cada una es una carpeta de viaje (aquí) o una
+ * violación (allí), nunca se descarta en silencio. No lanza: schema.spec.ts, invariants.spec.ts
+ * y tests/unit/searchIsolation.spec.ts la usan para recoger sus `describe.each`, y una excepción
+ * ahí escondería al culpable tras un error de recolección.
+ */
 export function listTripDirs(root: string = TRIPS_ROOT): string[] {
-  return readdirSync(root, { withFileTypes: true })
-    .filter(e => e.isDirectory() && !e.name.startsWith('.'))
+  return rootEntries(root)
+    .filter(e => e.isDirectory())
     .map(e => e.name)
     .sort()
+}
+
+/**
+ * Entradas sueltas en la raíz de viajes (G-09-3): toda entrada no oculta que NO es un
+ * directorio (fichero, enlace simbólico u otra) es una violación `stray-file` con su ruta del
+ * repo, porque Content la ignoraría en silencio. Es el complemento exacto de `listTripDirs`:
+ * entre las dos cubren todas las entradas no ocultas. Comprobación de la raíz, no de un viaje
+ * (por eso no vive en `checkTrip`); reutiliza la regla `stray-file` de RULES.
+ */
+export function checkTripsRoot(root: string = TRIPS_ROOT): Violation[] {
+  return rootEntries(root)
+    .filter(e => !e.isDirectory())
+    .map(e => e.name)
+    .sort()
+    .map(name => ({
+      file: toPosix(relative(process.cwd(), join(root, name))),
+      rule: 'stray-file' as const,
+      message: 'fichero suelto fuera de una carpeta de viaje (Content lo ignoraría)',
+    }))
 }
 
 /**
