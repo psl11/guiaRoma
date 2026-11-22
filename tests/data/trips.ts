@@ -513,6 +513,12 @@ export function checkTrip(t: LoadedTrip): Violation[] {
       if (row.kind === 'food') {
         for (const e of asArray(row.entries)) {
           if (typeof e.ref === 'string' && !stopOrFood.has(e.ref)) push(d.file, 'ref', `timeline food ref "${e.ref}" no resuelve`)
+          // CR-03 (10-REVIEW): TimelineFood pinta `<a :href="entry.href">` tal cual (Vue no sanea
+          // el href y el esquema es un z.string() pelado). No es prosa, así que scanProseLinks no
+          // lo ve: se somete aquí a la lista blanca D-05 (b), solo http(s)://.
+          if (typeof e.href === 'string' && !/^https?:\/\//i.test(e.href)) {
+            push(d.file, 'cross-trip-link', `timeline food href "${e.href}" no admitido (D-05): solo http(s)://`)
+          }
         }
       }
     }

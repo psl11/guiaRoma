@@ -767,6 +767,34 @@ describe('la puerta tiene dientes (fixtures)', () => {
     expect(vs.find(v => v.rule === 'ref')!.message).toContain('"nope"')
   })
 
+  // CR-03 (10-REVIEW): TimelineFood pinta `<a :href="entry.href">` tal cual; el href pasa por la
+  // lista blanca D-05 (b) (solo http(s)://), también dentro de las opciones de un `choice`.
+  const foodRow = (href: string) => ({
+    kind: 'food', pace: 'all', header: 'Comer', entries: [{ name: 'Café', href, desc: 'Café suelto.' }],
+  })
+
+  it.each(['/trips/roma', '#nope', 'javascript:alert(1)'])(
+    'CR-03 cross-trip-link: timeline food href %j → violación en el fichero del día',
+    (href) => {
+      for (const day of [y({ ...validDay, timeline: [foodRow(href)] }), dayWithChoice([foodRow(href)])]) {
+        const vs = checkTrip(memTrip('prueba', { 'days/viernes.yml': day }))
+        expect(vs, formatViolations(vs)).toEqual([{
+          file: 'content/trips/prueba/days/viernes.yml',
+          rule: 'cross-trip-link',
+          message: `timeline food href "${href}" no admitido (D-05): solo http(s)://`,
+        }])
+      }
+    },
+  )
+
+  it('CR-03 control: timeline food href https://www.google.com/maps/… → sin violaciones', () => {
+    const href = 'https://www.google.com/maps/search/?api=1&query=Caf%C3%A9'
+    for (const day of [y({ ...validDay, timeline: [foodRow(href)] }), dayWithChoice([foodRow(href)])]) {
+      const vs = checkTrip(memTrip('prueba', { 'days/viernes.yml': day }))
+      expect(vs, formatViolations(vs)).toEqual([])
+    }
+  })
+
   it('ref: un stop dentro de una opción con ref a un monumento existente → sin violaciones', () => {
     const vs = checkTrip(memTrip('prueba', {
       'monuments/galeria.yml': monument('prueba', 'galeria'),

@@ -357,6 +357,10 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
   guiones), también dentro de `>`, `-` o `1.` (CR-02 de 10-REVIEW). El
   escaneo es léxico y fail-closed (puede dar un falso rojo, nunca un falso verde); la ruta del
   parser se descartó porque no se resuelve con pnpm y la v1.1 no admite dependencias nuevas.
+  El `href` de una entrada de `food` del timeline (`FoodEntry.href`, también dentro de las
+  opciones de un `choice`) no es prosa: `TimelineFood` lo pinta tal cual en `<a :href>`, así que
+  la puerta lo somete aparte a la lista blanca y solo admite `http(s)://`; `/trips/…`, `#id` o
+  `javascript:` son `cross-trip-link` en el fichero del día (CR-03 de 10-REVIEW).
   `card-placement` exige que cada ficha aparezca **exactamente una vez** en la unión de los
   `cards` de `days/*.yml` (una ficha sin día no se pinta; una en dos días duplica su id), y
   `anchor`, `seenIn` y los `ref` de timeline y reservas solo resuelven a fichas pintadas (cierre
