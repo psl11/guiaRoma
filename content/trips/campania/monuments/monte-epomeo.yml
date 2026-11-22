@@ -5,20 +5,42 @@ name: Monte Epomeo
 italian: 'Monte Epomeo · Serrara Fontana'
 day: Martes 22
 coords:
-  lat: 40.7312
-  lng: 13.8996
+  lat: 40.7302
+  lng: 13.8945
 type: nature
 motif: trail
 hero:
-  src: https://example.invalid/campania/monte-epomeo.jpg
-  alt: Monte Epomeo
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Monte_Epomeo_da_Forio.jpg/960px-Monte_Epomeo_da_Forio.jpg
+  alt: El Monte Epomeo visto desde Forio
 sections:
   - heading: Qué es
     body: >-
-      El techo de Isquia, un antiguo volcán de toba verde de casi 800 metros. Se
-      sube a pie desde Fontana por un sendero entre castaños y viñas, y desde la
-      cima se ve todo el golfo, de Procida al Vesubio.
+      El techo de Isquia: un antiguo volcán de toba verde, de casi 800 metros, que
+      domina la isla entera. No es un cono de postal, sino una montaña de roca
+      verdosa, bosque de castaños y viñas en terrazas. Subirlo a pie, sin prisa y
+      con los niños, es la mejor manera de entender de qué está hecha la isla.
+  - heading: La subida
+    body: >-
+      El sendero clásico es el **CAI 501**, que sale de Fontana, en el municipio de
+      Serrara Fontana: unos **3 km** y entre **1 y 1,5 h** de subida. Buena parte del
+      camino va a la sombra de robles y castaños, así que en junio se agradece
+      salir temprano y guardar el tramo abierto para cuando aún no aprieta el sol.
+  - heading: En la cima
+    body: >-
+      Arriba os esperan la cruz de la cima y el Eremo di San Nicola, la ermita del
+      monte, con un restaurante cerca. Sentaos a mirar: desde aquí se abarca toda
+      la isla y, con el día claro, el golfo entero. Se baja por el mismo camino
+      hasta Fontana.
 facts:
-  - label: Subida
-    value: 'Unas 2 horas · desnivel moderado'
-mapsQuery: Monte Epomeo Ischia
+  - label: Sendero
+    value: 'CAI 501 desde Fontana · unos 3 km · 1-1,5 h de subida'
+  - label: Cómo llegar
+    value: 'Bus EAV desde Ischia Porto o Forio hasta Serrara Fontana · horarios de verano 2027 **⚠ por confirmar**'
+  - label: Con niños, no
+    value: 'La variante de Pietra Martone y Pietra Mosca: unas 6 h y con tramos expuestos'
+mapsQuery: Monte Epomeo Serrara Fontana Ischia
+family: >-
+  Salid temprano y con agua de sobra: los tramos a la sombra de los castaños son el
+  mejor sitio para las paradas de los niños. Si se cansan, no pasa nada por quedarse
+  en el bosque y no llegar a la cima. Evitad con ellos la variante de Pietra Martone
+  y Pietra Mosca, de unas 6 horas y con tramos expuestos.

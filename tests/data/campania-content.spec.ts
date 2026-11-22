@@ -1,0 +1,253 @@
+import { describe, it, expect } from 'vitest'
+import { collectStrings, loadTrip, timelineRowsOf, type CollectionName, type Doc } from './trips'
+import { findRomaLeaks } from '../trips/romaLeaks'
+import { routeCards, routeVisible } from '../../app/utils/dayRoute'
+
+/**
+ * CONTRATO DE CONTENIDO de Campania (Fase 13, CAMP-01…CAMP-06).
+ *
+ * La puerta de tests/data/trips.ts valida la FORMA de cada viaje (zod + 21 reglas entre ficheros);
+ * este spec valida el CONTENIDO real que escribe la Fase 13 sobre el esqueleto de la Fase 12. Crece
+ * plan a plan: cada plan que escribe días o fichas añade sus slugs a los registros de abajo
+ * (`WRITTEN_DAYS`, `WRITTEN_MONUMENTS`, `FAMILY_REQUIRED`, `MARKER_FILES`) y, si hace falta, un
+ * `describe` propio.
+ *
+ * Es seguro antes de publicar: solo lee los YAML con el loader puro de la puerta (Node, sin runtime
+ * Nuxt ni SQLite), así que no depende de `draft` ni de la build.
+ *
+ *  - D-12 / CAMP-06: el marcador de dato sin confirmar es EXACTAMENTE `**⚠ por confirmar**`
+ *    (U+26A0 + espacio, sin el selector U+FE0F), siempre en negrita, nunca en un campo de texto
+ *    plano (donde los `**` se verían tal cual) y nunca en Roma. Roma contiene las palabras sueltas
+ *    «por confirmar» (g-bar-musa.yml), por eso se busca el marcador completo con su ⚠.
+ *  - D-03 / D-09: ningún texto de Campania lleva una marca de Roma (tests/trips/romaLeaks.ts) y los
+ *    eyebrows de los días van en español: «<día> · <n> de junio».
+ *  - D-07 / D-08: el glifo de cada tramo lo pone el CSS, así que ni una stat ni la cabecera de un
+ *    tramo empiezan por emoji, y una fila meta no empieza por el glifo de un transporte. Un día con
+ *    `route.mode: transit` no pasa de 2 paradas (WR-01: Google Maps no dibuja más).
+ *  - T-13-02: ni teléfonos ni números largos en el contenido publicado.
+ */
+
+/** Marcador D-12. Escapado para que ningún editor lo convierta en emoji con U+FE0F. */
+const MARKER = '⚠ por confirmar'
+const BOLD_MARKER = `**${MARKER}**`
+
+const campania = loadTrip('campania')
+const roma = loadTrip('roma')
+
+/**
+ * Días ya escritos con contenido real → su base (`stay`). `null` = el día no tiene base (salida).
+ * Los planes siguientes de la Fase 13 añaden aquí cada día que escriben; 13-06 cubre los diez.
+ */
+const WRITTEN_DAYS: Record<string, { stay: string | null }> = {
+  'martes-22': { stay: 'ischia' },
+}
+
+/** Fichas ya escritas con contenido real. Los planes siguientes añaden las suyas. */
+const WRITTEN_MONUMENTS: string[] = ['monte-epomeo', 'baia-di-sorgeto']
+
+/** Fichas que deben llevar nota familiar (D-09). Los planes siguientes añaden las suyas. */
+const FAMILY_REQUIRED: string[] = ['monte-epomeo', 'baia-di-sorgeto']
+
+/**
+ * Ficheros (ruta relativa al viaje) que deben llevar el marcador porque tienen datos dudosos.
+ * Los planes siguientes añaden los suyos.
+ */
+const MARKER_FILES: string[] = ['monuments/baia-di-sorgeto.yml']
+
+/** Caja de coordenadas del viaje: de Trentova (sur) a Casertavecchia (norte), de Forio al Calore. */
+const BBOX = { minLat: 40.3, maxLat: 41.15, minLng: 13.8, maxLng: 15.3 }
+
+const EYEBROW_RE = /^(lunes|martes|miércoles|jueves|viernes|sábado|domingo) · \d{1,2} de junio$/
+
+/** Claves de texto plano: un marcador aquí se pintaría con los `**` literales (Pitfall 4). */
+const PLAIN_KEYS: ReadonlySet<string> = new Set([
+  'time', 'header', 'title', 'eyebrow', 'subtitle', 'pill', 'roman', 'label', 'tag', 'icon',
+  'address', 'footer', 'when', 'name', 'badge', 'italian', 'day', 'mapsQuery', 'itineraryTag',
+  'alt', 'decoration', 'heroMeta', 'quote', 'quoteAttr', 'pageTitle', 'mapLegend', 'heading', 'area',
+])
+
+/** Glifos de transporte que pone el CSS: una fila meta no empieza por ellos (D-07). */
+const TRANSPORT_GLYPHS = ['🚌', '⛴', '🚗', '🚲', '✈']
+
+const EMOJI_START = /^\p{Extended_Pictographic}/u
+
+type Rec = Record<string, unknown>
+
+const docsOf = (collection: CollectionName): Doc[] => campania.docs.filter(d => d.collection === collection)
+const docByRel = (rel: string): Doc | undefined => campania.docs.find(d => d.rel === rel)
+const dayOf = (slug: string): Rec | undefined => docsOf('day').find(d => d.slug === slug)?.data
+const monumentOf = (slug: string): Rec | undefined => docsOf('monument').find(d => d.slug === slug)?.data
+const tripData = (): Rec => docsOf('trip')[0]?.data ?? {}
+const stringsOf = (doc: Doc): string[] => collectStrings(doc.data)
+const asRecs = (v: unknown): Rec[] =>
+  Array.isArray(v) ? v.filter((x): x is Rec => typeof x === 'object' && x !== null && !Array.isArray(x)) : []
+const countOf = (text: string, needle: string): number => text.split(needle).length - 1
+
+/** Recorre los strings de un valor con la clave que los contiene (los arrays heredan la del padre). */
+function walkStrings(value: unknown, key: string | undefined, visit: (text: string, key: string | undefined) => void): void {
+  if (typeof value === 'string') visit(value, key)
+  else if (Array.isArray(value)) for (const v of value) walkStrings(v, key, visit)
+  else if (value && typeof value === 'object') for (const [k, v] of Object.entries(value)) walkStrings(v, k, visit)
+}
+
+/** Strings de un doc salvo los que cuelgan de las claves `skip`. */
+function stringsExcept(doc: Doc, skip: ReadonlySet<string>): string[] {
+  const out: string[] = []
+  walkStrings(doc.data, undefined, (text, key) => {
+    if (key === undefined || !skip.has(key)) out.push(text)
+  })
+  return out
+}
+
+type RouteDay = Parameters<typeof routeCards>[0] & Parameters<typeof routeVisible>[0]
+const asRouteDay = (day: Rec): RouteDay => day as unknown as RouteDay
+
+describe('marcador ⚠ por confirmar (CAMP-06, D-12)', () => {
+  it('Roma no contiene el marcador completo', () => {
+    const text = roma.docs.flatMap(stringsOf).join('\n')
+    expect(countOf(text, MARKER)).toBe(0)
+  })
+
+  it('en Campania el marcador va siempre en negrita y sin U+FE0F', () => {
+    const text = campania.docs.flatMap(stringsOf).join('\n')
+    expect(countOf(text, MARKER), 'cada marcador va envuelto en **…**').toBe(countOf(text, BOLD_MARKER))
+    expect(text.includes('⚠️'), 'el ⚠ va sin el selector de variación U+FE0F').toBe(false)
+  })
+
+  it('ningún marcador en un campo de texto plano ni en stays[].area / stays[].note', () => {
+    const bad: string[] = []
+    for (const doc of campania.docs) {
+      walkStrings(doc.data, undefined, (text, key) => {
+        if (key !== undefined && PLAIN_KEYS.has(key) && text.includes(MARKER)) bad.push(`${doc.file}: ${key}`)
+      })
+    }
+    for (const stay of asRecs(tripData().stays)) {
+      for (const key of ['area', 'note']) {
+        const v = stay[key]
+        if (typeof v === 'string' && v.includes(MARKER)) bad.push(`trip.yml: stays[${String(stay.slug)}].${key} (no se pinta)`)
+      }
+    }
+    expect(bad).toEqual([])
+  })
+
+  it.each(MARKER_FILES)('%s lleva el marcador', (rel) => {
+    const doc = docByRel(rel)
+    expect(doc, `${rel} existe`).toBeDefined()
+    expect(stringsOf(doc!).join('\n')).toContain(BOLD_MARKER)
+  })
+})
+
+describe('sin textos de Roma (D-03, D-09)', () => {
+  const SKIP: ReadonlySet<string> = new Set(['src', 'mapsQuery'])
+
+  it('ningún texto de Campania lleva una marca de Roma', () => {
+    for (const doc of campania.docs) {
+      expect(findRomaLeaks(stringsExcept(doc, SKIP).join('\n')), doc.file).toEqual([])
+    }
+  })
+
+  it('cada eyebrow de día es «<día> · <n> de junio» en español', () => {
+    for (const doc of docsOf('day')) {
+      expect(String(doc.data.eyebrow), doc.file).toMatch(EYEBROW_RE)
+    }
+  })
+})
+
+describe('tramos y ruta (D-07, D-08)', () => {
+  // Solo los días escritos: el jueves del esqueleto aún tiene una meta que empieza por 🚌 hasta
+  // que 13-04 lo reescribe; 13-06 hace que el registro cubra los diez días.
+  it.each(Object.keys(WRITTEN_DAYS))('%s: stats, cabeceras y metas sin glifo de transporte', (slug) => {
+    const day = dayOf(slug)
+    expect(day, `${slug} existe`).toBeDefined()
+    for (const stat of asRecs(day!.stats)) {
+      expect(String(stat.text), `${slug}: stat`).not.toMatch(EMOJI_START)
+    }
+    const rows = timelineRowsOf(day!.timeline)
+    for (const row of rows.filter(r => r.kind === 'transport')) {
+      expect(String(row.header), `${slug}: cabecera de tramo`).not.toMatch(EMOJI_START)
+    }
+    for (const row of rows.filter(r => r.kind === 'meta')) {
+      for (const item of asRecs(row.items)) {
+        const text = String(item.text)
+        expect(TRANSPORT_GLYPHS.some(g => text.startsWith(g)), `${slug}: meta «${text}»`).toBe(false)
+      }
+    }
+  })
+
+  it('un día con route.mode transit no pasa de 2 paradas (WR-01)', () => {
+    for (const doc of docsOf('day')) {
+      const route = doc.data.route as Rec | undefined | null
+      if (route?.mode !== 'transit') continue
+      expect(routeCards(asRouteDay(doc.data)).length, doc.file).toBeLessThanOrEqual(2)
+    }
+  })
+})
+
+describe('días escritos (CAMP-01, D-04)', () => {
+  it.each(Object.entries(WRITTEN_DAYS))('%s: base, eyebrow y versión ligera', (slug, { stay }) => {
+    const day = dayOf(slug)
+    expect(day, `${slug} existe`).toBeDefined()
+    if (stay === null) expect(day!.stay, `${slug} sin base`).toBeUndefined()
+    else expect(day!.stay).toBe(stay)
+    expect(String(day!.eyebrow)).toMatch(EYEBROW_RE)
+    const light = day!.light as Rec | undefined
+    expect(light, `${slug} tiene bloque light`).toBeDefined()
+    expect(asRecs(light!.items).length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('martes-22: Epomeo y Sorgeto, en transporte público, con su botón de ruta', () => {
+    const day = dayOf('martes-22')!
+    expect(day.cards).toEqual(['monte-epomeo', 'baia-di-sorgeto'])
+    expect((day.route as Rec).mode).toBe('transit')
+    const routeDay = asRouteDay(day)
+    expect(routeVisible(routeDay, routeCards(routeDay).length)).toBe(true)
+  })
+})
+
+describe('fichas escritas (CAMP-02, D-10, D-11)', () => {
+  it.each(WRITTEN_MONUMENTS)('%s: foto de Wikimedia, nombre italiano, prosa, datos y coordenadas', (slug) => {
+    const m = monumentOf(slug)
+    expect(m, `${slug} existe`).toBeDefined()
+    const hero = m!.hero as Rec
+    expect(String(hero.src)).toMatch(/^https:\/\/upload\.wikimedia\.org\/wikipedia\/commons\//)
+    expect(String(m!.italian).trim()).not.toBe('')
+    expect(String(m!.mapsQuery).trim()).not.toBe('')
+    const sections = asRecs(m!.sections)
+    expect(sections.length).toBeGreaterThanOrEqual(1)
+    expect(sections.some(s => typeof s.body === 'string' && s.body.trim() !== '')).toBe(true)
+    expect(asRecs(m!.facts).length).toBeGreaterThanOrEqual(1)
+    const { lat, lng } = m!.coords as { lat: number, lng: number }
+    expect(lat).toBeGreaterThanOrEqual(BBOX.minLat)
+    expect(lat).toBeLessThanOrEqual(BBOX.maxLat)
+    expect(lng).toBeGreaterThanOrEqual(BBOX.minLng)
+    expect(lng).toBeLessThanOrEqual(BBOX.maxLng)
+  })
+
+  it.each(FAMILY_REQUIRED)('%s: nota familiar', (slug) => {
+    const m = monumentOf(slug)
+    expect(m, `${slug} existe`).toBeDefined()
+    expect(typeof m!.family === 'string' && m!.family.trim() !== '').toBe(true)
+  })
+
+  it('baia-di-sorgeto: naturaleza termal, con escalones, linterna y el marcador en la nota familiar', () => {
+    const m = monumentOf('baia-di-sorgeto')!
+    expect(m.type).toBe('nature')
+    expect(m.motif).toBe('thermal')
+    const family = String(m.family)
+    expect(family).toContain('escalones')
+    expect(family).toContain('linterna')
+    expect(family).toContain(BOLD_MARKER)
+  })
+})
+
+describe('datos personales (T-13-02)', () => {
+  it('ningún teléfono internacional ni tira de 9 o más cifras', () => {
+    const SKIP: ReadonlySet<string> = new Set(['src'])
+    for (const doc of campania.docs) {
+      for (const text of stringsExcept(doc, SKIP)) {
+        expect(text, `${doc.file}: teléfono`).not.toMatch(/\+\d{2}\s?\d/)
+        expect(text, `${doc.file}: cifras`).not.toMatch(/(?:\d[ .-]?){9,}/)
+      }
+    }
+  })
+})

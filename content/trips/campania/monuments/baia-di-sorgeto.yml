@@ -5,24 +5,43 @@ name: Baia di Sorgeto
 italian: 'Baia di Sorgeto · Panza · Forio'
 day: Martes 22
 coords:
-  lat: 40.7083
-  lng: 13.8650
+  lat: 40.6992
+  lng: 13.8784
 type: nature
 motif: thermal
 hero:
-  src: https://example.invalid/campania/baia-di-sorgeto.jpg
-  alt: Baia di Sorgeto
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Baia_di_sorgeto%2C_sorgente_termale_che_sbuca_direttamente_in_mare.jpg/960px-Baia_di_sorgeto%2C_sorgente_termale_che_sbuca_direttamente_in_mare.jpg
+  alt: Baia di Sorgeto, pozas termales entre las rocas junto al mar
 sections:
   - heading: Qué es
     body: >-
-      Una cala de cantos rodados al pie de un acantilado del sur de Isquia, donde
-      el agua caliente del volcán brota entre las rocas y se mezcla con el mar en
-      pozas naturales. De noche, bañarse aquí mirando las estrellas es un rito.
+      Una cala pequeña de cantos y rocas al pie del acantilado, en el sur de
+      Isquia, donde el agua termal del volcán brota del fondo y se mezcla con el mar
+      en pozas naturales. Según la poza, el agua va de templada a muy caliente. En
+      julio y agosto se llena; en junio todavía se respira.
+  - heading: Cómo bajar
+    body: >-
+      A pie desde Panza, una aldea de Forio, por una larga bajada de peldaños hasta
+      la cala. De día también se puede llegar por mar, en taxi-barca desde
+      Sant'Angelo. La vuelta es cuesta arriba: guardad fuerzas para ella.
+  - heading: De noche
+    body: >-
+      Flotar en el agua caliente mirando las estrellas es la razón de venir aquí al
+      anochecer, y lo que convierte el martes en un recuerdo de familia. Pero lo que
+      más importa con niños no está publicado en ninguna parte: si la bajada tiene
+      luz, cómo está el mar o si quedan barcas por la tarde **⚠ por confirmar**.
+      Decididlo allí, con lo que veáis.
 facts:
-  - label: Acceso
-    value: 'Libre · unos 230 escalones desde Panza'
-mapsQuery: Baia di Sorgeto Ischia
+  - label: A pie
+    value: 'Desde Panza, unos 250-300 escalones **⚠ por confirmar**'
+  - label: Taxi-barca
+    value: 'De día desde Sant''Angelo, unos 5-6 € por trayecto **⚠ por confirmar**'
+  - label: Cuándo
+    value: 'Mucha gente en julio y agosto · de noche, acceso y barcas **⚠ por confirmar**'
+mapsQuery: Baia di Sorgeto Forio Ischia
 family: >-
-  La bajada son unos 230 escalones sin barandilla en algunos tramos: con niños pequeños,
-  mejor de día y sin prisa. En algunas pozas el agua sale muy caliente, así que comprobadla
-  antes con la mano. Si vais de noche, llevad linterna y calzado cerrado para las rocas.
+  Los escalones de la bajada son muchos y, con niños pequeños, conviene hacerlos de
+  día la primera vez y sin prisa. En algunas pozas el agua sale tan caliente que
+  quema: comprobadla siempre con la mano antes de que se metan. Si bajáis de noche,
+  llevad linterna y calzado cerrado para las rocas; el acceso de noche, la
+  iluminación, el estado del mar y las barcas de la tarde están **⚠ por confirmar**.
