@@ -714,7 +714,11 @@ git fetch origin main && git branch main origin/main
 - **Ruta D-05:** portada → Roma → Campania → «Atrás» → «Atrás»: ninguna página publicada ni
   ningún paso de historial descarga la base de contenido de cliente (`__nuxt_content/`,
   `sql_dump`, WASM). Cada paso espera la URL, `networkidle`, la hidratación y un marcador propio
-  de la página antes de comprobar nada.
+  de la página antes de comprobar nada. Cada «Atrás» / «Adelante» comprueba además que cargó un
+  **documento nuevo** (una marca puesta en `window` antes de navegar no sobrevive y la entrada de
+  navegación es `back_forward`): una restauración de bfcache haría trivial el «cero descargas»
+  del paso. Hoy Playwright desactiva el bfcache de Chromium; el spec lo comprueba en vez de
+  suponerlo.
 - **Recorrido con clics:** tarjeta de la portada → Roma → pie «← Todos los viajes» → tarjeta de
   Campania → «Atrás» → «Atrás» → «Adelante» → «Adelante», también con cero descargas pesadas.
 - **Control positivo:** la 404 de un borrador **sí** pide la base de contenido, así que el

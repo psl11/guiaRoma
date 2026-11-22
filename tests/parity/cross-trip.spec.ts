@@ -28,7 +28,8 @@ import { startPagesServer } from './_pagesServer'
  *
  * Historial: tras `goBack`/`goForward`, `page.url()` puede leerse aún con el valor anterior; por eso
  * cada paso espera la URL esperada, `networkidle`, la hidratación y un marcador propio de la página
- * (`landOn`), y solo entonces se comprueba nada.
+ * (`landOn`), y solo entonces se comprueba nada. Cada paso de historial comprueba además que cargó
+ * un documento nuevo y no una restauración de bfcache (`historyStep`).
  *
  * Cada test usa su propio contexto (fixture `page`): localStorage nuevo en cada uno.
  */
@@ -120,6 +121,28 @@ async function landOn(page: Page, url: string, marker: string): Promise<void> {
   expect(page.url()).toBe(url)
 }
 
+/**
+ * Un paso de historial («Atrás» / «Adelante») que de verdad carga un documento nuevo (IN-01 de
+ * 14-REVIEW.md). Si fuese una restauración de bfcache (sin documento nuevo ni JS re-ejecutado),
+ * el «cero descargas» del paso sería trivial y `landOn` pasaría igual. Hoy Playwright lanza
+ * Chromium con `--disable-back-forward-cache`; aquí se COMPRUEBA en vez de suponerlo: una marca
+ * puesta en `window` antes de navegar no debe sobrevivir, y la entrada de navegación del
+ * documento nuevo es de tipo `back_forward`.
+ */
+async function historyStep(page: Page, direction: 'back' | 'forward', url: string, marker: string): Promise<void> {
+  await page.evaluate(() => {
+    (window as unknown as { __crossTripPrevDoc?: boolean }).__crossTripPrevDoc = true
+  })
+  if (direction === 'back') await page.goBack()
+  else await page.goForward()
+  await landOn(page, url, marker)
+  const doc = await page.evaluate(() => ({
+    survived: (window as unknown as { __crossTripPrevDoc?: boolean }).__crossTripPrevDoc === true,
+    type: (performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined)?.type ?? null,
+  }))
+  expect(doc, `«${direction === 'back' ? 'Atrás' : 'Adelante'}» a ${url} carga un documento nuevo (no bfcache)`).toEqual({ survived: false, type: 'back_forward' })
+}
+
 test.describe('aislamiento entre viajes en la build publicada (D-05)', () => {
   // Cadenas de hasta 8 navegaciones (load + networkidle + hidratación + marcador cada una) bajo
   // la puerta en paralelo: el default de 30 s se queda corto (WR-09 de 14-REVIEW.md), como en el
@@ -163,12 +186,10 @@ test.describe('aislamiento entre viajes en la build publicada (D-05)', () => {
     await landOn(page, CAMPANIA, MARK.campania)
 
     t.step = 'atrás → roma'
-    await page.goBack()
-    await landOn(page, ROMA, MARK.roma)
+    await historyStep(page, 'back', ROMA, MARK.roma)
 
     t.step = 'atrás → portada'
-    await page.goBack()
-    await landOn(page, PORTADA, MARK.portada)
+    await historyStep(page, 'back', PORTADA, MARK.portada)
 
     expect(t.heavy, `descargas de la base de contenido:\n${t.heavy.join('\n')}`).toHaveLength(0)
     for (const step of ['portada', 'roma', 'campania']) {
@@ -212,20 +233,16 @@ test.describe('aislamiento entre viajes en la build publicada (D-05)', () => {
     await landOn(page, CAMPANIA, MARK.campania)
 
     t.step = 'atrás → portada'
-    await page.goBack()
-    await landOn(page, PORTADA, MARK.portada)
+    await historyStep(page, 'back', PORTADA, MARK.portada)
 
     t.step = 'atrás → roma'
-    await page.goBack()
-    await landOn(page, ROMA, MARK.roma)
+    await historyStep(page, 'back', ROMA, MARK.roma)
 
     t.step = 'adelante → portada'
-    await page.goForward()
-    await landOn(page, PORTADA, MARK.portada)
+    await historyStep(page, 'forward', PORTADA, MARK.portada)
 
     t.step = 'adelante → campania'
-    await page.goForward()
-    await landOn(page, CAMPANIA, MARK.campania)
+    await historyStep(page, 'forward', CAMPANIA, MARK.campania)
 
     expect(t.heavy, `descargas de la base de contenido:\n${t.heavy.join('\n')}`).toHaveLength(0)
     for (const step of ['portada', 'tarjeta → roma', 'tarjeta → campania']) {
@@ -285,8 +302,7 @@ test.describe('aislamiento entre viajes en la build publicada (D-05)', () => {
     await onlyFrom('iglesia', CAMPANIA_SLUGS, 'Campania')
 
     t.step = 'atrás → roma'
-    await page.goBack()
-    await landOn(page, ROMA, MARK.roma)
+    await historyStep(page, 'back', ROMA, MARK.roma)
     await searchUntil('Pantheon', 'pantheon')
     await none('Sorgeto')
     await onlyFrom('iglesia', ROMA_SLUGS, 'Roma')
@@ -317,8 +333,7 @@ test.describe('aislamiento entre viajes en la build publicada (D-05)', () => {
     await expect.poll(() => ls('campania-note-baia-di-sorgeto')).toBe(CAMPANIA_NOTE)
 
     t.step = 'atrás → roma'
-    await page.goBack()
-    await landOn(page, ROMA, MARK.roma)
+    await historyStep(page, 'back', ROMA, MARK.roma)
     // La nota propia restaurada demuestra que la restauración ya corrió antes de mirar las demás.
     await expect(page.locator('.notes-textarea[data-note-key="pantheon"]')).toHaveValue(ROMA_NOTE)
     const romaNotes = await notes()
@@ -327,8 +342,7 @@ test.describe('aislamiento entre viajes en la build publicada (D-05)', () => {
     expect(romaNotes.filter(([k, v]) => (k === 'pantheon' ? v !== ROMA_NOTE : v !== '')), 'en Roma solo pantheon tiene nota').toEqual([])
 
     t.step = 'adelante → campania'
-    await page.goForward()
-    await landOn(page, CAMPANIA, MARK.campania)
+    await historyStep(page, 'forward', CAMPANIA, MARK.campania)
     await expect(page.locator('.notes-textarea[data-note-key="baia-di-sorgeto"]')).toHaveValue(CAMPANIA_NOTE)
     const campaniaNotes = await notes()
     expect(campaniaNotes.length, 'Campania tiene un área de notas por ficha').toBe(CAMPANIA_SLUGS.length)
@@ -370,16 +384,14 @@ test.describe('aislamiento entre viajes en la build publicada (D-05)', () => {
     await expect.poll(() => ls('campania-pace')).toBe('slow')
 
     t.step = 'atrás → roma'
-    await page.goBack()
-    await landOn(page, ROMA, MARK.roma)
+    await historyStep(page, 'back', ROMA, MARK.roma)
     await expect(activePace).toHaveAttribute('data-pace', 'neutral')
     await expect(body).toHaveClass(/\bmodo-resumen\b/)
     await expect(body).not.toHaveClass(/\blight-mode\b/)
     await expect(page.locator('#light-toggle')).toHaveAttribute('aria-pressed', 'false')
 
     t.step = 'adelante → campania'
-    await page.goForward()
-    await landOn(page, CAMPANIA, MARK.campania)
+    await historyStep(page, 'forward', CAMPANIA, MARK.campania)
     await expect(activePace).toHaveAttribute('data-pace', 'slow')
     await expect(body).toHaveClass(/\blight-mode\b/)
     await expect(body).not.toHaveClass(/\bmodo-resumen\b/)
