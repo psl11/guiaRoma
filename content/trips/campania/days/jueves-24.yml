@@ -34,7 +34,7 @@ light:
     - kind: rest
       text: >-
         **Descanso:** la tarde en la cala o junto a la poza, sin horarios, antes de
-        volver a Salerno a cenar.
+        la cena.
 timeline:
   - kind: stop
     pace: all
@@ -126,17 +126,17 @@ timeline:
     heading: Para cenar, elige una
     options:
       - label: Opción 1
-        title: En la trattoria de monte, si habéis ido al Calore
+        title: Quedarse a cenar en Felitto antes de volver, si habéis ido al Calore
         rows:
           - kind: food
             pace: all
-            header: Cena en las colinas de Felitto
+            header: Cena en Felitto antes de volver
             entries:
-              - ref: g-5-trattoria-calore
-                name: Una trattoria de monte junto al Calore
+              - name: Una mesa sencilla en el pueblo
                 desc: >-
-                  Fusilli de Felitto y cocina de casa, a elegir sobre el terreno ·
-                  horario **⚠ por confirmar**
+                  Si la tarde junto al río se alarga, una cena ligera en Felitto, a
+                  elegir sobre el terreno, y vuelta a Salerno ya de noche · horarios
+                  **⚠ por confirmar**
       - label: Opción 2
         title: Una taberna del centro storico de Salerno
         rows:
