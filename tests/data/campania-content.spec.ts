@@ -140,11 +140,22 @@ const BBOX = { minLat: 40.3, maxLat: 41.15, minLng: 13.8, maxLng: 15.3 }
 
 const EYEBROW_RE = /^(lunes|martes|miércoles|jueves|viernes|sábado|domingo) · \d{1,2} de junio$/
 
-/** Claves de texto plano: un marcador aquí se pintaría con los `**` literales (Pitfall 4). */
+/**
+ * Claves de texto plano: un marcador aquí se pintaría con los `**` literales (Pitfall 4). Sale de
+ * RESEARCH A.3 y de los `{{ }}` de los componentes: además de las filas, días, fichas y trip.yml,
+ * los encabezados de Reservas (`headings.mesas` / `.visitas` / `.table`, ReservasSection.vue), el
+ * `group` de Gastronomía (`p.gastro-section-title`), la marca (`brand.before` / `.after`, Topbar),
+ * los `destinations` de la portada y la cabecera de una ficha de artista. `table` es seguro: los
+ * strings de las filas de la tabla llevan su propia clave (`name`, `desc`…), así que solo
+ * `headings.table` cae aquí. Es conservadora: alguna clave (`title`, `heading`, `footer`) es
+ * Markdown en otra colección, pero ahí tampoco hace falta el marcador.
+ */
 const PLAIN_KEYS: ReadonlySet<string> = new Set([
   'time', 'header', 'title', 'eyebrow', 'subtitle', 'pill', 'roman', 'label', 'tag', 'icon',
   'address', 'footer', 'when', 'name', 'badge', 'italian', 'day', 'mapsQuery', 'itineraryTag',
   'alt', 'decoration', 'heroMeta', 'quote', 'quoteAttr', 'pageTitle', 'mapLegend', 'heading', 'area',
+  'mesas', 'visitas', 'table', 'group', 'before', 'after', 'destinations',
+  'avatar', 'dates', 'epithet', 'term',
 ])
 
 /** Glifos de transporte que pone el CSS: una fila meta no empieza por ellos (D-07). */
