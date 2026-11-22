@@ -238,6 +238,12 @@ describe('sin textos de Roma (D-03, D-09)', () => {
     }
   })
 
+  it('la isla se escribe siempre «Ischia», como en las bases y la portada (IN-03)', () => {
+    for (const doc of campania.docs) {
+      expect(stringsOf(doc).filter(t => /Isquia/i.test(t)), doc.file).toEqual([])
+    }
+  })
+
   it('cada eyebrow de día es «<día> · <n> de junio» en español', () => {
     for (const doc of docsOf('day')) {
       expect(String(doc.data.eyebrow), doc.file).toMatch(EYEBROW_RE)
