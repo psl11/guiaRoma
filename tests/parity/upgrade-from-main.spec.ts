@@ -54,16 +54,16 @@ function requireBuild(): void {
   expect(existsSync(ROMA_HTML), `falta la build en ${OUTPUT_DIR}: ejecuta antes \`rm -rf .data .nuxt .output && pnpm generate\` (o \`pnpm verify\`). Este spec no genera la build: varios workers a la vez competirían por .nuxt/ y .data/`).toBe(true)
 }
 
-/** Aborta toda petición fuera del origen del servidor (tiles, Wikimedia, Google Fonts). */
-async function blockOffOrigin(page: Page, origin: string): Promise<string[]> {
-  const offOrigin: string[] = []
+/**
+ * Aborta toda petición fuera del origen del servidor (tiles, Wikimedia, Google Fonts). No
+ * devuelve nada (IN-03): aquí la guía viva SÍ pide Google Fonts, así que no hay aserción útil
+ * sobre lo abortado; la de «la build nueva no pide Google Fonts» vive en cross-trip.spec.ts.
+ */
+async function blockOffOrigin(page: Page, origin: string): Promise<void> {
   await page.context().route('**/*', (route) => {
-    const url = route.request().url()
-    if (url.startsWith(`${origin}/`)) return route.continue()
-    offOrigin.push(url)
+    if (route.request().url().startsWith(`${origin}/`)) return route.continue()
     return route.abort()
   })
-  return offOrigin
 }
 
 /** Espera a que Nuxt termine de hidratar la página actual (clon del de portada.spec.ts). */

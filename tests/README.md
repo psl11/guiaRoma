@@ -723,6 +723,9 @@ git fetch origin main && git branch main origin/main
   Campania → «Atrás» → «Atrás» → «Adelante» → «Adelante», también con cero descargas pesadas.
 - **Control positivo:** la 404 de un borrador **sí** pide la base de contenido, así que el
   detector ve esas descargas cuando ocurren y los «cero» no pasan por ceguera.
+- **Sin Google Fonts:** en los dos recorridos de descargas, ninguna de las peticiones fuera del
+  origen (abortadas) es a `fonts.googleapis.com` / `fonts.gstatic.com`: la build sirve sus
+  fuentes self-hosted (con control de que el registro sí ve las de tiles e imágenes).
 - **Búsqueda, notas y modos por viaje:** «Pantheon» no da resultados en Campania ni «Sorgeto» en
   Roma (también tras «Atrás»); una nota de Roma no aparece en Campania ni al revés (con «Atrás»
   y «Adelante»); el ritmo, «Caminar menos» y el modo resumen de un viaje no cambian los del otro.

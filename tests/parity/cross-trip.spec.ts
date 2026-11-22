@@ -67,7 +67,13 @@ function requireBuild(): void {
   }
 }
 
-/** Aborta toda petición fuera del origen del servidor (tiles, Wikimedia); devuelve las abortadas. */
+/** Fuentes de Google: la build las sirve self-hosted (offline), así que nunca debe pedirlas. */
+const GOOGLE_FONTS_RE = /^https?:\/\/fonts\.(googleapis|gstatic)\.com\//
+
+/**
+ * Aborta toda petición fuera del origen del servidor (tiles, Wikimedia) y devuelve las abortadas,
+ * que los tests de descargas comprueban (IN-03): ninguna es de Google Fonts.
+ */
 async function blockOffOrigin(page: Page, origin: string): Promise<string[]> {
   const offOrigin: string[] = []
   await page.context().route('**/*', (route) => {
@@ -170,7 +176,7 @@ test.describe('aislamiento entre viajes en la build publicada (D-05)', () => {
   })
 
   test('descargas: portada → Roma → Campania → «Atrás» → «Atrás» sin sql_dump ni WASM', async ({ page }) => {
-    await blockOffOrigin(page, ORIGIN)
+    const offOrigin = await blockOffOrigin(page, ORIGIN)
     const t = track(page)
 
     t.step = 'portada'
@@ -196,6 +202,8 @@ test.describe('aislamiento entre viajes en la build publicada (D-05)', () => {
       expect(t.nuxtAssets[step] ?? 0, `control de no vacuidad: el paso «${step}» pidió assets /_nuxt/`).toBeGreaterThan(0)
     }
     expect(t.badAssets, `respuestas /_nuxt/ >= 400:\n${t.badAssets.join('\n')}`).toHaveLength(0)
+    expect(offOrigin.length, 'control: el registro de peticiones fuera del origen ve las de tiles/imágenes').toBeGreaterThan(0)
+    expect(offOrigin.filter(u => GOOGLE_FONTS_RE.test(u)), 'la build publicada no pide Google Fonts (fuentes self-hosted)').toEqual([])
   })
 
   test('descargas: control positivo — la 404 de un borrador sí pide la base de contenido', async ({ page }) => {
@@ -213,7 +221,7 @@ test.describe('aislamiento entre viajes en la build publicada (D-05)', () => {
   })
 
   test('descargas: tarjeta de Roma → «← Todos los viajes» → tarjeta de Campania, Atrás y Adelante, sin sql_dump ni WASM', async ({ page }) => {
-    await blockOffOrigin(page, ORIGIN)
+    const offOrigin = await blockOffOrigin(page, ORIGIN)
     const t = track(page)
 
     t.step = 'portada'
@@ -249,6 +257,8 @@ test.describe('aislamiento entre viajes en la build publicada (D-05)', () => {
       expect(t.nuxtAssets[step] ?? 0, `control de no vacuidad: el paso «${step}» pidió assets /_nuxt/`).toBeGreaterThan(0)
     }
     expect(t.badAssets, `respuestas /_nuxt/ >= 400:\n${t.badAssets.join('\n')}`).toHaveLength(0)
+    expect(offOrigin.length, 'control: el registro de peticiones fuera del origen ve las de tiles/imágenes').toBeGreaterThan(0)
+    expect(offOrigin.filter(u => GOOGLE_FONTS_RE.test(u)), 'la build publicada no pide Google Fonts (fuentes self-hosted)').toEqual([])
   })
 
   test('búsqueda: cada guía busca solo en sus fichas, también al volver con «Atrás»', async ({ page }) => {
