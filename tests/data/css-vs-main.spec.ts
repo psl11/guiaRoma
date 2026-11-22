@@ -15,7 +15,8 @@ import { join } from 'node:path'
  *  · `tokens.css` + `base.css` = el bloque `<style>` editorial de main (v1.0 lo partió en tokens
  *    y resto, en ese orden).
  *  · `fonts.css` sustituye al `<link>` de Google Fonts de main por @font-face self-hosted
- *    (generado por scripts/vendor-fonts.mjs desde la MISMA URL css2): mismas tres familias.
+ *    (generado por scripts/vendor-fonts.mjs desde la MISMA URL css2): mismas tres familias y
+ *    EXACTAMENTE las mismas caras (familia, estilo, peso) que pide el `<link>`.
  *  · `multitrip.css` (portada, 11-05) y `tripshapes.css` (Fase 12) son hojas ADITIVAS de la v1.1,
  *    que no existen en main; las guardan tests/unit/multitripCss.spec.ts y
  *    tests/unit/tripShapesCss.spec.ts. No entran en esta comparación.
@@ -112,18 +113,57 @@ function editorialMatches(mainEditorial: string, tokens: string, base: string, r
   return { equal: main === build, orphanCounts, firstDiff: firstDiff(main, build) }
 }
 
-/** Familias del `<link>` css2 de Google Fonts del `<head>` de main. */
-function googleFontFamilies(html: string): { links: number, families: string[] } {
+/**
+ * Caras `familia|estilo|peso` que pide el `<link>` css2 de Google Fonts del `<head>` de main.
+ * Cada parámetro `family=` es `Nombre+Con+Espacios[:ejes@tupla;tupla…]`, con ejes `ital,wght`
+ * (tuplas `0,400`, `1,500`…) o solo `wght` (tuplas `400`, `500`); sin ejes, la cara normal 400.
+ */
+function googleFontFaces(html: string): { links: number, families: string[], faces: string[] } {
   const links = [...html.matchAll(/<link[^>]+href="(https:\/\/fonts\.googleapis\.com\/css2\?[^"]+)"/g)].map(m => m[1] ?? '')
-  const families = links.flatMap(href =>
-    new URL(href.replace(/&amp;/g, '&')).searchParams.getAll('family').map(f => (f.split(':')[0] ?? '').replace(/\+/g, ' ')))
-  return { links: links.length, families }
+  const params = links.flatMap(href => new URL(href.replace(/&amp;/g, '&')).searchParams.getAll('family'))
+  const families: string[] = []
+  const faces: string[] = []
+  for (const param of params) {
+    const [rawName = '', spec = ''] = param.split(':')
+    const family = rawName.replace(/\+/g, ' ')
+    families.push(family)
+    if (!spec) {
+      faces.push(`${family}|normal|400`)
+      continue
+    }
+    const [axesPart = '', tuplesPart = ''] = spec.split('@')
+    const axes = axesPart.split(',')
+    for (const tuple of tuplesPart.split(';')) {
+      const values = tuple.split(',')
+      const at = (axis: string, fallback: string): string => (axes.includes(axis) ? values[axes.indexOf(axis)] ?? fallback : fallback)
+      faces.push(`${family}|${at('ital', '0') === '1' ? 'italic' : 'normal'}|${at('wght', '400')}`)
+    }
+  }
+  return { links: links.length, families, faces: [...new Set(faces)].sort() }
+}
+
+interface FontFaceRule {
+  face: string
+  unicodeRange: string
+}
+
+/** Reglas @font-face de fonts.css como cara `familia|estilo|peso` + su `unicode-range`. */
+function fontFaceRules(css: string): FontFaceRule[] {
+  return [...css.matchAll(/@font-face\s*\{([^}]*)\}/g)].map((m) => {
+    const body = m[1] ?? ''
+    const prop = (name: string): string => (new RegExp(`${name}:\\s*([^;]+);`).exec(body)?.[1] ?? '').trim()
+    return {
+      face: `${prop('font-family').replace(/^'|'$/g, '')}|${prop('font-style') || 'normal'}|${prop('font-weight') || '400'}`,
+      unicodeRange: prop('unicode-range'),
+    }
+  })
 }
 
 /** Familias declaradas en las reglas @font-face de fonts.css. */
-function fontFaceFamilies(css: string): string[] {
-  return [...new Set([...css.matchAll(/@font-face\s*\{[^}]*?font-family:\s*'([^']+)'/g)].map(m => m[1] ?? ''))]
-}
+const fontFaceFamilies = (css: string): string[] => [...new Set(fontFaceRules(css).map(r => r.face.split('|')[0] ?? ''))]
+
+/** Caras distintas declaradas en fonts.css. */
+const fontFaceFaces = (css: string): string[] => [...new Set(fontFaceRules(css).map(r => r.face))].sort()
 
 const MAIN_HTML = readMainHtml()
 const BLOCKS = styleBlocks(MAIN_HTML)
@@ -157,11 +197,22 @@ describe('CSS de la build = CSS de main:index.html (D-02)', () => {
   })
 
   it('fonts.css sustituye al <link> de Google Fonts de main con las mismas tres familias', () => {
-    const g = googleFontFamilies(MAIN_HTML)
+    const g = googleFontFaces(MAIN_HTML)
     expect(g.links, 'main carga UN <link> css2 de Google Fonts').toBe(1)
     const expected = ['Cormorant Garamond', 'JetBrains Mono', 'Lora']
     expect([...g.families].sort()).toEqual(expected)
     expect(fontFaceFamilies(FONTS).sort()).toEqual(expected)
+  })
+
+  it('fonts.css declara EXACTAMENTE las caras (familia, estilo, peso) que pide el <link> de main, cada una con el subconjunto latin', () => {
+    // Sin una cara (p. ej. Cormorant 700 o Lora itálica 500) el navegador sintetiza negrita o
+    // cursiva falsas: rotura visual que la comparación de familias no ve (WR-04 de 14-REVIEW.md).
+    const g = googleFontFaces(MAIN_HTML)
+    expect(g.faces.length, 'main pide 14 caras (7 Cormorant + 5 Lora + 2 JetBrains Mono)').toBe(14)
+    expect(fontFaceFaces(FONTS)).toEqual(g.faces)
+    const withoutLatin = g.faces.filter(face =>
+      !fontFaceRules(FONTS).some(r => r.face === face && r.unicodeRange.startsWith('U+0000-00FF')))
+    expect(withoutLatin, 'caras sin el subconjunto latin (U+0000-00FF)').toEqual([])
   })
 
   describe('dientes (en memoria, sin tocar ningún CSS)', () => {
@@ -178,6 +229,13 @@ describe('CSS de la build = CSS de main:index.html (D-02)', () => {
 
     it('comparar sin quitar las reglas orfanadas hace fallar la comparación', () => {
       expect(editorialMatches(editorial, TOKENS, BASE, false).equal).toBe(false)
+    })
+
+    it('quitar una cara de fonts.css (Cormorant Garamond 700) hace fallar la comparación de caras', () => {
+      const dropped = FONTS.replace(/@font-face\s*\{[^}]*font-family:\s*'Cormorant Garamond';[^}]*font-style:\s*normal;[^}]*font-weight:\s*700;[^}]*\}/g, '')
+      expect(dropped).not.toBe(FONTS)
+      expect(fontFaceFamilies(dropped).sort(), 'la familia sigue presente (por eso no basta con las familias)').toEqual(fontFaceFamilies(FONTS).sort())
+      expect(fontFaceFaces(dropped)).not.toEqual(googleFontFaces(MAIN_HTML).faces)
     })
 
     it('espacios, saltos de línea y un comentario de más en base siguen pasando', () => {
