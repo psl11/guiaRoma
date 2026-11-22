@@ -121,6 +121,11 @@ async function landOn(page: Page, url: string, marker: string): Promise<void> {
 }
 
 test.describe('aislamiento entre viajes en la build publicada (D-05)', () => {
+  // Cadenas de hasta 8 navegaciones (load + networkidle + hidratación + marcador cada una) bajo
+  // la puerta en paralelo: el default de 30 s se queda corto (WR-09 de 14-REVIEW.md), como en el
+  // spec de upgrade (120 s).
+  test.describe.configure({ timeout: 90_000 })
+
   const PORT = 6700 + Number(process.env.TEST_PARALLEL_INDEX ?? 0)
   const ORIGIN = `http://127.0.0.1:${PORT}`
   const PORTADA = `${ORIGIN}${SITE_BASE}`
@@ -254,12 +259,14 @@ test.describe('aislamiento entre viajes en la build publicada (D-05)', () => {
 
     // Escribe hasta que la aserción pase: el índice MiniSearch se construye en onMounted, y una
     // entrada anterior a ese momento no se reevalúa sola (clon de tests/trips/isolation.spec.ts).
+    // 10 s por llamada, muy por debajo del timeout del test, para que el diagnóstico de toPass
+    // aflore en vez de un timeout de test mudo.
     async function searchUntil(q: string, slug: string): Promise<void> {
       await expect(async () => {
         await page.fill('#search', '')
         await page.fill('#search', q)
         await expect(page.locator(`#search-results .search-result[data-card="${slug}"]`)).not.toHaveCount(0, { timeout: 2_000 })
-      }).toPass({ timeout: 30_000 })
+      }).toPass({ timeout: 10_000 })
     }
 
     t.step = 'roma'
