@@ -34,7 +34,7 @@ Re-plataforma el `index.html` único (6.665 líneas) a Nuxt 4 SSG con paridad vi
 - [x] **Phase 9: Plataforma por viaje** - Búsqueda, navegación, persistencia y validación de datos acotadas al viaje, con Roma intacta en `/` (completed 2026-11-22)
 - [x] **Phase 10: Forma y chrome desde datos** - Días, secciones, pastillas, cabecera, pie, leyenda y título salen de los datos de cada viaje (Roma verbatim) (completed 2026-11-22)
 - [x] **Phase 11: Portada y rutas multi-viaje** - Portada índice en `/`, Roma en `/trips/roma/`, redirección de enlaces antiguos y prerender de todos los viajes, con goldens sin cambios (completed 2026-11-23)
-- [ ] **Phase 12: Formas nuevas de viaje** - Opciones A/B, «Dormís en…», transportes nuevos, naturaleza, mapa multi-ciudad, ruta del día por modo y nota familiar, probados con un esqueleto de Campania
+- [x] **Phase 12: Formas nuevas de viaje** - Opciones A/B, «Dormís en…», transportes nuevos, naturaleza, mapa multi-ciudad, ruta del día por modo y nota familiar, probados con un esqueleto de Campania (completed 2026-11-23)
 - [x] **Phase 12.1: Títulos de Reservas por viaje** *(INSERTED)* - Encabezados de la sección Reservas configurables por viaje, con los textos de Roma por defecto, para que Campania no herede «3 comensales» (completed 2026-11-22)
 - [ ] **Phase 13: Contenido Campania 2027** - Los 10 días, fichas, gastronomía, reservas y práctica de Campania redactados en tono slow y publicados
 - [ ] **Phase 14: Verificación del milestone** - Puerta completa desde build limpia, test de upgrade desde la guía viva y sign-off humano de Roma y Campania en móvil real
@@ -154,7 +154,7 @@ Plans:
   3. Una playa, poza termal, río o sendero tiene ficha, marcador propio en el mapa y un dibujo de reserva cuando su imagen no carga; una ficha puede mostrar una nota para familias con niños
   4. El mapa de un viaje de varias ciudades encuadra todos sus marcadores (Nápoles, Procida, Ischia y Salerno a la vista a la vez), mientras Roma conserva exactamente su vista actual
   5. «Ver ruta del día» abre Google Maps en el modo adecuado al día (a pie, coche o transporte público) y no aparece en los días de ferry; en Roma sigue siendo a pie con las mismas paradas, y la puerta de paridad de Roma sigue verde
-**Plans**: 7/7 plans executed
+**Plans**: 7/7 plans complete
 Plans:
 **Wave 1**
 - [x] 12-01-PLAN.md — «Elige una» de punta a punta: `ChoiceRow` estricto en el timeline (D-18 Roma primero), `TimelineChoice.vue` + `tripshapes.css` (última en `css[]`), borrador `campania` (trip.yml + jueves 24 A/B) y dientes del esquema (EXT-01)
@@ -297,7 +297,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 9. Plataforma por viaje | v1.1 | 6/6 | Complete    | 2026-11-22 |
 | 10. Forma y chrome desde datos | v1.1 | 6/6 | Complete    | 2026-11-22 |
 | 11. Portada y rutas multi-viaje | v1.1 | 8/8 | Complete    | 2026-11-23 |
-| 12. Formas nuevas de viaje | v1.1 | 7/7 | In Progress | - |
+| 12. Formas nuevas de viaje | v1.1 | 7/7 | Complete    | 2026-11-23 |
 | 13. Contenido Campania 2027 | v1.1 | 8/8 | In Progress | - |
 | 14. Verificación del milestone | v1.1 | 3/3 | In Progress | - |
 
