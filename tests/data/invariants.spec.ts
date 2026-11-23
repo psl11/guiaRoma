@@ -44,6 +44,9 @@ import {
  *  - D-08 `trip-dates`: `endDate` no puede ser anterior a `startDate` (comparación de strings ISO).
  *  - D-07 `trip-summary-link`: el `summary` no lleva enlaces (Markdown `[t](x)`, autoenlace
  *    `<scheme:…>` ni URL suelta `http(s)://`/`www.`): la tarjeta de la portada ya es un `<a>`.
+ *  - Cierre G-11-3 / WR-02 (11-REVIEW) `trip-summary-inline`: el `summary` solo admite Markdown en
+ *    línea (lista, cita, tabla, código, separador, línea en blanco o `::x` → una violación en
+ *    trip.yml); solo se mira un summary sin enlace; escaneo léxico y fail-closed.
  *
  * Fase 12 (formas nuevas de viaje):
  *  - EXT-01 / Pitfall 3: la regla `ref` mira también DENTRO de las opciones de un `choice`

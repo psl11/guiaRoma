@@ -53,6 +53,11 @@
 //  - D-07: `trip-summary-link` — el `summary` de trip.yml no lleva enlaces (Markdown `[t](x)`,
 //    autoenlace `<scheme:…>` ni URL suelta `http(s)://`/`www.`): la tarjeta entera de la portada ya
 //    es un `<a>`, y un enlace dentro daría `<a>` anidado (HTML inválido, hidratación rota).
+//  - Cierre G-11-3 / WR-02 (11-REVIEW): `trip-summary-inline` — el `summary` solo admite Markdown en
+//    línea: una lista (también `2027. …`), una cita, una tabla, un bloque de código, un separador,
+//    una línea en blanco o un componente `::x` dan una violación en trip.yml (la tarjeta lo pinta
+//    dentro de `<p>` y de `<a>`). Solo se evalúa un summary sin enlace (lo demás ya es
+//    trip-summary-link). El escaneo es léxico y fail-closed.
 //
 // Fase 12 (formas nuevas de viaje):
 //  - EXT-01 / Pitfall 3: la regla `ref` recorre también las filas de las opciones de un `choice`
@@ -124,7 +129,7 @@ export const RULES = [
   'yaml-parse', 'yaml-object', 'trip-yml', 'trip-slug', 'trip-field', 'stray-file', 'reserved-key',
   'unknown-key', 'basename-slug', 'dup-id', 'fixed-anchor', 'ref', 'anchor', 'cross-trip-link',
   'day-order', 'day-pill', 'trip-dates', 'trip-summary-link', 'stay-ref', 'stay-dup',
-  'reservas-headings', 'card-placement',
+  'reservas-headings', 'card-placement', 'trip-summary-inline',
 ] as const
 export type Rule = typeof RULES[number]
 
@@ -388,6 +393,57 @@ function hasLink(md: string): boolean {
 }
 
 /**
+ * Formas de Markdown de bloque que el `summary` de trip.yml no admite (regla trip-summary-inline,
+ * G-11-3 / WR-02 de 11-REVIEW), con la etiqueta que sale en el mensaje.
+ */
+const SUMMARY_BLOCK_FORMS: ReadonlyArray<readonly [RegExp, string]> = [
+  // Lista con viñeta o numerada (`2027. …`, `1) …`), también con sangría o dentro de `>`.
+  [/^[ \t>]*(?:[-*+]|\d{1,9}[.)])(?:[ \t]|$)/m, 'lista «- …» / «1. …»'],
+  [/^[ \t]*>/m, 'cita «> …»'],
+  // Fila delimitadora de GFM: una línea solo de `|`, `:`, `-` y blancos, con algún `-` y algún `|` o `:`.
+  [/^(?=[^\n]*[|:])(?=[^\n]*-)[ \t|:-]+$/m, 'tabla «| a | b |»'],
+  // Valla de tres o más acentos graves (`\x60`) o tildes, o sangría de 4 espacios / tabulador.
+  [/^[ \t>]*(?:\x60{3,}|~{3,})|^(?: {4}|[ ]{0,3}\t)/m, 'bloque de código (valla «~~~» o de acentos graves, o sangría de 4 espacios)'],
+  [/^[ \t>]*([-*_])(?:[ \t]*\1){2,}[ \t]*$/m, 'separador «---» / «***» / «___»'],
+  [/\S[ \t]*\n(?:[ \t]*\n)+[ \t]*\S/, 'línea en blanco (dos párrafos)'],
+  [/^[ \t>]*:{2,}[A-Za-z]/m, 'componente MDC de bloque «::x»'],
+]
+
+/**
+ * Formas de Markdown de bloque de un `summary` (regla trip-summary-inline, D-08; cierre G-11-3 /
+ * WR-02 de 11-REVIEW). Devuelve sus etiquetas en el orden de `SUMMARY_BLOCK_FORMS`.
+ *
+ * Por qué: TripIndex pinta el `summary` como `<p class="trip-index-summary"><MDC :tag="false"
+ * unwrap="p" /></p>` dentro de `a.trip-index-card`. `unwrap="p"` solo quita los párrafos, así que
+ * cualquier bloque que MDC abra queda dentro de `<p>` y de `<a>`: el navegador reubica el DOM y la
+ * hidratación no casa. Dos párrafos (`Uno.\n\nDos.`) se pegan además sin espacio (`flatUnwrap`).
+ *
+ * Evidencia (`parseMarkdown` de @nuxtjs/mdc 0.22.0, 2026-11-23): `2027. Diez días` → `ol[start=2027]`;
+ * `1) …` → `ol`; `Texto\n1. …` → `p + ol`; `- / * / + …` → `ul`; `Texto\n- …` → `p + ul`;
+ * `   2027. …` → `ol`; `> …` → `blockquote`; `| a | b |\n| - | - |`, `a | b\n--- | ---` y `a\n:-`
+ * → `table`; vallas de acentos graves o de `~~~`, `    Texto` y `\tTexto` → `pre`; `***`, `___` y
+ * `---` solos, o `***`/`___` tras una línea de texto → `hr`; `Uno.\n\nDos.` → `p + p`;
+ * `::nota\n…\n::` → elemento `nota`. Son un único `p` (en línea): los resúmenes de Roma y
+ * Campania, cursiva/negrita/código/tachado, `<br>`, el salto duro de dos espacios y el salto final.
+ *
+ * Lo que `scanProseLinks` ya rechaza (encabezados ATX y setext —`Texto\n---` y `Texto\n-`
+ * incluidos—, HTML crudo, `[r]: …`, `::x` con frontmatter, `{href=…}`, `{#id}`) ya es
+ * `trip-summary-link`: si `hasLink(md)` es verdadero no se evalúa aquí, para no avisar dos veces.
+ * Si un summary tiene un enlace y además un bloque, se avisa del enlace; el bloque aparece en la
+ * pasada siguiente. El string sigue en rojo: no hay falso verde.
+ *
+ * El escaneo es LÉXICO y fail-closed: puede dar un falso rojo, nunca un falso verde. Falsos rojos
+ * conocidos (MDC los deja en `p`): `Texto\n2027. …` (una lista ordenada que interrumpe un párrafo
+ * tiene que empezar en 1), una línea que empieza por código en línea de tres acentos graves y una
+ * línea de continuación con 4 espacios de sangría. No se usa un parser porque `@nuxtjs/mdc` no se
+ * resuelve desde la raíz con pnpm (sin hoisting) y el roadmap v1.1 no admite dependencias nuevas.
+ */
+function summaryBlockForms(md: string): string[] {
+  if (hasLink(md)) return []
+  return SUMMARY_BLOCK_FORMS.filter(([re]) => re.test(md)).map(([, label]) => label)
+}
+
+/**
  * Anclas `#id` de los enlaces internos (cualquier forma que MDC pinta como `<a>`: `[texto](#id)`,
  * `[texto]( #id)`, `[texto](<#id>)`…). Captura cualquier carácter salvo blanco/paréntesis (no solo
  * [a-z0-9-]) para que un ancla con mayúsculas o Unicode se compare tal cual y falle, en vez de
@@ -415,7 +471,7 @@ const rowKeys = new Map<CollectionName, ReadonlySet<string>>(
   COLLECTIONS.map(c => [c.name, new Set(Object.keys(c.row.shape))]),
 )
 
-/** Aplica las 22 reglas de la puerta (`RULES`) a un viaje cargado. Lista vacía = viaje sano. */
+/** Aplica las 23 reglas de la puerta (`RULES`) a un viaje cargado. Lista vacía = viaje sano. */
 export function checkTrip(t: LoadedTrip): Violation[] {
   const vs: Violation[] = [...t.loadViolations]
   const push = (file: string, rule: Rule, message: string) => vs.push({ file, rule, message })
@@ -436,7 +492,8 @@ export function checkTrip(t: LoadedTrip): Violation[] {
     else if (d.slug !== t.dir) push(d.file, 'trip-slug', `slug "${d.slug}" ≠ carpeta "${t.dir}"`)
   }
 
-  // trip-dates (D-08) / trip-summary-link (D-07) — datos de la tarjeta de la portada.
+  // trip-dates (D-08) / trip-summary-link (D-07) / trip-summary-inline (D-08, G-11-3) — datos de la
+  // tarjeta de la portada.
   for (const d of tripDocs) {
     const { startDate, endDate, summary } = d.data
     if (typeof startDate === 'string' && typeof endDate === 'string' && endDate < startDate) {
@@ -444,6 +501,11 @@ export function checkTrip(t: LoadedTrip): Violation[] {
     }
     if (typeof summary === 'string' && hasLink(summary)) {
       push(d.file, 'trip-summary-link', 'summary con enlace: la tarjeta de la portada ya es un enlace; quita [texto](destino)')
+    }
+    // Una sola violación por summary, con todas sus formas de bloque (solo si no hay enlace).
+    const blocks = typeof summary === 'string' ? summaryBlockForms(summary) : []
+    if (blocks.length > 0) {
+      push(d.file, 'trip-summary-inline', `summary con Markdown de bloque (${blocks.join(', ')}): la tarjeta de la portada lo pinta dentro de <p> y <a> y rompe la hidratación; escribe una frase o párrafo en línea (D-08)`)
     }
   }
 
