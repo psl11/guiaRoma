@@ -49,13 +49,13 @@ La guía se consulta paseando por el destino y debe ser **fiel, editorial y fiab
 - ✓ Persistencia en navegador separada por viaje; las claves `roma-*` siguen intactas (sin migración destructiva, `tripStorageKey`) — Fase 9
 - ✓ Puerta de datos por viaje: cualquier YAML inválido o fichero sin clasificar en `content/trips/` hace fallar `pnpm verify` nombrando el fichero (sin fail-open) — Fase 9
 - ✓ La UI se adapta a la forma de cada viaje desde sus datos: nº y nombres de días variables, secciones y pastillas por presencia de datos, chrome (marca, `<title>`, pie, leyenda del mapa) desde `trip.yml` con respaldo neutro; Roma verbatim — Fase 10
+- ✓ Portada `/` = índice de los viajes publicados; cada guía en su URL estática `/trips/<slug>/`; los enlaces antiguos (`/#viernes`…) redirigen a Roma; los borradores (`draft: true`) no se publican ni se filtran en el dump; Roma en `/trips/roma/` pasa la puerta de paridad sin re-baseline (56 goldens intactos) — Fase 11
 
 ### Active
 
 <!-- Milestone v1.1 — Multi-viaje + Campania 2027. Hipótesis hasta enviarse. -->
 
 - [ ] El mapa soporta viajes de varias ciudades (encuadre sobre todos los marcadores del viaje)
-- [ ] Portada `/` = índice de viajes; Roma vive en `/trips/roma`; enlaces antiguos (`/#viernes`…) redirigen; todos los viajes se prerenderizan para GitHub Pages
 - [ ] Viaje **Campania 2027** (19–28 junio, en familia) publicado con su contenido: días, fichas, gastronomía y práctica, en el tono slow/auténtico del planning del usuario
 - [ ] Roma sin regresiones: la suite de paridad (goldens + comportamiento) sigue verde en su nueva URL
 
@@ -108,6 +108,7 @@ La guía se consulta paseando por el destino y debe ser **fiel, editorial y fiab
 | Fase 9: claves de localStorage de Roma intactas; otros viajes con clave prefijada por slug | Quien ya usa Roma no pierde notas ni preferencias; cero migración destructiva | ✓ Fase 9: `tripStorageKey(slug, …)` + guardián `tripCoupling.spec.ts` |
 | Fase 9: la puerta de datos es fail-closed sobre `content/trips/` | Content ingiere carpetas ocultas (`dot: true`) y omite `.YML`/ficheros sueltos sin avisar; el autor debe recibir señal | ✓ Fase 9 (09-06 + CR-01): `stray-file`/`trip-slug` nombran el fichero culpable |
 | Fase 10: la puerta de datos ve todo lo que MDC convierte en enlace o id (escáner léxico, sin parser) y cada ficha se pinta exactamente una vez | Content no valida `type:'data'` y MDC enlaza más formas que `[t](x)`; añadir un parser rompería el diff vacío de `package.json` de v1.1 | ✓ Fase 10 (10-06 + revisión): `scanProseLinks`, `card-placement`, HTML crudo solo `<br>`, sin encabezados ni `{#id}` en prosa, `href` de comida solo http(s) |
+| Fase 11: la tarjeta de la portada solo admite Markdown inline en `summary` y un fallo de la consulta de la portada hace fallar la build | Un bloque dentro de `<p>`/`<a>` rompe la hidratación; una portada vacía con 200 se publicaría sin aviso | ✓ Fase 11 (11-08 + revisión): regla `trip-summary-inline` (normaliza `\r`, rechaza MDC inline), `createError` fatal en `TripIndex.vue` |
 
 ## Evolution
 
@@ -127,4 +128,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-11-22 after Phase 10 — forma y chrome desde datos (días, secciones y textos de marca por viaje; Roma verbatim; puerta de datos sin agujeros de enlace).*
+*Last updated: 2026-11-23 after Phase 11 — portada multi-viaje y rutas `/trips/<slug>/` (enlaces antiguos redirigen, borradores fuera, Roma con paridad sin re-baseline).*

@@ -22,10 +22,10 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-11-22)
+See: .planning/PROJECT.md (updated 2026-11-23)
 
 **Core value:** La guía se consulta paseando por el destino y debe ser fiel, editorial y fiable (también offline). Lo ya publicado no se rompe: Roma sigue exactamente igual (paridad verificada) mientras la plataforma crece a varios viajes.
-**Current focus:** Phase 11 — Portada y rutas multi-viaje
+**Current focus:** Phase 12 — Formas nuevas de viaje (construida; pendiente su UAT)
 
 ## Current Position
 
@@ -406,8 +406,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-23T00:18:39.935Z
-Stopped at: Phase 11 complete, ready to verify Phase 12
+Last session: 2026-11-23
+Stopped at: Phase 11 complete (verification passed 6/6), ready to verify Phase 12 (/gsd-verify-work 12)
 Resume file: None
 
 ## Operator Next Steps
