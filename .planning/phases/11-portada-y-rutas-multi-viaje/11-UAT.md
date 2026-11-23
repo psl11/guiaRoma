@@ -1,9 +1,9 @@
 ---
-status: diagnosed
+status: complete
 phase: 11-portada-y-rutas-multi-viaje
 source: [11-VERIFICATION.md]
 started: 2026-11-20T21:30:00Z
-updated: 2026-11-22T23:02:28.786Z
+updated: 2026-11-23T10:50:54.989Z
 ---
 
 ## Current Test
@@ -41,7 +41,9 @@ blocked: 0
 
 - gap_id: G-11-3
   truth: "La tarjeta de la portada nunca rompe la hidratación ni se publica vacía: un `summary` con Markdown de bloque (lista, cita, tabla, encabezado, «2027. …») hace fallar `pnpm verify` nombrando `trip.yml`, y un fallo de la consulta de la portada durante el prerender hace fallar la build en vez de publicar una portada en blanco con 200"
-  status: failed
+  status: resolved
+  resolved_by: 11-08-PLAN.md
+  resolved_at: 2026-11-23
   reason: "User reported: a — arreglar ahora WR-02 y WR-03 de 11-REVIEW.md; los 6 info se difieren"
   severity: minor
   test: 3
