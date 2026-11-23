@@ -55,8 +55,9 @@
 //    es un `<a>`, y un enlace dentro daría `<a>` anidado (HTML inválido, hidratación rota).
 //  - Cierre G-11-3 / WR-02 (11-REVIEW): `trip-summary-inline` — el `summary` solo admite Markdown en
 //    línea: una lista (también `2027. …`), una cita, una tabla, un bloque de código, un separador,
-//    una línea en blanco o un componente `::x` dan una violación en trip.yml (la tarjeta lo pinta
-//    dentro de `<p>` y de `<a>`). Solo se evalúa un summary sin enlace (lo demás ya es
+//    una línea en blanco, un componente `::x` o un componente en línea `:x` (CR-01 de 11-REVIEW:
+//    `:div[x]`, `:ul`, `:detail-photo{…}`, `:a[x]`) dan una violación en trip.yml (la tarjeta lo
+//    pinta dentro de `<p>` y de `<a>`). Solo se evalúa un summary sin enlace (lo demás ya es
 //    trip-summary-link). El escaneo es léxico y fail-closed.
 //
 // Fase 12 (formas nuevas de viaje):
@@ -407,6 +408,13 @@ const SUMMARY_BLOCK_FORMS: ReadonlyArray<readonly [RegExp, string]> = [
   [/^[ \t>]*([-*_])(?:[ \t]*\1){2,}[ \t]*$/m, 'separador «---» / «***» / «___»'],
   [/\S[ \t]*\n(?:[ \t]*\n)+[ \t]*\S/, 'línea en blanco (dos párrafos)'],
   [/^[ \t>]*:{2,}[A-Za-z]/m, 'componente MDC de bloque «::x»'],
+  // CR-01 (11-REVIEW, cierre G-11-3): componente MDC en línea (`:div[x]`, `:ul`, `:hr`,
+  // `:detail-photo{…}`, `:a[x]`). MDC saca de `p` los de etiqueta de bloque y los deja dentro de
+  // `p.trip-index-summary`; `:a` / `:nuxt-link` dan `<a>` dentro de `<a>`. Fail-closed: no mira el
+  // carácter previo (falso rojo conocido: `Roma:texto`, `\:x`). Excluye `:emoji:` (seguido de `:`,
+  // MDC lo deja en texto) y el `::x` a media línea (texto en MDC; el de inicio de línea es la forma
+  // anterior, así no se avisa dos veces).
+  [/(?<!:):[A-Za-z][\w-]*(?![\w-]*:)/, 'componente MDC en línea «:x[…]» / «:x{…}»'],
 ]
 
 /**
@@ -423,8 +431,14 @@ const SUMMARY_BLOCK_FORMS: ReadonlyArray<readonly [RegExp, string]> = [
  * `   2027. …` → `ol`; `> …` → `blockquote`; `| a | b |\n| - | - |`, `a | b\n--- | ---` y `a\n:-`
  * → `table`; vallas de acentos graves o de `~~~`, `    Texto` y `\tTexto` → `pre`; `***`, `___` y
  * `---` solos, o `***`/`___` tras una línea de texto → `hr`; `Uno.\n\nDos.` → `p + p`;
- * `::nota\n…\n::` → elemento `nota`. Son un único `p` (en línea): los resúmenes de Roma y
- * Campania, cursiva/negrita/código/tachado, `<br>`, el salto duro de dos espacios y el salto final.
+ * `::nota\n…\n::` → elemento `nota`. CR-01 (11-REVIEW): los componentes en línea con etiqueta de
+ * bloque salen de `p` (`Roma :div` y `Roma (:div[x])` → `p + div`; `:ul[x]`, `:hr`, `:h2[Mapa]` →
+ * `ul` / `hr` / `h2`; `_:div[x]_` → `p[em] + div[em]`) y los demás pintan dentro del `<p>` algo que
+ * no cabe (`:detail-photo{…}` → `DetailPhoto.global.vue`, un `<div>`; `Roma :a[x]` → `<a>` dentro
+ * del `<a>` de la tarjeta). Son un único `p` (en línea): los resúmenes de Roma y Campania,
+ * cursiva/negrita/código/tachado, `<br>`, el salto duro de dos espacios, el salto final, los dos
+ * puntos seguidos de espacio o cifra (`Del 19 al 23: 5 días`, `10:00`), un `:emoji:` y un `::x` a
+ * media línea.
  *
  * Lo que `scanProseLinks` ya rechaza (encabezados ATX y setext —`Texto\n---` y `Texto\n-`
  * incluidos—, HTML crudo, `[r]: …`, `::x` con frontmatter, `{href=…}`, `{#id}`) ya es
@@ -434,8 +448,9 @@ const SUMMARY_BLOCK_FORMS: ReadonlyArray<readonly [RegExp, string]> = [
  *
  * El escaneo es LÉXICO y fail-closed: puede dar un falso rojo, nunca un falso verde. Falsos rojos
  * conocidos (MDC los deja en `p`): `Texto\n2027. …` (una lista ordenada que interrumpe un párrafo
- * tiene que empezar en 1), una línea que empieza por código en línea de tres acentos graves y una
- * línea de continuación con 4 espacios de sangría. No se usa un parser porque `@nuxtjs/mdc` no se
+ * tiene que empezar en 1), una línea que empieza por código en línea de tres acentos graves, una
+ * línea de continuación con 4 espacios de sangría y unos dos puntos pegados a una letra
+ * (`Roma:texto`, `\:x` escapado o `:x` entre acentos graves: no se mira el carácter previo). No se usa un parser porque `@nuxtjs/mdc` no se
  * resuelve desde la raíz con pnpm (sin hoisting) y el roadmap v1.1 no admite dependencias nuevas.
  */
 function summaryBlockForms(md: string): string[] {

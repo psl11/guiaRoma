@@ -45,8 +45,9 @@ import {
  *  - D-07 `trip-summary-link`: el `summary` no lleva enlaces (Markdown `[t](x)`, autoenlace
  *    `<scheme:…>` ni URL suelta `http(s)://`/`www.`): la tarjeta de la portada ya es un `<a>`.
  *  - Cierre G-11-3 / WR-02 (11-REVIEW) `trip-summary-inline`: el `summary` solo admite Markdown en
- *    línea (lista, cita, tabla, código, separador, línea en blanco o `::x` → una violación en
- *    trip.yml); solo se mira un summary sin enlace; escaneo léxico y fail-closed.
+ *    línea (lista, cita, tabla, código, separador, línea en blanco, `::x` o componente en línea
+ *    `:x` —CR-01 de 11-REVIEW— → una violación en trip.yml); solo se mira un summary sin enlace;
+ *    escaneo léxico y fail-closed.
  *
  * Fase 12 (formas nuevas de viaje):
  *  - EXT-01 / Pitfall 3: la regla `ref` mira también DENTRO de las opciones de un `choice`
@@ -773,6 +774,7 @@ describe('la puerta tiene dientes (fixtures)', () => {
   const INLINE_S = 'separador «---» / «***» / «___»'
   const INLINE_B = 'línea en blanco (dos párrafos)'
   const INLINE_M = 'componente MDC de bloque «::x»'
+  const INLINE_I = 'componente MDC en línea «:x[…]» / «:x{…}»'
 
   it('G-11-3/WR-02 trip-summary-inline: «2027. Diez días por Campania» (lista ordenada que MDC abre en 2027) → mensaje exacto en trip.yml', () => {
     const vs = checkTrip(memTrip('prueba', {}, { summary: '2027. Diez días por Campania' }))
@@ -809,6 +811,16 @@ describe('la puerta tiene dientes (fixtures)', () => {
     ['Diez días.\n\nPor Campania.', INLINE_B],
     ['Diez días.\n  \nPor Campania.', INLINE_B],
     ['::nota\nDiez días\n::', INLINE_M],
+    // CR-01 (11-REVIEW): componentes en línea. parseMarkdown: `Roma :div` → `p + div`; `:ul[x]` →
+    // `ul`; `:hr` → `hr`; `Roma :a[x]` → `p[a]` (`<a>` dentro del `<a>` de la tarjeta);
+    // `:detail-photo{…}` → DetailPhoto (`<div>`); `_:div[x]_` → `p[em] + div[em]`.
+    ['Roma :div', INLINE_I],
+    [':ul[x]', INLINE_I],
+    [':hr', INLINE_I],
+    ['Roma :a[x]', INLINE_I],
+    ['Diez días :detail-photo{src="foto.jpg" alt="x"}', INLINE_I],
+    ['_:div[x]_', INLINE_I],
+    ['Roma (:div[x])', INLINE_I],
   ])('G-11-3/WR-02 trip-summary-inline: summary %j → una violación en trip.yml (%s)', (summary, label) => {
     const vs = checkTrip(memTrip('prueba', {}, { summary }))
     expect(vs, formatViolations(vs)).toEqual([{
@@ -845,6 +857,10 @@ describe('la puerta tiene dientes (fixtures)', () => {
     'Diez días  \npor Campania',
     'Cinco días a pie por Roma.\n',
     'Del 19 al 23: 5 días, 1.5 km diarios, 10:00-12:00 y +34 600 000 000.',
+    // CR-01: dos puntos + espacio/cifra, `:emoji:` y `::x` a media línea son un único `p` en MDC.
+    'Del 19 al 23: 5 días, 10:00-12:00',
+    'Roma :sunny: y',
+    'Roma ::div[x]',
   ])('G-11-3/WR-02 control: summary en línea %j → sin violaciones', (summary) => {
     const vs = checkTrip(memTrip('prueba', {}, { summary }))
     expect(vs, formatViolations(vs)).toEqual([])

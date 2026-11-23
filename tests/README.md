@@ -378,14 +378,18 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
   de `a.trip-index-card`, y `unwrap="p"` solo quita párrafos, así que un bloque quedaría dentro
   de `<p>` y de `<a>` (el navegador reubica el DOM y la hidratación no casa). Una lista
   (también `2027. …` o `1) …`), una cita, una tabla, un bloque de código (valla o sangría de 4
-  espacios), un separador, una línea en blanco que parte párrafos o un componente `::x` dan
-  **una sola** violación en trip.yml con las formas encontradas. Solo se evalúa un `summary`
+  espacios), un separador, una línea en blanco que parte párrafos, un componente `::x` o un
+  componente en línea `:x` (`:div[x]`, `:ul`, `:detail-photo{…}`, `:a[x]`: MDC saca de `p` los de
+  etiqueta de bloque, y `:a` da un `<a>` dentro del `<a>`; CR-01 de 11-REVIEW) dan
+  **una sola** violación en trip.yml con las formas encontradas. Los dos puntos seguidos de
+  espacio o cifra (`Del 19 al 23: 5 días`, `10:00`) y un `:emoji:` siguen en verde. Solo se evalúa un `summary`
   sin enlace: lo que `scanProseLinks` ya rechaza (encabezados, HTML crudo, `[r]:`, `::x` con
   frontmatter, `{href}`/`{#id}`) ya es `trip-summary-link`, así que nada se avisa dos veces. El
   escaneo es léxico y fail-closed; falsos rojos conocidos (MDC los deja en un `p`):
   `Texto\n2027. …` (una lista que interrumpe un párrafo tiene que empezar en 1), una línea que
-  empieza por código en línea de tres acentos graves y una línea de continuación con 4 espacios
-  de sangría (cierre de G-11-3 / WR-02 de 11-REVIEW).
+  empieza por código en línea de tres acentos graves, una línea de continuación con 4 espacios
+  de sangría y unos dos puntos pegados a una letra (`Roma:texto`, `\:x` o `:x` entre acentos
+  graves) (cierre de G-11-3 / WR-02 y CR-01 de 11-REVIEW).
 - Los mensajes (`formatViolations`) llevan **el fichero culpable** y la regla:
   `content/trips/<viaje>/…/<fichero>.yml: [<regla>] <detalle>`. Un YAML roto en
   cualquier viaje rompe `verify` nombrando su fichero.
