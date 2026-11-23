@@ -6,10 +6,10 @@ current_phase: 11
 current_phase_name: Portada y rutas multi-viaje
 status: verifying
 stopped_at: Completed 11-08-PLAN.md
-last_updated: "2026-11-23T00:18:40.389Z"
+last_updated: "2026-11-23T08:54:15.631Z"
 last_activity: 2026-11-23
 last_activity_desc: Phase 11 execution started
-state_head: bafd66c940778685a3ac81c99281bde35eec5b98
+state_head: 73e17183a4abdc5c7fbc343e4064fb4041f44eda
 progress:
   total_phases: 7
   completed_phases: 3
@@ -32,7 +32,7 @@ See: .planning/PROJECT.md (updated 2026-11-22)
 Phase: 11 (Portada y rutas multi-viaje) — EXECUTING
 Plan: 8 of 8
 Status: Phase complete — ready for verification
-Last activity: 2026-11-23 — Phase 11 execution started
+Last activity: 2026-11-23 - Completed quick task 261123-342: Despliegue de la guía Nuxt a GitHub Pages con GitHub Actions
 
 Progress: [████░░░░░░] 43%
 
@@ -380,6 +380,13 @@ Recent decisions affecting current work:
 - [RESUELTO en Fase 5 P03]: ~~[Phase 4/5]: cableado de interceptación de `a[href^="#"]` en `<MDC>`~~ → listener delegado nativo en CAPTURA + stopPropagation, registrado síncronamente.
 - [RESUELTO en v1.0]: ~~[Phase 4/6/7]: BLOQUEANTE D1 (uniones discriminadas `artist`/`reference` con filas SQL todo-null)~~ → `#arte`/`#arquitectura`/`#reservas`/`#practica` renderizan con datos reales desde F4 P05.
 - [RESUELTO en Fase 8]: ~~[Phase 8 P06]: visual-diff no verde por el corte de Lora self-hosted y el orden notas/culture por ficha~~ → golden re-baselinado desde el build Nuxt por decisión del usuario; `pnpm verify` VERDE y auditoría v1.0 sin bloqueantes.
+
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 261123-342 | Despliegue de la guía Nuxt a GitHub Pages con GitHub Actions | 2026-11-23 | 73e1718 | [261123-342-despliegue-de-la-gu-a-nuxt-a-github-page](./quick/261123-342-despliegue-de-la-gu-a-nuxt-a-github-page/) |
 
 ### Roadmap Evolution
 
