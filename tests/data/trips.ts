@@ -415,7 +415,10 @@ const SUMMARY_BLOCK_FORMS: ReadonlyArray<readonly [RegExp, string]> = [
   // Valla de tres o más acentos graves (`\x60`) o tildes, o sangría de 4 espacios / tabulador.
   [/^[ \t>]*(?:\x60{3,}|~{3,})|^(?: {4}|[ ]{0,3}\t)/m, 'bloque de código (valla «~~~» o de acentos graves, o sangría de 4 espacios)'],
   [/^[ \t>]*([-*_])(?:[ \t]*\1){2,}[ \t]*$/m, 'separador «---» / «***» / «___»'],
-  [/\S[ \t]*\n(?:[ \t]*\n)+[ \t]*\S/, 'línea en blanco (dos párrafos)'],
+  // WR-02 (11-REVIEW): «no blanco» en el sentido de CommonMark (solo espacio y tabulador son
+  // blancos), no `\S`: un NBSP o un U+3000 pegado a la línea en blanco es texto para micromark
+  // (`Diez\u00a0\n\nDos` → `p + p`), y con `\S` la forma no anclaba.
+  [/[^ \t\n][ \t]*\n(?:[ \t]*\n)+[ \t]*[^ \t\n]/, 'línea en blanco (dos párrafos)'],
   [/^[ \t>]*:{2,}[A-Za-z]/m, 'componente MDC de bloque «::x»'],
   // CR-01 (11-REVIEW, cierre G-11-3): componente MDC en línea (`:div[x]`, `:ul`, `:hr`,
   // `:detail-photo{…}`, `:a[x]`). MDC saca de `p` los de etiqueta de bloque y los deja dentro de
@@ -458,9 +461,11 @@ const SUMMARY_BLOCK_FORMS: ReadonlyArray<readonly [RegExp, string]> = [
  * El escaneo es LÉXICO y fail-closed: puede dar un falso rojo, nunca un falso verde. Falsos rojos
  * conocidos (MDC los deja en `p`): `Texto\n2027. …` (una lista ordenada que interrumpe un párrafo
  * tiene que empezar en 1), una línea que empieza por código en línea de tres acentos graves, una
- * línea de continuación con 4 espacios de sangría y unos dos puntos pegados a una letra
- * (`Roma:texto`, `\:x` escapado o `:x` entre acentos graves: no se mira el carácter previo). No se usa un parser porque `@nuxtjs/mdc` no se
- * resuelve desde la raíz con pnpm (sin hoisting) y el roadmap v1.1 no admite dependencias nuevas.
+ * línea de continuación con 4 espacios de sangría, unos dos puntos pegados a una letra
+ * (`Roma:texto`, `\:x` escapado o `:x` entre acentos graves: no se mira el carácter previo) y un
+ * párrafo de solo NBSP junto a una línea en blanco (`\u00a0\n\nDos`: MDC da un único `p`). No se
+ * usa un parser porque `@nuxtjs/mdc` no se resuelve desde la raíz con pnpm (sin hoisting) y el
+ * roadmap v1.1 no admite dependencias nuevas.
  */
 function summaryBlockForms(md: string): string[] {
   md = normEol(md)

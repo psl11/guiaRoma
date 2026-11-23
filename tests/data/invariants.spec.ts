@@ -817,6 +817,10 @@ describe('la puerta tiene dientes (fixtures)', () => {
     // WR-01 (11-REVIEW): `\r` y `\r\n` son saltos de línea en micromark (`p + p`).
     ['Uno.\r\rDos.', INLINE_B],
     ['Uno.\r\n\r\nDos.', INLINE_B],
+    // WR-02 (11-REVIEW): NBSP / U+3000 junto a la línea en blanco son texto en CommonMark (`p + p`).
+    ['Diez\u00a0\n\nDos', INLINE_B],
+    ['Uno.\n\n\u00a0Dos', INLINE_B],
+    ['Uno.\u3000\n\nDos', INLINE_B],
     ['::nota\nDiez días\n::', INLINE_M],
     // CR-01 (11-REVIEW): componentes en línea. parseMarkdown: `Roma :div` → `p + div`; `:ul[x]` →
     // `ul`; `:hr` → `hr`; `Roma :a[x]` → `p[a]` (`<a>` dentro del `<a>` de la tarjeta);
@@ -871,6 +875,8 @@ describe('la puerta tiene dientes (fixtures)', () => {
     'Del 19 al 23: 5 días, 10:00-12:00',
     // WR-01: un `\r` suelto entre dos líneas de texto es un único `p` (salto blando).
     'Diez días\rpor Campania',
+    // WR-02: una línea con solo un NBSP no es blanca en CommonMark: un único `p`.
+    'Uno.\n\u00a0\nDos.',
     'Roma :sunny: y',
     'Roma ::div[x]',
   ])('G-11-3/WR-02 control: summary en línea %j → sin violaciones', (summary) => {

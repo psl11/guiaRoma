@@ -387,13 +387,16 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
   **una sola** violación en trip.yml con las formas encontradas. Los dos puntos seguidos de
   espacio o cifra (`Del 19 al 23: 5 días`, `10:00`) y un `:emoji:` siguen en verde. Los saltos
   `\r` y `\r\n` cuentan como `\n` (`Uno.\r\rDos.` es una línea en blanco; WR-01 de 11-REVIEW).
-  Solo se evalúa un `summary` sin enlace: lo que `scanProseLinks` ya rechaza (encabezados, HTML crudo, `[r]:`, `::x` con
-  frontmatter, `{href}`/`{#id}`) ya es `trip-summary-link`, así que nada se avisa dos veces. El
+  Solo se evalúa un `summary` sin enlace: lo que `scanProseLinks` ya rechaza (encabezados, HTML
+  crudo, `[r]:`, `::x` con frontmatter, `{href}`/`{#id}`) ya es `trip-summary-link`, así que nada se avisa dos veces. El
   escaneo es léxico y fail-closed; falsos rojos conocidos (MDC los deja en un `p`):
   `Texto\n2027. …` (una lista que interrumpe un párrafo tiene que empezar en 1), una línea que
   empieza por código en línea de tres acentos graves, una línea de continuación con 4 espacios
-  de sangría y unos dos puntos pegados a una letra (`Roma:texto`, `\:x` o `:x` entre acentos
-  graves) (cierre de G-11-3 / WR-02 y CR-01 de 11-REVIEW).
+  de sangría, unos dos puntos pegados a una letra (`Roma:texto`, `\:x` o `:x` entre acentos
+  graves) y un párrafo de solo NBSP junto a una línea en blanco (cierre de G-11-3 / WR-02 y
+  CR-01 de 11-REVIEW). La línea en blanco se ancla en «no blanco» de CommonMark (todo salvo
+  espacio y tabulador), así que un NBSP o un U+3000 pegado a ella no esconde el segundo párrafo
+  (WR-02 de 11-REVIEW).
 - Los mensajes (`formatViolations`) llevan **el fichero culpable** y la regla:
   `content/trips/<viaje>/…/<fichero>.yml: [<regla>] <detalle>`. Un YAML roto en
   cualquier viaje rompe `verify` nombrando su fichero.
