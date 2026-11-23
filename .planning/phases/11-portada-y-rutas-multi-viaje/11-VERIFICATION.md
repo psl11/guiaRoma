@@ -1,8 +1,8 @@
 ---
 phase: 11-portada-y-rutas-multi-viaje
-verified: 2026-11-20T22:00:00Z
-status: human_needed
-score: 5/5 must-haves verified
+verified: 2026-11-23T11:00:00Z
+status: passed
+score: 6/6 must-haves verified
 covered_files:
   - ".planning/phases/11-portada-y-rutas-multi-viaje/11-01-PLAN.md"
   - ".planning/phases/11-portada-y-rutas-multi-viaje/11-01-SUMMARY.md"
@@ -18,167 +18,158 @@ covered_files:
   - ".planning/phases/11-portada-y-rutas-multi-viaje/11-06-SUMMARY.md"
   - ".planning/phases/11-portada-y-rutas-multi-viaje/11-07-PLAN.md"
   - ".planning/phases/11-portada-y-rutas-multi-viaje/11-07-SUMMARY.md"
+  - ".planning/phases/11-portada-y-rutas-multi-viaje/11-08-PLAN.md"
+  - ".planning/phases/11-portada-y-rutas-multi-viaje/11-08-SUMMARY.md"
   - "app/assets/css/multitrip.css"
   - "app/components/TripIndex.vue"
   - "app/components/TripView.vue"
   - "app/pages/index.vue"
   - "app/pages/trips/[slug].vue"
+  - "app/utils/tripDates.ts"
   - "content.config.ts"
   - "content/trips/roma/trip.yml"
   - "nuxt.config.ts"
   - "scripts/tripManifest.mjs"
   - "shared/schemas.ts"
+  - "tests/data/invariants.spec.ts"
+  - "tests/data/trips.ts"
   - "tests/parity/_harness.ts"
   - "tests/parity/legacy-redirect.spec.ts"
   - "tests/parity/portada.spec.ts"
   - "tests/parity/shell.spec.ts"
-covered_digest: "v4:sha256:9bdd16b644f5d134a42c8acdcaad3785aefbbdf67a11b094086bf9a12a94ce32"
+  - "tests/unit/tripIndexFatal.spec.ts"
+covered_digest: "v4:sha256:7b4de19eab04a3bea0e514b523746fce677a19cf8708696d15f0dadcf007d5d2"
 behavior_unverified: 0
 overrides_applied: 0
-human_verification:
-  - test: "Abrir la portada (/guiaRoma/) en un móvil real, en tema claro y en tema oscuro, y pulsar la tarjeta de Roma"
-    expected: "La tarjeta (título, fechas, destino, resumen) se lee bien, respeta el tema guardado, el contraste es correcto y la tarjeta lleva a /guiaRoma/trips/roma/. Los tests solo comprueban que no desborda a 375 px y que respeta el tema; no juzgan el aspecto."
-    why_human: "Aspecto visual y 'tacto' de la portada: no hay golden de la portada (no existía en la guía viva) y la valoración editorial es subjetiva. 11-UI-REVIEW dio 21/24."
-  - test: "Revisar las decisiones tomadas en modo --auto (D-06..D-23 de 11-CONTEXT.md: sin imagen en tarjetas, orden por fecha descendente, texto de fechas «19–23 de junio de 2026», título «Guías de viaje», estado vacío, enlace «← Todos los viajes» dentro del pie, etc.) y confirmarlas o corregirlas"
-    expected: "El usuario las acepta tal cual, o indica cuáles cambiar. Solo ROUTE-06 (D-01) fue decidida en persona."
-    why_human: "El propio CONTEXT.md declara que son opciones recomendadas elegidas por Claude, pendientes de confirmar en /gsd-verify-work 11."
-  - test: "Decidir qué hacer con los 3 warnings abiertos de 11-REVIEW.md (WR-01, WR-02, WR-03; disposition: open)"
-    expected: "Decisión explícita: arreglar ahora (fase de cierre/gap), diferir a Fase 12-13, o aceptar. Ninguno rompe la build ni la portada con los datos actuales (el resumen de Roma está limpio), pero son agujeros en las garantías de la puerta de datos y de la portada."
-    why_human: "Es una decisión de alcance/riesgo del usuario, no una comprobación automática. Ver «Anti-Patterns Found»."
+re_verification:
+  previous_status: human_needed
+  previous_score: 5/5
+  gaps_closed:
+    - "G-11-3 (UAT test 3): un summary con Markdown de bloque rompe la tarjeta y un fallo de la consulta de la portada publica una portada vacía con 200 (WR-02 + WR-03 del primer 11-REVIEW)"
+    - "Los 3 elementos de verificación humana del informe anterior (aspecto en móvil, decisiones --auto, disposición de WR-01..03): UAT tests 1 y 2 aprobados por el usuario, test 3 resuelto por 11-08"
+  gaps_remaining: []
+  regressions: []
 ---
 
 # Phase 11: Portada y rutas multi-viaje Verification Report
 
 **Phase Goal:** El usuario entra por una portada que lista los viajes publicados y llega a cada guía en su propia URL estática; los enlaces antiguos de Roma siguen funcionando y Roma, en su nueva URL, pasa la puerta de paridad sin re-baseline
-**Verified:** 2026-11-20T22:00:00Z
-**Status:** human_needed
-**Re-verification:** No — initial verification
+**Verified:** 2026-11-23T11:00:00Z
+**Status:** passed
+**Re-verification:** Sí — tras el cierre de G-11-3 (plan 11-08) y las correcciones de la revisión de código (CR-01, WR-01, WR-02)
 
 ## Goal Achievement
 
-Los cinco criterios de éxito del ROADMAP están respaldados por código real y por pruebas que ejercitan el comportamiento (no solo presencia). No hay FAILED ni UNCERTAIN en los must-haves. El estado es `human_needed` solo porque quedan tres elementos que requieren decisión o juicio humano (aspecto de la portada en móvil real, decisiones tomadas en `--auto`, warnings de revisión abiertos), no porque falte nada observable.
+Los cinco criterios de éxito del ROADMAP y la verdad añadida por el gap 11-08 están respaldados por código real y por pruebas que ejercitan el comportamiento. El informe anterior (`human_needed`) quedó pendiente de tres decisiones humanas; las tres están resueltas en `11-UAT.md`: tests 1 y 2 aprobados por el usuario (2026-11-22 y 2026-11-23) y test 3 dio el gap G-11-3, ahora cerrado. Ya no queda ningún elemento humano abierto.
 
 ### Observable Truths
 
-| # | Truth (ROADMAP SC) | Status | Evidence |
-|---|--------------------|--------|----------|
-| 1 | `/guiaRoma/` muestra una portada con una tarjeta por viaje publicado (título, fechas, destinos, resumen) que lleva a su guía; un `draft` ni aparece en la portada ni genera página | ✓ VERIFIED | `.output/public/index.html` (inspeccionado): `<title>Guías de viaje</title>`, `<h1>`, un único `<a class="trip-index-card" href="/guiaRoma/trips/roma/">` con `<h2>Cinque giorni a Roma</h2>`, meta «19–23 de junio de 2026 · Roma» y resumen. `app/components/TripIndex.vue` consulta solo la colección `trip` y filtra con `listedTrips` (también en dev). `.output/public/trips/` contiene solo `roma/`. `content/trips/{prueba,forma}/trip.yml` tienen `draft: true`; los 3 `sql_dump` de `__nuxt_content/trip` decodificados solo contienen `trips/roma/trip.yml` y ninguno de los centinelas `PRUEBA-CENTINELA`/`FORMA-CENTINELA` (comprobado por mí con Node). Tests: `portada.spec.ts` (borradores dan 404), `build-isolation.spec.ts`, `shell.spec.ts` (portada vs Roma). |
-| 2 | Roma en `/guiaRoma/trips/roma/` y cada viaje publicado en `/trips/<slug>/`, como páginas estáticas que cargan sin `sql_dump` ni WASM | ✓ VERIFIED | `nuxt.config.ts` deriva `nitro.prerender.routes` de `prerenderRoutes(readTripManifest())` (`scripts/tripManifest.mjs`), con barra final y `failOnError: true`. Existe `.output/public/trips/roma/index.html` y su `_payload.json`; ni `index.html` ni los `_payload.json` mencionan `sql_dump`. `portada.spec.ts:136` («ni la portada ni Roma piden sql_dump ni WASM») pasa — lo ejecuté yo (ver spot-checks). |
-| 3 | Un enlace antiguo (`/#viernes`, `/#pantheon`, `/index.html#gastronomia`) lleva a la misma ancla en `/trips/roma/` y «Atrás» no hace bucle; `/guiaRoma/` sin hash se queda en la portada | ✓ VERIFIED | `app/pages/index.vue`: script inline en `<head>` con `tagPriority: 'critical'`; en el HTML construido aparece antes del primer `<link rel="stylesheet">`: `if(/^#[a-z0-9-]+$/.test(h)){location.replace("/guiaRoma/trips/roma/"+h)}`. `location.replace` (sin entrada de historial). `legacy-redirect.spec.ts` ejecutado por mí: 28/28 en desktop+mobile, incluidos «Atrás vuelve en una pulsación», aterrizaje idéntico a carga directa para `#pantheon` y `/index.html#gastronomia`, hash vacío/inválido se queda, y servidor tipo Pages con 301 a barra final que conserva el hash. |
-| 4 | Desde cualquier guía se puede volver a la portada con el enlace que decida el usuario (ROUTE-06) | ✓ VERIFIED | Decisión del usuario D-01 (enlace «← Todos los viajes» en el pie). `TripView.vue:295`: `<p class="trip-back"><a :href="homeHref">← Todos los viajes</a></p>` como hijo directo de `<footer>`; en `.output/public/trips/roma/index.html` el pie contiene `<p class="trip-back"><a href="/guiaRoma/">← Todos los viajes</a></p>` tras `.container`, con la base del runtime (no `/guiaRoma/` literal en código). Test `portada.spec.ts:177` (pie de Roma lleva el enlace a la portada) verde. No se tocó ningún golden (el pie no está en ninguna de las 56 capturas, D-02). |
-| 5 | En `/trips/roma/` los 56 goldens pasan sin `--update-snapshots`, la suite de comportamiento de Roma sigue verde, y un test asevera que `/` sirve la portada y la URL de Roma sirve Roma | ✓ VERIFIED | Evidencia del orquestador (HEAD 1d1d7d8, Node 22, cachés limpias): `pnpm verify` EXIT=0, unit 301/301, data 377/377, parity 110/110 en 13 ficheros, 56 goldens comparados sin `--update-snapshots`. Verificado por mí: `git diff 6315f26 HEAD -- tests/parity/golden.spec.ts tests/parity/golden.spec.ts-snapshots/ package.json pnpm-lock.yaml app/assets/css/{base,tokens,fonts,leaflet}.css` vacío (0 cambios). Los 11 specs de Roma solo cambian por el harness (`ROMA_URL`/`ROMA_HTML`; revisé `render-cards`, `theme`, `visual-diff`: solo import + sustitución de URL/HTML), más el aserto invertido y el test nuevo `la portada vive en «/» y ROMA_URL sirve Roma (D-18)` en `shell.spec.ts` (permitido por D-18 paso 3). `tests/README.md` re-registra 110/13. |
+| # | Truth (ROADMAP SC / gap 11-08) | Status | Evidencia |
+|---|--------------------------------|--------|-----------|
+| 1 | `/guiaRoma/` muestra una portada con una tarjeta por viaje publicado (título, fechas, destinos, resumen) que lleva a su guía; un `draft` ni aparece ni genera página | ✓ VERIFIED | `.output/public/index.html` (build de las 09:50, posterior al último commit de código `7021b8a`): `<title>Guías de viaje</title>` y dos `<a class="trip-index-card">` → `/guiaRoma/trips/campania/` y `/guiaRoma/trips/roma/` (Campania ya está publicada desde la Fase 13, sin `draft`). `.output/public/trips/` contiene solo `campania` y `roma`. `content/trips/{prueba,forma}/trip.yml` tienen `draft: true`; el `sql_dump` decodificado (gunzip+base64) de la colección `trip` solo contiene `campania` y `roma` y no contiene `PRUEBA-CENTINELA` ni `FORMA-CENTINELA` (comprobado por mí). Dos reglas de aserto en `portada.spec.ts` (borradores dan 404) en verde. |
+| 2 | Roma en `/guiaRoma/trips/roma/` y cada viaje publicado en `/trips/<slug>/`, como páginas estáticas que cargan sin `sql_dump` ni WASM | ✓ VERIFIED | `nuxt.config.ts` deriva `nitro.prerender.routes` de `prerenderRoutes(readTripManifest())` con `failOnError: true`. Existe `.output/public/trips/roma/index.html`; `grep sql_dump` sobre `index.html`, `trips/roma/index.html` y ambos `_payload.json` no encuentra nada. `portada.spec.ts` («ni la portada ni Roma piden sql_dump ni WASM») pasa en mi ejecución. |
+| 3 | Un enlace antiguo (`/#viernes`, `/#pantheon`, `/index.html#gastronomia`) lleva a la misma ancla en `/trips/roma/`, «Atrás» no hace bucle y `/guiaRoma/` sin hash se queda | ✓ VERIFIED | Script crítico en el `<head>` del HTML construido: `location.replace("/guiaRoma/trips/roma/"+h)` con hash validado por `^#[a-z0-9-]+$`. `legacy-redirect.spec.ts` ejecutado por mí: todos los casos desktop+mobile en verde (aterrizaje idéntico a carga directa, «Atrás» en una pulsación, hash vacío/inválido se queda, servidor tipo Pages con 301 que conserva el hash). |
+| 4 | Desde cualquier guía se vuelve a la portada con el enlace que decida el usuario (ROUTE-06, D-01) | ✓ VERIFIED | `.output/public/trips/roma/index.html`: `<p class="trip-back"><a href="/guiaRoma/">← Todos los viajes</a></p></footer>` con la base del runtime. Test de `portada.spec.ts` verde. Confirmado por el usuario en UAT test 1. |
+| 5 | En `/trips/roma/` los 56 goldens pasan sin `--update-snapshots` y la suite de comportamiento de Roma sigue verde; un test asevera que `/` sirve la portada y la URL de Roma sirve Roma | ✓ VERIFIED | `git diff 6315f26 HEAD -- golden.spec.ts snapshots package.json pnpm-lock.yaml app/assets/css/{base,tokens,fonts,leaflet}.css` está vacío; `content/trips/roma/` solo difiere en `trip.yml` (+9 líneas de datos de la tarjeta, plan 11-04). Ejecutado por mí contra la build: `visual-diff.spec.ts` 4/4 y `shell.spec.ts` + `portada.spec.ts` + `legacy-redirect.spec.ts` 36 passed / 2 skipped (los 2 omitidos son el routing dev-only de ARCH-02, excluido del gate por D-04). `git status` queda limpio tras correrlos (ningún snapshot reescrito). Evidencia del orquestador: parity 125/126 con el único fallo en el flake conocido (ver Spot-Checks). |
+| 6 | (Gap G-11-3 / 11-08) La tarjeta nunca rompe la hidratación ni se publica vacía: un `summary` con Markdown de bloque hace fallar la puerta nombrando `trip.yml`, y un fallo de la consulta de la portada en el prerender hace fallar la build | ✓ VERIFIED | (a) `tests/data/trips.ts`: `SUMMARY_BLOCK_FORMS` (lista, cita, tabla, código, separador, línea en blanco, `::x`, componente MDC en línea) + `normEol` (CR/CRLF) + blanco CommonMark; `summaryBlockForms` devuelve `[]` si `hasLink` (sin doble aviso); la regla `trip-summary-inline` está en `RULES` (línea 133) y empuja una violación con `d.file` (trip.yml). `vitest run tests/unit/tripIndexFatal.spec.ts tests/data/invariants.spec.ts`: 305 passed (re-ejecutado por mí). (b) `TripIndex.vue`: `const { data, error } = await useAsyncData(...)`; `if (error.value) throw createError({ statusCode: 500, statusMessage: 'No se pudo cargar la lista de viajes', fatal: true, cause })`; `git diff 0f7843c HEAD` solo toca el bloque `<script setup>` y comentarios (la plantilla es idéntica). **Prueba de comportamiento mía:** copia del repo en un directorio temporal (se borró; el árbol no se tocó) con `.select('columnaQueNoExiste', …)` → `nuxi generate` sale con `EXIT=1` y el log contiene `[500] No se pudo cargar la lista de viajes`, `no such column` y `Exiting due to prerender errors`. |
 
-**Score:** 5/5 truths verified (0 present-but-behavior-unverified)
+**Score:** 6/6 truths verified (0 present-but-behavior-unverified)
 
-Las verdades de comportamiento (redirección sin bucle, no-remontaje de TripView al pulsar pastillas, borradores en 404, sin `sql_dump`/WASM) tienen cada una un test que las ejercita y que pasa; no hay ninguna marcada solo por presencia.
+Las verdades de comportamiento (redirección sin bucle, borradores en 404, sin `sql_dump`/WASM, la build que falla ante un error de consulta) tienen cada una evidencia ejecutada, no solo presencia de símbolos.
 
 ### Deferred Items
 
-Ninguno. (La URL concreta `/trips/campania/` de ROUTE-02 se asigna explícitamente a la Fase 13 en las notas de trazabilidad de REQUIREMENTS.md; el mecanismo `/trips/<slug>/` se entrega aquí y se demuestra con Roma.)
+Ninguno. (La URL `/trips/campania/` de ROUTE-02 se entregó en la Fase 13: la build ya la genera y la portada la lista.)
 
 ### Required Artifacts
 
 | Artifact | Expected | Status | Details |
 |----------|----------|--------|---------|
-| `app/components/TripIndex.vue` | Portada: tarjeta por viaje publicado | ✓ VERIFIED | Sustantivo, datos reales vía `queryCollection('trip')`, montado desde `pages/index.vue`; sin `id`, sin Topbar/pie |
-| `app/pages/index.vue` | Portada + script de redirección legacy | ✓ VERIFIED | Script `critical` en head; destino fijo del mismo origen; hash validado por regex |
-| `app/pages/trips/[slug].vue` | Guía por slug, clave de página por slug, 404 | ✓ VERIFIED | `definePageMeta({ key: route => 'trip:'+slug })`; guard 404 vía `useTrip` |
-| `app/components/TripView.vue` | Pie con «← Todos los viajes» | ✓ VERIFIED | Hijo directo de `<footer>`, tras `.container` |
-| `scripts/tripManifest.mjs` (+ `.d.mts`) | Manifiesto draft + rutas de prerender | ✓ VERIFIED | Fail-closed (slug inválido y `draft` no booleano lanzan); usado por `content.config.ts` y `nuxt.config.ts` |
-| `content.config.ts` | Exclusión de borradores en producción | ✓ VERIFIED | `source.exclude` por colección; solo `NODE_ENV=development` conserva borradores |
-| `shared/schemas.ts` | `draft`, `startDate`, `endDate`, `destinations`, `summary` opcionales | ✓ VERIFIED | Presentes; Roma los recibe en `content/trips/roma/trip.yml` |
-| `app/assets/css/multitrip.css` | Estilos de la portada bajo `.trip-index` | ✓ VERIFIED | Guardián en `tests/unit/multitripCss.spec.ts`; `base/tokens/fonts/leaflet.css` sin cambios |
-| `app/utils/tripDates.ts` | Fechas deterministas, orden y lista publicada | ✓ VERIFIED | Usado por `TripIndex.vue` (`listedTrips`, `tripMetaLine`) |
-| `tests/parity/_harness.ts` | Punto único de `ROMA_URL`/`ROMA_HTML` | ✓ VERIFIED | `ROMA_URL = '/guiaRoma/trips/roma/'`; usado por los 11 specs de Roma |
-| `tests/parity/legacy-redirect.spec.ts`, `portada.spec.ts`, `_pagesServer.ts` | Specs nuevos y servidor tipo Pages | ✓ VERIFIED | Ejecutados por mí, todos verdes |
+| `app/components/TripIndex.vue` | Portada con tarjeta por viaje publicado y error fatal si la consulta falla | ✓ VERIFIED | Datos reales vía `queryCollection('trip')`; `error` convertido en `createError` fatal; plantilla sin cambios desde 0f7843c; sin `id`, sin chrome de viaje |
+| `app/pages/index.vue` | Portada + script de redirección legacy | ✓ VERIFIED | Script `critical` en head, visible en el HTML construido |
+| `app/pages/trips/[slug].vue` | Guía por slug, clave por slug, 404 | ✓ VERIFIED | `trips/roma/` y `trips/campania/` generados |
+| `app/components/TripView.vue` | Pie con «← Todos los viajes» | ✓ VERIFIED | Presente en el HTML de Roma |
+| `scripts/tripManifest.mjs` | Manifiesto draft + rutas de prerender | ✓ VERIFIED | Alimenta `content.config.ts` y `nuxt.config.ts`; borradores fuera de build y de `sql_dump` |
+| `shared/schemas.ts` | `draft`, `startDate`, `endDate`, `destinations`, `summary` | ✓ VERIFIED | Roma y Campania los consumen |
+| `app/assets/css/multitrip.css` | Estilos de la portada bajo `.trip-index` | ✓ VERIFIED | `base/tokens/fonts/leaflet.css` sin cambios |
+| `app/utils/tripDates.ts` | Fechas, orden y lista publicada | ✓ VERIFIED | Usado por `TripIndex.vue` |
+| `tests/data/trips.ts` + `invariants.spec.ts` | Regla `trip-summary-inline` con dientes | ✓ VERIFIED | RULES = 23; dientes de CR-01/WR-01/WR-02 incluidos |
+| `tests/unit/tripIndexFatal.spec.ts` | Guardián estático del error fatal de la portada | ✓ VERIFIED | 7 tests en verde |
+| `tests/parity/_harness.ts`, `portada.spec.ts`, `legacy-redirect.spec.ts` | Harness y specs nuevos | ✓ VERIFIED | Ejecutados por mí, verdes |
 
 ### Key Link Verification
 
 | From | To | Via | Status | Details |
 |------|----|-----|--------|---------|
-| `nuxt.config.ts` | `scripts/tripManifest.mjs` | `prerenderRoutes(readTripManifest())` | WIRED | `.output/public/trips/roma/index.html` existe; borradores no |
-| `content.config.ts` | `scripts/tripManifest.mjs` | `draftExcludes(...)` en cada `source` | WIRED | `sql_dump` sin filas ni centinelas de borradores |
+| `nuxt.config.ts` | `scripts/tripManifest.mjs` | `prerenderRoutes(readTripManifest())` | WIRED | `trips/roma` y `trips/campania` existen; borradores no |
+| `content.config.ts` | `scripts/tripManifest.mjs` | `draftExcludes(...)` | WIRED | `sql_dump` sin centinelas de borradores |
 | `pages/index.vue` | `TripIndex.vue` | `<TripIndex />` | WIRED | HTML construido contiene la portada |
-| `TripIndex.vue` | colección `trip` | `useAsyncData('trips-index', queryCollection('trip').select(...))` | WIRED | Tarjeta de Roma con datos reales del payload |
-| tarjeta de la portada | `/guiaRoma/trips/roma/` | `<a href>` de documento completo con la base del runtime | WIRED | Comprobado en HTML y por test |
+| `TripIndex.vue` | colección `trip` | `useAsyncData('trips-index', queryCollection('trip').select(...))` | WIRED | Tarjetas con datos reales del payload |
+| `TripIndex.vue` | `nuxt.config.ts` | `createError` fatal 500 → `nitro.prerender.failOnError: true` | WIRED | Demostrado con el fallo forzado: `generate` sale con 1 |
+| `tests/data/invariants.spec.ts` | `tests/data/trips.ts` | `checkTrip(memTrip(…, { summary }))` | WIRED | 305 tests en verde |
+| tarjeta de la portada | `/guiaRoma/trips/<slug>/` | `<a href>` de documento completo con la base del runtime | WIRED | Comprobado en el HTML |
 | script de redirección | `/guiaRoma/trips/roma/#ancla` | `location.replace(base+'trips/roma/'+hash)` | WIRED | Probado E2E con 301 estilo Pages |
-| pie de la guía | portada | `<a :href="homeHref">` | WIRED | Comprobado en HTML y por test |
-| specs de Roma | `ROMA_URL` | import desde `_harness.ts` | WIRED | Diffs revisados |
+| pie de la guía | portada | `<a :href="homeHref">` | WIRED | Comprobado en el HTML |
 
 ### Data-Flow Trace (Level 4)
 
 | Artifact | Data Variable | Source | Produces Real Data | Status |
 |----------|---------------|--------|--------------------|--------|
-| `TripIndex.vue` | `data` → `cards` | `queryCollection('trip')` prerenderizado en el payload | Sí: la tarjeta de Roma sale de `content/trips/roma/trip.yml` (título, fechas, destino, resumen coinciden con el YAML) | ✓ FLOWING |
-| `TripView.vue` (pie) | `homeHref` | `useRuntimeConfig().app.baseURL` | Sí: `/guiaRoma/` en la build | ✓ FLOWING |
+| `TripIndex.vue` | `data` → `cards` | `queryCollection('trip')` prerenderizado en el payload | Sí: las dos tarjetas (Campania, Roma) salen de sus `trip.yml` | ✓ FLOWING |
+| `TripView.vue` (pie) | `homeHref` | `useRuntimeConfig().app.baseURL` | Sí: `/guiaRoma/` | ✓ FLOWING |
 
 ### Behavioral Spot-Checks
 
 | Behavior | Command | Result | Status |
 |----------|---------|--------|--------|
-| Redirección legacy (6 escenarios × desktop/mobile) | `pnpm exec playwright test -c playwright.config.ts tests/parity/legacy-redirect.spec.ts tests/parity/portada.spec.ts` (Node 22, contra la build existente) | 28 passed (18.3s) | ✓ PASS |
-| `sql_dump` de la colección `trip` sin borradores | decodificación gunzip+base64 con Node de `.output/public/__nuxt_content/trip/sql_dump.txt` | solo `trips/roma/trip.yml`; centinelas ausentes | ✓ PASS |
-| Puerta completa (unit/data/parity, 56 goldens) | `pnpm verify` — **no re-ejecutado**; evidencia del orquestador | EXIT=0; 301/301, 377/377, 110/110 | ✓ PASS (evidencia aportada) |
-| `pnpm test:trips` | — no re-ejecutado; evidencia del orquestador (executor 11-07, en solitario) | 19/19 | ✓ PASS (evidencia aportada) |
-| Ficheros congelados sin cambios | `git diff 6315f26 HEAD -- golden.spec.ts snapshots package.json pnpm-lock.yaml base/tokens/fonts/leaflet.css` | vacío | ✓ PASS |
+| Redirección legacy, portada, shell (desktop+mobile) | `playwright test -c playwright.gate.config.ts tests/parity/{legacy-redirect,portada,shell}.spec.ts` (Node 22, build existente) | 36 passed, 2 skipped (dev-routing excluido, D-04) | ✓ PASS |
+| 56 goldens (visual-diff nuxt↔golden en la URL nueva) | `playwright test -c playwright.gate.config.ts tests/parity/visual-diff.spec.ts` | 4 passed; árbol limpio después | ✓ PASS |
+| Puerta de datos y guardián de la portada | `vitest run tests/unit/tripIndexFatal.spec.ts tests/data/invariants.spec.ts` | 305 passed | ✓ PASS |
+| Un fallo de la consulta de la portada rompe `generate` | copia temporal + `.select('columnaQueNoExiste', …)` + `nuxi generate` | `EXIT=1`; `[500] No se pudo cargar la lista de viajes`; `Exiting due to prerender errors` | ✓ PASS |
+| `sql_dump` de `trip` sin borradores | gunzip+base64 con Node | solo `campania`, `roma`; sin centinelas | ✓ PASS |
+| Ficheros congelados sin cambios | `git diff 6315f26 HEAD -- golden.spec.ts snapshots package.json pnpm-lock.yaml css/{base,tokens,fonts,leaflet}` | vacío | ✓ PASS |
+| `pnpm test:unit` / `pnpm test:data` | evidencia del orquestador (esta sesión) | 575 / 927 passed | ✓ PASS (evidencia aportada) |
+| Suite de paridad completa | evidencia del orquestador | 125/126; único fallo: «SC#2 [mobile] scrollspy» de `tests/parity/navigation.spec.ts` | ⚠️ FLAKE CONOCIDO, no es un gap |
+
+**Flake reportado (no gap):** `navigation.spec.ts` «SC#2: el scrollspy conmuta la pastilla en scrollY+130» [mobile] falla de forma intermitente (esperaba `#sabado`, recibió `#viernes`). Pasa 18/18 en aislamiento tanto en un commit anterior como en HEAD (según el orquestador y 11-08-SUMMARY, que repitió `pnpm verify` y obtuvo 126/126). Es un spec de Roma que no toca nada de lo que cambió la Fase 11; se documenta, no se excluye.
 
 ### Probe Execution
 
-Step 7c: SKIPPED — la fase no declara probes (`scripts/*/tests/probe-*.sh`); su verificación son specs de Playwright/Vitest, ejecutados arriba.
+Step 7c: SKIPPED — la fase no declara probes (`scripts/*/tests/probe-*.sh`); la verificación son specs de Playwright/Vitest ejecutados arriba.
 
 ### Requirements Coverage
 
-Los 8 IDs de la fase (ROUTE-01..06, PAR-01, PAR-02) aparecen declarados en los PLAN y mapeados a Phase 11 en REQUIREMENTS.md; no hay IDs huérfanos (PAR-03/PAR-04 están asignados a la Fase 14).
+Los 8 IDs de la fase (ROUTE-01..06, PAR-01, PAR-02) están declarados en los PLAN (11-01..11-08) y mapeados a Phase 11 en REQUIREMENTS.md, todos marcados `[x]` / Complete. Sin IDs huérfanos (PAR-03/PAR-04 son de la Fase 14).
 
-| Requirement | Source Plan | Description | Status | Evidence |
-|-------------|-------------|-------------|--------|----------|
-| ROUTE-01 | 11-04, 11-05, 11-07 | Portada con tarjeta por viaje publicado | ✓ SATISFIED | Truth 1; HTML construido de `/` |
-| ROUTE-02 | 11-02, 11-03 | Roma en `/guiaRoma/trips/roma/` (Campania: Fase 13 por trazabilidad) | ✓ SATISFIED | Truth 2; `trips/roma/index.html`; rutas de prerender del manifiesto |
-| ROUTE-03 | 11-06 | Enlace antiguo `/#ancla` → `/trips/roma/#ancla` sin bucle | ✓ SATISFIED | Truth 3; `legacy-redirect.spec.ts` 28/28 |
-| ROUTE-04 | 11-03, 11-07 | Páginas estáticas sin `sql_dump`/WASM | ✓ SATISFIED | Truth 2; `portada.spec.ts:136` |
-| ROUTE-05 | 11-02, 11-05, 11-07 | `draft` no aparece ni se publica | ✓ SATISFIED | Truth 1; exclusión en Content + sin `trips/prueba|forma` + 404 |
-| ROUTE-06 | 11-03, 11-07 | Volver a la portada desde cualquier guía | ✓ SATISFIED | Truth 4 (decisión del usuario D-01) |
-| PAR-01 | 11-01, 11-03, 11-05 | 56 goldens sin re-baseline en la nueva URL | ✓ SATISFIED | Truth 5; snapshots y `golden.spec.ts` intactos |
-| PAR-02 | 11-01, 11-03, 11-05 | Suite de comportamiento de Roma en verde en `/trips/roma/` | ✓ SATISFIED | Truth 5; parity 110/110 |
+| Requirement | Source Plan | Description | Status | Evidencia |
+|-------------|-------------|-------------|--------|-----------|
+| ROUTE-01 | 11-04, 11-05, 11-07, 11-08 | Portada con tarjeta por viaje publicado | ✓ SATISFIED | Truths 1 y 6; HTML de `/` |
+| ROUTE-02 | 11-02, 11-03 | Roma en `/guiaRoma/trips/roma/`, Campania en `/trips/campania/` | ✓ SATISFIED | Truth 2; ambas rutas generadas |
+| ROUTE-03 | 11-06 | `/#ancla` → `/trips/roma/#ancla` sin bucle | ✓ SATISFIED | Truth 3 |
+| ROUTE-04 | 11-03, 11-07 | Páginas estáticas sin `sql_dump`/WASM | ✓ SATISFIED | Truth 2 |
+| ROUTE-05 | 11-02, 11-05, 11-07 | `draft` no aparece ni se publica | ✓ SATISFIED | Truth 1 |
+| ROUTE-06 | 11-03, 11-07 | Volver a la portada desde cualquier guía | ✓ SATISFIED | Truth 4 |
+| PAR-01 | 11-01, 11-03, 11-05, 11-08 | 56 goldens sin re-baseline | ✓ SATISFIED | Truth 5; visual-diff 4/4, snapshots intactos |
+| PAR-02 | 11-01, 11-03, 11-05, 11-08 | Suite de comportamiento de Roma en verde | ✓ SATISFIED | Truth 5; flake documentado |
 
 ### Anti-Patterns Found
 
-Marcadores `TBD/FIXME/XXX`: ninguno bloqueante detectado en los ficheros de la fase. Los hallazgos de `11-REVIEW.md` (0 críticos, 3 warnings, 6 info; todos `open`) los he contrastado con el código; ninguno invalida un must-have con los datos actuales, pero WR-03 la he confirmado directamente (`const { data } = await useAsyncData(...)`, sin leer `error`).
+Sin `TBD/FIXME/XXX` en los ficheros de código modificados por la fase. Revisión de código: CR-01, WR-01 y WR-02 (incrementales sobre 11-08) corregidos en 65476f1, 4f63ba1, 8129e48; WR-03 del primer review corregido por 11-08. Quedan solo hallazgos informativos.
 
 | File | Line | Pattern | Severity | Impact |
 |------|------|---------|----------|--------|
-| `tests/data/trips.ts` | 174-188 | WR-01: `trip-summary-link` eludible (email GFM, HTML crudo, enlaces por referencia, `]( dest )`) → `<a>` anidado en la tarjeta | ⚠️ Warning | Un `summary` futuro podría romper la hidratación; el de Roma está limpio |
-| `app/components/TripIndex.vue` / `shared/schemas.ts` | 78-87 / 424 | WR-02: Markdown de bloque en `summary` (p. ej. «2027. Diez días…» → `<ol>`) dentro de `<p>`/`<a>` | ⚠️ Warning | Mismo riesgo para datos futuros (Campania); sin regla en la puerta |
-| `app/components/TripIndex.vue` | 36-52 | WR-03: un fallo de la consulta publica una portada vacía con HTTP 200 (`failOnError` no lo detecta) | ⚠️ Warning | Solo `portada.spec.ts` lo notaría; no ocurre con la build actual |
-| varios | — | IN-01..IN-06 (comentarios obsoletos, base URL duplicada, `console.log` en spec, `yaml` en devDependencies, etc.) | ℹ️ Info | Higiene; sin impacto en el goal |
-
-Ninguno es BLOCKER: no hay un must-have FAILED. Se llevan a decisión humana (ver abajo).
+| `tests/data/trips.ts` | 409-ss | Escaneo léxico con falsos rojos conocidos y documentados (`Roma:texto`, `Texto\n2027. …`, continuación con sangría) | ℹ️ Info | Fail-closed deliberado: nunca un falso verde |
+| `11-REVIEW.md` | — | IN-01..IN-03 (`open`), IN-04..IN-06 (`deferred`) | ℹ️ Info | Higiene, sin efecto en el goal; el usuario difirió los de 11-UAT y los tres nuevos de la revisión no afectan a ningún must-have |
 
 ### Human Verification Required
 
-#### 1. Aspecto de la portada en móvil real (claro y oscuro)
-
-**Test:** Abrir `/guiaRoma/` en un móvil real, con tema claro y oscuro, y pulsar la tarjeta de Roma.
-**Expected:** Tarjeta legible (título, fechas, destino, resumen), respeta el tema guardado, contraste correcto, lleva a `/guiaRoma/trips/roma/`.
-**Why human:** Aspecto/tacto editorial; no existe golden de la portada. Los tests solo aseguran ausencia de desbordamiento a 375 px y respeto del tema. (PAR-04, sign-off en móvil real, es de la Fase 14.)
-
-#### 2. Confirmar las decisiones tomadas en `--auto`
-
-**Test:** Repasar D-06..D-23 de `11-CONTEXT.md` (sin imagen en tarjetas, orden por `startDate` descendente, formato «19–23 de junio de 2026», `<title>`/`<h1>` «Guías de viaje», estado vacío, enlace dentro del pie, etc.).
-**Expected:** El usuario las acepta o indica cambios. Solo ROUTE-06 (D-01) fue decidida en persona.
-**Why human:** El CONTEXT las declara pendientes de confirmación en `/gsd-verify-work 11`.
-
-#### 3. Disposición de los warnings abiertos WR-01..WR-03
-
-**Test:** Decidir si se arreglan ahora (gap-closure), se difieren (p. ej. a la Fase 12-13, antes de redactar el `summary` de Campania) o se aceptan.
-**Expected:** Decisión registrada en `11-REVIEW-DISPOSITION.md`.
-**Why human:** Decisión de alcance y riesgo; recomendable resolverla antes de que Campania añada un `summary` real.
+Ninguna. Los tres elementos del informe anterior están resueltos en `11-UAT.md` (tests 1 y 2: pass; test 3: gap G-11-3, cerrado por 11-08 con pruebas automáticas que reproducen y cierran el fallo, incluido un fallo forzado de la build verificado de nuevo en esta pasada).
 
 ### Gaps Summary
 
-No hay gaps: los cinco criterios de éxito y los ocho requisitos están implementados, cableados y demostrados con pruebas que ejercitan el comportamiento (redirección sin bucle, portada vs Roma, borradores fuera del `sql_dump`, sin WASM, goldens intactos). Observación de bookkeeping (no bloqueante): en `ROADMAP.md` (línea 36) la casilla de la Fase 11 sigue sin marcar `[ ]`, aunque sus 7 planes y los 8 requisitos constan como completos en REQUIREMENTS.md; debe marcarla el orquestador al cerrar la fase.
+No hay gaps. Los cinco criterios de éxito del ROADMAP y el cierre de G-11-3 están implementados, cableados y demostrados con pruebas que ejercitan el comportamiento. Observación de bookkeeping no bloqueante: `11-REVIEW-DISPOSITION.md` marca `open: 3` (IN-01..IN-03, info, fuera del alcance `critical_warning` del fixer); conviene triarlos o diferirlos al cerrar la fase.
 
 ---
 
-_Verified: 2026-11-20T22:00:00Z_
+_Verified: 2026-11-23T11:00:00Z_
 _Verifier: Claude (gsd-verifier)_

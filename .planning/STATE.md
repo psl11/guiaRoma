@@ -2,14 +2,14 @@
 gsd_state_version: "1.0"
 milestone: v1.1
 milestone_name: Multi-viaje + Campania
-current_phase: 11
-current_phase_name: Portada y rutas multi-viaje
+current_phase: 12
+current_phase_name: Formas nuevas de viaje
 status: verifying
-stopped_at: Completed 11-08-PLAN.md
-last_updated: "2026-11-23T08:54:15.631Z"
+stopped_at: Phase 11 complete, ready to verify Phase 12
+last_updated: "2026-11-23T10:50:59.887Z"
 last_activity: 2026-11-23
-last_activity_desc: Phase 11 execution started
-state_head: 73e17183a4abdc5c7fbc343e4064fb4041f44eda
+last_activity_desc: Phase 11 complete, transitioned to Phase 12
+state_head: 06e5bddddc7b03e4996418689991bf0cd8bb69d0
 progress:
   total_phases: 7
   completed_phases: 3
@@ -29,10 +29,10 @@ See: .planning/PROJECT.md (updated 2026-11-22)
 
 ## Current Position
 
-Phase: 11 (Portada y rutas multi-viaje) — EXECUTING
-Plan: 8 of 8
+Phase: 12 — Formas nuevas de viaje
+Plan: 7
 Status: Phase complete — ready for verification
-Last activity: 2026-11-23 - Completed quick task 261123-342: Despliegue de la guía Nuxt a GitHub Pages con GitHub Actions
+Last activity: 2026-11-23 — Phase 11 complete, transitioned to Phase 12
 
 Progress: [████░░░░░░] 43%
 
@@ -40,7 +40,7 @@ Progress: [████░░░░░░] 43%
 
 **Velocity:**
 
-- Total plans completed: 52
+- Total plans completed: 60
 - Average duration: 9 min
 - Total execution time: 0.15 hours
 
@@ -59,6 +59,7 @@ Progress: [████░░░░░░] 43%
 | 12.1 | 1 | - | - |
 | 09 | 6 | - | - |
 | 10 | 6 | - | - |
+| 11 | 8 | - | - |
 
 **Recent Trend:**
 
@@ -406,7 +407,7 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-11-23T00:18:39.935Z
-Stopped at: Completed 11-08-PLAN.md
+Stopped at: Phase 11 complete, ready to verify Phase 12
 Resume file: None
 
 ## Operator Next Steps

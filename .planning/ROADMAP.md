@@ -33,7 +33,7 @@ Re-plataforma el `index.html` único (6.665 líneas) a Nuxt 4 SSG con paridad vi
 
 - [x] **Phase 9: Plataforma por viaje** - Búsqueda, navegación, persistencia y validación de datos acotadas al viaje, con Roma intacta en `/` (completed 2026-11-22)
 - [x] **Phase 10: Forma y chrome desde datos** - Días, secciones, pastillas, cabecera, pie, leyenda y título salen de los datos de cada viaje (Roma verbatim) (completed 2026-11-22)
-- [ ] **Phase 11: Portada y rutas multi-viaje** - Portada índice en `/`, Roma en `/trips/roma/`, redirección de enlaces antiguos y prerender de todos los viajes, con goldens sin cambios
+- [x] **Phase 11: Portada y rutas multi-viaje** - Portada índice en `/`, Roma en `/trips/roma/`, redirección de enlaces antiguos y prerender de todos los viajes, con goldens sin cambios (completed 2026-11-23)
 - [ ] **Phase 12: Formas nuevas de viaje** - Opciones A/B, «Dormís en…», transportes nuevos, naturaleza, mapa multi-ciudad, ruta del día por modo y nota familiar, probados con un esqueleto de Campania
 - [x] **Phase 12.1: Títulos de Reservas por viaje** *(INSERTED)* - Encabezados de la sección Reservas configurables por viaje, con los textos de Roma por defecto, para que Campania no herede «3 comensales» (completed 2026-11-22)
 - [ ] **Phase 13: Contenido Campania 2027** - Los 10 días, fichas, gastronomía, reservas y práctica de Campania redactados en tono slow y publicados
@@ -114,7 +114,7 @@ Plans:
   3. Un enlace antiguo (`/guiaRoma/#viernes`, `/guiaRoma/#pantheon`, `/guiaRoma/index.html#gastronomia`) lleva a la misma ancla dentro de `/trips/roma/` y pulsar «Atrás» no entra en bucle; `/guiaRoma/` sin hash se queda en la portada
   4. Desde cualquier guía el usuario puede volver a la portada con el enlace discreto que decida el usuario para ROUTE-06 (recomendado: «← Todos los viajes» en el pie, con re-captura documentada solo de esa captura de Roma); si el usuario decide no añadirlo, ROUTE-06 se mueve a Future y no se toca ningún golden
   5. En `/trips/roma/` los 56 goldens pasan sin `--update-snapshots` (salvo la excepción aprobada de ROUTE-06) y toda la suite de comportamiento de Roma sigue verde; un test asevera que `/` sirve la portada y la URL de Roma sirve Roma (evita specs «verdes» contra la portada)
-**Plans**: 8/8 plans executed
+**Plans**: 8/8 plans complete
 Plans:
 **Wave 1**
 - [x] 11-01-PLAN.md — Harness de paridad (D-18 paso 1): `tests/parity/_harness.ts` con `ROMA_URL` sin cambiar su valor y los 11 specs de Roma usándolo, puerta verde (PAR-01, PAR-02)
@@ -296,7 +296,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 8. Verificación de paridad | v1.0 | 7/7 | Complete | 2026-06-24 |
 | 9. Plataforma por viaje | v1.1 | 6/6 | Complete    | 2026-11-22 |
 | 10. Forma y chrome desde datos | v1.1 | 6/6 | Complete    | 2026-11-22 |
-| 11. Portada y rutas multi-viaje | v1.1 | 8/8 | In Progress | - |
+| 11. Portada y rutas multi-viaje | v1.1 | 8/8 | Complete    | 2026-11-23 |
 | 12. Formas nuevas de viaje | v1.1 | 7/7 | In Progress | - |
 | 13. Contenido Campania 2027 | v1.1 | 8/8 | In Progress | - |
 | 14. Verificación del milestone | v1.1 | 3/3 | In Progress | - |
