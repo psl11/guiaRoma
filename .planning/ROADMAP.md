@@ -36,7 +36,7 @@ Re-plataforma el `index.html` único (6.665 líneas) a Nuxt 4 SSG con paridad vi
 - [x] **Phase 11: Portada y rutas multi-viaje** - Portada índice en `/`, Roma en `/trips/roma/`, redirección de enlaces antiguos y prerender de todos los viajes, con goldens sin cambios (completed 2026-11-23)
 - [x] **Phase 12: Formas nuevas de viaje** - Opciones A/B, «Dormís en…», transportes nuevos, naturaleza, mapa multi-ciudad, ruta del día por modo y nota familiar, probados con un esqueleto de Campania (completed 2026-11-23)
 - [x] **Phase 12.1: Títulos de Reservas por viaje** *(INSERTED)* - Encabezados de la sección Reservas configurables por viaje, con los textos de Roma por defecto, para que Campania no herede «3 comensales» (completed 2026-11-22)
-- [ ] **Phase 13: Contenido Campania 2027** - Los 10 días, fichas, gastronomía, reservas y práctica de Campania redactados en tono slow y publicados
+- [x] **Phase 13: Contenido Campania 2027** - Los 10 días, fichas, gastronomía, reservas y práctica de Campania redactados en tono slow y publicados (completed 2026-11-23)
 - [ ] **Phase 14: Verificación del milestone** - Puerta completa desde build limpia, test de upgrade desde la guía viva y sign-off humano de Roma y Campania en móvil real
 
 ## Phase Details
@@ -212,7 +212,7 @@ Plans:
   3. Las secciones de Gastronomía (pizzerías de barrio, mozzarella di bufala, tabernas, trattorias de monte), Reservas (alojamiento por base, ferris, coche, conciertos, vuelos) y Práctica (ferris, conducción/ZTL y coche en islas, calor, calzado, consejos con niños) están completas para Campania
   4. Los datos de campo críticos (horarios de ferry, fechas de conciertos, acceso nocturno a Sorgeto con niños, coche en Procida/Ischia) aparecen verificados o marcados visiblemente como «por confirmar»
   5. Campania aparece en la portada y se abre en `/guiaRoma/trips/campania/` según la decisión de publicación de ROUTE-05; todo su contenido valida en `pnpm verify` y la puerta de Roma sigue verde
-**Plans**: 8/8 plans executed
+**Plans**: 8/8 plans complete
 Plans:
 **Wave 1**
 - [x] 13-01-PLAN.md — Tracer: martes 22 en Ischia con Epomeo y Sorgeto reales + spec de contenido Wave 0 (`tests/data/campania-content.spec.ts`) + trip.yml publicable (aún borrador, D-02) + numerales finales de las fichas (CAMP-01, CAMP-02, CAMP-06)
@@ -298,7 +298,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 10. Forma y chrome desde datos | v1.1 | 6/6 | Complete    | 2026-11-22 |
 | 11. Portada y rutas multi-viaje | v1.1 | 8/8 | Complete    | 2026-11-23 |
 | 12. Formas nuevas de viaje | v1.1 | 7/7 | Complete    | 2026-11-23 |
-| 13. Contenido Campania 2027 | v1.1 | 8/8 | In Progress | - |
+| 13. Contenido Campania 2027 | v1.1 | 8/8 | Complete    | 2026-11-23 |
 | 14. Verificación del milestone | v1.1 | 3/3 | In Progress | - |
 
 ---
