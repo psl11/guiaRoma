@@ -1,18 +1,14 @@
 ---
-status: testing
+status: complete
 phase: 14-verificacion-del-milestone
 source: [14-03-SUMMARY.md]
 started: 2026-11-22T02:11:00Z
-updated: 2026-11-22T02:11:00Z
+updated: 2026-11-23T22:22:52.513Z
 ---
 
 ## Current Test
 
-number: 1
-name: Portada y vuelta a la portada
-expected: |
-  En `/guiaRoma/` aparece «Guías de viaje» con Campania primero y Roma después. Cada tarjeta abre su guía, y «← Todos los viajes», al pie de cada guía, vuelve a la portada.
-awaiting: user response
+[testing complete]
 
 ## Antes de empezar: abrir la build en el móvil
 
@@ -30,46 +26,47 @@ No es un test, es la preparación (una vez):
 
 ### 1. Portada y vuelta a la portada
 expected: En `/guiaRoma/` aparece «Guías de viaje» con Campania primero y Roma después. Cada tarjeta abre su guía, y «← Todos los viajes», al pie de cada guía, vuelve a la portada.
-result: [pending]
+result: pass
 
 ### 2. Roma en el móvil (iOS o Android), tema claro y oscuro
 expected: Se ve como la guía de siempre, sin destellos de tema al cargar. El tema elegido se recuerda al recargar.
-result: [pending]
+result: pass
 
 ### 3. Campania en el móvil, tema claro y oscuro
 expected: Los días, las bandas de ferry, coche y autobús, la caja «Con niños» y el mapa se leen bien en los dos temas, y nada desborda a lo ancho.
-result: [pending]
+result: pass
 
 ### 4. Notas por viaje
 expected: Una nota escrita en una ficha de Roma y otra en una ficha de Campania siguen ahí tras recargar, y ninguna aparece en la otra guía.
-result: [pending]
+result: pass
 
 ### 5. Ritmo y modos por viaje
 expected: Con Roma en «Neutra» + «Modo resumen» y Campania en «Caminar menos», al volver a cada guía cada una conserva lo suyo y no cambia la otra.
-result: [pending]
+result: pass
 
 ### 6. «Ver ruta del día» abre Google Maps en el modo correcto
 expected: En Roma abre la ruta a pie. En Campania, el jueves 24 y el viernes 25 en coche, y el martes 22 en transporte público. No hay botón el sábado 19, el domingo 20, el lunes 21, el domingo 27 ni el lunes 28.
-result: [pending]
+result: pass
 
 ### 7. Sin conexión en Roma, con la guía ya abierta
 expected: Con la guía de Roma ya abierta, se activa el modo avión SIN recargar. Las fotos que no habían cargado muestran su dibujo, y el mapa, al moverlo a una zona sin cargar, muestra «Sin conexión · solo marcadores visibles». Recargar sin red no forma parte de la 1.x (no hay PWA, es de la v2): una página en blanco tras recargar sin conexión no es un defecto de esta fase.
-result: [pending]
+result: pass
 
 ### 8. Sin conexión en Campania, con la guía ya abierta
 expected: Lo mismo que en el test 7, en Campania: con la guía ya abierta y en modo avión, sin recargar, las fotos que faltan muestran su dibujo y el mapa muestra «Sin conexión · solo marcadores visibles». Recargar sin red tampoco forma parte de la 1.x.
-result: [pending]
+result: pass
 
 ### 9. Firma: Roma y Campania aprobadas en un móvil real (PAR-04)
 expected: Con los tests 1 a 8 en orden, se aprueban Roma y Campania en un móvil real. Se anotan aquí el modelo del móvil y el navegador (sin datos personales: ni correos, ni teléfonos, ni códigos de reserva).
-result: [pending]
+result: pass
+device: "no indicado por el usuario (aprobado en móvil real contra https://psl11.github.io/guiaRoma/)"
 
 ## Summary
 
 total: 9
-passed: 0
+passed: 9
 issues: 0
-pending: 9
+pending: 0
 skipped: 0
 blocked: 0
 
