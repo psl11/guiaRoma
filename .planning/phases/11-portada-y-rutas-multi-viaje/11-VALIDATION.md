@@ -7,7 +7,7 @@ status: validated
 nyquist_compliant: true
 wave_0_complete: true
 created: "2026-11-20"
-validated: "2026-11-20"
+validated: "2026-11-23"
 ---
 
 # Phase 11 — Validation Strategy
@@ -53,6 +53,7 @@ validated: "2026-11-20"
 | ROUTE-05 | Sin `trips/prueba` ni `trips/forma`; ningún fichero de `.output/public` (dumps decodificados) contiene los centinelas; control positivo con Roma | node | `pnpm test:data` (build-isolation) | ✅ invertido | ✅ green |
 | ROUTE-05 | Esquema acepta/rechaza `draft`, `startDate`, `endDate`, `destinations`, `summary` (incl. `2026-02-30`) | data | `pnpm test:data` | ✅ ampliado | ✅ green |
 | ROUTE-06 | Roma: `footer .trip-back a` «← Todos los viajes» → baseURL; `footer .container p` = 1; prueba: pie solo con el enlace | e2e | `pnpm test:parity` (shell/portada) + `pnpm test:trips` (shape.spec) | ✅ | ✅ green |
+| G-11-3 (ROUTE-01, D-07/D-08) | `summary` con Markdown de bloque (listas incl. «2027. …», cita, tabla, código, separador, línea en blanco, `::x`) → violación `trip-summary-inline` en trip.yml; un fallo de la consulta de la portada hace fallar `nuxt generate` (createError fatal 500) | data + unit | `pnpm vitest run tests/data/invariants.spec.ts -t "G-11-3"` + `pnpm vitest run tests/unit/tripIndexFatal.spec.ts` | ✅ ampliado (11-08) | ✅ green |
 | D-13 | Clic en pastilla no remonta TripView | e2e (gate) | `portada.spec.ts` | ✅ | ✅ green |
 | D-21 | Todo selector de `multitrip.css` empieza por `.trip-index` | unit (static) | `pnpm exec vitest run tests/unit/multitripCss.spec.ts` | ✅ | ✅ green |
 | PAR-01 | 56 goldens sin `--update-snapshots`; snapshots sin diff | e2e (gate) + git | `pnpm test:parity` + `git diff --quiet -- tests/parity/golden.spec.ts-snapshots/` | ✅ | ✅ green |
@@ -91,7 +92,7 @@ validated: "2026-11-20"
 - [x] Feedback latency < 10s
 - [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** approved 2026-11-20 (validate-phase --auto, retroactive audit)
+**Approval:** approved 2026-11-20 (validate-phase --auto, retroactive audit); re-audited 2026-11-23 after gap closure 11-08 (G-11-3): `pnpm test:unit` 575/575, `pnpm test:data` 906/906 (Node 22).
 
 **Evidence (orchestrator-run at HEAD after 11-07, Node 22, caches cleared):**
 - `pnpm verify`: unit **301/301**, data **377/377**, parity **110/110** (13 files; 56 goldens, sin `--update-snapshots`); EXIT=0.

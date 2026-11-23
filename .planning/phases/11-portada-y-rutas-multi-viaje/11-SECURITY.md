@@ -17,6 +17,7 @@ created: "2026-11-20"
 > (all «None» — every new surface was already in the plan registers). Verified at ASVS L1 (grep depth) against the
 > code on `release/nuxt-4` after 11-07. All threats closed and ASVS = 1, so the auditor subagent was not spawned
 > (workflow short-circuit).
+> Re-audited 2026-11-23 after gap closure 11-08 (G-11-3): T-11-21..T-11-25 added from 11-08-PLAN.md `<threat_model>` (SUMMARY threat flags: none), T-11-SC evidence extended; same L1 short-circuit.
 
 ---
 
@@ -57,7 +58,12 @@ created: "2026-11-20"
 | T-11-18 | Denial of Service | portada/guide downloading `sql_dump`/WASM | medium | mitigate | `portada.spec.ts` request interception on portada + Roma with non-vacuity control (≥ 1 `/_nuxt/`) | closed |
 | T-11-19 | Repudiation | E2E passing against the wrong page / empty lists | medium | mitigate | expectations from `readTripManifest()`, non-empty draft list, document markers; gate count 110/13 | closed |
 | T-11-20 | Information Disclosure | draft URL published | medium | mitigate | 404 for every draft on the Pages-like server (`portada.spec.ts`) + decoded-dump scan | closed |
-| T-11-SC | Tampering | npm/pip/cargo installs | low | mitigate | No packages installed: `git diff --quiet 6315f26 HEAD -- package.json pnpm-lock.yaml` exits 0 | closed |
+| T-11-21 | Tampering | `summary` of trip.yml without block-Markdown control | medium | mitigate | New gate rule `trip-summary-inline` (`tests/data/trips.ts:132,508`) — lists (incl. `2027. …`), quotes, tables, code, thematic break, blank-line split, `::x`; 41 teeth in `invariants.spec.ts` (`-t "G-11-3"`) + real trips inside `pnpm verify` (11-08) | closed |
+| T-11-22 | Denial of Service | `TripIndex.vue` ignoring `useAsyncData` error | medium | mitigate | `error.value` → `throw createError({ statusCode: 500, fatal: true, cause })` (`app/components/TripIndex.vue:47-50`); `failOnError` stops `nuxt generate`; differential forced-failure build (base exit 0 blank, fixed exit 1) + static guard `tests/unit/tripIndexFatal.spec.ts` (11-08) | closed |
+| T-11-23 | Information Disclosure | `cause` of the portada createError | low | accept | Build stops before publishing; Nuxt's client error page serialises only statusCode/statusMessage; the message is SQL over a public content schema (AR-11-02) | closed |
+| T-11-24 | Tampering | forced-failure temp builds of 11-08 Task 2 | low | mitigate | `mktemp -d` copy with trap cleanup; base read via `git show 0f7843c:…`; `git status --porcelain -- app content` empty; `git diff --quiet 0f7843c HEAD -- content` exits 0 | closed |
+| T-11-25 | Denial of Service | lexical-scan false reds in `trip-summary-inline` | low | accept | Fail-closed (a false red blocks `verify` naming trip.yml, never admits a block); Roma/Campania summaries give 0 violations (AR-11-03) | closed |
+| T-11-SC | Tampering | npm/pip/cargo installs | low | mitigate | No packages installed: `git diff --quiet 6315f26 HEAD -- package.json pnpm-lock.yaml` exits 0 (11-01..11-07); no parser added in 11-08 and `git diff --quiet 0f7843c HEAD -- package.json pnpm-lock.yaml` exits 0 | closed |
 
 *Status: open · closed*
 *Severity: critical > high > medium > low — only open threats at or above workflow.security_block_on count toward threats_open*
@@ -70,6 +76,8 @@ created: "2026-11-20"
 | Risk ID | Threat Ref | Rationale | Accepted By | Date |
 |---------|------------|-----------|-------------|------|
 | AR-11-01 | T-11-05 | Config-time YAML read over three PR-reviewed trips; a broken YAML fails the build loudly, which is the desired behaviour | plan-time disposition (11-02), confirmed by secure-phase --auto | 2026-11-20 |
+| AR-11-02 | T-11-23 | `cause` carries a SQL error over the public content schema; it only appears in build logs, never in published output | plan-time disposition (11-08), confirmed by secure-phase | 2026-11-23 |
+| AR-11-03 | T-11-25 | Lexical (parser-less, per v1.1 empty-`package.json`-diff) block scan in `summary`; three documented false reds, all fail-closed | plan-time disposition (11-08), confirmed by secure-phase | 2026-11-23 |
 
 **Closed from earlier phases:** AR-09-01 / AR-10-02 (dev-only trip rows in the public `sql_dump`) are now mitigated by T-11-03 — the decoded-dump scan proves no `prueba`/`forma` row reaches `.output/public`.
 
@@ -92,4 +100,12 @@ created: "2026-11-20"
 - [x] `threats_open: 0` confirmed
 - [x] `status: verified` set in frontmatter
 
-**Approval:** verified 2026-11-20
+**Approval:** verified 2026-11-20; re-verified 2026-11-23 (11-08)
+
+## Security Audit 2026-11-23
+
+| Metric | Count |
+|---|---|
+| Threats found | 26 |
+| Closed | 26 |
+| Open | 0 |
