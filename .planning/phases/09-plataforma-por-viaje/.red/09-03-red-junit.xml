@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="13" failures="3" errors="0" time="0.014524801">
+    <testsuite name="tests/unit/searchIsolation.spec.ts" timestamp="2026-11-20T10:27:44.070Z" hostname="NewVaktorPC" tests="13" failures="3" errors="0" skipped="0" time="0.014524801">
+        <testcase classname="tests/unit/searchIsolation.spec.ts" name="aislamiento de búsqueda por viaje (PLAT-01, datos reales) &gt; los dos viajes tienen monumentos (el fixture prueba existe)" time="0.004411913">
+            <failure message="expected [] to deeply equal [ &apos;fontana-pruebas&apos;, &apos;spagna&apos;, …(1) ]" type="AssertionError">
+AssertionError: expected [] to deeply equal [ &apos;fontana-pruebas&apos;, &apos;spagna&apos;, …(1) ]
+
+- Expected
++ Received
+
+- [
+-   &quot;fontana-pruebas&quot;,
+-   &quot;spagna&quot;,
+-   &quot;torre-ensayo&quot;,
+- ]
++ []
+
+ ❯ tests/unit/searchIsolation.spec.ts:45:37
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/searchIsolation.spec.ts" name="aislamiento de búsqueda por viaje (PLAT-01, datos reales) &gt; «Pantheon» devuelve pantheon en Roma" time="0.002557224">
+        </testcase>
+        <testcase classname="tests/unit/searchIsolation.spec.ts" name="aislamiento de búsqueda por viaje (PLAT-01, datos reales) &gt; «Pante» devuelve pantheon en Roma" time="0.000546641">
+        </testcase>
+        <testcase classname="tests/unit/searchIsolation.spec.ts" name="aislamiento de búsqueda por viaje (PLAT-01, datos reales) &gt; «Pantheon» no devuelve nada en prueba" time="0.000249097">
+        </testcase>
+        <testcase classname="tests/unit/searchIsolation.spec.ts" name="aislamiento de búsqueda por viaje (PLAT-01, datos reales) &gt; «Pante» no devuelve nada en prueba" time="0.000128877">
+        </testcase>
+        <testcase classname="tests/unit/searchIsolation.spec.ts" name="aislamiento de búsqueda por viaje (PLAT-01, datos reales) &gt; «Fontana» en prueba devuelve solo fontana-pruebas" time="0.000606195">
+            <failure message="expected [] to deeply equal [ &apos;fontana-pruebas&apos; ]" type="AssertionError">
+AssertionError: expected [] to deeply equal [ &apos;fontana-pruebas&apos; ]
+
+- Expected
++ Received
+
+- [
+-   &quot;fontana-pruebas&quot;,
+- ]
++ []
+
+ ❯ tests/unit/searchIsolation.spec.ts:57:45
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/searchIsolation.spec.ts" name="aislamiento de búsqueda por viaje (PLAT-01, datos reales) &gt; «Fontana» en Roma no devuelve fontana-pruebas" time="0.000457031">
+        </testcase>
+        <testcase classname="tests/unit/searchIsolation.spec.ts" name="aislamiento de búsqueda por viaje (PLAT-01, datos reales) &gt; spagna en prueba es la Escalinata de Ensayo" time="0.00047567">
+            <failure message="expected undefined to be &apos;Escalinata de Ensayo&apos; // Object.is equality" type="AssertionError">
+AssertionError: expected undefined to be &apos;Escalinata de Ensayo&apos; // Object.is equality
+
+- Expected:
+&quot;Escalinata de Ensayo&quot;
+
++ Received:
+undefined
+
+ ❯ tests/unit/searchIsolation.spec.ts:66:23
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/searchIsolation.spec.ts" name="aislamiento de búsqueda por viaje (PLAT-01, datos reales) &gt; spagna en Roma es Piazza di Spagna" time="0.000497291">
+        </testcase>
+        <testcase classname="tests/unit/searchIsolation.spec.ts" name="aislamiento de búsqueda por viaje (PLAT-01, datos reales) &gt; «Pantheon»: cada índice solo devuelve fichas de su viaje" time="0.001682901">
+        </testcase>
+        <testcase classname="tests/unit/searchIsolation.spec.ts" name="aislamiento de búsqueda por viaje (PLAT-01, datos reales) &gt; «Fontana»: cada índice solo devuelve fichas de su viaje" time="0.000404393">
+        </testcase>
+        <testcase classname="tests/unit/searchIsolation.spec.ts" name="aislamiento de búsqueda por viaje (PLAT-01, datos reales) &gt; «Spagna»: cada índice solo devuelve fichas de su viaje" time="0.000221896">
+        </testcase>
+        <testcase classname="tests/unit/searchIsolation.spec.ts" name="aislamiento de búsqueda por viaje (PLAT-01, datos reales) &gt; «Escalinata»: cada índice solo devuelve fichas de su viaje" time="0.001371085">
+        </testcase>
+    </testsuite>
+</testsuites>

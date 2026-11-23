@@ -1,0 +1,106 @@
+slug: santeustachio
+trip: roma
+roman: VIII
+name: Sant'Eustachio · iglesia + caffè
+italian: Basilica di Sant'Eustachio in Campo Marzio
+day: Sábado
+coords:
+  lat: 41.8984724
+  lng: 12.4757930
+type: card
+motif: church
+hero:
+  src: https://media-cdn.tripadvisor.com/media/photo-m/1280/18/9d/82/66/dal-1938-qualita-tradizione.jpg
+  alt: Basílica de Sant'Eustachio
+sections:
+  - heading: Qué es
+    body: >-
+      Una basílica menor del siglo VII, escondida en una plaza pequeña detrás
+      del Pantheon, con una _cabeza de ciervo coronada con una cruz_ esculpida
+      sobre el frontón. Y enfrente, el **Sant'Eustachio Il Caffè**, considerado
+      por los romanos exigentes como el mejor espresso de Roma. Las dos cosas
+      juntas componen uno de los rincones más Sorrentino-Enric González del
+      centro storico.
+  - heading: Historia
+    body: >-
+      La leyenda de Sant'Eustachio (en español San Eustaquio) es uno de los
+      relatos más cinematográficos de la hagiografía cristiana. Plácido era un
+      general romano del siglo II d.C., cazador apasionado, al servicio del
+      emperador Trajano. Un día, cazando un ciervo enorme en los bosques de
+      Tívoli, lo arrinconó en un claro. Cuando se preparaba para disparar, el
+      ciervo se giró y entre sus astas **apareció una cruz luminosa con la
+      figura de Cristo**. Una voz le habló: «¿Por qué me persigues? Yo soy aquel
+      a quien tú buscas sin saberlo». Plácido cayó del caballo, se convirtió en
+      el acto, se bautizó con el nombre de Eustachio, y a partir de ese momento
+      perdió todo: hijos, esposa, riqueza, posición — los típicos sufrimientos
+      del santo de leyenda. Tras décadas en pobreza fue rehabilitado por el
+      emperador, pero al negarse a sacrificar a los dioses paganos tras una
+      victoria militar, fue ejecutado junto con su familia metido dentro de un
+      toro de bronce al rojo vivo. Año 118 d.C., aproximadamente.
+
+
+      La iglesia se construyó sobre el supuesto lugar de su martirio. La actual
+      fachada es del siglo XVIII, pero la basílica subyacente tiene capas
+      romanas, medievales y barrocas. La **cabeza de ciervo con la cruz** en el
+      coronamiento (en lugar de la habitual cruz simple) es uno de los detalles
+      más singulares de las iglesias romanas — y la convirtió en lugar de
+      patronazgo de cazadores. Casi pegada está la sede del Caffè Sant'Eustachio,
+      fundado en 1938 por Raimondo Ricci. Una de las cinco grandes torrefactoras
+      tradicionales de Roma, todavía tuesta café con leña de roble en su propio
+      horno. Su _gran caffè_ es legendario por la espesa crema que se forma
+      sobre el espresso — receta secreta, transmitida de barista a barista.
+  - heading: Anécdotas
+    body: >-
+      El Caffè Sant'Eustachio tiene una regla no escrita: pedir el café **sin
+      azúcar** es ofender al barista. Te pondrán azúcar por defecto en el
+      espresso a menos que pidas explícitamente «_amaro_» o «_senza zucchero_».
+      La razón: el truco de la crema espesa funciona mejor con azúcar (se monta
+      como un merengue mínimo). Hace décadas el barista trabajaba detrás de un
+      panel de madera porque su técnica era considerada secreto industrial. Hoy
+      el panel sigue ahí — los _baristi_ hacen el café tapados a la vista del
+      cliente.
+
+
+      Anécdota Sorrentino: en _La Grande Bellezza_, Jep Gambardella se hace una
+      autocrítica feroz al despertar tras una noche de fiesta, sentado en la
+      barra de un bar tomando un espresso. Aunque la escena no se rueda
+      específicamente en Sant'Eustachio, ese momento condensa el ritual romano
+      del espresso de la barra — pedirlo de pie, beberlo de un sorbo, pagar al
+      final, irse. **Cuesta 1,30€ en la barra y 5€ sentado en mesa**: la doble
+      tarifa es perfectamente legal y los romanos siempre piden de pie. Si te
+      sientas estás pagando alquiler de silla, no el café.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Sant%27Eustachio_%28Rome%29_outside.jpg/960px-Sant%27Eustachio_%28Rome%29_outside.jpg" alt="Iglesia de Sant'Eustachio, Roma, con la cornamenta en lo alto" caption="Busca en la cima de la fachada: una gran cruz sobre una cabeza de ciervo con su cornamenta completa. Por esto ningún romano quiere casarse aquí — «salir de la boda bajo los cuernos» no augura bien. González lo convierte en prueba previa al café."}
+
+      - La **cabeza de ciervo con cruz** en lo alto del frontón de la basílica: alza la vista desde la pequeña plaza. Es una escultura única en Roma — ninguna otra iglesia la tiene.
+      - Dentro de la iglesia, el **relieve del martirio**: muestra a Eustaquio y su familia dentro del toro de bronce, con llamas alrededor. Macabro pero brillante artísticamente.
+      - El **panel de madera** en la cafetería detrás del cual los baristas hacen el café: aún hoy, "secreto comercial".
+      - El **aroma** del Caffè Sant'Eustachio: al entrar pega un golpe de café tostado a leña que no se encuentra en ninguna cadena. Es por el horno de roble.
+      - Pide el **gran caffè** (con crema) o el **monachello** (un macchiato con un toque de leche y cacao). Y siempre, siempre, de pie.
+      - La **Piazza Sant'Eustachio** es una de las plazas menos transitadas del centro a pesar de estar a 2 minutos del Pantheon. Siéntate un momento en el muretto bajo si quieres respirar.
+facts:
+  - label: Iglesia
+    value: 7:30-12:00 · 16:30-19:30 aprox
+  - label: Caffè
+    value: L-V 7:30 · S 7:30-1:00 · D 7:30-0:00
+  - label: Espresso barra
+    value: €1,30
+  - label: Tip
+    value: Pide «amaro» o te lo endulzan
+mapsQuery: Caffè Sant'Eustachio Roma
+culture:
+  - title: Referencias literarias
+    text: ''
+  - title: Historias de Roma
+    text: >-
+      (Enric González, 2004) — «En la Piazza de San Eustachio, lo suyo es tomar
+      el mejor café del mundo. Lo preparan en el Caffè San Eustachio, tostando
+      los granos con leña cada mañana... Ustedes dirán, quizá, que no es el
+      mejor café del mundo. Vale. Pues aquí nos peleamos.» Sobre la iglesia de
+      enfrente, González tiene la mejor prueba previa que existe: ¿por qué nadie
+      quiere casarse ahí? La respuesta está arriba del pórtico: una gran cruz
+      sobre una cabeza de ciervo con su cornamenta completa. «Evidentemente, a
+      los romanos no les gusta salir de su boda bajo la sombra de los cuernos.»
+      Sobre el café rival: «El que está en la esquina, con un agradable aspecto
+      antiguo, pertenece, dicen, a la Camorra napolitana.»

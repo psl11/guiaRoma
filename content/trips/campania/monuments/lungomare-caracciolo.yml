@@ -1,0 +1,38 @@
+slug: lungomare-caracciolo
+trip: campania
+roman: II
+name: Lungomare Caracciolo
+italian: 'Via Francesco Caracciolo · Chiaia'
+day: Sábado 19
+coords:
+  lat: 40.8320
+  lng: 14.2305
+type: card
+motif: sea
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Panoramica_dal_lungomare_di_Napoli_sul_golfo.jpg/960px-Panoramica_dal_lungomare_di_Napoli_sul_golfo.jpg
+  alt: El golfo de Nápoles visto desde el paseo marítimo
+sections:
+  - heading: Qué es
+    body: >-
+      El paseo marítimo de Chiaia: kilómetros de acera ancha pegada al mar, con el
+      Vesubio al fondo y el golfo abierto delante. Es el balcón de los napolitanos,
+      el sitio al que se baja a pasear cuando cae la tarde, sin más plan que mirar
+      el agua y saludar a los vecinos.
+  - heading: Qué mirar
+    body: >-
+      Fijaos en los espigones de piedra: los chavales improvisan partidos de fútbol
+      sobre las rocas y los pescadores del barrio echan la caña sin prisa, como si
+      la ciudad no fuera con ellos. Con la luz baja, el Vesubio se vuelve violeta y
+      el mar se llena de reflejos dorados.
+  - heading: En vuestro día
+    body: >-
+      Es el primer paseo del viaje, el de quitarse el avión de encima. Andad solo
+      hasta donde os apetezca, sentaos en el murete a ver caer el sol y volved al
+      Vomero a cenar en una [pizzería de barrio](#gastronomia).
+facts:
+  - label: Acceso
+    value: 'Libre · paseo a pie junto al mar, llano y sin escaleras'
+  - label: Mejor momento
+    value: 'Al atardecer, cuando el barrio baja a pasear'
+mapsQuery: Lungomare Caracciolo Napoli

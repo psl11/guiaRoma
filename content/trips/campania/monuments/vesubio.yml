@@ -1,0 +1,39 @@
+slug: vesubio
+trip: campania
+roman: XVI
+name: Viñedos del Vesubio
+italian: 'Vigneti del Lacryma Christi · Boscotrecase'
+day: Viernes 25
+coords:
+  lat: 40.7743
+  lng: 14.4620
+type: nature
+motif: garden
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Boscoreale_-_vigneti_Lacryma_Christi_del_Vesuvio.jpg/960px-Boscoreale_-_vigneti_Lacryma_Christi_del_Vesuvio.jpg
+  alt: Viñas del Lacryma Christi en las laderas bajas del Vesubio
+sections:
+  - heading: Qué es
+    body: >-
+      La cara del volcán que mira al sur, la menos masificada: laderas bajas cubiertas
+      de viñas sobre tierra de lava, donde se hace el Lacryma Christi del Vesubio. Aquí
+      no hay colas ni autobuses de excursión, sino fincas de agricultores que venden su
+      vino y su fruta en la misma finca. Boscotrecase es uno de los pueblos de esas
+      laderas.
+  - heading: Qué mirar
+    body: >-
+      Las cepas bajas sobre la tierra oscura y porosa del volcán, los huertos que crecen
+      entre las viñas, la cumbre del Vesubio por encima de vuestras cabezas y, hacia el
+      otro lado, el golfo de Nápoles.
+  - heading: En vuestro día
+    body: >-
+      Un desvío corto en el camino de Salerno a Nápoles. Un paseo por los senderos bajos
+      entre las viñas y una compra sin prisa a quien esté en la finca: una botella para
+      la cena, fruta para el coche. Si os apetece una cata en una bodega, cuáles la
+      ofrecen, a qué hora y si piden reserva está **⚠ por confirmar**.
+facts:
+  - label: Acceso
+    value: 'En coche hasta las laderas de Boscotrecase · senderos bajos entre viñas'
+  - label: Visitas
+    value: 'Cata en bodega · horario y reserva **⚠ por confirmar**'
+mapsQuery: Vigneti Lacryma Christi Boscotrecase

@@ -1,0 +1,45 @@
+kind: arquitectura
+slug: arq-medieval
+trip: roma
+avatar: II
+name: Paleocristiano y medieval
+dates: s. IV – XIV · la basílica y el mosaico
+epithet: "«Cuando cae el Imperio, la Iglesia hereda su molde: el edificio civil romano se hace templo cristiano.»"
+sections:
+  - heading: Qué la define
+    body: >-
+      Los primeros cristianos no inventaron una forma nueva: tomaron la **basílica
+      romana** —el edificio civil de justicia y comercio, una nave larga rematada
+      en ábside— y la convirtieron en iglesia. Planta **longitudinal**, columnas
+      **reaprovechadas** de templos antiguos (_spolia_), techumbre de madera y un
+      ábside cubierto de **mosaicos de fondo dorado**. En la Edad Media llegan los
+      **campanarios románicos** de ladrillo y, rarísimo en Roma, algún toque
+      gótico.
+  - heading: En qué fijarse
+    body: |
+      - La **planta basilical**: nave central alta + naves laterales + ábside
+      semicircular al fondo.
+      - Las **columnas recicladas** (_spolia_): fijaos en que son distintas entre
+      sí — robadas de varios edificios romanos.
+      - Los **mosaicos del ábside** sobre fondo de oro (Santa Maria in Trastevere,
+      Santa Maria Maggiore).
+      - El **campanario románico** de ladrillo (el de Santa Maria Maggiore, el más
+      alto de Roma).
+      - El **gótico casi inexistente**: la Minerva, con su bóveda de crucería y el
+      azul estrellado.
+      - La **estratigrafía**: San Clemente, tres iglesias una sobre otra (s. XII
+      sobre s. IV sobre una casa romana).
+seenIn:
+  - ref: smt
+    label: '[Santa Maria in Trastevere](#smt)'
+    note: ✦ Dónde la verás en este viaje
+  - ref: smm
+    label: '[Santa Maria Maggiore](#smm)'
+  - ref: san-clemente
+    label: '[San Clemente](#san-clemente)'
+  - ref: laterano
+    label: '[San Giovanni in Laterano](#laterano)'
+  - ref: minerva
+    label: '[Santa Maria sopra Minerva](#minerva)'
+  - ref: bocca-verita
+    label: '[Santa Maria in Cosmedin](#bocca-verita)'

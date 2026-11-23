@@ -1,0 +1,100 @@
+slug: lunes-21
+trip: campania
+order: 3
+pill: 'Lun 21'
+roman: III
+eyebrow: 'lunes · 21 de junio'
+title: Procida slow y travesía a Ischia por la tarde
+subtitle: Mañana entre limoneros y callejuelas pastel, ferry corto a Ischia y atardecer en el Soccorso de Forio.
+# Base de la noche (D-06): slug de una entrada de `stays` en trip.yml → «Dormís en Ischia».
+stay: ischia
+# Sin clave `route` (D-08): el ferry oculta solo el botón de ruta del día.
+stats:
+  - variant: ferry
+    text: '**Ferry** de Procida a Ischia, de 15 a 30 min'
+  - variant: bus
+    text: '**Bus EAV** o taxi del puerto a Forio'
+light:
+  title: 🦶 Versión ligera · lunes
+  items:
+    - kind: see
+      text: >-
+        **Imprescindibles:** el mirador de [Terra Murata](#terra-murata) y el
+        atardecer en el [Soccorso](#forio).
+    - kind: move
+      text: >-
+        **Taxi** del puerto de llegada a Forio, con las maletas, en lugar del bus ·
+        precio **⚠ por confirmar**
+    - kind: skip
+      text: >-
+        **Saltar hoy:** la cena fuera de Forio. Si llegáis cansados, cenad en el
+        pueblo y dejad Il Focolare.
+    - kind: rest
+      text: >-
+        **Descanso:** la comida larga en Procida antes del ferry y la travesía, corta
+        y tranquila.
+timeline:
+  - kind: stop
+    pace: all
+    time: '09:30'
+    title: Terra Murata y los limoneros
+    ref: terra-murata
+    note: >-
+      Subida sin prisa al pueblo amurallado, el punto más alto de la isla, y bajada
+      entre huertos de limoneros y callejuelas pastel. Mañana para mirar, no para
+      correr.
+  - kind: stop
+    pace: all
+    time: '13:00'
+    title: Comida tranquila en Procida
+    disabled: true
+    note: >-
+      Una comida sencilla cerca del puerto, a elegir sobre el terreno, con tiempo de
+      sobra para recoger las maletas antes del ferry.
+  - kind: transport
+    pace: all
+    variant: ferry
+    header: De Procida a Ischia
+    modes:
+      - icon: ⛴️
+        recommended: true
+        desc: >-
+          **Traghetto Caremar** de Procida a Ischia · salidas de tarde como las de las
+          15:45 o las 17:15, horario de verano 2027 **⚠ por confirmar**
+        tag: recomendado
+        meta: '⏱ **≈30 min**'
+      - icon: 🚤
+        desc: '**Aliscafo**, más corto · horarios y precio **⚠ por confirmar**'
+        meta: '⏱ **15-20 min**'
+    footnote: >-
+      Se llega a Ischia Porto o a Casamicciola según el barco: el puerto de llegada
+      está **⚠ por confirmar**.
+  - kind: transport
+    pace: all
+    variant: bus
+    header: Del puerto a Forio
+    modes:
+      - icon: 🚌
+        recommended: true
+        desc: '**Bus EAV** del puerto de llegada a Forio · línea y horarios **⚠ por confirmar**'
+        tag: recomendado
+      - icon: 🚕
+        desc: '**Taxi**, más cómodo con las maletas · precio **⚠ por confirmar**'
+  - kind: stop
+    pace: all
+    time: '20:00'
+    title: Atardecer en el Soccorso
+    ref: forio
+    note: >-
+      Maletas en el alojamiento de la zona de Forio (**⚠ por confirmar**) y paseo
+      hasta la iglesia blanca del promontorio, a ver cómo el sol se hunde en el mar.
+  - kind: food
+    pace: all
+    header: Cena en la Ischia de dentro
+    entries:
+      - ref: g-3-il-focolare
+        name: Trattoria Il Focolare
+        desc: >-
+          Coniglio all'ischitana en olla de barro · solo con reserva y en taxi desde
+          Forio · horario y día de cierre **⚠ por confirmar**
+cards: [terra-murata, forio]

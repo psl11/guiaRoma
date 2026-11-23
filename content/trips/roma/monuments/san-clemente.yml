@@ -1,0 +1,92 @@
+slug: san-clemente
+trip: roma
+roman: XXVI
+name: Basilica di San Clemente
+italian: Basilica di San Clemente al Laterano · Via Labicana 95
+day: Lunes
+coords:
+  lat: 41.8894110
+  lng: 12.4975660
+type: card
+motif: church
+arch:
+  - ref: arq-medieval
+    label: 'Arquitectura: [Medieval](#arq-medieval)'
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Basilica_di_San_Clemente_al_Laterano_-_esterno.jpg/960px-Basilica_di_San_Clemente_al_Laterano_-_esterno.jpg
+  alt: Fachada exterior de la Basilica di San Clemente, Roma
+sections:
+  - heading: Qué es
+    body: >-
+      La **máquina del tiempo** de Roma. Una basílica que es en realidad tres
+      edificios apilados, uno encima de otro, separados por mil años cada uno. En
+      la superficie, una iglesia medieval del siglo XII. Bajas unas escaleras y
+      aparece una basílica paleocristiana del siglo IV. Bajas otro tramo y estás
+      en un **templo del dios Mitra** del siglo II y unas casas romanas de la
+      época de la República, con un manantial que todavía corre en la oscuridad.
+      En veinte minutos descendéis 18 metros y 1.900 años. No hay mejor sitio en
+      Roma para entender cómo la ciudad está hecha de capas.
+  - heading: Historia
+    body: >-
+      La gestiona desde 1667 una comunidad de **dominicos irlandeses** —
+      exiliados de Irlanda por la persecución protestante, que encontraron
+      refugio en Roma. La **basílica superior** (siglo XII) está coronada por uno
+      de los mosaicos más bellos de la Edad Media: el _Triunfo de la Cruz_, un
+      árbol de la vida del que brotan volutas verdes que envuelven a doce palomas
+      (los apóstoles), ciervos, pavos reales y figuras cotidianas. En una capilla
+      lateral, frescos del Quattrocento de **Masolino da Panicale** (con posible
+      intervención de Masaccio).
+
+
+      Debajo está la **basílica del siglo IV**, una de las primeras iglesias de
+      Roma, dedicada a san Clemente, el cuarto Papa. Funcionó como templo
+      principal hasta que el saqueo normando de Roberto Guiscardo (1084) la dejó
+      en ruinas; se rellenó de escombros y se construyó la nueva iglesia encima,
+      olvidando que existía. Quedó sepultada y olvidada hasta que en **1857** el
+      prior irlandés **Joseph Mullooly** empezó a excavar bajo el altar y se
+      encontró con toda una basílica enterrada bajo sus pies.
+
+
+      Y aún más abajo: un **mitreo** del siglo II — un templo subterráneo del
+      culto a Mitra, el dios persa cuyo misterio fue el gran rival del
+      cristianismo en los siglos II y III (compartían el 25 de diciembre, un
+      banquete ritual y la promesa de salvación). Junto al mitreo, los muros de
+      casas romanas republicanas y el rumor constante de un **manantial
+      subterráneo** que sigue fluyendo hacia las cloacas antiguas.
+  - heading: Anécdotas
+    body: >-
+      En la basílica inferior se conservan unos frescos del siglo XI con una **de
+      las primeras frases escritas en italiano vulgar** — no en latín. En la
+      escena del milagro de San Clemente, el patricio pagano Sisinio ordena a sus
+      siervos arrastrar al santo y suelta un improperio soez: _«Fili de le pute,
+      traite!»_ («¡Hijos de puta, tirad!»). Ese exabrupto tabernario es uno de
+      los textos fundacionales de la lengua italiana, y está pintado en una pared
+      a 12 metros bajo tierra.
+
+
+      El mitreo es escalofriante por lo que significa: estáis viendo, literalmente
+      apiladas, tres religiones sucesivas en el mismo solar. El culto pagano
+      abajo, la iglesia primitiva en medio, la iglesia triunfante arriba. Roma no
+      destruye: _sepulta y construye encima_. San Clemente es la prueba física de
+      esa frase.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Apsis_mosaic_San_Clemente.jpg/960px-Apsis_mosaic_San_Clemente.jpg" alt="Mosaico absidal del árbol de la vida, San Clemente, Roma" caption="El mosaico absidal del siglo XII: el árbol de la vida del que brota la Cruz, con doce palomas (los apóstoles), ciervos, pavos reales y figuras cotidianas entre las volutas verdes. Busca al pastor y a la mujer dando de comer a las gallinas."}
+
+      - El **mosaico absidal del árbol de la vida** (basílica superior): la cruz de la que nace toda la vegetación, con las doce palomas. Buscad las figuritas cotidianas entre las volutas (un pastor, una mujer dando de comer a las gallinas).
+      - Los **frescos de Masolino** en la Cappella di Santa Caterina: el ciclo de Santa Catalina de Alejandría, Quattrocento puro.
+      - Bajad al **nivel del siglo IV**: los frescos del milagro de San Clemente y la **inscripción en italiano vulgar** de Sisinio. Pedid que os la señalen o buscadla en el panel.
+      - El **mitreo**: el altar con el relieve de Mitra degollando al toro (la _tauroctonía_), los bancos donde se reclinaban los iniciados.
+      - El **sonido del agua**: parad y escuchad. El manantial subterráneo lleva corriendo dos mil años.
+      - La **temperatura**: abajo se está fresco. Es un refugio perfecto contra el calor de la tarde.
+      - Los niveles inferiores son de **pago** (~€10) y **no se pueden fotografiar**. La basílica superior es gratis.
+facts:
+  - label: Horario
+    value: L-S 10-12:30 y 15-18 · dom 12-18
+  - label: Acceso
+    value: Superior gratis · subterráneo ~€10
+  - label: Tiempo de visita
+    value: 50-60 minutos
+  - label: Importante
+    value: Cierra al mediodía · reabre 15:00 · sin fotos abajo
+mapsQuery: Basilica di San Clemente Roma

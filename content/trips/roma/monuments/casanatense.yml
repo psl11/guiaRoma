@@ -1,0 +1,99 @@
+slug: casanatense
+trip: roma
+roman: XX
+name: Biblioteca Casanatense
+italian: Biblioteca Casanatense · Via Sant'Ignazio
+day: Lunes
+coords:
+  lat: 41.8986879
+  lng: 12.4794511
+type: card
+motif: library
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Biblioteca_Casanatense.jpg/960px-Biblioteca_Casanatense.jpg
+  alt: Sala Monumentale de la Biblioteca Casanatense
+sections:
+  - heading: Qué es
+    body: >-
+      Una biblioteca pública del siglo XVIII, fundada por un cardenal dominico,
+      con una sala monumental de 50 metros de largo cubierta de libros antiguos
+      del suelo al techo. 60.000 volúmenes están a la vista en su disposición
+      original. Es uno de los secretos mejor guardados de Roma — casi ningún
+      turista entra. Funciona como biblioteca académica activa, no como museo.
+  - heading: Historia
+    body: >-
+      La fundó el cardenal **Girolamo Casanate** (1620-1700), inquisidor y
+      bibliófilo obsesivo, dominico nacido en Nápoles. Casanate acumuló durante
+      su vida una de las bibliotecas privadas más importantes del barroco —
+      25.000 volúmenes — con la idea de hacerla pública a su muerte. Por
+      testamento donó su colección a los dominicos del convento de Santa Maria
+      sopra Minerva (justo detrás del Pantheon), encargando la construcción de
+      una sala monumental que albergara los libros y permitiera el acceso
+      público al estudio.
+
+
+      Los dominicos contrataron al arquitecto **Antonio Maria Borioni** para
+      construir el espacio que vemos hoy, inaugurado en 1701. La sala monumental
+      — la _Sala Casanatense_ — mide 50 metros de largo, con dos pisos de
+      estanterías de madera labrada conectados por escaleras de caracol,
+      balcones, esculturas y una estatua del cardenal Casanate en bronce en el
+      centro. El plan iconográfico es estrictamente católico: sobre los
+      anaqueles, los nombres de los Padres de la Iglesia y los grandes teólogos
+      dominicos.
+
+
+      La biblioteca fue desde el principio pública, gratuita, y abierta a todos
+      los letrados sin distinción de fe — algo radical para una institución
+      dominica del 1700. Casanate, paradójicamente para un inquisidor, defendía
+      el libre acceso al conocimiento. Adquirió libros prohibidos del Index para
+      que los académicos pudieran refutarlos. Tras la unificación italiana en
+      1870, el Estado nacionalizó la biblioteca y la separó del convento
+      dominicano. Hoy depende del Ministerio de Cultura italiano y sigue
+      funcionando como biblioteca de investigación humanística.
+  - heading: Anécdotas
+    body: >-
+      La biblioteca contiene 400.000 volúmenes hoy en día, 6.000 manuscritos y
+      2.200 incunables (libros impresos antes de 1500). Entre las joyas: un
+      fragmento del Misal Casanatense del siglo XII con miniaturas únicas, varios
+      códices iluminados del cardinalato florentino, ediciones princeps de Dante,
+      Boccaccio, Petrarca, y una colección casi completa del Index de libros
+      prohibidos por la Inquisición.
+
+
+      Casanate compró los manuscritos prohibidos por la Inquisición
+      personalmente, lo que es una de las paradojas más bellas del barroco: el
+      inquisidor mayor de Roma adquiriendo libros prohibidos por su propio
+      tribunal con el pretexto de "estudio académico". Sus sucesores siguieron la
+      tradición — la biblioteca acabó siendo el lugar más completo de Europa para
+      estudiar la heterodoxia que la Iglesia perseguía.
+
+
+      Enric González la incluye en sus _Historias de Roma_ como «uno de los
+      prodigios romanos menos conocidos» y le dedica este consejo de amigo:
+      «Antes de pisar la Piazza del Collegio Romano, se abre la Via di San
+      Ignazio. En el número 52 se esconde, literalmente, uno de los prodigios
+      romanos menos conocidos... La sala principal de la Biblioteca Casanatense
+      es una de las estancias más bellas de Roma. Entrar es gratis.» Es
+      exactamente eso. Cuando entréis, comprenderéis: la sala está casi siempre
+      vacía o con dos o tres investigadores en silencio absoluto.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Biblioteca_Casanatense.jpg/800px-Biblioteca_Casanatense.jpg" alt="Biblioteca Casanatense, sala principal, Roma" caption="La Sala Monumentale de la Casanatense: 50 metros de largo, dos pisos de estanterías de madera labrada, los nombres de los Padres de la Iglesia tallados encima. González: «uno de los prodigios romanos menos conocidos». Acceso gratuito. Solo lunes a viernes."}
+
+      - La **Sala Monumentale**: 50 metros de largo, dos pisos de estanterías. El primer impacto al entrar es físico — la cantidad de libros y la calidad de la luz cenital convierten el espacio en una catedral del conocimiento.
+      - La **estatua del cardenal Casanate** en el centro: bronce sobre pedestal, con el cardenal sentado leyendo. Mira los pliegues de la sotana y la expresión concentrada.
+      - Las **balconadas del segundo piso**: las escaleras de caracol de hierro forjado son originales. Si te dejan subir (a veces sí), la vista desde arriba es vertiginosa.
+      - Las **inscripciones latinas** sobre los anaqueles: nombres de Padres de la Iglesia (Agustín, Jerónimo, Ambrosio, Gregorio Magno) y de teólogos dominicos (Tomás de Aquino, Alberto Magno).
+      - Los **libros mismos**: encuadernaciones en cuero del siglo XVII, lomos dorados con títulos en latín, ningún libro moderno. Es una biblioteca congelada en el tiempo.
+      - El **silencio**: respétalo. Es una biblioteca activa. Habla en susurros si hablas. Apaga el móvil. Si fotografías, sin flash.
+      - La **taquilla obligatoria** al entrar: deja la mochila. No se puede entrar con bolsas. Te dan una llave. Devuélvela al salir.
+facts:
+  - label: Horario
+    value: Sala Monumental L-V 10:00-16:00 · finde cerrada
+  - label: Acceso
+    value: Gratuito · DNI obligatorio
+  - label: Tiempo de visita
+    value: 30-45 minutos
+  - label: Importante
+    value: Cerrada finde · LUNES única ventana del viaje
+mapsQuery: Biblioteca Casanatense Roma

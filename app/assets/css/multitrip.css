@@ -1,0 +1,37 @@
+/* Portada (Fase 11). TODO selector bajo .trip-index (D-21); tema oscuro solo vía tokens. */
+.trip-index { max-width: 760px; margin: 0 auto; padding: 0 16px 48px; }
+.trip-index .trip-index-header { text-align: center; padding: 48px 0 32px; }
+.trip-index .trip-index-header h1 { margin-bottom: 0; }
+.trip-index .trip-index-list { list-style: none; display: flex; flex-direction: column; gap: 24px; }
+.trip-index .trip-index-card {
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 24px;
+  background: var(--bg-elev);
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+  color: var(--ink);
+  overflow-wrap: break-word;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.trip-index .trip-index-card:hover { border-color: var(--accent); box-shadow: var(--shadow); }
+.trip-index .trip-index-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.trip-index .trip-index-title { font-size: 1.75rem; margin-bottom: 0; transition: color .2s ease; }
+.trip-index .trip-index-card:hover .trip-index-title { color: var(--accent); }
+.trip-index .trip-index-card p { margin-bottom: 0; text-indent: 0; }
+.trip-index .trip-index-meta,
+.trip-index .trip-index-empty {
+  font-family: 'Cormorant Garamond', 'Garamond', 'Hoefler Text', 'Times New Roman', serif;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+.trip-index .trip-index-empty { text-align: center; }
+@media (min-width: 640px) {
+  .trip-index { padding: 0 24px 64px; }
+  .trip-index .trip-index-header { padding: 64px 0 48px; }
+  .trip-index .trip-index-list { gap: 32px; }
+  .trip-index .trip-index-card { padding: 32px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .trip-index .trip-index-card,
+  .trip-index .trip-index-title { transition: none; }
+}

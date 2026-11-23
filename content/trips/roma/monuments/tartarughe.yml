@@ -1,0 +1,90 @@
+slug: tartarughe
+trip: roma
+roman: XVII
+name: Fontana delle Tartarughe
+italian: Piazza Mattei · Ghetto
+day: Domingo
+coords:
+  lat: 41.8938343
+  lng: 12.4775765
+type: card
+motif: fountain
+hero:
+  src: https://media.traveler.es/photos/613783f9cb06ad0f20e14078/master/w_1600%2Cc_limit/66094.jpg
+  alt: Fontana delle Tartarughe
+sections:
+  - heading: Qué es
+    body: >-
+      La fuente más deliciosa de Roma. Cuatro jovenzuelos desnudos de bronce,
+      sentados sobre delfines, con un pie apoyado en cabezas de tortuga,
+      elevando con la otra mano cuatro tortugas hacia el cuenco superior. Está en
+      una plaza pequeñita del ghetto, casi escondida, que casi nadie visita. Es
+      una pieza tardo-renacentista de extraordinaria sutileza.
+  - heading: Historia
+    body: >-
+      La fuente se construyó entre 1581 y 1588 bajo el papado de Gregorio XIII,
+      como punto terminal del _Acqua Vergine_ dirigido a este barrio. La diseñó
+      el arquitecto **Giacomo della Porta** y la esculpió el florentino **Taddeo
+      Landini**. Originalmente la fuente terminaba sin las tortugas: los cuatro
+      jóvenes simplemente apoyaban una mano hacia el cuenco superior, sin nada
+      que sostener. Era una composición elegante pero desequilibrada — los brazos
+      quedaban "colgando".
+
+
+      En 1658-1659, durante una restauración bajo Alejandro VII, alguien — la
+      tradición atribuye el gesto al propio **Gian Lorenzo Bernini**, aunque no
+      hay documentos que lo prueben — añadió cuatro tortugas de bronce sobre el
+      cuenco superior, dispuestas de tal manera que los jóvenes parecen estar
+      empujándolas hacia arriba. El gesto cambió la fuente: añadió una narrativa
+      juguetona, dotó a los brazos suspendidos de un objeto que sostener y un
+      propósito visible. Las tortugas escalan eternamente, los muchachos las
+      empujan eternamente, el agua cae eternamente entre ellos.
+  - heading: Anécdotas
+    body: >-
+      Las cuatro tortugas **originales fueron robadas en 1981** y nunca se
+      recuperaron. Las que ves hoy son copias colocadas inmediatamente después
+      del robo. El robo fue espectacular: se sospecha de una banda de
+      coleccionistas privados de arte que actuó por encargo. Las tortugas eran
+      piezas de bronce relativamente pequeñas pero de valor histórico altísimo.
+      La policía italiana sigue buscándolas — entran y salen periódicamente en
+      listas de bienes culturales perdidos.
+
+
+      Existe una leyenda urbana romana: cuenta que el duque **Muzio Mattei** (la
+      familia que daba nombre a la plaza) era un hombre de vida disipada que se
+      arruinó en una sola noche jugando a las cartas en su palacio frente a la
+      fuente. Su prometido y futuro suegro, el duque Costaguti, rompió el
+      compromiso. Para reconquistarlo, Mattei mandó construir esta fuente en una
+      sola noche frente a las ventanas del palazzo de los Costaguti. Al amanecer,
+      abrió los postigos y dijo: "Esto es lo que un Mattei arruinado puede hacer
+      en una noche". El suegro reconsideró. La leyenda es falsa — la fuente tardó
+      siete años en construirse — pero los romanos la repiten porque les gusta el
+      aforismo: "el dinero es nada, el gesto es todo".
+
+
+      Hay un detalle erótico que se comenta poco: los **cuatro adolescentes son
+      completamente andróginos**, casi feminizados. Landini, el escultor
+      florentino, trabajó en una época donde la representación masculina
+      renacentista llegaba a su máxima ambigüedad. Los cuerpos podrían ser
+      jóvenes hombres o jóvenes mujeres por igual. La fuente es uno de los
+      ejemplos más sutiles del manierismo italiano.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/The_Turtle_Fountain.jpg/700px-The_Turtle_Fountain.jpg" alt="Las tortugas escalan hacia el cuenco superior. Las originales fueron robadas en 1981 y nunca recuperadas — las actuales " caption="Las tortugas escalan hacia el cuenco superior. Las originales fueron robadas en 1981 y nunca recuperadas — las actuales son copias."}
+
+      - Los **cuatro adolescentes de bronce**: están en posturas distintas, cada uno girado hacia un lado diferente. Camínalos uno a uno, mirándolos desde varios ángulos. Cada perfil es distinto.
+      - Las **tortugas**: una en cada esquina del cuenco superior, escalando hacia el centro. Son copias modernas pero respetan exactamente el diseño barroco.
+      - Los **delfines bajo los pies** de cada joven: dolfines fontainescos típicos, escupiendo agua hacia el cuenco inferior.
+      - El **cuenco superior** con borde levemente almenado: por aquí cae el agua de manera continuamente irregular. La fuente "respira" — el sonido cambia según la presión.
+      - La **plaza Piazza Mattei** casi vacía: en domingo de junio puede ser de las plazas más silenciosas del centro storico. Quédate cinco minutos sentado en un banco.
+      - Los **palazzos circundantes**: el Palazzo Mattei di Giove (al noreste) tiene un patio interior con esculturas antiguas — puedes asomarte gratis al patio sin pagar entrada.
+facts:
+  - label: Acceso
+    value: Libre 24/7
+  - label: Tiempo de visita
+    value: 15 minutos
+  - label: Mejor momento
+    value: Mañana temprano · luz oblicua
+  - label: Combo
+    value: 5 min andando del Portico d'Ottavia
+mapsQuery: Fontana delle Tartarughe Piazza Mattei Roma

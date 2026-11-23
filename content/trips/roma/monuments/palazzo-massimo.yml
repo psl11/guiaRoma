@@ -1,0 +1,69 @@
+slug: palazzo-massimo
+trip: roma
+roman: XXXIII
+name: Palazzo Massimo
+italian: Museo Nazionale Romano · Palazzo Massimo alle Terme · Largo di Villa Peretti 1
+day: Martes
+coords:
+  lat: 41.9017900
+  lng: 12.4985200
+type: card
+motif: statue
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Villa_of_Livia_-_Garden_fresco_001.jpg/960px-Villa_of_Livia_-_Garden_fresco_001.jpg
+  alt: El jardín pintado de la Villa de Livia, en Palazzo Massimo
+sections:
+  - heading: Qué es
+    body: >-
+      Probablemente la **mejor colección de arte romano antiguo del mundo**, y
+      casi nadie la visita — a dos minutos de Termini y del hotel. Esculturas
+      helenísticas en bronce y mármol (el _Púgil en reposo_, el _Discóbolo_),
+      monedas, joyas, momias y, sobre todo, los **frescos**: el _jardín pintado de
+      la Villa de Livia_, una habitación entera convertida en un vergel ilusorio.
+      Climatizado: el refugio perfecto para las horas de calor antes del vuelo.
+  - heading: Historia
+    body: >-
+      El edificio es un palacio neorrenacentista de finales del siglo XIX. Desde
+      1998 alberga una de las cuatro sedes del **Museo Nazionale Romano**, que
+      reúne las grandes piezas arqueológicas halladas en Roma y sus alrededores. A
+      diferencia de los museos abarrotados, aquí se camina con calma entre obras
+      maestras absolutas, muchas veces casi a solas. El plato fuerte está en la
+      **segunda planta**: los frescos arrancados de villas imperiales y
+      reinstalados en salas a oscuras que reconstruyen las habitaciones
+      originales.
+  - heading: Anécdotas
+    body: >-
+      El **jardín pintado de la Villa de Livia** (esposa del emperador Augusto),
+      de Prima Porta: las cuatro paredes de un comedor subterráneo pintadas con un
+      jardín en flor — granados, laureles, pájaros, frutos — para crear la ilusión
+      de comer al aire libre estando bajo tierra, fresco en verano. Tiene **dos
+      mil años** y conserva un verde imposible. Es de las cosas más bellas que se
+      pueden ver en Roma, y casi nadie lo sabe.
+
+
+      El **Púgil en reposo** es un bronce helenístico original (no una copia): un
+      boxeador sentado tras el combate, con el rostro hinchado, la nariz rota, las
+      orejas de coliflor y cicatrices de cobre rojizo simulando heridas frescas.
+      Un realismo brutal, sin idealización, de hace 2.300 años. Cerca está el
+      **Discóbolo Lancellotti**, la mejor copia romana del bronce perdido de
+      Mirón, y el inquietante _Hermafrodita durmiente_.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/P%C3%BAgil_en_rep%C3%B2s_%28s._IV_a.C.%29%2C_Museu_Nacional_Rom%C3%A0_%28Palau_Massimo%29%2C_Roma_%28Vista_general%29.jpg/800px-P%C3%BAgil_en_rep%C3%B2s_%28s._IV_a.C.%29%2C_Museu_Nacional_Rom%C3%A0_%28Palau_Massimo%29%2C_Roma_%28Vista_general%29.jpg" alt="El Púgil en reposo, bronce helenístico, Palazzo Massimo, Roma" caption="El _Pugile in riposo_: bronce helenístico original del siglo II a.C., no una copia romana. Boxeador sentado tras el combate — nariz rota, orejas de coliflor, cicatrices de cobre rojizo incrustado simulando heridas frescas. Dadle la vuelta entera: cada ángulo cuenta otro momento."}
+
+      - El **jardín de Livia** (2ª planta): entrad en la sala a oscuras y dejad que los ojos se acostumbren. Buscad los pájaros entre las ramas.
+      - El **Púgil en reposo**: rodeadlo, miradle la cara. Es uno de los grandes bronces que sobreviven de la Antigüedad.
+      - El **Discóbolo Lancellotti**: el lanzador de disco congelado en tensión.
+      - Los **frescos de la Villa Farnesina** (2ª planta): estucos y pinturas de delicadeza extrema.
+      - La **momia de la niña de Grottarossa** y la colección de joyas y monedas (sótano).
+      - El **aire acondicionado**: aprovechadlo. Es el mejor sitio para pasar las horas centrales del calor.
+facts:
+  - label: Horario
+    value: Mar-Dom 9:30-19:00 · cierra lunes
+  - label: Entrada
+    value: ~€8 · billete combinado MNR (7 días)
+  - label: Tiempo de visita
+    value: 60-90 minutos
+  - label: Cómo llegar
+    value: 2 min de Termini y del hotel
+mapsQuery: Palazzo Massimo alle Terme Roma

@@ -1,0 +1,56 @@
+slug: lunes-28
+trip: campania
+order: 10
+pill: 'Lun 28'
+roman: X
+eyebrow: 'lunes · 28 de junio'
+title: Vuelta a casa
+subtitle: Temprano al aeropuerto de Capodichino y vuelo de las 09:55 a Palma.
+# Sin `stay` (D-04): la última noche fue la del domingo; hoy no se duerme en Campania.
+# Día de avión (D-08, IN-04): sin botón de ruta y sin fichas.
+route:
+  enabled: false
+stats:
+  - variant: bus
+    text: '**Alibus** o taxi al aeropuerto, a primera hora'
+  - variant: plane
+    text: '**Vuelo** a Palma a las 09:55'
+light:
+  title: 🦶 Versión ligera · lunes
+  items:
+    - kind: move
+      text: >-
+        **Taxi** directo al aeropuerto en lugar del Alibus, con las maletas · precio
+        **⚠ por confirmar**
+    - kind: rest
+      text: >-
+        **Descanso:** maletas hechas el domingo antes del concierto, para salir sin
+        prisas por la mañana.
+timeline:
+  - kind: transport
+    pace: all
+    variant: bus
+    header: Al aeropuerto de Capodichino
+    modes:
+      - icon: 🚌
+        recommended: true
+        desc: >-
+          **Alibus** desde Piazza Garibaldi hasta el aeropuerto, a primera hora ·
+          horario de la mañana **⚠ por confirmar**
+        tag: recomendado
+        meta: '⏱ **≈20 min**'
+      - icon: 🚕
+        desc: '**Taxi** desde el alojamiento, más cómodo con las maletas · precio **⚠ por confirmar**'
+    footnote: >-
+      Calculad llegar a Capodichino con margen de sobra antes del vuelo de las 09:55.
+  - kind: transport
+    pace: all
+    variant: plane
+    header: Vuelo de vuelta a Palma
+    modes:
+      - icon: ✈️
+        recommended: true
+        desc: >-
+          **Despegue a las 09:55** desde Capodichino hacia Palma · aerolínea y reserva
+          **⚠ por confirmar**
+cards: []

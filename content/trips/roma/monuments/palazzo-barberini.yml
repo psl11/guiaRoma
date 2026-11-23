@@ -1,0 +1,91 @@
+slug: palazzo-barberini
+trip: roma
+roman: XXIX
+name: Palazzo Barberini
+italian: Galleria Nazionale d'Arte Antica · Via delle Quattro Fontane 13
+day: Martes
+coords:
+  lat: 41.9036000
+  lng: 12.4895000
+type: card
+motif: painting
+artists:
+  - ref: art-caravaggio
+    label: 'Artistas: [Caravaggio](#art-caravaggio)'
+  - ref: art-rafael
+    label: '[Rafael](#art-rafael)'
+  - ref: art-cortona
+    label: '[Cortona](#art-cortona)'
+  - ref: art-borromini
+    label: '[Borromini](#art-borromini)'
+arch:
+  - ref: arq-barroco
+    label: 'Arquitectura: [Barroco](#arq-barroco)'
+hero:
+  src: https://commons.wikimedia.org/wiki/Special:FilePath/Cortona%20Trionfo%20della%20Divina%20Provvidenza.jpg?width=900
+  alt: El techo de Pietro da Cortona, Triunfo de la Divina Providencia, en el Gran Salone de Palazzo Barberini
+sections:
+  - heading: Qué es
+    body: >-
+      El palacio barroco de los **Barberini** —la familia del papa Urbano VIII—
+      y hoy sede principal de la **Galleria Nazionale d'Arte Antica**. Sin reserva
+      ni aforo, es el mejor sustituto posible de la Galleria Borghese: aquí están
+      la _Judith decapitando a Holofernes_ de **Caravaggio**, _La Fornarina_ de
+      **Rafael**, el _Enrique VIII_ de Holbein y el techo más espectacular del
+      barroco romano, el _Triunfo de la Divina Providencia_ de **Pietro da
+      Cortona**. Todo en interior, con bancos para sentarse.
+  - heading: Historia
+    body: >-
+      El palacio se empezó en **1627** para Maffeo Barberini, elegido papa como
+      **Urbano VIII** en 1623. Lo proyectó **Carlo Maderno** (con un joven
+      **Borromini** de ayudante) y, a su muerte en 1629, tomó el relevo **Gian
+      Lorenzo Bernini**, de nuevo con Borromini. De esa rivalidad entre los dos
+      genios del barroco quedan, en el mismo edificio, **dos escaleras opuestas**:
+      la cuadrada y monumental de Bernini y la **ovalada y helicoidal de
+      Borromini**.
+
+
+      El corazón del palacio es el **Gran Salone**, con el fresco de **Pietro da
+      Cortona** _Triunfo de la Divina Providencia_ (1632-1639): una bóveda
+      ilusionista que glorifica a la familia y al papado, manifiesto de la
+      pintura barroca de techos. En el siglo XX el Estado italiano adquirió el
+      edificio (1949) y lo convirtió en la sede de la Galleria Nazionale d'Arte
+      Antica, la colección nacional de pintura antigua (repartida con el Palazzo
+      Corsini, en Trastevere).
+  - heading: Anécdotas
+    body: >-
+      El emblema de la familia —**tres abejas**— está por todas partes: en la
+      fachada, en el techo, en los marcos. Y dio pie a una de las pasquinadas más
+      famosas de Roma: cuando Urbano VIII mandó fundir el bronce del pórtico del
+      Panteón para el baldaquino de Bernini y los cañones de Sant'Angelo, los
+      romanos sentenciaron _«Quod non fecerunt barbari, fecerunt Barberini»_ —
+      «lo que no hicieron los bárbaros, lo hicieron los Barberini».
+
+
+      La _Judith_ de Caravaggio (h. 1599) es pura teatralidad: el chorro de
+      sangre, el gesto de asco y determinación de la muchacha, la vieja criada
+      esperando con el paño. Y _La Fornarina_ de Rafael —la «hija del panadero»,
+      su amante, identificada con Margherita Luti— lleva en el brazalete la firma
+      _RAPHAEL VRBINAS_, como un anillo de propiedad. También cuelga aquí la
+      _Beatrice Cenci_ atribuida a Guido Reni, la joven noble decapitada en 1599
+      por el asesinato de su padre, una de las leyendas negras de Roma.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://commons.wikimedia.org/wiki/Special:FilePath/Judith%20Beheading%20Holofernes-Caravaggio%20(c.1598-9).jpg?width=800" alt="Judith decapitando a Holofernes, de Caravaggio, en Palazzo Barberini" caption="La _Judith decapitando a Holofernes_ de Caravaggio (h. 1599), una de las joyas de la casa. El modelo de Judith pudo ser la cortesana Fillide Melandroni. Fijaos en el chorro de sangre y en la cara de Holofernes, posiblemente un autorretrato del propio Caravaggio."}
+
+      - El **techo de Cortona** en el Gran Salone: tumbaos a mirar hacia arriba y buscad las **tres abejas** Barberini en lo alto.
+      - La **Judith de Caravaggio**: el instante exacto del corte, sin idealizar nada.
+      - **La Fornarina** de Rafael: buscad la firma _RAPHAEL VRBINAS_ en el brazalete.
+      - Las **dos escaleras**: comparad la cuadrada de Bernini con la **ovalada de Borromini** — los dos rivales del barroco en un solo edificio.
+      - El **Enrique VIII de Holbein**: el único retrato autógrafo del rey por el maestro alemán.
+      - Las **abejas Barberini**: una vez que las veis, aparecen por todo el palacio.
+facts:
+  - label: Horario
+    value: Mar-Dom 10-18 · cierra lunes · última entrada 17:00
+  - label: Entrada
+    value: ~€12 · sin reserva
+  - label: Tiempo
+    value: 75-90 min
+  - label: No te pierdas
+    value: Caravaggio · Rafael · techo de Cortona · escalera de Borromini
+mapsQuery: Palazzo Barberini Roma

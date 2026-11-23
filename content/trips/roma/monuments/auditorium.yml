@@ -1,0 +1,78 @@
+slug: auditorium
+trip: roma
+roman: ♪
+name: Auditorium Parco della Musica · Cavea
+italian: Viale De Coubertin 30 · Quartiere Flaminio
+day: Domingo noche
+coords:
+  lat: 41.9291587
+  lng: 12.4747027
+type: concert
+motif: monument
+badge: concierto
+hero:
+  src: https://upload.wikimedia.org/wikipedia/it/thumb/9/90/Parco_della_Musica_di_Roma.jpg/960px-Parco_della_Musica_di_Roma.jpg
+  alt: Auditorium Parco della Musica
+sections:
+  - heading: Qué es
+    body: >-
+      El complejo musical más grande de Europa por superficie. Tres grandes
+      salas en forma de escarabajo gigante de plomo oxidado, diseñadas por
+      **Renzo Piano** e inauguradas en 2002, dispuestas alrededor de un
+      anfiteatro al aire libre — la **Cavea** — donde se celebran los conciertos
+      estivales. Capacidad 3.000 personas, acústica perfecta, cielo abierto
+      sobre el escenario. El sitio en el que vais a ver a Einaudi.
+  - heading: Sobre el edificio
+    body: >-
+      Renzo Piano diseñó las tres salas como tres escarabajos colosales
+      recubiertos de plomo curvado — un material que se patina con los años
+      hacia un gris-verdoso muy distintivo. La Sala Santa Cecilia (2.756
+      plazas), la Sala Sinopoli (1.133) y la Sala Petrassi (673) están separadas
+      físicamente para evitar interferencias acústicas entre conciertos
+      simultáneos. Durante las excavaciones aparecieron restos de una villa
+      romana republicana del siglo VI a.C. que se conservó _in situ_: hay una
+      pequeña zona arqueológica visible bajo el complejo. Roma siempre te
+      recuerda que está construida sobre Roma.
+
+
+      La **Cavea** es un anfiteatro al aire libre de 3.000 plazas que evoca los
+      teatros griegos antiguos: gradas en herradura, escenario en el centro,
+      cielo abierto encima. En verano (junio-septiembre) acoge la programación
+      nocturna de grandes nombres internacionales — el festival se llama _Luglio
+      Suona Bene_ pero se extiende también a junio. Por aquí han pasado Burt
+      Bacharach, Joan Baez, Patti Smith, Lou Reed, Caetano Veloso, Pat Metheny.
+      El sonido en exterior es notablemente bueno gracias a la forma del bowl y
+      a la ausencia de obstáculos arquitectónicos.
+  - heading: Einaudi en la Cavea
+    body: >-
+      **Ludovico Einaudi** (Turín, 1955) es el pianista y compositor italiano
+      más escuchado del mundo — sus obras acumulan más streams que cualquier
+      otro músico clásico contemporáneo en Spotify. Su música minimalista,
+      deudora de Philip Glass y Erik Satie pero con un lirismo mediterráneo
+      propio, se ha vuelto banda sonora de cine (_Intocable_, _This is England_)
+      y de la psicología colectiva del siglo XXI. Tocar al aire libre en una de
+      las plazas musicales más emblemáticas de su país — y en plena noche romana
+      de junio — es probablemente el contexto óptimo posible para escucharlo en
+      directo. Las temperaturas nocturnas en junio rondan los 20-22°C, perfecto
+      para estar al aire libre dos horas.
+  - heading: Logística práctica
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/en/thumb/0/04/Auditorium_Parco_della_Musica%2C_Roma%2C_terrazza_in_rosso.jpg/800px-Auditorium_Parco_della_Musica%2C_Roma%2C_terrazza_in_rosso.jpg" alt="Auditorium Parco della Musica de Renzo Piano, Roma" caption="Las tres salas de concierto de Renzo Piano (inauguradas 2002) — revestidas de plomo envejecido y madera de ciliegio. La Cavea (el anfiteatro abierto entre las tres estructuras) es donde tocará Einaudi. Es la mejor sala de conciertos al aire libre de Roma."}
+
+      - **Llegada**: desde Trastevere (donde estaréis a las 19:00) son ~5 km al norte. Taxi 15-20 min sin tráfico, €18-22. La opción más cómoda con margen.
+      - **Transporte público alternativo**: tram 2 desde Piazzale Flaminio (parada "Apollodoro") + 5 min caminando. Tarda 30-40 min desde el centro pero da más miedo el timing.
+      - **Horario óptimo**: llegar 30-45 min antes del concierto (20:15-20:30). Las puertas suelen abrir 1h antes.
+      - **Antes del concierto**: la cafetería del Auditorium tiene snacks, vino, paninis. También hay un pequeño restaurante (ReD) pero es caro y precisa reserva con tiempo.
+      - **Asientos**: en la Cavea son todos numerados. Llegar pronto no te da mejor sitio, pero sí te permite acomodarte tranquilo.
+      - **Frío**: aunque sea junio, las noches en Roma a veces refrescan. Llevad una manga larga ligera por si acaso. Pasada la medianoche puede bajar a 18°C.
+      - **Vuelta**: al final del concierto saldrán 2.500 personas a la vez. Habrá cola de taxis oficiales en la entrada (Viale De Coubertin), pero pide uno por FreeNow 5 min antes del final para tenerlo asegurado.
+facts:
+  - label: Concierto
+    value: Domingo 21 · 21:00
+  - label: Llegada recomendada
+    value: 20:15-20:30
+  - label: Desde Trastevere
+    value: Taxi 15-20 min · €18-22
+  - label: Duración
+    value: ~1h 45min
+mapsQuery: Auditorium Parco della Musica Roma

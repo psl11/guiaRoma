@@ -1,0 +1,44 @@
+slug: napoli-sotterranea
+trip: campania
+roman: XXII
+name: Napoli Sotterranea
+italian: 'Napoli Sotterranea · Piazza San Gaetano'
+day: Domingo 27
+coords:
+  lat: 40.8509
+  lng: 14.2574
+type: card
+motif: stairs
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Napoli_Sotterranea_1.jpg/960px-Napoli_Sotterranea_1.jpg
+  alt: Una galería excavada en la toba bajo el centro histórico de Nápoles
+sections:
+  - heading: Qué es
+    body: >-
+      La ciudad que hay debajo de la ciudad: galerías, cisternas y pasadizos excavados
+      en la toba volcánica, muy por debajo de las calles del centro histórico. Sirvieron
+      de cantera, de depósito de agua y, durante la Segunda Guerra Mundial, de refugio
+      contra los bombardeos. Una visita a escala humana, sin grandes salas, que se hace
+      siempre con guía.
+  - heading: Qué mirar
+    body: >-
+      Las paredes de toba, blanda y amarillenta, con las marcas de las herramientas; los
+      pozos por donde se subía el agua a las casas; los pasadizos tan estrechos que hay
+      que pasar de lado; y, en los refugios, los rastros que dejaron quienes esperaron
+      allí abajo a que pasaran las bombas.
+  - heading: En vuestro día
+    body: >-
+      La mañana del domingo, ya los dos solos después de despedir a Arantxa y a los
+      niños en el aeropuerto. Entre hora y media y dos horas bajo tierra, al fresco,
+      antes de una tarde tranquila. La visita se reserva con antelación: horario y
+      precio **⚠ por confirmar**.
+facts:
+  - label: Entrada
+    value: 'Piazza San Gaetano 68, en la Via dei Tribunali'
+  - label: Visita
+    value: 'Solo guiada y con reserva · entre hora y media y dos horas'
+  - label: Horario y precio
+    value: '**⚠ por confirmar**'
+  - label: Acceso
+    value: 'Una escalera larga de bajada y pasadizos muy estrechos · no apta para quien lo pase mal en sitios cerrados'
+mapsQuery: Napoli Sotterranea Piazza San Gaetano 68

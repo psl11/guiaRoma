@@ -1,0 +1,67 @@
+slug: vaticano
+trip: roma
+roman: ★
+name: Vaticano · preparar la visita guiada
+italian: Musei Vaticani · Cappella Sistina · Basilica di San Pietro
+day: Sábado
+coords:
+  lat: 41.9064878
+  lng: 12.4536413
+type: guided
+motif: church
+badge: guiado
+artists:
+  - ref: art-michelangelo
+    label: 'Artistas: [Michelangelo](#art-michelangelo)'
+  - ref: art-rafael
+    label: '[Rafael](#art-rafael)'
+  - ref: art-bernini
+    label: '[Bernini](#art-bernini)'
+arch:
+  - ref: arq-renacimiento
+    label: 'Arquitectura: [Renacimiento](#arq-renacimiento)'
+  - ref: arq-barroco
+    label: '[Barroco](#arq-barroco)'
+hero:
+  src: https://commons.wikimedia.org/wiki/Special:FilePath/Basilique%20Saint-Pierre%20-%20Vatican.jpg?width=900
+  alt: Interior de la Basílica de San Pedro del Vaticano
+sections:
+  - heading: Cómo será (y cómo no agobiarse)
+    body: >-
+      El tour dura unas **3 horas** y sigue siempre el mismo orden: **Museos
+      Vaticanos → Capilla Sixtina → Basílica de San Pedro**. Es un **maratón**:
+      7 km de salas posibles, multitudes y calor. Nadie lo ve "todo" —es
+      inabarcable—, así que la clave es saber **qué buscar** en cada parte. Esto
+      es lo esencial para que no os pille de nuevas y podáis disfrutarlo
+      entendiéndolo. Dejaos llevar por el ritmo del guía y reservad energía (y,
+      con el tobillo, saltad la subida opcional a la cúpula).
+  - heading: 1 · Museos Vaticanos — qué buscar
+    body: |
+      Atravesaréis kilómetros de galerías. No intentéis mirarlo todo; fijad la vista en estos hitos:
+
+      - El **Patio Octógono** (Cortile del Belvedere): el _Laocoonte_ —escultura griega desenterrada en 1506 que dejó pasmado a Miguel Ángel— y el _Apolo del Belvedere_, el ideal de belleza clásica durante siglos.
+      - La **Galería de los Mapas**: 120 metros de mapas de Italia al fresco bajo una bóveda dorada deslumbrante. Una de las estampas más fotografiadas del mundo.
+      - Las **Estancias de Rafael** (Stanze di Raffaello): cuatro salas pintadas por [Rafael](#art-rafael) y su taller. La joya es _La Escuela de Atenas_ —Platón y Aristóteles en el centro, con las caras de Leonardo y Miguel Ángel, y Rafael autorretratado mirándoos—. Buscad también la _Liberación de San Pedro_, una lección de luz nocturna.
+  - heading: 2 · La Capilla Sixtina — qué buscar
+    body: |
+      El clímax. **Silencio absoluto y prohibido hacer fotos** (los guardias lo hacen cumplir). Entrad, buscad sitio en los bancos laterales y mirad con calma:
+
+      - La **bóveda de [Miguel Ángel](#art-michelangelo)** (1508-1512): nueve escenas del Génesis. La _Creación de Adán_ —los dedos que casi se tocan; **el sentido está en ese hueco**—; alrededor, las **Sibilas y Profetas** (no os perdáis la Sibila de Delfos y el gigantesco Jonás sobre el altar).
+      - El **Juicio Final** (1536-1541), en el muro del altar: Cristo juez en el centro, alzando el brazo. Buscad a **San Bartolomé sosteniendo su propia piel desollada** — la cara de esa piel es un **autorretrato** amargo de Miguel Ángel.
+      - Los **"calzones"**: tras la muerte de Miguel Ángel se pintaron paños sobre los desnudos por pudor (la "campaña de las hojas de parra"). Aquí, además, se **elige al papa** en cónclave.
+  - heading: 3 · Basílica de San Pedro — qué buscar
+    body: |
+      La iglesia más grande de la cristiandad. Nada más entrar, a la derecha:
+
+      - La **Pietà de [Miguel Ángel](#art-michelangelo)** (1499), tras un cristal: la talló con **24 años** y es la **única obra que firmó** (en la banda sobre el pecho de la Virgen), molesto porque la atribuían a otro.
+      - El **baldaquino de [Bernini](#art-bernini)**: 29 m de bronce retorcido sobre el altar papal, fundido —dice la leyenda— con el bronce arrancado del pórtico del Panteón. Marca la **tumba de San Pedro**, justo debajo.
+      - Al fondo, la **Cátedra de San Pedro** (Bernini): un trono que parece flotar entre rayos dorados y la paloma del Espíritu Santo en un vitral de alabastro. Puro teatro barroco.
+      - La **cúpula de Miguel Ángel** (136 m). La **estatua de bronce de San Pedro** con el pie derecho **gastado** de siglos de caricias. Y, en el suelo de la nave, las **marcas** que indican hasta dónde llegarían las otras grandes catedrales del mundo: todas más pequeñas.
+  - heading: Antes de ir · práctico
+    body: |
+      - **Código de vestimenta estricto**: hombros y rodillas cubiertos, o no entráis (ni en la Sixtina ni en San Pedro). Llevad algo para taparos.
+      - Es **largo y caluroso** y hay pocos sitios para sentarse: agua encima y calzado cómodo.
+      - En los museos, **no os frustréis** por lo que dejáis atrás: id a por los hitos de arriba y disfrutadlos.
+      - Con el esguince: la **subida a la cúpula es opcional** (cientos de escalones) — sáltala sin culpa, lo esencial está abajo.
+facts: []
+mapsQuery: Musei Vaticani Roma

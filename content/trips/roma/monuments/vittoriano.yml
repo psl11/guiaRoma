@@ -1,0 +1,112 @@
+slug: vittoriano
+trip: roma
+roman: XVIII
+name: Piazza Venezia · Vittoriano
+italian: Altare della Patria · Piazza Venezia
+day: Domingo
+coords:
+  lat: 41.8948910
+  lng: 12.4829541
+type: card
+motif: monument
+arch:
+  - ref: arq-moderna
+    label: 'Arquitectura: [s. XIX · capital](#arq-moderna)'
+hero:
+  src: https://www.turismoroma.it/sites/default/files/piazzavenezia.jpg
+  alt: Altare della Patria
+sections:
+  - heading: Qué es
+    body: >-
+      El monumento más grande, blanco y discutido de Roma. Construido entre 1885
+      y 1935 para celebrar la unificación italiana, ocupa todo un costado del
+      Capitolio con su mole de mármol blanco brillante. Los romanos lo llaman
+      cariñosamente "_la macchina da scrivere_" (la máquina de escribir) o "_la
+      torta nuziale_" (la tarta de boda). Pero la vista desde sus terrazas es de
+      las mejores de la ciudad.
+  - heading: Historia
+    body: >-
+      Cuando Italia se unificó en 1861 con Víctor Manuel II de Saboya como primer
+      rey, faltaba una iconografía nacional. Roma se incorporó al Reino de Italia
+      solo en 1870, tras quitarle al Papa el poder temporal. Para celebrar la
+      nueva unidad nacional, el gobierno convocó un concurso internacional para
+      erigir un monumento monumental al primer rey de Italia. Ganó el arquitecto
+      Giuseppe Sacconi en 1884 con un proyecto neoclásico exorbitante: un
+      edificio de 135 metros de ancho y 70 de alto, todo en mármol blanco
+      brillante de las canteras de Botticino (Brescia).
+
+
+      Para construirlo hubo que **demoler un barrio medieval entero** en la falda
+      norte del Capitolio: capillas, palacetes, casas con torres, conventos. Una
+      pérdida arqueológica brutal que entonces no se valoraba. El monumento se
+      inauguró en 1911 para el cincuentenario de la unificación, pero las obras
+      siguieron hasta 1935. En 1921, después de la Primera Guerra Mundial, se
+      añadió la **Tumba del Soldado Desconocido** en el centro del monumento —
+      restos anónimos de un soldado caído en el Carso, traídos desde Friuli en un
+      tren que cruzó toda Italia entre multitudes lloradas.
+
+
+      Para los romanos clásicos, el Vittoriano nunca encajó. Su escala es
+      desproporcionada en relación al Capitolio renacentista que tiene detrás. Su
+      blancura constante contrasta agresivamente con la pátina dorada del resto
+      de la ciudad. Los muchos críticos del XIX y XX lo despreciaron como
+      "monumento egomaníaco" del nacionalismo italiano. Aun así, las terrazas
+      superiores ofrecen las mejores vistas panorámicas del centro de Roma, y la
+      Tumba del Soldado Desconocido es un símbolo cargado de emoción para los
+      italianos.
+  - heading: Anécdotas
+    body: >-
+      Cada 4 de noviembre (Aniversario de la Victoria) y 2 de junio (Fiesta de la
+      República), el presidente de la república italiana deposita una corona en
+      la Tumba del Soldado Desconocido. Es la principal ceremonia cívica de
+      Italia.
+
+
+      La **estatua ecuestre de Víctor Manuel II** en el centro del monumento es
+      una de las más grandes del mundo: 12 metros de altura, 50 toneladas de
+      bronce. Antes de instalarla en 1911, organizaron _una cena dentro del
+      caballo_ para los obreros: 21 personas cenaron sentadas en el interior del
+      vientre del caballo, brindando con champán. Hay fotos de la escena.
+
+
+      El nombre oficial es "**Altare della Patria**" pero los romanos lo llamaron
+      desde el día de la inauguración con apodos burlones: _la macchina da
+      scrivere_ (por la forma alargada), _la torta nuziale_, _la dentadura
+      postiza_, _il vespasiano monumentale_ (los _vespasiani_ eran los baños
+      públicos romanos antiguos). La mejor anécdota: cuando los romanos te dan
+      indicaciones en el centro y dicen "_vai al Vittoriano_", es signo casi
+      siempre de que _no_ aprueban tu destino — es una expresión casi sinónima de
+      "vete a porra".
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Piazza_Venezia_-_Il_Vittoriano_%28cropped%29.jpg/800px-Piazza_Venezia_-_Il_Vittoriano_%28cropped%29.jpg" alt="Vittoriano / Altare della Patria, Roma" caption="La «máquina de escribir blanca» — González — vista desde Piazza Venezia. El mármol de Botticino (Brescia) nunca adquiere pátina, de ahí su blancura constante frente al oro envejecido de Roma. Las dos quadrigae (carros alados) en lo alto representan la Libertad y la Unidad de Italia."}
+
+      - Las **primeras terrazas son gratuitas**: sube las escalinatas centrales hasta el primer nivel. Vista despejada de Via dei Fori Imperiali, el Coliseo al fondo, el Palatino a la derecha.
+      - La **Tumba del Soldado Desconocido** en el centro inferior: dos guardias armados de pie permanentemente. Llama mucho la atención porque el cambio de guardia es solemne y silencioso.
+      - Las **dos fuentes laterales**: representan los dos mares de Italia, _Adriático_ (a la derecha) y _Tirreno_ (a la izquierda). Cada uno con esculturas alegóricas.
+      - La **estatua ecuestre de Víctor Manuel II**: la giante figura central. Mira la cola del caballo — es enorme, casi cómica en proporción.
+      - Las **quadrigae aladas** en lo alto de los dos pabellones laterales: estatuas de bronce de cuatro caballos con auriga representando, una, la _Libertad_, y otra, la _Unidad_.
+      - Si pagáis los €18 del **ascensor de cristal** al ático: vista de 360° sobre Roma desde 80 metros. Una de las mejores panorámicas pagables de la ciudad. Pero las primeras dos terrazas gratis casi cubren la experiencia.
+      - El **museo del Risorgimento** dentro del monumento (gratis): explica la unificación italiana del XIX. Para italianos es esencial, para extranjeros es interesante pero saltable si no os sobra tiempo.
+facts:
+  - label: Terrazas inferiores
+    value: 9:30-19:30 · GRATIS
+  - label: Ascensor al ático
+    value: €18 · vista 360°
+  - label: Tumba del Soldado
+    value: Acceso libre · respeto militar
+  - label: Mejor hora
+    value: Atardecer · luz contra el mármol blanco
+mapsQuery: Altare della Patria Vittoriano Roma
+culture:
+  - title: Referencias literarias
+    text: ''
+  - title: Historias de Roma
+    text: >-
+      (Enric González, 2004) — González lo cita como «la atrocidad de la máquina
+      de escribir blanca en Piazza Venezia, es decir, el horrible Monumento a la
+      Patria perpetrado por los Saboya». Los romanos nunca le perdonaron que
+      aplastara el perfil de la colina Capitolina con un blanco neoclásico sin
+      pátina. Sus apodos — _la macchina da scrivere_, _la torta nuziale_, _la
+      dentadura postiza_ — son exactamente del tipo de humor romano que González
+      recoge en el libro.

@@ -1,0 +1,90 @@
+slug: san-pietro-vincoli
+trip: roma
+roman: XXVII
+name: San Pietro in Vincoli · el Moisés
+italian: Basilica di San Pietro in Vincoli · Piazza di San Pietro in Vincoli 4a
+day: Lunes
+coords:
+  lat: 41.8937640
+  lng: 12.4933280
+type: card
+motif: statue
+artists:
+  - ref: art-michelangelo
+    label: 'Artistas: [Michelangelo](#art-michelangelo)'
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Michelangelo%27s_Moses_%28Rome%29.jpg/900px-Michelangelo%27s_Moses_%28Rome%29.jpg
+  alt: El Moisés de Miguel Ángel
+sections:
+  - heading: Qué es
+    body: >-
+      Una basílica del siglo V que guarda, bajo el altar mayor, las **cadenas**
+      (_vincoli_) con que san Pedro estuvo preso. Pero casi nadie viene por las
+      cadenas: vienen por el **Moisés de Miguel Ángel** (1513-1515), el fragmento
+      más imponente de la tumba inacabada del Papa Julio II. Una de las
+      esculturas que mejor concentran la fuerza del Renacimiento — el instante
+      exacto antes de que la furia estalle, tallado en mármol.
+  - heading: Historia
+    body: >-
+      La basílica se levantó entre 432 y 440 para custodiar las cadenas que,
+      según la tradición, aprisionaron a san Pedro en Jerusalén. La emperatriz
+      **Eudoxia** las regaló al Papa León I; cuando este las acercó a las cadenas
+      de la prisión Mamertina de Roma (donde Pedro también estuvo preso), las dos
+      se **fundieron milagrosamente en una sola**. De ahí el nombre y la
+      veneración.
+
+
+      Pero la historia que importa es la del **Moisés**. En 1505 el Papa **Julio
+      II** — el «papa guerrero», el mismo de la Capilla Sixtina — encargó a Miguel
+      Ángel su tumba: un mausoleo megalómano de tres pisos, cuarenta estatuas,
+      pensado para presidir la nueva basílica de San Pedro. Era el sueño
+      escultórico de Miguel Ángel. Pero Julio II perdió el interés (prefirió
+      gastar en reconstruir San Pedro y en los frescos de la Sixtina), dejó de
+      pagar, y el proyecto se fue encogiendo durante **cuarenta años** de pleitos
+      con los herederos. Miguel Ángel lo llamó _«la tragedia de la tumba»_. Lo
+      que veis es el resto reducido a un monumento mural, con el Moisés
+      salvándolo todo en el centro.
+  - heading: Anécdotas
+    body: >-
+      Fijaos en los **cuernos** de Moisés. No son un capricho: son un **error de
+      traducción**. San Jerónimo, al verter la Biblia al latín (la Vulgata),
+      tradujo el hebreo _qaran_ — que significa «irradiar rayos de luz» — como
+      _cornuta_, «con cuernos». Durante siglos el arte representó a Moisés
+      cornudo. Miguel Ángel heredó el equívoco y lo esculpió.
+
+
+      La leyenda más famosa: al terminarlo, Miguel Ángel lo encontró tan vivo que
+      le golpeó la rodilla con el martillo y le gritó _«¡Perché non parli?»_ —
+      «¿Por qué no hablas?». Dicen que aún se ve la marca del golpe en la rodilla.
+      Y **Sigmund Freud** quedó tan obsesionado que escribió un ensayo entero (_El
+      Moisés de Miguel Ángel_, 1914) intentando descifrar el instante psicológico
+      que la estatua congela: ¿va a levantarse furibundo al ver a su pueblo
+      adorando el becerro de oro, o se está conteniendo? Esa tensión irresuelta es
+      justo lo que la hace inolvidable.
+
+
+      A los lados del Moisés, **Lía y Raquel** (la vida activa y la contemplativa),
+      también de mano de Miguel Ángel, más serenas. La efigie yacente de Julio II
+      en lo alto es, en cambio, de discípulos: el papa que arruinó el sueño quedó
+      relegado a la fila de arriba, mientras el profeta domina la escena.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Michelangelo%27s_Moses_%28Rome%29.jpg/700px-Michelangelo%27s_Moses_%28Rome%29.jpg" alt="El Moisés de Miguel Ángel (1513-1515). Echad monedas en la caja de la luz: sin iluminación, los detalles del mármol se pierden." caption="El _Moisés_ de Miguel Ángel (1513-1515). Echad monedas en la caja de la luz: a oscuras, el mármol se apaga."}
+
+      - Los **cuernos** (los rayos de luz mal traducidos) y la mirada lateral, hacia la izquierda, cargada de furia contenida.
+      - La **barba**: mirad cómo los dedos de la mano derecha se hunden y enredan en ella. Es uno de los detalles técnicos más asombrosos de la escultura occidental.
+      - La **musculatura** de los brazos y la tensión del pie izquierdo, ya recogido como si fuera a incorporarse.
+      - **Lía y Raquel** a los lados: la calma frente a la tormenta central.
+      - Bajo el **altar mayor**, en una urna de bronce y cristal, las **cadenas de san Pedro**.
+      - Echad **monedas en la caja de la luz**: la capilla suele estar en penumbra y sin luz el Moisés pierde la mitad.
+      - Cierra al mediodía: hay que entrar **antes de las 12:30** o **después de las 15:00**.
+facts:
+  - label: Horario
+    value: 8-12:30 y 15-19 (verano)
+  - label: Acceso
+    value: Gratuito · luz con monedas
+  - label: Tiempo de visita
+    value: 20-30 minutos
+  - label: Cómo llegar
+    value: Metro B Cavour · subiendo por Monti
+mapsQuery: San Pietro in Vincoli Roma

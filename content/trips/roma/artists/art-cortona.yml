@@ -1,0 +1,51 @@
+kind: artist
+slug: art-cortona
+trip: roma
+avatar: P
+name: Pietro da Cortona
+dates: Cortona 1596 – Roma 1669 · pintor · arquitecto
+epithet: «El tercer pilar del Barroco romano y el rey indiscutible del techo pintado.»
+sections:
+  - heading: Quién fue
+    body: >-
+      Pietro Berrettini, llamado por su pueblo. Junto a Bernini y Borromini
+      completa la trinidad del Barroco romano. Protegido también por los
+      **Barberini**, fue el maestro absoluto de la **pintura de bóvedas**.
+  - heading: Su estilo
+    body: >-
+      La **exuberancia ilusionista**: techos que disuelven la arquitectura en un
+      cielo abierto poblado de figuras en remolino. Color cálido, movimiento,
+      abundancia. La gloria barroca llevada a lo más alto, literalmente.
+  - heading: Obras maestras
+    body: |
+      - El _Triunfo de la Divina Providencia_ — Palazzo Barberini
+      - Las salas pintadas del Palazzo Pitti (Florencia)
+      - La iglesia de _Santi Luca e Martina_ y la fachada de _Santa Maria della
+      Pace_
+  - heading: Por qué importa
+    body: >-
+      Definió el **techo barroco ilusionista** que se imitaría en palacios e
+      iglesias de toda Europa. El _Triunfo_ Barberini es el manifiesto del género:
+      un encargo de propaganda familiar convertido en obra maestra.
+  - heading: Cómo reconocer su mano
+    body: |
+      - Techos que **se abren al cielo**: la bóveda parece desaparecer y deja ver
+      el firmamento.
+      - **Multitudes de figuras** en remolino, en escorzo, flotando hacia arriba.
+      - Marcos de **arquitectura y estuco fingidos** (dorados) que enmarcan cada
+      escena: la _quadratura_.
+      - Color cálido, abundancia teatral, **movimiento** por todas partes.
+      - Las **abejas Barberini** coladas entre las nubes del _Triunfo_.
+  - heading: Curiosidades
+    body: |
+      - De los poquísimos que brillaron por igual como **pintor y como
+      arquitecto**.
+      - El _Triunfo de la Divina Providencia_ le llevó **cinco años**: propaganda
+      Barberini ejecutada con tal genio que trasciende el encargo.
+      - Protagonizó el gran **debate del Barroco** con Andrea Sacchi: ¿pocas
+      figuras (sobriedad) o muchas (abundancia)? Ganó la abundancia — y con ella,
+      el Barroco pleno.
+seenIn:
+  - ref: palazzo-barberini
+    label: '[el techo del Gran Salone (Palazzo Barberini)](#palazzo-barberini)'
+    note: ✦ Lo verás en este viaje

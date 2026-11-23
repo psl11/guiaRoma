@@ -1,0 +1,104 @@
+slug: doria-pamphilj
+trip: roma
+roman: VII
+name: Galleria Doria Pamphilj
+italian: Galleria Doria Pamphilj · Via del Corso
+day: Sábado
+coords:
+  lat: 41.8979782
+  lng: 12.4815742
+type: card
+motif: painting
+artists:
+  - ref: art-caravaggio
+    label: 'Artistas: [Caravaggio](#art-caravaggio)'
+  - ref: art-bernini
+    label: '[Bernini](#art-bernini)'
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Diego_Vel%C3%A1zquez_046.jpg/960px-Diego_Vel%C3%A1zquez_046.jpg
+  alt: Retrato del Papa Inocencio X por Velázquez
+sections:
+  - heading: Qué es
+    body: >-
+      El palacio aristocrático más impresionante de Roma que sigue siendo
+      _habitado por la familia que lo construyó_. Una colección privada con 400
+      cuadros, esculturas, frescos y tapices acumulados durante cinco siglos por
+      los Doria-Pamphilj-Landi. Aquí están tres Caravaggios, un Tiziano, dos
+      Brueghel, un Tintoretto, un Lorrain, y la obra cumbre del museo: el
+      retrato del Papa **Inocencio X** pintado por **Diego Velázquez** en 1650.
+  - heading: Historia
+    body: >-
+      La familia Pamphilj llegó al poder absoluto cuando uno de los suyos fue
+      elegido Papa en 1644: Giovanni Battista Pamphilj, que tomó el nombre de
+      **Inocencio X**. Durante su pontificado (1644-1655), enriquecieron
+      desproporcionadamente al clan familiar — práctica habitual entonces, pero
+      los Pamphilj la llevaron al extremo. La fortuna se acumuló en este palazzo
+      sobre Via del Corso, ampliado y decorado durante el resto del siglo XVII.
+      En 1763, la última Pamphilj se casó con un Doria-Landi, dinastía genovesa,
+      y desde entonces el apellido se compone de los tres. La familia sigue
+      viva: el actual príncipe, Jonathan Doria Pamphilj, vive en una parte del
+      palacio cerrada al público con su familia y dos hijos adoptados. Es el
+      narrador de la audioguía gratuita — su voz, en inglés con un acento mitad
+      italiano mitad británico, te cuenta los cuadros como si fuera tu anfitrión.
+
+
+      La colección se abrió al público a finales del siglo XIX. Lo
+      extraordinario es que se mantiene tal como estaba dispuesta en el siglo
+      XVIII: cuadros amontonados de suelo a techo, sin etiquetas a la vista, en
+      cuatro grandes galerías que forman un cuadrado alrededor de un patio
+      interior. No es un museo moderno: es un palazzo decorado.
+  - heading: Anécdotas
+    body: >-
+      El **Retrato de Inocencio X** de Velázquez es probablemente el cuadro más
+      perturbadoramente realista del barroco europeo. Velázquez vino a Roma en
+      1649 enviado por Felipe IV. Pasó tres años pintando para coleccionistas
+      italianos. Cuando Inocencio X vio el retrato terminado, exclamó: _«Troppo
+      vero»_ — "demasiado verdadero". El cuadro muestra a un hombre poderoso
+      pero astuto, casi siniestro, con ojos vivos que te siguen por la sala.
+      Francis Bacon obsesivamente lo reinterpretó cuarenta veces a lo largo de
+      los años cincuenta — sus _Screaming Popes_ son todos variaciones de éste.
+      Bacon nunca vio el original en persona; le bastaron las reproducciones
+      para que el cuadro le poseyera.
+
+
+      Otra historia: el cuadro de la **Magdalena penitente** de Caravaggio fue
+      durante siglos considerado solo "escuela de" hasta que se autentificó en
+      los años setenta. La familia lo tenía como cuadro decorativo en una
+      habitación menor. Y la **Olimpia Maidalchini**, cuñada del Papa Inocencio
+      X (su retrato escultórico está en una sala), fue tan poderosa durante el
+      pontificado que la llamaban "_la Papessa_". Cuando murió Inocencio, dejó a
+      la familia 2 millones de escudos en oro escondidos. Su sobrino prefirió
+      quemar el dinero a entregarlo a los acreedores.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Michelangelo_Caravaggio_064.jpg/960px-Michelangelo_Caravaggio_064.jpg" alt="Magdalena penitente de Caravaggio. El cuadro estuvo siglos considerado «de escuela» hasta su autenticación en los años s" caption="_Magdalena penitente_ de Caravaggio. El cuadro estuvo siglos considerado «de escuela» hasta su autenticación en los años setenta."}
+
+      - El **retrato de Inocencio X**, en una sala dedicada solo a él (Gabinetto Velázquez). Hay un _busto_ del Papa hecho por Bernini en la misma sala — compararlos es ver dos genios miran al mismo hombre desde ángulos opuestos.
+      - Los **tres Caravaggios**: _Magdalena penitente_ (joven y triste), _Descanso en la huida a Egipto_ (con un ángel músico precioso) y _San Juan Bautista_ (joven Juan en el desierto).
+      - La **Galería de los Espejos**: imitación versallesca del salón parisino, con frescos del techo, espejos a ambos lados y bustos antiguos. Es el espacio más fotogénico del palazzo.
+      - El **Salón Aldobrandini**: con un Tiziano juvenil de la _Salomé con la cabeza del Bautista_.
+      - La **colocación "de pared completa"**: las pinturas se amontonan de suelo a techo en filas — esto era cómo se exhibía arte en el XVIII. Te obliga a mirar también las inferiores y las superiores, no solo las que están a la altura del ojo.
+      - La **audioguía narrada por Jonathan Doria Pamphilj**: la cuenta como si te invitase a su casa. Es gratuita, incluida en la entrada. No la saltes — convierte la visita en una experiencia íntima.
+facts:
+  - label: Horario
+    value: L-M-J-D 9-19 · V-S 10-20 · Mié cerrado
+  - label: Acceso
+    value: €16 con audioguía
+  - label: Tiempo de visita
+    value: 1h 15min — 1h 30min
+  - label: Reserva
+    value: Online recomendable · doriapamphilj.it
+mapsQuery: Galleria Doria Pamphilj Roma
+culture:
+  - title: Referencias literarias
+    text: ''
+  - title: Historias de Roma
+    text: >-
+      (Enric González, 2004) — «Lo imprescindible está en un rincón, en una sala
+      minúscula con una puerta cerrada al fondo que utilizan los propietarios,
+      los Doria, para bajar de vez en cuando a contemplar su joya: el Inocencio
+      X pintado por Velázquez. El artista español retrató al papa Inocencio tal
+      como era, con toda su desconfianza y su crueldad dibujada en los ojos. Es
+      un cuadro sobrecogedor.» González añade que Francis Bacon, obsesionado con
+      ese retrato, «volcó sobre el rostro de Inocencio X un imaginario litro de
+      ácido y lo deconstruyó en un retrato tan impresionante como el original».

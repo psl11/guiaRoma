@@ -1,0 +1,133 @@
+slug: domingo-20
+trip: campania
+order: 2
+pill: 'Dom 20'
+roman: II
+eyebrow: 'domingo · 20 de junio'
+title: La Spaccanapoli y rumbo a Procida
+subtitle: Carrera matutina por el corazón de Nápoles, ferry con los vecinos y atardecer en Marina Corricella.
+# Base de la noche (D-06): slug de una entrada de `stays` en trip.yml → «Dormís en Procida».
+stay: procida
+# Sin clave `route` (D-08): el ferry oculta solo el botón de ruta del día.
+# Variantes de stats y de tramo nuevas (EXT-03, D-09): el glifo lo antepone el CSS (tripshapes.css),
+# así que ni el texto de la stat ni el `header` del tramo empiezan por el emoji. Exactamente un
+# ferry y una bici, en tramo y en stat (lo exige el e2e del domingo 20).
+stats:
+  - variant: walk
+    text: '**A pie** por Spaccanapoli y hasta el puerto'
+  - variant: ferry
+    text: '**Ferry** a Procida, ≈1 h'
+  - variant: bike
+    text: '**Bici** por la isla, a ritmo lento'
+light:
+  title: 🦶 Versión ligera · domingo
+  items:
+    - kind: see
+      text: >-
+        **Imprescindibles:** el ferry con los vecinos y el atardecer en
+        [Marina Corricella](#marina-corricella).
+    - kind: move
+      text: >-
+        **Taxi** por la isla en lugar de las bicis, si aprieta el calor o los niños
+        están cansados · precio **⚠ por confirmar**
+    - kind: skip
+      text: >-
+        **Saltar hoy:** correr la carrera; miradla pasar desde un café de
+        [Spaccanapoli](#spaccanapoli). Si vais justos, también la playa.
+    - kind: rest
+      text: >-
+        **Descanso:** la travesía en ferry, sentados en cubierta, y el muelle de la
+        Corricella sin nada que hacer más que mirar.
+timeline:
+  - kind: stop
+    pace: all
+    time: '08:00'
+    title: La carrera Spaccanapoli
+    ref: spaccanapoli
+    note: >-
+      Correr por la arteria histórica antes de que despierten los turistas, con las
+      persianas bajadas y el olor a café en los callejones. La edición de 2026 se
+      corrió el **21 de junio de 2026** desde las 08:00 en Piazza Municipio, organizada
+      por UISP Napoli: 10 km y un recorrido de 5 km para familias, con el tráfico
+      cortado de 08:00 a 10:30. Fecha, hora y salida de 2027 **⚠ por confirmar**.
+      Correrla o verla desde un café: las dos maneras valen.
+  - kind: stop
+    pace: all
+    time: '10:30'
+    title: Ducha, maletas y café
+    disabled: true
+  - kind: transport
+    pace: all
+    variant: walk
+    header: A pie hasta Porta di Massa
+    modes:
+      - icon: 🚶
+        recommended: true
+        desc: >-
+          **A pie** hasta el muelle de **Porta di Massa**, de donde salen los
+          traghetti; los aliscafi salen de **Molo Beverello**, un poco más allá
+        tag: recomendado
+  - kind: transport
+    pace: all
+    variant: ferry
+    header: De Porta di Massa a Procida
+    modes:
+      - icon: ⛴️
+        recommended: true
+        desc: >-
+          **Traghetto Caremar** desde Porta di Massa · salidas a las 12:15 o a las
+          13:30; el horario de verano 2027 aún no se ha publicado **⚠ por confirmar**
+        tag: recomendado
+        meta: '⏱ **≈1 h**'
+      - icon: 🚤
+        desc: '**Aliscafo** desde Molo Beverello · horarios, duración y precio **⚠ por confirmar**'
+    footnote: >-
+      El coche no cruza a las islas: en temporada Procida prohíbe los vehículos
+      de no residentes (en 2025, del 1 de abril al 30 de octubre) e Ischia tiene su
+      propia restricción de temporada (en 2026, del 3 de abril al 31 de octubre);
+      fechas y criterios de 2027 **⚠ por confirmar**.
+  - kind: stop
+    pace: all
+    time: '14:30'
+    title: Llegada a Marina Grande
+    disabled: true
+    note: >-
+      Dejad las maletas en el alojamiento de la isla y comed algo ligero cerca del
+      puerto. El alojamiento está **⚠ por confirmar**.
+  - kind: transport
+    pace: all
+    variant: bike
+    header: Por la isla en bici
+    modes:
+      - icon: 🚲
+        recommended: true
+        desc: >-
+          **Bici de alquiler** cerca del puerto de Marina Grande, por calles tranquilas
+          y sin prisa · dónde alquilarla y precio **⚠ por confirmar**
+  - kind: stop
+    pace: all
+    time: '16:30'
+    title: Baño en Pozzo Vecchio
+    ref: pozzo-vecchio
+    note: >-
+      La playa tranquila de arena oscura de *Il Postino*, en la costa oeste. Agua,
+      arena y nada más; leed antes la caja «Con niños» de la ficha.
+  - kind: stop
+    pace: all
+    time: '20:00'
+    title: Atardecer en Marina Corricella
+    ref: marina-corricella
+    note: >-
+      Sentaos en el muelle a ver cómo los pescadores sacan las barcas mientras la
+      isla recupera su silencio.
+  - kind: food
+    pace: all
+    header: Mesa en la Corricella
+    entries:
+      - ref: g-3-caracale
+        name: Caracalè
+        desc: 'En el mismo puerto: la comida larga si llegáis con el primer ferry, o la cena mirando las barcas · horario y si conviene reservar **⚠ por confirmar**'
+      - ref: g-3-la-lampara
+        name: La Lampara
+        desc: 'Un poco más allá en la misma marina, buena para la cena · horario y si conviene reservar **⚠ por confirmar**'
+cards: [spaccanapoli, pozzo-vecchio, marina-corricella]

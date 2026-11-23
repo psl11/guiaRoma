@@ -1,0 +1,38 @@
+slug: lago-d-averno
+trip: campania
+roman: XIX
+name: Lago d'Averno
+italian: "Lago d'Averno · Pozzuoli"
+day: Sábado 26
+coords:
+  lat: 40.8388
+  lng: 14.0764
+type: nature
+motif: trail
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Lago_d%27Averno_1.jpg/960px-Lago_d%27Averno_1.jpg
+  alt: El lago de Averno, redondo dentro de su cráter, rodeado de árboles y viñedos
+sections:
+  - heading: Qué es
+    body: >-
+      Un lago redondo dentro de un cráter apagado de los Campos Flégreos, junto a
+      Pozzuoli. Para los antiguos, aquí estaba la puerta del inframundo: por estas
+      orillas baja Eneas a ver a los muertos en la Eneida.
+  - heading: Qué mirar
+    body: >-
+      El agua quieta dentro del anillo verde del cráter, los viñedos que bajan hasta
+      la orilla y el silencio, que sorprende a tan pocos kilómetros de Nápoles.
+  - heading: En vuestro día
+    body: >-
+      La primera parada de la Opción 2: la vuelta al lago a pie, un sendero llano de
+      unos 2,8 km que se hace en unos 45 minutos, entre viñas y sin prisa. Si os
+      apetece, en las bodegas de la orilla se puede comprar vino, en la que os
+      llame sobre el terreno.
+facts:
+  - label: Sendero
+    value: 'Vuelta llana de unos 2,8 km · unos 45 min'
+  - label: Cómo llegar
+    value: 'En coche hasta la orilla; en tren, la estación Lucrino de la Cumana queda a 1 km'
+  - label: Aparcamiento
+    value: 'Junto al lago **⚠ por confirmar**'
+mapsQuery: Lago d'Averno Pozzuoli

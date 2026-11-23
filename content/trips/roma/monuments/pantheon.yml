@@ -1,0 +1,105 @@
+slug: pantheon
+trip: roma
+roman: IV
+name: Pantheon
+italian: Pantheon · Piazza della Rotonda
+day: Viernes / Sábado
+coords:
+  lat: 41.8986108
+  lng: 12.4768729
+type: card
+motif: pantheon
+artists:
+  - ref: art-rafael
+    label: 'Artistas: [Rafael](#art-rafael)'
+    note: (aquí está enterrado)
+arch:
+  - ref: arq-antigua
+    label: 'Arquitectura: [Roma antigua](#arq-antigua)'
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Rome_Pantheon_front.jpg/960px-Rome_Pantheon_front.jpg
+  alt: Fachada del Pantheon
+sections:
+  - heading: Qué es
+    body: >-
+      El edificio de la antigüedad romana mejor conservado del mundo. Diecinueve
+      siglos de pie, completo, con su pavimento original, su pórtico de granito
+      egipcio y su cúpula de hormigón sin armar que sigue siendo la más grande
+      jamás construida sin barras de acero. Por dentro: un círculo perfecto
+      inscrito en una esfera, con un solo agujero en el cielo por donde entra la
+      luz y la lluvia.
+  - heading: Historia
+    body: >-
+      El edificio que ves no es el original. El primer Pantheon lo construyó
+      Marco Vipsanio Agripa, yerno y mano derecha de Augusto, en el año 27 a.C.
+      — y la inscripción del frontón sigue siendo la suya: _M·AGRIPPA·L·F·COS·TERTIVM·FECIT_
+      ("Marco Agripa, hijo de Lucio, cónsul por tercera vez, lo hizo"). Un
+      incendio destruyó aquel edificio el año 80 d.C. Adriano lo reconstruyó por
+      completo entre los años 118 y 125, pero modesto como era, mantuvo la
+      inscripción original en lugar de poner la suya. Eso ha confundido a
+      arqueólogos durante siglos.
+
+
+      El Pantheon era un templo dedicado a "todos los dioses" (de ahí su nombre,
+      del griego). Pero en el año 609 fue donado por el emperador bizantino
+      Focas al Papa Bonifacio IV, que lo consagró como iglesia cristiana — Santa
+      Maria ad Martyres. Esa transformación es lo que salvó el edificio:
+      mientras templos paganos eran demolidos como canteras, este sobrevivió
+      porque era casa de Dios. La cúpula mide 43,3 metros de diámetro, y la
+      altura desde el suelo hasta el óculo es exactamente la misma cifra: el
+      interior cabe una esfera perfecta. Es la cúpula sin armar más grande del
+      mundo, y lo será siempre — ningún hormigón moderno puede igualar la
+      fórmula romana sin acero.
+  - heading: Anécdotas
+    body: >-
+      El óculo (el agujero del techo) tiene 9 metros de diámetro y nunca se ha
+      cerrado. Cuando llueve, llueve dentro — el pavimento tiene drenajes
+      inclinados que se descubrieron hace solo unas décadas, durante una
+      restauración. El día de Pentecostés, los bomberos de Roma lanzan miles de
+      pétalos de rosa rojos por el óculo durante la misa: la imagen es uno de
+      los espectáculos religiosos más bonitos de Italia. Bajo el suelo están
+      enterrados **Rafael Sanzio** (el pintor murió en 1520 con 37 años y pidió
+      que le sepultaran aquí), los reyes **Vittorio Emanuele II** y **Umberto
+      I** de Italia, y la reina Margarita (la que dio nombre a la pizza). Miguel
+      Ángel dijo de la cúpula: «diseño de ángeles, no de hombres». Brunelleschi
+      estudió esta cúpula obsesivamente antes de construir la de Florencia.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Interior_oculus_of_the_Rome_Pantheon.jpg/960px-Interior_oculus_of_the_Rome_Pantheon.jpg" alt="El óculo del Pantheon — único foco de luz natural. La cúpula de hormigón sin armar más grande jamás construida." caption="El óculo del Pantheon — único foco de luz natural. La cúpula de hormigón sin armar más grande jamás construida."}
+
+      - Las **columnas del pórtico**: dieciséis monolitos de granito gris egipcio, cada uno con 12 metros y 60 toneladas, traídos por barco desde una cantera específica en Egipto. Algunas están reutilizadas de palacios anteriores — los romanos reciclaban hasta el granito.
+      - Las **puertas de bronce**: son las originales del siglo II d.C. Pesan 8 toneladas cada hoja y siguen abriendo y cerrando con un sistema de cojinetes ocultos.
+      - El **óculo**: mira directamente hacia arriba. Es el único punto de iluminación del interior. La luz se mueve por la cúpula a lo largo del día como un reloj solar gigante.
+      - El **pavimento**: parece plano pero está sutilmente inclinado hacia los desagües centrales. Es el original romano (mármol pavonazzo, granito gris, pórfido rojo). Si llueve, mira cómo el agua se reparte.
+      - La **tumba de Rafael**, en una capilla a la derecha. Tiene un epitafio en latín de Pietro Bembo: _«Aquí yace Rafael, por quien la Naturaleza temió ser vencida mientras vivía, y morir cuando él murió»_.
+      - El **relieve sobre la cúpula desde el exterior**: si subes a un sitio elevado (Vittoriano, Castel Sant'Angelo), el Pantheon visto desde arriba es un cilindro perfecto coronado por una semiesfera. Los romanos lo construyeron sin grúas modernas.
+facts:
+  - label: Horario
+    value: 9:00 - 19:00 todos los días
+  - label: Acceso
+    value: €5 · **entrada con hora** recomendada (web oficial) para evitar cola · gratis primer domingo de mes
+  - label: Tiempo de visita
+    value: 30-40 minutos
+  - label: Antigüedad
+    value: 1900 años · año 125 d.C.
+mapsQuery: Pantheon Roma
+culture:
+  - title: Referencias literarias
+    text: ''
+  - title: I Segreti di Roma
+    text: >-
+      (Corrado Augias, 2005) — Augias dedica un capítulo a la tumba de Rafael en
+      el Pantheon y a la petición que hizo en su testamento: ser enterrado allí
+      con su amante, la _Fornarina_. Solo la primera parte se cumplió. También
+      recorre la historia del edificio desde Agripa hasta Hadrian, deteniéndose
+      en el misterio estructural de la cúpula: el mayor domo de hormigón sin
+      armar del mundo, todavía sin rival.
+  - title: Historias de Roma
+    text: >-
+      (Enric González, 2004) — González pone el dato en perspectiva: «Solo en
+      1958 los técnicos modernos consiguieron levantar una cúpula de hormigón
+      más grande que la del Panteón. Hasta entonces no había sido posible
+      reproducir tal maravilla.» Y sobre Adriano: «prefirió dedicarlo a Agripa»
+      — la inscripción monumental de la fachada es publicidad de un edificio
+      anterior que ya no existe. La modestia de un genio, o su sentido del
+      humor.

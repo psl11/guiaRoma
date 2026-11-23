@@ -1,0 +1,38 @@
+slug: raito
+trip: campania
+roman: XIII
+name: Raito y Albori
+italian: 'Raito · Albori · Vietri sul Mare'
+day: Jueves 24
+coords:
+  lat: 40.6669
+  lng: 14.7156
+type: card
+motif: rooftops
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Costiera_amalfitana_-_Albori_%28Vietri_sul_Mare%29_-_2019_by-RaBoe_118.jpg/960px-Costiera_amalfitana_-_Albori_%28Vietri_sul_Mare%29_-_2019_by-RaBoe_118.jpg
+  alt: Las casas de Albori sobre la costa de Amalfi, en Vietri sul Mare
+sections:
+  - heading: Qué es
+    body: >-
+      Dos aldeas tranquilas de Vietri sul Mare, el pueblo de la cerámica, colgadas
+      sobre la costa de Amalfi a pocos kilómetros de Salerno. Raito y Albori son
+      pueblos de casas apiñadas, cúpulas de azulejo y talleres de ceramistas, lejos
+      del bullicio de la costa más famosa.
+  - heading: Qué mirar
+    body: >-
+      En Raito, el Museo Provinciale della Ceramica, en Villa Guariglia, con sus
+      jardines sobre el mar. En Albori, que está entre «I Borghi più belli
+      d'Italia», las callejuelas en escalera, las fachadas de colores y las vistas
+      del golfo de Salerno desde arriba.
+  - heading: En vuestro día
+    body: >-
+      El mediodía de la Opción A, después del Duomo y el castillo: un paseo lento
+      entre talleres y miradores y la comida en el pueblo, antes de bajar en coche
+      hacia el sur a buscar una cala para la tarde.
+facts:
+  - label: Acceso
+    value: 'Libre · los pueblos se recorren a pie'
+  - label: Museo de la cerámica
+    value: 'Villa Guariglia, en Raito · horario y entrada **⚠ por confirmar**'
+mapsQuery: Raito Vietri sul Mare

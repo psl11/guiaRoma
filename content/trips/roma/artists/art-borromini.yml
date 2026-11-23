@@ -1,0 +1,60 @@
+kind: artist
+slug: art-borromini
+trip: roma
+avatar: B
+name: Francesco Borromini
+dates: Bissone 1599 – Roma 1667 · arquitecto
+epithet: "«El rival oscuro de Bernini: geometría pura, muros que ondulan, genio atormentado.»"
+sections:
+  - heading: Quién fue
+    body: >-
+      Empezó como cantero y ayudante —de Maderno y del propio Bernini— y se hizo a
+      sí mismo a fuerza de talento. Solitario, melancólico y de carácter difícil,
+      tuvo en vida menos éxito mundano que su rival y acabó **suicidándose**. Hoy
+      se le considera, técnicamente, el más innovador de los dos.
+  - heading: Su estilo
+    body: >-
+      La **geometría en movimiento**: muros que ondulan (cóncavo-convexo), plantas
+      basadas en triángulos y óvalos, una luz sabiamente dirigida. Donde Bernini
+      es teatro, decoración y oro, Borromini es **estructura pura, dinamismo y
+      forma**. Casi nunca usa color ni dorados: juega con la geometría y la luz.
+  - heading: Obras maestras
+    body: |
+      - _San Carlo alle Quattro Fontane_ — su manifiesto
+      - _Sant'Ivo alla Sapienza_, con su cúpula en espiral
+      - La fachada de _Sant'Agnese in Agone_ (Piazza Navona)
+      - La **galería en falsa perspectiva** del Palazzo Spada
+      - La **escalera ovalada** del Palazzo Barberini
+  - heading: Por qué importa
+    body: >-
+      Liberó la arquitectura de la rigidez clásica e inventó un **lenguaje
+      dinámico** que marcó todo el Barroco centroeuropeo. Su rivalidad con Bernini
+      es la gran historia del arte romano del siglo XVII: dos genios, dos
+      caracteres opuestos, trabajando puerta con puerta.
+  - heading: Cómo reconocer su mano
+    body: |
+      - **Muros que se curvan**: fachadas cóncavas y convexas que parecen respirar.
+      - **Plantas geométricas** complejas —triángulos, óvalos, estrellas— en vez
+      del rectángulo o el círculo clásicos.
+      - **Blanco y luz, sin oro ni color**: la belleza está en la forma pura.
+      - Detalles **inventados**: capiteles "al revés", molduras que se retuercen,
+      querubines fundidos con la piedra.
+      - Cúpulas que **engañan**: los casetones se estrechan para que parezcan más
+      altas de lo que son.
+  - heading: Curiosidades
+    body: |
+      - Empezó **picando piedra** en la obra de San Pedro antes de convertirse en
+      arquitecto.
+      - Trabajó **a las órdenes de Bernini** (en el baldaquino) y se sintió siempre
+      mal pagado y sin crédito; ese rencor marcó su vida.
+      - Perfeccionista enfermizo, **quemó sus dibujos** antes de morir para que
+      nadie los copiara.
+      - Atormentado y depresivo, **se suicidó** con su propia espada en 1667; pidió
+      ser enterrado sin nombre.
+seenIn:
+  - ref: piazza-navona
+    label: '[la fachada de Sant''Agnese (Piazza Navona)](#piazza-navona)'
+    note: ✦ Lo verás en este viaje
+  - ref: palazzo-barberini
+    label: '[la escalera ovalada del Palazzo Barberini](#palazzo-barberini)'
+    note: (Y si pasáis por Campo de' Fiori de día, su pasillo en perspectiva del Palazzo Spada.)

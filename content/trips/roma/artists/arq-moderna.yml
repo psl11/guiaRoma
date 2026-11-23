@@ -1,0 +1,36 @@
+kind: arquitectura
+slug: arq-moderna
+trip: roma
+avatar: V
+name: Del Neoclásico a la capital
+dates: s. XVIII – XX · escenografía urbana y nación
+epithet: «Roma se ordena en grandes escenarios urbanos y, ya capital de Italia, se construye un altar a la patria.»
+sections:
+  - heading: Qué la define
+    body: >-
+      El **tardobarroco** aún regala dos decorados teatrales —la Fontana di Trevi y
+      la escalinata de la Plaza de España—. Luego, el **Neoclásico** vuelve a la
+      sobriedad clásica y reordena la ciudad en perspectivas (Valadier: Piazza del
+      Popolo y el Pincio). Y cuando Roma se hace **capital de la Italia unida**
+      (1871), el Estado levanta el **Vittoriano**, mármol blanco y eclecticismo
+      monumental, como símbolo de la nueva nación.
+  - heading: En qué fijarse
+    body: |
+      - La **escenografía urbana**: la escalinata de España y la Trevi como
+      decorados para "salir a escena".
+      - El **óvalo de Valadier** en Piazza del Popolo y las rampas al Pincio: orden
+      neoclásico.
+      - El **mármol blanquísimo** del Vittoriano (que no envejece como el travertino
+      dorado del resto de Roma — por eso "desentona").
+      - El **eclecticismo**: columnatas, cuadrigas y alegorías que imitan lo antiguo
+      a lo grande.
+seenIn:
+  - ref: fontana-trevi
+    label: '[la Fontana di Trevi](#fontana-trevi)'
+    note: ✦ Dónde la verás en este viaje
+  - ref: spagna
+    label: '[la escalinata de Piazza di Spagna](#spagna)'
+  - ref: popolo
+    label: '[Piazza del Popolo y el Pincio](#popolo)'
+  - ref: vittoriano
+    label: '[el Vittoriano](#vittoriano)'

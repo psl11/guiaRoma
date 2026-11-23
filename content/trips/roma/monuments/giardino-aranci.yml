@@ -1,0 +1,88 @@
+slug: giardino-aranci
+trip: roma
+roman: XIII
+name: Giardino degli Aranci
+italian: Parco Savello · Aventino
+day: Domingo
+coords:
+  lat: 41.8851338
+  lng: 12.4803900
+type: card
+motif: garden
+badge: Sorrentino
+hero:
+  src: https://www.turismoroma.it/sites/default/files/98_turismo.jpg
+  alt: Giardino degli Aranci
+sections:
+  - heading: Qué es
+    body: >-
+      Un jardín amurallado en lo alto del Aventino, plantado con naranjos
+      amargos, con un mirador que abarca toda Roma desde el Tíber hasta los
+      castelli romani. Compacto, silencioso, casi olvidado por los grandes
+      flujos turísticos. Uno de los lugares preferidos por Sorrentino para sus
+      encuadres.
+  - heading: Historia
+    body: >-
+      El terreno fue un fortín de la familia **Savelli**, condotieros que
+      controlaron buena parte de Roma medieval. En el siglo XIII pasó a manos de
+      los dominicos, que construyeron al lado la basílica de Santa Sabina y
+      plantaron naranjos amargos en su huerto. Cuenta la tradición — sin
+      verificación histórica — que **Santo Domingo de Guzmán**, fundador de la
+      orden dominica, plantó en este lugar el primer naranjo que llegó a Europa,
+      traído desde España hacia 1220. El árbol "de Santo Domingo" todavía existe
+      — al menos se mantiene un naranjo en el claustro contiguo de Santa Sabina
+      que la tradición señala como descendiente directo.
+
+
+      El jardín actual se diseñó como espacio público en 1932, durante el régimen
+      fascista. Se reformó la balaustrada del mirador, se plantaron en filas
+      paralelas naranjos amargos (que no se comen pero perfuman) y se conservó la
+      fuente romana llamada _Mascherone Savelli_ en la entrada — una máscara
+      grotesca tallada en un sarcófago romano del siglo II y reutilizada como
+      fuente medieval.
+  - heading: Anécdotas
+    body: >-
+      Los naranjos del jardín dan fruta amarga e incomible. La gente los recoge a
+      veces y los abandona en bancos. En el siglo XX una tradición romana decía
+      que comer una de estas naranjas curaba penas de amor — el efecto era tan
+      terrible al gusto que te hacía olvidar el problema mayor.
+
+
+      Sorrentino lo elige en _La Grande Bellezza_ como uno de los escenarios
+      donde Jep Gambardella pasea con personajes secundarios reflexionando sobre
+      la vida. El plano característico es desde el mirador — la balaustrada de
+      piedra, los pinos parasol, y al fondo la cúpula de San Pedro perfectamente
+      recortada. Si miras hacia el suroeste desde el mirador (a la derecha al
+      posarte sobre la balaustrada), la cúpula del Vaticano aparece flotando
+      entre los pinos.
+
+
+      Existe también una tradición popular: las parejas romanas vienen aquí al
+      atardecer a hacerse promesas. La fuente Mascherone Savelli a la entrada
+      tiene a sus pies cientos de monedas pequeñas — los amantes locales
+      sustituyen Trevi por aquí, donde no hay turistas.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Giardino_degli_Aranci.JPG/800px-Giardino_degli_Aranci.JPG" alt="Giardino degli Aranci en el Aventino, Roma" caption="El jardín de los naranjos amargos plantado sobre la colina Aventina. La vista desde el mirador al fondo: cúpulas, San Pedro, el Gianicolo. El banco de piedra en el extremo del jardín es el asiento para entender Roma de un vistazo."}
+
+      - El **Mascherone Savelli** a la entrada: máscara grotesca tallada en un sarcófago romano. Mira la boca abierta — por ahí mana el agua.
+      - La **balaustrada del mirador**: cuatro pilares de mármol, y entre ellos toda Roma. Identifica San Pedro a la derecha, el Vittoriano en el centro, las Termas de Caracalla a la izquierda al fondo.
+      - Los **naranjos amargos**: dispuestos en filas geométricas, recortados en cubos. El olor es muy distinto al naranjo dulce — más resinoso, más amargo. En junio: flores blancas (zagar) y fruta verde.
+      - Los **pinos parasol** centenarios: una de las imágenes más romanas. Son los árboles que enmarcan todas las postales del lugar.
+      - La **iglesia de Santa Sabina** al lado: del año 422 d.C., con la _puerta de madera tallada_ más antigua del mundo cristiano (siglo V, con las primeras representaciones esculpidas de la crucifixión que se conservan). Si tienes 10 minutos extras, entra.
+      - El **Buco della Serratura** está a 5 minutos andando — los dos puntos forman un combo natural.
+facts:
+  - label: Horario
+    value: 7:00 - 21:00 todos los días
+  - label: Acceso
+    value: Gratuito
+  - label: Tiempo de visita
+    value: 30-45 minutos
+  - label: Aviso
+    value: El mirador estuvo en obras · comprobar al llegar
+mapsQuery: Giardino degli Aranci Roma
+sorrentino:
+  label: La Grande Bellezza
+  text: >-
+    Escenario recurrente en escenas de paseo y reflexión de Jep Gambardella. La
+    cúpula de San Pedro recortada entre pinos parasol es el plano típico.

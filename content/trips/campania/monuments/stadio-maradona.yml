@@ -1,0 +1,57 @@
+slug: stadio-maradona
+trip: campania
+roman: ♪
+name: Stadio Diego Armando Maradona
+italian: 'Piazzale Vincenzo Tecchio · Fuorigrotta'
+day: Viernes 25 / Domingo 27
+coords:
+  lat: 40.8280
+  lng: 14.1929
+type: concert
+motif: monument
+badge: concierto
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Stadio_Maradona_%28Napoli%29%2C_Agosto_2025_%281%29.jpg/960px-Stadio_Maradona_%28Napoli%29%2C_Agosto_2025_%281%29.jpg
+  alt: El Stadio Diego Armando Maradona de Nápoles, en el barrio de Fuorigrotta
+sections:
+  - heading: Qué es
+    body: >-
+      El gran estadio de Nápoles, en el barrio de Fuorigrotta, al oeste del centro. Es la
+      casa del Napoli, lleva el nombre de Maradona desde 2020 y en verano se convierte en
+      el escenario de los grandes conciertos de la ciudad. Dos noches de este viaje
+      terminan aquí, cantando con miles de napolitanos.
+  - heading: Los dos conciertos
+    body: >-
+      **Ultimo**, el viernes 25 de junio, con los niños. Es la fecha de vuestras
+      entradas, aunque el calendario oficial de la gira anunció Nápoles para el jueves
+      24: mandan las entradas. La hora de inicio y la apertura de puertas están
+      **⚠ por confirmar**.
+
+
+      **Pinguini Tattici Nucleari**, el domingo 27 de junio, ya los dos solos. Esa fecha
+      la publica una sola fuente y está **⚠ por confirmar**, igual que la hora y las
+      entradas.
+  - heading: Logística práctica
+    body: |
+      - **Ida**: Metro Línea 2 hasta la estación Napoli Campi Flegrei, en el mismo Piazzale Tecchio. La Cumana para en «Mostra», también cerca. Qué servicios habrá en 2027 está **⚠ por confirmar**.
+      - **Vuelta**: para los conciertos de junio de 2025 la Línea 2 puso trenes extra, algunos hasta cerca de la 01:00, y la Cumana solo en algunas noches. Los de 2027 están **⚠ por confirmar**.
+      - **Taxis**: esperan en Piazzale Tecchio al acabar, con cola larga cuando sale todo el estadio a la vez.
+      - **Con margen**: llegad pronto, con agua, algo de comer y una prenda ligera para la noche.
+      - **Obras**: el Ayuntamiento prevé obras de reforma en el estadio a partir de enero de 2027. Cómo afectan a los conciertos del verano está **⚠ por confirmar**.
+facts:
+  - label: Conciertos
+    value: 'Ultimo, viernes 25 · Pinguini Tattici Nucleari, domingo 27 (fecha **⚠ por confirmar**)'
+  - label: Hora
+    value: 'Inicio y apertura de puertas **⚠ por confirmar**'
+  - label: Cómo llegar
+    value: 'Metro Línea 2 hasta Napoli Campi Flegrei · Cumana hasta Mostra · servicios de 2027 **⚠ por confirmar**'
+  - label: Vuelta
+    value: 'Trenes extra hasta cerca de la 01:00 en 2025, en 2027 **⚠ por confirmar** · taxis en Piazzale Tecchio'
+mapsQuery: Stadio Diego Armando Maradona Napoli
+family: >-
+  El viernes vienen los niños, y es una noche larga y con mucho volumen. Llevad
+  protección para los oídos, agua y algo de comer, y acordad antes de entrar un punto de
+  encuentro fácil de reconocer por si os separáis entre la gente. La vuelta será
+  probablemente pasada la medianoche (la hora de inicio está **⚠ por confirmar**): si
+  los niños están cansados, salid un poco antes del final o esperad a
+  que se vacíe la salida antes de meteros en la marea de gente.

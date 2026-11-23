@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="52" failures="6" errors="0" time="0.014204545">
+    <testsuite name="tests/unit/tripCoupling.spec.ts" timestamp="2026-11-20T10:42:57.218Z" hostname="NewVaktorPC" tests="52" failures="6" errors="0" skipped="0" time="0.014204545">
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; escanea composables, componentes y utils, y deja fuera las excepciones documentadas" time="0.001494723">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/composables/useCardNavigation.ts no reintroduce acoplamiento" time="0.000537879">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/composables/useSearch.ts no reintroduce acoplamiento" time="0.000136563">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/composables/useTrip.ts no reintroduce acoplamiento" time="0.000117561">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/composables/useTripContext.ts no reintroduce acoplamiento" time="0.000138724">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/composables/useTripModes.ts no reintroduce acoplamiento" time="0.000106847">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/ArtistCard.vue no reintroduce acoplamiento" time="0.000150354">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/BackButton.vue no reintroduce acoplamiento" time="0.000076043">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/DaySection.vue no reintroduce acoplamiento" time="0.000400886">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/DetailPhoto.global.vue no reintroduce acoplamiento" time="0.000215336">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/GastroCard.vue no reintroduce acoplamiento" time="0.000126138">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/GastroSection.vue no reintroduce acoplamiento" time="0.000075743">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/LeafletMap.client.vue no reintroduce acoplamiento" time="0.000071385">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/MonumentCard.vue no reintroduce acoplamiento" time="0.000142492">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/NavPills.vue no reintroduce acoplamiento" time="0.000068375">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/PracticaSection.vue no reintroduce acoplamiento" time="0.000127831">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/ReservasSection.vue no reintroduce acoplamiento" time="0.000097262">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/SearchBox.vue no reintroduce acoplamiento" time="0.000065898">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/TheHero.vue no reintroduce acoplamiento" time="0.000103829">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/ThemeToggle.vue no reintroduce acoplamiento" time="0.000077082">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/Timeline.vue no reintroduce acoplamiento" time="0.000056313">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/TimelineFood.vue no reintroduce acoplamiento" time="0.000078868">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/TimelineMeta.vue no reintroduce acoplamiento" time="0.000051042">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/TimelineReservation.vue no reintroduce acoplamiento" time="0.00007937">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/TimelineStop.vue no reintroduce acoplamiento" time="0.00007337">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/TimelineTransport.vue no reintroduce acoplamiento" time="0.000074653">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/Topbar.vue no reintroduce acoplamiento" time="0.000069908">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/components/TripView.vue no reintroduce acoplamiento" time="0.00008123">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/utils/cardNav.ts no reintroduce acoplamiento" time="0.000075223">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/utils/dayLabel.ts no reintroduce acoplamiento" time="0.000072924">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/utils/dayRoute.ts no reintroduce acoplamiento" time="0.000074733">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/utils/foodGroups.ts no reintroduce acoplamiento" time="0.000081055">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/utils/mapMarkers.ts no reintroduce acoplamiento" time="0.000054385">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/utils/mapOffline.ts no reintroduce acoplamiento" time="0.000065347">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/utils/pace.ts no reintroduce acoplamiento" time="0.000045912">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/utils/searchIndex.ts no reintroduce acoplamiento" time="0.000088113">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/utils/svgMotifs.ts no reintroduce acoplamiento" time="0.00016719">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/utils/tripIndexes.ts no reintroduce acoplamiento" time="0.000073055">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="guardián de acoplamiento: código de app/ sin viaje fijo ni estado global (D-04, D-08) &gt; app/utils/tripStorage.ts no reintroduce acoplamiento" time="0.000055944">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="cableado por viaje (forma estructural) &gt; TripView publica el slug antes del primer await y se lo pasa al controller de navegación" time="0.000275914">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="cableado por viaje (forma estructural) &gt; useCardNavigationController recibe el slug y lo pasa al accesor" time="0.000210695">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="cableado por viaje (forma estructural) &gt; useSearchController lee useTripSlug() antes de su primer await y guarda un índice por slug" time="0.000263796">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="cableado por viaje (forma estructural) &gt; useTripModesController lee el slug inyectado y lo pasa a useTripModes" time="0.000195126">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="dientes del guardián &gt; detecta un viaje fijo en useTrip" time="0.002473836">
+            <failure message="expected [] to include &apos;viaje fijo: useTrip con slug literal&apos;" type="AssertionError">
+AssertionError: expected [] to include &apos;viaje fijo: useTrip con slug literal&apos;
+ ❯ tests/unit/tripCoupling.spec.ts:163:69
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="dientes del guardián &gt; detecta una clave roma- literal y un getItem con clave literal" time="0.000401124">
+            <failure message="expected [] to include &apos;clave literal roma-…&apos;" type="AssertionError">
+AssertionError: expected [] to include &apos;clave literal roma-…&apos;
+ ❯ tests/unit/tripCoupling.spec.ts:168:19
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="dientes del guardián &gt; detecta la clave roma- también entre comillas dobles y backticks" time="0.000308505">
+            <failure message="expected [] to include &apos;clave literal roma-…&apos;" type="AssertionError">
+AssertionError: expected [] to include &apos;clave literal roma-…&apos;
+ ❯ tests/unit/tripCoupling.spec.ts:173:50
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="dientes del guardián &gt; detecta un useState sin tripStateKey" time="0.001469601">
+            <failure message="expected false to be true // Object.is equality" type="AssertionError">
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/unit/tripCoupling.spec.ts:178:117
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="dientes del guardián &gt; detecta un índice MiniSearch único de módulo" time="0.000899983">
+            <failure message="expected [] to include &apos;índice MiniSearch único de módulo (sh…&apos;" type="AssertionError">
+AssertionError: expected [] to include &apos;índice MiniSearch único de módulo (sh…&apos;
+ ❯ tests/unit/tripCoupling.spec.ts:183:80
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="dientes del guardián &gt; detecta la enumeración o el borrado de localStorage" time="0.000296698">
+            <failure message="expected [] to include &apos;enumeración o borrado de localStorage&apos;" type="AssertionError">
+AssertionError: expected [] to include &apos;enumeración o borrado de localStorage&apos;
+ ❯ tests/unit/tripCoupling.spec.ts:188:60
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="dientes del guardián &gt; no da falso positivo con comentarios ni con la forma correcta" time="0.00015786">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="dientes del guardián &gt; stripComments no corta URLs dentro de strings" time="0.000061896">
+        </testcase>
+        <testcase classname="tests/unit/tripCoupling.spec.ts" name="dientes del guardián &gt; scriptOf toma solo el script de un .vue" time="0.000085586">
+        </testcase>
+    </testsuite>
+</testsuites>

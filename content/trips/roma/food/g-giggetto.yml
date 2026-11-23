@@ -1,0 +1,24 @@
+slug: g-giggetto
+trip: roma
+group: Cocina giudaico-romana · Ghetto
+# gastro-intro de NIVEL GRUPO (Ghetto), verbatim de index.html línea 5541. Vive en la ficha
+# representativa del grupo (la primera del grupo en el DOM).
+groupIntro: >-
+  La cocina del Ghetto tiene 2.000 años de historia. Frutos, verduras y legumbres
+  llevados al extremo de sabor: el carciofo alla giudia (alcachofa frita abierta
+  «como una rosa») es una de las cosas más romanas que podéis comer. Junio es final
+  de temporada — si los hay, no los dejéis pasar.
+badge: cucina ebraica
+badgeKind: ghetto
+name: Giggetto al Portico d'Ottavia
+address: Via del Portico d'Ottavia 21 · Ghetto
+desc: >-
+  Desde 1923. Tres generaciones de la familia Ceccarelli frente al Portico
+  d'Ottavia. El Financial Times lo colocó en su podio de los mejores carciofi
+  alla giudia de Roma. Mesas exteriores con las ruinas romanas al fondo.
+plato: >-
+  **Plato estrella:** carciofo alla giudia (solo en temporada) + filetto di
+  baccalà fritto + fiori di zucca. Cacio e pepe bien ejecutada también.
+footer: Mar–Dom · precio medio €30-45/persona ·
+itineraryTag: domingo al paso del ghetto
+mapsQuery: Giggetto Via del Portico d'Ottavia 21 Roma

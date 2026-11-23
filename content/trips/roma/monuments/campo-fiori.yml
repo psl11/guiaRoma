@@ -1,0 +1,112 @@
+slug: campo-fiori
+trip: roma
+roman: VI
+name: Campo de' Fiori
+italian: Campo de' Fiori · Rione Parione
+day: Viernes
+coords:
+  lat: 41.8956100
+  lng: 12.4721821
+type: card
+motif: statue
+# Paridad de orden (F8 Plan 06): el index.html rinde .notes-area ANTES de .culture-box en esta ficha.
+boxOrder: notes-first
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/1/1f/Il_Valle_delle_Rose_....JPG
+  alt: Estatua de Giordano Bruno en Campo de' Fiori
+sections:
+  - heading: Qué es
+    body: >-
+      La única gran plaza histórica de Roma que _no_ tiene iglesia. De día,
+      mercado de fruta y flores; de noche, epicentro de la vida romana joven. En
+      el centro: la estatua sombría de Giordano Bruno, filósofo quemado vivo en
+      este mismo sitio el 17 de febrero del año 1600 por hereje. Mira hacia el
+      Vaticano. No es casualidad.
+  - heading: Historia
+    body: >-
+      El nombre viene de _campus florae_: hasta el siglo XV era un prado florido
+      fuera del centro habitado. En 1456, el Papa Calixto III ordenó
+      pavimentarlo y desde entonces fue mercado y lugar de ejecuciones públicas.
+      Durante los siglos XVI y XVII, las hogueras de la Inquisición ardían aquí
+      con regularidad. El más célebre de sus condenados fue **Giordano Bruno**,
+      dominico napolitano, filósofo, matemático y astrónomo, autor de obras
+      vertiginosamente avanzadas para su tiempo: defendía un universo infinito
+      con infinitos mundos habitados, la existencia de seres pensantes fuera de
+      la Tierra, la no-centralidad del cosmos, y la idea de que la materia y el
+      espíritu son una misma sustancia. La Inquisición lo persiguió siete años
+      por toda Europa, lo capturó en Venecia, lo procesó en Roma durante otros
+      ocho años, y al negarse a retractarse fue condenado a la hoguera el 8 de
+      febrero de 1600. Lo quemaron desnudo en este lugar nueve días después.
+
+
+      Durante casi tres siglos, ningún romano se atrevió a recordar a Bruno
+      públicamente: la Iglesia católica controlaba Roma. Cuando los Saboya
+      unificaron Italia en 1870 y le quitaron al Papa el poder temporal, jóvenes
+      anticlericales y masones lanzaron una colecta internacional para erigirle
+      un monumento. La estatua, obra de Ettore Ferrari, se inauguró el 9 de
+      junio de 1889 con discursos furibundos contra el Vaticano. El Papa León
+      XIII se encerró en sus aposentos en señal de luto. La estatua sigue ahí,
+      encapuchada, sombría, mirando exactamente hacia el Vaticano. Cada 17 de
+      febrero, anarquistas, librepensadores y científicos depositan flores a sus
+      pies.
+  - heading: Anécdotas
+    body: >-
+      En las palabras finales del proceso, cuando le leyeron la sentencia, Bruno
+      respondió: _«Quizá tembláis más vosotros al pronunciar esta condena que yo
+      al recibirla»_. El verdugo le clavó la lengua con un perno de hierro para
+      que no pudiera hablar durante la ejecución — temían que predicara herejías
+      hasta el último aliento. Sus cenizas fueron arrojadas al Tíber. En 2000,
+      el Papa Juan Pablo II expresó "tristeza" por la muerte de Bruno pero la
+      Iglesia católica jamás lo rehabilitó formalmente. Curiosamente, justo
+      detrás de Campo de' Fiori está el Palazzo della Cancelleria, residencia
+      del cardenal Vicario de Roma — los enemigos eternos de Bruno tienen sede a
+      30 metros de su estatua. Sobre el mercado: los puestos son sucesivamente
+      más turísticos en las últimas décadas. Los romanos hacen la compra en
+      Mercato Trionfale o Testaccio. Lo que sí sobrevive son los **bares de
+      aperitivo** donde la sociedad romana joven sale a tomarse el primer trago
+      antes de cenar.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Campo_dei_Fiori.jpg/800px-Campo_dei_Fiori.jpg" alt="Campo de' Fiori con la estatua de Giordano Bruno, Roma" caption="La única plaza grande del centro storico sin iglesia ni vírgenes en las esquinas — González. La estatua encapuchada de Bruno en el centro, mirando hacia el Vaticano. Fue ejecutado aquí el 17 de febrero de 1600."}
+
+      - La **orientación de la mirada de Bruno**: encapuchado, con un libro cerrado entre las manos, mirando fijamente al noroeste — hacia el Vaticano. Posición intencional del escultor.
+      - Los **relieves del pedestal**: ocho escenas de la vida de Bruno (su captura, el proceso, la hoguera) y ocho retratos de "mártires del pensamiento": Galileo, Wycliffe, Hus, Servet, Aonio Paleario, Ramus, Vanini, Sarpi.
+      - La **inscripción**: «A Bruno, el siglo por él predicho, aquí donde la hoguera ardió». El "siglo por él predicho" es el del libre pensamiento — el siglo XIX.
+      - Las **placas en las casas alrededor**: una a la izquierda al entrar marca exactamente dónde estuvo la hoguera. Otra recuerda a Lucrezia Borgia, que vivió aquí brevemente.
+      - Los **puestos del mercado**: están casi todos puestos para turistas. Si quieres ver un mercado real, baja a Testaccio.
+      - El **Forno Campo de' Fiori** en la esquina sur: panadería romana legítima, la _pizza bianca_ (pizza blanca con aceite y sal) es uno de los pequeños placeres romanos auténticos. Coge una para acompañar el aperitivo.
+facts:
+  - label: Mercado
+    value: L-S 7:00 - 14:00 aprox
+  - label: Aperitivo
+    value: 18:00 - 21:00
+  - label: Acceso
+    value: Gratuito · plaza pública
+  - label: Día de Bruno
+    value: 17 de febrero · aniversario ejecución
+mapsQuery: Campo de' Fiori Roma
+culture:
+  - title: Referencias literarias
+    text: ''
+  - title: I Segreti di Roma
+    text: >-
+      (Corrado Augias, 2005) — El capítulo dedicado a Giordano Bruno es uno de
+      los más detallados del libro. Augias reconstruye los siete años de proceso
+      inquisitorial, los cargos exactos por los que Bruno fue condenado (no solo
+      el heliocentrismo, sino su panteísmo radical: negaba la Trinidad, la
+      Encarnación, la Virgen) y describe la mañana del 17 de febrero de 1600,
+      cuando fue quemado vivo en esta misma plaza con la lengua sujeta para que
+      no pudiera hablar. «Roma quemó a su mejor pensador y levantó una estatua
+      en su honor. Así funciona esta ciudad con sus héroes.»
+  - title: Historias de Roma
+    text: >-
+      (Enric González, 2004) — «Campo de' Fiori es la gran plaza laica de la
+      vieja Roma: la única, creo, que carece de iglesia y de vírgenes en las
+      esquinas.» González describe la plaza que no descansa nunca: el mercado de
+      madrugada, las terrazas al mediodía, la juerga nocturna. Y Bruno: «Se le
+      ató a una estaca y se le quemó vivo.» El cardenal Belarmino que le condenó
+      fue canonizado en 1930. González remata: «Solo hubo que esperar setenta
+      añitos más para que el papa Juan Pablo II pidiera perdón.» De noche,
+      González quedaba en La Vineria, «por donde a una hora u otra pasaba todo
+      el mundo — una vez vi a Francis Ford Coppola sentado en la terraza con
+      unos amigos».

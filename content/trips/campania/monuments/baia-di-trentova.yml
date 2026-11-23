@@ -1,0 +1,41 @@
+slug: baia-di-trentova
+trip: campania
+roman: XIV
+name: Baia di Trentova
+italian: 'Spiaggia di Trentova · Agropoli · Cilento'
+day: Jueves 24
+coords:
+  lat: 40.3437
+  lng: 14.9724
+type: nature
+motif: sea
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Spiaggia_di_Trentova%2C_Agropoli_%28SA%29.jpg/960px-Spiaggia_di_Trentova%2C_Agropoli_%28SA%29.jpg
+  alt: La bahía de Trentova, junto a Agropoli, con el agua clara y la costa verde
+sections:
+  - heading: Qué es
+    body: >-
+      Una bahía abierta junto a Agropoli, en la costa norte del Cilento, al sur de
+      Salerno. Agua clara, costa verde y una orilla a la que vienen a bañarse las
+      familias del lugar, lejos de las playas más conocidas.
+  - heading: Qué mirar
+    body: >-
+      El color del agua, que cambia de verde a azul con la profundidad; la línea de
+      la costa del Cilento, con la vegetación que baja hasta el mar; y, al norte, el
+      promontorio de Agropoli.
+  - heading: En vuestro día
+    body: >-
+      La tarde de la Opción A, después de los pueblos de los ceramistas: toalla,
+      baño y nada más, compartiendo orilla con la gente de la zona hasta que baje el
+      sol.
+facts:
+  - label: Acceso
+    value: 'En coche hasta Agropoli · aparcamiento cerca de la playa **⚠ por confirmar**'
+  - label: Servicios
+    value: 'Sombrillas, bar y socorrista **⚠ por confirmar**'
+mapsQuery: Spiaggia di Trentova Agropoli
+family: >-
+  Orilla de guijarros y arena: escarpines para los niños y algo de sombra propia por
+  si no hay sombrillas. Llevad agua de sobra y bañaos en las horas de menos sol,
+  siempre con un adulto al lado. Qué servicios hay en la playa (sombra, bar,
+  socorrista) está **⚠ por confirmar**.

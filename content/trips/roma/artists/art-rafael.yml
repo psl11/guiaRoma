@@ -1,0 +1,62 @@
+kind: artist
+slug: art-rafael
+trip: roma
+avatar: R
+name: Raffaello Sanzio
+dates: Urbino 1483 – Roma 1520 · pintor · arquitecto
+epithet: «Si Miguel Ángel es fuerza, Rafael es armonía. Murió a los 37 en la cima de la fama.»
+sections:
+  - heading: Quién fue
+    body: >-
+      El tercer gran maestro del Alto Renacimiento, junto a Leonardo y Miguel
+      Ángel. Encantador, sociable y prolífico, dirigió un taller enorme y llegó a
+      ser **arquitecto jefe de San Pedro**. Murió a los 37, un Viernes Santo, en
+      plena gloria; Roma quedó conmocionada. Está enterrado en el **Panteón**, que
+      visitaréis.
+  - heading: Su estilo
+    body: >-
+      La **armonía perfecta**: equilibrio, claridad, gracia y dulzura (la
+      _grazia_). Composiciones serenas y matemáticamente ordenadas, color
+      luminoso, una idealización elegante de la figura. Donde Miguel Ángel
+      tensiona, Rafael apacigua.
+  - heading: Obras maestras
+    body: |
+      - Las **Estancias Vaticanas** —entre ellas _La Escuela de Atenas_
+      - La _Transfiguración_ y sus célebres _Madonnas_
+      - _La Fornarina_ — Palazzo Barberini
+      - La **Capilla Chigi** en Santa Maria del Popolo (diseño integral)
+  - heading: Por qué importa
+    body: >-
+      Su ideal de belleza armónica se convirtió en el **modelo académico durante
+      cuatro siglos**: «rafaelesco» es sinónimo de perfección clásica. Fue además
+      pionero en la idea de proteger y catalogar las antigüedades de Roma.
+  - heading: Cómo reconocer su mano
+    body: |
+      - La **grazia**: rostros dulces y ovalados, gestos elegantes, una serenidad
+      que no chirría en nada.
+      - Composiciones en **pirámide o círculo**, equilibradas y clarísimas.
+      - **Color luminoso y armónico**, con transiciones suaves (el sfumato que
+      aprendió de Leonardo).
+      - Dominio total del **espacio y la perspectiva** (la arquitectura imposible
+      de _La Escuela de Atenas_).
+      - Sus **Madonnas**: el modelo de ternura materna que copiaría todo el arte
+      posterior.
+  - heading: Curiosidades
+    body: |
+      - Tan encantador y diplomático que dirigía un taller de **50 ayudantes** y
+      caía bien a todos — el reverso del huraño Miguel Ángel, su rival.
+      - En _La Escuela de Atenas_ se **autorretrató** mirándote, pintó a Platón con
+      la cara de **Leonardo** y a Heráclito con la de **Miguel Ángel**.
+      - Murió a los **37 un Viernes Santo**; según Vasari, por "excesos amorosos".
+      Roma lo vivió como una catástrofe.
+      - Su epitafio en el Panteón: «Aquí yace Rafael, de quien la Naturaleza temió
+      ser vencida mientras vivía.»
+seenIn:
+  - ref: palazzo-barberini
+    label: '[La Fornarina (Palazzo Barberini)](#palazzo-barberini)'
+    note: ✦ Lo verás en este viaje
+  - ref: popolo
+    label: '[la Capilla Chigi (Santa Maria del Popolo)](#popolo)'
+  - ref: pantheon
+    label: 'su tumba en el [Panteón](#pantheon)'
+    note: y, con guía, las **Estancias** del **Vaticano**.

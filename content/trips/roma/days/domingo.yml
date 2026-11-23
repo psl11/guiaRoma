@@ -1,0 +1,351 @@
+slug: domingo
+trip: roma
+order: 3
+roman: III
+eyebrow: domenica · 21 giugno
+title: Aventino · Ghetto · Roma Antigua
+subtitle: >-
+  El día más físico. Aventino y Ghetto por la mañana, Coliseo con Arena por la
+  tarde, España en el Mundial y el concierto de Einaudi como broche.
+stats:
+  - variant: walk
+    text: '**~6,5 km** a pie'
+  - variant: metro
+    text: '**Metro B** Termini→Circo Massimo (mañana)'
+  - variant: ticket
+    text: '**Coliseo guiado · 15:30** · Arena + Foro + Palatino (2h 30min)'
+  - variant: taxi
+    text: '**Taxi al Auditorium** · concierto Einaudi 21:00 (~€20)'
+light:
+  title: 🦶 Versión ligera · domingo (el día más exigente)
+  items:
+    - kind: care
+      text: >-
+        **El día clave para el tobillo:** el tour incluye Foro y Palatino, de
+        terreno irregular y con cuestas. **Guardad las piernas para esto** y
+        descansad por la mañana.
+    - kind: see
+      text: >-
+        **Imprescindibles:** comida en Ristoro Della Salute (13:30, junto al
+        Coliseo), tour Coliseo + Arena (15:30, reservado), España en el pub
+        (18:00, sentados) y concierto Einaudi (21:00, sentados).
+    - kind: skip
+      text: >-
+        **Saltar la mañana de andar:** el Aventino ([Giardino degli
+        Aranci](#giardino-aranci) y [Buco della Serratura](#buco-serratura)
+        suben colina) y reducir el Ghetto. Mejor llegar fresco al tour.
+    - kind: move
+      text: >-
+        **Cómo moverse:** taxi directo a la comida (Ristoro, a pie de Coliseo) y
+        taxi del pub al Auditorium. Nada de patear el centro antes del tour.
+    - kind: care
+      text: >-
+        **En el tour, avisad al guía del esguince:** podéis hacer Coliseo + Arena
+        y aflojar en el Foro/Palatino (la parte con subida) o ir a vuestro aire.
+        Calzado de apoyo.
+    - kind: rest
+      text: >-
+        **Descanso:** comida en Ristoro antes del tour; el partido y el concierto
+        son sentados.
+timeline:
+  - kind: stop
+    pace: all
+    time: '09:00'
+    title: Desayuno rápido
+    disabled: true
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **30 min** · rápido — el día empieza con metro y subida'
+  - kind: transport
+    pace: all
+    header: Hotel → Aventino (Giardino degli Aranci) · ~2,9 km
+    modes:
+      - icon: 🚶
+        desc: Andando · por Via Cavour · termina con subida al Aventino
+        meta: '⏱ **40 min**<br>💶 **gratis**'
+      - icon: Ⓜ️
+        recommended: true
+        desc: >-
+          **Metro B** · Termini → Circo Massimo · 3 paradas · + 8 min andando al
+          Aventino
+        tag: recomendado
+        meta: '⏱ **18 min total**<br>💶 **€1,50 p.p. · €4,50 total**'
+      - icon: 🚕
+        desc: '**Taxi** directo al Giardino degli Aranci'
+        meta: '⏱ **12-15 min**<br>💶 **€12-15 · €4-5 p.p.**'
+    footnote: >-
+      Domingo mañana con muchos kms por delante: ahorrar 40 min andando vale la
+      pena. Andando hasta Termini desde el hotel: 5 min.
+  - kind: stop
+    pace: all
+    time: '09:45'
+    title: Giardino degli Aranci
+    ref: giardino-aranci
+    tag: Sorrentino
+    note: Mirador del Aventino con naranjos.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **55 min** · mirador + naranjos + banco con el mejor panorama de Roma'
+      - level: plain
+        text: '🚶 hasta siguiente: **5 min** · 360 m hasta el Buco della Serratura'
+  - kind: stop
+    pace: all
+    time: '10:40'
+    title: Buco della Serratura
+    ref: buco-serratura
+    tag: Sorrentino
+    note: El ojo de cerradura. Cola posible.
+  - kind: meta
+    items:
+      - level: warn
+        text: >-
+          ⏱ **20 min** · puede haber cola — el momento de mirar dura 10 segundos,
+          pero el efecto queda
+      - level: plain
+        text: >-
+          🚶 hasta siguiente: **13 min** · ~1 km bajando desde el Aventino hasta
+          Santa Maria in Cosmedin
+  - kind: stop
+    pace: medium
+    time: '11:30'
+    title: Bocca della Verità
+    ref: bocca-verita
+    note: Foto rápida exterior.
+  - kind: meta
+    items:
+      - level: ok
+        text: >-
+          ⏱ **20 min** · foto + contexto de la iglesia de Santa Maria in
+          Cosmedin, no solo el buzón
+      - level: plain
+        text: '🚶 hasta siguiente: **7 min** · 500 m hasta Teatro Marcello'
+  - kind: stop
+    pace: slow-only
+    time: '11:50'
+    title: Teatro Marcello · Portico d'Ottavia
+    ref: ghetto
+    note: Entrada al barrio judío.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **30 min** · exterior + paseo corto por el ghetto'
+      - level: plain
+        text: '🚶 hasta siguiente: **10 min** · 800 m hasta Fontana delle Tartarughe'
+  - kind: food
+    pace: all
+    header: 🍴 Cucina ebraica en el Ghetto
+    entries:
+      - ref: g-giggetto
+        name: Giggetto al Portico d'Ottavia
+        time: '🚶 1 min'
+        desc: >-
+          Carciofo alla giudia frente a las ruinas · para sentarse a comer ·
+          **~€30-45**
+      - ref: g-sora-lella
+        name: Sora Lella
+        time: '🚶 5 min'
+        desc: >-
+          En la Isola Tiberina · trattoria histórica de la familia Fabrizi ·
+          **~€35-50**
+    footnote: >-
+      Estas dos son por si os apetece la cucina ebraica al pasar; pero hoy **la
+      comida está pensada más cerca del Coliseo** (ver más abajo, ~13:30) para
+      llegar al tour de las 15:30. Si coméis aquí, contad 15-20 min hasta el punto
+      de encuentro. Fichas en [Gastronomía](#gastronomia).
+  - kind: stop
+    pace: slow-only
+    time: '12:20'
+    title: Fontana delle Tartarughe
+    ref: tartarughe
+    note: La fuente más deliciosa de Roma.
+  - kind: meta
+    items:
+      - level: ok
+        text: >-
+          ⏱ **15 min** · la fuente se disfruta en pocos minutos — momento
+          tranquilo antes del Coliseo
+  - kind: transport
+    pace: all
+    variant: walk
+    header: Ghetto / Tartarughe → Piazza Venezia → zona Coliseo · ~1,5 km
+    modes:
+      - icon: 🚶
+        recommended: true
+        desc: >-
+          Andando · subís a Piazza Venezia y bajáis por Via dei Fori Imperiali con
+          los Foros a ambos lados
+        tag: recomendado
+        meta: '⏱ **20 min**<br>💶 **gratis**'
+    footnote: >-
+      Uno de los paseos más espectaculares de Roma. Hoy el tour es a las 15:30,
+      así que la mañana va sin prisa: Vittoriano, comida cerca del Coliseo y al
+      punto de encuentro.
+  - kind: stop
+    pace: medium
+    time: '12:45'
+    title: Piazza Venezia · Vittoriano
+    ref: vittoriano
+    note: Las primeras terrazas son gratis. De camino al Coliseo.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **45 min** · terraza gratis con uno de los mejores panoramas de Roma'
+      - level: plain
+        text: '🚶 hasta la zona del Coliseo: **12 min** · por Via dei Fori Imperiali'
+  - kind: stop
+    pace: all
+    time: '13:30'
+    title: Comida en Ristoro Della Salute · junto al Coliseo
+    disabled: true
+    reservedEvent: true
+    tag: reservado
+    note: >-
+      A pie de Coliseo, perfecto para llegar al tour de las 15:30 sin moveros de
+      la zona.
+  - kind: reservation
+    text: >-
+      ✅ **Reserva confirmada · Ristoro Della Salute** — dom 21 jun, 13:30 · a
+      nombre de **Alejandro** · al lado del Coliseo (Piazza del Colosseo). Tras
+      comer, andáis 3-5 min al punto de encuentro del tour.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **75 min** · comida tranquila · estáis a 3-5 min del punto de encuentro'
+      - level: ok
+        text: >-
+          Comed ligero: por la tarde son 2h 30min de pie en el Coliseo, el Foro y
+          el Palatino
+  - kind: food
+    pace: all
+    header: 🍴 Tu mesa del domingo (mediodía)
+    entries:
+      - href: 'https://www.google.com/maps/search/?api=1&query=Ristoro%20Della%20Salute%20Colosseo%20Roma'
+        name: Ristoro Della Salute
+        reserved: true
+        badge: ✓ reservado 13:30
+        desc: 'A pie de Coliseo · cocina romana y pizza · a nombre de Alejandro'
+  - kind: transport
+    pace: all
+    variant: walk
+    header: → Punto de encuentro · metro Colosseo (Línea B)
+    modes:
+      - icon: 🚶
+        recommended: true
+        desc: >-
+          Andando · al punto de encuentro: **parada de metro Colosseo (Línea B),
+          salida de abajo, sobre Via dei Fori Imperiali**
+        tag: recomendado
+        meta: '⏱ **5-10 min**<br>💶 **gratis**'
+    footnote: >-
+      Llegad 15 min antes. Ojo: es la **salida de abajo del metro Colosseo, en
+      Via dei Fori Imperiali** — no la de la plaza del Coliseo.
+  - kind: stop
+    pace: all
+    time: '15:30'
+    title: Tour Coliseo (Arena) + Foro + Palatino · Civitatis
+    disabled: true
+    tag: guiado
+    note: >-
+      2h 30min. Incluye acceso a la Arena. Tour con **Civitatis**. Encuentro:
+      salida de abajo del metro Colosseo (L.B), en Via dei Fori Imperiali.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **2h 30min** · hasta ~18:00 · Coliseo con Arena + Foro Romano + Palatino'
+      - level: plain
+        text: '🚶 hasta el bar del partido: **3-12 min**'
+  - kind: stop
+    pace: all
+    time: '18:00'
+    title: ⚽ España – Arabia Saudí · Mundial
+    disabled: true
+    tag: partido
+    note: >-
+      A ver el partido a un pub con ambiente. Todos a un paso del Coliseo.
+  - kind: meta
+    items:
+      - level: ok
+        text: >-
+          ⏱ **~2 h** · partido + **cena en el propio pub** · al pitido final,
+          taxi al Auditorium para el concierto
+  - kind: food
+    pace: all
+    header: ⚽ Ver a España cerca del Coliseo · sports bars
+    entries:
+      - href: 'https://www.google.com/maps/search/?api=1&query=The%20Shamrock%20Irish%20Pub%20Via%20del%20Colosseo%20Roma'
+        name: The Shamrock
+        time: '🚶 3 min'
+        desc: >-
+          Pub irlandés en Via del Colosseo, literalmente al lado · varias
+          pantallas · el más cercano y futbolero · birra ~€6
+      - href: 'https://www.google.com/maps/search/?api=1&query=The%20Scholars%20Lounge%20Roma'
+        name: The Scholars Lounge
+        time: '🚶 12 min'
+        desc: >-
+          Cerca de Piazza Venezia · el pub deportivo más grande de Roma ·
+          pantallas enormes y ambientazo en partidos · birra ~€7
+      - href: 'https://www.google.com/maps/search/?api=1&query=The%20Fiddler%27s%20Elbow%20Roma'
+        name: The Fiddler's Elbow
+        time: '🚶 12 min'
+        desc: >-
+          El pub irlandés más antiguo de Roma, junto a Monti / Santa Maria
+          Maggiore · clásico para fútbol · birra ~€6
+    footnote: >-
+      En partido de España estos pubs se llenan: llegad **20-30 min antes** para
+      coger sitio. The Shamrock es el más cercano al Coliseo; The Scholars Lounge,
+      el de más ambiente. **Cenáis ahí mismo durante el partido** (todos sirven
+      comida) y al pitido final salís hacia el concierto.
+  - kind: transport
+    pace: all
+    variant: taxi
+    header: Pub (Coliseo) → Auditorium Parco della Musica · ~7 km
+    modes:
+      - icon: 🚕
+        recommended: true
+        desc: >-
+          **Taxi** · pedidlo con FreeNow al pitido final · es lo único que llega
+          bien al Auditorium
+        tag: recomendado
+        meta: '⏱ **20-25 min**<br>💶 **€18-22 · €6-7 p.p.**'
+    footnote: >-
+      Salid del pub sobre las 19:55-20:10 para llegar holgados. El Auditorium está
+      al norte, fuera del centro: el taxi es la opción realista de noche.
+  - kind: stop
+    pace: all
+    time: '20:30'
+    title: Llegada Auditorium · Cavea
+    ref: auditorium
+    note: Cafetería del Auditorium para un café o algo dulce antes del concierto.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **30 min** · margen para recoger entradas y sentarse en la Cavea'
+  - kind: stop
+    pace: all
+    time: '21:00'
+    title: Concierto Ludovico Einaudi
+    disabled: true
+    tag: reservado
+    note: 'Cavea (anfiteatro al aire libre). ~1h 45min. El broche del viaje.'
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **~1h 45min** · Einaudi al aire libre, de noche · el mejor cierre posible'
+  - kind: stop
+    pace: all
+    time: '~23:00'
+    title: Taxi Auditorium → hotel (~15 min)
+    disabled: true
+    note: >-
+      ~€20. Habrá cola de taxis al salir, o pedid con FreeNow. Si quedáis con
+      hambre, una pizza al taglio camino del hotel.
+cards:
+  - giardino-aranci
+  - buco-serratura
+  - bocca-verita
+  - ghetto
+  - tartarughe
+  - vittoriano
+  - monti

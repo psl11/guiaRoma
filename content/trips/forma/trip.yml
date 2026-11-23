@@ -1,0 +1,38 @@
+# Viaje FICTICIO de pruebas de FORMA (Fase 10, D-15). No es un viaje real: existe solo para
+# comprobar que la guía toma su forma de los datos del viaje. Tiene diez días que repiten día
+# de la semana (dos sábados, con slugs con fecha y pastillas propias, D-02/D-03), no tiene
+# Arte, Arquitectura, Reservas ni Práctica (sus secciones y pastillas no deben aparecer) y lleva
+# su propio chrome: título de pestaña, marca, leyenda del mapa y pie.
+#
+# Borrador (Fase 11, ROUTE-05, D-16): `draft: true` lo deja fuera de la build de producción.
+# content.config.ts lo excluye de las 6 colecciones de Nuxt Content, así que no se prerenderiza
+# ninguna ruta suya ni viaja ninguna fila suya en los `sql_dump` públicos (CR-01 cerrado). Solo
+# en `pnpm dev` se sigue cargando: se ve en /trips/forma, pero nunca se lista en la portada. El
+# centinela FORMA-CENTINELA-10A (en howTo) permite comprobar que nada de este viaje llega al
+# sitio publicado (tests/data/build-isolation.spec.ts decodifica los dumps).
+draft: true
+slug: forma
+title: Diez días de _Forma_
+decoration: '·  FORMA PROBATA  ·'
+heroMeta: 19 — 28 de septiembre · Pensión del Ensayo
+quote: Toda guía se mide por sus días.
+quoteAttr: — ANÓNIMO DEL ENSAYO
+infoCards: []
+howTo:
+  - >-
+    Guía de ensayo para comprobar que la forma de cada guía sale de sus datos:
+    tantos días como tiene el viaje, cada uno con su pastilla, y ninguna sección
+    que el viaje no tenga. Marca de control FORMA-CENTINELA-10A. Nada de lo que
+    hay aquí existe fuera de esta guía.
+map:
+  center: { lat: 43.375, lng: -8.4 }
+  zoom: 14
+pageTitle: 'Forma · diez días de ensayo'
+brand:
+  before: 'Forma'
+  after: 'diez días de ensayo'
+mapLegend: '✦  Rojos · paradas con ficha ✦'
+footer:
+  - 'Guía de ensayo para _comprobar_ la forma'
+  - 'Forma · diez días de prueba'
+  - '"Toda guía se mide por sus días."'

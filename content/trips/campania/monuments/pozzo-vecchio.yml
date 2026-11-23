@@ -1,0 +1,41 @@
+slug: pozzo-vecchio
+trip: campania
+roman: IV
+name: Pozzo Vecchio
+italian: 'Spiaggia del Pozzo Vecchio · Procida'
+day: Domingo 20
+coords:
+  lat: 40.7627
+  lng: 14.0089
+type: nature
+motif: sea
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Cala_Pozzo_Vecchio_-_Procida.jpg/960px-Cala_Pozzo_Vecchio_-_Procida.jpg
+  alt: La cala de Pozzo Vecchio, en la costa oeste de Procida
+sections:
+  - heading: Qué es
+    body: >-
+      Una playa tranquila de arena volcánica oscura al pie de un acantilado de toba,
+      en la costa oeste de Procida. Es la playa de *Il Postino*: aquí se rodaron
+      escenas de la película, y el sitio conserva ese aire quieto, de isla sin prisa.
+  - heading: Qué mirar
+    body: >-
+      El color de la arena, casi negra, contra el agua clara; las capas de la roca
+      del acantilado, hechas de ceniza volcánica; y, enfrente, la silueta de Ischia,
+      adonde iréis mañana.
+  - heading: En vuestro día
+    body: >-
+      El baño de la tarde, después de recorrer la isla en bici. Sin horarios: un rato
+      de agua, de arena y de no hacer nada antes de bajar a la Corricella a ver el
+      atardecer.
+facts:
+  - label: Acceso
+    value: 'Libre · bajada a pie desde la carretera, junto al cementerio de la isla'
+  - label: Servicios
+    value: 'Hamacas, sombrillas, bar y socorrista **⚠ por confirmar**'
+mapsQuery: Spiaggia del Pozzo Vecchio Procida
+family: >-
+  La arena oscura se calienta mucho al sol de junio: llevad chanclas para los niños,
+  agua de sobra y algo de sombra propia por si no hay sombrillas. Bañaos en las
+  horas de menos sol y vigilad siempre a los pequeños en el agua; qué servicios hay
+  en la playa (sombra, bar, socorrista) está **⚠ por confirmar**.

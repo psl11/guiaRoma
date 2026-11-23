@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="18" failures="11" errors="0" time="0.008980013">
+    <testsuite name="tests/unit/romaLeaks.spec.ts" timestamp="2026-11-20T14:33:00.432Z" hostname="NewVaktorPC" tests="18" failures="11" errors="0" skipped="0" time="0.008980013">
+        <testcase classname="tests/unit/romaLeaks.spec.ts" name="findRomaLeaks — no casa dentro de otra palabra &gt; aroma → []" time="0.000965942">
+        </testcase>
+        <testcase classname="tests/unit/romaLeaks.spec.ts" name="findRomaLeaks — no casa dentro de otra palabra &gt; Romaña → []" time="0.000113275">
+        </testcase>
+        <testcase classname="tests/unit/romaLeaks.spec.ts" name="findRomaLeaks — no casa dentro de otra palabra &gt; romano → []" time="0.000075276">
+        </testcase>
+        <testcase classname="tests/unit/romaLeaks.spec.ts" name="findRomaLeaks — no casa dentro de otra palabra &gt; guiaRoma → []" time="0.000071328">
+        </testcase>
+        <testcase classname="tests/unit/romaLeaks.spec.ts" name="findRomaLeaks — no casa dentro de otra palabra &gt; payment → []" time="0.000067711">
+        </testcase>
+        <testcase classname="tests/unit/romaLeaks.spec.ts" name="findRomaLeaks — no casa dentro de otra palabra &gt; Payaso → []" time="0.000047427">
+        </testcase>
+        <testcase classname="tests/unit/romaLeaks.spec.ts" name="findRomaLeaks — no casa dentro de otra palabra &gt; cadena vacía → []" time="0.000105931">
+        </testcase>
+        <testcase classname="tests/unit/romaLeaks.spec.ts" name="findRomaLeaks — casa la palabra en cualquier caja &gt; «en Roma.» → Roma" time="0.003242638">
+            <failure message="expected [] to deeply equal [ &apos;Roma&apos; ]" type="AssertionError">
+AssertionError: expected [] to deeply equal [ &apos;Roma&apos; ]
+
+- Expected
++ Received
+
+- [
+-   &quot;Roma&quot;,
+- ]
++ []
+
+ ❯ tests/unit/romaLeaks.spec.ts:25:39
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/romaLeaks.spec.ts" name="findRomaLeaks — casa la palabra en cualquier caja &gt; «ROMA» → Roma (forma canónica)" time="0.000586645">
+            <failure message="expected [] to deeply equal [ &apos;Roma&apos; ]" type="AssertionError">
+AssertionError: expected [] to deeply equal [ &apos;Roma&apos; ]
+
+- Expected
++ Received
+
+- [
+-   &quot;Roma&quot;,
+- ]
++ []
+
+ ❯ tests/unit/romaLeaks.spec.ts:29:35
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/romaLeaks.spec.ts" name="findRomaLeaks — casa la palabra en cualquier caja &gt; «ROYAL COURT» → Royal Court" time="0.000462644">
+            <failure message="expected [] to deeply equal [ &apos;Royal Court&apos; ]" type="AssertionError">
+AssertionError: expected [] to deeply equal [ &apos;Royal Court&apos; ]
+
+- Expected
++ Received
+
+- [
+-   &quot;Royal Court&quot;,
+- ]
++ []
+
+ ❯ tests/unit/romaLeaks.spec.ts:33:42
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/romaLeaks.spec.ts" name="findRomaLeaks — casa la palabra en cualquier caja &gt; «Royal\nCourt» → Royal Court (cualquier espacio entre las dos palabras)" time="0.000359853">
+            <failure message="expected [] to deeply equal [ &apos;Royal Court&apos; ]" type="AssertionError">
+AssertionError: expected [] to deeply equal [ &apos;Royal Court&apos; ]
+
+- Expected
++ Received
+
+- [
+-   &quot;Royal Court&quot;,
+- ]
++ []
+
+ ❯ tests/unit/romaLeaks.spec.ts:37:43
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/romaLeaks.spec.ts" name="findRomaLeaks — casa la palabra en cualquier caja &gt; varias marcas salen en el orden de la lista" time="0.000453281">
+            <failure message="expected [] to deeply equal [ &apos;Roma&apos;, &apos;Royal Court&apos; ]" type="AssertionError">
+AssertionError: expected [] to deeply equal [ &apos;Roma&apos;, &apos;Royal Court&apos; ]
+
+- Expected
++ Received
+
+- [
+-   &quot;Roma&quot;,
+-   &quot;Royal Court&quot;,
+- ]
++ []
+
+ ❯ tests/unit/romaLeaks.spec.ts:41:54
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/romaLeaks.spec.ts" name="findRomaLeaks — casa la palabra en cualquier caja &gt; «19—23 giugno 2026» → giugno" time="0.000296043">
+            <failure message="expected [] to deeply equal [ &apos;giugno&apos; ]" type="AssertionError">
+AssertionError: expected [] to deeply equal [ &apos;giugno&apos; ]
+
+- Expected
++ Received
+
+- [
+-   &quot;giugno&quot;,
+- ]
++ []
+
+ ❯ tests/unit/romaLeaks.spec.ts:51:33
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/romaLeaks.spec.ts" name="findRomaLeaks — casa la palabra en cualquier caja &gt; «— FEDERICO FELLINI» → Fellini" time="0.000256056">
+            <failure message="expected [] to deeply equal [ &apos;Fellini&apos; ]" type="AssertionError">
+AssertionError: expected [] to deeply equal [ &apos;Fellini&apos; ]
+
+- Expected
++ Received
+
+- [
+-   &quot;Fellini&quot;,
+- ]
++ []
+
+ ❯ tests/unit/romaLeaks.spec.ts:51:33
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/romaLeaks.spec.ts" name="findRomaLeaks — casa la palabra en cualquier caja &gt; «para Pay y» → Pay" time="0.000227491">
+            <failure message="expected [] to deeply equal [ &apos;Pay&apos; ]" type="AssertionError">
+AssertionError: expected [] to deeply equal [ &apos;Pay&apos; ]
+
+- Expected
++ Received
+
+- [
+-   &quot;Pay&quot;,
+- ]
++ []
+
+ ❯ tests/unit/romaLeaks.spec.ts:51:33
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/romaLeaks.spec.ts" name="findRomaLeaks — casa la palabra en cualquier caja &gt; «MMXXVI» → MMXXVI" time="0.000271161">
+            <failure message="expected [] to deeply equal [ &apos;MMXXVI&apos; ]" type="AssertionError">
+AssertionError: expected [] to deeply equal [ &apos;MMXXVI&apos; ]
+
+- Expected
++ Received
+
+- [
+-   &quot;MMXXVI&quot;,
+- ]
++ []
+
+ ❯ tests/unit/romaLeaks.spec.ts:51:33
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/romaLeaks.spec.ts" name="findRomaLeaks — casa la palabra en cualquier caja &gt; «concierto Einaudi» → Einaudi" time="0.0002223">
+            <failure message="expected [] to deeply equal [ &apos;Einaudi&apos; ]" type="AssertionError">
+AssertionError: expected [] to deeply equal [ &apos;Einaudi&apos; ]
+
+- Expected
++ Received
+
+- [
+-   &quot;Einaudi&quot;,
+- ]
++ []
+
+ ❯ tests/unit/romaLeaks.spec.ts:51:33
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/romaLeaks.spec.ts" name="ROMA_MARKERS — lista mínima de D-16 &gt; contiene las siete marcas y ninguna más" time="0.000267604">
+            <failure message="expected [] to deeply equal [ &apos;Roma&apos;, &apos;Einaudi&apos;, &apos;giugno&apos;, …(4) ]" type="AssertionError">
+AssertionError: expected [] to deeply equal [ &apos;Roma&apos;, &apos;Einaudi&apos;, &apos;giugno&apos;, …(4) ]
+
+- Expected
++ Received
+
+- [
+-   &quot;Roma&quot;,
+-   &quot;Einaudi&quot;,
+-   &quot;giugno&quot;,
+-   &quot;MMXXVI&quot;,
+-   &quot;Pay&quot;,
+-   &quot;Fellini&quot;,
+-   &quot;Royal Court&quot;,
+- ]
++ []
+
+ ❯ tests/unit/romaLeaks.spec.ts:57:31
+            </failure>
+        </testcase>
+    </testsuite>
+</testsuites>

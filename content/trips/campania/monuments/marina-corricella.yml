@@ -1,0 +1,37 @@
+slug: marina-corricella
+trip: campania
+roman: V
+name: Marina Corricella
+italian: 'Marina di Corricella · Procida'
+day: Domingo 20
+coords:
+  lat: 40.7616
+  lng: 14.0290
+type: card
+motif: rooftops
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Procida_Marina_Corricella.jpg/960px-Procida_Marina_Corricella.jpg
+  alt: Las casas de colores de Marina Corricella sobre el puerto de pescadores
+sections:
+  - heading: Qué es
+    body: >-
+      El puerto de pescadores más antiguo de Procida: casas pastel, rosas, amarillas
+      y azules, apiñadas unas sobre otras al borde del agua, con escaleras, arcos y
+      balcones que bajan hasta las barcas. Es la postal de la isla, pero sigue
+      siendo, antes que nada, un pueblo de pescadores.
+  - heading: Qué mirar
+    body: >-
+      Sentaos en el muelle al caer la tarde y mirad cómo los pescadores sacan las
+      barcas y recogen las redes mientras la isla recupera su silencio. Los gatos
+      rondan las cajas de pescado y las fachadas se encienden con la última luz.
+  - heading: En vuestro día
+    body: >-
+      Es el final del primer día en la isla, sin nada más que hacer que mirar.
+      Cuando se vaya la luz, la cena está aquí mismo, en las terrazas del puerto
+      ([cocina de las islas](#gastronomia)).
+facts:
+  - label: Acceso
+    value: 'Libre · escalinata desde Terra Murata o bajada a pie desde el centro de la isla'
+  - label: Mejor momento
+    value: 'Al atardecer, cuando vuelven las barcas'
+mapsQuery: Marina Corricella Procida

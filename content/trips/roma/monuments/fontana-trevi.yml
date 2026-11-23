@@ -1,0 +1,101 @@
+slug: fontana-trevi
+trip: roma
+roman: II
+name: Fontana di Trevi
+italian: Fontana di Trevi · Rione Trevi
+day: Viernes
+coords:
+  lat: 41.9009325
+  lng: 12.4833130
+type: card
+motif: fountain
+arch:
+  - ref: arq-moderna
+    label: 'Arquitectura: [Tardobarroco](#arq-moderna)'
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Fontana_di_Trevi_di_notte.JPG/960px-Fontana_di_Trevi_di_notte.JPG
+  alt: Fontana di Trevi de noche
+sections:
+  - heading: Qué es
+    body: >-
+      La fuente barroca más teatral del mundo. Veintiséis metros de altura, una
+      fachada-palacio de mármol, un dios oceánico en carro de caballos marinos,
+      agua brotando de la roca: un escenario antes que una escultura. Ocupa toda
+      una plaza pequeña que la fuerza a apretarse contra el edificio detrás como
+      una obra de teatro contra el escenario.
+  - heading: Historia
+    body: >-
+      Marca el punto final del _Acqua Vergine_, el acueducto que Agripa
+      construyó en el año 19 a.C. y que sigue funcionando: el agua que ves caer
+      ha viajado 20 kilómetros bajo tierra desde un manantial cerca de Salone,
+      al este de Roma. Es una de las pocas piezas de ingeniería de la Roma
+      imperial que todavía cumple su función original. Durante siglos el
+      manantial alimentó una fuente modesta en este mismo punto; en 1732 el Papa
+      Clemente XII convocó un concurso para sustituirla por algo monumental y
+      eligió a Nicola Salvi, un arquitecto poco conocido que tardó treinta años
+      en terminarla y murió antes del estreno.
+
+
+      La fuente se inauguró en 1762 bajo Clemente XIII. La leyenda de la moneda
+      viene de los soldados romanos antiguos, que lanzaban una moneda al
+      manantial antes de marchar a las guerras para asegurar el regreso. La
+      tradición moderna fue popularizada por la película _Tres monedas en la
+      fuente_ (1954) y luego cementada por Fellini en _La dolce vita_, con Anita
+      Ekberg bañándose en ella.
+  - heading: Anécdotas
+    body: >-
+      Cada año se recogen unos 1,5 millones de euros en monedas, que se donan a
+      Caritas para alimentar a personas sin hogar de Roma. En 2002 un alcalde
+      intentó cambiar este destino y hubo manifestaciones. La escena de Anita
+      Ekberg en _La dolce vita_ se rodó en marzo y el agua estaba a 4 grados;
+      ella aguantó con copas de vodka entre tomas mientras Mastroianni llevaba
+      un traje de buceo bajo la ropa. En 2017 un turista alemán se metió en la
+      fuente para hacerse un selfie y se rompió el tobillo al resbalar en el
+      mármol; la municipalidad lo multó con 450 euros además del coste del
+      rescate. Detrás de la fachada barroca está el Palazzo Poli, donde vivió en
+      su vejez la duquesa Marianna Talbot, amante de Bonnie Prince Charlie.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Trevi_Fountain_-_Roma.jpg/800px-Trevi_Fountain_-_Roma.jpg" alt="Fontana di Trevi de noche, Roma" caption="La fuente iluminada: el carro de Océano tirado por caballos marinos (uno manso, uno salvaje — la dualidad del mar). El caballo indómito está a su izquierda. La moneda: con la mano derecha, por encima del hombro izquierdo."}
+
+      - Las **dos figuras laterales bajo Oceanus**: la izquierda es _Salubridad_ con una corona de laurel; la derecha, _Abundancia_ con un cuerno. Ambas representan virtudes del agua romana.
+      - El **relieve sobre la figura de Abundancia**: muestra a una doncella señalando el manantial a los soldados romanos. Es la leyenda del nombre "Vergine" — una virgen indicó el manantial a Agripa.
+      - Los **dos caballos marinos** son opuestos: uno está calmo (representa el mar quieto), el otro rampante (el mar agitado).
+      - El **vaso de mármol con relieve** en una esquina de la plaza, conocido como _Asso di Coppe_: lo añadió Salvi para tapar la vista de un peluquero que criticaba la obra durante la construcción.
+      - **De noche** la iluminación viene de abajo del agua, lo que crea sombras dramáticas sobre Oceanus y hace que el barroco "vibre". Es cuando mejor se entiende por qué la palabra "espectáculo" cabe aquí.
+facts:
+  - label: Horario
+    value: 24/7 · plataforma 9:00-22:00
+  - label: Acceso
+    value: Gratuito · €2 plataforma inferior
+  - label: Tiempo de visita
+    value: 20-25 minutos
+  - label: Tradición
+    value: Moneda con la derecha sobre el hombro izquierdo
+mapsQuery: Fontana di Trevi Roma
+culture:
+  - title: Referencias culturales
+    text: ''
+  - title: La dolce vita
+    text: >-
+      (Federico Fellini, 1960) — la escena más famosa del cine italiano: Anita
+      Ekberg bañándose en la fuente con Marcello Mastroianni. Rodada en marzo
+      con agua a 4°C.
+  - title: Tres monedas en la fuente
+    text: >-
+      (Jean Negulesco, 1954) — la película que popularizó internacionalmente la
+      tradición de la moneda.
+  - title: I Segreti di Roma
+    text: >-
+      (Corrado Augias, 2005) — Augias recorre la historia del Acqua Vergine, el
+      acueducto de Agripa del año 19 a.C. que aún hoy abastece esta fuente: el
+      nombre «Vergine» viene de la leyenda de la jovencita que, según Frontino,
+      mostró a los ingenieros romanos el manantial en la Campagna. El agua lleva
+      viniendo del mismo sitio desde hace 2.000 años.
+  - title: Historias de Roma
+    text: >-
+      (Enric González, 2004) — González pasa por la fuente de noche, cuando ya
+      no hay turistas: «Roma mantiene una relación estrictamente pasiva con el
+      tiempo» — la Fontana di Trevi sigue abastecida por el Acqua Vergine, el
+      mismo acueducto de Agripa del año 19 a.C. La fontana de noche, sola, es
+      exactamente la imagen de esa frase.

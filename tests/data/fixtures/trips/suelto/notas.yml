@@ -1,0 +1,4 @@
+# Fixture NEGATIVO (09-02): YAML suelto que no casa con ninguna colección de
+# content.config.ts. Content lo ignoraría sin avisar → la regla `stray-file` lo señala.
+titulo: Notas sueltas
+texto: Este fichero no pertenece a ninguna colección.

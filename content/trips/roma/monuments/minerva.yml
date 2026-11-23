@@ -1,0 +1,86 @@
+slug: minerva
+trip: roma
+roman: XXXV
+name: Santa Maria sopra Minerva
+italian: Piazza della Minerva · detrás del Panteón
+day: Lunes
+coords:
+  lat: 41.8983000
+  lng: 12.4779000
+type: card
+motif: church
+artists:
+  - ref: art-michelangelo
+    label: 'Artistas: [Michelangelo](#art-michelangelo)'
+  - ref: art-bernini
+    label: '[Bernini](#art-bernini)'
+arch:
+  - ref: arq-medieval
+    label: 'Arquitectura: [Gótico (medieval)](#arq-medieval)'
+hero:
+  src: https://commons.wikimedia.org/wiki/Special:FilePath/Elefantino%20Bernini%20Roma.jpg?width=900
+  alt: El elefantino de Bernini con el obelisco frente a Santa Maria sopra Minerva
+sections:
+  - heading: Qué es
+    body: >-
+      La **única iglesia gótica de Roma**, levantada por los dominicos sobre los
+      restos de un templo dedicado a Minerva. Pasa desapercibida —tiene una
+      fachada lisa y modesta—, pero dentro guarda una **bóveda azul cuajada de
+      estrellas doradas**, el _Cristo Resucitado_ de **Miguel Ángel**, los
+      frescos de Filippino Lippi en la Capilla Carafa y las tumbas de dos papas
+      Médicis, de Fra Angelico y de Santa Catalina de Siena. Y delante, en la
+      plaza, uno de los caprichos más queridos de Roma: el **elefantino de
+      Bernini** cargando un obelisco egipcio.
+  - heading: Historia
+    body: >-
+      Los dominicos empezaron la iglesia hacia **1280** sobre el solar de un
+      antiguo templo —de ahí el «sopra Minerva», «sobre Minerva»—. La
+      construyeron al estilo **gótico**, importado de Florencia por frailes de
+      Santa Maria Novella, algo rarísimo en una ciudad que pasó del románico
+      directo al Renacimiento. El interior actual, con su intenso azul
+      estrellado, es fruto de una restauración neogótica del siglo XIX, pero
+      recupera el espíritu medieval del templo.
+
+
+      Por su prestigio dominico, la Minerva se llenó de tumbas y capillas de las
+      grandes familias: la **Capilla Carafa**, con los frescos de **Filippino
+      Lippi** (1488-1493), es una joya del primer Renacimiento. Aquí están
+      enterrados los papas **León X** y **Clemente VII** (los dos Médicis), el
+      pintor **Fra Angelico** y, bajo el altar mayor, **Santa Catalina de
+      Siena**, copatrona de Italia y Europa.
+  - heading: Anécdotas
+    body: >-
+      El **elefantino** (1667) lo diseñó **Bernini** y lo talló su discípulo
+      Ercole Ferrata para sostener un pequeño obelisco egipcio hallado en el
+      huerto del convento. La inscripción del papa Alejandro VII proclama que
+      «hace falta una mente robusta para sostener una sabiduría sólida», y por
+      eso el peso descansa sobre el elefante, símbolo de fuerza e inteligencia.
+      Los romanos, más prosaicos, lo bautizaron _«il pulcino della Minerva»_ (el
+      pollito) y cuentan que Bernini orientó adrede el **trasero del elefante**
+      hacia el convento dominico, con cuyos frailes se llevaba mal.
+
+
+      En el convento contiguo, en **1633**, **Galileo Galilei** fue juzgado por
+      la Inquisición y obligado a abjurar de que la Tierra gira alrededor del
+      Sol. La leyenda —no documentada— pone en su boca al levantarse el famoso
+      _«E pur si muove»_ («y sin embargo, se mueve»).
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://commons.wikimedia.org/wiki/Special:FilePath/Cristo%20della%20Minerva%20-%20Michelangelo.jpg?width=800" alt="El Cristo Resucitado de Miguel Ángel en Santa Maria sopra Minerva" caption="El _Cristo Resucitado_ de Miguel Ángel (1519-1521): un Cristo desnudo y clásico que sostiene la cruz. El paño de bronce dorado sobre las caderas se añadió después, por pudor. Está a la izquierda del altar mayor — fijaos en el pulido casi pictórico del mármol."}
+
+      - El **elefantino de Bernini** en la plaza, antes de entrar: el obelisco más pequeño de Roma sobre la sonrisa del elefante.
+      - El **Cristo de Miguel Ángel** a la izquierda del altar: tocadlo con la mirada, no con las manos (el pie está gastado de siglos de devoción).
+      - La **bóveda azul estrellada**: levantad la vista nada más entrar.
+      - La **Capilla Carafa** (brazo derecho del crucero): los frescos de Filippino Lippi, con la _Anunciación_ y la _Asunción_.
+      - El cuerpo de **Santa Catalina de Siena** bajo el altar mayor (su cabeza se venera en Siena).
+      - En la pared exterior y en pilastras, las **placas de las grandes inundaciones** del Tíber: marcan hasta dónde llegó el agua.
+facts:
+  - label: Horario
+    value: ~10-13 y 15-19 · entrada libre
+  - label: Cómo llegar
+    value: Detrás del Panteón · 2 min de la Casanatense
+  - label: Tiempo
+    value: 20-25 min
+  - label: Código
+    value: Hombros y rodillas cubiertos
+mapsQuery: Santa Maria sopra Minerva Roma

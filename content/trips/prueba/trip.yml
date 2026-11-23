@@ -1,0 +1,32 @@
+# Viaje FICTICIO de pruebas de aislamiento entre viajes (Fase 9, D-01). No es un viaje real:
+# existe solo para que los tests comprueben que búsqueda, notas, preferencias y enlaces de ficha
+# de un viaje no se mezclan con los de otro. Su contenido es estable a propósito.
+#
+# Solo DEV (D-02): se ve en `pnpm dev` → /trips/prueba. NO se prerenderiza ni se enlaza desde
+# ningún sitio (nitro.prerender.routes sigue siendo ['/'] y crawlLinks no lo descubre), así que
+# la build estática solo emite Roma. El centinela PRUEBA-CENTINELA-9F3 (en howTo y en la ficha
+# fontana-pruebas) permite comprobar que nada de este viaje se cuela en la página de Roma.
+#
+# Hallazgo D-03 para la Fase 10: los slugs de día de un viaje TIENEN que ser viernes…martes,
+# porque TripView solo monta esos cinco DaySection (un día con otro slug no se pintaría). Por
+# eso los días de prueba son viernes y sabado.
+#
+# Fase 11 (ROUTE-05): descomentar la línea siguiente cuando exista el campo `draft` en el
+# esquema del viaje. Ese filtro deberá excluir también las filas de prueba del sql_dump
+# público de la build, no solo las rutas de prerender.
+draft: true
+slug: prueba
+title: Dos días de _Prueba_
+decoration: '·  ITER PROBATIONIS  ·'
+heroMeta: Fin de semana ficticio · Hostal del Ensayo
+quote: Toda guía se mide por lo que no confunde.
+quoteAttr: — ANÓNIMO DE LAS PRUEBAS
+infoCards: []
+howTo:
+  - >-
+    Guía de ensayo para comprobar que cada viaje vive en su propio mundo: sus
+    fichas, su buscador, sus notas y sus preferencias. Marca de control
+    PRUEBA-CENTINELA-9F3. Nada de lo que hay aquí existe fuera de esta guía.
+map:
+  center: { lat: 40.4168, lng: -3.7038 }
+  zoom: 15

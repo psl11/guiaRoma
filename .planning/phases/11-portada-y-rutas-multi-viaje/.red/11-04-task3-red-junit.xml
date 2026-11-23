@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="21" failures="10" errors="0" time="0.01789011">
+    <testsuite name="tests/unit/tripDates.spec.ts" timestamp="2026-11-20T19:39:36.256Z" hostname="NewVaktorPC" tests="21" failures="10" errors="0" skipped="0" time="0.01789011">
+        <testcase classname="tests/unit/tripDates.spec.ts" name="trip.yml real de Roma → línea meta de su tarjeta (D-08) &gt; valida con TripSchema y su línea meta es «19–23 de junio de 2026 · Roma»" time="0.010732126">
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="formatTripDates (D-09) &gt; rango en el mismo mes: 2026-06-19 + 2026-06-23 → «19–23 de junio de 2026»" time="0.000160624">
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="formatTripDates (D-09) &gt; solo inicio, fin null o inicio = fin → fecha completa «19 de junio de 2026»" time="0.000218041">
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="formatTripDates (D-09) &gt; sin inicio (con o sin fin) → null" time="0.000155409">
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="tripMetaLine (línea meta de la tarjeta) &gt; solo fechas → «19–23 de junio de 2026»" time="0.000137634">
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="tripMetaLine (línea meta de la tarjeta) &gt; solo destinos [Roma] → «Roma»" time="0.00012749">
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="tripMetaLine (línea meta de la tarjeta) &gt; varios destinos con fechas de 2027 → termina en « · Nápoles · Procida · Ischia»" time="0.000173075">
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="tripMetaLine (línea meta de la tarjeta) &gt; sin fechas ni destinos → null" time="0.00014272">
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="formatTripDates: tabla completa (D-09) &gt; mismo mes, día 1: 2027-05-01 + 2027-05-10 → «1–10 de mayo de 2027»" time="0.000129312">
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="formatTripDates: tabla completa (D-09) &gt; cruce de mes: 2026-06-30 + 2026-07-02 → fechas completas unidas por « – »" time="0.000130448">
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="formatTripDates: tabla completa (D-09) &gt; cruce de año: 2026-12-28 + 2027-01-03 → fechas completas unidas por « – »" time="0.000113077">
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="sortTrips (D-10) &gt; startDate descendente: 2027-06-19 antes que 2026-06-19" time="0.001930503">
+            <failure message="sortTrips is not a function" type="TypeError">
+TypeError: sortTrips is not a function
+ ❯ tests/unit/tripDates.spec.ts:99:17
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="sortTrips (D-10) &gt; un viaje sin startDate va detrás de todos los que la tienen" time="0.000374583">
+            <failure message="sortTrips is not a function" type="TypeError">
+TypeError: sortTrips is not a function
+ ❯ tests/unit/tripDates.spec.ts:107:17
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="sortTrips (D-10) &gt; misma fecha → por título plano en español («_Ávila_» antes que «Burgos»)" time="0.000284618">
+            <failure message="sortTrips is not a function" type="TypeError">
+TypeError: sortTrips is not a function
+ ❯ tests/unit/tripDates.spec.ts:117:17
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="sortTrips (D-10) &gt; ambos sin fecha → por título plano en español" time="0.000310646">
+            <failure message="sortTrips is not a function" type="TypeError">
+TypeError: sortTrips is not a function
+ ❯ tests/unit/tripDates.spec.ts:125:17
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="sortTrips (D-10) &gt; no muta la entrada" time="0.000246798">
+            <failure message="sortTrips is not a function" type="TypeError">
+TypeError: sortTrips is not a function
+ ❯ tests/unit/tripDates.spec.ts:132:17
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="listedTrips (D-16, vacío frente a cargando) &gt; null o undefined (datos aún no llegados) → null" time="0.000306722">
+            <failure message="listedTrips is not a function" type="TypeError">
+TypeError: listedTrips is not a function
+ ❯ tests/unit/tripDates.spec.ts:140:12
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="listedTrips (D-16, vacío frente a cargando) &gt; [] → []" time="0.00026612">
+            <failure message="listedTrips is not a function" type="TypeError">
+TypeError: listedTrips is not a function
+ ❯ tests/unit/tripDates.spec.ts:145:12
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="listedTrips (D-16, vacío frente a cargando) &gt; solo borradores → []" time="0.000270072">
+            <failure message="listedTrips is not a function" type="TypeError">
+TypeError: listedTrips is not a function
+ ❯ tests/unit/tripDates.spec.ts:149:12
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="listedTrips (D-16, vacío frente a cargando) &gt; draft null o ausente cuenta como publicado" time="0.000239419">
+            <failure message="listedTrips is not a function" type="TypeError">
+TypeError: listedTrips is not a function
+ ❯ tests/unit/tripDates.spec.ts:153:19
+            </failure>
+        </testcase>
+        <testcase classname="tests/unit/tripDates.spec.ts" name="listedTrips (D-16, vacío frente a cargando) &gt; mezcla → solo los publicados, ordenados con sortTrips" time="0.000274173">
+            <failure message="listedTrips is not a function" type="TypeError">
+TypeError: listedTrips is not a function
+ ❯ tests/unit/tripDates.spec.ts:157:17
+            </failure>
+        </testcase>
+    </testsuite>
+</testsuites>

@@ -1,0 +1,126 @@
+slug: castel-santangelo
+trip: roma
+roman: IX
+name: Castel Sant'Angelo · Ponte
+italian: Castel Sant'Angelo · Lungotevere Castello
+day: Sábado
+coords:
+  lat: 41.9030632
+  lng: 12.4662760
+type: card
+motif: fortress
+artists:
+  - ref: art-bernini
+    label: 'Artistas: [Bernini](#art-bernini)'
+arch:
+  - ref: arq-antigua
+    label: 'Arquitectura: [Roma antigua](#arq-antigua)'
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Castel_Sant%27Angelo_and_Ponte_Sant%27Angelo.jpg/960px-Castel_Sant%27Angelo_and_Ponte_Sant%27Angelo.jpg?width=900
+  alt: Castel Sant'Angelo
+sections:
+  - heading: Qué es
+    body: >-
+      Un edificio circular gigantesco junto al Tíber que en sus 1.900 años de
+      existencia ha sido sucesivamente: **mausoleo imperial**, fortaleza
+      militar, palacio papal, cárcel, museo. Y el puente que lo precede — el
+      _Ponte Sant'Angelo_ — está flanqueado por diez ángeles colosales de
+      mármol, varios diseñados por Bernini. Caminar el puente al atardecer es
+      uno de los momentos visuales más emocionantes de Roma.
+  - heading: Historia
+    body: >-
+      El emperador Adriano (el mismo que reconstruyó el Pantheon) se hizo
+      construir aquí su mausoleo familiar en el año 139 d.C. Era un cilindro
+      gigantesco sobre una base cuadrada, recubierto de mármol blanco, coronado
+      por estatuas, cipreses y una cuádriga dorada en el ápice. Adriano y sus
+      sucesores hasta Caracalla fueron enterrados aquí. En el siglo III la
+      ciudad construyó una muralla y este edificio quedó incorporado a ella como
+      bastión defensivo del nuevo perímetro urbano. De ahí en adelante, su
+      función militar nunca cesó.
+
+
+      El nombre actual viene del año 590 d.C., durante una terrible plaga. El
+      Papa Gregorio Magno encabezaba una procesión por las calles pidiendo el
+      fin de la peste cuando, al pasar frente al mausoleo, tuvo una visión: el
+      arcángel **Miguel** aparecía sobre el edificio envainando su espada —
+      señal de que la plaga había terminado. Desde entonces el edificio se llama
+      "Castillo del Santo Ángel" y una estatua de Miguel envainando la espada
+      corona su tejado. La estatua actual, en bronce, es de 1753.
+
+
+      Durante la Edad Media y el Renacimiento, los Papas conectaron el castillo
+      con el Vaticano mediante un **passetto** — un pasadizo elevado de 800
+      metros — para huir en caso de ataque. Lo utilizó Alejandro VI Borgia en
+      1494 huyendo de Carlos VIII, y Clemente VII en 1527 durante el famoso
+      _Sacco di Roma_, refugiándose aquí mientras los lansquenetes de Carlos V
+      saqueaban la ciudad durante meses. El castillo también fue cárcel papal:
+      Benvenuto Cellini fue encarcelado aquí en 1538 acusado de robar joyas
+      papales, escapó descolgándose con sábanas y se rompió una pierna en el
+      intento — episodio narrado en su autobiografía con detalle suculento.
+  - heading: Anécdotas
+    body: >-
+      El **Ponte Sant'Angelo** que está delante del castillo era el principal
+      puente de acceso al Vaticano. Construido por Adriano en el año 134 d.C.
+      para unir su mausoleo con el Campo de Marte, los tres arcos centrales son
+      **romanos originales** — sigues caminando sobre piedra que vieron pasar
+      Trajano y Marco Aurelio. En 1450, durante un jubileo, hubo una avalancha y
+      172 peregrinos murieron pisoteados o ahogados al caer al río. Clemente IX,
+      en 1669, encargó a Bernini el rediseño escultórico del puente: diez
+      ángeles colosales, cada uno con un instrumento de la Pasión (la cruz, la
+      corona de espinas, los clavos, la lanza, etc.). Bernini esculpió dos
+      personalmente (los que llevan la corona de espinas y la cartela INRI),
+      pero el Papa los consideró "demasiado bellos para estar a la intemperie" y
+      los retiró a la iglesia de Sant'Andrea delle Fratte — donde siguen. Los
+      del puente son copias del taller.
+
+
+      Es también el escenario de la ópera _Tosca_ de Puccini: la protagonista se
+      suicida lanzándose desde el tejado del castillo al final del tercer acto.
+      La famosa aria "_E lucevan le stelle_" se canta justo antes, con la imagen
+      del castillo en plena noche romana.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Angelo_con_la_corona_di_spine.jpg/960px-Angelo_con_la_corona_di_spine.jpg" alt="Ángel con la corona de espinas, de Bernini (1669). Los del puente son copias del taller — los originales están en Sant'A" caption="Ángel con la corona de espinas, de Bernini (1669). Los del puente son copias del taller — los originales están en Sant'Andrea delle Fratte."}
+
+      - Camina el **Ponte Sant'Angelo** despacio, mirando los ángeles uno por uno. Empieza desde el lado opuesto al castillo (lado Centro Storico) y avanza. Los ángeles que llevan la _Cruz_, los _Clavos_ y la _Lanza_ son los más expresivos.
+      - El **arcángel Miguel envainando la espada** en lo alto del castillo: símbolo del fin de la peste. Búscalo desde el lado opuesto del río — se ve mejor de noche con la iluminación.
+      - La **silueta circular** del castillo: estás viendo aproximadamente la forma del mausoleo romano. Las añadiduras medievales y renacentistas le dieron las murallas y los bastiones, pero el cilindro central es de Adriano.
+      - El **passetto di Borgo**: el muro elevado que sale del castillo hacia el Vaticano, visible desde Via dei Corridori. Es un pasadizo de evacuación papal que aún se puede recorrer en visitas especiales.
+      - Si entras (no en este viaje, pero para futuras): la **terraza superior con la estatua de Miguel** tiene una de las mejores vistas de Roma. La cafetería de la terraza es cara pero el momento del atardecer compensa.
+      - Los **graffiti renacentistas** dentro de las celdas: prisioneros importantes (Cellini, Beatrice Cenci, Cagliostro) dejaron inscripciones en las paredes que se conservan.
+facts:
+  - label: Exterior y puente
+    value: Acceso libre 24/7
+  - label: Interior (museo)
+    value: Ma-D 9:00-19:30 · L cerrado
+  - label: Acceso interior
+    value: €16-20 según temporada
+  - label: Mejor momento
+    value: Atardecer y noche · iluminación dramática
+mapsQuery: Castel Sant'Angelo Roma
+culture:
+  - title: Referencias culturales y literarias
+    text: ''
+  - title: Tosca
+    text: >-
+      (Giacomo Puccini, 1900) — la ópera termina con la protagonista lanzándose
+      desde el tejado del castillo tras cantar el aria «_E lucevan le stelle_».
+      Uno de los finales operísticos más famosos del repertorio.
+  - title: Ángeles y demonios
+    text: >-
+      (Dan Brown, 2000) — el castillo aparece como uno de los enclaves clave de
+      la trama. La novela fue éxito mundial antes que _El código Da Vinci_.
+  - title: I Segreti di Roma
+    text: >-
+      (Corrado Augias, 2005) — Augias traza la historia completa del edificio:
+      el mausoleo de Adriano construido para ser la tumba más suntuosa del
+      mundo, su conversión en fortaleza papal, los corredores secretos que
+      conectan el castillo con el Vaticano (el _passetto_), y la leyenda del
+      papa Gregorio Magno que en 590, durante una procesión de penitencia por la
+      peste, vio al arcángel Miguel posarse sobre lo alto del mausoleo
+      envainando la espada — señal del fin de la epidemia. De ahí el nombre.
+  - title: Historias de Roma
+    text: >-
+      (Enric González, 2004) — González lo cita como ejemplo de la vocación
+      romana de reutilizar: «en Roma nada se destruye y nada se construye de
+      cero; todo se adapta, se tapa, se convierte en otra cosa».

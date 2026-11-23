@@ -1,0 +1,106 @@
+slug: sabado-19
+trip: campania
+order: 1
+pill: 'Sáb 19'
+roman: I
+eyebrow: 'sábado · 19 de junio'
+title: Llegada a Nápoles y pulso de barrio
+subtitle: Aterrizaje a media tarde, subida al Vomero y paseo sin prisas por el Lungomare Caracciolo al atardecer.
+# Base de la noche (D-06): slug de una entrada de `stays` en trip.yml → «Dormís en Nápoles».
+stay: napoles
+# Día de avión (D-08, IN-04): sin botón de ruta aunque haya dos fichas.
+route:
+  enabled: false
+# Variantes de stats y de tramo nuevas (EXT-03, D-09): el glifo lo antepone el CSS, así que ni el
+# texto de la stat ni el `header` del tramo empiezan por el emoji. El tercer tramo va SIN `variant`
+# a propósito: conserva el estilo base del tramo (edge EXT-03 «sin variante»).
+stats:
+  - variant: plane
+    text: '**Vuelo** a Capodichino · aterrizaje a las 16:35'
+  - variant: bus
+    text: '**Alibus** aeropuerto → Piazza Garibaldi, ≈20 min'
+  - variant: metro
+    text: '**Metro** o funicular hasta el Vomero'
+light:
+  title: 🦶 Versión ligera · sábado
+  items:
+    - kind: move
+      text: >-
+        **Taxi** desde el aeropuerto hasta el Vomero en lugar de Alibus y metro: con
+        maletas y niños cansados, se agradece · precio **⚠ por confirmar**
+    - kind: skip
+      text: >-
+        **Saltar hoy:** el paseo largo. Bajad al [Lungomare](#lungomare-caracciolo)
+        solo hasta donde os apetezca, o quedaos mirando el golfo desde el Vomero.
+    - kind: rest
+      text: >-
+        **Descanso:** cena temprano en la pizzería de abajo y a dormir pronto, que
+        mañana se madruga.
+timeline:
+  - kind: transport
+    pace: all
+    variant: plane
+    header: Vuelo a Nápoles-Capodichino
+    modes:
+      - icon: ✈️
+        recommended: true
+        desc: '**Aterrizaje a las 16:35** en el aeropuerto de Capodichino · aerolínea y reserva **⚠ por confirmar**'
+  - kind: transport
+    pace: all
+    variant: bus
+    header: Alibus hasta Piazza Garibaldi
+    modes:
+      - icon: 🚌
+        recommended: true
+        desc: >-
+          **Alibus** desde la salida de llegadas hasta Piazza Garibaldi, en unos 20 min.
+          Sigue hasta Porta di Massa y Molo Beverello, pero **no sube al Vomero**:
+          bajaos en Garibaldi · pasa cada 10-20 min
+        tag: recomendado
+        meta: '⏱ **≈20 min** · 💶 5 € **⚠ por confirmar**'
+  - kind: transport
+    pace: all
+    header: Del Alibus al Vomero
+    modes:
+      - icon: Ⓜ️
+        recommended: true
+        desc: >-
+          **Metro Línea 1** desde Piazza Garibaldi hasta Vanvitelli, en pleno Vomero ·
+          recorrido y horarios **⚠ por confirmar**
+        tag: recomendado
+      - icon: 🚡
+        desc: >-
+          O uno de los **funiculares** que suben a la colina desde el centro · cuál os
+          conviene desde Garibaldi, **⚠ por confirmar**
+  - kind: stop
+    pace: all
+    time: '18:00'
+    title: Llegada al Vomero
+    ref: vomero
+    note: >-
+      La base de la primera noche está en el Vomero, la colina tranquila de vecinos
+      sobre el centro. Dejad las maletas y respirad: el alojamiento concreto está
+      **⚠ por confirmar**.
+  - kind: meta
+    items:
+      - level: plain
+        text: '🚶 bajada hacia el mar por Chiaia, a pie o en funicular · cuál os conviene **⚠ por confirmar**'
+  - kind: stop
+    pace: all
+    time: '20:00'
+    title: Lungomare Caracciolo al atardecer
+    ref: lungomare-caracciolo
+    note: >-
+      Paseo sin prisas junto al mar mientras cae el sol: los chavales jugando al
+      fútbol en los espigones, los pescadores del barrio con la caña y el Vesubio
+      al fondo, cada vez más violeta.
+  - kind: food
+    pace: all
+    header: Cena de bienvenida en el Vomero
+    entries:
+      - ref: g-1-pizzeria-vomero
+        name: Una pizzería de barrio en el Vomero
+        desc: >-
+          La de la esquina, con las mesas llenas de familias del barrio y un pizzaiolo
+          que os atiende como a un vecino más · a elegir sobre el terreno
+cards: [vomero, lungomare-caracciolo]

@@ -1,0 +1,52 @@
+kind: artist
+slug: art-pozzo
+trip: roma
+avatar: A
+name: Andrea Pozzo
+dates: Trento 1642 – Viena 1709 · pintor jesuita · teórico
+epithet: "«Llevó el trampantojo al límite: pintó un cielo y una cúpula que no existen.»"
+sections:
+  - heading: Quién fue
+    body: >-
+      Hermano jesuita, pintor y el gran **teórico de la perspectiva** del Barroco.
+      Su tratado _Perspectiva pictorum et architectorum_ difundió la técnica por
+      toda Europa y llegó hasta China de la mano de los misioneros.
+  - heading: Su estilo
+    body: >-
+      El **trampantojo total** (_quadratura_): pinta arquitecturas falsas que
+      continúan las reales hasta que el ojo no sabe dónde acaba la piedra y empieza
+      la pintura. Todo está calculado para funcionar desde **un punto exacto del
+      suelo**, marcado con un disco.
+  - heading: Obras maestras
+    body: |
+      - La bóveda de **Sant'Ignazio**: la _Apoteosis de San Ignacio_
+      - Su célebre **cúpula falsa** de Sant'Ignazio — pintada plana sobre lienzo
+      porque no hubo dinero para construirla de verdad
+  - heading: Por qué importa
+    body: >-
+      Convirtió la ilusión perspectiva en una **técnica enseñable** y la exportó
+      por el mundo con su tratado. Sant'Ignazio es la demostración más
+      espectacular de hasta dónde puede engañar la pintura al ojo humano.
+  - heading: Cómo reconocer su mano
+    body: |
+      - **Arquitectura pintada** que continúa la real: columnas, arcos y cornisas
+      falsos que suben al infinito.
+      - El **punto único**: todo cuadra perfecto desde un disco marcado en el
+      suelo; si te mueves, la ilusión se deforma a propósito.
+      - La **cúpula que no existe**: un lienzo plano que finge casetones y
+      profundidad.
+      - Figuras que parecen **asomarse por balcones** pintados.
+  - heading: Curiosidades
+    body: |
+      - Su **tratado de perspectiva** fue un best-seller europeo, traducido incluso
+      al **chino** por los misioneros jesuitas.
+      - Pintó la cúpula falsa de Sant'Ignazio porque los vecinos **se opusieron a
+      una real** que les robaría luz; salió barata, convincente… y se quedó.
+      - Como jesuita, su arte era **propaganda de la Compañía**: el cielo abierto es
+      la gloria de la orden misionera.
+      - Acabó su carrera en **Viena**, exportando el ilusionismo barroco al imperio
+      austríaco.
+seenIn:
+  - ref: santignazio
+    label: '[la bóveda y la cúpula falsa de Sant''Ignazio](#santignazio)'
+    note: ✦ Lo verás en este viaje · (buscad los dos discos en el suelo).

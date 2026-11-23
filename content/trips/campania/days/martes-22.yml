@@ -1,0 +1,102 @@
+slug: martes-22
+trip: campania
+# Orden 3 hasta 13-03, que escribe el lunes 21 y lo mueve al 4 (regla `day-order`: 1..N contiguo).
+order: 4
+pill: 'Mar 22'
+roman: IV
+eyebrow: 'martes · 22 de junio'
+title: El volcán de día, el mar caliente de noche
+subtitle: Subida entre castaños al Monte Epomeo · siesta a la sombra · de noche, pozas termales en la Baia di Sorgeto.
+# Base de la noche (D-06): slug de una entrada de `stays` en trip.yml → «Dormís en Ischia».
+stay: ischia
+# Dos paradas con ficha: en transporte público Google Maps sí dibuja la ruta (WR-01, D-08).
+route:
+  mode: transit
+stats:
+  - variant: walk
+    text: '**~7 km** a pie · sendero del Epomeo y escalones de Sorgeto'
+  - variant: bus
+    text: '**Bus EAV** · Forio ↔ Fontana y, de noche, hasta Panza'
+light:
+  title: 🦶 Versión ligera · martes
+  items:
+    - kind: see
+      text: >-
+        **Imprescindibles:** el primer tramo del sendero entre castaños y, al caer
+        la tarde, las pozas de [Sorgeto](#baia-di-sorgeto).
+    - kind: skip
+      text: >-
+        **Saltar hoy:** la cima. Quedaos en el bosque de castaños, a la sombra, y
+        bajad sin prisa a comer.
+    - kind: care
+      text: >-
+        **Ojo:** el calor de junio en los tramos abiertos de la subida y el agua
+        termal, que en algunas pozas sale muy caliente.
+    - kind: rest
+      text: >-
+        **Descanso:** la comida larga en la taberna y la siesta a la sombra antes
+        de la noche en el mar.
+timeline:
+  - kind: stop
+    pace: all
+    time: '08:30'
+    title: Desayuno sin prisa en Forio
+    disabled: true
+  - kind: transport
+    pace: all
+    variant: bus
+    header: Bus EAV hasta Serrara Fontana
+    modes:
+      - icon: 🚌
+        recommended: true
+        desc: >-
+          **Bus EAV** desde Forio o Ischia Porto hasta Serrara Fontana, al pie del
+          sendero · horarios de verano 2027 **⚠ por confirmar**
+        tag: recomendado
+      - icon: 🚕
+        desc: '**Taxi** desde Forio, si no queréis depender del horario · precio **⚠ por confirmar**'
+  - kind: stop
+    pace: all
+    time: '09:30'
+    title: Monte Epomeo
+    ref: monte-epomeo
+    note: >-
+      Sendero **CAI 501** desde Fontana: unos 3 km y entre 1 y 1,5 h de subida, buena
+      parte a la sombra de robles y castaños. Arriba, la cruz de la cima y la ermita
+      de San Nicola, con la isla entera a vuestros pies.
+  - kind: stop
+    pace: all
+    time: '13:30'
+    title: Comida casera en una taberna rústica
+    disabled: true
+    note: >-
+      Cocina de la isla, sencilla y sin prisa, en una taberna rústica de la ladera,
+      a elegir sobre el terreno. Horarios y si conviene reservar **⚠ por confirmar**.
+  - kind: meta
+    items:
+      - level: ok
+        text: '⏱ **Siesta a la sombra** en las horas de más calor · bajada tranquila a media tarde'
+      - level: plain
+        text: '🚶 bajada por el mismo sendero hasta Fontana y bus de vuelta a Forio'
+  - kind: transport
+    pace: all
+    variant: bus
+    header: Hasta Panza, al anochecer
+    modes:
+      - icon: 🚌
+        recommended: true
+        desc: '**Bus EAV** de Forio a Panza · servicio de noche **⚠ por confirmar**'
+      - icon: 🚕
+        desc: >-
+          **Taxi** desde Forio, la vuelta más cómoda con los niños cansados · precio
+          **⚠ por confirmar**
+  - kind: stop
+    pace: all
+    time: '21:30'
+    title: Baia di Sorgeto
+    ref: baia-di-sorgeto
+    note: >-
+      Bajada a pie desde Panza, unos 250-300 escalones, y baño en las pozas donde el
+      agua termal se mezcla con el mar, mirando las estrellas. Acceso, luz y estado
+      del mar de noche **⚠ por confirmar**: leed antes la caja «Con niños» de la ficha.
+cards: [monte-epomeo, baia-di-sorgeto]

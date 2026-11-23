@@ -1,0 +1,86 @@
+slug: cappuccini
+trip: roma
+roman: XXX
+name: Cripta dei Cappuccini
+italian: Santa Maria della Concezione dei Cappuccini · Via Vittorio Veneto 27
+day: Martes
+coords:
+  lat: 41.9047900
+  lng: 12.4888600
+type: card
+motif: church
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/1389RomaSMariaConcezione.jpg/900px-1389RomaSMariaConcezione.jpg?width=900
+  alt: Santa Maria della Concezione dei Cappuccini
+sections:
+  - heading: Qué es
+    body: >-
+      Bajo una iglesia discreta al inicio de Via Veneto, **cinco capillas
+      subterráneas decoradas íntegramente con los huesos de unos 3.700 frailes
+      capuchinos** muertos entre 1528 y 1870. Candelabros, rosetones, arcos y
+      guirnaldas hechos con vértebras, cráneos, pelvis y fémures. No es una
+      catacumba macabra ni una galería de horrores: es un **memento mori**
+      franciscano, una meditación serena sobre la muerte, resumida en la placa
+      final: _«Lo que vosotros sois, nosotros fuimos; lo que nosotros somos,
+      vosotros seréis»_.
+  - heading: Historia
+    body: >-
+      Los **capuchinos** — la rama más austera y reformada de los franciscanos,
+      los del hábito marrón con capucha puntiaguda — se instalaron aquí en 1631,
+      cuando el cardenal **Antonio Barberini** (hermano del Papa Urbano VIII y él
+      mismo fraile capuchino) les cedió el convento. Al trasladarse desde su
+      antigua sede, trajeron en carros la **tierra sagrada de Jerusalén** con la
+      que cubrir a sus muertos, y los restos exhumados de los frailes difuntos.
+
+
+      Durante más de dos siglos, cada vez que moría un fraile se enterraba en la
+      tierra de Jerusalén y, pasado el tiempo, se exhumaba el más antiguo para
+      hacer sitio. Con los huesos exhumados, los propios frailes fueron
+      **componiendo la decoración** capilla a capilla, generación tras
+      generación. No fue obra de un artista, sino una labor colectiva y anónima
+      de siglos: una catequesis sobre la fugacidad de la vida hecha con el
+      material más elocuente posible.
+  - heading: Anécdotas
+    body: >-
+      El **Marqués de Sade** la visitó en 1775 y dejó constancia escrita,
+      fascinado. Pero quien la inmortalizó fue **Mark Twain** en _Los inocentes
+      en el extranjero_ (1869): le dedicó páginas memorables, entre el espanto y
+      la admiración, describiendo a un fraile que le enseñaba la cripta «tan
+      tranquilo como quien muestra su jardín». También la citan Hawthorne y, más
+      recientemente, aparece en novelas y películas de ambiente romano.
+
+
+      En el techo de la última capilla hay un **esqueleto infantil con una guadaña
+      y una balanza** hechas de huesos — una alegoría de la Muerte que siega y
+      pesa las almas. La tradición dice que era una sobrina de los Barberini. Es
+      la imagen más recordada del lugar. La cripta se recorre en silencio, sin
+      música, con luz tenue: el efecto no es de terror sino de extraña paz. **No
+      se permiten fotografías**.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/1389RomaSMariaConcezione.jpg/800px-1389RomaSMariaConcezione.jpg" alt="Fachada de Santa Maria della Concezione dei Cappuccini, Via Veneto, Roma" caption="La entrada a la cripta está en el lateral de esta iglesia (museo adjunto). Sin señales llamativas. La cripta tiene cinco capillas subterráneas decoradas con los huesos de casi 4.000 frailes. La placa al final: «Lo que vosotros sois, nosotros fuimos; lo que nosotros somos, vosotros seréis.»"}
+
+      - Las **cinco capillas**: la de las calaveras, la de las pelvis, la de las tibias y fémures, la de los tres esqueletos y la cripta de la Resurrección. Cada una con un motivo distinto.
+      - El **esqueleto con la guadaña y la balanza** en el techo de la última: la alegoría de la Muerte.
+      - La **placa con la frase trilingüe**: «Lo que vosotros sois, nosotros fuimos…». Leedla despacio.
+      - Los **frailes vestidos**: algunos esqueletos conservan el hábito marrón, recostados en nichos.
+      - La **tierra de Jerusalén** del suelo de las capillas.
+      - El **pequeño museo** de arriba (incluido), sobre la orden capuchina, con un cuadro atribuido a Caravaggio (_San Francisco en meditación_).
+      - **Silencio y respeto**: es un lugar sagrado, no una atracción. Sin fotos.
+facts:
+  - label: Horario
+    value: Todos los días 10:00-19:00 (último acceso 18:30)
+  - label: Entrada
+    value: ~€10 · incluye museo
+  - label: Tiempo de visita
+    value: 40 minutos
+  - label: Metro
+    value: A · Barberini · Via Veneto 27
+mapsQuery: Cripta dei Cappuccini Via Veneto Roma
+culture:
+  - title: Referencias culturales
+    text: ''
+  - title: Los inocentes en el extranjero
+    text: >-
+      (Mark Twain, 1869) — las páginas más famosas jamás escritas sobre la
+      cripta, entre el humor y el escalofrío.

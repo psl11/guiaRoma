@@ -1,0 +1,62 @@
+kind: artist
+slug: art-michelangelo
+trip: roma
+avatar: M
+name: Michelangelo Buonarroti
+dates: Caprese 1475 – Roma 1564 · escultor · pintor · arquitecto
+epithet: «El arquetipo del genio. Se creía solo escultor y, de paso, pintó la Sixtina.»
+sections:
+  - heading: Quién fue
+    body: >-
+      Florentino, el genio del Alto Renacimiento. Trabajó para nueve papas a lo
+      largo de casi 70 años de carrera. Se consideraba ante todo **escultor** —del
+      mármol decía que «liberaba» la figura ya presente en el bloque—, pero pintó
+      la **Capilla Sixtina** y, ya anciano, dirigió la cúpula de San Pedro. Sus
+      contemporáneos acuñaron el término _terribilità_ para su fuerza sobrehumana.
+  - heading: Su estilo
+    body: >-
+      La **figura humana** como vehículo de lo divino y lo heroico: cuerpos
+      monumentales, musculosos, en tensión contenida. El _non finito_ —partes sin
+      pulir— hace que la figura parezca emerger de la piedra. En su obra tardía,
+      una espiritualidad atormentada y dramática.
+  - heading: Obras maestras
+    body: |
+      - La bóveda y el _Juicio Final_ de la **Capilla Sixtina**
+      - La _Pietà_ y la **cúpula** de San Pedro
+      - El _David_ (Florencia)
+      - El _Moisés_ y el _Cristo de la Minerva_
+  - heading: Por qué importa
+    body: >-
+      Definió la idea del artista como **genio creador**, no como artesano. Su
+      Sixtina y su escultura fijaron el canon de la figura humana en el arte
+      occidental durante siglos, y su arquitectura tardía abrió el camino al
+      Manierismo y al Barroco.
+  - heading: Cómo reconocer su mano
+    body: |
+      - **Cuerpos hercúleos y en torsión** (la _figura serpentinata_): hasta las
+      mujeres tienen musculatura de atleta.
+      - El **non finito**: zonas sin pulir de las que la figura parece _luchar por
+      salir_ de la piedra.
+      - **Manos y pies enormes** y expresivos; una tensión contenida a punto de
+      estallar.
+      - Los **"cuernos" del Moisés**: nacen de un error de traducción de la Biblia
+      (rayos → cuernos) que él respetó.
+      - En pintura, **escultura con pincel**: los cuerpos de la Sixtina están
+      "tallados" en color.
+  - heading: Curiosidades
+    body: |
+      - De joven **falsificó una escultura "antigua"** para venderla cara; al
+      descubrirse el fraude, en vez de arruinarlo, lo hizo famoso.
+      - Pintó la Sixtina **de pie** sobre andamios (no tumbado), con la vista
+      dañada y dolores crónicos; **odiaba que lo llamaran pintor**.
+      - Hosco y descuidado —dormía con las botas puestas—, se peleó con casi todos
+      sus papas; la tumba de Julio II (la del Moisés) fue "la tragedia" que lo
+      persiguió 40 años.
+      - Trabajó hasta **días antes de morir**, con casi 89 años.
+seenIn:
+  - ref: san-pietro-vincoli
+    label: '[el Moisés (San Pietro in Vincoli)](#san-pietro-vincoli)'
+    note: ✦ Lo verás en este viaje
+  - ref: minerva
+    label: '[el Cristo de la Minerva](#minerva)'
+    note: y, con guía, la **Capilla Sixtina**, la _Pietà_ y la cúpula de San Pedro en el **Vaticano**.

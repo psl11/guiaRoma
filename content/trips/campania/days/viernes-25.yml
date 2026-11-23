@@ -1,0 +1,137 @@
+slug: viernes-25
+trip: campania
+order: 7
+pill: 'Vie 25'
+roman: VII
+eyebrow: 'viernes · 25 de junio'
+title: Del Vesubio a Nápoles, noche de Ultimo
+subtitle: Viñas del Vesubio por el camino, tarde de barrio en la Sanità y el concierto de Ultimo en el Maradona, con los niños.
+# Base de la noche (D-06, D-25): «Dormís en Nápoles». La zona exacta de la base del 25 al 27
+# puede no ser la del sábado 19, así que la prosa del día la marca por confirmar.
+stay: napoles
+# Ruta del día en coche (EXT-06, D-14): «Ver ruta del día» abre Google Maps con
+# `travelmode=driving` y un punto por ficha. Sin alternativas: el e2e cuenta las tres fichas.
+route:
+  mode: driving
+stats:
+  - variant: car
+    text: '**Coche de alquiler** de Salerno a Nápoles, con parada en el Vesubio'
+  - variant: metro
+    text: '**Metro Línea 2** hasta el estadio y vuelta de noche'
+light:
+  title: 🦶 Versión ligera · viernes
+  items:
+    - kind: see
+      text: >-
+        **Imprescindibles:** la tarde en el [Rione Sanità](#rione-sanita) y el concierto
+        en el [Maradona](#stadio-maradona).
+    - kind: skip
+      text: >-
+        **Saltar hoy:** el paseo por los [viñedos del Vesubio](#vesubio). Id directos a
+        Nápoles y comprad la mozzarella en el primer caseificio del camino.
+    - kind: rest
+      text: >-
+        **Descanso:** una siesta en el alojamiento antes de la cena, que la noche del
+        concierto será larga.
+    - kind: move
+      text: >-
+        **Taxi** de vuelta desde Piazzale Tecchio si los niños no aguantan el metro de
+        madrugada · precio **⚠ por confirmar**
+timeline:
+  - kind: transport
+    pace: all
+    variant: car
+    header: De Salerno al Vesubio por la autopista
+    modes:
+      - icon: 🚗
+        recommended: true
+        desc: '**Coche de alquiler** por la autopista A3, hacia el norte, hasta las laderas del Vesubio'
+        meta: '⏱ **⚠ por confirmar**'
+  - kind: stop
+    pace: all
+    time: '10:30'
+    title: Viñedos del Vesubio
+    ref: vesubio
+    note: >-
+      Paseo por los senderos bajos de la cara menos masificada del volcán y compra de
+      vino o fruta directamente a los agricultores, sin colas. Si queréis una cata en
+      una bodega, horario y reserva **⚠ por confirmar**.
+  - kind: food
+    pace: medium
+    header: De camino, mozzarella del día
+    entries:
+      - ref: g-2-caseificio-carretera
+        name: Un caseificio de carretera
+        desc: >-
+          Un alto para comprar mozzarella di bufala recién hecha, en el caseificio
+          donde veáis gente del lugar comprando · a elegir sobre el terreno
+  - kind: transport
+    pace: all
+    variant: car
+    header: Del Vesubio a Nápoles
+    modes:
+      - icon: 🚗
+        recommended: true
+        desc: '**Coche de alquiler** hasta el alojamiento de Nápoles, en una zona **⚠ por confirmar**'
+        meta: '⏱ **⚠ por confirmar**'
+    footnote: >-
+      La base de estas tres noches puede no estar en la misma zona que la del sábado
+      19: la zona exacta está **⚠ por confirmar**. El coche duerme en un garaje o un
+      parking cerca del alojamiento (**⚠ por confirmar** cuál) y no se mueve hasta el
+      sábado. Nápoles tiene varias zonas ZTL con cámaras y horarios distintos,
+      **⚠ por confirmar**: no entréis con el coche en el centro antiguo.
+  - kind: stop
+    pace: all
+    time: '16:30'
+    title: Tarde de barrio en la Sanità
+    ref: rione-sanita
+    note: >-
+      En metro hasta Museo o Piazza Cavour y paseo sin rumbo: los patios de los
+      palacios de escaleras abiertas, la ropa tendida, los altares de las esquinas.
+      Sin entradas ni visitas, solo el barrio.
+  - kind: food
+    pace: all
+    header: Cena temprana antes del concierto
+    entries:
+      - ref: g-1-concettina
+        name: Da Concettina ai Tre Santi
+        desc: >-
+          Pizza napolitana en la pizzería del barrio desde 1951, a primera hora para
+          llegar con calma al estadio · horario **⚠ por confirmar**
+  - kind: transport
+    pace: all
+    variant: train
+    header: Metro Línea 2 hasta Napoli Campi Flegrei
+    modes:
+      - icon: Ⓜ️
+        recommended: true
+        desc: >-
+          **Metro Línea 2** desde Piazza Cavour, a un paseo de la Sanità, hasta Napoli
+          Campi Flegrei, junto al estadio · recorrido y frecuencias **⚠ por confirmar**
+        tag: recomendado
+      - icon: 🚕
+        desc: >-
+          O **taxi** hasta Piazzale Tecchio, contando con el tráfico de una noche de
+          concierto · precio **⚠ por confirmar**
+  - kind: stop
+    pace: all
+    time: '19:30'
+    title: Llegada al estadio · concierto de Ultimo
+    ref: stadio-maradona
+    tag: concierto
+    reservedEvent: true
+    note: >-
+      Llegada con margen al estadio. Las entradas son del viernes 25: el calendario
+      oficial de la gira anunció Nápoles para el jueves 24, pero mandan vuestras
+      entradas. La hora de inicio y la apertura de puertas están **⚠ por confirmar**.
+      Esta noche vienen los niños: protección para los oídos, agua y un punto de
+      encuentro acordado.
+  - kind: reservation
+    text: >-
+      ✅ **Entradas de Ultimo** · viernes 25 de junio, en el Stadio Diego Armando
+      Maradona. Hora de inicio y puertas **⚠ por confirmar**.
+  - kind: meta
+    items:
+      - level: warn
+        text: '⏱ Vuelta en Línea 2 o taxi **⚠ por confirmar**'
+cards: [vesubio, rione-sanita, stadio-maradona]

@@ -1,0 +1,37 @@
+slug: duomo-di-salerno
+trip: campania
+roman: XI
+name: Duomo di Salerno
+italian: 'Cattedrale di San Matteo · Salerno'
+day: Jueves 24
+coords:
+  lat: 40.6802
+  lng: 14.7594
+type: card
+motif: church
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Cattedrale_di_Salerno_05.jpg/960px-Cattedrale_di_Salerno_05.jpg
+  alt: La catedral de San Matteo en Salerno
+sections:
+  - heading: Qué es
+    body: >-
+      La catedral de Salerno, levantada por los normandos en el siglo XI y dedicada a
+      san Mateo, el evangelista, cuyas reliquias se guardan en la cripta. Es el
+      corazón antiguo de la ciudad, a dos pasos de las callejuelas del centro
+      storico.
+  - heading: Qué mirar
+    body: >-
+      El atrio de columnas antiguas, fresco y en silencio, que se cruza antes de
+      entrar; el campanario normando; y, abajo, la cripta, toda de mármoles de
+      colores y dorados, que sorprende después de la sobriedad del patio.
+  - heading: En vuestro día
+    body: >-
+      La primera visita de la mañana, a primera hora, antes de que apriete el calor
+      y antes de coger el coche. Un rato tranquilo de sombra y piedra para empezar
+      el día de elegir.
+facts:
+  - label: Acceso
+    value: 'Horario de visita y entrada a la cripta **⚠ por confirmar**'
+  - label: Dónde
+    value: 'Piazza Alfano I, en el centro storico'
+mapsQuery: Duomo di Salerno Piazza Alfano I

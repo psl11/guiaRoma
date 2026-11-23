@@ -1,0 +1,84 @@
+slug: smm
+trip: roma
+roman: XXXI
+name: Santa Maria Maggiore
+italian: Basilica Papale di Santa Maria Maggiore · Piazza di Santa Maria Maggiore
+day: Martes
+coords:
+  lat: 41.8976400
+  lng: 12.4986300
+type: card
+motif: church
+arch:
+  - ref: arq-medieval
+    label: 'Arquitectura: [Paleocristiano](#arq-medieval)'
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Basilica_di_Santa_Maria_Maggiore_-_Roma.jpg/900px-Basilica_di_Santa_Maria_Maggiore_-_Roma.jpg
+  alt: Santa Maria Maggiore
+sections:
+  - heading: Qué es
+    body: >-
+      Una de las **cuatro basílicas papales mayores** de Roma y la más grande
+      dedicada a la Virgen — y casualmente, a cinco minutos andando del hotel, en
+      lo alto del Esquilino. Conserva los **mosaicos paleocristianos del siglo V**
+      más importantes de la ciudad, un artesonado dorado con el primer oro llegado
+      de América, un suelo cosmatesco medieval, la tumba de Bernini y, desde 2025,
+      la del **papa Francisco**. Mil seiscientos años de cristianismo en un solo
+      edificio.
+  - heading: Historia
+    body: >-
+      La leyenda la llama _Santa Maria della Neve_ (de la Nieve): en agosto del
+      año 358, la Virgen se apareció al Papa Liberio y a un patricio pidiendo una
+      iglesia donde, a la mañana siguiente, hallaran nieve. Y en pleno verano
+      romano, **nevó sobre la colina del Esquilino**, dibujando la planta del
+      templo. Cada 5 de agosto, la basílica conmemora el milagro dejando caer
+      pétalos blancos desde el techo.
+
+
+      La basílica actual la levantó el Papa **Sixto III** hacia 432-440, justo
+      después de que el Concilio de Éfeso (431) proclamara a María _Theotokos_,
+      Madre de Dios — por eso es un monumento al nuevo culto mariano. El
+      **campanario románico** (siglo XIV), con sus 75 metros, es el más alto de
+      Roma. El **artesonado dorado** del techo, diseñado por Giuliano da Sangallo,
+      se cubrió —según la tradición— con el **primer oro que Colón trajo de
+      América**, regalado por los Reyes Católicos al Papa Alejandro VI Borgia.
+      Bernini y Fuga intervinieron en los siglos XVII-XVIII (la fachada exterior
+      es de Ferdinando Fuga).
+  - heading: Anécdotas
+    body: >-
+      **Gian Lorenzo Bernini**, el genio del Barroco que dio forma a media Roma,
+      está enterrado aquí en una tumba sorprendentemente **modesta**: una simple
+      losa en el suelo, a la derecha del altar mayor, casi imposible de encontrar
+      si no la buscas. El hombre que diseñó la columnata de San Pedro reposa bajo
+      una lápida que cualquiera pisa sin saberlo.
+
+
+      En abril de **2025**, el **papa Francisco** fue enterrado en esta basílica
+      —no en el Vaticano—, según su voluntad expresa: quería reposar junto al
+      icono de la _Salus Populi Romani_, la imagen mariana bizantina que veneraba
+      y ante la que rezaba antes y después de cada viaje. Su tumba, sencilla, con
+      la sola inscripción «Franciscus», se ha convertido en lugar de
+      peregrinación. Es el primer papa en más de un siglo enterrado fuera del
+      Vaticano.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Jacopo_torriti%2C_coronation_of_the_virgin%2C_santa_maria_maggiore%2C_rome.jpg/800px-Jacopo_torriti%2C_coronation_of_the_virgin%2C_santa_maria_maggiore%2C_rome.jpg" alt="Mosaico de Torriti en Santa Maria Maggiore — Coronación de la Virgen, 1296" caption="El mosaico absidal de Jacopo Torriti (1296): Cristo coronando a María sentados juntos en el trono celestial. Esta iconografía — ambos de igual tamaño, como iguales — es rarísima. Busca la figura diminuta del papa Niccolò IV a los pies. El fondo dorado es del siglo XIII."}
+
+      - Los **mosaicos del siglo V** en lo alto de la nave: 36 escenas del Antiguo Testamento, los mosaicos cristianos más antiguos de Roma. Y el **mosaico absidal** de la Coronación de la Virgen (siglo XIII, de Jacopo Torriti).
+      - El **artesonado dorado** del techo: el primer oro de América.
+      - El **suelo cosmatesco** medieval, de mármoles geométricos.
+      - La **Cappella Sistina** y la **Cappella Paolina (Borghese)**: dos capillas-mausoleo barrocas riquísimas, una a cada lado.
+      - El icono **Salus Populi Romani** en la Cappella Paolina: la imagen mariana más venerada de Roma.
+      - La **tumba de Bernini**: losa en el suelo a la derecha del altar. Buscadla.
+      - La **tumba del papa Francisco**: sencilla, con la inscripción «Franciscus».
+      - **Hombros y rodillas cubiertos**. Control de seguridad a la entrada.
+facts:
+  - label: Horario
+    value: 7:00-18:45 · sin pausa de mediodía
+  - label: Acceso
+    value: Basílica gratis · museo/loggia con ticket
+  - label: Tiempo de visita
+    value: 40-45 minutos
+  - label: Cómo llegar
+    value: 5 min andando desde el hotel
+mapsQuery: Basilica di Santa Maria Maggiore Roma

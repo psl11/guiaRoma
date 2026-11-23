@@ -1,0 +1,91 @@
+slug: monti
+trip: roma
+roman: XIX
+name: Rione Monti
+italian: Rione I · Monti
+day: Domingo
+coords:
+  lat: 41.8949000
+  lng: 12.4928000
+type: card
+motif: rooftops
+hero:
+  src: https://www.turismoroma.it/sites/default/files/Mercati%20di%20Traiano_1920.jpg
+  alt: Piazza Madonna dei Monti
+sections:
+  - heading: Qué es
+    body: >-
+      El primer rione (barrio histórico) de Roma. Construido sobre tres de las
+      siete colinas — Esquilino, Viminal, Celio — fue el barrio más populoso de
+      la antigüedad imperial y, hasta hace 30 años, el barrio más popular y
+      obrero del centro contemporáneo. Hoy es un raro equilibrio entre tradición
+      y modernidad: tiendas vintage, bares de aperitivo, trattorias auténticas,
+      todo en callejones medievales sin tráfico turístico denso. Vuestro barrio
+      para la última cena.
+  - heading: Historia
+    body: >-
+      En la antigüedad romana, Monti era la _Suburra_ — el barrio popular,
+      ruidoso, peligroso, lleno de tabernas, prostíbulos y casas de huéspedes
+      baratas. Aquí vivía la mayoría de la población libre pobre. Julio César
+      nació en este barrio (familia patricia decadente). La _Suburra_ aparece en
+      Plauto, Marcial, Juvenal como sinónimo de calle desbordada, viva, plebeya.
+      Tras la caída del imperio, Monti se ruralizó parcialmente — viñas, huertos,
+      monasterios entre las ruinas. El renacimiento medieval lo llenó de
+      iglesias.
+
+
+      Hasta los años setenta del siglo XX, Monti seguía siendo barrio de obreros,
+      artesanos, y "trasteverini desplazados" (familias romanas tradicionales que
+      la gentrificación expulsó de Trastevere). Era el barrio donde se rodaban
+      las películas neorrealistas — _Roma, città aperta_, _Ladri di biciclette_.
+      La gentrificación llegó tarde y suavemente: a partir de los noventa,
+      jóvenes profesionales empezaron a comprar pisos, abrieron galerías de arte,
+      tiendas vintage y bares. Hoy Monti es uno de los barrios más codiciados de
+      Roma — pero conserva mejor que ningún otro la mezcla entre artesanos viejos
+      y nueva escena moderna.
+  - heading: Anécdotas
+    body: >-
+      La **Piazza Madonna dei Monti** es el corazón social del barrio. Tiene una
+      fuente del siglo XVI en el centro y bares con mesas en la calle a su
+      alrededor. Los romanos jóvenes se sientan en la escalinata de la fuente al
+      atardecer con cervezas o copas de vino. Es la viva imagen del _aperitivo
+      romano_ sin pretensiones.
+
+
+      **Vía dei Serpenti** (la calle de las serpientes) cruza el barrio y debe su
+      nombre a una pintura del siglo XV con dos serpientes que estaba sobre una
+      farmacia. La pintura desapareció pero el nombre quedó. Es una de las calles
+      más vintage del barrio: tiendas de ropa de segunda mano, anticuarios,
+      sombrereros.
+
+
+      La **iglesia de San Pietro in Vincoli**, a 5 minutos caminando hacia el
+      Coliseo, tiene una de las obras maestras absolutas de Miguel Ángel: el
+      **Moisés**. Era parte del proyecto de tumba para el Papa Julio II que
+      Miguel Ángel nunca llegó a terminar a la escala original. El Moisés tiene
+      cuernos por un error de traducción de la Vulgata latina ("rayos de luz" se
+      tradujo como "cuernos"). Cuando Miguel Ángel terminó la estatua, dicen que
+      la golpeó con un martillo en la rodilla gritando "_Parla!_" — háblame — por
+      lo realista que era. Aún se ve la marca del golpe en el mármol. Entrada
+      gratuita. Si os queda energía después de la cena en Monti, vale la pena.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/Rome_via_dei_fori_imperiali_20050922.jpg/800px-Rome_via_dei_fori_imperiali_20050922.jpg" alt="Rione Monti, Roma — Via dei Fori Imperiali" caption="El acceso al rione desde Via dei Fori Imperiali, con el Coliseo al fondo. Monti rodea las tres colinas que hacían de suburbio en la antigüedad — la _Suburra_, el barrio más populoso y peligroso de Roma imperial. Julio César nació aquí."}
+
+      - La **Piazza Madonna dei Monti**: la plaza central. Fuente del siglo XVI con dos pilas. Bares con mesas afuera, escalinata para sentarse.
+      - La **Via dei Serpenti**: tiendas vintage, anticuarios. Camina arriba y abajo despacio.
+      - La **Via del Boschetto**: paralela a Serpenti, llena de pequeñas tiendas de moda independiente y joyerías artesanales.
+      - El **Mercato Monti** (sábados y domingos en Via Leonina): pequeño mercado vintage cubierto. Si llegáis temprano el domingo, vale para curiosear.
+      - La **iglesia de Santa Maria ai Monti** en la plaza homónima: barroca temprana de Giacomo della Porta. Discreta pero hermosa.
+      - La **iglesia de San Pietro in Vincoli** con el **Moisés de Miguel Ángel**: 5 minutos hacia el este. Una de las obras maestras absolutas de la escultura occidental. Gratuita.
+      - Para el **aperitivo**: cualquier bar en Piazza Madonna dei Monti o Via Panisperna. Pedid un _Aperol Spritz_, un _Campari Soda_ o, más romano, un _Hugo_ (prosecco, jarabe de saúco, menta).
+facts:
+  - label: Barrio
+    value: Acceso libre 24/7
+  - label: Aperitivo
+    value: 18:00 - 21:00
+  - label: Cena romana
+    value: 19:30 - 23:00
+  - label: Del hotel
+    value: 15 minutos andando
+mapsQuery: Rione Monti Roma

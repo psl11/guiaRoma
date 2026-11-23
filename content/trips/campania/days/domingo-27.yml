@@ -1,0 +1,117 @@
+slug: domingo-27
+trip: campania
+order: 9
+pill: 'Dom 27'
+roman: IX
+eyebrow: 'domingo · 27 de junio'
+title: Despedida, Nápoles bajo tierra y Pinguini Tattici Nucleari
+subtitle: Arantxa y los niños vuelan a casa por la mañana; día tranquilo por Nápoles para los dos y último concierto en el Maradona.
+# Base de la noche (D-06, D-25): «Dormís en Nápoles», en una zona por confirmar.
+stay: napoles
+# Tres paradas repartidas por la ciudad (D-08, WR-01): a pie engañaría y en transporte público
+# Google Maps no dibuja más de dos, así que el día no ofrece ruta.
+route:
+  enabled: false
+stats:
+  - variant: bus
+    text: '**Alibus** o taxi al aeropuerto y vuelta al centro'
+  - variant: metro
+    text: '**Metro Línea 2** hasta el estadio para el último concierto'
+light:
+  title: 🦶 Versión ligera · domingo
+  items:
+    - kind: see
+      text: >-
+        **Imprescindibles:** la despedida en el aeropuerto y el concierto en el
+        [Maradona](#stadio-maradona).
+    - kind: skip
+      text: >-
+        **Saltar hoy:** la visita bajo tierra. Adelantar las librerías y el café por
+        el centro también es un buen domingo.
+    - kind: rest
+      text: >-
+        **Descanso:** la tarde a la sombra del [Real Bosco di Capodimonte](#capodimonte),
+        sin reloj, antes del concierto.
+timeline:
+  - kind: stop
+    pace: all
+    time: '10:00'
+    title: Al aeropuerto con Arantxa y los niños
+    disabled: true
+    note: >-
+      Alibus o taxi hasta Capodichino para despedir a Arantxa y a los niños, que
+      vuelven a casa. La hora y los datos de su vuelo están **⚠ por confirmar**. Desde
+      aquí, el día es para vosotros dos.
+  - kind: transport
+    pace: all
+    variant: bus
+    header: Del aeropuerto al centro histórico
+    modes:
+      - icon: 🚌
+        recommended: true
+        desc: >-
+          **Alibus** hasta Piazza Garibaldi y un paseo hasta la Via dei Tribunali ·
+          pasa cada 10-20 min
+        tag: recomendado
+        meta: '⏱ **≈20 min** · 💶 5 € **⚠ por confirmar**'
+      - icon: 🚕
+        desc: '**Taxi** directo al centro histórico · precio **⚠ por confirmar**'
+  - kind: stop
+    pace: all
+    time: '12:00'
+    title: Napoli Sotterranea
+    ref: napoli-sotterranea
+    note: >-
+      Visita guiada bajo el centro histórico, entre hora y media y dos horas, con
+      entrada en Piazza San Gaetano 68. Hay que reservar: la hora de la visita y el
+      precio están **⚠ por confirmar**.
+  - kind: stop
+    pace: all
+    time: '14:30'
+    title: Comida y librerías del centro
+    disabled: true
+    note: >-
+      Comida sin prisa en el centro histórico y una tarde de librerías independientes y
+      puestos de libros de viejo en los alrededores de Port'Alba y Piazza Dante, la
+      zona de los libreros. Entrad en las que os llamen desde la calle.
+  - kind: stop
+    pace: medium
+    time: '16:30'
+    title: Tarde a la sombra en Capodimonte
+    ref: capodimonte
+    note: >-
+      Si aún os quedan piernas, subid al Real Bosco y buscad un banco a la sombra antes
+      del concierto. Cómo subir desde el centro (autobús o taxi) y el horario del parque
+      están **⚠ por confirmar**.
+  - kind: transport
+    pace: all
+    variant: train
+    header: Metro Línea 2 hasta Napoli Campi Flegrei
+    modes:
+      - icon: Ⓜ️
+        recommended: true
+        desc: >-
+          **Metro Línea 2** desde Piazza Cavour hasta Napoli Campi Flegrei, junto al
+          estadio · servicios de la noche **⚠ por confirmar**
+        tag: recomendado
+      - icon: 🚕
+        desc: >-
+          O **taxi** hasta Piazzale Tecchio, contando con el tráfico de una noche de
+          concierto · precio **⚠ por confirmar**
+  - kind: stop
+    pace: all
+    time: '19:30'
+    title: Llegada al estadio · concierto de Pinguini Tattici Nucleari
+    ref: stadio-maradona
+    tag: concierto
+    note: >-
+      Llegada con margen para el último concierto del viaje, ya los dos solos. La fecha
+      la publica una sola fuente y está **⚠ por confirmar**, igual que la hora de
+      inicio y las entradas.
+  - kind: meta
+    items:
+      - level: warn
+        text: '⏱ Vuelta en Línea 2 o taxi **⚠ por confirmar**'
+# El estadio NO va aquí (Pitfall 7): ya está en las fichas del viernes 25 y el domingo lo cita
+# solo con `stop.ref`; listarlo dos veces duplicaría el id del DOM.
+cards: [napoli-sotterranea, capodimonte]

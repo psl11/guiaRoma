@@ -1,0 +1,73 @@
+slug: practica
+trip: campania
+order: 2
+title: Manual práctico de Campania
+eyebrow: Campania · práctica
+intro: >-
+  Lo que conviene saber antes de moveros entre Nápoles, las islas y Salerno: los
+  barcos, el coche, el calor de finales de junio y cómo hacerlo todo a buen ritmo
+  con los niños. Lo marcado con **⚠ por confirmar** son datos de 2027 que todavía
+  no se han publicado.
+sections:
+  - heading: Ferris y puertos
+    body: |
+      - **Dos muelles en Nápoles.** Los traghetti (ferris grandes, más lentos y baratos) de **Caremar** salen de **Porta di Massa**; los aliscafi (más rápidos) salen del **Molo Beverello**, a pocos minutos andando. Mirad bien en el billete de qué muelle sale vuestro barco.
+      - **Compañías.** **Caremar** va a Procida e Ischia desde los dos muelles; **Medmar**, de Porta di Massa a Ischia; **SNAV**, del Molo Beverello a Procida y a Casamicciola; **Alilauro**, del Molo Beverello a Ischia y a Forio, en algo más de una hora.
+      - **Tiempos.** De Nápoles a Procida, alrededor de una hora en traghetto; de Procida a Ischia, unos 30 min en traghetto o 15-20 min en aliscafo.
+      - **Billetes.** Se compran en la web de cada compañía, en la app **MyCaremar** o en las taquillas del puerto. Los horarios del verano de 2027 aún no están publicados: **⚠ por confirmar** cada salida antes de ir al puerto.
+      - **Equipaje.** Llegad con margen y con las mochilas a mano: en el aliscafo el sitio para maletas es poco y se embarca deprisa.
+  - heading: 'Conducir: ZTL, aparcar y por qué no hay coche en las islas'
+    body: |
+      - **ZTL de Nápoles.** El centro tiene varias zonas de tráfico limitado (ZTL), cada una con sus accesos y sus horarios. Los del Centro Antico no coinciden entre fuentes **⚠ por confirmar**. Las cámaras multan desde unos 80 € hasta más de 330 €. Si el alojamiento está dentro de una ZTL, preguntad si puede registrar la matrícula.
+      - **ZTL de Salerno.** El centro storico también es ZTL, con cámaras que, según las fuentes, funcionan las 24 h **⚠ por confirmar**. Aparcad fuera y entrad andando.
+      - **Procida.** En temporada está prohibido desembarcar coches de no residentes (en 2025, del 1 de abril al 30 de octubre). Fechas de 2027 **⚠ por confirmar**.
+      - **Ischia.** También tiene una prohibición de temporada (en 2026, del 3 de abril al 31 de octubre). A quién afecta y las fechas de 2027 **⚠ por confirmar**. Por eso el coche se recoge al volver de las islas y ninguno cruza en barco.
+      - **La noche del 25.** El coche duerme en un garaje o un aparcamiento vigilado cerca de la base de Nápoles; cuál, **⚠ por confirmar**.
+      - **Devolución.** El sábado 26, prevista en Capodichino **⚠ por confirmar**. Pedid siempre un justificante de devolución firmado. Lo tenéis también en [Reservas](#reservas).
+  - heading: Calor y sol de finales de junio
+    body: >-
+      En junio Nápoles tiene una máxima media de **28 °C** y una mínima de **18 °C**
+      (medias de 1991-2020), y el mar ronda los **22-23 °C**. Caminad por la mañana
+      y al atardecer, guardad las horas centrales para la siesta, la sombra o el
+      agua, y llevad gorra, crema y una botella para cada uno.
+  - heading: 'Calzado: roca volcánica y escalones'
+    body: |
+      - **Calzado cerrado** para bajar a la [Baia di Sorgeto](#baia-di-sorgeto) (entre 250 y 300 escalones) y caminar por sus rocas volcánicas.
+      - **Zapatillas con buena suela** para el sendero del [Monte Epomeo](#monte-epomeo), unos 3 km de subida desde Fontana.
+      - **Nada resbaladizo** para la larga escalera de [Napoli Sotterranea](#napoli-sotterranea).
+      - Las sandalias, solo para las playas.
+  - heading: Con niños
+    body: |
+      - **Agua, sombra y siesta.** Que cada uno lleve su botella, y parad a mediodía.
+      - **Sorgeto de noche.** Id solo con buena luz y el mar en calma. El acceso nocturno, la iluminación y si los niños pueden bañarse están **⚠ por confirmar**. El agua termal quema en algunos puntos: comprobadla con la mano.
+      - **En el estadio, el 25.** Tapones o cascos para los oídos, y un punto de encuentro fijo por si os separáis entre la gente.
+  - heading: Conciertos en el Maradona
+    body: |
+      - **Metro Linea 2** (Trenitalia) hasta la estación **Napoli Campi Flegrei**, la más cómoda. En los conciertos de junio de 2025 hubo trenes extra, en algunos casos hasta cerca de la 01:00.
+      - **Cumana** hasta la estación **Mostra**: hubo trenes extra en algunos conciertos y en otros no.
+      - **Taxis** en **Piazzale Tecchio**.
+      - **La vuelta es tarde.** Los servicios especiales de 2027 están **⚠ por confirmar**, y está previsto que las obras de reforma del estadio empiecen en enero de 2027 **⚠ por confirmar**: revisad que los conciertos sigan en pie antes de ir.
+  - heading: Del aeropuerto a la ciudad
+    body: >-
+      El **Alibus** une el aeropuerto con Piazza Garibaldi (unos 20 min), Porta di
+      Massa y el Molo Beverello, cada 10-20 min. Billete sencillo de 5 €
+      **⚠ por confirmar**. No sube al Vomero: desde Garibaldi seguid en metro o en
+      funicular.
+  - heading: Lecturas y visionados antes del viaje
+    body: >-
+      Para llegar con la región ya en la cabeza, unas pocas historias que pasan en
+      sus islas y en sus calles.
+media:
+  - category: libros
+    items:
+      - >-
+        **_La isla de Arturo_**, Elsa Morante (1957): la infancia de un chico en
+        Procida, entre el puerto y el viejo penal de Terra Murata.
+      - >-
+        **_La amiga estupenda_**, Elena Ferrante (2011): dos amigas que crecen en
+        un barrio de Nápoles; el principio de toda la saga.
+  - category: peliculas
+    items:
+      - >-
+        **_El cartero (y Pablo Neruda)_** (1994): rodada en parte en Procida, en
+        la Marina Corricella.

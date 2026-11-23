@@ -1,0 +1,24 @@
+slug: puente-de-la-forma
+trip: forma
+roman: II
+name: Puente de la Forma
+italian: 'Puente de la Forma · Ría del Ensayo'
+day: Sábado 26
+coords:
+  lat: 43.37
+  lng: -8.396
+type: card
+motif: arch
+hero:
+  src: https://example.invalid/forma/puente-de-la-forma.jpg
+  alt: Puente de la Forma
+sections:
+  - heading: Qué es
+    body: >-
+      Un puente de piedra de tres ojos sobre la ría, ficticio como todo este
+      viaje. Es la parada del segundo sábado y el segundo marcador del mapa, para
+      que el encuadre del mapa tenga más de un punto.
+facts:
+  - label: Paso
+    value: 'Peatonal · todo el día'
+mapsQuery: Puente de la Forma

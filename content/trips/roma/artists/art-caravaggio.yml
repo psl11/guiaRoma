@@ -1,0 +1,66 @@
+kind: artist
+slug: art-caravaggio
+trip: roma
+avatar: C
+name: Caravaggio
+dates: Milán 1571 – Porto Ercole 1610 · pintor
+epithet: «Trajo la calle, la suciedad y la luz brutal a la pintura sagrada. Y cambió el arte para siempre.»
+sections:
+  - heading: Quién fue
+    body: >-
+      Michelangelo Merisi, llamado por su pueblo natal. Genial y violento, vivió
+      huyendo: **mató a un hombre** en una reyerta en 1606 y pasó sus últimos años
+      fugitivo entre Nápoles, Malta y Sicilia. Murió a los 38 en una playa, en
+      circunstancias aún oscuras. En apenas quince años de carrera revolucionó la
+      pintura europea.
+  - heading: Su estilo
+    body: >-
+      El **tenebrismo**: fondos negros de los que un foco de luz arranca las
+      figuras (el _claroscuro_). Y un realismo descarnado —usaba prostitutas y
+      mendigos como modelos para vírgenes y santos, con **pies sucios y arrugas
+      reales**, algo escandaloso entonces—. Composiciones de máxima tensión que
+      meten al espectador dentro de la escena.
+  - heading: Obras maestras
+    body: |
+      - El ciclo de **San Mateo** (Vocación, Inspiración, Martirio) — San Luigi
+      dei Francesi
+      - La _Conversión de San Pablo_ y la _Crucifixión de San Pedro_ — Santa Maria
+      del Popolo
+      - _Judith y Holofernes_ y _Narciso_ — Palazzo Barberini
+      - La _Vocación de San Mateo_ es, para muchos, su obra cumbre
+  - heading: Por qué importa
+    body: >-
+      Rompió con el idealismo del Renacimiento y trajo la **realidad cruda y la
+      luz dramática** a la pintura. Su influencia (los _caravaggisti_) se extendió
+      por toda Europa: Ribera, Zurbarán, Georges de La Tour y hasta Rembrandt
+      beben de él. Es el puente hacia la pintura moderna.
+  - heading: Cómo reconocer su mano
+    body: |
+      - El **foco brutal**: un haz de luz lateral y, alrededor, **negro absoluto**.
+      Ni cielo ni paisaje, solo oscuridad de la que emergen las figuras.
+      - **Pies sucios, uñas negras, caras de la calle**: santos y vírgenes que
+      parecen jornaleros y verduleras.
+      - El **primer plano** que invade tu espacio: un codo, una cesta de fruta, un
+      caballo casi saliéndose del cuadro.
+      - Pintaba **del natural, sin bocetos**; a veces se ven incisiones en la base
+      para fijar la pose. Realismo hasta en la fruta podrida.
+  - heading: Curiosidades
+    body: |
+      - Iba armado por Roma y acumulaba denuncias y peleas; en **1606 mató a un
+      hombre** y huyó con pena de muerte encima.
+      - Para una Virgen usó el cuerpo de **una prostituta ahogada en el Tíber**: la
+      Iglesia rechazó el cuadro por indecente.
+      - Murió a los 38 en una playa, enfermo y solo, **justo cuando le llegaba el
+      perdón** del papa.
+      - Tras su muerte fue **olvidado casi 300 años**; el siglo XX lo redescubrió y
+      hoy es uno de los pintores más influyentes de la historia.
+seenIn:
+  - ref: san-luigi
+    label: '[Ciclo de San Mateo (San Luigi dei Francesi)](#san-luigi)'
+    note: ✦ Lo verás en este viaje
+  - ref: popolo
+    label: '[los dos de Santa Maria del Popolo](#popolo)'
+  - ref: palazzo-barberini
+    label: '[Judith (Palazzo Barberini)](#palazzo-barberini)'
+  - ref: doria-pamphilj
+    label: '[Galleria Doria Pamphilj](#doria-pamphilj)'

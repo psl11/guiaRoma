@@ -1,0 +1,96 @@
+slug: santignazio
+trip: roma
+roman: III
+name: Sant'Ignazio di Loyola
+italian: Chiesa di Sant'Ignazio · Rione Pigna
+day: Viernes
+coords:
+  lat: 41.8991634
+  lng: 12.4797080
+type: card
+motif: dome
+artists:
+  - ref: art-pozzo
+    label: 'Artistas: [Andrea Pozzo](#art-pozzo)'
+arch:
+  - ref: arq-barroco
+    label: 'Arquitectura: [Barroco](#arq-barroco)'
+hero:
+  src: https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Church_of_Sant%27Ignazio_di_Loyola.jpg/1280px-Church_of_Sant%27Ignazio_di_Loyola.jpg
+  alt: Techo de Sant'Ignazio por Andrea Pozzo
+sections:
+  - heading: Qué es
+    body: >-
+      La iglesia jesuita madre del Colegio Romano, construida en pleno siglo
+      XVII para celebrar la canonización de Ignacio de Loyola. Por fuera es
+      contenida; por dentro es uno de los espectáculos visuales más complejos
+      jamás pintados — una de las obras maestras absolutas del trampantojo
+      barroco europeo. Y un secreto: la cúpula que parece de piedra es _pintura
+      plana_.
+  - heading: Historia
+    body: >-
+      Cuando Ignacio fue canonizado en 1622, la Compañía de Jesús decidió que
+      necesitaba una iglesia digna junto al Colegio Romano (la principal
+      universidad jesuita, donde estudiaron generaciones de teólogos y
+      científicos). La iniciaron los arquitectos Carlo Maderno y Orazio Grassi y
+      se inauguró en 1685. Pero faltaba la decoración interior, y aquí entra en
+      escena el personaje clave: **Andrea Pozzo**, un hermano jesuita de Trento
+      que era además uno de los mejores pintores y matemáticos de la perspectiva
+      del siglo XVII. Había escrito un tratado, _Perspectiva pictorum et
+      architectorum_, que sigue siendo referencia universal.
+
+
+      Pozzo recibió el encargo del fresco del techo de la nave entre 1685 y
+      1694. Su _Gloria de San Ignacio_ mide cerca de 800 metros cuadrados y
+      representa la expansión espiritual de la Compañía de Jesús por los cuatro
+      continentes — figuras alegóricas de Europa, Asia, África y América rodean
+      al santo, que asciende hacia Cristo entre arquitecturas en perspectiva
+      imposibles. La famosa "cúpula" no se llegó a construir nunca por problemas
+      de presupuesto y disputas con un vecino dominico. Pozzo, en lugar de dejar
+      el hueco, **pintó una cúpula falsa sobre un lienzo plano** de 17 metros de
+      diámetro que, vista desde un punto específico del suelo, parece una bóveda
+      perfecta. Es una de las ilusiones ópticas más elegantes del arte
+      occidental.
+  - heading: Anécdotas
+    body: >-
+      Si te mueves del punto óptimo de la cúpula, ves cómo se distorsiona y
+      descubres el truco — los pilares aparentan inclinarse, la circunferencia
+      se ovala. Pozzo dejó instrucciones expresas de marcar ese punto en el
+      suelo con un disco de mármol amarillo (sigue ahí). Cuenta la tradición que
+      cuando un mecenas lo regañó por la "trampa", él respondió: «Si Dios no me
+      concede una cúpula real, le ofrezco una pintada». Dicen también que Pozzo,
+      perfeccionista hasta la enfermedad, modificó el fresco tres veces tras
+      quejas de cardenales sobre la representación de África. La iglesia es
+      además el lugar donde el matemático y astrónomo jesuita Cristoforo Clavio
+      enseñó cálculo a Galileo Galilei.
+  - heading: En qué fijarse
+    body: |
+      :detail-photo{src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Andrea_pozzo%2C_gloria_di_sant%27ignazio%2C_1685-94%2C_01.jpg/960px-Andrea_pozzo%2C_gloria_di_sant%27ignazio%2C_1685-94%2C_01.jpg" alt="La «cúpula» de Sant'Ignazio es plana. Pozzo pintó el trampantojo sobre un lienzo de 17 m. Búscala desde el disco amarill" caption="La «cúpula» de Sant'Ignazio es **plana**. Pozzo pintó el trampantojo sobre un lienzo de 17 m. Búscala desde el disco amarillo del centro de la nave."}
+
+      - El **disco amarillo de mármol** en el centro de la nave: ponte exactamente sobre él y mira hacia arriba. La cúpula parece real. Da medio paso y la ilusión se rompe.
+      - El **segundo disco de mármol**, más adelante, marca el punto óptimo para el fresco de la nave: la _Gloria de San Ignacio_. Pozzo trazó dos puntos focales distintos, uno por obra.
+      - Los **cuatro continentes**: Asia con un camello, África con un cocodrilo, América con una guacamaya, Europa con una corona. Identifica cada uno. Las figuras tienen pies que parecen "salirse" del fresco hacia abajo.
+      - El **órgano espejo** (siglo XIX) a la derecha del altar: si llegáis en horario de música, lo tocan. La acústica de la nave es brutal.
+      - La **capilla de Ludovica Albertoni** en el transepto izquierdo: hay un Bernini menor pero precioso (no es la famosa _Beata Ludovica_, esa está en otra iglesia).
+      - Las **tumbas de los Papas Gregorio XV y Ludovico Ludovisi**: los dos hombres que canonizaron a Ignacio. Sin ellos no habría esta iglesia.
+facts:
+  - label: Horario
+    value: 9:00 - 23:30 todos los días
+  - label: Acceso
+    value: Gratuito
+  - label: Tiempo de visita
+    value: 30 minutos
+  - label: Tip
+    value: Lleva monedas de €1 para iluminar los frescos
+mapsQuery: Chiesa di Sant'Ignazio di Loyola Roma
+culture:
+  - title: Referencias literarias
+    text: ''
+  - title: Historias de Roma
+    text: >-
+      (Enric González, 2004) — «No entren en este templo bajo el efecto de una
+      droga: podrían pasar un mal rato porque del techo pintado por Andrea Pozzo
+      brotan manos, rostros y rayos divinos. ‹Brotan› literalmente, acercándose
+      al observador. Ni la aparente profundidad del techo ni la falsa cúpula
+      pueden describirse correctamente: hay que estar ahí, bajo el invento de
+      Pozzo, para comprender de qué hablamos.»

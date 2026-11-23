@@ -1,0 +1,42 @@
+slug: torre-ensayo
+trip: prueba
+roman: II
+name: Torre del Ensayo
+italian: Torre del Saggio · Quartiere del Collaudo
+day: Viernes
+coords:
+  lat: 40.4161
+  lng: -3.7027
+type: card
+motif: tower
+hero:
+  src: https://example.invalid/prueba/torre-ensayo.jpg
+  alt: Torre del Ensayo
+sections:
+  - heading: Qué es
+    body: >-
+      Una torre de ladrillo de cinco pisos con un mirador de madera en lo alto.
+      Desde arriba se ve todo el barrio del recorrido de ensayo y, en los días
+      claros, la línea azul de la sierra. Queda a nueve minutos a pie de
+      [el surtidor de las pruebas](#fontana-pruebas).
+  - heading: Historia
+    body: >-
+      Se construyó como torre de vigía para un mercado que ya no existe. Durante
+      décadas sirvió de reloj para el barrio: una campana sonaba a cada hora y una
+      bandera roja indicaba el día de feria.
+
+
+      Hoy la escalera interior tiene ciento doce peldaños de piedra. A mitad de la
+      subida hay un rellano con una ventana estrecha desde la que se ve el
+      surtidor; es el mejor lugar para tomar aire y seguir con el último tramo.
+  - heading: En qué fijarse
+    body: >-
+      El reloj de sol pintado en la fachada sur, la veleta con forma de gallo y
+      las marcas de los canteros en los sillares de la base: cada uno firmaba su
+      piedra con un símbolo propio.
+facts:
+  - label: Horario
+    value: 10:00-14:00 · cerrada los lunes
+  - label: Subida
+    value: 112 peldaños · sin ascensor
+mapsQuery: Torre del Ensayo

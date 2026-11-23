@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="23" failures="21" errors="0" time="0.02977867">
+    <testsuite name="tests/data/invariants.spec.ts" timestamp="2026-11-20T10:20:22.744Z" hostname="NewVaktorPC" tests="23" failures="21" errors="0" skipped="0" time="0.02977867">
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta no está vacía (incluye el viaje roma)" time="0.003973019">
+            <failure message="expected [] to include &apos;roma&apos;" type="AssertionError">
+AssertionError: expected [] to include &apos;roma&apos;
+ ❯ tests/data/invariants.spec.ts:42:17
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; listTripDirs lista solo carpetas, ordenadas (fixtures en disco)" time="0.002254642">
+            <failure message="expected [] to deeply equal [ &apos;campania-2027&apos;, &apos;suelto&apos; ]" type="AssertionError">
+AssertionError: expected [] to deeply equal [ &apos;campania-2027&apos;, &apos;suelto&apos; ]
+
+- Expected
++ Received
+
+- [
+-   &quot;campania-2027&quot;,
+-   &quot;suelto&quot;,
+- ]
++ []
+
+ ❯ tests/data/invariants.spec.ts:129:36
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; trip-slug: slug con guion en disco (campania-2027, D-05)" time="0.001387019">
+            <failure message="expected [] to deeply equal ArrayContaining{…}" type="AssertionError">
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     &quot;file&quot;: &quot;tests/data/fixtures/trips/campania-2027/trip.yml&quot;,
+-     &quot;message&quot;: StringContaining &quot;campania-2027&quot;,
+-     &quot;rule&quot;: &quot;trip-slug&quot;,
+-   },
+- ]
++ []
+
+ ❯ tests/data/invariants.spec.ts:134:16
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; trip-yml + stray-file: carpeta sin trip.yml y con un YAML suelto (en disco)" time="0.000771507">
+            <failure message="expected [] to deeply equal ArrayContaining{…}" type="AssertionError">
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     &quot;file&quot;: &quot;tests/data/fixtures/trips/suelto/trip.yml&quot;,
+-     &quot;rule&quot;: &quot;trip-yml&quot;,
+-   },
+-   ObjectContaining {
+-     &quot;file&quot;: &quot;tests/data/fixtures/trips/suelto/notas.yml&quot;,
+-     &quot;rule&quot;: &quot;stray-file&quot;,
+-   },
+- ]
++ []
+
+ ❯ tests/data/invariants.spec.ts:143:16
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; trip-slug: slug &quot;distinto&quot; en la carpeta &quot;otro&quot;" time="0.003669874">
+            <failure message="expected [] to deeply equal ArrayContaining{…}" type="AssertionError">
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     &quot;file&quot;: StringContaining &quot;content/trips/otro/trip.yml&quot;,
+-     &quot;rule&quot;: &quot;trip-slug&quot;,
+-   },
+- ]
++ []
+
+ ❯ expectRule tests/data/invariants.spec.ts:122:36
+ ❯ tests/data/invariants.spec.ts:151:5
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; trip-field: monumento con trip &quot;roma&quot; en la carpeta &quot;prueba&quot;" time="0.001335633">
+            <failure message="expected [] to deeply equal ArrayContaining{…}" type="AssertionError">
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     &quot;file&quot;: StringContaining &quot;content/trips/prueba/monuments/galeria.yml&quot;,
+-     &quot;rule&quot;: &quot;trip-field&quot;,
+-   },
+- ]
++ []
+
+ ❯ expectRule tests/data/invariants.spec.ts:122:36
+ ❯ tests/data/invariants.spec.ts:156:5
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; dup-id: monuments/x.yml y food/x.yml con el mismo slug nombran ambos ficheros" time="0.001425891">
+            <failure message="expected [] to deeply equal ArrayContaining{…}" type="AssertionError">
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     &quot;file&quot;: StringContaining &quot;prueba/monuments/x.yml&quot;,
+-     &quot;rule&quot;: &quot;dup-id&quot;,
+-   },
+- ]
++ []
+
+ ❯ expectRule tests/data/invariants.spec.ts:122:36
+ ❯ tests/data/invariants.spec.ts:164:5
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; fixed-anchor: un monumento con slug &quot;mapa&quot; choca con TripView" time="0.00105987">
+            <failure message="expected [] to deeply equal ArrayContaining{…}" type="AssertionError">
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     &quot;file&quot;: StringContaining &quot;prueba/monuments/mapa.yml&quot;,
+-     &quot;rule&quot;: &quot;fixed-anchor&quot;,
+-   },
+- ]
++ []
+
+ ❯ expectRule tests/data/invariants.spec.ts:122:36
+ ❯ tests/data/invariants.spec.ts:173:5
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; fixed-anchor: un slug con prefijo &quot;note-&quot; choca con las notas de MonumentCard" time="0.001505874">
+            <failure message="expected [] to deeply equal ArrayContaining{…}" type="AssertionError">
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     &quot;file&quot;: StringContaining &quot;prueba/monuments/note-a.yml&quot;,
+-     &quot;rule&quot;: &quot;fixed-anchor&quot;,
+-   },
+- ]
++ []
+
+ ❯ expectRule tests/data/invariants.spec.ts:122:36
+ ❯ tests/data/invariants.spec.ts:178:5
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; reserved-key: &quot;meta&quot; en el nivel superior" time="0.001283206">
+            <failure message="expected [] to deeply equal ArrayContaining{…}" type="AssertionError">
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     &quot;file&quot;: StringContaining &quot;prueba/monuments/galeria.yml&quot;,
+-     &quot;rule&quot;: &quot;reserved-key&quot;,
+-   },
+- ]
++ []
+
+ ❯ expectRule tests/data/invariants.spec.ts:122:36
+ ❯ tests/data/invariants.spec.ts:183:5
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; unknown-key: &quot;boxorder&quot; (zod lo tiraría sin avisar)" time="0.001098108">
+            <failure message="expected [] to deeply equal ArrayContaining{…}" type="AssertionError">
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     &quot;file&quot;: StringContaining &quot;prueba/monuments/galeria.yml&quot;,
+-     &quot;rule&quot;: &quot;unknown-key&quot;,
+-   },
+- ]
++ []
+
+ ❯ expectRule tests/data/invariants.spec.ts:122:36
+ ❯ tests/data/invariants.spec.ts:188:5
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; ref: day.cards apunta a un monumento inexistente" time="0.00088642">
+            <failure message="expected [] to deeply equal ArrayContaining{…}" type="AssertionError">
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     &quot;file&quot;: StringContaining &quot;prueba/days/viernes.yml&quot;,
+-     &quot;rule&quot;: &quot;ref&quot;,
+-   },
+- ]
++ []
+
+ ❯ expectRule tests/data/invariants.spec.ts:122:36
+ ❯ tests/data/invariants.spec.ts:194:5
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; anchor: [x](#pantheon) en &quot;prueba&quot; no resuelve (la ficha es de otro viaje)" time="0.000995067">
+            <failure message="expected [] to deeply equal ArrayContaining{…}" type="AssertionError">
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     &quot;file&quot;: StringContaining &quot;prueba/monuments/&quot;,
+-     &quot;rule&quot;: &quot;anchor&quot;,
+-   },
+- ]
++ []
+
+ ❯ expectRule tests/data/invariants.spec.ts:122:36
+ ❯ tests/data/invariants.spec.ts:201:5
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; anchor: [x](#Galeria) NO resuelve a &quot;galeria&quot; (comparación exacta, sin normalizar)" time="0.000791675">
+            <failure message="expected [] to deeply equal ArrayContaining{…}" type="AssertionError">
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     &quot;file&quot;: StringContaining &quot;prueba/monuments/galeria.yml&quot;,
+-     &quot;rule&quot;: &quot;anchor&quot;,
+-   },
+- ]
++ []
+
+ ❯ expectRule tests/data/invariants.spec.ts:122:36
+ ❯ tests/data/invariants.spec.ts:209:5
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; cross-trip-link: [x](/trips/roma#pantheon) no se admite (D-11)" time="0.000684386">
+            <failure message="expected [] to deeply equal ArrayContaining{…}" type="AssertionError">
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     &quot;file&quot;: StringContaining &quot;prueba/monuments/galeria.yml&quot;,
+-     &quot;rule&quot;: &quot;cross-trip-link&quot;,
+-   },
+- ]
++ []
+
+ ❯ expectRule tests/data/invariants.spec.ts:122:36
+ ❯ tests/data/invariants.spec.ts:216:5
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; yaml-parse: un YAML que no parsea nombra su fichero" time="0.000568334">
+            <failure message="expected [] to deeply equal ArrayContaining{…}" type="AssertionError">
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     &quot;file&quot;: StringContaining &quot;prueba/monuments/roto.yml&quot;,
+-     &quot;rule&quot;: &quot;yaml-parse&quot;,
+-   },
+- ]
++ []
+
+ ❯ expectRule tests/data/invariants.spec.ts:122:36
+ ❯ tests/data/invariants.spec.ts:221:5
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; yaml-object: un YAML vacío nombra su fichero" time="0.000555169">
+            <failure message="expected [] to deeply equal ArrayContaining{…}" type="AssertionError">
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     &quot;file&quot;: StringContaining &quot;prueba/monuments/vacio.yml&quot;,
+-     &quot;rule&quot;: &quot;yaml-object&quot;,
+-   },
+- ]
++ []
+
+ ❯ expectRule tests/data/invariants.spec.ts:122:36
+ ❯ tests/data/invariants.spec.ts:226:5
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; stray-file: monuments/sub/x.yml no casa con ninguna colección" time="0.00074846">
+            <failure message="expected [] to deeply equal ArrayContaining{…}" type="AssertionError">
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     &quot;file&quot;: StringContaining &quot;prueba/monuments/sub/x.yml&quot;,
+-     &quot;rule&quot;: &quot;stray-file&quot;,
+-   },
+- ]
++ []
+
+ ❯ expectRule tests/data/invariants.spec.ts:122:36
+ ❯ tests/data/invariants.spec.ts:231:5
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; basename-slug: monuments/a.yml con slug &quot;b&quot;" time="0.000731163">
+            <failure message="expected [] to deeply equal ArrayContaining{…}" type="AssertionError">
+AssertionError: expected [] to deeply equal ArrayContaining{…}
+
+- Expected
++ Received
+
+- ArrayContaining [
+-   ObjectContaining {
+-     &quot;file&quot;: StringContaining &quot;prueba/monuments/a.yml&quot;,
+-     &quot;rule&quot;: &quot;basename-slug&quot;,
+-   },
+- ]
++ []
+
+ ❯ expectRule tests/data/invariants.spec.ts:122:36
+ ❯ tests/data/invariants.spec.ts:236:5
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; D-09: un viaje con solo un trip.yml válido no tiene violaciones" time="0.000384691">
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="la puerta tiene dientes (fixtures) &gt; [x](#reservas) resuelve aunque el viaje no tenga ficheros reference" time="0.000550492">
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="extractAnchors &gt; saca las anclas internas y NO las URLs externas" time="0.000415823">
+            <failure message="expected [] to deeply equal [ &apos;fontana-trevi&apos;, &apos;art-pozzo&apos; ]" type="AssertionError">
+AssertionError: expected [] to deeply equal [ &apos;fontana-trevi&apos;, &apos;art-pozzo&apos; ]
+
+- Expected
++ Received
+
+- [
+-   &quot;fontana-trevi&quot;,
+-   &quot;art-pozzo&quot;,
+- ]
++ []
+
+ ❯ tests/data/invariants.spec.ts:257:32
+            </failure>
+        </testcase>
+        <testcase classname="tests/data/invariants.spec.ts" name="extractAnchors &gt; captura un archLink inline (Barroco → #art-bernini)" time="0.000357403">
+            <failure message="expected [] to include &apos;art-bernini&apos;" type="AssertionError">
+AssertionError: expected [] to include &apos;art-bernini&apos;
+ ❯ tests/data/invariants.spec.ts:263:21
+            </failure>
+        </testcase>
+    </testsuite>
+</testsuites>

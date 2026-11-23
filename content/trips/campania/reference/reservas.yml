@@ -1,0 +1,132 @@
+slug: reservas
+trip: campania
+order: 1
+title: Reservas
+eyebrow: Campania · organización
+intro: >-
+  Todo lo que tenéis que reservar para el viaje, en un solo sitio: los vuelos,
+  las entradas de los conciertos y, más abajo, los alojamientos, los ferris, el
+  coche y las visitas con cupo, con cuánta antelación conviene cerrarlos. Lo
+  marcado con **⚠ por confirmar** todavía tenéis que comprobarlo vosotros.
+# Encabezados propios de Campania (Fase 12.1, D-16/D-23): el primer bloque son los vuelos, el
+# segundo las entradas confirmadas y la tabla, lo que queda por reservar. Sin ellos se verían los
+# textos de Roma (la regla `reservas-headings` de la puerta lo impide).
+headings:
+  mesas: ✈️ Vuelos
+  visitas: 🎟️ Entradas confirmadas
+  table: Alojamientos, ferris, coche y entradas · qué reservar y cuándo
+confirmed:
+  - group: mesas
+    when: Sáb 19 · 16:35
+    text: >-
+      **Vuelo** de ida al aeropuerto de Nápoles-Capodichino, con aterrizaje a las
+      16:35 · aerolínea y reserva **⚠ por confirmar**
+  - group: mesas
+    when: Lun 28 · 09:55
+    text: >-
+      **Vuelo** de vuelta a Palma desde Capodichino, con despegue a las 09:55 ·
+      aerolínea y reserva **⚠ por confirmar**
+  - group: visitas
+    when: Vie 25
+    text: >-
+      **Concierto de [Ultimo](#stadio-maradona)** en el Stadio Diego Armando
+      Maradona, con los niños · vuestras entradas son del **viernes 25**. El
+      calendario oficial de la gira anunció Nápoles para el jueves 24, pero mandan
+      las entradas. Hora de inicio y puertas de acceso **⚠ por confirmar**
+table:
+  - name: Alojamiento en Nápoles · noche del 19
+    badge: semanas antes
+    badgeKind: urgent
+    desc: >-
+      La primera noche, en el Vomero, cerca del metro o de un funicular para bajar
+      al centro. Zona y alojamiento **⚠ por confirmar**.
+  - name: Alojamiento en Procida · noche del 20
+    badge: semanas antes
+    badgeKind: urgent
+    desc: >-
+      Una sola noche en la isla, mejor cerca del puerto de Marina Grande o de la
+      Corricella para ir andando con las mochilas. Alojamiento **⚠ por confirmar**.
+  - name: Alojamiento en Ischia · noches del 21 y el 22
+    badge: semanas antes
+    badgeKind: urgent
+    desc: >-
+      Dos noches en Forio o cerca de la bahía de Sorgeto, la base para el Epomeo y
+      los baños termales. Alojamiento **⚠ por confirmar**.
+  - name: Alojamiento en Salerno · noches del 23 y el 24
+    badge: semanas antes
+    badgeKind: urgent
+    desc: >-
+      Dos noches con el coche: buscad un alojamiento con aparcamiento o un parking
+      cercano fuera de la ZTL del centro storico. Alojamiento **⚠ por confirmar**.
+  - name: Alojamiento en Nápoles · noches del 25 al 27
+    badge: semanas antes
+    badgeKind: urgent
+    desc: >-
+      Las tres últimas noches en Nápoles. ¿La misma base que la primera noche, en el
+      Vomero, u otra zona? **⚠ por confirmar**. La noche del 25 el coche duerme en
+      un garaje o un parking cerca de la base.
+  - name: Ferry Nápoles → Procida · domingo 20
+    badge: días antes
+    badgeKind: rec
+    desc: >-
+      Traghetto de **Caremar** desde Porta di Massa, en torno a las 12:15 o las
+      13:30 **⚠ por confirmar** (los horarios del verano de 2027 aún no están
+      publicados). Billetes en la web de Caremar o en la app MyCaremar.
+  - name: Ferry Procida → Ischia · lunes 21
+    badge: días antes
+    badgeKind: rec
+    desc: >-
+      Un salto corto: unos 30 min en traghetto o 15-20 min en aliscafo. Hora de
+      salida **⚠ por confirmar**; billetes en línea o en la taquilla del puerto.
+  - name: Ferry Ischia → Nápoles · miércoles 23
+    badge: días antes
+    badgeKind: rec
+    desc: >-
+      Vuelta a Nápoles con tiempo de sobra para estar a las 16:00 en Capodichino.
+      Compañía, puerto de llegada y hora **⚠ por confirmar**.
+  - name: Coche de alquiler · del miércoles 23 al sábado 26
+    badge: reservar ya
+    badgeKind: urgent
+    desc: >-
+      Recogida el **miércoles 23 a las 16:00** en el aeropuerto de Capodichino,
+      cuando llega Arantxa. Devolución el **sábado 26**, prevista también en
+      Capodichino. Compañía, punto y hora de devolución **⚠ por confirmar**. Al
+      devolverlo, pedid un justificante de devolución firmado. El coche no cruza a
+      las islas.
+  - ref: stadio-maradona
+    name: Concierto de Ultimo · viernes 25
+    badge: ✓ entradas
+    badgeKind: done
+    isDone: true
+    desc: >-
+      **Entradas compradas** para el viernes 25, con los niños. Hora de inicio y
+      puertas **⚠ por confirmar**.
+  - ref: stadio-maradona
+    name: Concierto de Pinguini Tattici Nucleari · domingo 27
+    badge: semanas antes
+    badgeKind: urgent
+    desc: >-
+      La fecha de Nápoles, el **domingo 27**, sale de una sola fuente. Entradas y
+      hora de inicio **⚠ por confirmar**.
+  - ref: napoli-sotterranea
+    name: Napoli Sotterranea
+    badge: días antes
+    badgeKind: rec
+    desc: >-
+      Solo se visita con guía y con reserva previa. Horarios y precios
+      **⚠ por confirmar**.
+  - ref: antro-della-sibilla
+    name: Parco Archeologico di Cuma · Antro della Sibilla
+    badge: días antes
+    badgeKind: rec
+    desc: >-
+      Reserva **obligatoria**, con entrada por turnos y aforo limitado. Cierra los
+      martes; el sábado 26 está abierto. Horario y precio de 2027
+      **⚠ por confirmar**.
+  - ref: g-3-il-focolare
+    name: Trattoria Il Focolare
+    badge: días antes
+    badgeKind: rec
+    desc: >-
+      El coniglio all'ischitana en olla de barro solo se prepara **por encargo**:
+      reservadlo al reservar la mesa. Día y horario **⚠ por confirmar**.
