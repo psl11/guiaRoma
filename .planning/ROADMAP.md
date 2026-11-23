@@ -114,7 +114,7 @@ Plans:
   3. Un enlace antiguo (`/guiaRoma/#viernes`, `/guiaRoma/#pantheon`, `/guiaRoma/index.html#gastronomia`) lleva a la misma ancla dentro de `/trips/roma/` y pulsar «Atrás» no entra en bucle; `/guiaRoma/` sin hash se queda en la portada
   4. Desde cualquier guía el usuario puede volver a la portada con el enlace discreto que decida el usuario para ROUTE-06 (recomendado: «← Todos los viajes» en el pie, con re-captura documentada solo de esa captura de Roma); si el usuario decide no añadirlo, ROUTE-06 se mueve a Future y no se toca ningún golden
   5. En `/trips/roma/` los 56 goldens pasan sin `--update-snapshots` (salvo la excepción aprobada de ROUTE-06) y toda la suite de comportamiento de Roma sigue verde; un test asevera que `/` sirve la portada y la URL de Roma sirve Roma (evita specs «verdes» contra la portada)
-**Plans**: 7/8 plans executed
+**Plans**: 8/8 plans executed
 Plans:
 **Wave 1**
 - [x] 11-01-PLAN.md — Harness de paridad (D-18 paso 1): `tests/parity/_harness.ts` con `ROMA_URL` sin cambiar su valor y los 11 specs de Roma usándolo, puerta verde (PAR-01, PAR-02)
@@ -134,7 +134,7 @@ Plans:
 - [x] 11-07-PLAN.md — `portada.spec.ts` (portada, sin `sql_dump`/WASM, vuelta a la portada, borradores en 404, sin remontajes, backstops), re-registro del conteo (110/13) y puerta completa de la fase (ROUTE-01, ROUTE-04, ROUTE-05, ROUTE-06, PAR-01, PAR-02)
 
 **Gap closure** *(UAT G-11-3)*
-- [ ] 11-08-PLAN.md — Cierre de G-11-3 (WR-02/WR-03 de 11-REVIEW): regla `trip-summary-inline` (el `summary` de la tarjeta solo admite Markdown en línea; lista, «2027. …», cita, tabla, código, separador, dos párrafos o `::x` hacen fallar la puerta nombrando trip.yml, sin doble aviso con `trip-summary-link`) y fallo de la consulta de la portada → error fatal 500 que hace fallar `nuxt generate` en vez de publicar una portada vacía con 200 (ROUTE-01, PAR-01, PAR-02)
+- [x] 11-08-PLAN.md — Cierre de G-11-3 (WR-02/WR-03 de 11-REVIEW): regla `trip-summary-inline` (el `summary` de la tarjeta solo admite Markdown en línea; lista, «2027. …», cita, tabla, código, separador, dos párrafos o `::x` hacen fallar la puerta nombrando trip.yml, sin doble aviso con `trip-summary-link`) y fallo de la consulta de la portada → error fatal 500 que hace fallar `nuxt generate` en vez de publicar una portada vacía con 200 (ROUTE-01, PAR-01, PAR-02)
 
 **Cross-cutting constraints:** <!-- gsd:generated -->
 - D-22: generate/Playwright/eslint/typecheck con Node 22 en el PATH, `rm -rf .data .nuxt .output` antes de generar; test:trips nunca a la vez que verify
@@ -296,7 +296,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 8. Verificación de paridad | v1.0 | 7/7 | Complete | 2026-06-24 |
 | 9. Plataforma por viaje | v1.1 | 6/6 | Complete    | 2026-11-22 |
 | 10. Forma y chrome desde datos | v1.1 | 6/6 | Complete    | 2026-11-22 |
-| 11. Portada y rutas multi-viaje | v1.1 | 7/7 | In Progress | - |
+| 11. Portada y rutas multi-viaje | v1.1 | 8/8 | In Progress | - |
 | 12. Formas nuevas de viaje | v1.1 | 7/7 | In Progress | - |
 | 13. Contenido Campania 2027 | v1.1 | 8/8 | In Progress | - |
 | 14. Verificación del milestone | v1.1 | 3/3 | In Progress | - |

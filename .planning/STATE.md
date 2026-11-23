@@ -5,16 +5,16 @@ milestone_name: Multi-viaje + Campania
 current_phase: 11
 current_phase_name: Portada y rutas multi-viaje
 status: verifying
-stopped_at: Phase 10 complete, ready to verify Phase 11
-last_updated: "2026-11-22T22:24:54.335Z"
-last_activity: 2026-11-22
-last_activity_desc: Phase 10 complete, transitioned to Phase 11
-state_head: bcbb0a799ececece818b81859fee7f1e1bcda1e4
+stopped_at: Completed 11-08-PLAN.md
+last_updated: "2026-11-23T00:18:40.389Z"
+last_activity: 2026-11-23
+last_activity_desc: Phase 11 execution started
+state_head: bafd66c940778685a3ac81c99281bde35eec5b98
 progress:
   total_phases: 7
   completed_phases: 3
-  total_plans: 38
-  completed_plans: 38
+  total_plans: 39
+  completed_plans: 39
   percent: 43
 ---
 
@@ -29,10 +29,10 @@ See: .planning/PROJECT.md (updated 2026-11-22)
 
 ## Current Position
 
-Phase: 11 — Portada y rutas multi-viaje
-Plan: 7
+Phase: 11 (Portada y rutas multi-viaje) — EXECUTING
+Plan: 8 of 8
 Status: Phase complete — ready for verification
-Last activity: 2026-11-22 — Phase 10 complete, transitioned to Phase 11
+Last activity: 2026-11-23 — Phase 11 execution started
 
 Progress: [████░░░░░░] 43%
 
@@ -144,6 +144,7 @@ Progress: [████░░░░░░] 43%
 | Phase 14 P03 | 10min | 3 tasks | 2 files |
 | Phase 09 P06 | 3min | 3 tasks | 5 files |
 | Phase 10 P06 | 6min | 3 tasks | 4 files |
+| Phase 11 P08 | 13 min | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -356,6 +357,9 @@ Recent decisions affecting current work:
 - [Phase 09]: G-09-3: reuse stray-file for loose content/trips root entries and upper-case YAML extensions (RULES stays 21); only isYaml is case-insensitive, COLLECTIONS[].match stays case-sensitive
 - [Phase 10]: G-10-2: la puerta de datos escanea léxicamente (fail-closed, sin parser ni dependencias) toda forma de enlace que MDC pinta como <a>; rechaza [r]:, <a> crudo, {href=}/{to=} y props href:/to: en frontmatter MDC (comprobado que sí pintan <a href>)
 - [Phase 10]: G-10-2: regla card-placement (RULES=22) — cada ficha exactamente una vez en days[*].cards; anchor/seenIn/ref solo resuelven a fichas pintadas (renderedMonuments)
+- [Phase 11]: trip-summary-inline only evaluates a summary with no link (!hasLink): link-forms stay trip-summary-link, no double warning
+- [Phase 11]: WR-02 closed with a lexical fail-closed scan (no parser, no new deps); documented false reds accepted, false greens not
+- [Phase 11]: WR-03: portada query error -> createError 500 fatal (template unchanged); nuxt generate fails via failOnError
 
 ### Pending Todos
 
@@ -394,8 +398,8 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-11-22T22:30:00Z
-Stopped at: Phase 10 complete, ready to verify Phase 11
+Last session: 2026-11-23T00:18:39.935Z
+Stopped at: Completed 11-08-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
