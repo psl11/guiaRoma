@@ -5,41 +5,41 @@ titles: json
 findings:
   - id: WR-01
     severity: warning
-    disposition: open
+    disposition: fixed
     title: "The `trip-summary-link` rule can be bypassed, so a nested `<a>` can reach the home-page card"
   - id: WR-02
     severity: warning
-    disposition: open
+    disposition: fixed
     title: "Block Markdown in `summary` renders block elements inside `<p class=\"trip-index-summary\">`"
   - id: WR-03
     severity: warning
-    disposition: open
+    disposition: fixed
     title: "A failed query on the home page publishes a blank page with HTTP 200"
   - id: IN-01
     severity: info
-    disposition: open
+    disposition: deferred
     title: "The schema accepts card data that the card then silently drops"
   - id: IN-02
     severity: info
-    disposition: open
+    disposition: deferred
     title: "The `multitrip.css` scope guard does not see at-rules that bring in global CSS"
   - id: IN-03
     severity: info
-    disposition: open
+    disposition: deferred
     title: "A symlinked trip folder bypasses the \"fail-closed\" draft exclusion"
   - id: IN-04
     severity: info
-    disposition: open
+    disposition: deferred
     title: "Comments still describe the pre-phase-11 routing"
   - id: IN-05
     severity: info
-    disposition: open
+    disposition: deferred
     title: "The base-URL trailing-slash expression is duplicated four times"
   - id: IN-06
     severity: info
-    disposition: open
+    disposition: deferred
     title: "Debug `console.log` in the redirect spec, and a build-time dependency in devDependencies"
-open: 9
+open: 0
 total: 9
 recorded: 2026-11-20T20:39:32.550Z
 ---
@@ -48,15 +48,15 @@ recorded: 2026-11-20T20:39:32.550Z
 
 | Finding | Severity | Disposition | Source |
 |---------|----------|-------------|--------|
-| WR-01 | warning | open | - |
-| WR-02 | warning | open | - |
-| WR-03 | warning | open | - |
-| IN-01 | info | open | - |
-| IN-02 | info | open | - |
-| IN-03 | info | open | - |
-| IN-04 | info | open | - |
-| IN-05 | info | open | - |
-| IN-06 | info | open | - |
+| WR-01 | warning | fixed | 10-06 + revisión de la Fase 10 (trip-summary-link usa scanProseLinks) |
+| WR-02 | warning | fixed | 11-08 (G-11-3) |
+| WR-03 | warning | fixed | 11-08 (G-11-3) |
+| IN-01 | info | deferred | 11-UAT.md · Deferred Follow-Ups |
+| IN-02 | info | deferred | 11-UAT.md · Deferred Follow-Ups |
+| IN-03 | info | deferred | 11-UAT.md · Deferred Follow-Ups |
+| IN-04 | info | deferred | 11-UAT.md · Deferred Follow-Ups |
+| IN-05 | info | deferred | 11-UAT.md · Deferred Follow-Ups |
+| IN-06 | info | deferred | 11-UAT.md · Deferred Follow-Ups |
 
 Dispositions: `open` (recorded, not yet triaged), `fixed`, `skipped`, `deferred`.
 Set `deferred` by hand and put the reason in the Source cell; both are preserved. A `|` in the reason is kept as prose and escaped on the next run.

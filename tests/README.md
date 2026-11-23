@@ -340,8 +340,8 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
   `yaml-object`, `trip-yml`, `trip-slug`, `trip-field`, `stray-file`, `reserved-key`,
   `unknown-key`, `basename-slug`, `dup-id`, `fixed-anchor`, `ref`, `anchor`,
   `cross-trip-link`, `day-order`, `day-pill`, `trip-dates`, `trip-summary-link`, `stay-ref`,
-  `stay-dup`, `reservas-headings` (Fase 12.1, ver §5.9) y `card-placement` (Fase 10, cierre de
-  G-10-2).
+  `stay-dup`, `reservas-headings` (Fase 12.1, ver §5.9), `card-placement` (Fase 10, cierre de
+  G-10-2) y `trip-summary-inline` (Fase 11, cierre de G-11-3).
 - Los enlaces de la prosa se buscan en **toda forma que MDC pinta como `<a>`**, no solo
   `[texto](destino)` pegado al paréntesis: con espacio o salto de línea tras el `(`, con destino
   `<…>`, los autoenlaces `<scheme:…>` y los emails (`<a@b>` o sueltos, que GFM convierte en
@@ -373,6 +373,19 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
   `cards` de `days/*.yml` (una ficha sin día no se pinta; una en dos días duplica su id), y
   `anchor`, `seenIn` y los `ref` de timeline y reservas solo resuelven a fichas pintadas (cierre
   de G-10-2 / WR-01 y WR-03 de 10-REVIEW).
+- `trip-summary-inline` exige que el `summary` de trip.yml sea **Markdown en línea** (D-08):
+  la tarjeta de la portada lo pinta con `<MDC unwrap="p">` dentro de `p.trip-index-summary` y
+  de `a.trip-index-card`, y `unwrap="p"` solo quita párrafos, así que un bloque quedaría dentro
+  de `<p>` y de `<a>` (el navegador reubica el DOM y la hidratación no casa). Una lista
+  (también `2027. …` o `1) …`), una cita, una tabla, un bloque de código (valla o sangría de 4
+  espacios), un separador, una línea en blanco que parte párrafos o un componente `::x` dan
+  **una sola** violación en trip.yml con las formas encontradas. Solo se evalúa un `summary`
+  sin enlace: lo que `scanProseLinks` ya rechaza (encabezados, HTML crudo, `[r]:`, `::x` con
+  frontmatter, `{href}`/`{#id}`) ya es `trip-summary-link`, así que nada se avisa dos veces. El
+  escaneo es léxico y fail-closed; falsos rojos conocidos (MDC los deja en un `p`):
+  `Texto\n2027. …` (una lista que interrumpe un párrafo tiene que empezar en 1), una línea que
+  empieza por código en línea de tres acentos graves y una línea de continuación con 4 espacios
+  de sangría (cierre de G-11-3 / WR-02 de 11-REVIEW).
 - Los mensajes (`formatViolations`) llevan **el fichero culpable** y la regla:
   `content/trips/<viaje>/…/<fichero>.yml: [<regla>] <detalle>`. Un YAML roto en
   cualquier viaje rompe `verify` nombrando su fichero.
@@ -521,7 +534,10 @@ Roma en `ROMA_URL`); lo nuevo se defiende con estas piezas:
   (título plano, línea meta, resumen MDC), enlace de documento completo a
   `${baseURL}trips/<slug>/`, sin `id` en ningún elemento, sin chrome de viaje y sin tocar
   `localStorage`. Sus datos se resuelven en prerender: la portada **no descarga** el
-  `sql_dump` ni el WASM de Nuxt Content (ROUTE-04).
+  `sql_dump` ni el WASM de Nuxt Content (ROUTE-04). Si la consulta de la portada falla en el
+  prerender, `TripIndex` lanza un error fatal 500 (`createError`) y `nuxt generate` falla
+  (`failOnError`) en vez de publicar una portada vacía con 200 (cierre de G-11-3 / WR-03); el
+  cableado lo fija `tests/unit/tripIndexFatal.spec.ts` (`test:unit`).
 - **`scripts/tripManifest.mjs`** (+ `tripManifest.d.mts`): manifiesto de viajes leído en
   tiempo de config — `readTripManifest()` (`{ slug, draft }` por carpeta con `trip.yml`,
   fail-closed ante nombres o `draft` inválidos), `draftExcludes()` (excluye los borradores
@@ -535,8 +551,9 @@ Roma en `ROMA_URL`); lo nuevo se defiende con estas piezas:
   (`test:unit`, D-21): todas las reglas de la portada van bajo `.trip-index` y el fichero se
   carga el último, detrás de los cuatro CSS congelados (que no cambian).
 - **Reglas nuevas de la puerta de datos** (§5.3): `trip-dates` (`endDate` no anterior a
-  `startDate`) y `trip-summary-link` (el `summary` no lleva enlaces: la tarjeta ya es un
-  `<a>`).
+  `startDate`), `trip-summary-link` (el `summary` no lleva enlaces: la tarjeta ya es un
+  `<a>`) y `trip-summary-inline` (el `summary` solo admite Markdown en línea; cierre de
+  G-11-3 / WR-02).
 - **Redirección de enlaces antiguos** — script inline `legacy-hash-redirect` en el `<head>`
   de la portada: `/guiaRoma/#ancla` (y `/guiaRoma/index.html#ancla`) hace `location.replace`
   a `/guiaRoma/trips/roma/#ancla` antes del primer pintado, solo si el hash cumple
