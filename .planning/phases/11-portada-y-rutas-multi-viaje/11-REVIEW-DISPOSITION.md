@@ -5,15 +5,15 @@ titles: json
 findings:
   - id: CR-01
     severity: critical
-    disposition: open
+    disposition: fixed
     title: "Inline MDC components render block elements (and a nested `<a>`) inside the summary `<p>` but pass both summary rules"
   - id: WR-01
     severity: warning
-    disposition: open
+    disposition: fixed
     title: "`\\r` line endings bypass the blank-line scan and the setext scan (two paragraphs, `h1` inside the `<p>`)"
   - id: WR-02
     severity: warning
-    disposition: open
+    disposition: fixed
     title: "Unicode whitespace next to the blank line hides a paragraph break"
   - id: IN-01
     severity: info
@@ -43,18 +43,18 @@ findings:
     severity: info
     disposition: deferred
     title: "Debug `console.log` in the redirect spec, and a build-time dependency in devDependencies"
-open: 6
+open: 3
 total: 10
-recorded: 2026-11-23T00:26:30.325Z
+recorded: 2026-11-23T00:35:09.911Z
 ---
 
 # Phase 11: Code Review Disposition
 
 | Finding | Severity | Disposition | Source |
 |---------|----------|-------------|--------|
-| CR-01 | critical | open | - |
-| WR-01 | warning | open | - |
-| WR-02 | warning | open | - |
+| CR-01 | critical | fixed | 11-REVIEW-FIX.md |
+| WR-01 | warning | fixed | 11-REVIEW-FIX.md |
+| WR-02 | warning | fixed | 11-REVIEW-FIX.md |
 | IN-01 | info | open | - |
 | IN-02 | info | open | - |
 | IN-03 | info | open | - |
