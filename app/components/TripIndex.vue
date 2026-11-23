@@ -7,10 +7,15 @@
 // resultado viaja en el payload de la página: la portada no descarga el dump SQLite ni el WASM.
 //
 // LISTA (D-10, D-16): `listedTrips` (app/utils/tripDates.ts) quita los borradores —también en
-// dev, donde sí se cargan— y ordena por `startDate` descendente. Devuelve `null` mientras los datos
-// no han llegado y `[]` cuando han llegado y no hay nada publicado: el estado vacío
-// de la portada solo se pinta con la lista cargada y vacía (D-11), nunca
-// durante la hidratación.
+// dev, donde sí se cargan— y ordena por `startDate` descendente. El estado vacío de la portada
+// (D-11) solo se pinta con la lista cargada y sin nada publicado.
+//
+// ERRORES (WR-03 de 11-REVIEW, G-11-3): con el `await` de nivel superior los datos ya están
+// resueltos al pintar (en SSR y, al hidratar, desde el payload), así que solo faltan si la consulta
+// falló. Ese fallo no se puede pintar como una portada en blanco con 200, porque `failOnError` no
+// lo vería: `error.value` se convierte en un `createError` fatal 500, la ruta «/» se prerenderiza
+// con 500 y `nuxt generate` falla (`nitro.prerender.failOnError: true`). El `cause` lleva el error
+// original al log del prerender. Lo fija tests/unit/tripIndexFatal.spec.ts.
 //
 // TARJETA (D-07): toda la tarjeta es UN `<a>` de documento completo (D-04: `href` plano, ni
 // NuxtLink ni handler de click) hacia `${base}trips/<slug>/`, siempre con barra final (D-13), con
@@ -33,11 +38,19 @@
 const { app } = useRuntimeConfig()
 const base = app.baseURL.endsWith('/') ? app.baseURL : `${app.baseURL}/`
 
-const { data } = await useAsyncData('trips-index', () =>
+const { data, error } = await useAsyncData('trips-index', () =>
   queryCollection('trip')
     .select('slug', 'title', 'startDate', 'endDate', 'destinations', 'summary', 'draft')
     .all(),
 )
+if (error.value) {
+  throw createError({
+    statusCode: 500,
+    statusMessage: 'No se pudo cargar la lista de viajes',
+    fatal: true,
+    cause: error.value,
+  })
+}
 
 const cards = computed(() => {
   const trips = listedTrips(data.value)
