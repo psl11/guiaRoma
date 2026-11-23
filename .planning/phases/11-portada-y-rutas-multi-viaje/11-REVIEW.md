@@ -1,233 +1,146 @@
 ---
 phase: 11-portada-y-rutas-multi-viaje
-reviewed: 2026-11-20T00:00:00Z
+reviewed: 2026-11-23T00:25:06Z
 depth: standard
-files_reviewed: 41
+files_reviewed: 5
 files_reviewed_list:
-  - app/assets/css/multitrip.css
   - app/components/TripIndex.vue
-  - app/components/TripView.vue
-  - app/pages/index.vue
-  - app/pages/trips/[slug].vue
-  - app/utils/tripDates.ts
-  - content.config.ts
-  - nuxt.config.ts
-  - scripts/tripManifest.d.mts
-  - scripts/tripManifest.mjs
-  - shared/schemas.ts
-  - content/trips/roma/trip.yml
-  - content/trips/forma/trip.yml
-  - content/trips/prueba/trip.yml
-  - tests/data/build-isolation.spec.ts
+  - tests/README.md
   - tests/data/invariants.spec.ts
-  - tests/data/romaChrome.spec.ts
-  - tests/data/schema.spec.ts
   - tests/data/trips.ts
-  - tests/parity/_harness.ts
-  - tests/parity/_pagesServer.ts
-  - tests/parity/legacy-redirect.spec.ts
-  - tests/parity/portada.spec.ts
-  - tests/parity/shell.spec.ts
-  - tests/parity/map-fallback-notes.spec.ts
-  - tests/parity/modes.spec.ts
-  - tests/parity/navigation.spec.ts
-  - tests/parity/render-cards.spec.ts
-  - tests/parity/render-reference.spec.ts
-  - tests/parity/render-timeline.spec.ts
-  - tests/parity/search-route.spec.ts
-  - tests/parity/subpath.spec.ts
-  - tests/parity/theme.spec.ts
-  - tests/parity/visual-diff.spec.ts
-  - tests/trips/isolation.spec.ts
-  - tests/trips/portada.spec.ts
-  - tests/trips/shape.spec.ts
-  - tests/unit/multitripCss.spec.ts
-  - tests/unit/tripCoupling.spec.ts
-  - tests/unit/tripDates.spec.ts
-  - tests/unit/tripManifest.spec.ts
+  - tests/unit/tripIndexFatal.spec.ts
 findings:
-  critical: 0
-  warning: 3
-  info: 6
-  total: 9
-  necessity: 0
+  critical: 1
+  warning: 2
+  info: 3
+  total: 6
+  necessity: 1
 status: issues_found
 ---
 
-# Phase 11: Code Review Report
+# Phase 11: Code Review Report (incremental, gap closure 11-08 / G-11-3)
 
-**Reviewed:** 2026-11-20T00:00:00Z
+**Reviewed:** 2026-11-23T00:25:06Z
 **Depth:** standard
-**Files Reviewed:** 41
+**Files Reviewed:** 5
 **Status:** issues_found
 
 ## Summary
 
-I reviewed the phase-11 diff against `bbc4e23`: the home page (`TripIndex.vue`, `pages/index.vue` with the
-legacy-hash redirect), the `/trips/[slug]/` route and its page key, the draft exclusion and prerender routes
-read at config time (`scripts/tripManifest.mjs`, `content.config.ts`, `nuxt.config.ts`), the new optional
-`TripSchema` fields, the pure helpers in `tripDates.ts`, the footer back link in `TripView.vue`,
-`multitrip.css`, and the new and updated specs. I checked the 11 Roma parity specs only for the mechanical
-`_harness.ts` change, which is limited to `ROMA_URL`/`ROMA_HTML` as D-18 requires.
+This is an incremental review of plan 11-08 (commits 1c4b01d, 74e82e7, fb1e31f, 7021b8a, cf7ceea). It closed WR-02 (block Markdown in the trip `summary`) and WR-03 (a failed portada query published as a blank 200) from the previous 11-REVIEW.md. `trips.ts` and `invariants.spec.ts` were reviewed only where they touch the new `trip-summary-inline` rule. The Phase 10 parts of those files are covered by 10-REVIEW.md.
 
-The core mechanics hold up. The draft exclusion fails closed: nuxi forces `NODE_ENV=production` for
-build/generate (`@nuxt/cli` `overrideEnv`), and a non-boolean `draft` or an invalid folder name throws. The
-redirect has a fixed, same-origin destination, and its hash is validated with a regex. Every Roma `id` in the
-built `trips/roma/index.html` matches `^[a-z0-9-]+$`, so no legacy anchor misses the redirect. The page key
-by slug is correct. ESLint is clean on the lintable files.
+What checks out:
+- **WR-03 is fixed.** The TripIndex `<template>` did not change between `eec76cc` and `HEAD`. The only edits are the `error` destructure and the guard that throws a fatal 500, so the normal-case markup is the same byte for byte. `nitro.prerender.failOnError: true` is set (`nuxt.config.ts:64`), and nothing navigates to `/` on the client (no `NuxtLink`/`navigateTo` to `/`), so the fatal path cannot be hit offline after the page has loaded.
+- **No double warning.** `summaryBlockForms` returns `[]` whenever `hasLink(md)` is true, so a summary never gets both `trip-summary-link` and `trip-summary-inline`.
+- **Real trips stay green.** `vitest run tests/data`: 906/906 pass. `tests/unit/tripIndexFatal.spec.ts`: 7/7 pass (Node 22.20.0).
 
-The main risk is in the new data contract for the home-page card. The `summary` field goes through MDC
-(which turns on `remark-gfm` and `rehype-raw`) and is rendered inside `<p>` inside `<a>`. The gate that
-protects that position can be bypassed, and nothing checks for block Markdown. I confirmed both against the
-real MDC parser (`@nuxtjs/mdc@0.22.0` `parseMarkdown`). A failed query on the home page also renders a blank
-page that the prerender reports as 200.
+What fails:
+- **The main goal is not met.** The rule is meant to be fail-closed for every construct MDC renders as a block inside the card's `<p>`, and it is not. I ran `@nuxtjs/mdc` 0.22.0 `parseMarkdown` and `checkTrip` side by side on each string below (scratch probe only, no repo files touched). Inline MDC components with a block tag come out GREEN on both summary rules. They render as top-level `div`/`ul`/`table`/`hr`/`h1`/`section`/`form`/`nav`, or as a `<div>` through the global `DetailPhoto` component. That is exactly the hydration break WR-02 described. `:a[x]` renders an `<a>` inside the card's `<a>`.
+- **Lower-impact false greens in the blank-line scan.** They come from `\r` line endings (reachable through YAML double-quoted escapes) and from Unicode whitespace at the edge of a paragraph.
 
-No BLOCKERs: today's data (Roma's `summary`) is clean, so none of the findings cause a visible bug in the
-current build. They are holes in the guarantees that the phase says it provides.
+## Critical Issues
 
-## Narrative Findings (AI reviewer)
+### CR-01: Inline MDC components render block elements (and a nested `<a>`) inside the summary `<p>` but pass both summary rules
+
+**File:** `tests/data/trips.ts:399-410` (`SUMMARY_BLOCK_FORMS`), `tests/data/trips.ts:441-444` (`summaryBlockForms`); render site `app/components/TripIndex.vue:91-100`; missing tests in `tests/data/invariants.spec.ts:787-811`
+**Issue:** `SUMMARY_BLOCK_FORMS` only knows block *syntax*: list, quote, table, fence/indent, rule, blank line, `::x`. remark-mdc also accepts **inline** components, written `:name`, `:name[text]` or `:name{attrs}`. When the tag is block-level, MDC lifts the element out of the paragraph. `unwrap="p"` then leaves it directly inside `<p class="trip-index-summary">`. The browser closes the `<p>` before the block element, so the DOM no longer matches the SSR tree and hydration fails, the same defect WR-02 described. None of these strings is caught by `hasLink` (no URL, no `href`/`to`, no raw HTML), so all of them are GREEN.
+
+Each row shows the real `parseMarkdown` output and the `checkTrip` result for a `summary`:
+
+| summary | MDC body | gate |
+|---|---|---|
+| `Roma :div` / `Roma\n:div[x]` / `Roma (:div[x])` | `p + div` | GREEN |
+| `:ul[x]`, `:ol[x]`, `:table`, `:hr`, `:pre[x]`, `:blockquote[x]` | `ul` / `ol` / `table` / `hr` / `pre` / `blockquote` | GREEN |
+| `:h1[x]`, `:h2[Mapa]`, `:header[x]`, `:nav[x]`, `:form[x]`, `:details[x]`, `:dl`, `:fieldset` | the same tag at top level | GREEN |
+| `Diez :section[días]`, `_:div[x]_`, `**:div[x]**` | `p + section` / `p[em] + div[em]` / `p[strong] + div[strong]` | GREEN |
+| `Diez días :detail-photo{src="foto.jpg" alt="Nápoles"}` | `p[detail-photo]` → `DetailPhoto.global.vue` renders `<div class="detail-photo"><img>` | GREEN |
+| `Roma :a[x]`, `:nuxt-link[x]` | `p[a]` / `nuxt-link` → `<a>` inside `a.trip-index-card` (the HTML parser closes the outer anchor) | GREEN |
+
+The guide's own prose already uses `:detail-photo{…}` (`content/trips/roma/monuments/*.yml`), so a contributor copying that idiom into a summary is a realistic mistake. The `:a` case breaks the D-07 invariant stated in `TripIndex.vue:24-25` ("nunca hay un `<a>` dentro del `<a>`").
+
+The REJECTED_LINK_FORMS list cannot simply ban components, because guide prose legitimately uses them. The fix belongs in the summary-only scan. No real summary needs a component, so rejecting the syntax outright is fail-closed with no cost to the Roma/Campania summaries (their colons are followed by a space).
+
+**Fix:** add a summary-only form. remark-mdc does not start a component after a letter or a `.`, but does after `_`. The pattern below is deliberately broader, and excludes emoji shortcodes (`:sunny:` → plain text):
+```ts
+// Componente MDC en línea (`:div[x]`, `:ul`, `:detail-photo{…}`, `:a[x]`): MDC saca de `p` los de
+// etiqueta de bloque y los deja dentro de `p.trip-index-summary`; `:a` da `<a>` dentro de `<a>`.
+// Fail-closed: no mira el carácter previo (falso rojo conocido: `Roma:texto`). Excluye `:emoji:`.
+[/:[A-Za-z][\w-]*(?![\w-]*:)/, 'componente MDC en línea «:x[…]» / «:x{…}»'],
+```
+Then add teeth to the `trip-summary-inline` `it.each` (`invariants.spec.ts:787`): `Roma :div`, `:ul[x]`, `Roma :a[x]`, `Diez días :detail-photo{src="foto.jpg" alt="x"}`, `_:div[x]_`. Add controls that stay green: `Del 19 al 23: 5 días, 10:00-12:00`, `Roma :sunny: y`. Update the doc comment at `trips.ts:420-437`, the `trips.ts:56-60` header and `tests/README.md` §5.3.
 
 ## Warnings
 
-### WR-01: The `trip-summary-link` rule can be bypassed, so a nested `<a>` can reach the home-page card
+### WR-01: `\r` line endings bypass the blank-line scan and the setext scan (two paragraphs, `h1` inside the `<p>`)
 
-**File:** `tests/data/trips.ts:174-188`
-**Issue:** `hasLink` only detects `](dest)` with no space after `(`, `<scheme:…>` autolinks, and
-`http(s)://` / `www.`. MDC's parser has `remark-gfm` and `rehype-raw` turned on
-(`@nuxtjs/mdc/dist/runtime/parser/options.js`), and it turns all of the following into `<a>`. I checked each
-one with `parseMarkdown`, and `hasLink` returns `false` for all four:
-- `Escríbenos a hola@ejemplo.com` → `<a href="mailto:hola@ejemplo.com">` (GFM email autolink literal)
-- `Ver <a href="#x">aquí</a>` → `<a href="#x">` (raw HTML via rehype-raw)
-- `[t][r]\n\n[r]: #inicio` → `<a href="#inicio">` (reference link; a `|`-style YAML block allows it)
-- `[t]( #inicio )` → `<a href="#inicio">` (CommonMark allows spaces around the destination; the regex
-  `\]\(([^)\s]+)` requires a non-space right after `(`)
+**File:** `tests/data/trips.ts:408` (blank-line form); interacts with `tests/data/trips.ts:336` (setext `===` in `REJECTED_LINK_FORMS`, reached through `hasLink`)
+**Issue:** micromark treats `\r` and `\r\n` as line endings. The blank-line regex `/\S[ \t]*\n(?:[ \t]*\n)+[ \t]*\S/` and the setext regexes match only a literal `\n`. JS multiline `^`/`$` already accept `\r`, which is why the other line-anchored forms happen to work. The `yaml` parser normalizes raw CRLF files (verified: `summary: |\r\n  Uno.\r\n\r\n  Dos.` → `"Uno.\n\nDos.\n"`), but a double-quoted escape keeps the `\r`. `summary: "Uno.\r\rDos."` gives `"Uno.\r\rDos."`. Verified false greens:
+- `"Uno.\r\n\r\nDos."` and `"Uno.\r\rDos."` → MDC `p + p` → GREEN (glued by `flatUnwrap`, the defect `trip-summary-inline` exists to prevent).
+- `"Diez días\r==="` → MDC `h1` → GREEN on both summary rules. This puts a heading block, with a generated id, inside `<p>`/`<a>` on the portada, which also violates D-12 (no `id` on the portada).
 
-Any of these in `summary` puts an `<a>` inside `a.trip-index-card` (`TripIndex.vue:69-88`). The HTML parser
-closes the outer anchor, the server DOM no longer matches the vnode tree, and hydration breaks. This is
-exactly the failure D-07 and the rule's own comment (`trips.ts:29-32`) say the rule prevents. The same
-weakness affects `cross-trip-link` and `anchor`, which share `extractLinkTargets`.
-**Fix:** Check the parsed output instead of pattern-matching the source. Parse `summary` with the same parser
-the app uses and reject any `a` element:
+(`"Diez días\r---"` → `h2` is still red, but only by luck, through the thematic-break form and with the wrong label.)
+**Fix:** normalize line endings once, before both scans, so every `\n`-based regex sees what micromark sees:
 ```ts
-import { parseMarkdown } from '@nuxtjs/mdc/runtime'
-const hasA = (n: any): boolean => n?.tag === 'a' || (n?.children ?? []).some(hasA)
-// in checkTrip (make it async or pre-parse):
-if (typeof summary === 'string' && hasA((await parseMarkdown(summary)).body))
-  push(d.file, 'trip-summary-link', '…')
-```
-If the gate has to stay synchronous, at least add `/<a[\s>]/i`, an email regex
-(`/[\w.+-]+@[\w-]+\.[\w.]+/`), `/^\s*\[[^\]]+\]:/m`, and relax the destination regex to `\]\(\s*<?([^)\s>]+)`.
-Add one fixture per bypass to `invariants.spec.ts`.
-
-### WR-02: Block Markdown in `summary` renders block elements inside `<p class="trip-index-summary">`
-
-**File:** `app/components/TripIndex.vue:78-87`, `shared/schemas.ts:424`
-**Issue:** `summary` is only `Md.min(1)` (any string). The card renders it as
-`<p class="trip-index-summary"><MDC :tag="false" unwrap="p" /></p>`. `unwrap="p"` only removes paragraph
-wrappers. Any block construct produces a block element inside the `<p>` (and inside the `<a>`): a list,
-heading, blockquote, table, or a sentence that starts with a year. I confirmed that
-`2027. Diez días por Campania` parses to `<ol start="2027"><li>…</li></ol>`, because a number of up to 9
-digits followed by `. ` starts a CommonMark ordered list. That is a very natural opening for a trip
-summary. The browser closes `<p>` before `<ol>`, the DOM no longer matches the vnode tree (hydration
-mismatch), and the card layout breaks. No schema or gate rule covers this.
-**Fix:** Add a gate rule (for example `trip-summary-inline`) that rejects a `summary` whose parsed body
-contains anything other than one `p` with inline children:
-```ts
-const body = (await parseMarkdown(summary)).body.children.filter(n => n.type === 'element')
-if (body.length !== 1 || body[0].tag !== 'p') push(d.file, 'trip-summary-inline', 'summary debe ser Markdown-inline (una sola frase/párrafo)')
-```
-You could also render into a `<div class="trip-index-summary">` instead of a `<p>`, but the gate is the
-real protection.
-
-### WR-03: A failed query on the home page publishes a blank page with HTTP 200
-
-**File:** `app/components/TripIndex.vue:36-52`, `app/components/TripIndex.vue:61-96`
-**Issue:** `useAsyncData('trips-index', …)` takes only `data`. If `queryCollection('trip')` throws during
-prerender (a schema/column drift after adding a field, a broken Content DB, or a typo in `.select`), Nuxt
-stores the error in `error.value` and leaves `data.value` as `undefined`. `listedTrips` returns `null`, so the
-template renders an empty `<main>`: no cards, no empty state, no message. The page still prerenders with
-status 200, so `nitro.prerender.failOnError` does not catch it, and `nuxt generate` publishes a blank home
-page. Only `tests/parity/portada.spec.ts` would notice, and only if the parity gate runs before deploy.
-
-The rationale given for the `null` state ("nunca durante la hidratación", lines 9-13) does not apply here:
-with a top-level `await useAsyncData`, data is resolved before SSR render and comes from the payload during
-hydration. So the `null` branch is only reached on this error path.
-**Fix:** Turn a query failure into a fatal error so the prerender fails:
-```ts
-const { data, error } = await useAsyncData('trips-index', () => queryCollection('trip').select(…).all())
-if (error.value) {
-  throw createError({ statusCode: 500, statusMessage: 'No se pudo cargar la lista de viajes', fatal: true })
+const normEol = (md: string) => md.replace(/\r\n?/g, '\n')
+function hasLink(md: string): boolean {
+  md = normEol(md)
+  // …
+}
+function summaryBlockForms(md: string): string[] {
+  md = normEol(md)
+  if (hasLink(md)) return []
+  // …
 }
 ```
+(Or normalize inside `scanProseLinks`, which also fixes the same gap for guide prose.) Add teeth: `'Uno.\r\rDos.'` → INLINE_B, and `'Diez días\r==='` → `trip-summary-link`.
+
+### WR-02: Unicode whitespace next to the blank line hides a paragraph break
+
+**File:** `tests/data/trips.ts:408`
+**Issue:** in JS, `\S` excludes all Unicode whitespace, but CommonMark counts only space and tab as blank (`"Uno.\n \nDos."` is a single `p`, which is correct). So when the last character before the blank line, or the first after it, is NBSP, U+3000 or similar, the regex cannot anchor:
+- `"Diez \n\nDos"` → MDC `p + p` → GREEN
+- `"Uno.\n\n Dos"` → `p + p` → GREEN
+- `"Uno.　\n\nDos"` → `p + p` → GREEN
+
+Trailing NBSPs are common in text pasted from Spanish editors. The visible harm is small, because the leftover NBSP happens to supply the space that `flatUnwrap` drops. But the fail-closed claim in the comment ("nunca un falso verde") is false for this form.
+**Fix:** anchor on "non-blank" in the CommonMark sense, not on `\S`:
+```ts
+[/[^ \t\n][ \t]*\n(?:[ \t]*\n)+[ \t]*[^ \t\n]/, 'línea en blanco (dos párrafos)'],
+```
+Add teeth `'Diez \n\nDos'` and `'Uno.\n\n Dos'` → INLINE_B. Keep `'Uno.\n \nDos.'` as a control: one `p` in MDC, so it must stay green.
 
 ## Info
 
-### IN-01: The schema accepts card data that the card then silently drops
+### IN-01: Undocumented false red: a tab-indented continuation line
 
-**File:** `shared/schemas.ts:418-424`, `app/utils/tripDates.ts:51-52`, `tests/data/trips.ts:241`, `tests/data/invariants.spec.ts:427`
-**Issue:** Three inputs pass validation but are silently dropped or render as nothing on the card:
-- `endDate` without `startDate` is explicitly accepted ("solo endDate → sin violación"), but
-  `formatTripDates` returns `null` and `sortTrips` puts the trip last. The author's date disappears with no
-  signal.
-- `summary: ' '` passes `Md.min(1)`. `c.summary` is truthy, so the card renders an empty
-  `p.trip-index-summary`.
-- `destinations: [' ']` passes `z.string().min(1)` and produces a meta line ending in ` · `.
+**File:** `tests/data/trips.ts:405`, `tests/data/trips.ts:432-435`, `tests/README.md` (§5.3, `trip-summary-inline` bullet)
+**Issue:** the code-block form `^(?: {4}|[ ]{0,3}\t)` also fires on a lazy continuation line that starts with a tab. `"Diez\n\tmás"` is a single `p` in MDC but is reported as "bloque de código". The documented false reds (T-11-25) list only "una línea de continuación con 4 espacios de sangría".
+**Fix:** change the doc text in both places to "con 4 espacios o un tabulador de sangría". You could also add it as a documented-red tooth so the accepted behaviour is pinned.
 
-**Fix:** Have `trip-dates` reject `endDate` without `startDate`. Use `.trim().min(1)` (or
-`.regex(/\S/)`) for `summary` and the `destinations` items.
+### IN-02: The static fatal-guard test does not tie the guard to the `trips-index` result or check where it sits
 
-### IN-02: The `multitrip.css` scope guard does not see at-rules that bring in global CSS
+**File:** `tests/unit/tripIndexFatal.spec.ts:43-44`
+**Issue:** `DESTRUCTURES_ERROR` and `FATAL_GUARD` are matched independently, anywhere in the script. The test stays green in these cases:
+- `const { data, error: e } = await useAsyncData('trips-index', …)`: `\berror\b` matches the key, while `if (error.value)` tests some other binding.
+- The guard is inside a function that is never called, or inside a `watch`.
+- The guard comes before the `await`.
 
-**File:** `tests/unit/multitripCss.spec.ts:38-71`
-**Issue:** `cssSelectors` only looks at the prelude before `{`. An `@import url(other.css);` ends in `;`, so
-it is dropped without a check: a global stylesheet pulled in from `multitrip.css` would reach Roma's DOM and
-the guard would stay green. Splitting on every `,` also cuts selectors such as
-`.trip-index :is(h2, p)` into `.trip-index :is(h2` and `p)`, which gives a false positive.
-**Fix:** Reject any `@import` (and `@layer` statements) in `multitrip.css`. Split selector lists only on
-commas at parenthesis depth 0.
+In the other direction, `[^}]*` makes it a false red if anyone adds a nested object to `createError` (`data: { … }`). The docblock states the static scope ("Es ESTÁTICO… lo dinámico lo probó el fallo forzado diferencial"), so this is a robustness note, not a regression.
+**Fix:** match the two pieces as one adjacent sequence, so the guard must follow the `trips-index` call directly:
+```ts
+const WIRED = /const\s*\{[^}]*\berror\b(?!\s*:)[^}]*\}\s*=\s*await\s+useAsyncData\(\s*'trips-index'[\s\S]*?\)\s*\n\s*if\s*\(\s*error\.value\s*\)/
+```
+Add a tooth for the `error: e` rename.
 
-### IN-03: A symlinked trip folder bypasses the "fail-closed" draft exclusion
+### IN-03: Impossible-state guard — `cards === null` branch after the fatal guard
 
-**File:** `scripts/tripManifest.mjs:42`
-**Issue:** `readdirSync(..., { withFileTypes: true })` returns `isDirectory() === false` for a symlink to a
-directory, so the manifest skips a symlinked trip folder. Nuxt Content's `trips/*/…` globs will still pick it
-up if they follow symlinks. A symlinked folder with `draft: true` would then get no `exclude` entry, and its
-rows would ship in the public `sql_dump`. That contradicts the "FAIL-CLOSED" claim in `content.config.ts:32`.
-Whether Content follows the symlink is unverified, so this is judgment-level.
-**Fix:** Accept symlinks (`d.isDirectory() || (d.isSymbolicLink() && statSync(join(root, d.name)).isDirectory())`),
-or throw on any symlink under `content/trips`.
-
-### IN-04: Comments still describe the pre-phase-11 routing
-
-**File:** `app/app.vue:39-41`, `tests/parity/shell.spec.ts:21`, `tests/parity/shell.spec.ts:219-220`, `tests/data/build-isolation.spec.ts:11`
-**Issue:** `app.vue` still says both pages are `<TripView :slug>` one-liners (`index.vue` is now the home
-page). `shell.spec.ts` still says "la salida estática SOLO emite «/» (D-01)", but it now also emits
-`trips/roma/`. `build-isolation.spec.ts` says "«/» pasará a ser la portada" in the future tense. The headers
-of the Roma parity specs also still say "sobre el «/» CONSTRUIDO".
-**Fix:** Update `app.vue` and `build-isolation.spec.ts`. D-19 limits edits to the parity specs, so record the
-outdated headers in `tests/README.md` or fix them in a later phase where that is allowed.
-
-### IN-05: The base-URL trailing-slash expression is duplicated four times
-
-**File:** `app/app.vue:9`, `app/pages/index.vue:25`, `app/components/TripIndex.vue:34`, `app/components/TripView.vue:67`
-**Issue:** `app.baseURL.endsWith('/') ? app.baseURL : \`${app.baseURL}/\`` now appears in four places. Two of
-them (the redirect destination and the back link) are routing contracts tested elsewhere. If one copy drifts,
-links can quietly differ.
-**Fix:** Move it into a single `app/utils/baseHref.ts` (`export const withSlash = (b: string) => …`) or a
-`useBaseHref()` composable.
-
-### IN-06: Debug `console.log` in the redirect spec, and a build-time dependency in devDependencies
-
-**File:** `tests/parity/legacy-redirect.spec.ts:133`, `tests/parity/legacy-redirect.spec.ts:163`, `scripts/tripManifest.mjs:13`
-**Issue:** Two `console.log` calls print measurements on every gate run. Separately, `yaml` is now loaded
-while the Nuxt and Content configs are evaluated (it is imported by `tripManifest.mjs`), but it is only a
-`devDependency`. A `--prod` install would make `nuxi generate` fail at config load. That does not matter for
-today's static build, but the dependency is mis-declared.
-**Fix:** Remove the logs, or attach the values with `testInfo.annotations`. Move `yaml` to `dependencies`, or
-add a comment that the build requires devDependencies.
+**File:** `app/components/TripIndex.vue:56-57`, `app/components/TripIndex.vue:105`
+**Category:** necessity
+**Issue:** `listedTrips` returns `null` only when `data.value == null` (`app/utils/tripDates.ts:85-89`). With the top-level `await`, `useAsyncData` has settled before the template renders. Since 7021b8a, an errored fetch throws (`TripIndex.vue:46-53`), so a null `data` should no longer be reachable on SSR, or on hydration from the payload. The `if (trips === null) return null` branch and the `v-else-if="cards !== null"` distinction then defend against a state that cannot occur. The header comment at lines 9-11 still describes it as live. This is judgment rather than proof: it depends on Nuxt's `useAsyncData` semantics, not on a type in this repo.
+**Fix:** leave the code as is (removing it would not change the normal-case markup, but it is a scope call). Alternatively, update the comment at lines 9-11 to say the null state is unreachable since G-11-3 and kept only as defense.
 
 ---
 
-_Reviewed: 2026-11-20T00:00:00Z_
+_Reviewed: 2026-11-23T00:25:06Z_
 _Reviewer: Claude (gsd-code-reviewer)_
 _Depth: standard_
