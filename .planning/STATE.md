@@ -2,20 +2,20 @@
 gsd_state_version: "1.0"
 milestone: v1.1
 milestone_name: Multi-viaje + Campania
-current_phase: 13
-current_phase_name: Contenido Campania 2027
+current_phase: 14
+current_phase_name: Verificación del milestone
 status: verifying
-stopped_at: Phase 12 complete, ready to verify Phase 13
-last_updated: "2026-11-23T17:55:41.228Z"
+stopped_at: Phase 13 complete, ready to verify Phase 14
+last_updated: "2026-11-23T20:55:27.651Z"
 last_activity: 2026-11-23
-last_activity_desc: Phase 12 complete, transitioned to Phase 13
-state_head: 7b0093f5ccabc9bdb8b66c74c2a172d1f07af511
+last_activity_desc: Phase 13 complete, transitioned to Phase 14
+state_head: cb61620abb4978e579f428d18d126ad5bb5af493
 progress:
   total_phases: 7
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 39
   completed_plans: 39
-  percent: 57
+  percent: 71
 ---
 
 # Project State
@@ -25,22 +25,22 @@ progress:
 See: .planning/PROJECT.md (updated 2026-11-23)
 
 **Core value:** La guía se consulta paseando por el destino y debe ser fiel, editorial y fiable (también offline). Lo ya publicado no se rompe: Roma sigue exactamente igual (paridad verificada) mientras la plataforma crece a varios viajes.
-**Current focus:** Phase 13 — Contenido Campania 2027 (construida; pendiente su UAT)
+**Current focus:** Phase 14 — Verificación del milestone
 
 ## Current Position
 
-Phase: 13 — Contenido Campania 2027
-Plan: 8
+Phase: 14 — Verificación del milestone
+Plan: 3
 Status: Phase complete — ready for verification
-Last activity: 2026-11-23 — Phase 12 complete, transitioned to Phase 13
+Last activity: 2026-11-23 — Phase 13 complete, transitioned to Phase 14
 
-Progress: [██████░░░░] 57%
+Progress: [███████░░░] 71%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 67
+- Total plans completed: 75
 - Average duration: 9 min
 - Total execution time: 0.15 hours
 
@@ -61,6 +61,7 @@ Progress: [██████░░░░] 57%
 | 10 | 6 | - | - |
 | 11 | 8 | - | - |
 | 12 | 7 | - | - |
+| 13 | 8 | - | - |
 
 **Recent Trend:**
 
@@ -374,10 +375,9 @@ Recent decisions affecting current work:
 - [Roadmap v1.1]: REQUIREMENTS.md y ROADMAP.md de v1.1 son **borradores** preparados de forma autónoma; pendientes de aprobación del usuario y sin commit.
 - [Roadmap v1.1] ⚠ ROUTE-06 — enlace «← Todos los viajes» en Roma (cambia una captura del pie) o ninguno en v1.1: **resolver antes de planificar la Fase 11**.
 - [Roadmap v1.1] ⚠ EXT-01 — opciones A/B apiladas (recomendado) vs selector; ⚠ EXT-04 — motifs SVG nuevos de naturaleza vs reutilizar existentes: **resolver antes de planificar la Fase 12**.
-- [Roadmap v1.1] ⚠ CAMP-01 — fecha de devolución del coche (25 vs 26), decide si el sábado 26 (día VIII) es en coche o en transporte público: **pendiente del usuario, necesaria antes de redactar ese día en la Fase 13**.
-- [Roadmap v1.1] ⚠ ROUTE-05 — publicar Campania solo completa (`draft`) vs con días provisionales: **resolver antes de cerrar la Fase 13**.
-- [Phase 13]: datos de campo de Campania sin verificar (vehículos en Procida/Ischia 2027, horarios/muelles de ferry, Sorgeto de noche con niños, fechas de conciertos, carrera Spaccanapoli) — research flag.
+- [Phase 13 → primavera 2027]: los datos de campo de Campania sin confirmar (ferris, coche en Procida/Ischia, conciertos, PTN, Sorgeto de noche, alojamientos, devolución del coche) están marcados «⚠ por confirmar» (172 marcas, lista en 13-08-SUMMARY.md); confirmarlos antes del viaje.
 - [Deuda v1.0 aceptada, no bloqueante]: divergencia de ranking de búsqueda MiniSearch (`"Pante"`), warnings de tooling del code review, golden re-baselinado desde el build Nuxt (D-01 anulado), `#mapa` verificado solo por comportamiento (D-06), test de dev-routing gateado tras `RUN_DEV_ROUTING`. Detalle en `milestones/v1.0-MILESTONE-AUDIT.md`.
+- [RESUELTO en Fase 13]: ~~CAMP-01 devolución del coche~~ → recogida mié 23, devolución sáb 26 en Capodichino; ~~ROUTE-05~~ → Campania publicada completa, sin `draft`.
 - [RESUELTO en v1.0]: ~~[Phase 2]: bandera de research parcial sobre las secciones de referencia~~ → migradas en F2 P07 (reservas + práctica tipadas).
 - [RESUELTO en Fase 5 P03]: ~~[Phase 4/5]: cableado de interceptación de `a[href^="#"]` en `<MDC>`~~ → listener delegado nativo en CAPTURA + stopPropagation, registrado síncronamente.
 - [RESUELTO en v1.0]: ~~[Phase 4/6/7]: BLOQUEANTE D1 (uniones discriminadas `artist`/`reference` con filas SQL todo-null)~~ → `#arte`/`#arquitectura`/`#reservas`/`#practica` renderizan con datos reales desde F4 P05.
@@ -408,7 +408,7 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-11-23
-Stopped at: Phase 12 complete (UAT 5/5, verification passed), ready to verify Phase 13 (/gsd-verify-work 13)
+Stopped at: Phase 13 complete, ready to verify Phase 14
 Resume file: None
 
 ## Operator Next Steps
