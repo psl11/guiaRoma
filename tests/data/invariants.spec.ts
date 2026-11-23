@@ -755,6 +755,98 @@ describe('la puerta tiene dientes (fixtures)', () => {
     expect(vs, formatViolations(vs)).toEqual([])
   })
 
+  // ── G-11-3 / WR-02 (11-REVIEW): el summary solo admite Markdown en línea ─────
+  // TripIndex pinta el `summary` con `<MDC :tag="false" unwrap="p">` dentro de
+  // `p.trip-index-summary` y de `a.trip-index-card`. `unwrap="p"` solo quita párrafos: un bloque
+  // queda dentro de `<p>` y de `<a>`, el navegador reubica el DOM y la hidratación no casa. Todas
+  // las formas de (a) abren un bloque de nivel superior en MDC (@nuxtjs/mdc 0.22.0, comprobado con
+  // parseMarkdown el 2026-11-23): `ol`, `ul`, `blockquote`, `table`, `pre`, `hr`, dos `p` o un
+  // componente `::x`. Las cadenas con acentos graves usan `\x60` (sin tres seguidos en el fuente).
+  const SUMMARY_FILE = 'content/trips/prueba/trip.yml'
+  const INLINE_L = 'lista «- …» / «1. …»'
+  const INLINE_C = 'cita «> …»'
+  const INLINE_T = 'tabla «| a | b |»'
+  const INLINE_K = 'bloque de código (valla «~~~» o de acentos graves, o sangría de 4 espacios)'
+  const INLINE_S = 'separador «---» / «***» / «___»'
+  const INLINE_B = 'línea en blanco (dos párrafos)'
+  const INLINE_M = 'componente MDC de bloque «::x»'
+
+  it('G-11-3/WR-02 trip-summary-inline: «2027. Diez días por Campania» (lista ordenada que MDC abre en 2027) → mensaje exacto en trip.yml', () => {
+    const vs = checkTrip(memTrip('prueba', {}, { summary: '2027. Diez días por Campania' }))
+    expect(vs, formatViolations(vs)).toEqual([{
+      file: SUMMARY_FILE,
+      rule: 'trip-summary-inline',
+      message: 'summary con Markdown de bloque (lista «- …» / «1. …»): la tarjeta de la portada lo pinta dentro de <p> y <a> y rompe la hidratación; escribe una frase o párrafo en línea (D-08)',
+    }])
+  })
+
+  it.each([
+    ['2027. Diez días por Campania', INLINE_L],
+    ['1) Diez días por Campania', INLINE_L],
+    ['Diez días\n1. por Campania', INLINE_L],
+    ['- Nápoles', INLINE_L],
+    ['* Nápoles', INLINE_L],
+    ['+ Nápoles', INLINE_L],
+    ['Diez días\n- por Campania', INLINE_L],
+    ['   2027. Diez días', INLINE_L],
+    ['> Diez días', INLINE_C],
+    ['Diez días\n> por Campania', INLINE_C],
+    ['| a | b |\n| - | - |\n| 1 | 2 |', INLINE_T],
+    ['a | b\n--- | ---', INLINE_T],
+    ['a\n:-', INLINE_T],
+    ['\x60\x60\x60\nDiez días\n\x60\x60\x60', INLINE_K],
+    ['~~~\nDiez días\n~~~', INLINE_K],
+    ['Diez días\n\x60\x60\x60\npor Campania\n\x60\x60\x60', INLINE_K],
+    ['    Diez días', INLINE_K],
+    ['\tDiez días', INLINE_K],
+    ['***', INLINE_S],
+    ['Diez días\n***', INLINE_S],
+    ['Diez días\n___', INLINE_S],
+    ['---', INLINE_S],
+    ['Diez días.\n\nPor Campania.', INLINE_B],
+    ['Diez días.\n  \nPor Campania.', INLINE_B],
+    ['::nota\nDiez días\n::', INLINE_M],
+  ])('G-11-3/WR-02 trip-summary-inline: summary %j → una violación en trip.yml (%s)', (summary, label) => {
+    const vs = checkTrip(memTrip('prueba', {}, { summary }))
+    expect(vs, formatViolations(vs)).toEqual([{
+      file: SUMMARY_FILE,
+      rule: 'trip-summary-inline',
+      message: expect.stringContaining(label),
+    }])
+  })
+
+  it.each([
+    '# Diez días',
+    'Diez días\n===',
+    'Diez días\n---',
+    'Diez días\n-',
+    '<div>Diez días</div>',
+    '- [Diez días](#inicio)',
+    '::a\n---\nhref: /trips/roma\n---\nDiez días\n::',
+  ])('G-11-3/WR-02 sin doble aviso: %j ya es trip-summary-link (scanProseLinks), nunca trip-summary-inline', (summary) => {
+    const vs = checkTrip(memTrip('prueba', {}, { summary }))
+    expect(vs.filter(v => v.rule === 'trip-summary-inline'), formatViolations(vs)).toEqual([])
+    expect(vs.filter(v => v.rule === 'trip-summary-link'), formatViolations(vs)).toEqual([{
+      file: SUMMARY_FILE,
+      rule: 'trip-summary-link',
+      message: 'summary con enlace: la tarjeta de la portada ya es un enlace; quita [texto](destino)',
+    }])
+  })
+
+  it.each([
+    'Cinco días a pie por Roma, del viernes por la tarde al martes por la noche: una ficha para cada parada, el mapa del viaje y dónde comer como los romanos.',
+    'Diez días de junio entre Nápoles, Procida, Ischia, Salerno y el Cilento, a ritmo lento y en familia: islas, volcanes, pozas termales y dos conciertos en el Maradona.',
+    'Diez días\ncon _cursiva_, **negrita**, \x60código\x60 y ~~tachado~~',
+    '*Diez* días por Campania',
+    'Diez días<br>por Campania',
+    'Diez días  \npor Campania',
+    'Cinco días a pie por Roma.\n',
+    'Del 19 al 23: 5 días, 1.5 km diarios, 10:00-12:00 y +34 600 000 000.',
+  ])('G-11-3/WR-02 control: summary en línea %j → sin violaciones', (summary) => {
+    const vs = checkTrip(memTrip('prueba', {}, { summary }))
+    expect(vs, formatViolations(vs)).toEqual([])
+  })
+
   // ── Fase 12 (EXT-01, Pitfall 3): la puerta mira DENTRO de las opciones de un `choice` ─────
   /** Un día `viernes` con un `choice` de dos opciones; la primera lleva las filas dadas. */
   const dayWithChoice = (rows: unknown[], title = 'Opción con filas', cards: string[] = []) => y({
