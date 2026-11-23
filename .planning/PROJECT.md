@@ -52,12 +52,13 @@ La guía se consulta paseando por el destino y debe ser **fiel, editorial y fiab
 - ✓ Portada `/` = índice de los viajes publicados; cada guía en su URL estática `/trips/<slug>/`; los enlaces antiguos (`/#viernes`…) redirigen a Roma; los borradores (`draft: true`) no se publican ni se filtran en el dump; Roma en `/trips/roma/` pasa la puerta de paridad sin re-baseline (56 goldens intactos) — Fase 11
 - ✓ La guía muestra lo que un viaje como Campania necesita y Roma no tenía: días con alternativas («elige una»), bases de alojamiento («Dormís en…»), tramos de ferry/coche/bus/bici/avión, lugares de naturaleza con sus dibujos y marcador, caja «Con niños», ruta del día por modo (a pie/coche/transporte) y mapa encuadrado sobre varias ciudades; Roma byte a byte — Fase 12
 - ✓ Viaje **Campania 2027** (19–28 junio, en familia) publicado en `/trips/campania/` y enlazado desde la portada: 10 días con su logística, 24 fichas, gastronomía, reservas y práctica en tono slow/vosotros; los datos de campo dudosos quedan marcados «⚠ por confirmar» (172) — Fase 13 (UAT 4/4)
+- ✓ Roma sin regresiones y sin pérdida de datos: `pnpm verify` desde build limpia verde (parity 126/126, 56 goldens intactos desde v1.0, CSS igual a `main`), upgrade desde la guía viva en el mismo origen conserva notas y preferencias (PAR-03), nada se mezcla entre viajes ni se descarga `sql_dump`/WASM, y Roma + Campania firmadas en un móvil real, también sin conexión (PAR-04, UAT 9/9) — Fase 14
 
 ### Active
 
 <!-- Milestone v1.1 — Multi-viaje + Campania 2027. Hipótesis hasta enviarse. -->
 
-- [ ] Roma sin regresiones: la suite de paridad (goldens + comportamiento) sigue verde en su nueva URL
+(ninguno: todos los requisitos de v1.1 validados; falta auditar y cerrar el milestone)
 
 ### Out of Scope
 
@@ -110,6 +111,7 @@ La guía se consulta paseando por el destino y debe ser **fiel, editorial y fiab
 | Fase 10: la puerta de datos ve todo lo que MDC convierte en enlace o id (escáner léxico, sin parser) y cada ficha se pinta exactamente una vez | Content no valida `type:'data'` y MDC enlaza más formas que `[t](x)`; añadir un parser rompería el diff vacío de `package.json` de v1.1 | ✓ Fase 10 (10-06 + revisión): `scanProseLinks`, `card-placement`, HTML crudo solo `<br>`, sin encabezados ni `{#id}` en prosa, `href` de comida solo http(s) |
 | Fase 11: la tarjeta de la portada solo admite Markdown inline en `summary` y un fallo de la consulta de la portada hace fallar la build | Un bloque dentro de `<p>`/`<a>` rompe la hidratación; una portada vacía con 200 se publicaría sin aviso | ✓ Fase 11 (11-08 + revisión): regla `trip-summary-inline` (normaliza `\r`, rechaza MDC inline), `createError` fatal en `TripIndex.vue` |
 | Fase 13: solo se nombran restaurantes verificados (el resto «a elegir sobre el terreno») y todo dato de campo no confirmado lleva «⚠ por confirmar» visible | Una guía para usar sobre el terreno no puede inventar locales ni horarios de 2027 que aún no existen | ✓ Fase 13: 172 marcas, spec de contenido las vigila; confirmación en primavera de 2027 |
+| Fase 14: el upgrade se prueba contra la guía viva real (`git show main:index.html` en tiempo de test, mismo origen y puerto, oráculo calculado ejecutando la guía viva) y la firma de PAR-04 la hace una persona en un móvil | Un test escrito a mano podía pasar en vacío; la paridad offline/móvil no se puede afirmar solo con automatización | ✓ Fase 14: `upgrade-from-main.spec.ts` y `cross-trip.spec.ts` dentro de la puerta; 14-UAT 9/9 firmada contra la web publicada |
 
 ## Evolution
 
@@ -129,4 +131,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-11-23 after Phase 13 — contenido de Campania 2027 publicado (10 días, 24 fichas, gastronomía, reservas y práctica), aprobado por el usuario en UAT 4/4.*
+*Last updated: 2026-11-23 after Phase 14 — milestone v1.1 verificado: puerta limpia 126/126, upgrade desde la guía viva sin pérdida de datos, y Roma + Campania firmadas en móvil real (UAT 9/9).*

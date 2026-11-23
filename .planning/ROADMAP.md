@@ -37,7 +37,7 @@ Re-plataforma el `index.html` único (6.665 líneas) a Nuxt 4 SSG con paridad vi
 - [x] **Phase 12: Formas nuevas de viaje** - Opciones A/B, «Dormís en…», transportes nuevos, naturaleza, mapa multi-ciudad, ruta del día por modo y nota familiar, probados con un esqueleto de Campania (completed 2026-11-23)
 - [x] **Phase 12.1: Títulos de Reservas por viaje** *(INSERTED)* - Encabezados de la sección Reservas configurables por viaje, con los textos de Roma por defecto, para que Campania no herede «3 comensales» (completed 2026-11-22)
 - [x] **Phase 13: Contenido Campania 2027** - Los 10 días, fichas, gastronomía, reservas y práctica de Campania redactados en tono slow y publicados (completed 2026-11-23)
-- [ ] **Phase 14: Verificación del milestone** - Puerta completa desde build limpia, test de upgrade desde la guía viva y sign-off humano de Roma y Campania en móvil real
+- [x] **Phase 14: Verificación del milestone** - Puerta completa desde build limpia, test de upgrade desde la guía viva y sign-off humano de Roma y Campania en móvil real (completed 2026-11-23)
 
 ## Phase Details
 
@@ -254,7 +254,7 @@ Plans:
   2. Un usuario de la guía viva (`index.html` de `main`) que escribió notas y eligió ritmo y modos abre la nueva versión en el mismo origen y, en `/trips/roma/`, ve sus notas y preferencias desde la primera carga
   3. Ir de la portada a Roma, de Roma a Campania y volver con «Atrás» no mezcla búsqueda, notas ni modos entre viajes, y ninguna guía descarga `sql_dump` ni WASM
   4. Una persona firma Roma y Campania en un móvil real, en claro y oscuro, incluido el uso sin conexión (fallback de imágenes y banner de mapa offline)
-**Plans**: 3/3 plans executed
+**Plans**: 3/3 plans complete
 Plans:
 **Wave 1**
 - [x] 14-01-PLAN.md — Tracer + spec de upgrade en el mismo origen: la guía viva (`git show main:index.html`) y la build nueva en el mismo puerto y contexto; notas de las 38 fichas, ritmo, modos y tema intactos en `/trips/roma/` desde la primera carga, con oráculo de la propia guía viva (PAR-03)
@@ -299,7 +299,7 @@ Phases execute in numeric order: 9 → 10 → 11 → 12 → 13 → 14 (las fases
 | 11. Portada y rutas multi-viaje | v1.1 | 8/8 | Complete    | 2026-11-23 |
 | 12. Formas nuevas de viaje | v1.1 | 7/7 | Complete    | 2026-11-23 |
 | 13. Contenido Campania 2027 | v1.1 | 8/8 | Complete    | 2026-11-23 |
-| 14. Verificación del milestone | v1.1 | 3/3 | In Progress | - |
+| 14. Verificación del milestone | v1.1 | 3/3 | Complete    | 2026-11-23 |
 
 ---
 

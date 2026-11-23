@@ -57,7 +57,7 @@
 - [x] **PAR-01**: Los 56 goldens de Roma pasan en su nueva URL sin re-baseline (salvo excepción aprobada explícitamente por el usuario, p. ej. ROUTE-06)
 - [x] **PAR-02**: La suite de comportamiento de Roma (navegación, búsqueda, ruta del día, mapa, notas, modos) sigue en verde en `/trips/roma/`
 - [x] **PAR-03**: Un usuario de la guía viva (`index.html` de `main`) que actualiza a la nueva versión conserva sus notas y preferencias de Roma (test de upgrade en el mismo origen)
-- [ ] **PAR-04**: Sign-off humano de Roma y Campania en móvil real, incluido el comportamiento sin conexión
+- [x] **PAR-04**: Sign-off humano de Roma y Campania en móvil real, incluido el comportamiento sin conexión
 
 ## Future Requirements (v1.2+)
 
@@ -131,7 +131,7 @@
 | PAR-01 | Phase 11 | Complete |
 | PAR-02 | Phase 11 | Complete |
 | PAR-03 | Phase 14 | Complete |
-| PAR-04 | Phase 14 | Pending |
+| PAR-04 | Phase 14 | Complete |
 
 **Notas de trazabilidad:**
 - **PAR-01/PAR-02** se asignan a la Fase 11, la primera en la que Roma vive en `/trips/roma/`; las fases 12, 13 y 14 los vuelven a exigir como criterio de éxito (la puerta de Roma sigue verde) y la 14 los re-verifica desde build limpia.

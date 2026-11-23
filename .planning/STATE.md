@@ -3,19 +3,18 @@ gsd_state_version: "1.0"
 milestone: v1.1
 milestone_name: Multi-viaje + Campania
 current_phase: 14
-current_phase_name: Verificación del milestone
-status: verifying
-stopped_at: Phase 13 complete, ready to verify Phase 14
-last_updated: "2026-11-23T20:55:27.651Z"
+status: completed
+stopped_at: Phase 14 complete — all phases complete
+last_updated: "2026-11-23T22:29:59.609Z"
 last_activity: 2026-11-23
-last_activity_desc: Phase 13 complete, transitioned to Phase 14
-state_head: cb61620abb4978e579f428d18d126ad5bb5af493
+last_activity_desc: Phase 14 complete
+state_head: eec82eb615dae7593bfe85b3730097a49ff1ac45
 progress:
   total_phases: 7
-  completed_phases: 5
+  completed_phases: 7
   total_plans: 39
   completed_plans: 39
-  percent: 71
+  percent: 100
 ---
 
 # Project State
@@ -25,22 +24,22 @@ progress:
 See: .planning/PROJECT.md (updated 2026-11-23)
 
 **Core value:** La guía se consulta paseando por el destino y debe ser fiel, editorial y fiable (también offline). Lo ya publicado no se rompe: Roma sigue exactamente igual (paridad verificada) mientras la plataforma crece a varios viajes.
-**Current focus:** Phase 14 — Verificación del milestone
+**Current focus:** Milestone v1.1 completo — auditar y cerrar el milestone
 
 ## Current Position
 
-Phase: 14 — Verificación del milestone
-Plan: 3
-Status: Phase complete — ready for verification
-Last activity: 2026-11-23 — Phase 13 complete, transitioned to Phase 14
+Phase: 14
+Plan: Not started
+Status: All phases complete
+Last activity: 2026-11-23 — Phase 14 complete
 
-Progress: [███████░░░] 71%
+Progress: [██████████] 100% (39/39 plans)
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 75
+- Total plans completed: 78
 - Average duration: 9 min
 - Total execution time: 0.15 hours
 
@@ -62,6 +61,7 @@ Progress: [███████░░░] 71%
 | 11 | 8 | - | - |
 | 12 | 7 | - | - |
 | 13 | 8 | - | - |
+| 14 | 3 | - | - |
 
 **Recent Trend:**
 
@@ -364,6 +364,9 @@ Recent decisions affecting current work:
 - [Phase 11]: WR-02 closed with a lexical fail-closed scan (no parser, no new deps); documented false reds accepted, false greens not
 - [Phase 11]: WR-03: portada query error -> createError 500 fatal (template unchanged); nuxt generate fails via failOnError
 
+- [Phase 14]: PAR-04 firmado en móvil real contra la web publicada (https://psl11.github.io/guiaRoma/, mismo código que release/nuxt-4): 14-UAT 9/9; el modelo de móvil no se registró
+- [Phase 14]: re-verificación tras los arreglos del code review: pnpm verify desde caché limpia → unit 575, data 927, parity 126/126; 14-VERIFICATION passed 4/4; 14-VALIDATION nyquist_compliant; 14-SECURITY threats_open 0
+
 ### Pending Todos
 
 - [2026-11-23] [app/components] Tabla de Reservas sin tbody provoca aviso de hidratación — [todo file](.planning/todos/pending/2026-11-23-reservas-table-tbody-hydration-mismatch.md)
@@ -372,9 +375,10 @@ Recent decisions affecting current work:
 
 [Issues that affect future work]
 
-- [Roadmap v1.1]: REQUIREMENTS.md y ROADMAP.md de v1.1 son **borradores** preparados de forma autónoma; pendientes de aprobación del usuario y sin commit.
-- [Roadmap v1.1] ⚠ ROUTE-06 — enlace «← Todos los viajes» en Roma (cambia una captura del pie) o ninguno en v1.1: **resolver antes de planificar la Fase 11**.
-- [Roadmap v1.1] ⚠ EXT-01 — opciones A/B apiladas (recomendado) vs selector; ⚠ EXT-04 — motifs SVG nuevos de naturaleza vs reutilizar existentes: **resolver antes de planificar la Fase 12**.
+- [Phase 14 → mantenimiento]: `navigation.spec.ts` SC#2 scrollspy [mobile] tardó 29.7 s de un presupuesto de 30 s (verde, pero puede fallar al azar en un `pnpm verify` futuro; el spec está congelado, cambiarlo es decisión del usuario).
+- [Phase 14 → ship]: WR-08 diferido — el upgrade/CSS spec necesitan una rama `main` local (sin fallback a `origin/main`); ver 14-REVIEW-DISPOSITION.md.
+- [Pages]: mientras psl11 no cambie Settings → Pages → Source a «GitHub Actions», cada push a `main` lanza dos despliegues que compiten (Jekyll legado vs Nuxt).
+- [RESUELTO en Fases 11-12]: ~~borradores de REQUIREMENTS/ROADMAP v1.1, ROUTE-06, EXT-01/EXT-04~~.
 - [Phase 13 → primavera 2027]: los datos de campo de Campania sin confirmar (ferris, coche en Procida/Ischia, conciertos, PTN, Sorgeto de noche, alojamientos, devolución del coche) están marcados «⚠ por confirmar» (172 marcas, lista en 13-08-SUMMARY.md); confirmarlos antes del viaje.
 - [Deuda v1.0 aceptada, no bloqueante]: divergencia de ranking de búsqueda MiniSearch (`"Pante"`), warnings de tooling del code review, golden re-baselinado desde el build Nuxt (D-01 anulado), `#mapa` verificado solo por comportamiento (D-06), test de dev-routing gateado tras `RUN_DEV_ROUTING`. Detalle en `milestones/v1.0-MILESTONE-AUDIT.md`.
 - [RESUELTO en Fase 13]: ~~CAMP-01 devolución del coche~~ → recogida mié 23, devolución sáb 26 en Capodichino; ~~ROUTE-05~~ → Campania publicada completa, sin `draft`.
@@ -403,16 +407,16 @@ Items acknowledged and carried forward from previous milestone close:
 | Backend | BACK-01/02/03 (auth, uploads, API Nitro activa) | v2 | Init |
 | PWA | PWA-01/02 (app instalable, caché offline real de tiles) | v2 (en v1.1 anotado como PLAT-06 futuro) | Init |
 | Multi-viaje | TRIP-01 de v1.0 (segundo viaje con contenido real) | En curso en v1.1 → CAMP-01..06 (no confundir con el TRIP-01 futuro de v1.1, «estado del viaje») | Init |
-| Ship | Merge `release/nuxt-4` → `main` + deploy/CI GitHub Pages (D-08) | Acto de ship separado tras v1.1 (primer deploy = v1.0 + v1.1) | v1.0 close |
+| Ship | Merge `release/nuxt-4` → `main` + deploy/CI GitHub Pages (D-08) | Hecho 2026-11-23 (merge a `main` + workflow de Actions, quick 261123-342); falta que psl11 cambie la fuente de Pages | v1.0 close |
 
 ## Session Continuity
 
 Last session: 2026-11-23
-Stopped at: Phase 13 complete, ready to verify Phase 14
+Stopped at: Phase 14 complete (UAT 9/9, verification passed) — milestone v1.1 ready to audit and close
 Resume file: None
 
 ## Operator Next Steps
 
-- Revisar y aprobar `.planning/REQUIREMENTS.md` y `.planning/ROADMAP.md` (borradores v1.1)
-- Resolver ROUTE-06 antes de la Fase 11 (no bloquea las fases 9-10)
-- Empezar la Fase 9 con /gsd-discuss-phase 9 (o /gsd-plan-phase 9)
+- `/gsd-audit-milestone` (D-08: tras el sign-off de PAR-04)
+- `/gsd-complete-milestone v1.1` tras la auditoría
+- Pedir a psl11 que cambie Settings → Pages → Source a «GitHub Actions» (termina la carrera de despliegues)
