@@ -1,0 +1,93 @@
+# Despliegue de la guía (Nuxt 4, salida estática) en GitHub Pages.
+# Instrucciones de activación y vuelta atrás para el dueño del repo: docs/DEPLOY.md
+name: Desplegar en GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Mínimo privilegio: leer el repo y publicar en Pages vía OIDC (deploy-pages).
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un solo despliegue a la vez; nunca se cancela uno de producción en curso.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      # tests/data/css-vs-main.spec.ts lee `git show main:index.html` al cargar el módulo.
+      # En un push a main el checkout ya crea la rama local main, pero una ejecución
+      # manual desde otra rama no: en ese caso se trae main de origin.
+      - name: Rama local main (para tests/data/css-vs-main)
+        run: |
+          if ! git show-ref --verify --quiet refs/heads/main; then
+            git fetch --no-tags --depth=1 origin main:main
+          fi
+
+      # Sin bloque with: la versión de pnpm sale de package.json (packageManager pnpm@10.32.1);
+      # pasar también una versión arriesga un error de discrepancia. Va antes de setup-node
+      # porque la caché pnpm de setup-node necesita pnpm en el PATH.
+      - uses: pnpm/action-setup@v6
+
+      # Node 22 es obligatorio: Nuxt Content usa better-sqlite3 (ABI nativa) durante la build.
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # nuxt.config.ts ya fija app.baseURL '/guiaRoma/' y el valor de la config gana sobre esta
+      # variable: es redundante a propósito, documenta el subpath en CI y DEBE ser idéntica
+      # byte a byte al valor de la config (otro valor se colaría en la runtime config del
+      # prerender y desincronizaría HTML y assets).
+      - name: Generar la web estática
+        run: pnpm generate
+        env:
+          NUXT_APP_BASE_URL: /guiaRoma/
+
+      # Suites Vitest de Node puro (~1 s cada una). Tras generate se activan las comprobaciones
+      # post-build (viajes borrador prueba/forma ausentes de .output/public, #reservas de Roma
+      # idéntico a su fixture), así que nunca se publica una build rota o que filtre borradores.
+      # Las suites de paridad Playwright NO corren en CI a propósito (instalar navegadores y
+      # minutos por ejecución); siguen siendo la puerta local de `pnpm verify`.
+      - name: Puerta unitaria y de datos
+        run: pnpm test:unit && pnpm test:data
+
+      # Sin bloque with: no se pasa el site generator de Nuxt (intentaría reescribir
+      # nuxt.config.ts, que ya tiene baseURL y preset correctos). Va después de la puerta:
+      # sus salidas no se usan y así el resultado de build y tests ya consta en el log
+      # aunque se queje de la configuración de Pages.
+      - uses: actions/configure-pages@v6
+
+      # include-hidden-files para que el artefacto sea exactamente la salida local (.nojekyll
+      # incluido; inocuo, un despliegue de Pages por Actions nunca ejecuta Jekyll).
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: .output/public
+          include-hidden-files: "true"
+
+  # Este job falla hasta que el dueño ponga Settings > Pages > Source: "GitHub Actions"
+  # (ver docs/DEPLOY.md). Es lo esperado. Una ejecución manual desde otra rama solo
+  # construye y prueba: el entorno github-pages solo admite main.
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
