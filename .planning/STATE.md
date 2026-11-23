@@ -25,7 +25,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-11-23)
 
 **Core value:** La guía se consulta paseando por el destino y debe ser fiel, editorial y fiable (también offline). Lo ya publicado no se rompe: Roma sigue exactamente igual (paridad verificada) mientras la plataforma crece a varios viajes.
-**Current focus:** Phase 12 — Formas nuevas de viaje (construida; pendiente su UAT)
+**Current focus:** Phase 13 — Contenido Campania 2027 (construida; pendiente su UAT)
 
 ## Current Position
 
@@ -408,7 +408,7 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-11-23
-Stopped at: Phase 12 complete, ready to verify Phase 13
+Stopped at: Phase 12 complete (UAT 5/5, verification passed), ready to verify Phase 13 (/gsd-verify-work 13)
 Resume file: None
 
 ## Operator Next Steps

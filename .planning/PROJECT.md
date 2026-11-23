@@ -50,12 +50,12 @@ La guía se consulta paseando por el destino y debe ser **fiel, editorial y fiab
 - ✓ Puerta de datos por viaje: cualquier YAML inválido o fichero sin clasificar en `content/trips/` hace fallar `pnpm verify` nombrando el fichero (sin fail-open) — Fase 9
 - ✓ La UI se adapta a la forma de cada viaje desde sus datos: nº y nombres de días variables, secciones y pastillas por presencia de datos, chrome (marca, `<title>`, pie, leyenda del mapa) desde `trip.yml` con respaldo neutro; Roma verbatim — Fase 10
 - ✓ Portada `/` = índice de los viajes publicados; cada guía en su URL estática `/trips/<slug>/`; los enlaces antiguos (`/#viernes`…) redirigen a Roma; los borradores (`draft: true`) no se publican ni se filtran en el dump; Roma en `/trips/roma/` pasa la puerta de paridad sin re-baseline (56 goldens intactos) — Fase 11
+- ✓ La guía muestra lo que un viaje como Campania necesita y Roma no tenía: días con alternativas («elige una»), bases de alojamiento («Dormís en…»), tramos de ferry/coche/bus/bici/avión, lugares de naturaleza con sus dibujos y marcador, caja «Con niños», ruta del día por modo (a pie/coche/transporte) y mapa encuadrado sobre varias ciudades; Roma byte a byte — Fase 12
 
 ### Active
 
 <!-- Milestone v1.1 — Multi-viaje + Campania 2027. Hipótesis hasta enviarse. -->
 
-- [ ] El mapa soporta viajes de varias ciudades (encuadre sobre todos los marcadores del viaje)
 - [ ] Viaje **Campania 2027** (19–28 junio, en familia) publicado con su contenido: días, fichas, gastronomía y práctica, en el tono slow/auténtico del planning del usuario
 - [ ] Roma sin regresiones: la suite de paridad (goldens + comportamiento) sigue verde en su nueva URL
 
@@ -128,4 +128,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-11-23 after Phase 11 — portada multi-viaje y rutas `/trips/<slug>/` (enlaces antiguos redirigen, borradores fuera, Roma con paridad sin re-baseline).*
+*Last updated: 2026-11-23 after Phase 12 — formas nuevas de viaje (alternativas, alojamientos, ferris y coche, naturaleza, varias ciudades), aprobadas por el usuario en UAT.*
