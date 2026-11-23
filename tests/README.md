@@ -363,7 +363,10 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
   cuenta). Un id así duplicaría el de una ficha o sección (lo que `card-placement` garantiza
   único) y, en el `summary`, metería un `<a>` dentro de la tarjeta de la portada, así que también
   es `trip-summary-link`. El
-  escaneo es léxico y fail-closed (puede dar un falso rojo, nunca un falso verde); la ruta del
+  escaneo es léxico y fail-closed (puede dar un falso rojo, nunca un falso verde) y empieza
+  normalizando los fines de línea `\r\n` y `\r` a `\n`, porque micromark los trata como saltos y
+  un escape YAML entre comillas dobles (`"Uno.\r\rDos."`) conserva el `\r` (WR-01 de 11-REVIEW;
+  también para `trip-summary-inline`); la ruta del
   parser se descartó porque no se resuelve con pnpm y la v1.1 no admite dependencias nuevas.
   El `href` de una entrada de `food` del timeline (`FoodEntry.href`, también dentro de las
   opciones de un `choice`) no es prosa: `TimelineFood` lo pinta tal cual en `<a :href>`, así que
@@ -382,8 +385,9 @@ pnpm test:trips   # = playwright test -c playwright.trips.config.ts
   componente en línea `:x` (`:div[x]`, `:ul`, `:detail-photo{…}`, `:a[x]`: MDC saca de `p` los de
   etiqueta de bloque, y `:a` da un `<a>` dentro del `<a>`; CR-01 de 11-REVIEW) dan
   **una sola** violación en trip.yml con las formas encontradas. Los dos puntos seguidos de
-  espacio o cifra (`Del 19 al 23: 5 días`, `10:00`) y un `:emoji:` siguen en verde. Solo se evalúa un `summary`
-  sin enlace: lo que `scanProseLinks` ya rechaza (encabezados, HTML crudo, `[r]:`, `::x` con
+  espacio o cifra (`Del 19 al 23: 5 días`, `10:00`) y un `:emoji:` siguen en verde. Los saltos
+  `\r` y `\r\n` cuentan como `\n` (`Uno.\r\rDos.` es una línea en blanco; WR-01 de 11-REVIEW).
+  Solo se evalúa un `summary` sin enlace: lo que `scanProseLinks` ya rechaza (encabezados, HTML crudo, `[r]:`, `::x` con
   frontmatter, `{href}`/`{#id}`) ya es `trip-summary-link`, así que nada se avisa dos veces. El
   escaneo es léxico y fail-closed; falsos rojos conocidos (MDC los deja en un `p`):
   `Texto\n2027. …` (una lista que interrumpe un párrafo tiene que empezar en 1), una línea que

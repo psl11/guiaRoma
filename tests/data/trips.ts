@@ -341,6 +341,14 @@ const REJECTED_LINK_FORMS: ReadonlyArray<readonly [RegExp, string]> = [
 ]
 
 /**
+ * Fines de línea como los ve micromark (WR-01 de 11-REVIEW): `\r\n` y `\r` sueltos son saltos de
+ * línea, pero las formas de `\n` literal (línea en blanco, setext, frontmatter `::x`) no los ven. El
+ * parser `yaml` normaliza un fichero CRLF, pero un escape entre comillas dobles (`"Uno.\r\rDos."`)
+ * conserva el `\r`. Se normaliza una vez antes de cada escaneo.
+ */
+const normEol = (md: string) => md.replace(/\r\n?/g, '\n')
+
+/**
  * Escaneo de los enlaces de un string de prosa (D-05b / D-08, cierre G-10-2 / WR-01).
  *
  * MDC (`@nuxtjs/mdc` 0.22.0, el parser de `<MDC>`) pinta `<a>` para muchas más formas que
@@ -370,6 +378,7 @@ const REJECTED_LINK_FORMS: ReadonlyArray<readonly [RegExp, string]> = [
  * CommonMark puro: no vería los emails de GFM ni la sintaxis de componentes MDC.
  */
 function scanProseLinks(md: string): { targets: string[], rejected: string[] } {
+  md = normEol(md)
   const targets: string[] = []
   for (const m of md.matchAll(INLINE_LINK_RE)) targets.push(m[1] ?? m[2] ?? '')
   for (const m of md.matchAll(AUTOLINK_RE)) targets.push(m[1]!)
@@ -454,6 +463,7 @@ const SUMMARY_BLOCK_FORMS: ReadonlyArray<readonly [RegExp, string]> = [
  * resuelve desde la raíz con pnpm (sin hoisting) y el roadmap v1.1 no admite dependencias nuevas.
  */
 function summaryBlockForms(md: string): string[] {
+  md = normEol(md)
   if (hasLink(md)) return []
   return SUMMARY_BLOCK_FORMS.filter(([re]) => re.test(md)).map(([, label]) => label)
 }

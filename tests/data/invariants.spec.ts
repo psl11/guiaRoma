@@ -622,6 +622,10 @@ describe('la puerta tiene dientes (fixtures)', () => {
     '::a\n---\n? href\n: /trips/roma\n---\nesto\n::',
     '::a\n---\n"\\x68ref": /trips/roma\n---\nesto\n::',
     '- ::a\n  ----\n  href: /trips/roma\n  ----\n  esto\n  ::',
+    // WR-01 (11-REVIEW): micromark toma `\r` y `\r\n` como salto de línea (parseMarkdown da `a`);
+    // un escape YAML entre comillas dobles lo conserva. scanProseLinks normaliza antes de escanear.
+    '::a\r---\rhref: /trips/roma\r---\resto\r::',
+    '::a\r\n---\r\nhref: /trips/roma\r\n---\r\nesto\r\n::',
   ])('G-10-2 (advisory) cross-trip-link: bloque MDC con props en frontmatter %j se rechaza (D-05b)', (body) => {
     const vs = checkTrip(galeriaWith(body))
     expect(vs.filter(v => v.rule === 'cross-trip-link'), formatViolations(vs)).toEqual([
@@ -810,6 +814,9 @@ describe('la puerta tiene dientes (fixtures)', () => {
     ['---', INLINE_S],
     ['Diez días.\n\nPor Campania.', INLINE_B],
     ['Diez días.\n  \nPor Campania.', INLINE_B],
+    // WR-01 (11-REVIEW): `\r` y `\r\n` son saltos de línea en micromark (`p + p`).
+    ['Uno.\r\rDos.', INLINE_B],
+    ['Uno.\r\n\r\nDos.', INLINE_B],
     ['::nota\nDiez días\n::', INLINE_M],
     // CR-01 (11-REVIEW): componentes en línea. parseMarkdown: `Roma :div` → `p + div`; `:ul[x]` →
     // `ul`; `:hr` → `hr`; `Roma :a[x]` → `p[a]` (`<a>` dentro del `<a>` de la tarjeta);
@@ -833,6 +840,9 @@ describe('la puerta tiene dientes (fixtures)', () => {
   it.each([
     '# Diez días',
     'Diez días\n===',
+    // WR-01 (11-REVIEW): setext con `\r` → `h1` en parseMarkdown; scanProseLinks normaliza el salto.
+    'Diez días\r===',
+    'Diez días\r\n===',
     'Diez días\n---',
     'Diez días\n-',
     '<div>Diez días</div>',
@@ -859,6 +869,8 @@ describe('la puerta tiene dientes (fixtures)', () => {
     'Del 19 al 23: 5 días, 1.5 km diarios, 10:00-12:00 y +34 600 000 000.',
     // CR-01: dos puntos + espacio/cifra, `:emoji:` y `::x` a media línea son un único `p` en MDC.
     'Del 19 al 23: 5 días, 10:00-12:00',
+    // WR-01: un `\r` suelto entre dos líneas de texto es un único `p` (salto blando).
+    'Diez días\rpor Campania',
     'Roma :sunny: y',
     'Roma ::div[x]',
   ])('G-11-3/WR-02 control: summary en línea %j → sin violaciones', (summary) => {
