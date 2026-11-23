@@ -3,30 +3,34 @@ phase: 11
 review: 11-REVIEW.md
 titles: json
 findings:
+  - id: CR-01
+    severity: critical
+    disposition: open
+    title: "Inline MDC components render block elements (and a nested `<a>`) inside the summary `<p>` but pass both summary rules"
   - id: WR-01
     severity: warning
-    disposition: fixed
-    title: "The `trip-summary-link` rule can be bypassed, so a nested `<a>` can reach the home-page card"
+    disposition: open
+    title: "`\\r` line endings bypass the blank-line scan and the setext scan (two paragraphs, `h1` inside the `<p>`)"
   - id: WR-02
     severity: warning
-    disposition: fixed
-    title: "Block Markdown in `summary` renders block elements inside `<p class=\"trip-index-summary\">`"
+    disposition: open
+    title: "Unicode whitespace next to the blank line hides a paragraph break"
+  - id: IN-01
+    severity: info
+    disposition: open
+    title: "Undocumented false red: a tab-indented continuation line"
+  - id: IN-02
+    severity: info
+    disposition: open
+    title: "The static fatal-guard test does not tie the guard to the `trips-index` result or check where it sits"
+  - id: IN-03
+    severity: info
+    disposition: open
+    title: "Impossible-state guard — `cards === null` branch after the fatal guard"
   - id: WR-03
     severity: warning
     disposition: fixed
     title: "A failed query on the home page publishes a blank page with HTTP 200"
-  - id: IN-01
-    severity: info
-    disposition: deferred
-    title: "The schema accepts card data that the card then silently drops"
-  - id: IN-02
-    severity: info
-    disposition: deferred
-    title: "The `multitrip.css` scope guard does not see at-rules that bring in global CSS"
-  - id: IN-03
-    severity: info
-    disposition: deferred
-    title: "A symlinked trip folder bypasses the \"fail-closed\" draft exclusion"
   - id: IN-04
     severity: info
     disposition: deferred
@@ -39,24 +43,25 @@ findings:
     severity: info
     disposition: deferred
     title: "Debug `console.log` in the redirect spec, and a build-time dependency in devDependencies"
-open: 0
-total: 9
-recorded: 2026-11-20T20:39:32.550Z
+open: 6
+total: 10
+recorded: 2026-11-23T00:26:30.325Z
 ---
 
 # Phase 11: Code Review Disposition
 
 | Finding | Severity | Disposition | Source |
 |---------|----------|-------------|--------|
-| WR-01 | warning | fixed | 10-06 + revisión de la Fase 10 (trip-summary-link usa scanProseLinks) |
-| WR-02 | warning | fixed | 11-08 (G-11-3) |
-| WR-03 | warning | fixed | 11-08 (G-11-3) |
-| IN-01 | info | deferred | 11-UAT.md · Deferred Follow-Ups |
-| IN-02 | info | deferred | 11-UAT.md · Deferred Follow-Ups |
-| IN-03 | info | deferred | 11-UAT.md · Deferred Follow-Ups |
-| IN-04 | info | deferred | 11-UAT.md · Deferred Follow-Ups |
-| IN-05 | info | deferred | 11-UAT.md · Deferred Follow-Ups |
-| IN-06 | info | deferred | 11-UAT.md · Deferred Follow-Ups |
+| CR-01 | critical | open | - |
+| WR-01 | warning | open | - |
+| WR-02 | warning | open | - |
+| IN-01 | info | open | - |
+| IN-02 | info | open | - |
+| IN-03 | info | open | - |
+| WR-03 | warning | fixed | 11-08 (G-11-3) (not in the current review) |
+| IN-04 | info | deferred | 11-UAT.md · Deferred Follow-Ups (not in the current review) |
+| IN-05 | info | deferred | 11-UAT.md · Deferred Follow-Ups (not in the current review) |
+| IN-06 | info | deferred | 11-UAT.md · Deferred Follow-Ups (not in the current review) |
 
 Dispositions: `open` (recorded, not yet triaged), `fixed`, `skipped`, `deferred`.
 Set `deferred` by hand and put the reason in the Source cell; both are preserved. A `|` in the reason is kept as prose and escaped on the next run.
