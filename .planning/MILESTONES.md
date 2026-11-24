@@ -1,5 +1,29 @@
 # Milestones
 
+## v1.1 Multi-viaje + Campania (Shipped: 2026-11-24)
+
+**Delivered:** La guía pasa a ser multi-viaje de verdad, *data-driven*, y publica Campania 2027 como segundo viaje sin que Roma cambie: 56 goldens intactos desde v1.0, sin pérdida de notas ni preferencias para quien ya la usaba.
+
+**Phases completed:** 7 phases (9, 10, 11, 12, 12.1 insertada, 13, 14), 39 plans, 96 tasks
+**Timeline:** 2026-11-20 → 2026-11-23 (4 días), 387 commits; código y tests: 160 ficheros, +15.859 / −755 líneas
+**Requisitos:** 32/32 (PLAT 4, SHAPE 5, ROUTE 6, EXT 7, CAMP 6, PAR 4)
+**Gate final:** `pnpm verify` desde cachés limpias — unit 567, data 774, parity 126
+
+**Key accomplishments:**
+- **Plataforma por viaje (F9):** búsqueda, navegación entre fichas, notas y preferencias aisladas por viaje (`tripStorageKey`, claves `roma-*` intactas) y una puerta de datos *fail-closed* que valida cada carpeta de `content/trips/` y nombra el fichero culpable.
+- **Forma y chrome desde datos (F10):** `buildTripLayout` decide días, secciones y pastillas según los datos; marca, `<title>`, pie y leyenda salen de `trip.yml`, con un test-trampa contra textos de Roma fuera de Roma.
+- **Portada y rutas (F11):** portada «Guías de viaje» en `/`, cada guía en `/trips/<slug>/`, redirección de los enlaces antiguos `/#ancla` a Roma, borradores fuera de la build y del `sql_dump`, y «← Todos los viajes» (única excepción de golden aprobada).
+- **Formas nuevas (F12 + F12.1):** alternativas A/B, «Dormís en…», ferry/coche/bus/bici/avión, fichas y marcadores de naturaleza con SVG propios, ruta del día por modo, caja «Con niños», mapa multi-ciudad y títulos de Reservas por viaje; Roma byte a byte.
+- **Campania 2027 (F13):** 10 días con su logística, 24 fichas, 9 de gastronomía, Reservas y Práctica propias, y 172 marcas «⚠ por confirmar» en los datos de campo no verificados; publicada en `/trips/campania/`.
+- **Verificación del milestone (F14):** test de upgrade contra la guía viva real en el mismo origen, aislamiento entre viajes sin descargas de `sql_dump`/WASM, CSS idéntico al de `main`, y firma humana de Roma y Campania en móvil real (UAT 9/9). Publicado junto con v1.0 en GitHub Pages (quick 261123-342).
+
+**Closeout:** `override_closeout`
+- Known verification overrides: 16 newly acknowledged, 0 carried forward from a prior close (see STATE.md Deferred Items). 1 todo (aviso de hidratación de `<tbody>` en Reservas) + 15 deferred items (1 de la Fase 12, 14 de fases archivadas de v1.0).
+- Verificación `stale` (no fallida) en las fases 9, 10 y 12.1: fases posteriores tocaron ficheros cubiertos (`tests/data/trips.ts`, `invariants.spec.ts`, `tests/README.md`); la Fase 14 re-pasó la puerta completa desde build limpia. Aceptado por el usuario al cerrar.
+- Audit: `milestones/v1.1-MILESTONE-AUDIT.md` (status `tech_debt`, 32/32, ~30 elementos de deuda informativa o diferida).
+
+---
+
 ## v1.0 Migración a Nuxt 4 (Shipped: 2026-06-24)
 
 **Phases completed:** 8 phases, 39 plans, 76 tasks

@@ -2,38 +2,36 @@
 gsd_state_version: "1.0"
 milestone: v1.1
 milestone_name: Multi-viaje + Campania
-current_phase: 14
-status: completed
+status: Awaiting next milestone
 stopped_at: Phase 14 complete — all phases complete
-last_updated: "2026-11-23T22:29:59.609Z"
-last_activity: 2026-11-23
-last_activity_desc: Phase 14 complete
-state_head: eec82eb615dae7593bfe85b3730097a49ff1ac45
+last_updated: "2026-11-24T00:28:34.895Z"
+last_activity: 2026-11-24
+last_activity_desc: Milestone v1.1 completed and archived
+state_head: ab9307f748d2bd06f6e94c4c8be3502461d35902
 progress:
   total_phases: 7
   completed_phases: 7
   total_plans: 39
   completed_plans: 39
   percent: 100
+current_phase: 14
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-11-23)
+See: .planning/PROJECT.md (updated 2026-11-24)
 
 **Core value:** La guía se consulta paseando por el destino y debe ser fiel, editorial y fiable (también offline). Lo ya publicado no se rompe: Roma sigue exactamente igual (paridad verificada) mientras la plataforma crece a varios viajes.
-**Current focus:** Milestone v1.1 completo — auditar y cerrar el milestone
+**Current focus:** Planificar el próximo milestone (`/gsd-new-milestone`); v1.1 cerrado y publicado
 
 ## Current Position
 
-Phase: 14
-Plan: Not started
-Status: All phases complete
-Last activity: 2026-11-23 — Phase 14 complete
-
-Progress: [██████████] 100% (39/39 plans)
+Phase: Milestone v1.1 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-11-24 — Milestone v1.1 completed and archived
 
 ## Performance Metrics
 
@@ -378,21 +376,15 @@ Recent decisions affecting current work:
 - [Phase 14 → mantenimiento]: `navigation.spec.ts` SC#2 scrollspy [mobile] tardó 29.7 s de un presupuesto de 30 s (verde, pero puede fallar al azar en un `pnpm verify` futuro; el spec está congelado, cambiarlo es decisión del usuario).
 - [Phase 14 → ship]: WR-08 diferido — el upgrade/CSS spec necesitan una rama `main` local (sin fallback a `origin/main`); ver 14-REVIEW-DISPOSITION.md.
 - [Pages]: mientras psl11 no cambie Settings → Pages → Source a «GitHub Actions», cada push a `main` lanza dos despliegues que compiten (Jekyll legado vs Nuxt).
-- [RESUELTO en Fases 11-12]: ~~borradores de REQUIREMENTS/ROADMAP v1.1, ROUTE-06, EXT-01/EXT-04~~.
 - [Phase 13 → primavera 2027]: los datos de campo de Campania sin confirmar (ferris, coche en Procida/Ischia, conciertos, PTN, Sorgeto de noche, alojamientos, devolución del coche) están marcados «⚠ por confirmar» (172 marcas, lista en 13-08-SUMMARY.md); confirmarlos antes del viaje.
 - [Deuda v1.0 aceptada, no bloqueante]: divergencia de ranking de búsqueda MiniSearch (`"Pante"`), warnings de tooling del code review, golden re-baselinado desde el build Nuxt (D-01 anulado), `#mapa` verificado solo por comportamiento (D-06), test de dev-routing gateado tras `RUN_DEV_ROUTING`. Detalle en `milestones/v1.0-MILESTONE-AUDIT.md`.
-- [RESUELTO en Fase 13]: ~~CAMP-01 devolución del coche~~ → recogida mié 23, devolución sáb 26 en Capodichino; ~~ROUTE-05~~ → Campania publicada completa, sin `draft`.
-- [RESUELTO en v1.0]: ~~[Phase 2]: bandera de research parcial sobre las secciones de referencia~~ → migradas en F2 P07 (reservas + práctica tipadas).
-- [RESUELTO en Fase 5 P03]: ~~[Phase 4/5]: cableado de interceptación de `a[href^="#"]` en `<MDC>`~~ → listener delegado nativo en CAPTURA + stopPropagation, registrado síncronamente.
-- [RESUELTO en v1.0]: ~~[Phase 4/6/7]: BLOQUEANTE D1 (uniones discriminadas `artist`/`reference` con filas SQL todo-null)~~ → `#arte`/`#arquitectura`/`#reservas`/`#practica` renderizan con datos reales desde F4 P05.
-- [RESUELTO en Fase 8]: ~~[Phase 8 P06]: visual-diff no verde por el corte de Lora self-hosted y el orden notas/culture por ficha~~ → golden re-baselinado desde el build Nuxt por decisión del usuario; `pnpm verify` VERDE y auditoría v1.0 sin bloqueantes.
+- [Deuda v1.1 aceptada, no bloqueante]: ~30 elementos en `milestones/v1.1-MILESTONE-AUDIT.md`; los más relevantes: oráculo `main:index.html` (no borrar el `index.html` legacy de `main`), `localStorage` sin try/catch en `useTripModes.ts`, ruta `transit` multiparada, verificación `stale` de las fases 9/10/12.1.
 
 
 ### Quick Tasks Completed
 
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
-| 261123-342 | Despliegue de la guía Nuxt a GitHub Pages con GitHub Actions | 2026-11-23 | 73e1718 | [261123-342-despliegue-de-la-gu-a-nuxt-a-github-page](./quick/261123-342-despliegue-de-la-gu-a-nuxt-a-github-page/) |
 
 ### Roadmap Evolution
 
@@ -409,14 +401,36 @@ Items acknowledged and carried forward from previous milestone close:
 | Multi-viaje | TRIP-01 de v1.0 (segundo viaje con contenido real) | En curso en v1.1 → CAMP-01..06 (no confundir con el TRIP-01 futuro de v1.1, «estado del viaje») | Init |
 | Ship | Merge `release/nuxt-4` → `main` + deploy/CI GitHub Pages (D-08) | Hecho 2026-11-23 (merge a `main` + workflow de Actions, quick 261123-342); falta que psl11 cambie la fuente de Pages | v1.0 close |
 
+Items acknowledged and deferred at milestone close, most recent first:
+
+| Category | Item | Status | Deferred At | Milestone |
+|----------|------|--------|-------------|-----------|
+| todos | 2026-11-23-reservas-table-tbody-hydration-mismatch.md | (presence-only) | 2026-11-24 | v1.1 |
+| deferred_items | 12/deferred-items.md: [12-07] en `nuxi dev` el contenedor del mapa pierde `id="leaflet-map"` y mide 0 px | acknowledged | 2026-11-24 | v1.1 |
+| deferred_items | 02 (v1.0)/deferred-items.md: invariants.spec con 3 fallos por `artists` aún no migrada | acknowledged | 2026-11-24 | v1.1 |
+| deferred_items | 03 (v1.0)/deferred-items.md: D1 `no such column: "trip"` en `artist`/`reference` | acknowledged | 2026-11-24 | v1.1 |
+| deferred_items | 03 (v1.0)/deferred-items.md: D2 mismatch de hidratación benigno de `<html data-theme>` | acknowledged | 2026-11-24 | v1.1 |
+| deferred_items | 03 (v1.0)/deferred-items.md: D3 robustez y tipos de `useTrip` | acknowledged | 2026-11-24 | v1.1 |
+| deferred_items | 04 (v1.0)/deferred-items.md: D-04-A envoltorio `<div class="">` de `<MDC unwrap="p">` | acknowledged | 2026-11-24 | v1.1 |
+| deferred_items | 04 (v1.0)/deferred-items.md: D-04-B variante `metro`/`metro-b` perdida | acknowledged | 2026-11-24 | v1.1 |
+| deferred_items | 04 (v1.0)/deferred-items.md: D-04-C `**…**` emite `<strong>`, no `<b>` | acknowledged | 2026-11-24 | v1.1 |
+| deferred_items | 04 (v1.0)/deferred-items.md: D-04-D filas null en uniones de Content | acknowledged | 2026-11-24 | v1.1 |
+| deferred_items | 05 (v1.0)/deferred-items.md: fallos de la suite completa en 05-03 (flake golden, lock de `nuxi dev`) | acknowledged | 2026-11-24 | v1.1 |
+| deferred_items | 06 (v1.0)/deferred-items.md: 1-4 flake de píxel del golden | acknowledged | 2026-11-24 | v1.1 |
+| deferred_items | 06 (v1.0)/deferred-items.md: 5 `shell.spec.ts` dev-routing bloqueado por lock de `nuxi dev` | acknowledged | 2026-11-24 | v1.1 |
+| deferred_items | 08 (v1.0)/deferred-items.md: D-DEF-01 «Volver restaura el scroll» en search-route | acknowledged | 2026-11-24 | v1.1 |
+| deferred_items | 08 (v1.0)/deferred-items.md: D-DEF-02 divergencia de ranking de búsqueda | acknowledged | 2026-11-24 | v1.1 |
+| deferred_items | 08 (v1.0)/deferred-items.md: D-DEF-03 deriva del `index.html` de `origin/main` | acknowledged | 2026-11-24 | v1.1 |
+
+Closeout v1.1: `override_closeout` — además de lo anterior, verificación `stale` aceptada en las fases 9, 10 y 12.1 (ver MILESTONES.md).
+
 ## Session Continuity
 
-Last session: 2026-11-23
-Stopped at: Phase 14 complete (UAT 9/9, verification passed) — milestone v1.1 ready to audit and close
+Last session: 2026-11-24
+Stopped at: Milestone v1.1 audited (tech_debt), archived and tagged — next: /gsd-new-milestone
 Resume file: None
 
 ## Operator Next Steps
 
-- `/gsd-audit-milestone` (D-08: tras el sign-off de PAR-04)
-- `/gsd-complete-milestone v1.1` tras la auditoría
-- Pedir a psl11 que cambie Settings → Pages → Source a «GitHub Actions» (termina la carrera de despliegues)
+
+- Start the next milestone with /gsd-new-milestone
