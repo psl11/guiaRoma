@@ -36,6 +36,7 @@ plan/phase to resolve.
   OR add a top-level (non-union) `trip`/`order` column to the union schemas. Decision belongs to F4.
 
 ---
+  status: acknowledged
 
 ## D2 — Benign `<html data-theme>` hydration mismatch on the static build (expected color-mode SSG behavior)
 
@@ -62,6 +63,7 @@ plan/phase to resolve.
   considered noise; it cannot be removed without reintroducing FOUC.
 
 ---
+  status: acknowledged
 
 ## D3 — `useTrip` data-layer robustness + type-safety (code-review WR-02 / WR-03 / IN-02), fix WITH D1 in Phase 4
 
@@ -90,3 +92,4 @@ plan/phase to resolve.
 > CR-01 (the `meta`→`heroMeta` reserved-field parity break) and WR-01 (parity test now asserts
 > hero-meta TEXT) were **FIXED in Phase 3** — see `03-REVIEW.md` ▸ Resolution. IN-01 (reserved-name
 > audit) was performed: only `meta` collided and is now resolved.
+  status: acknowledged

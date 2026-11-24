@@ -10,6 +10,7 @@ outside its scope (the visual-diff/D-02 classification). Logged per the executor
 - **Proven pre-existing:** fails IDENTICALLY (24) on **pure HEAD `ec7cadc`** with zero working-tree changes (golden reverted, MonumentCard reverted, golden.spec reverted). NOT introduced by the golden re-capture (behavior tests don't read the golden PNGs) nor by the MonumentCard `.facts` fix (verified by reverting it).
 - **Root cause:** `goBack()` is a verbatim port (`window.scrollTo({ top: prev, behavior:'smooth' })`). The chosen search result resolves to a DEEP card (`window.scrollY` ~53605 after nav). A `behavior:'smooth'` scroll back from ~53k px does NOT finish within `expect.poll`'s default 5s window, so the assertion samples a mid-flight scrollY. It is a TEST-timing fragility, not an app/parity bug (the app behavior matches index.html).
 - **Suggested fix (separate task):** let the smooth scroll settle before asserting (e.g. `settleScroll(page)` after clicking `#back-btn`, or raise the `expect.poll` timeout for this assertion), OR have `goBack` use instant scroll in the test env. Do NOT change `goBack`'s production behavior (it is a faithful port).
+  status: acknowledged
 
 ## D-DEF-02 — search ranking divergence (Nuxt vs index.html)
 
@@ -21,6 +22,7 @@ outside its scope (the visual-diff/D-02 classification). Logged per the executor
   but it is a behavior-parity gap worth a dedicated fix.
 - **Suggested fix (separate task):** align the Nuxt MiniSearch options (`boost`, `fields`,
   `searchOptions`, prefix/fuzzy) with index.html's original search config so ranking matches.
+  status: acknowledged
 
 ## D-DEF-03 — origin/main index.html drift (informational)
 
@@ -31,3 +33,4 @@ outside its scope (the visual-diff/D-02 classification). Logged per the executor
   `index.html` (the frozen D-05 baseline). Pulling main's content into the release branch is an
   unrelated content sync, to be decided separately (it would also require re-capturing the golden
   for the changed Monday/Sunday timeline lines).
+  status: acknowledged

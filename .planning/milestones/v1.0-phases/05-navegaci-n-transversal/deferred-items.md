@@ -32,3 +32,4 @@ the 05-03 changes (`tests/parity/navigation.spec.ts` + the capture-phase fix in
 All other parity specs (render-cards, render-timeline, render-reference, modes, theme, shell static,
 subpath) and the new `navigation.spec.ts` pass. `pnpm test:unit` (43), `pnpm typecheck`, `pnpm lint`
 are green.
+  status: acknowledged

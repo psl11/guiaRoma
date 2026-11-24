@@ -6,6 +6,9 @@ severity: minor
 files:
   - app/components/ReservasSection.vue:114-130
   - tests/data/fixtures/roma-reservas.html
+audit_acknowledged:
+  milestone: v1.1
+  at: 2026-11-24
 ---
 
 ## Problem

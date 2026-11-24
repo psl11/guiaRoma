@@ -16,3 +16,4 @@ owning plan.
     `reservas.table[].ref → food` y `timeline[stop|food].ref → … | food` están en VERDE.
   - Resolución esperada: automática al ejecutar el plan de migración de `artists`.
     Re-ejecutar `pnpm exec vitest run tests/data/invariants.spec.ts` tras ese plan.
+  status: acknowledged

@@ -31,6 +31,7 @@ posteriores. NO se arreglan en el plan que los descubre.
   `<div>` envoltorio). Validar contra el golden de F1 tras el cambio.
 
 ---
+  status: acknowledged
 
 ## D-04-B: variante `metro` / `metro-b` perdida en los datos F2 del timeline + ausente del enum
 
@@ -58,6 +59,7 @@ posteriores. NO se arreglan en el plan que los descubre.
   `pnpm test:data`. Lo cierra la verificación E2E del Plan 05 (`render-timeline.spec.ts`).
 
 ---
+  status: acknowledged
 
 ## D-04-C: prosa Markdown `**…**` emite `<strong>`, no `<b>` — afecta a `.tl-meta-item.ok/.warn b`
 
@@ -86,6 +88,7 @@ posteriores. NO se arreglan en el plan que los descubre.
   Plan 05 contra el golden.
 
 ---
+  status: acknowledged
 
 ## D-04-D: `queryCollection('artist'/'reference')` devuelve filas con TODOS los campos null (uniones discriminadas no se materializan en SQL) — BLOQUEANTE para #arte/#arquitectura/#reservas/#practica
 
@@ -156,3 +159,4 @@ posteriores. NO se arreglan en el plan que los descubre.
   paridad de marcado de los 3 componentes nuevos; en cuanto D1 entregue los datos, `TripView` (Plan
   05) podrá montar `<ArtistCard>`/`<ReservasSection>`/`<PracticaSection>`/`<GastroSection>` sin
   tocarlos.
+  status: acknowledged
