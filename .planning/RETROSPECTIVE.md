@@ -45,6 +45,52 @@
 
 ---
 
+## Milestone: v1.1 — Multi-viaje + Campania
+
+**Shipped:** 2026-11-24
+**Phases:** 7 (9-14 + 12.1 insertada) | **Plans:** 39 | **Tasks:** 96
+
+### What Was Built
+- **Plataforma por viaje:** búsqueda, navegación, notas y preferencias aisladas por viaje (claves `roma-*` intactas), y puerta de datos *fail-closed* sobre todo `content/trips/`.
+- **Forma desde datos:** `buildTripLayout` (días, secciones y pastillas por presencia de datos) y chrome por viaje en `trip.yml`, con test-trampa anti-fugas de Roma.
+- **Portada + rutas:** `/` como índice, `/trips/<slug>/` estático, redirección de los enlaces antiguos y borradores fuera de la build.
+- **Formas nuevas:** A/B, «Dormís en…», cinco transportes, naturaleza con SVG propios, ruta por modo, «Con niños», mapa multi-ciudad y títulos de Reservas por viaje.
+- **Campania 2027** completa (10 días, 24 fichas, 172 «⚠ por confirmar») y **verificación final** con upgrade real desde la guía viva y firma en móvil. Publicado con v1.0 en GitHub Pages.
+
+### What Worked
+- **«Un único sospechoso por fallo»:** el orden código → datos → URL → extensiones → contenido mantuvo los 56 goldens sin re-baseline en todo el hito (solo la excepción aprobada de ROUTE-06).
+- **Mover la URL de Roma en dos pasos** (`_harness.ts` con `ROMA_URL` sin cambiar, después un diff de una línea) convirtió la Fase 11 en un cambio trivial de revisar.
+- **El mecanismo `draft` antes que el contenido:** el esqueleto de Campania (Fase 12) probó cada forma nueva sin publicarse, y la Fase 13 solo tocó YAML.
+- **La inserción decimal (12.1)** cuando el contenido necesitó una forma nueva, en vez de forzar el esquema desde la fase de contenido.
+- **El oráculo real:** el test de upgrade ejecuta el `index.html` de `main` en el mismo origen en lugar de un test escrito a mano que podía pasar en vacío.
+
+### What Was Inefficient
+- **Tres fases necesitaron un plan de cierre de hueco tras la UAT** (09-06, 10-06, 11-08): la puerta de datos tenía rendijas (*fail-open*, formas de enlace de MDC, Markdown de bloque) que la revisión de código vio y la UAT confirmó. La regla «la puerta nunca omite en silencio» debió fijarse desde el plan 09-02.
+- **Verificación `stale` al cierre (9, 10, 12.1):** los informes cubren ficheros compartidos (`tests/data/trips.ts`, `invariants.spec.ts`, `tests/README.md`) que toda fase posterior toca, así que caducan por diseño. Se cerró con override.
+- **Muchos hallazgos de revisión diferidos en bloque** (todos los de la Fase 12, IN de 9-11): sin efecto visible, pero acumulan ~30 elementos de deuda.
+- **Flake del scrollspy móvil** reaparecido en varias puertas (29,7 s de 30 s) sin poder tocarlo por ser un spec congelado.
+
+### Patterns Established
+- **Puerta de datos fail-closed por viaje:** cada violación nombra fichero, regla y detalle; «dientes» en memoria y en disco para cada regla.
+- **Centinelas de build:** tests de datos que inspeccionan `.output` y `sql_dump` decodificados para probar que un borrador o un texto de Roma no se filtra.
+- **Valores de enum ⇒ estilo obligatorio:** un test enum → CSS/SVG hace fallar `pnpm verify` si un valor nuevo queda sin estilo.
+- **Roma byte a byte como contrato:** fixtures HTML de secciones de Roma capturados antes del cambio (Reservas) y comparados con `Buffer.equals`.
+- **«⚠ por confirmar» como dato:** los datos de campo no verificables se marcan en el contenido y un spec vigila el mínimo y su ausencia en campos de texto plano.
+
+### Key Lessons
+1. **Si un informe de verificación cubre ficheros compartidos por todas las fases, caducará.** Hay que limitar `covered_files` a lo propio de la fase o aceptar que la puerta final (Fase 14) es la verificación de referencia.
+2. **Las invariantes de la puerta de datos se diseñan *fail-closed* desde el primer plan,** no se endurecen fase a fase tras la UAT.
+3. **El oráculo de paridad tiene que fijarse a algo inmutable** (un commit o tag) antes de fusionar con `main`, o queda atado a un fichero que alguien puede borrar.
+4. **Insertar una fase decimal es barato** y mantiene limpia la frontera plataforma/contenido.
+
+### Cost Observations
+- Model mix: perfil «quality» (executor opus, verifier y checkers sonnet).
+- Timeline: 4 días (2026-11-20 → 2026-11-23), 387 commits (51 `fix(`), 1 contribuidor.
+- UAT: 28 tests pass, 3 issues (uno en cada una de 9, 10 y 11), cerrados con planes de hueco.
+- Notable: el coste se concentró en las puertas de datos y en las re-verificaciones tras la revisión de código, no en el contenido de Campania.
+
+---
+
 ## Cross-Milestone Trends
 
 ### Process Evolution
@@ -52,14 +98,18 @@
 | Milestone | Phases | Plans | Key Change |
 |-----------|--------|-------|------------|
 | v1.0 | 8 | 39 | Baseline: migración con golden pre-divergencia + sign-off humano por fase |
+| v1.1 | 7 | 39 | Orden «un sospechoso por fallo», borradores antes del contenido, fase decimal para formas nuevas, oráculo real de upgrade |
 
 ### Cumulative Quality
 
 | Milestone | Tests (gate) | Coverage | Zero-Dep Additions |
 |-----------|-------------|----------|-------------------|
 | v1.0 | 80 parity + 87 unit + 295 data | 33/33 requisitos | 0 paquetes nuevos en F8 |
+| v1.1 | 126 parity + 567 unit + 774 data | 32/32 requisitos | 0 dependencias nuevas en todo el hito |
 
 ### Top Lessons (Verified Across Milestones)
 
 1. (v1.0) Capturar y congelar un baseline objetivo antes de divergir es la red de seguridad de una migración de paridad.
 2. (v1.0) Paridad efectiva de lo que se envía > clon byte-exacto cuando el coste es desproporcionado.
+3. (v1.0, v1.1) La red de seguridad congelada (goldens) aguanta un hito entero de cambios estructurales si cada fase tiene un único sospechoso de regresión.
+4. (v1.1) Las puertas automáticas se diseñan *fail-closed* desde el principio; endurecerlas tras la UAT cuesta un plan extra por fase.
